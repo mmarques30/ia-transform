@@ -1,19 +1,31 @@
 import { Reveal } from "@/components/Reveal";
+import { Sparkles, Database, Zap, FileText } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
-const PROBLEMS = [
+interface ProblemItem {
+  icon: LucideIcon;
+  title: string;
+  text: string;
+}
+
+const PROBLEMS: ProblemItem[] = [
   {
+    icon: Sparkles,
     title: "Softwares prontos que obrigam sua empresa a se adaptar",
     text: "Você molda a operação ao software, e não o contrário. Resultado: workflow torto e time frustrado.",
   },
   {
+    icon: Database,
     title: "ERPs caros que prometem controle e entregam complexidade",
     text: "Módulos genéricos, consultoria cara, 18 meses de implementação — e ninguém usa metade.",
   },
   {
+    icon: Zap,
     title: "Automações soltas que só aceleram processos ruins",
     text: "Acelerar o errado não resolve. Automação sem estrutura é só caos mais rápido.",
   },
   {
+    icon: FileText,
     title: "Consultorias que entregam relatórios, mas não deixam execução",
     text: "Slide bonito, deliverable teórico, zero sistema em produção. Na semana seguinte, nada mudou.",
   },
@@ -52,10 +64,10 @@ export function Problem() {
                   style={{ backgroundColor: "var(--color-primary)" }}
                 />
                 <div
-                  className="h-8 w-8 rounded-md flex items-center justify-center"
+                  className="h-10 w-10 rounded-lg flex items-center justify-center"
                   style={{ backgroundColor: "var(--color-olive)" }}
                 >
-                  <img src="/brand/logo.svg" alt="" aria-hidden className="h-5 w-5" />
+                  <p.icon className="h-5 w-5 text-white" strokeWidth={1.75} />
                 </div>
                 <h3 className="mt-5 text-[17px] lg:text-[18px] font-semibold text-foreground leading-snug">
                   {p.title}

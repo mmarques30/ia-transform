@@ -1,6 +1,7 @@
 import { Reveal } from "@/components/Reveal";
 import { ArrowRight } from "lucide-react";
 import { FOUNDER } from "@/config/brand";
+import { LogoMark } from "@/components/Logo";
 
 export function Authority() {
   return (
@@ -26,7 +27,7 @@ export function Authority() {
         <div className="grid lg:grid-cols-[1.05fr_1fr] gap-12 lg:gap-16 items-center">
           <div>
             <Reveal>
-              <img src="/brand/logo.svg" alt="" aria-hidden className="h-14 w-14" />
+              <LogoMark size={56} />
             </Reveal>
 
             <Reveal delay={0.05}>
@@ -157,12 +158,7 @@ function RotatingBadge() {
           </textPath>
         </text>
       </svg>
-      <img
-        src="/brand/logo.svg"
-        alt=""
-        aria-hidden
-        className="h-12 w-12 lg:h-16 lg:w-16 relative z-10"
-      />
+      <LogoMark size={56} className="relative z-10" />
     </div>
   );
 }

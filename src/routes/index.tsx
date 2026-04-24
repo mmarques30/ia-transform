@@ -3,9 +3,11 @@ import { Header } from "@/components/sections/Header";
 import { Hero } from "@/components/sections/Hero";
 import { Problem } from "@/components/sections/Problem";
 import { Solution } from "@/components/sections/Solution";
+import { Systems } from "@/components/sections/Systems";
 import { OliveWave } from "@/components/sections/OliveWave";
 import { Process } from "@/components/sections/Process";
 import { Impact } from "@/components/sections/Impact";
+import { Cases } from "@/components/sections/Cases";
 import { Segmentation } from "@/components/sections/Segmentation";
 import { Comparison } from "@/components/sections/Comparison";
 import { Authority } from "@/components/sections/Authority";
@@ -48,9 +50,11 @@ function BusinessLanding() {
       <Hero />
       <Problem />
       <Solution />
+      <Systems />
       <OliveWave />
       <Process />
       <Impact />
+      <Cases />
       <Authority />
       <Comparison />
       <Segmentation />

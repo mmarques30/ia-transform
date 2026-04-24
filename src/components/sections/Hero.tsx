@@ -75,24 +75,28 @@ export function Hero() {
   );
 }
 
-/** 4 stacked circular avatars + a lime badge on the right. */
+/**
+ * 4 stacked circular initials — generated locally so we never depend on
+ * external image hosts that can 404 or be blocked.
+ */
 function AvatarStack() {
   const avatars = [
-    "https://images.unsplash.com/photo-1545996124-0501ebae84d0?auto=format&fit=crop&w=96&q=80",
-    "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=96&q=80",
-    "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=96&q=80",
-    "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=96&q=80",
+    { initials: "MR", bg: "oklch(0.62 0.17 125)" },
+    { initials: "JC", bg: "oklch(0.55 0.16 125)" },
+    { initials: "AP", bg: "oklch(0.48 0.14 122)" },
+    { initials: "LS", bg: "oklch(0.42 0.12 122)" },
   ];
   return (
     <div className="flex -space-x-2.5">
-      {avatars.map((src, i) => (
-        <img
+      {avatars.map((a, i) => (
+        <span
           key={i}
-          src={src}
-          alt=""
           aria-hidden
-          className="h-9 w-9 rounded-full object-cover ring-2 ring-background"
-        />
+          className="h-9 w-9 rounded-full ring-2 ring-background flex items-center justify-center text-white font-semibold text-[11px] tracking-tight"
+          style={{ backgroundColor: a.bg }}
+        >
+          {a.initials}
+        </span>
       ))}
     </div>
   );
