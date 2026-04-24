@@ -159,27 +159,6 @@ export function HeroForm({ compact = false }: HeroFormProps) {
         )}
       </div>
 
-      <style>{`
-        .form-input {
-          width: 100%;
-          border-radius: 8px;
-          background-color: var(--color-background);
-          border: 1px solid var(--color-border);
-          padding: 11px 14px;
-          color: var(--color-foreground);
-          font-size: 14px;
-          transition: border-color 0.15s ease, box-shadow 0.15s ease;
-        }
-        .form-input:focus {
-          outline: none;
-          border-color: var(--color-primary);
-          box-shadow: 0 0 0 3px oklch(0.62 0.17 125 / 0.12);
-        }
-        .form-input::placeholder {
-          color: var(--color-muted-foreground);
-          opacity: 0.7;
-        }
-      `}</style>
     </div>
   );
 }

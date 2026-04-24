@@ -29,20 +29,39 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "IAplicada Business implements AI within companies for measurable operational transformation." },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "IAplicada Business implements AI within companies for measurable operational transformation." },
+      { title: "IAplicada Business · IA aplicada ao operacional da sua empresa" },
+      {
+        name: "description",
+        content:
+          "Programa de diagnóstico, construção e continuidade de IA aplicada pra empresas de 50 a 2.000 pessoas. A gente implementa — seu time opera.",
+      },
+      { name: "author", content: "IAplicada" },
+      {
+        property: "og:title",
+        content: "IAplicada Business · IA entregue, rodando e medida",
+      },
+      {
+        property: "og:description",
+        content:
+          "Diagnóstico em 2 semanas, sistemas de IA construídos sob medida, treinamento e handover. 6 vagas por trimestre.",
+      },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
-      { name: "twitter:title", content: "Lovable App" },
-      { name: "twitter:description", content: "IAplicada Business implements AI within companies for measurable operational transformation." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/a72c53ea-c09b-47e6-8111-b68302198cce/id-preview-672e67d5--3e493d3c-70cb-40da-85f3-b2dbd161c1a9.lovable.app-1777048121161.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/a72c53ea-c09b-47e6-8111-b68302198cce/id-preview-672e67d5--3e493d3c-70cb-40da-85f3-b2dbd161c1a9.lovable.app-1777048121161.png" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
+      {
+        rel: "preconnect",
+        href: "https://fonts.googleapis.com",
+      },
+      {
+        rel: "preconnect",
+        href: "https://fonts.gstatic.com",
+        crossOrigin: "anonymous",
+      },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap",
+      },
       {
         rel: "stylesheet",
         href: appCss,
