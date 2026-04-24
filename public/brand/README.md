@@ -13,6 +13,7 @@ Usado em Header, Footer, Authority, Problem e badge rotativo. Se você tiver o S
 Usado na seção Authority (Sobre a IAplicada).
 
 **Como substituir:**
+
 1. Salve a foto oficial dela com o nome exato `mariana.jpg` (ou `.jpeg` / `.png`)
 2. Coloque em `public/brand/mariana.jpg`
 3. Commit + push — a página vai carregar a foto automaticamente
@@ -20,6 +21,7 @@ Usado na seção Authority (Sobre a IAplicada).
 Enquanto o arquivo não existir, cai num placeholder neutro do Unsplash (editável em `src/config/brand.ts` → `FOUNDER.photoFallback`).
 
 **Dicas pra foto:**
+
 - Proporção recomendada: **3:4 vertical** ou **4:5** (ex: 1200×1500 ou 1500×2000)
 - Enquadramento: dos ombros pra cima, levemente acima do centro
 - Qualidade: mínima 1200px no maior lado

@@ -18,8 +18,9 @@ const ROLES = [
 ];
 
 /**
- * Lead form from the iaplicada.com/business hero — adapted to the premium
- * light palette. 6 fields: Nome, E-mail, Telefone, Cargo, Faturamento, Empresa.
+ * Premium B2B lead form — white card with subtle olive top accent strip,
+ * neutral inputs, charcoal submit button. Pulled back from the saturated
+ * lime/olive of the legacy LP for a more refined Stripe/Vanta feel.
  */
 export function HeroForm() {
   const [submitted, setSubmitted] = useState(false);
@@ -36,109 +37,151 @@ export function HeroForm() {
 
   return (
     <div
-      className="rounded-[28px] p-7 lg:p-9 relative overflow-hidden"
+      className="rounded-[24px] overflow-hidden relative"
       style={{
-        background: "linear-gradient(180deg, oklch(0.62 0.17 125) 0%, oklch(0.54 0.15 125) 100%)",
-        boxShadow: "var(--shadow-elevated)",
+        backgroundColor: "oklch(1 0 0)",
+        border: "1px solid oklch(0.92 0.005 110)",
+        boxShadow:
+          "0 30px 60px -20px oklch(0.18 0.02 122 / 0.18), 0 8px 20px -8px oklch(0.18 0.02 122 / 0.08)",
       }}
     >
+      {/* Top accent strip — discrete olive brand presence */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 rounded-[28px]"
-        style={{ boxShadow: "inset 0 1px 0 oklch(1 0 0 / 0.25)" }}
+        className="absolute inset-x-0 top-0 h-1"
+        style={{
+          background: "linear-gradient(90deg, oklch(0.62 0.17 125) 0%, oklch(0.55 0.16 125) 100%)",
+        }}
       />
 
-      {submitted ? (
-        <div className="text-center py-12 relative">
-          <CheckCircle2 className="h-12 w-12 mx-auto text-white" strokeWidth={1.5} />
-          <h3 className="mt-6 text-[22px] font-semibold text-white">Recebemos seu contato.</h3>
-          <p className="mt-2 text-white/80 text-[14px] leading-[1.6] max-w-[320px] mx-auto">
-            Um sócio do time vai te mandar opções de horário em até 1 dia útil.
-          </p>
-        </div>
-      ) : (
-        <form onSubmit={handleSubmit} className="relative space-y-4">
-          <FormField id="name" label="Nome completo" required>
-            <input
-              id="name"
-              type="text"
-              required
-              placeholder="Seu nome completo"
-              className="form-input"
-            />
-          </FormField>
-
-          <FormField id="email" label="E-mail" required>
-            <input
-              id="email"
-              type="email"
-              required
-              placeholder="seu@email.com"
-              className="form-input"
-            />
-          </FormField>
-
-          <FormField id="phone" label="Telefone com DDD" required>
-            <input
-              id="phone"
-              type="tel"
-              required
-              placeholder="(11) 99999-9999"
-              className="form-input"
-            />
-          </FormField>
-
-          <FormField id="role" label="Cargo" required>
-            <select id="role" required defaultValue="" className="form-input">
-              <option value="" disabled>
-                Selecione...
-              </option>
-              {ROLES.map((r) => (
-                <option key={r} value={r}>
-                  {r}
-                </option>
-              ))}
-            </select>
-          </FormField>
-
-          <FormField id="revenue" label="Faixa de Faturamento" required>
-            <select id="revenue" required defaultValue="" className="form-input">
-              <option value="" disabled>
-                Selecione...
-              </option>
-              {REVENUE_BANDS.map((r) => (
-                <option key={r} value={r}>
-                  {r}
-                </option>
-              ))}
-            </select>
-          </FormField>
-
-          <FormField id="company" label="Empresa">
-            <input
-              id="company"
-              type="text"
-              placeholder="Nome da sua empresa"
-              className="form-input"
-            />
-          </FormField>
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="mt-2 w-full inline-flex items-center justify-center gap-2 rounded-full px-6 py-4 text-[14px] font-bold transition-transform hover:-translate-y-0.5 disabled:opacity-60"
+      <div className="px-7 pt-8 lg:px-9 lg:pt-10">
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <p className="text-[11px] uppercase tracking-[0.16em] text-muted-foreground font-semibold">
+              Diagnóstico estratégico
+            </p>
+            <p className="mt-1.5 text-[18px] font-semibold text-foreground tracking-tight">
+              Conversa de 30 min · gratuita
+            </p>
+          </div>
+          <span
+            className="inline-flex items-center gap-1.5 text-[10px] uppercase tracking-[0.14em] font-semibold rounded-full px-2.5 py-1 shrink-0"
             style={{
-              background:
-                "linear-gradient(180deg, oklch(0.95 0.22 115) 0%, oklch(0.8 0.22 118) 100%)",
-              color: "oklch(0.14 0.02 122)",
-              boxShadow: "0 10px 30px oklch(0.85 0.22 115 / 0.45)",
+              backgroundColor: "oklch(0.62 0.17 125 / 0.1)",
+              color: "oklch(0.4 0.14 125)",
             }}
           >
-            {loading ? "Enviando..." : "Quero saber mais sobre o Business"}
-            {!loading && <ArrowRight className="h-4 w-4" />}
-          </button>
-        </form>
-      )}
+            <span
+              className="h-1.5 w-1.5 rounded-full"
+              style={{ backgroundColor: "oklch(0.62 0.17 125)" }}
+            />
+            Vagas abertas
+          </span>
+        </div>
+      </div>
+
+      <div className="px-7 pb-8 pt-6 lg:px-9 lg:pb-10 lg:pt-7">
+        {submitted ? (
+          <div className="text-center py-10">
+            <CheckCircle2
+              className="h-11 w-11 mx-auto"
+              style={{ color: "var(--color-olive)" }}
+              strokeWidth={1.5}
+            />
+            <h3 className="mt-5 text-[20px] font-semibold text-foreground">
+              Recebemos seu contato.
+            </h3>
+            <p className="mt-2 text-[14px] text-sage leading-[1.6] max-w-[320px] mx-auto">
+              Um sócio do time vai te mandar opções de horário em até 1 dia útil.
+            </p>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="space-y-3.5">
+            <FormField id="name" label="Nome completo" required>
+              <input
+                id="name"
+                type="text"
+                required
+                placeholder="Seu nome completo"
+                className="form-input"
+              />
+            </FormField>
+
+            <FormField id="email" label="E-mail corporativo" required>
+              <input
+                id="email"
+                type="email"
+                required
+                placeholder="voce@suaempresa.com"
+                className="form-input"
+              />
+            </FormField>
+
+            <FormField id="phone" label="Telefone com DDD" required>
+              <input
+                id="phone"
+                type="tel"
+                required
+                placeholder="(11) 99999-9999"
+                className="form-input"
+              />
+            </FormField>
+
+            <div className="grid sm:grid-cols-2 gap-3">
+              <FormField id="role" label="Cargo" required>
+                <select id="role" required defaultValue="" className="form-input">
+                  <option value="" disabled>
+                    Selecione
+                  </option>
+                  {ROLES.map((r) => (
+                    <option key={r} value={r}>
+                      {r}
+                    </option>
+                  ))}
+                </select>
+              </FormField>
+              <FormField id="revenue" label="Faturamento" required>
+                <select id="revenue" required defaultValue="" className="form-input">
+                  <option value="" disabled>
+                    Selecione
+                  </option>
+                  {REVENUE_BANDS.map((r) => (
+                    <option key={r} value={r}>
+                      {r}
+                    </option>
+                  ))}
+                </select>
+              </FormField>
+            </div>
+
+            <FormField id="company" label="Empresa">
+              <input
+                id="company"
+                type="text"
+                placeholder="Nome da sua empresa"
+                className="form-input"
+              />
+            </FormField>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="cta-primary mt-2 w-full justify-center disabled:opacity-60"
+            >
+              {loading ? "Enviando..." : "Quero saber mais sobre o Business"}
+              {!loading && (
+                <span className="arrow">
+                  <ArrowRight className="h-3.5 w-3.5" strokeWidth={2.5} />
+                </span>
+              )}
+            </button>
+
+            <p className="pt-2 text-[11.5px] text-muted-foreground text-center leading-relaxed">
+              Seus dados não são compartilhados. Sem SPAM. Cancele a qualquer momento.
+            </p>
+          </form>
+        )}
+      </div>
     </div>
   );
 }
@@ -156,8 +199,13 @@ function FormField({
 }) {
   return (
     <div>
-      <label htmlFor={id} className="block text-[13px] font-semibold text-white mb-1.5">
-        {label} {required && <span className="text-white/70">*</span>}
+      <label htmlFor={id} className="block text-[12px] font-semibold text-foreground mb-1.5">
+        {label}
+        {required && (
+          <span className="ml-1" style={{ color: "var(--color-olive)" }}>
+            ·
+          </span>
+        )}
       </label>
       {children}
     </div>
