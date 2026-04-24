@@ -19,8 +19,8 @@ export function Process() {
             </span>
           </Reveal>
           <Reveal delay={0.05}>
-            <h2 className="h-display mt-6 text-[36px] sm:text-[44px] lg:text-[52px] text-foreground">
-              Do "alô" ao time rodando sozinho.
+            <h2 className="h-mix mt-6 text-[36px] sm:text-[44px] lg:text-[52px] text-foreground">
+              Do "alô" <em>ao time rodando</em> sozinho.
             </h2>
           </Reveal>
         </div>

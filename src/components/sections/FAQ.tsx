@@ -52,8 +52,8 @@ export function FAQ() {
           </span>
         </Reveal>
         <Reveal delay={0.05}>
-          <h2 className="h-display mt-6 text-[36px] sm:text-[44px] lg:text-[52px] text-foreground">
-            O que a gente mais ouve.
+          <h2 className="h-mix mt-6 text-[36px] sm:text-[44px] lg:text-[52px] text-foreground">
+            O que a gente <em>mais ouve</em>.
           </h2>
         </Reveal>
 

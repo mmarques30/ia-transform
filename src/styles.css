@@ -1,6 +1,7 @@
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap");
 
 @custom-variant dark (&:is(.dark *));
 
@@ -33,6 +34,7 @@
   --color-ring: var(--primary);
   --font-sans: "Inter", system-ui, -apple-system, sans-serif;
   --font-display: "Inter", system-ui, sans-serif;
+  --font-serif: "Instrument Serif", "Times New Roman", Georgia, serif;
 }
 
 :root {
@@ -135,6 +137,27 @@
     font-weight: 700;
     letter-spacing: -0.025em;
     line-height: 1.05;
+  }
+
+  .h-serif {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    line-height: 1;
+    font-style: italic;
+  }
+
+  .h-mix {
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.02;
+  }
+  .h-mix em {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    color: var(--color-accent);
   }
 
   .num-display {

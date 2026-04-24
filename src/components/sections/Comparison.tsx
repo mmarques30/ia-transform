@@ -82,10 +82,10 @@ export function Comparison() {
             </span>
           </Reveal>
           <Reveal delay={0.05}>
-            <h2 className="h-display mt-6 text-[36px] sm:text-[44px] lg:text-[52px] text-foreground">
-              Não é ERP.
+            <h2 className="h-mix mt-6 text-[36px] sm:text-[44px] lg:text-[52px] text-foreground">
+              <em>Não é</em> ERP.
               <br />
-              Nem fábrica de software.
+              <em>Nem</em> fábrica de software.
             </h2>
           </Reveal>
         </div>

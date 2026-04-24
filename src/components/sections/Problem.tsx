@@ -17,11 +17,10 @@ export function Problem() {
             </span>
           </Reveal>
           <Reveal delay={0.05}>
-            <h2 className="h-display mt-6 text-[36px] sm:text-[44px] lg:text-[52px] text-foreground">
+            <h2 className="h-mix mt-6 text-[36px] sm:text-[44px] lg:text-[52px] text-foreground">
               Sua empresa não precisa de mais um curso.
               <br />
-              Precisa que a{" "}
-              <span style={{ color: "var(--color-primary)" }}>IA chegue no fluxo</span>.
+              Precisa que a <em>IA chegue no fluxo</em>.
             </h2>
           </Reveal>
         </div>

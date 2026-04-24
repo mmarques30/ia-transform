@@ -47,10 +47,10 @@ export function Authority() {
               </span>
             </Reveal>
             <Reveal delay={0.05}>
-              <h2 className="h-display mt-6 text-[32px] sm:text-[38px] lg:text-[44px] text-foreground">
+              <h2 className="h-mix mt-6 text-[32px] sm:text-[38px] lg:text-[44px] text-foreground">
                 Produto, operação, liderança.
                 <br />
-                Agora, IA aplicada.
+                Agora, <em>IA aplicada</em>.
               </h2>
             </Reveal>
 
