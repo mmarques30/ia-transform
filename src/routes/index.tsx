@@ -4,10 +4,10 @@ import { Hero } from "@/components/sections/Hero";
 import { LogosBar } from "@/components/sections/LogosBar";
 import { Problem } from "@/components/sections/Problem";
 import { Approach } from "@/components/sections/Approach";
+import { Systems } from "@/components/sections/Systems";
 import { Process } from "@/components/sections/Process";
-import { Formats } from "@/components/sections/Formats";
-import { Comparison } from "@/components/sections/Comparison";
 import { Cases } from "@/components/sections/Cases";
+import { Comparison } from "@/components/sections/Comparison";
 import { Authority } from "@/components/sections/Authority";
 import { ForWhom } from "@/components/sections/ForWhom";
 import { FAQ } from "@/components/sections/FAQ";
@@ -23,20 +23,20 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Implementação de IA no operacional de empresas que já tentaram sozinhas e não sustentaram. Diagnóstico estratégico, construção sob demanda e acompanhamento contínuo. 6 vagas novas por trimestre.",
+          "Diagnóstico, construção e continuidade de IA aplicada. 6 novas empresas por trimestre.",
       },
       {
         property: "og:title",
-        content: "IAplicada Business · IA aplicada ao operacional de empresas sérias",
+        content: "IAplicada Business · IA aplicada ao operacional",
       },
       {
         property: "og:description",
         content:
-          "Diagnóstico, implementação e continuidade pra empresas de 50 a 2.000 pessoas. Sem hype. Sem ERP. Sem fábrica de software. Método, acompanhamento e métrica acordada.",
+          "Sistemas de IA construídos, entregues e rodando no seu operacional em 3 a 12 semanas.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "theme-color", content: "#141A0B" },
+      { name: "theme-color", content: "#FAFAF7" },
     ],
   }),
   component: BusinessLanding,
@@ -49,11 +49,11 @@ function BusinessLanding() {
       <Hero />
       <LogosBar />
       <Problem />
+      <Systems />
       <Approach />
       <Process />
-      <Formats />
-      <Comparison />
       <Cases />
+      <Comparison />
       <Authority />
       <ForWhom />
       <FAQ />

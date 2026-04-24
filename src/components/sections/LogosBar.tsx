@@ -1,31 +1,22 @@
 import { Reveal } from "@/components/Reveal";
 
-const LOGOS = [
-  "Natura",
-  "Ambev",
-  "Magazine Luiza",
-  "Globo",
-  "Hubla",
-  "Conta Simples",
-  "Mottu",
-  "Pipefy",
-];
+const LOGOS = ["Natura", "Ambev", "Magazine Luiza", "Globo", "Hubla", "Mottu"];
 
 export function LogosBar() {
   return (
-    <section className="py-16 lg:py-20 border-y border-border bg-background">
+    <section className="py-12 border-y border-border bg-background">
       <div className="container-page">
         <Reveal>
-          <p className="text-center text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
-            Empresas que já confiaram na IAplicada em implementações e mentorias
+          <p className="text-center text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
+            Parceiros de implementação e mentoria
           </p>
         </Reveal>
         <Reveal delay={0.1}>
-          <div className="mt-10 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-x-6 gap-y-8 items-center">
+          <div className="mt-7 grid grid-cols-3 sm:grid-cols-6 gap-x-6 gap-y-6 items-center">
             {LOGOS.map((logo) => (
               <div
                 key={logo}
-                className="text-center text-sage/50 hover:text-sage transition-colors font-semibold tracking-tight text-[15px]"
+                className="text-center text-muted-foreground/70 hover:text-foreground transition-colors font-semibold tracking-tight text-[14px]"
               >
                 {logo}
               </div>
