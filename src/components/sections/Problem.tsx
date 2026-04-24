@@ -1,64 +1,42 @@
 import { Reveal } from "@/components/Reveal";
 
 const STATS = [
-  {
-    big: "78%",
-    label: "das iniciativas corporativas de IA",
-    text: "não passam do piloto em até 6 meses — dado recorrente em estudos da Gartner, BCG e MIT Sloan.",
-  },
-  {
-    big: "9 em 10",
-    label: "empresas médias e grandes",
-    text: "compram ferramenta antes de mapear o processo. O resultado é licença subutilizada e time desengajado.",
-  },
-  {
-    big: "1 em 5",
-    label: "líderes de área",
-    text: "consegue apresentar ROI mensurável de IA pra diretoria. Sem métrica, a iniciativa morre no ciclo orçamentário seguinte.",
-  },
+  { big: "78%", text: "das iniciativas de IA não passam do piloto em 6 meses" },
+  { big: "9/10", text: "empresas compram ferramenta antes de mapear o processo" },
+  { big: "1/5", text: "líderes consegue mostrar ROI real pra diretoria" },
 ];
 
 export function Problem() {
   return (
-    <section className="py-[120px] lg:py-[160px] bg-background">
+    <section className="py-[90px] lg:py-[120px] bg-background">
       <div className="container-page">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+        <div className="max-w-[820px]">
           <Reveal>
-            <div>
-              <span className="label-chip">✱ O problema real</span>
-              <h2 className="h-display mt-6 text-[36px] sm:text-[44px] lg:text-[48px] text-foreground">
-                Sua empresa não precisa de mais um curso de IA.
-                <br />
-                Precisa que a IA{" "}
-                <span style={{ color: "var(--color-primary-glow)" }}>
-                  chegue no fluxo de trabalho.
-                </span>
-              </h2>
-            </div>
+            <span className="label-chip">
+              <span className="dot" />O problema real
+            </span>
           </Reveal>
-
-          <Reveal delay={0.1}>
-            <p className="text-[18px] text-sage leading-[1.6] lg:pt-12">
-              Quase toda empresa que chega aqui já tentou. Contratou ferramenta, mandou o time fazer
-              curso, rodou um workshop. Mas 3 meses depois, ninguém está usando. O problema
-              raramente é ferramenta. É implementação: mapear onde IA gera valor, desenhar o fluxo,
-              treinar o time no contexto real e manter a coisa viva depois.
-            </p>
+          <Reveal delay={0.05}>
+            <h2 className="h-display mt-6 text-[36px] sm:text-[44px] lg:text-[52px] text-foreground">
+              Sua empresa não precisa de mais um curso.
+              <br />
+              Precisa que a{" "}
+              <span style={{ color: "var(--color-primary)" }}>IA chegue no fluxo</span>.
+            </h2>
           </Reveal>
         </div>
 
-        <div className="mt-20 grid md:grid-cols-3 gap-6">
+        <div className="mt-14 grid md:grid-cols-3 gap-4">
           {STATS.map((s, i) => (
             <Reveal key={s.big} delay={i * 0.05}>
-              <div className="rounded-lg border border-border bg-card p-8 h-full">
+              <div className="card-soft p-7 h-full">
                 <div
-                  className="num-display text-[56px] lg:text-[64px] leading-none"
-                  style={{ color: "var(--color-primary-glow)" }}
+                  className="num-display text-[48px] lg:text-[56px] leading-none"
+                  style={{ color: "var(--color-accent)" }}
                 >
                   {s.big}
                 </div>
-                <p className="mt-4 text-foreground font-semibold">{s.label}</p>
-                <p className="mt-2 text-muted-foreground text-[15px] leading-relaxed">{s.text}</p>
+                <p className="mt-4 text-[14px] text-sage leading-[1.5]">{s.text}</p>
               </div>
             </Reveal>
           ))}

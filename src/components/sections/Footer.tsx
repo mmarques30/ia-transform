@@ -1,63 +1,72 @@
 export function Footer() {
   return (
-    <footer
-      className="py-20 border-t border-border"
-      style={{ backgroundColor: "oklch(0.155 0.035 122)" }}
-    >
+    <footer className="py-12 border-t border-border bg-background">
       <div className="container-page">
-        <div className="grid md:grid-cols-3 gap-12">
+        <div className="grid md:grid-cols-3 gap-8">
           <div>
             <div className="flex items-center gap-2">
-              <div className="h-8 w-8 rounded-md bg-primary flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-sm">IA</span>
+              <div
+                className="h-7 w-7 rounded-md flex items-center justify-center"
+                style={{ backgroundColor: "var(--color-accent)" }}
+              >
+                <span
+                  className="font-bold text-[11px]"
+                  style={{ color: "var(--color-primary-glow)" }}
+                >
+                  IA
+                </span>
               </div>
               <span className="text-foreground font-semibold tracking-tight">IAplicada</span>
             </div>
-            <p className="mt-4 text-sm text-muted-foreground leading-relaxed max-w-[280px]">
-              IAplicada é a casa da IA aplicada ao trabalho real.
+            <p className="mt-3 text-[13px] text-muted-foreground leading-relaxed max-w-[280px]">
+              IA aplicada ao trabalho real.
             </p>
-            <p className="mt-4 text-xs text-primary-glow font-mono">#menoshypemaisentrega</p>
+            <p className="mt-3 text-[11px] font-mono" style={{ color: "var(--color-primary)" }}>
+              #menoshypemaisentrega
+            </p>
           </div>
 
           <div>
-            <p className="text-xs uppercase tracking-[0.12em] text-muted-foreground">Navegação</p>
-            <ul className="mt-4 space-y-3 text-sm">
-              {["Business", "Academy", "Skills", "Blog", "Contato", "Termos", "Privacidade"].map(
-                (l) => (
-                  <li key={l}>
-                    <a href="#" className="text-sage hover:text-foreground transition-colors">
-                      {l}
-                    </a>
-                  </li>
-                ),
-              )}
+            <p className="text-[10px] uppercase tracking-[0.14em] text-muted-foreground font-semibold">
+              Produtos
+            </p>
+            <ul className="mt-3 space-y-2 text-[13px]">
+              {["Business", "Academy", "Skills"].map((l) => (
+                <li key={l}>
+                  <a href="#" className="text-sage hover:text-foreground transition-colors">
+                    {l}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
 
           <div>
-            <p className="text-xs uppercase tracking-[0.12em] text-muted-foreground">Redes</p>
-            <ul className="mt-4 space-y-3 text-sm">
+            <p className="text-[10px] uppercase tracking-[0.14em] text-muted-foreground font-semibold">
+              Redes
+            </p>
+            <ul className="mt-3 space-y-2 text-[13px]">
               <li>
                 <a href="#" className="text-sage hover:text-foreground transition-colors">
-                  LinkedIn — Mariana Marques
+                  LinkedIn
                 </a>
               </li>
               <li>
                 <a href="#" className="text-sage hover:text-foreground transition-colors">
-                  Instagram — @marimarquescb
+                  Instagram
                 </a>
               </li>
               <li>
                 <a href="#" className="text-sage hover:text-foreground transition-colors">
-                  YouTube — @iaplicadaa
+                  YouTube
                 </a>
               </li>
             </ul>
           </div>
         </div>
 
-        <div className="mt-16 pt-8 border-t border-border flex flex-wrap justify-between gap-4 text-xs text-muted-foreground">
-          <span>© 2026 IAplicada · CNPJ 00.000.000/0001-00</span>
+        <div className="mt-10 pt-6 border-t border-border flex flex-wrap justify-between gap-3 text-[11px] text-muted-foreground">
+          <span>© 2026 IAplicada</span>
           <a
             href="mailto:business@iaplicada.com"
             className="hover:text-foreground transition-colors"

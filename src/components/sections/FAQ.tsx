@@ -8,69 +8,63 @@ import {
 
 const FAQS = [
   {
-    q: "Quanto tempo dura um projeto típico?",
-    a: "Entre 3 e 12 meses, dependendo do escopo definido no diagnóstico. Projetos de construção de sistema costumam ser 3-6 meses. Mentoria estratégica é por contrato anual.",
+    q: "Quanto dura um projeto?",
+    a: "De 3 a 12 meses. Construção de sistema costuma ser 3–6 meses. Mentoria é anual.",
   },
   {
     q: "Qual o investimento?",
-    a: "O valor é construído caso a caso, depois do diagnóstico. Nossos contratos atuais ficam entre R$ 15 mil e R$ 80 mil por mês, dependendo do escopo e do porte da empresa.",
+    a: "Entre R$ 15k e R$ 80k/mês, dependendo do escopo e porte. Valor fechado depois do diagnóstico.",
   },
   {
-    q: "Vocês substituem a nossa consultoria, agência ou fábrica de software?",
-    a: "Não. A gente complementa. Trabalhamos lado a lado com times internos, consultorias estratégicas e fornecedores técnicos. Nosso foco é implementação de IA aplicada ao operacional, não a estratégia de negócio inteira.",
+    q: "Substitui consultoria, agência ou fábrica de software?",
+    a: "Não. Complementa. Trabalhamos lado a lado com times internos e fornecedores técnicos.",
   },
   {
     q: "O time precisa ter base técnica?",
-    a: "Não. A gente trabalha com líderes e times operacionais. A parte técnica fica com a gente quando necessário. O objetivo é o time usar, não virar desenvolvedor.",
+    a: "Não. Trabalhamos com líderes e operacionais. Parte técnica fica com a gente.",
   },
   {
     q: "Vocês assinam NDA?",
-    a: "Sim, é parte do protocolo. Acordo de confidencialidade é assinado antes do diagnóstico aprofundado.",
+    a: "Sim, antes de qualquer conversa aprofundada.",
   },
   {
     q: "Como é a cobrança?",
-    a: "Mensal, sob contrato, nota fiscal PJ. Pagamento por boleto ou transferência bancária.",
+    a: "Mensal, contrato PJ, nota fiscal, boleto ou transferência.",
   },
   {
-    q: "Vocês atendem empresas fora do Brasil?",
-    a: "Atendemos, sim, desde que as conversas sejam em português ou inglês. Temos cases em Portugal e México.",
+    q: "Diferença entre Business e Academy?",
+    a: "Academy é capacitação individual. Business é implementação na empresa inteira.",
   },
   {
-    q: "Qual a diferença entre Business e Skills?",
-    a: "Skills é capacitação estruturada de time (mínimo 3 pessoas, treinamento intensivo por 3 meses). Business é implementação e acompanhamento contínuo. Skills às vezes é parte de um projeto Business — definimos no diagnóstico.",
-  },
-  {
-    q: "Vocês têm exclusividade por setor?",
-    a: "Não. Atendemos múltiplas empresas no mesmo setor quando não há conflito direto. Transparência total sobre isso é firmada no contrato.",
-  },
-  {
-    q: "Como garantimos continuidade quando o projeto acaba?",
-    a: "Todo projeto termina com handover documentado: playbooks, rituais, materiais de treinamento. E oferecemos formato de acompanhamento mais leve (4-8h/mês) pra quem quer manter um ponto de contato externo.",
+    q: "Como garante continuidade depois?",
+    a: "Handover documentado: playbooks, rituais, materiais. Acompanhamento opcional de 4–8h/mês.",
   },
 ];
 
 export function FAQ() {
   return (
-    <section
-      id="faq"
-      className="py-[120px] lg:py-[160px]"
-      style={{ backgroundColor: "var(--color-surface)" }}
-    >
-      <div className="container-page max-w-[880px]">
+    <section id="faq" className="py-[90px] lg:py-[120px] bg-background">
+      <div className="container-page max-w-[820px]">
         <Reveal>
-          <h2 className="h-display text-[36px] sm:text-[44px] lg:text-[48px] text-foreground">
+          <span className="label-chip">
+            <span className="dot" />
             Perguntas frequentes
+          </span>
+        </Reveal>
+        <Reveal delay={0.05}>
+          <h2 className="h-display mt-6 text-[36px] sm:text-[44px] lg:text-[52px] text-foreground">
+            O que a gente mais ouve.
           </h2>
         </Reveal>
 
-        <Reveal delay={0.05}>
-          <Accordion type="single" collapsible className="mt-12 w-full">
+        <Reveal delay={0.1}>
+          <Accordion type="single" collapsible className="mt-10 w-full">
             {FAQS.map((item, i) => (
               <AccordionItem key={i} value={`item-${i}`} className="border-b border-border">
-                <AccordionTrigger className="text-left text-foreground hover:text-primary-glow text-[17px] font-semibold py-6">
+                <AccordionTrigger className="text-left text-foreground hover:text-primary text-[16px] font-semibold py-5">
                   {item.q}
                 </AccordionTrigger>
-                <AccordionContent className="text-sage leading-[1.6] text-[16px] pb-6">
+                <AccordionContent className="text-sage leading-[1.6] text-[15px] pb-5">
                   {item.a}
                 </AccordionContent>
               </AccordionItem>

@@ -5,75 +5,69 @@ const NUMBERS = [
   { v: "+80", l: "empresas atendidas" },
   { v: "+2.000", l: "profissionais formados" },
   { v: "3 anos", l: "construindo IAplicada" },
-  { v: "100%", l: "projetos com métrica mensurável" },
+  { v: "100%", l: "projetos com métrica" },
 ];
 
 export function Authority() {
   return (
     <section
       id="time"
-      className="py-[120px] lg:py-[160px]"
+      className="py-[90px] lg:py-[120px]"
       style={{ backgroundColor: "var(--color-surface)" }}
     >
       <div className="container-page">
-        <div className="grid lg:grid-cols-[5fr_7fr] gap-12 lg:gap-16 items-start">
+        <div className="grid lg:grid-cols-[5fr_7fr] gap-10 lg:gap-14 items-center">
           <Reveal>
-            <div className="aspect-[4/5] w-full rounded-lg border border-border overflow-hidden bg-card relative">
-              {/* Placeholder portrait */}
-              <div
-                className="absolute inset-0"
-                style={{
-                  background:
-                    "radial-gradient(circle at 50% 40%, oklch(0.305 0.038 122) 0%, oklch(0.193 0.039 122) 70%)",
-                }}
-              />
-              <div className="absolute inset-0 flex items-end p-6">
-                <div>
-                  <p className="text-xs uppercase tracking-[0.12em] text-primary-glow">Fundadora</p>
-                  <p className="mt-1 text-foreground font-semibold text-lg">Mariana Marques</p>
-                </div>
+            <div
+              className="aspect-[4/5] w-full rounded-2xl overflow-hidden border border-border relative"
+              style={{
+                backgroundImage: `linear-gradient(180deg, oklch(0.18 0.02 122 / 0) 40%, oklch(0.18 0.02 122 / 0.85) 100%), url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=900&q=80')`,
+                backgroundSize: "cover",
+                backgroundPosition: "center top",
+                boxShadow: "var(--shadow-elevated)",
+              }}
+            >
+              <div className="absolute inset-x-0 bottom-0 p-6">
+                <p
+                  className="text-[10px] uppercase tracking-[0.16em] font-semibold"
+                  style={{ color: "var(--color-primary-glow)" }}
+                >
+                  Fundadora
+                </p>
+                <p className="mt-1 text-white font-semibold text-lg">Mariana Marques</p>
               </div>
             </div>
           </Reveal>
 
           <div>
             <Reveal>
-              <span className="label-chip">✱ Quem lidera</span>
+              <span className="label-chip">
+                <span className="dot" />
+                Quem lidera
+              </span>
             </Reveal>
             <Reveal delay={0.05}>
-              <h2 className="h-display mt-6 text-[36px] sm:text-[42px] text-foreground">
-                Mariana Marques.
-                <br />E uma rede de especialistas.
+              <h2 className="h-display mt-6 text-[32px] sm:text-[38px] lg:text-[44px] text-foreground">
+                Produto, operação, liderança.
+                <br />
+                Agora, IA aplicada.
               </h2>
             </Reveal>
 
-            <div className="mt-8 space-y-5 text-sage text-[17px] leading-[1.6]">
+            <div className="mt-6 space-y-4 text-sage text-[16px] leading-[1.6]">
               <Reveal delay={0.1}>
                 <p>
-                  Fundei a IAplicada porque cansei de ver boas empresas presas em pilotos de IA que
-                  nunca viraram operação. Há 3 anos, a gente ajuda equipes a sair da experimentação
-                  e chegar na implementação que sustenta.
+                  Fundei a IAplicada em 2022 depois de cansar de ver boas empresas presas em pilotos
+                  de IA. Hoje, implemento com um time curado.
                 </p>
               </Reveal>
               <Reveal delay={0.15}>
-                <p>
-                  Atendemos empresas como Natura, Ambev, Magazine Luiza e dezenas de médias em
-                  setores que vão de varejo a indústria. E formei mais de 2.000 profissionais no
-                  Academy. Business é onde aplicamos tudo isso na escala de quem precisa mudar a
-                  operação inteira, não só a rotina pessoal.
-                </p>
-              </Reveal>
-              <Reveal delay={0.2}>
-                <p>
-                  Não trabalho sozinha. Business é conduzido por um time de especialistas em
-                  implementação, automação e liderança de IA, curado e treinado por mim. Cada
-                  projeto é acompanhado de ponta a ponta.
-                </p>
+                <p className="text-foreground">Natura · Ambev · Magazine Luiza · e +80 empresas.</p>
               </Reveal>
             </div>
 
-            <Reveal delay={0.25}>
-              <div className="mt-8 flex gap-5">
+            <Reveal delay={0.2}>
+              <div className="mt-6 flex gap-4">
                 <a
                   href="#"
                   aria-label="LinkedIn"
@@ -97,24 +91,24 @@ export function Authority() {
                 </a>
               </div>
             </Reveal>
+
+            <Reveal delay={0.25}>
+              <div className="mt-10 grid grid-cols-2 lg:grid-cols-4 gap-6 pt-8 border-t border-border">
+                {NUMBERS.map((n) => (
+                  <div key={n.l}>
+                    <div
+                      className="num-display text-[28px] lg:text-[32px] leading-none"
+                      style={{ color: "var(--color-accent)" }}
+                    >
+                      {n.v}
+                    </div>
+                    <p className="mt-2 text-[12px] text-muted-foreground leading-tight">{n.l}</p>
+                  </div>
+                ))}
+              </div>
+            </Reveal>
           </div>
         </div>
-
-        <Reveal delay={0.1}>
-          <div className="mt-20 grid grid-cols-2 lg:grid-cols-4 gap-8 border-t border-border pt-12">
-            {NUMBERS.map((n) => (
-              <div key={n.l}>
-                <div
-                  className="num-display text-[44px] lg:text-[56px] leading-none"
-                  style={{ color: "var(--color-primary-glow)" }}
-                >
-                  {n.v}
-                </div>
-                <p className="mt-3 text-sm text-muted-foreground max-w-[180px]">{n.l}</p>
-              </div>
-            ))}
-          </div>
-        </Reveal>
       </div>
     </section>
   );
