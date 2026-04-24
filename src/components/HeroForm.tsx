@@ -158,7 +158,6 @@ export function HeroForm({ compact = false }: HeroFormProps) {
           </form>
         )}
       </div>
-
     </div>
   );
 }
