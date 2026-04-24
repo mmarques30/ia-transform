@@ -1,26 +1,27 @@
 import { useState, type FormEvent } from "react";
-import { ArrowRight, CheckCircle2, ShieldCheck, Clock, Lock } from "lucide-react";
+import { ArrowRight, CheckCircle2 } from "lucide-react";
 
-const COMPANY_SIZES = [
-  "50 a 200 colaboradores",
-  "200 a 500 colaboradores",
-  "500 a 2.000 colaboradores",
-  "+2.000 colaboradores",
+const REVENUE_BANDS = [
+  "Até R$ 1M/ano",
+  "R$ 1M a R$ 5M/ano",
+  "R$ 5M a R$ 20M/ano",
+  "R$ 20M a R$ 50M/ano",
+  "Acima de R$ 50M/ano",
 ];
 
 const ROLES = [
   "CEO / Fundador(a)",
-  "C-level (CFO, COO, CMO, CTO, CDO)",
-  "Head ou Diretor(a) de área",
+  "Sócio(a)",
+  "C-level (CFO, COO, CMO)",
+  "Head ou Diretor(a)",
   "Líder de transformação",
 ];
 
-interface HeroFormProps {
-  /** Compact mode used when embedded in secondary CTAs. */
-  compact?: boolean;
-}
-
-export function HeroForm({ compact = false }: HeroFormProps) {
+/**
+ * Lead form from the iaplicada.com/business hero — adapted to the premium
+ * light palette. 6 fields: Nome, E-mail, Telefone, Cargo, Faturamento, Empresa.
+ */
+export function HeroForm() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -35,141 +36,128 @@ export function HeroForm({ compact = false }: HeroFormProps) {
 
   return (
     <div
-      className="rounded-2xl border border-border bg-card overflow-hidden"
-      style={{ boxShadow: "var(--shadow-elevated)" }}
+      className="rounded-[28px] p-7 lg:p-9 relative overflow-hidden"
+      style={{
+        background: "linear-gradient(180deg, oklch(0.62 0.17 125) 0%, oklch(0.54 0.15 125) 100%)",
+        boxShadow: "var(--shadow-elevated)",
+      }}
     >
-      {/* Header strip */}
       <div
-        className="px-7 py-5 border-b border-border flex items-center justify-between"
-        style={{ backgroundColor: "var(--color-surface)" }}
-      >
-        <div>
-          <p className="text-[11px] uppercase tracking-[0.14em] text-muted-foreground font-semibold">
-            Diagnóstico estratégico
-          </p>
-          <p className="mt-1 text-[16px] font-semibold text-foreground">
-            Conversa de 30 min · gratuita
-          </p>
-        </div>
-        <div className="hidden sm:flex items-center gap-1.5 text-[11px] text-muted-foreground">
-          <span
-            className="h-1.5 w-1.5 rounded-full"
-            style={{ backgroundColor: "var(--color-primary)" }}
-          />
-          Vagas abertas
-        </div>
-      </div>
+        aria-hidden
+        className="pointer-events-none absolute inset-0 rounded-[28px]"
+        style={{ boxShadow: "inset 0 1px 0 oklch(1 0 0 / 0.25)" }}
+      />
 
-      {/* Body */}
-      <div className={compact ? "p-6" : "p-7 lg:p-8"}>
-        {submitted ? (
-          <div className="text-center py-10">
-            <CheckCircle2
-              className="h-10 w-10 mx-auto"
-              style={{ color: "var(--color-primary)" }}
-              strokeWidth={1.5}
+      {submitted ? (
+        <div className="text-center py-12 relative">
+          <CheckCircle2 className="h-12 w-12 mx-auto text-white" strokeWidth={1.5} />
+          <h3 className="mt-6 text-[22px] font-semibold text-white">Recebemos seu contato.</h3>
+          <p className="mt-2 text-white/80 text-[14px] leading-[1.6] max-w-[320px] mx-auto">
+            Um sócio do time vai te mandar opções de horário em até 1 dia útil.
+          </p>
+        </div>
+      ) : (
+        <form onSubmit={handleSubmit} className="relative space-y-4">
+          <FormField id="name" label="Nome completo" required>
+            <input
+              id="name"
+              type="text"
+              required
+              placeholder="Seu nome completo"
+              className="form-input"
             />
-            <h3 className="mt-5 text-[20px] font-semibold text-foreground">
-              Recebemos seu contato.
-            </h3>
-            <p className="mt-2 text-sage text-[14px] leading-[1.6] max-w-[320px] mx-auto">
-              Um sócio do time vai te mandar opções de horário em até 1 dia útil.
-            </p>
-          </div>
-        ) : (
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <Field id={`${compact ? "c-" : ""}name`} label="Nome">
-              <input
-                id={`${compact ? "c-" : ""}name`}
-                type="text"
-                required
-                placeholder="Como prefere ser chamado(a)"
-                className="form-input"
-              />
-            </Field>
+          </FormField>
 
-            <Field id={`${compact ? "c-" : ""}email`} label="E-mail corporativo">
-              <input
-                id={`${compact ? "c-" : ""}email`}
-                type="email"
-                required
-                placeholder="voce@suaempresa.com"
-                className="form-input"
-              />
-            </Field>
+          <FormField id="email" label="E-mail" required>
+            <input
+              id="email"
+              type="email"
+              required
+              placeholder="seu@email.com"
+              className="form-input"
+            />
+          </FormField>
 
-            <div className="grid sm:grid-cols-2 gap-3">
-              <Field id={`${compact ? "c-" : ""}role`} label="Seu papel">
-                <select
-                  id={`${compact ? "c-" : ""}role`}
-                  required
-                  defaultValue=""
-                  className="form-input"
-                >
-                  <option value="" disabled>
-                    Selecione
-                  </option>
-                  {ROLES.map((r) => (
-                    <option key={r} value={r}>
-                      {r}
-                    </option>
-                  ))}
-                </select>
-              </Field>
-              <Field id={`${compact ? "c-" : ""}size`} label="Porte">
-                <select
-                  id={`${compact ? "c-" : ""}size`}
-                  required
-                  defaultValue=""
-                  className="form-input"
-                >
-                  <option value="" disabled>
-                    Selecione
-                  </option>
-                  {COMPANY_SIZES.map((s) => (
-                    <option key={s} value={s}>
-                      {s}
-                    </option>
-                  ))}
-                </select>
-              </Field>
-            </div>
+          <FormField id="phone" label="Telefone com DDD" required>
+            <input
+              id="phone"
+              type="tel"
+              required
+              placeholder="(11) 99999-9999"
+              className="form-input"
+            />
+          </FormField>
 
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full inline-flex items-center justify-center gap-2 rounded-md bg-accent text-accent-foreground font-semibold px-6 py-3.5 text-[14px] hover:bg-primary hover:text-primary-foreground transition-colors disabled:opacity-60"
-            >
-              {loading ? "Enviando..." : "Agendar diagnóstico"}
-              {!loading && <ArrowRight className="h-4 w-4" />}
-            </button>
+          <FormField id="role" label="Cargo" required>
+            <select id="role" required defaultValue="" className="form-input">
+              <option value="" disabled>
+                Selecione...
+              </option>
+              {ROLES.map((r) => (
+                <option key={r} value={r}>
+                  {r}
+                </option>
+              ))}
+            </select>
+          </FormField>
 
-            <div className="pt-3 flex flex-col sm:flex-row sm:items-center gap-x-5 gap-y-2 text-[11px] text-muted-foreground">
-              <span className="inline-flex items-center gap-1.5">
-                <Clock className="h-3 w-3" strokeWidth={2} /> 30 min
-              </span>
-              <span className="inline-flex items-center gap-1.5">
-                <ShieldCheck className="h-3 w-3" strokeWidth={2} /> NDA
-              </span>
-              <span className="inline-flex items-center gap-1.5">
-                <Lock className="h-3 w-3" strokeWidth={2} /> 6 vagas/trimestre
-              </span>
-            </div>
-          </form>
-        )}
-      </div>
+          <FormField id="revenue" label="Faixa de Faturamento" required>
+            <select id="revenue" required defaultValue="" className="form-input">
+              <option value="" disabled>
+                Selecione...
+              </option>
+              {REVENUE_BANDS.map((r) => (
+                <option key={r} value={r}>
+                  {r}
+                </option>
+              ))}
+            </select>
+          </FormField>
+
+          <FormField id="company" label="Empresa">
+            <input
+              id="company"
+              type="text"
+              placeholder="Nome da sua empresa"
+              className="form-input"
+            />
+          </FormField>
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="mt-2 w-full inline-flex items-center justify-center gap-2 rounded-full px-6 py-4 text-[14px] font-bold transition-transform hover:-translate-y-0.5 disabled:opacity-60"
+            style={{
+              background:
+                "linear-gradient(180deg, oklch(0.95 0.22 115) 0%, oklch(0.8 0.22 118) 100%)",
+              color: "oklch(0.14 0.02 122)",
+              boxShadow: "0 10px 30px oklch(0.85 0.22 115 / 0.45)",
+            }}
+          >
+            {loading ? "Enviando..." : "Quero saber mais sobre o Business"}
+            {!loading && <ArrowRight className="h-4 w-4" />}
+          </button>
+        </form>
+      )}
     </div>
   );
 }
 
-function Field({ id, label, children }: { id: string; label: string; children: React.ReactNode }) {
+function FormField({
+  id,
+  label,
+  required,
+  children,
+}: {
+  id: string;
+  label: string;
+  required?: boolean;
+  children: React.ReactNode;
+}) {
   return (
     <div>
-      <label
-        htmlFor={id}
-        className="block text-[11px] uppercase tracking-[0.14em] text-muted-foreground font-semibold mb-2"
-      >
-        {label}
+      <label htmlFor={id} className="block text-[13px] font-semibold text-white mb-1.5">
+        {label} {required && <span className="text-white/70">*</span>}
       </label>
       {children}
     </div>

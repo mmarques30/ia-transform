@@ -25,6 +25,8 @@
   --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
+  --color-olive: var(--olive);
+  --color-olive-foreground: var(--olive-foreground);
   --color-sage: var(--sage);
   --color-destructive: oklch(0.577 0.245 27.325);
   --color-destructive-foreground: var(--foreground);
@@ -38,41 +40,41 @@
 
 :root {
   --radius: 0.75rem;
-  /* Brand palette — Business edition (light, premium B2B aligned with Academy reference) */
-  --background: oklch(0.985 0.004 105); /* off-white warm */
+  /* Brand palette — Business premium (light, olive + bright lime) */
+  --background: oklch(0.985 0.004 105); /* warm off-white */
   --surface: oklch(0.965 0.008 105); /* subtle step down */
-  --card: oklch(1 0 0); /* pure white cards */
-  --card-foreground: oklch(0.18 0.02 122); /* near-black ink */
+  --card: oklch(1 0 0); /* pure white card */
+  --card-foreground: oklch(0.18 0.02 122);
   --foreground: oklch(0.18 0.02 122);
-  --muted-foreground: oklch(0.48 0.015 122); /* mid gray */
-  --primary: oklch(0.62 0.17 125); /* lime olive — confident */
-  --primary-foreground: oklch(1 0 0); /* white on lime */
-  --primary-glow: oklch(0.82 0.18 118); /* brighter lime for highlights */
-  --accent: oklch(0.22 0.03 122); /* near-black accent for premium touch */
+  --muted-foreground: oklch(0.48 0.015 122);
+  /* Primary = confident lime olive (main CTAs text pop) */
+  --primary: oklch(0.62 0.17 125);
+  --primary-foreground: oklch(1 0 0);
+  --primary-glow: oklch(0.82 0.2 115); /* bright lime glow */
+  /* Accent = near-black ink for premium contrast */
+  --accent: oklch(0.22 0.03 122);
   --accent-foreground: oklch(1 0 0);
-  --sage: oklch(0.36 0.02 122); /* body text — darker gray */
-  --border: oklch(0.9 0.01 122); /* soft divider */
+  /* Olive is the signature surface */
+  --olive: oklch(0.58 0.16 125);
+  --olive-foreground: oklch(1 0 0);
+  --sage: oklch(0.36 0.02 122);
+  --border: oklch(0.9 0.01 122);
 
   /* Gradients & shadows */
   --gradient-hero: radial-gradient(
     ellipse 80% 55% at 50% 0%,
-    oklch(0.955 0.015 120) 0%,
+    oklch(0.96 0.02 120) 0%,
     oklch(0.985 0.004 105) 65%
   );
-  --gradient-cta: linear-gradient(180deg, oklch(0.18 0.02 122) 0%, oklch(0.13 0.015 122) 100%);
-  --gradient-surface: linear-gradient(
+  --gradient-cta-lime: linear-gradient(180deg, oklch(0.88 0.22 115) 0%, oklch(0.72 0.2 120) 100%);
+  --gradient-olive-wave: linear-gradient(
     180deg,
-    oklch(0.965 0.008 105) 0%,
-    oklch(0.985 0.004 105) 100%
+    oklch(0.62 0.17 125) 0%,
+    oklch(0.55 0.16 125) 100%
   );
-  --shadow-card: 0 1px 2px 0 oklch(0.2 0.02 122 / 0.04), 0 1px 0 0 oklch(0.9 0.01 122 / 1);
+  --shadow-card: 0 1px 2px 0 oklch(0.2 0.02 122 / 0.04), 0 1px 0 0 oklch(0.9 0.01 122 / 0.8);
   --shadow-elevated:
-    0 30px 60px -20px oklch(0.2 0.02 122 / 0.15), 0 8px 20px -8px oklch(0.2 0.02 122 / 0.08);
-}
-
-.dark {
-  --background: oklch(0.145 0.022 122);
-  --foreground: oklch(0.97 0.018 105);
+    0 30px 60px -20px oklch(0.2 0.02 122 / 0.18), 0 8px 20px -8px oklch(0.2 0.02 122 / 0.08);
 }
 
 @layer base {
@@ -138,14 +140,6 @@
     line-height: 1.05;
   }
 
-  .h-serif {
-    font-family: var(--font-serif);
-    font-weight: 400;
-    letter-spacing: -0.015em;
-    line-height: 1;
-    font-style: italic;
-  }
-
   .h-mix {
     font-weight: 700;
     letter-spacing: -0.03em;
@@ -156,7 +150,7 @@
     font-style: italic;
     font-weight: 400;
     letter-spacing: -0.015em;
-    color: var(--color-accent);
+    color: var(--color-primary);
   }
 
   .num-display {
@@ -174,11 +168,11 @@
 
   .form-input {
     width: 100%;
-    border-radius: 8px;
-    background-color: var(--color-background);
-    border: 1px solid var(--color-border);
-    padding: 11px 14px;
-    color: var(--color-foreground);
+    border-radius: 999px;
+    background-color: oklch(1 0 0);
+    border: 1px solid oklch(0.85 0.02 122);
+    padding: 12px 18px;
+    color: oklch(0.18 0.02 122);
     font-size: 14px;
     transition:
       border-color 0.15s ease,
@@ -186,18 +180,78 @@
   }
   .form-input:focus {
     outline: none;
-    border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px oklch(0.62 0.17 125 / 0.12);
+    border-color: var(--color-olive);
+    box-shadow: 0 0 0 3px oklch(0.58 0.16 125 / 0.2);
   }
   .form-input::placeholder {
-    color: var(--color-muted-foreground);
-    opacity: 0.7;
+    color: oklch(0.55 0.015 115);
+  }
+
+  /* Primary CTA — filled olive with white arrow pill */
+  .cta-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: var(--gradient-olive-wave);
+    color: oklch(0.1 0.01 110);
+    font-weight: 700;
+    padding: 10px 10px 10px 24px;
+    border-radius: 999px;
+    transition:
+      transform 0.15s ease,
+      box-shadow 0.2s ease;
+    box-shadow: 0 10px 30px oklch(0.58 0.16 125 / 0.25);
+  }
+  .cta-primary .arrow {
+    height: 34px;
+    width: 34px;
+    border-radius: 999px;
+    background-color: oklch(1 0 0);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: oklch(0.2 0.03 122);
+  }
+  .cta-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 14px 40px oklch(0.58 0.16 125 / 0.4);
+  }
+
+  /* Secondary CTA — black pill */
+  .cta-dark {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--color-accent);
+    color: var(--color-accent-foreground);
+    font-weight: 600;
+    padding: 12px 22px;
+    border-radius: 999px;
+    transition: background-color 0.15s ease;
+  }
+  .cta-dark:hover {
+    background-color: oklch(0.12 0.02 122);
   }
 
   .grid-bg {
     background-image:
       linear-gradient(to right, oklch(0.9 0.01 122 / 0.5) 1px, transparent 1px),
       linear-gradient(to bottom, oklch(0.9 0.01 122 / 0.5) 1px, transparent 1px);
-    background-size: 40px 40px;
+    background-size: 48px 48px;
+  }
+
+  /* Ticker for the keyword strip (like "Clareza ✽ Análise ✽ Eficiência") */
+  @keyframes ticker-scroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  .ticker-track {
+    display: inline-flex;
+    gap: 2rem;
+    animation: ticker-scroll 40s linear infinite;
   }
 }
