@@ -3,23 +3,25 @@ import type { CSSProperties } from "react";
 interface LogoProps {
   variant?: "default" | "mono-dark" | "mono-light";
   showWordmark?: boolean;
+  markOnly?: boolean;
+  size?: number;
   className?: string;
   style?: CSSProperties;
 }
 
 /**
- * IAplicada wordmark with geometric mark.
- * The mark is a stylized "i·A" glyph — a tall stroke + a dot + a triangular A.
+ * IAplicada logo — 4-petal flower with center diamond on a rounded olive square.
+ * The mark is a geometric glyph made of 4 rounded quadrants separated by a thin cross,
+ * with a small diamond in the negative space at the center.
  */
-export function Logo({ variant = "default", showWordmark = true, className, style }: LogoProps) {
-  const markColor =
-    variant === "mono-light"
-      ? "oklch(1 0 0)"
-      : variant === "mono-dark"
-        ? "oklch(0.18 0.02 122)"
-        : "var(--color-accent)";
-  const accentColor =
-    variant === "mono-light" || variant === "mono-dark" ? markColor : "var(--color-primary)";
+export function Logo({
+  variant = "default",
+  showWordmark = true,
+  markOnly = false,
+  size = 32,
+  className,
+  style,
+}: LogoProps) {
   const wordColor =
     variant === "mono-light"
       ? "oklch(1 0 0)"
@@ -29,13 +31,13 @@ export function Logo({ variant = "default", showWordmark = true, className, styl
 
   return (
     <span className={`inline-flex items-center gap-2.5 ${className ?? ""}`} style={style}>
-      <LogoMark markColor={markColor} accentColor={accentColor} />
-      {showWordmark && (
+      <LogoMark variant={variant} size={size} />
+      {showWordmark && !markOnly && (
         <span
           className="font-semibold tracking-tight"
           style={{
             color: wordColor,
-            fontSize: "17px",
+            fontSize: size >= 32 ? "18px" : "16px",
             letterSpacing: "-0.02em",
           }}
         >
@@ -46,39 +48,50 @@ export function Logo({ variant = "default", showWordmark = true, className, styl
   );
 }
 
-function LogoMark({
-  markColor,
-  accentColor,
-  size = 28,
+export function LogoMark({
+  variant = "default",
+  size = 32,
 }: {
-  markColor: string;
-  accentColor: string;
+  variant?: "default" | "mono-dark" | "mono-light";
   size?: number;
 }) {
+  const bgColor =
+    variant === "mono-light"
+      ? "oklch(1 0 0)"
+      : variant === "mono-dark"
+        ? "oklch(0.18 0.02 122)"
+        : "oklch(0.62 0.17 125)"; // olive/lime
+  const markColor = variant === "mono-light" ? "oklch(0.18 0.02 122)" : "oklch(1 0 0)"; // white petals by default
+
+  // Unique id keeps multiple instances on the same page from colliding.
+  const maskId = `ia-mark-${variant}-${size}`;
+
   return (
     <svg
       width={size}
       height={size}
-      viewBox="0 0 32 32"
+      viewBox="0 0 64 64"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
     >
-      <rect width="32" height="32" rx="8" fill={markColor} />
-      {/* "i" stem */}
-      <rect x="8.5" y="12" width="2.6" height="12" rx="1.3" fill="oklch(1 0 0)" />
-      {/* "i" dot — accent */}
-      <circle cx="9.8" cy="8.6" r="1.6" fill={accentColor} />
-      {/* "A" — two strokes forming a triangle */}
-      <path
-        d="M15 24 L19 8 L23 24"
-        stroke="oklch(1 0 0)"
-        strokeWidth="2.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      {/* "A" crossbar */}
-      <path d="M16.7 18 H 21.3" stroke="oklch(1 0 0)" strokeWidth="2" strokeLinecap="round" />
+      <defs>
+        <mask id={maskId} maskUnits="userSpaceOnUse">
+          {/* What stays visible */}
+          <rect width="64" height="64" fill="black" />
+          {/* Big circle → becomes the "flower" outline */}
+          <circle cx="32" cy="32" r="23" fill="white" />
+          {/* Cross cutouts create 4 petals */}
+          <rect x="29.5" y="6" width="5" height="52" fill="black" />
+          <rect x="6" y="29.5" width="52" height="5" fill="black" />
+          {/* Diamond in the center */}
+          <path d="M32 27.5 L36.5 32 L32 36.5 L27.5 32 Z" fill="white" />
+        </mask>
+      </defs>
+      {/* Background rounded square */}
+      <rect width="64" height="64" rx="12" fill={bgColor} />
+      {/* Flower mark */}
+      <rect width="64" height="64" fill={markColor} mask={`url(#${maskId})`} />
     </svg>
   );
 }
