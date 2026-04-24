@@ -13,11 +13,11 @@ const LOGOS = [
 
 export function LogosBar() {
   return (
-    <section className="py-20 border-y border-border bg-background">
+    <section className="py-16 lg:py-20 border-y border-border bg-background">
       <div className="container-page">
         <Reveal>
-          <p className="text-center text-xs uppercase tracking-[0.12em] text-muted-foreground">
-            Empresas que implementam IA com a IAplicada
+          <p className="text-center text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
+            Empresas que já confiaram na IAplicada em implementações e mentorias
           </p>
         </Reveal>
         <Reveal delay={0.1}>
@@ -25,7 +25,7 @@ export function LogosBar() {
             {LOGOS.map((logo) => (
               <div
                 key={logo}
-                className="text-center text-sage/60 hover:text-sage transition-colors font-semibold tracking-tight text-base"
+                className="text-center text-sage/50 hover:text-sage transition-colors font-semibold tracking-tight text-[15px]"
               >
                 {logo}
               </div>

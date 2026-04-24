@@ -39,8 +39,7 @@ const CASES: CaseStudy[] = [
       { value: "0", label: "contratações em 6 meses" },
       { value: "R$ 480k", label: "de economia anualizada" },
     ],
-    quote:
-      "Em 3 meses mudou a cara da nossa operação. E o time deixou de ver IA como hype.",
+    quote: "Em 3 meses mudou a cara da nossa operação. E o time deixou de ver IA como hype.",
     author: "CEO",
   },
   {
@@ -82,32 +81,22 @@ export function Cases() {
               <article className="rounded-lg border border-border bg-card p-8 lg:p-12">
                 <header className="flex items-start justify-between gap-6 flex-wrap">
                   <div>
-                    <h3 className="text-[24px] font-semibold text-foreground">
-                      {c.company}
-                    </h3>
-                    <p className="mt-1 text-sm text-muted-foreground">
-                      {c.segment}
-                    </p>
+                    <h3 className="text-[24px] font-semibold text-foreground">{c.company}</h3>
+                    <p className="mt-1 text-sm text-muted-foreground">{c.segment}</p>
                   </div>
                   <span className="label-chip">Case {String(i + 1).padStart(2, "0")}</span>
                 </header>
 
                 <div className="mt-8 grid lg:grid-cols-2 gap-8">
                   <div>
-                    <p className="text-xs uppercase tracking-[0.12em] text-primary">
-                      Desafio
-                    </p>
-                    <p className="mt-3 text-sage leading-[1.6] text-[15px]">
-                      {c.challenge}
-                    </p>
+                    <p className="text-xs uppercase tracking-[0.12em] text-primary">Desafio</p>
+                    <p className="mt-3 text-sage leading-[1.6] text-[15px]">{c.challenge}</p>
                   </div>
                   <div>
                     <p className="text-xs uppercase tracking-[0.12em] text-primary">
                       Implementação
                     </p>
-                    <p className="mt-3 text-sage leading-[1.6] text-[15px]">
-                      {c.implementation}
-                    </p>
+                    <p className="mt-3 text-sage leading-[1.6] text-[15px]">{c.implementation}</p>
                   </div>
                 </div>
 
@@ -120,20 +109,14 @@ export function Cases() {
                       >
                         {m.value}
                       </div>
-                      <p className="mt-2 text-sm text-muted-foreground">
-                        {m.label}
-                      </p>
+                      <p className="mt-2 text-sm text-muted-foreground">{m.label}</p>
                     </div>
                   ))}
                 </div>
 
                 <blockquote className="mt-10 border-l-2 border-primary pl-6">
-                  <p className="text-foreground text-[17px] leading-[1.5]">
-                    "{c.quote}"
-                  </p>
-                  <footer className="mt-3 text-sm text-muted-foreground">
-                    — {c.author}
-                  </footer>
+                  <p className="text-foreground text-[17px] leading-[1.5]">"{c.quote}"</p>
+                  <footer className="mt-3 text-sm text-muted-foreground">— {c.author}</footer>
                 </blockquote>
               </article>
             </Reveal>

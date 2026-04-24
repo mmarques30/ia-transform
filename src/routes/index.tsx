@@ -6,6 +6,7 @@ import { Problem } from "@/components/sections/Problem";
 import { Approach } from "@/components/sections/Approach";
 import { Process } from "@/components/sections/Process";
 import { Formats } from "@/components/sections/Formats";
+import { Comparison } from "@/components/sections/Comparison";
 import { Cases } from "@/components/sections/Cases";
 import { Authority } from "@/components/sections/Authority";
 import { ForWhom } from "@/components/sections/ForWhom";
@@ -17,25 +18,25 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       {
-        title:
-          "IAplicada Business · Implementação de IA no operacional da sua empresa",
+        title: "IAplicada Business · IA dentro da sua empresa, como entrega mensurável",
       },
       {
         name: "description",
         content:
-          "Implementação de IA que sustenta. Diagnóstico, execução e acompanhamento pra empresas que querem tirar IA do discurso e colocar no fluxo de trabalho.",
+          "Implementação de IA no operacional de empresas que já tentaram sozinhas e não sustentaram. Diagnóstico estratégico, construção sob demanda e acompanhamento contínuo. 6 vagas novas por trimestre.",
       },
       {
         property: "og:title",
-        content: "IAplicada Business · IA aplicada ao operacional",
+        content: "IAplicada Business · IA aplicada ao operacional de empresas sérias",
       },
       {
         property: "og:description",
         content:
-          "Para empresas que já tentaram implementar IA sozinhas e não sustentaram. Diagnóstico, implementação e acompanhamento contínuo.",
+          "Diagnóstico, implementação e continuidade pra empresas de 50 a 2.000 pessoas. Sem hype. Sem ERP. Sem fábrica de software. Método, acompanhamento e métrica acordada.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "theme-color", content: "#141A0B" },
     ],
   }),
   component: BusinessLanding,
@@ -51,6 +52,7 @@ function BusinessLanding() {
       <Approach />
       <Process />
       <Formats />
+      <Comparison />
       <Cases />
       <Authority />
       <ForWhom />

@@ -9,52 +9,33 @@ export function Footer() {
           <div>
             <div className="flex items-center gap-2">
               <div className="h-8 w-8 rounded-md bg-primary flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-sm">
-                  IA
-                </span>
+                <span className="text-primary-foreground font-bold text-sm">IA</span>
               </div>
-              <span className="text-foreground font-semibold tracking-tight">
-                IAplicada
-              </span>
+              <span className="text-foreground font-semibold tracking-tight">IAplicada</span>
             </div>
             <p className="mt-4 text-sm text-muted-foreground leading-relaxed max-w-[280px]">
               IAplicada é a casa da IA aplicada ao trabalho real.
             </p>
-            <p className="mt-4 text-xs text-primary-glow font-mono">
-              #menoshypemaisentrega
-            </p>
+            <p className="mt-4 text-xs text-primary-glow font-mono">#menoshypemaisentrega</p>
           </div>
 
           <div>
-            <p className="text-xs uppercase tracking-[0.12em] text-muted-foreground">
-              Navegação
-            </p>
+            <p className="text-xs uppercase tracking-[0.12em] text-muted-foreground">Navegação</p>
             <ul className="mt-4 space-y-3 text-sm">
-              {[
-                "Business",
-                "Academy",
-                "Skills",
-                "Blog",
-                "Contato",
-                "Termos",
-                "Privacidade",
-              ].map((l) => (
-                <li key={l}>
-                  <a
-                    href="#"
-                    className="text-sage hover:text-foreground transition-colors"
-                  >
-                    {l}
-                  </a>
-                </li>
-              ))}
+              {["Business", "Academy", "Skills", "Blog", "Contato", "Termos", "Privacidade"].map(
+                (l) => (
+                  <li key={l}>
+                    <a href="#" className="text-sage hover:text-foreground transition-colors">
+                      {l}
+                    </a>
+                  </li>
+                ),
+              )}
             </ul>
           </div>
 
           <div>
-            <p className="text-xs uppercase tracking-[0.12em] text-muted-foreground">
-              Redes
-            </p>
+            <p className="text-xs uppercase tracking-[0.12em] text-muted-foreground">Redes</p>
             <ul className="mt-4 space-y-3 text-sm">
               <li>
                 <a href="#" className="text-sage hover:text-foreground transition-colors">
