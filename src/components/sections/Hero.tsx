@@ -1,83 +1,93 @@
 import { Reveal } from "@/components/Reveal";
-import { ArrowRight } from "lucide-react";
-import { HeroMockup } from "@/components/mockups/HeroMockup";
+import { HeroForm } from "@/components/HeroForm";
+import { Check } from "lucide-react";
 
-const HERO_STATS = [
-  { v: "+80", l: "empresas" },
-  { v: "R$ 2,1M", l: "em eficiência (1 case)" },
-  { v: "3 a 12 sem", l: "pra rodar" },
+const BULLETS = [
+  "Diagnóstico estratégico em 2 semanas",
+  "Sistemas de IA construídos sob medida",
+  "Treinamento contínuo do time interno",
+  "Handover documentado ao fim do projeto",
 ];
+
+const LOGOS = ["Natura", "Ambev", "Magazine Luiza", "Globo"];
 
 export function Hero() {
   return (
     <section
       id="top"
-      className="relative pt-[140px] pb-[80px] lg:pt-[180px] lg:pb-[120px] overflow-hidden"
+      className="relative pt-[120px] pb-[60px] lg:pt-[160px] lg:pb-[100px] overflow-hidden"
       style={{ background: "var(--gradient-hero)" }}
     >
       <div className="container-page relative">
-        <div className="grid lg:grid-cols-[1.05fr_1fr] gap-12 lg:gap-16 items-center">
+        <div className="grid lg:grid-cols-[1.05fr_1fr] gap-10 lg:gap-16 items-start">
           <div>
             <Reveal>
               <span className="label-chip">
                 <span className="dot" />
-                IAplicada · Business
+                Business · Implementação de IA B2B
               </span>
             </Reveal>
 
             <Reveal delay={0.05}>
-              <h1 className="h-display mt-6 text-[44px] sm:text-[56px] lg:text-[68px] text-foreground">
-                IA dentro da sua empresa.
+              <h1 className="h-mix mt-7 text-[44px] sm:text-[56px] lg:text-[68px] text-foreground">
+                IA dentro da sua
                 <br />
-                Como <span style={{ color: "var(--color-primary)" }}>entrega mensurável.</span>
+                empresa — <em>entregue,</em>
+                <br />
+                rodando e medida.
               </h1>
             </Reveal>
 
             <Reveal delay={0.1}>
-              <p className="mt-6 text-[18px] lg:text-[20px] text-sage leading-[1.55] max-w-[560px]">
-                Diagnosticamos onde IA faz diferença, construímos os fluxos com seu time e mantemos
-                a roda girando. Sem curso. Sem hype.
+              <p className="mt-6 text-[17px] lg:text-[19px] text-sage leading-[1.55] max-w-[540px]">
+                Business é um programa de{" "}
+                <span className="text-foreground font-semibold">
+                  diagnóstico, construção e continuidade
+                </span>{" "}
+                de IA aplicada pra empresas de 50 a 2.000 pessoas. A gente implementa — seu time
+                opera.
               </p>
             </Reveal>
 
             <Reveal delay={0.15}>
-              <div className="mt-8 flex flex-col sm:flex-row gap-3">
-                <a
-                  href="#cta-final"
-                  className="inline-flex items-center justify-center gap-2 rounded-md bg-accent text-accent-foreground font-semibold px-7 py-3.5 text-[15px] hover:bg-primary hover:text-primary-foreground transition-colors"
-                >
-                  Agendar diagnóstico
-                  <ArrowRight className="h-4 w-4" />
-                </a>
-                <a
-                  href="#sistemas"
-                  className="inline-flex items-center justify-center rounded-md border border-border bg-card text-foreground font-semibold px-7 py-3.5 text-[15px] hover:border-primary transition-colors"
-                >
-                  Ver sistemas que construímos
-                </a>
-              </div>
+              <ul className="mt-8 grid sm:grid-cols-2 gap-y-3 gap-x-6 max-w-[560px]">
+                {BULLETS.map((b) => (
+                  <li key={b} className="flex items-start gap-2.5 text-[14px] text-foreground">
+                    <span
+                      className="mt-[3px] flex h-4 w-4 shrink-0 items-center justify-center rounded-full"
+                      style={{ backgroundColor: "var(--color-primary)" }}
+                    >
+                      <Check className="h-2.5 w-2.5 text-white" strokeWidth={3} />
+                    </span>
+                    {b}
+                  </li>
+                ))}
+              </ul>
             </Reveal>
 
-            <Reveal delay={0.2}>
-              <div className="mt-10 pt-8 border-t border-border grid grid-cols-3 gap-4 max-w-[480px]">
-                {HERO_STATS.map((s) => (
-                  <div key={s.l}>
-                    <div
-                      className="num-display text-[22px] lg:text-[26px] leading-none"
-                      style={{ color: "var(--color-accent)" }}
+            <Reveal delay={0.22}>
+              <div className="mt-10 pt-8 border-t border-border">
+                <p className="text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
+                  Empresas que já confiaram
+                </p>
+                <div className="mt-4 flex flex-wrap items-center gap-x-8 gap-y-3">
+                  {LOGOS.map((logo) => (
+                    <span
+                      key={logo}
+                      className="text-[15px] font-semibold tracking-tight text-muted-foreground/80"
                     >
-                      {s.v}
-                    </div>
-                    <p className="mt-2 text-xs text-muted-foreground leading-tight">{s.l}</p>
-                  </div>
-                ))}
+                      {logo}
+                    </span>
+                  ))}
+                  <span className="text-[13px] text-muted-foreground">+80 empresas</span>
+                </div>
               </div>
             </Reveal>
           </div>
 
-          <Reveal delay={0.25}>
-            <div className="relative">
-              <HeroMockup />
+          <Reveal delay={0.1}>
+            <div className="lg:sticky lg:top-24">
+              <HeroForm />
             </div>
           </Reveal>
         </div>

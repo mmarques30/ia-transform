@@ -70,8 +70,8 @@ export function Cases() {
             </span>
           </Reveal>
           <Reveal delay={0.05}>
-            <h2 className="h-display mt-6 text-[36px] sm:text-[44px] lg:text-[52px] text-foreground">
-              O que acontece quando IA chega no operacional.
+            <h2 className="h-mix mt-6 text-[36px] sm:text-[44px] lg:text-[52px] text-foreground">
+              O que acontece <em>quando IA chega</em> no operacional.
             </h2>
           </Reveal>
         </div>

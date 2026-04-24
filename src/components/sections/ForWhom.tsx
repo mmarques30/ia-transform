@@ -27,8 +27,8 @@ export function ForWhom() {
             </span>
           </Reveal>
           <Reveal delay={0.05}>
-            <h2 className="h-display mt-6 text-[36px] sm:text-[44px] lg:text-[52px] text-foreground">
-              Não é pra todo mundo.
+            <h2 className="h-mix mt-6 text-[36px] sm:text-[44px] lg:text-[52px] text-foreground">
+              <em>Não é pra todo mundo</em>.
               <br />E isso é bom pra você.
             </h2>
           </Reveal>

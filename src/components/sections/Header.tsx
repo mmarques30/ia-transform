@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Logo } from "@/components/Logo";
 
 const NAV = [
   { href: "#sistemas", label: "Sistemas" },
@@ -26,17 +27,12 @@ export function Header() {
     >
       <div className="container-page flex items-center justify-between w-full">
         <a href="#top" className="flex items-center gap-2.5">
-          <div
-            className="h-7 w-7 rounded-md flex items-center justify-center"
-            style={{ backgroundColor: "var(--color-accent)" }}
+          <Logo />
+          <span
+            className="hidden sm:inline text-muted-foreground text-[13px] font-normal ml-1"
+            style={{ marginLeft: "2px" }}
           >
-            <span className="font-bold text-[11px]" style={{ color: "var(--color-primary-glow)" }}>
-              IA
-            </span>
-          </div>
-          <span className="text-foreground font-semibold tracking-tight text-[15px]">
-            IAplicada
-            <span className="text-muted-foreground font-normal"> · Business</span>
+            · Business
           </span>
         </a>
 
@@ -53,7 +49,7 @@ export function Header() {
         </nav>
 
         <a
-          href="#cta-final"
+          href="#top"
           className="inline-flex items-center justify-center rounded-md bg-accent text-accent-foreground font-semibold text-[13px] px-4 py-2.5 hover:bg-primary hover:text-primary-foreground transition-colors"
         >
           Agendar diagnóstico
