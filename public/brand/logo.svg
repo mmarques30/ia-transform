@@ -7,32 +7,34 @@
   aria-label="IAplicada"
 >
   <defs>
-    <!-- Inner glow filter -->
-    <filter id="inner-glow" x="-10%" y="-10%" width="120%" height="120%">
-      <feGaussianBlur stdDeviation="2.5" result="blur" />
+    <!-- Soft inner glow on the white petals/diamond -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="1.8" result="blur" />
+      <feFlood flood-color="#FFFFFF" flood-opacity="0.8" result="color" />
+      <feComposite in="color" in2="blur" operator="in" result="glow" />
       <feMerge>
-        <feMergeNode in="blur" />
+        <feMergeNode in="glow" />
         <feMergeNode in="SourceGraphic" />
       </feMerge>
     </filter>
-    <!-- Mask: circle minus cross plus center diamond -->
-    <mask id="ia-flower" maskUnits="userSpaceOnUse" x="0" y="0" width="128" height="128">
+    <!-- Mask that sculpts the 4 petals + center diamond -->
+    <mask id="ia-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="128" height="128">
       <rect width="128" height="128" fill="black" />
-      <!-- Outer white circle -->
-      <circle cx="64" cy="64" r="46" fill="white" />
-      <!-- Cross cutouts (rounded rects for soft gaps) -->
-      <rect x="59" y="12" width="10" height="104" rx="5" fill="black" />
-      <rect x="12" y="59" width="104" height="10" rx="5" fill="black" />
-      <!-- Center diamond — restore white -->
-      <path d="M64 55 L73 64 L64 73 L55 64 Z" fill="white" />
+      <!-- Outer white body — becomes the flower after cutout -->
+      <circle cx="64" cy="64" r="48" fill="white" />
+      <!-- Vertical + horizontal pill cutouts create the 4 petals -->
+      <rect x="60" y="10" width="8" height="108" rx="4" fill="black" />
+      <rect x="10" y="60" width="108" height="8" rx="4" fill="black" />
+      <!-- Small diamond re-added at the very center -->
+      <polygon points="64,57 71,64 64,71 57,64" fill="white" />
     </mask>
   </defs>
 
-  <!-- Background rounded square, olive -->
-  <rect width="128" height="128" rx="26" fill="#8BAB23" />
+  <!-- Rounded olive square background -->
+  <rect width="128" height="128" rx="24" fill="#8BAB23" />
 
-  <!-- Flower mark with inner glow -->
-  <g filter="url(#inner-glow)">
-    <rect width="128" height="128" fill="white" mask="url(#ia-flower)" />
+  <!-- White flower + diamond with subtle glow -->
+  <g filter="url(#glow)">
+    <rect width="128" height="128" fill="white" mask="url(#ia-mask)" />
   </g>
 </svg>

@@ -37,14 +37,18 @@ export const CLIENTS: ClientLogo[] = [
 
 /**
  * Fundadora da IAplicada.
- * SUBSTITUIR a foto colocando o arquivo em public/brand/mariana.jpg (ou .png).
+ * SUBSTITUIR a foto colocando o arquivo em public/brand/mariana.jpg
+ * (ver public/brand/README.md pra instruções). Enquanto o arquivo não existir,
+ * a UI carrega um placeholder neutro do Unsplash e não quebra.
  */
 export const FOUNDER = {
   name: "Mariana Marques",
   role: "Fundadora · IAplicada",
   photoSrc: "/brand/mariana.jpg",
+  // Placeholder: mulher profissional, cabelo escuro, em escritório com estante.
+  // Sobrescrito automaticamente quando /brand/mariana.jpg existir.
   photoFallback:
-    "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=900&q=80",
+    "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=900&q=80",
   bio: "Fundei a IAplicada em 2022 depois de ver boas empresas travarem em pilotos de IA. Hoje conduzimos implementações com um time curado de especialistas.",
   socials: {
     linkedin: "https://www.linkedin.com/in/marianaqmarques/",
