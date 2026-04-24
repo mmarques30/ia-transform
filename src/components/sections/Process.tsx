@@ -58,15 +58,9 @@ export function Process() {
                 >
                   {s.n}
                 </div>
-                <h3 className="mt-5 text-[18px] font-semibold text-foreground">
-                  {s.title}
-                </h3>
-                <p className="mt-1 text-xs uppercase tracking-[0.12em] text-primary">
-                  {s.meta}
-                </p>
-                <p className="mt-4 text-sm text-muted-foreground leading-relaxed">
-                  {s.text}
-                </p>
+                <h3 className="mt-5 text-[18px] font-semibold text-foreground">{s.title}</h3>
+                <p className="mt-1 text-xs uppercase tracking-[0.12em] text-primary">{s.meta}</p>
+                <p className="mt-4 text-sm text-muted-foreground leading-relaxed">{s.text}</p>
               </div>
             </Reveal>
           ))}

@@ -52,9 +52,7 @@ export function Approach() {
                 <h3 className="mt-6 text-[22px] font-semibold text-foreground">
                   Pilar {p.n} — {p.title}
                 </h3>
-                <p className="mt-4 text-sage leading-[1.6] text-[16px]">
-                  {p.text}
-                </p>
+                <p className="mt-4 text-sage leading-[1.6] text-[16px]">{p.text}</p>
               </div>
             </Reveal>
           ))}
@@ -62,9 +60,9 @@ export function Approach() {
 
         <Reveal delay={0.2}>
           <p className="mt-12 text-center text-sm text-muted-foreground italic max-w-[680px] mx-auto">
-            O formato de cada projeto (mentoria estratégica, construção de
-            sistema, automação pontual) é definido no diagnóstico. Não
-            engessamos o escopo antes de entender o seu contexto.
+            O formato de cada projeto (mentoria estratégica, construção de sistema, automação
+            pontual) é definido no diagnóstico. Não engessamos o escopo antes de entender o seu
+            contexto.
           </p>
         </Reveal>
       </div>

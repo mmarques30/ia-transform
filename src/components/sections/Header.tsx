@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 const NAV = [
   { href: "#abordagem", label: "Abordagem" },
+  { href: "#comparativo", label: "Comparativo" },
   { href: "#cases", label: "Cases" },
   { href: "#time", label: "Time" },
   { href: "#faq", label: "FAQ" },
@@ -19,14 +20,12 @@ export function Header() {
 
   return (
     <header
-      className={`fixed top-0 inset-x-0 z-50 h-[72px] flex items-center transition-colors duration-200 ${
-        scrolled
-          ? "bg-background/80 backdrop-blur-md border-b border-border"
-          : "bg-transparent"
+      className={`fixed top-0 inset-x-0 z-50 h-[72px] flex items-center transition-all duration-200 ${
+        scrolled ? "bg-background/85 backdrop-blur-md border-b border-border" : "bg-transparent"
       }`}
     >
       <div className="container-page flex items-center justify-between w-full">
-        <a href="#top" className="flex items-center gap-2">
+        <a href="#top" className="flex items-center gap-2.5">
           <div className="h-8 w-8 rounded-md bg-primary flex items-center justify-center">
             <span className="text-primary-foreground font-bold text-sm">IA</span>
           </div>
@@ -36,7 +35,7 @@ export function Header() {
           </span>
         </a>
 
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden lg:flex items-center gap-8">
           {NAV.map((item) => (
             <a
               key={item.href}

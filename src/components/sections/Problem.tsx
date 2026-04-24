@@ -3,18 +3,18 @@ import { Reveal } from "@/components/Reveal";
 const STATS = [
   {
     big: "78%",
-    label: "das iniciativas de IA corporativa",
-    text: "não sustentam depois de 6 meses",
+    label: "das iniciativas corporativas de IA",
+    text: "não passam do piloto em até 6 meses — dado recorrente em estudos da Gartner, BCG e MIT Sloan.",
   },
   {
     big: "9 em 10",
-    label: "das empresas",
-    text: "compram ferramenta antes de desenhar o processo",
+    label: "empresas médias e grandes",
+    text: "compram ferramenta antes de mapear o processo. O resultado é licença subutilizada e time desengajado.",
   },
   {
     big: "1 em 5",
-    label: "líderes",
-    text: "sabe medir o ROI real das suas implementações de IA",
+    label: "líderes de área",
+    text: "consegue apresentar ROI mensurável de IA pra diretoria. Sem métrica, a iniciativa morre no ciclo orçamentário seguinte.",
   },
 ];
 
@@ -39,10 +39,9 @@ export function Problem() {
 
           <Reveal delay={0.1}>
             <p className="text-[18px] text-sage leading-[1.6] lg:pt-12">
-              Quase toda empresa que chega aqui já tentou. Contratou ferramenta,
-              mandou o time fazer curso, rodou um workshop. Mas 3 meses depois,
-              ninguém está usando. O problema raramente é ferramenta. É
-              implementação: mapear onde IA gera valor, desenhar o fluxo,
+              Quase toda empresa que chega aqui já tentou. Contratou ferramenta, mandou o time fazer
+              curso, rodou um workshop. Mas 3 meses depois, ninguém está usando. O problema
+              raramente é ferramenta. É implementação: mapear onde IA gera valor, desenhar o fluxo,
               treinar o time no contexto real e manter a coisa viva depois.
             </p>
           </Reveal>
@@ -59,9 +58,7 @@ export function Problem() {
                   {s.big}
                 </div>
                 <p className="mt-4 text-foreground font-semibold">{s.label}</p>
-                <p className="mt-2 text-muted-foreground text-[15px] leading-relaxed">
-                  {s.text}
-                </p>
+                <p className="mt-2 text-muted-foreground text-[15px] leading-relaxed">{s.text}</p>
               </div>
             </Reveal>
           ))}

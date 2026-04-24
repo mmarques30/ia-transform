@@ -4,18 +4,21 @@ import { Compass, Wrench, GraduationCap, ArrowRight } from "lucide-react";
 const FORMATS = [
   {
     icon: Compass,
-    title: "Estratégia contínua",
-    text: "Para empresas que precisam de um copiloto externo que desafia decisões e mantém a maturidade de IA crescendo sem descontinuidade.",
+    title: "Mentoria estratégica contínua",
+    meta: "C-level · Recorrência mensal",
+    text: "Um copiloto externo que senta com a diretoria, desafia decisões, organiza o portfólio de iniciativas de IA e mantém a maturidade crescendo sem descontinuidade. Agenda fixa, governança clara, entregáveis por trimestre.",
   },
   {
     icon: Wrench,
-    title: "Construção sob demanda",
-    text: "Para quando você tem um desafio específico e quer um sistema próprio, desenhado pra sua operação. Entregamos, documentamos, treinamos.",
+    title: "Implementação sob demanda",
+    meta: "Por projeto · 3 a 6 meses",
+    text: "Para desafios específicos — automação de um processo crítico, construção de um assistente interno, reengenharia de um fluxo. Desenhamos, construímos, treinamos e deixamos documentado. O time opera sozinho no fim.",
   },
   {
     icon: GraduationCap,
-    title: "Capacitação profunda",
-    text: "Para líderes e times que precisam subir de nível com IA aplicada no contexto do cargo deles, não no genérico.",
+    title: "Capacitação de lideranças",
+    meta: "Turmas fechadas · 8 a 12 sem",
+    text: "Para squads de líderes e times operacionais que precisam subir o nível de IA aplicada no contexto real do cargo — não em aulas genéricas. Casos reais da empresa viram material de aula.",
   },
 ];
 
@@ -37,10 +40,9 @@ export function Formats() {
           </Reveal>
           <Reveal delay={0.1}>
             <p className="mt-6 text-[17px] text-sage leading-[1.6] max-w-[720px] mx-auto">
-              Depois do diagnóstico, o formato é construído pra você. Pode ser
-              mais próximo de uma mentoria estratégica contínua, de uma
-              consultoria de implementação, ou da construção de sistemas sob
-              demanda. Pode ser uma combinação. O que nunca muda: método,
+              Depois do diagnóstico, o formato é construído pra você. Pode ser mais próximo de uma
+              mentoria estratégica contínua, de uma consultoria de implementação, ou da construção
+              de sistemas sob demanda. Pode ser uma combinação. O que nunca muda: método,
               acompanhamento e resultado mensurável.
             </p>
           </Reveal>
@@ -49,14 +51,15 @@ export function Formats() {
         <div className="mt-16 grid md:grid-cols-3 gap-6">
           {FORMATS.map((f, i) => (
             <Reveal key={f.title} delay={i * 0.08}>
-              <div className="rounded-lg border border-border bg-card p-8 h-full">
-                <f.icon className="h-6 w-6 text-primary" strokeWidth={1.75} />
-                <h3 className="mt-6 text-[20px] font-semibold text-foreground">
+              <div className="rounded-lg border border-border bg-card p-8 h-full flex flex-col">
+                <f.icon className="h-6 w-6 text-primary-glow" strokeWidth={1.5} />
+                <p className="mt-6 text-[11px] uppercase tracking-[0.14em] text-primary">
+                  {f.meta}
+                </p>
+                <h3 className="mt-2 text-[21px] font-semibold text-foreground leading-snug">
                   {f.title}
                 </h3>
-                <p className="mt-3 text-sage leading-[1.6] text-[15px]">
-                  {f.text}
-                </p>
+                <p className="mt-4 text-sage leading-[1.6] text-[15px]">{f.text}</p>
               </div>
             </Reveal>
           ))}
@@ -64,9 +67,7 @@ export function Formats() {
 
         <Reveal delay={0.2}>
           <div className="mt-14 text-center">
-            <p className="text-sage">
-              O formato certo pra você a gente descobre em 30 minutos.
-            </p>
+            <p className="text-sage">O formato certo pra você a gente descobre em 30 minutos.</p>
             <a
               href="#cta-final"
               className="mt-4 inline-flex items-center gap-2 text-primary-glow hover:text-primary font-semibold transition-colors"
