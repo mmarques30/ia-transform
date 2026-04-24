@@ -1,6 +1,5 @@
 import { Reveal } from "@/components/Reveal";
-
-const LOGOS = ["Natura", "Ambev", "Magazine Luiza", "Globo", "Hubla", "Mottu"];
+import { CLIENTS } from "@/config/brand";
 
 export function LogosBar() {
   return (
@@ -13,14 +12,23 @@ export function LogosBar() {
         </Reveal>
         <Reveal delay={0.1}>
           <div className="mt-7 grid grid-cols-3 sm:grid-cols-6 gap-x-6 gap-y-6 items-center">
-            {LOGOS.map((logo) => (
-              <div
-                key={logo}
-                className="text-center text-muted-foreground/70 hover:text-foreground transition-colors font-semibold tracking-tight text-[14px]"
-              >
-                {logo}
-              </div>
-            ))}
+            {CLIENTS.map((c) =>
+              c.src ? (
+                <img
+                  key={c.name}
+                  src={c.src}
+                  alt={c.name}
+                  className="h-6 mx-auto opacity-70 hover:opacity-100 transition-opacity"
+                />
+              ) : (
+                <div
+                  key={c.name}
+                  className="text-center text-muted-foreground/70 hover:text-foreground transition-colors font-semibold tracking-tight text-[14px]"
+                >
+                  {c.name}
+                </div>
+              ),
+            )}
           </div>
         </Reveal>
       </div>

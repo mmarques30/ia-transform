@@ -1,37 +1,27 @@
 import { Reveal } from "@/components/Reveal";
 import { HeroForm } from "@/components/HeroForm";
-import { Check } from "lucide-react";
-
-const BULLETS = [
-  "Diagnóstico estratégico em 2 semanas",
-  "Sistemas de IA construídos sob medida",
-  "Treinamento e handover pro seu time",
-  "Acompanhamento contínuo depois do go-live",
-];
-
-const LOGOS = ["Natura", "Ambev", "Magazine Luiza", "Globo"];
 
 export function Hero() {
   return (
     <section
       id="top"
-      className="relative pt-[130px] pb-[80px] lg:pt-[170px] lg:pb-[120px] overflow-hidden"
+      className="relative pt-[120px] pb-[80px] lg:pt-[160px] lg:pb-[120px] overflow-hidden"
       style={{ background: "var(--gradient-hero)" }}
     >
-      {/* Soft grid background for premium editorial feel */}
+      {/* Soft grid texture */}
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.35]"
         style={{
           backgroundImage:
             "linear-gradient(to right, oklch(0.82 0.02 122 / 0.3) 1px, transparent 1px), linear-gradient(to bottom, oklch(0.82 0.02 122 / 0.3) 1px, transparent 1px)",
-          backgroundSize: "64px 64px",
-          maskImage: "radial-gradient(ellipse 80% 60% at 50% 40%, black 20%, transparent 80%)",
+          backgroundSize: "56px 56px",
+          maskImage: "radial-gradient(ellipse 70% 60% at 40% 30%, black 20%, transparent 80%)",
         }}
       />
 
       <div className="container-page relative">
-        <div className="grid lg:grid-cols-[1.1fr_1fr] gap-12 lg:gap-20 items-start">
-          <div>
+        <div className="grid lg:grid-cols-[1.05fr_1fr] gap-12 lg:gap-16 items-start">
+          <div className="lg:pt-6">
             <Reveal>
               <span className="label-chip">
                 <span className="dot" />
@@ -40,61 +30,41 @@ export function Hero() {
             </Reveal>
 
             <Reveal delay={0.05}>
-              <h1 className="h-mix mt-7 text-[44px] sm:text-[56px] lg:text-[72px] text-foreground">
-                A IA da sua empresa,
+              <h1 className="h-mix mt-7 text-[42px] sm:text-[54px] lg:text-[64px] text-foreground">
+                Sua empresa <em>organizada</em>
                 <br />
-                <em>construída, entregue</em>
-                <br />e rodando.
+                em até 30 dias em
+                <br />
+                um único lugar.
               </h1>
             </Reveal>
 
             <Reveal delay={0.1}>
-              <p className="mt-7 text-[18px] lg:text-[20px] text-sage leading-[1.55] max-w-[560px]">
-                <span className="text-foreground font-semibold">Business</span> é o programa da
-                IAplicada que diagnostica, constrói e sustenta sistemas de IA no operacional de
-                empresas de{" "}
-                <span className="text-foreground font-semibold">50 a 2.000 colaboradores</span>. A
-                gente implementa — seu time opera.
+              <p className="mt-7 text-[18px] lg:text-[20px] text-foreground font-semibold leading-[1.4]">
+                Sem DEV. Sem soluções engessadas.
               </p>
             </Reveal>
 
             <Reveal delay={0.15}>
-              <ul className="mt-8 grid sm:grid-cols-2 gap-y-3 gap-x-6 max-w-[580px]">
-                {BULLETS.map((b) => (
-                  <li key={b} className="flex items-start gap-2.5 text-[14.5px] text-foreground">
-                    <span
-                      className="mt-[3px] flex h-4 w-4 shrink-0 items-center justify-center rounded-full"
-                      style={{ backgroundColor: "var(--color-primary)" }}
-                    >
-                      <Check className="h-2.5 w-2.5 text-white" strokeWidth={3} />
-                    </span>
-                    {b}
-                  </li>
-                ))}
-              </ul>
+              <p className="mt-4 text-[16px] text-sage leading-[1.6] max-w-[520px]">
+                Sem enrolação. Um sistema totalmente adaptado e exclusivo para a sua operação — com
+                IA aplicada pra substituir planilhas e tarefas manuais por fluxos automáticos.
+              </p>
             </Reveal>
 
             <Reveal delay={0.22}>
-              <div className="mt-12 pt-8 border-t border-border">
-                <p className="text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
-                  Já implementamos em
+              <div className="mt-10 flex items-center gap-4">
+                <AvatarStack />
+                <p className="text-[14px] text-foreground font-medium leading-tight">
+                  Centenas de empresários
+                  <br />
+                  impactados.
                 </p>
-                <div className="mt-4 flex flex-wrap items-center gap-x-8 gap-y-3">
-                  {LOGOS.map((logo) => (
-                    <span
-                      key={logo}
-                      className="text-[16px] font-semibold tracking-tight text-foreground/75"
-                    >
-                      {logo}
-                    </span>
-                  ))}
-                  <span className="text-[13px] text-muted-foreground">+80 empresas</span>
-                </div>
               </div>
             </Reveal>
           </div>
 
-          <Reveal delay={0.15}>
+          <Reveal delay={0.1}>
             <div className="lg:sticky lg:top-24">
               <HeroForm />
             </div>
@@ -102,5 +72,28 @@ export function Hero() {
         </div>
       </div>
     </section>
+  );
+}
+
+/** 4 stacked circular avatars + a lime badge on the right. */
+function AvatarStack() {
+  const avatars = [
+    "https://images.unsplash.com/photo-1545996124-0501ebae84d0?auto=format&fit=crop&w=96&q=80",
+    "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=96&q=80",
+    "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=96&q=80",
+    "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=96&q=80",
+  ];
+  return (
+    <div className="flex -space-x-2.5">
+      {avatars.map((src, i) => (
+        <img
+          key={i}
+          src={src}
+          alt=""
+          aria-hidden
+          className="h-9 w-9 rounded-full object-cover ring-2 ring-background"
+        />
+      ))}
+    </div>
   );
 }

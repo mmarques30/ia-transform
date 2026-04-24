@@ -1,178 +1,150 @@
 import { Reveal } from "@/components/Reveal";
-import { Check, Minus, X } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 
-type Cell = { kind: "yes" | "no" | "partial"; text: string };
+type Status = "red" | "yellow" | "green";
+
+interface Cell {
+  status: Status;
+  text: string;
+}
 
 interface Row {
   feature: string;
-  ia: Cell;
   erp: Cell;
   factory: Cell;
+  squads: Cell;
+  iaplicada: Cell;
 }
 
 const ROWS: Row[] = [
   {
-    feature: "Tempo até rodar",
-    ia: { kind: "yes", text: "3–12 semanas" },
-    erp: { kind: "no", text: "6–18 meses" },
-    factory: { kind: "partial", text: "4–9 meses" },
+    feature: "Velocidade de Implementação",
+    erp: { status: "red", text: "Lenta, meses de setup" },
+    factory: { status: "red", text: "Média, depende de escopo" },
+    squads: { status: "red", text: "Lenta, onboarding demorado" },
+    iaplicada: { status: "green", text: "Rápida, foco em impacto imediato" },
   },
   {
-    feature: "Diagnóstico do seu contexto",
-    ia: { kind: "yes", text: "Sempre, antes de tudo" },
-    erp: { kind: "no", text: "Vende módulo" },
-    factory: { kind: "partial", text: "Só técnico" },
+    feature: "Personalização",
+    erp: { status: "red", text: "Limitada ao sistema" },
+    factory: { status: "yellow", text: "Alta, porém complexa" },
+    squads: { status: "yellow", text: "Alta, porém complexa" },
+    iaplicada: { status: "green", text: "Total, baseada na operação real" },
   },
   {
-    feature: "Foco em IA aplicada",
-    ia: { kind: "yes", text: "Core do trabalho" },
-    erp: { kind: "no", text: "Add-on superficial" },
-    factory: { kind: "partial", text: "Depende" },
+    feature: "Custo Inicial",
+    erp: { status: "red", text: "Alto" },
+    factory: { status: "red", text: "Muito alto" },
+    squads: { status: "red", text: "Muito alto" },
+    iaplicada: { status: "green", text: "Controlado e previsível" },
   },
   {
-    feature: "Adoção pelo time",
-    ia: { kind: "yes", text: "Ritual + treinamento" },
-    erp: { kind: "partial", text: "Pontual" },
-    factory: { kind: "no", text: "Entrega e tchau" },
+    feature: "Manutenção",
+    erp: { status: "yellow", text: "Dependência do fornecedor" },
+    factory: { status: "yellow", text: "Dependência de pessoas" },
+    squads: { status: "yellow", text: "Dependência de pessoas" },
+    iaplicada: { status: "green", text: "Processos claros e automações" },
   },
   {
-    feature: "ROI mensurável",
-    ia: { kind: "yes", text: "Métrica acordada antes" },
-    erp: { kind: "no", text: "Raramente claro" },
-    factory: { kind: "partial", text: "Só entrega" },
+    feature: "Foco em Resultado",
+    erp: { status: "red", text: "Baixo" },
+    factory: { status: "yellow", text: "Média" },
+    squads: { status: "yellow", text: "Variável" },
+    iaplicada: { status: "green", text: "Alto, orientado à decisão" },
   },
   {
-    feature: "Dependência de fornecedor",
-    ia: { kind: "yes", text: "Opera sozinho depois" },
-    erp: { kind: "no", text: "Contrato rígido" },
-    factory: { kind: "no", text: "Manutenção paga" },
+    feature: "Visibilidade da Operação",
+    erp: { status: "yellow", text: "Parcial" },
+    factory: { status: "red", text: "Customizada" },
+    squads: { status: "red", text: "Depende do time" },
+    iaplicada: { status: "green", text: "Centralizada e em tempo real" },
+  },
+  {
+    feature: "Escalabilidade",
+    erp: { status: "red", text: "Limitada" },
+    factory: { status: "red", text: "Demorada" },
+    squads: { status: "red", text: "Difícil" },
+    iaplicada: { status: "green", text: "Natural e progressiva" },
+  },
+  {
+    feature: "Complexidade para o Gestor",
+    erp: { status: "red", text: "Alta" },
+    factory: { status: "red", text: "Alta" },
+    squads: { status: "red", text: "Muito alta" },
+    iaplicada: { status: "green", text: "Baixa, decisões simplificadas" },
   },
 ];
 
-function CellRender({ cell }: { cell: Cell }) {
-  const Icon = cell.kind === "yes" ? Check : cell.kind === "partial" ? Minus : X;
-  const color =
-    cell.kind === "yes"
-      ? "var(--color-primary)"
-      : cell.kind === "partial"
-        ? "var(--color-muted-foreground)"
-        : "oklch(0.55 0.15 25)";
-
-  return (
-    <div className="flex items-start gap-2">
-      <Icon className="h-4 w-4 mt-[2px] shrink-0" style={{ color }} strokeWidth={2.5} />
-      <span className="text-[13px] leading-[1.5] text-sage">{cell.text}</span>
-    </div>
-  );
-}
+const STATUS_DOT: Record<Status, string> = {
+  red: "oklch(0.65 0.22 22)",
+  yellow: "oklch(0.82 0.17 88)",
+  green: "oklch(0.65 0.2 140)",
+};
 
 export function Comparison() {
   return (
     <section
       id="comparativo"
-      className="py-[90px] lg:py-[120px]"
+      className="py-[100px] lg:py-[140px]"
       style={{ backgroundColor: "var(--color-surface)" }}
     >
       <div className="container-page">
-        <div className="max-w-[760px]">
+        <div className="text-center max-w-[820px] mx-auto">
           <Reveal>
-            <span className="label-chip">
-              <span className="dot" />
-              Comparativo honesto
-            </span>
-          </Reveal>
-          <Reveal delay={0.05}>
-            <h2 className="h-mix mt-6 text-[36px] sm:text-[44px] lg:text-[52px] text-foreground">
-              <em>Não é</em> ERP.
+            <h2 className="h-mix text-[36px] sm:text-[44px] lg:text-[54px] text-foreground">
+              Por que a <em>IAplicada</em> é diferente
               <br />
-              <em>Nem</em> fábrica de software.
+              de ERP e fábrica de software
             </h2>
           </Reveal>
         </div>
 
-        <Reveal delay={0.15}>
+        <Reveal delay={0.1}>
           <div
-            className="mt-12 rounded-xl border border-border bg-card overflow-hidden"
-            style={{ boxShadow: "var(--shadow-card)" }}
+            className="mt-16 rounded-2xl border border-border overflow-hidden"
+            style={{
+              backgroundColor: "var(--color-card)",
+              boxShadow: "var(--shadow-card)",
+            }}
           >
-            <div className="hidden lg:grid grid-cols-[1.3fr_1fr_1fr_1fr] border-b border-border">
-              <div className="p-5 text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
-                Critério
-              </div>
-              <div
-                className="p-5 border-l border-border"
-                style={{ backgroundColor: "oklch(0.62 0.17 125 / 0.08)" }}
-              >
-                <p className="text-[11px] uppercase tracking-[0.14em] text-primary font-semibold">
-                  IAplicada Business
-                </p>
-              </div>
-              <div className="p-5 border-l border-border">
-                <p className="text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
-                  ERP / SaaS
-                </p>
-              </div>
-              <div className="p-5 border-l border-border">
-                <p className="text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
-                  Fábrica de software
-                </p>
-              </div>
-            </div>
-
+            {/* Desktop */}
             <div className="hidden lg:block">
+              <div className="grid grid-cols-[1.3fr_1fr_1fr_1fr_1.1fr] border-b border-border">
+                <HeaderCell title="Entregas" />
+                <HeaderCell title="ERP Tradicional" />
+                <HeaderCell title="Fábrica de Software" />
+                <HeaderCell title="Squads Internos" />
+                <HeaderCell title="IAplicada" highlight />
+              </div>
+
               {ROWS.map((row, i) => (
                 <div
                   key={row.feature}
-                  className={`grid grid-cols-[1.3fr_1fr_1fr_1fr] ${
+                  className={`grid grid-cols-[1.3fr_1fr_1fr_1fr_1.1fr] ${
                     i !== ROWS.length - 1 ? "border-b border-border" : ""
                   }`}
                 >
-                  <div className="p-5 text-[14px] font-semibold text-foreground">{row.feature}</div>
-                  <div
-                    className="p-5 border-l border-border"
-                    style={{ backgroundColor: "oklch(0.62 0.17 125 / 0.04)" }}
-                  >
-                    <CellRender cell={row.ia} />
+                  <div className="p-5 text-[14px] font-semibold text-foreground flex items-center">
+                    {row.feature}
                   </div>
-                  <div className="p-5 border-l border-border">
-                    <CellRender cell={row.erp} />
-                  </div>
-                  <div className="p-5 border-l border-border">
-                    <CellRender cell={row.factory} />
-                  </div>
+                  <BodyCell cell={row.erp} />
+                  <BodyCell cell={row.factory} />
+                  <BodyCell cell={row.squads} />
+                  <BodyCell cell={row.iaplicada} highlight />
                 </div>
               ))}
             </div>
 
+            {/* Mobile */}
             <div className="lg:hidden divide-y divide-border">
               {ROWS.map((row) => (
                 <div key={row.feature} className="p-5">
                   <p className="text-[14px] font-semibold text-foreground">{row.feature}</p>
-                  <div className="mt-4 space-y-3">
-                    <div>
-                      <p className="text-[10px] uppercase tracking-[0.14em] text-primary font-semibold">
-                        IAplicada
-                      </p>
-                      <div className="mt-1.5">
-                        <CellRender cell={row.ia} />
-                      </div>
-                    </div>
-                    <div>
-                      <p className="text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
-                        ERP / SaaS
-                      </p>
-                      <div className="mt-1.5">
-                        <CellRender cell={row.erp} />
-                      </div>
-                    </div>
-                    <div>
-                      <p className="text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
-                        Fábrica de software
-                      </p>
-                      <div className="mt-1.5">
-                        <CellRender cell={row.factory} />
-                      </div>
-                    </div>
+                  <div className="mt-4 space-y-2.5">
+                    <MobileRow label="ERP Tradicional" cell={row.erp} />
+                    <MobileRow label="Fábrica de Software" cell={row.factory} />
+                    <MobileRow label="Squads Internos" cell={row.squads} />
+                    <MobileRow label="IAplicada" cell={row.iaplicada} highlight />
                   </div>
                 </div>
               ))}
@@ -181,5 +153,91 @@ export function Comparison() {
         </Reveal>
       </div>
     </section>
+  );
+}
+
+function HeaderCell({ title, highlight }: { title: string; highlight?: boolean }) {
+  return (
+    <div
+      className="p-5 border-l border-border first:border-l-0"
+      style={
+        highlight
+          ? {
+              background:
+                "linear-gradient(180deg, oklch(0.62 0.17 125) 0%, oklch(0.55 0.16 125) 100%)",
+            }
+          : undefined
+      }
+    >
+      <p
+        className="text-[13px] uppercase tracking-[0.12em] font-bold"
+        style={{ color: highlight ? "oklch(0.1 0.01 110)" : "var(--color-foreground)" }}
+      >
+        {title}
+      </p>
+    </div>
+  );
+}
+
+function BodyCell({ cell, highlight }: { cell: Cell; highlight?: boolean }) {
+  return (
+    <div
+      className="p-5 border-l border-border first:border-l-0"
+      style={highlight ? { backgroundColor: "oklch(0.62 0.17 125 / 0.12)" } : undefined}
+    >
+      <div className="flex items-start gap-2.5">
+        {highlight ? (
+          <CheckCircle2
+            className="h-4 w-4 mt-[2px] shrink-0"
+            style={{ color: "var(--color-primary)" }}
+            strokeWidth={2}
+          />
+        ) : (
+          <span
+            className="h-2.5 w-2.5 rounded-full mt-[5px] shrink-0"
+            style={{ backgroundColor: STATUS_DOT[cell.status] }}
+          />
+        )}
+        <span
+          className="text-[13px] leading-[1.45]"
+          style={{
+            color: highlight ? "var(--color-foreground)" : "var(--color-sage)",
+            fontWeight: highlight ? 600 : 400,
+          }}
+        >
+          {cell.text}
+        </span>
+      </div>
+    </div>
+  );
+}
+
+function MobileRow({ label, cell, highlight }: { label: string; cell: Cell; highlight?: boolean }) {
+  return (
+    <div className="flex items-start gap-2.5">
+      {highlight ? (
+        <CheckCircle2
+          className="h-4 w-4 mt-[2px] shrink-0"
+          style={{ color: "var(--color-primary)" }}
+          strokeWidth={2}
+        />
+      ) : (
+        <span
+          className="h-2.5 w-2.5 rounded-full mt-[5px] shrink-0"
+          style={{ backgroundColor: STATUS_DOT[cell.status] }}
+        />
+      )}
+      <div>
+        <p
+          className="text-[11px] uppercase tracking-[0.12em] font-semibold"
+          style={{
+            color: highlight ? "var(--color-primary)" : "var(--color-muted-foreground)",
+          }}
+        >
+          {label}
+        </p>
+        <p className="text-[13px] text-sage mt-0.5">{cell.text}</p>
+      </div>
+    </div>
   );
 }

@@ -1,15 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Header } from "@/components/sections/Header";
 import { Hero } from "@/components/sections/Hero";
-import { LogosBar } from "@/components/sections/LogosBar";
 import { Problem } from "@/components/sections/Problem";
-import { Approach } from "@/components/sections/Approach";
-import { Systems } from "@/components/sections/Systems";
+import { Solution } from "@/components/sections/Solution";
+import { OliveWave } from "@/components/sections/OliveWave";
 import { Process } from "@/components/sections/Process";
-import { Cases } from "@/components/sections/Cases";
+import { Impact } from "@/components/sections/Impact";
+import { Segmentation } from "@/components/sections/Segmentation";
 import { Comparison } from "@/components/sections/Comparison";
 import { Authority } from "@/components/sections/Authority";
-import { ForWhom } from "@/components/sections/ForWhom";
 import { FAQ } from "@/components/sections/FAQ";
 import { CTAFinal } from "@/components/sections/CTAFinal";
 import { Footer } from "@/components/sections/Footer";
@@ -18,21 +17,21 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       {
-        title: "IAplicada Business · IA dentro da sua empresa, como entrega mensurável",
+        title: "IAplicada Business · Sua empresa organizada em 30 dias em um único lugar",
       },
       {
         name: "description",
         content:
-          "Diagnóstico, construção e continuidade de IA aplicada. 6 novas empresas por trimestre.",
+          "Plataforma de gestão e automação com IA aplicada, sob medida para a sua operação. Sem DEV. Sem soluções engessadas.",
       },
       {
         property: "og:title",
-        content: "IAplicada Business · IA aplicada ao operacional",
+        content: "IAplicada Business · Sua empresa organizada em 30 dias",
       },
       {
         property: "og:description",
         content:
-          "Sistemas de IA construídos, entregues e rodando no seu operacional em 3 a 12 semanas.",
+          "Estruturação operacional com IA para empresas que precisam organizar a casa antes de escalar.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -47,15 +46,14 @@ function BusinessLanding() {
     <main className="min-h-screen bg-background text-foreground">
       <Header />
       <Hero />
-      <LogosBar />
       <Problem />
-      <Systems />
-      <Approach />
+      <Solution />
+      <OliveWave />
       <Process />
-      <Cases />
-      <Comparison />
+      <Impact />
       <Authority />
-      <ForWhom />
+      <Comparison />
+      <Segmentation />
       <FAQ />
       <CTAFinal />
       <Footer />
