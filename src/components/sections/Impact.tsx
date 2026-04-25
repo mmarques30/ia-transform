@@ -1,82 +1,54 @@
 import { Reveal } from "@/components/Reveal";
 import {
-  ChevronRight,
   ShoppingCart,
   Factory,
   Briefcase,
   HeartPulse,
   Wrench,
   GraduationCap,
+  ArrowDown,
+  ArrowUp,
+  Activity,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
-const IMPACTS = [
-  "Menos tarefas manuais",
-  "Menos retrabalho",
-  "Mais visibilidade",
-  "Mais segurança nas decisões",
-  "Menos dependência do dono",
-  "Crescimento com controle",
+interface Metric {
+  label: string;
+  delta: string;
+  /** 0–100 — quanto da barra está preenchido */
+  fill: number;
+  trend: "up" | "down";
+  /** "down" significa que cair é bom (tarefas, retrabalho) */
+  isGoodWhen: "up" | "down";
+}
+
+const METRICS: Metric[] = [
+  { label: "Tarefas manuais", delta: "−62%", fill: 38, trend: "down", isGoodWhen: "down" },
+  { label: "Retrabalho", delta: "−54%", fill: 46, trend: "down", isGoodWhen: "down" },
+  { label: "Visibilidade ops", delta: "+88%", fill: 88, trend: "up", isGoodWhen: "up" },
+  { label: "Confiança em decisões", delta: "+74%", fill: 74, trend: "up", isGoodWhen: "up" },
+  { label: "Dependência do dono", delta: "−71%", fill: 29, trend: "down", isGoodWhen: "down" },
+  { label: "Crescimento previsível", delta: "+92%", fill: 92, trend: "up", isGoodWhen: "up" },
 ];
 
 interface Segment {
   Icon: LucideIcon;
   label: string;
-  /** Soft tint backgrounds — cada segmento tem um tom próprio. */
-  tint: string;
-  border: string;
   iconColor: string;
 }
 
 const SEGMENTS: Segment[] = [
-  {
-    Icon: ShoppingCart,
-    label: "Varejo",
-    tint: "linear-gradient(180deg, oklch(0.97 0.045 80) 0%, oklch(0.99 0.015 80) 100%)",
-    border: "oklch(0.85 0.06 80)",
-    iconColor: "oklch(0.55 0.13 60)",
-  },
-  {
-    Icon: Factory,
-    label: "Indústria",
-    tint: "linear-gradient(180deg, oklch(0.95 0.03 240) 0%, oklch(0.99 0.01 240) 100%)",
-    border: "oklch(0.82 0.06 240)",
-    iconColor: "oklch(0.45 0.13 240)",
-  },
-  {
-    Icon: Briefcase,
-    label: "Consultoria",
-    tint: "linear-gradient(180deg, oklch(0.96 0.04 125) 0%, oklch(0.99 0.015 125) 100%)",
-    border: "oklch(0.82 0.08 125)",
-    iconColor: "oklch(0.45 0.16 125)",
-  },
-  {
-    Icon: HeartPulse,
-    label: "Saúde",
-    tint: "linear-gradient(180deg, oklch(0.96 0.035 25) 0%, oklch(0.99 0.012 25) 100%)",
-    border: "oklch(0.85 0.06 25)",
-    iconColor: "oklch(0.5 0.15 25)",
-  },
-  {
-    Icon: Wrench,
-    label: "Serviços",
-    tint: "linear-gradient(180deg, oklch(0.96 0.025 280) 0%, oklch(0.99 0.01 280) 100%)",
-    border: "oklch(0.82 0.05 280)",
-    iconColor: "oklch(0.45 0.14 280)",
-  },
-  {
-    Icon: GraduationCap,
-    label: "Educação",
-    tint: "linear-gradient(180deg, oklch(0.96 0.03 195) 0%, oklch(0.99 0.012 195) 100%)",
-    border: "oklch(0.82 0.06 195)",
-    iconColor: "oklch(0.45 0.13 195)",
-  },
+  { Icon: ShoppingCart, label: "Varejo", iconColor: "oklch(0.55 0.13 60)" },
+  { Icon: Factory, label: "Indústria", iconColor: "oklch(0.45 0.13 240)" },
+  { Icon: Briefcase, label: "Consultoria", iconColor: "oklch(0.45 0.16 125)" },
+  { Icon: HeartPulse, label: "Saúde", iconColor: "oklch(0.5 0.15 25)" },
+  { Icon: Wrench, label: "Serviços", iconColor: "oklch(0.45 0.14 280)" },
+  { Icon: GraduationCap, label: "Educação", iconColor: "oklch(0.45 0.13 195)" },
 ];
 
 export function Impact() {
   return (
     <section className="py-[100px] lg:py-[140px] bg-background relative overflow-hidden">
-      {/* Tech background — drifting dots */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 tech-bg-dots ia-anim-grid-drift opacity-50"
@@ -84,12 +56,19 @@ export function Impact() {
           maskImage: "radial-gradient(ellipse 70% 60% at 50% 50%, black 30%, transparent 90%)",
         }}
       />
+
       <div className="container-page relative">
-        {/* Headline + benefícios */}
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start max-w-[1100px] mx-auto card-soft p-8 lg:p-12">
+        <div className="grid lg:grid-cols-[5fr_7fr] gap-10 lg:gap-14 items-center max-w-[1200px] mx-auto">
+          {/* LEFT — Headline */}
           <div>
             <Reveal>
-              <h2 className="h-mix text-[32px] sm:text-[40px] lg:text-[48px] text-foreground">
+              <span className="label-chip">
+                <span className="dot" />
+                Impacto operacional
+              </span>
+            </Reveal>
+            <Reveal delay={0.05}>
+              <h2 className="h-mix mt-6 text-[32px] sm:text-[40px] lg:text-[48px] text-foreground">
                 Quando a empresa
                 <br />
                 deixa de operar
@@ -98,46 +77,40 @@ export function Impact() {
                 <br />o impacto é imediato.
               </h2>
             </Reveal>
-
             <Reveal delay={0.1}>
-              <p className="mt-8 text-[15.5px] text-sage leading-[1.65] max-w-[440px]">
-                O Business é uma solução de estruturação operacional com Inteligência Artificial
-                aplicada, criada para empresas que precisam organizar a casa antes de escalar.
+              <p className="mt-7 text-[15.5px] text-sage leading-[1.65] max-w-[440px]">
+                O Business é uma solução de estruturação operacional com IA, criada pra empresas que
+                precisam organizar a casa antes de escalar.
               </p>
             </Reveal>
-          </div>
-
-          <div>
             <Reveal delay={0.15}>
-              <ul className="space-y-4">
-                {IMPACTS.map((item) => (
-                  <li key={item} className="flex items-center gap-3 text-[17px] text-foreground">
-                    <ChevronRight
-                      className="h-4 w-4 shrink-0"
-                      style={{ color: "var(--color-primary)" }}
-                      strokeWidth={2.5}
-                    />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </Reveal>
-
-            <Reveal delay={0.25}>
-              <p
-                className="mt-10 text-[18px] lg:text-[20px] font-bold leading-[1.4]"
-                style={{ color: "var(--color-primary)" }}
+              <div
+                className="mt-8 rounded-xl p-4"
+                style={{
+                  backgroundColor: "oklch(0.97 0.025 125)",
+                  border: "1px solid oklch(0.85 0.05 125)",
+                }}
               >
-                Clareza gera controle.
-                <br />
-                Controle gera crescimento sustentável.
-              </p>
+                <p
+                  className="text-[15px] font-bold leading-[1.45]"
+                  style={{ color: "oklch(0.42 0.15 125)" }}
+                >
+                  Clareza gera controle.
+                  <br />
+                  Controle gera crescimento sustentável.
+                </p>
+              </div>
             </Reveal>
           </div>
+
+          {/* RIGHT — Live operations monitor */}
+          <Reveal delay={0.2}>
+            <ImpactMonitor />
+          </Reveal>
         </div>
 
-        {/* Grid de segmentos — cada um com tom próprio, mostrando que serve pra vários verticais */}
-        <div className="mt-20 lg:mt-24">
+        {/* Vertical strip — Empresas que organizamos */}
+        <div className="mt-24 lg:mt-28">
           <Reveal>
             <p className="text-center text-[11px] uppercase tracking-[0.16em] text-muted-foreground font-semibold">
               Empresas que organizamos
@@ -155,7 +128,7 @@ export function Impact() {
                     className="relative h-10 w-10 rounded-xl flex items-center justify-center"
                     style={{
                       backgroundColor: "oklch(0.97 0.005 110)",
-                      border: `1px solid var(--color-border)`,
+                      border: "1px solid var(--color-border)",
                     }}
                   >
                     <s.Icon
@@ -182,5 +155,121 @@ export function Impact() {
         </div>
       </div>
     </section>
+  );
+}
+
+/**
+ * Live operations monitor — dashboard-style com 6 métricas em barras de progresso
+ * coloridas baseadas no benefício. Substitui os 6 bullets estáticos.
+ */
+function ImpactMonitor() {
+  return (
+    <div
+      className="rounded-2xl overflow-hidden"
+      style={{
+        backgroundColor: "oklch(1 0 0)",
+        border: "1px solid oklch(0.92 0.005 110)",
+        boxShadow:
+          "0 30px 60px -20px oklch(0.18 0.02 122 / 0.18), 0 8px 20px -8px oklch(0.18 0.02 122 / 0.08)",
+      }}
+    >
+      {/* Header */}
+      <div
+        className="flex items-center justify-between px-5 py-3.5 border-b"
+        style={{
+          borderColor: "oklch(0.92 0.005 110)",
+          backgroundColor: "oklch(0.985 0.004 110)",
+        }}
+      >
+        <div className="flex items-center gap-2">
+          <span className="h-2 w-2 rounded-full bg-red-400/60" />
+          <span className="h-2 w-2 rounded-full bg-yellow-400/60" />
+          <span className="h-2 w-2 rounded-full bg-green-400/60" />
+          <p className="ml-2 text-[10.5px] font-mono text-muted-foreground">
+            iaplicada · monitor operacional
+          </p>
+        </div>
+        <span
+          className="inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider"
+          style={{ color: "oklch(0.55 0.16 145)" }}
+        >
+          <Activity className="h-2.5 w-2.5" strokeWidth={2.5} />
+          ao vivo
+        </span>
+      </div>
+
+      {/* Title row */}
+      <div className="px-5 lg:px-6 pt-5 pb-3 flex items-end justify-between">
+        <div>
+          <p className="text-[10.5px] uppercase tracking-[0.16em] text-muted-foreground font-semibold">
+            Operação · últimos 90 dias
+          </p>
+          <p className="mt-1 text-[18px] font-bold tracking-tight text-foreground">
+            6 indicadores chave
+          </p>
+        </div>
+        <span
+          className="text-[24px] font-bold tracking-tight"
+          style={{ color: "oklch(0.55 0.16 125)" }}
+        >
+          +73%
+        </span>
+      </div>
+
+      {/* Metrics list */}
+      <div className="px-5 lg:px-6 pb-5 lg:pb-6 space-y-3.5">
+        {METRICS.map((m) => {
+          const isGood = m.trend === m.isGoodWhen;
+          const TrendIcon = m.trend === "up" ? ArrowUp : ArrowDown;
+          return (
+            <div key={m.label}>
+              <div className="flex items-center justify-between mb-1.5">
+                <p className="text-[13px] text-foreground font-medium">{m.label}</p>
+                <span
+                  className="inline-flex items-center gap-1 text-[12px] font-bold tracking-tight"
+                  style={{
+                    color: isGood ? "oklch(0.55 0.16 125)" : "oklch(0.55 0.16 25)",
+                  }}
+                >
+                  <TrendIcon className="h-3 w-3" strokeWidth={2.5} />
+                  {m.delta}
+                </span>
+              </div>
+              <div
+                className="h-1.5 rounded-full overflow-hidden relative"
+                style={{ backgroundColor: "oklch(0.95 0.005 110)" }}
+              >
+                <div
+                  className="h-full rounded-full"
+                  style={{
+                    width: `${m.fill}%`,
+                    background: isGood
+                      ? "linear-gradient(90deg, oklch(0.62 0.17 125), oklch(0.82 0.2 115))"
+                      : "linear-gradient(90deg, oklch(0.55 0.16 25), oklch(0.7 0.18 25))",
+                  }}
+                />
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Footer */}
+      <div
+        className="px-5 lg:px-6 py-3.5 border-t flex items-center justify-between text-[11px]"
+        style={{
+          borderColor: "oklch(0.92 0.005 110)",
+          backgroundColor: "oklch(0.985 0.004 110)",
+        }}
+      >
+        <span className="text-muted-foreground">Calculado sobre média de 80+ implementações</span>
+        <span
+          className="font-semibold inline-flex items-center gap-1"
+          style={{ color: "oklch(0.55 0.16 125)" }}
+        >
+          tudo no verde
+        </span>
+      </div>
+    </div>
   );
 }
