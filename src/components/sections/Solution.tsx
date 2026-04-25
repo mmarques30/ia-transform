@@ -1,5 +1,4 @@
 import { Reveal } from "@/components/Reveal";
-import { HeroMockup } from "@/components/mockups/HeroMockup";
 
 const TOOL_BADGES = ["Monday", "Make", "n8n", "Notion"];
 
@@ -78,10 +77,44 @@ export function Solution() {
           </div>
 
           <Reveal delay={0.2}>
-            <HeroMockup />
+            <SystemsCover />
           </Reveal>
         </div>
       </div>
     </section>
+  );
+}
+
+/**
+ * Real systems cover image hosted on ibb.co.
+ * Soft glow behind + olive frame to feel premium.
+ */
+function SystemsCover() {
+  return (
+    <div className="relative">
+      <div
+        aria-hidden
+        className="absolute -inset-10 -z-10 rounded-[40px] opacity-50"
+        style={{
+          background:
+            "radial-gradient(ellipse at center, oklch(0.62 0.17 125 / 0.25) 0%, transparent 70%)",
+        }}
+      />
+      <div
+        className="rounded-2xl overflow-hidden"
+        style={{
+          border: "1px solid oklch(0.85 0.02 122)",
+          boxShadow:
+            "0 30px 60px -20px oklch(0.18 0.02 122 / 0.18), 0 8px 20px -8px oklch(0.18 0.02 122 / 0.08)",
+        }}
+      >
+        <img
+          src="https://i.ibb.co/0jJmgsPg/capa-biz-sistemas.png"
+          alt="Sistemas IAplicada Business — interfaces de operação"
+          loading="lazy"
+          className="block w-full h-auto"
+        />
+      </div>
+    </div>
   );
 }
