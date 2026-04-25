@@ -196,6 +196,39 @@
     font-weight: 400;
   }
 
+  /* Dark variant — inputs sobre card preto (HeroForm) */
+  .form-input-dark {
+    width: 100%;
+    border-radius: 12px;
+    background-color: oklch(0.18 0.025 122);
+    border: 1px solid oklch(0.32 0.025 122);
+    padding: 13px 16px;
+    color: oklch(1 0 0);
+    font-size: 14.5px;
+    font-weight: 500;
+    transition:
+      border-color 0.15s ease,
+      box-shadow 0.15s ease,
+      background-color 0.15s ease;
+  }
+  .form-input-dark:hover {
+    border-color: oklch(0.42 0.03 122);
+  }
+  .form-input-dark:focus {
+    outline: none;
+    border-color: oklch(0.82 0.2 115);
+    background-color: oklch(0.14 0.02 122);
+    box-shadow: 0 0 0 4px oklch(0.82 0.2 115 / 0.15);
+  }
+  .form-input-dark::placeholder {
+    color: oklch(0.55 0.015 115);
+    font-weight: 400;
+  }
+  .form-input-dark option {
+    background-color: oklch(0.18 0.025 122);
+    color: oklch(1 0 0);
+  }
+
   /* Primary CTA — solid charcoal with olive accent on hover (premium B2B) */
   .cta-primary {
     display: inline-flex;
@@ -228,12 +261,11 @@
     transition: transform 0.2s ease;
   }
   .cta-primary:hover {
-    background-color: oklch(0.14 0.02 122);
+    background-color: oklch(0.12 0.015 122);
     transform: translateY(-1px);
     box-shadow:
       0 1px 0 0 oklch(1 0 0 / 0.12) inset,
-      0 12px 32px -8px oklch(0.18 0.02 122 / 0.5),
-      0 0 0 4px oklch(0.62 0.17 125 / 0.18);
+      0 14px 36px -8px oklch(0.18 0.02 122 / 0.55);
   }
   .cta-primary:hover .arrow {
     transform: translateX(2px);

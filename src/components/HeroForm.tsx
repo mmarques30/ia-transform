@@ -39,59 +39,64 @@ export function HeroForm() {
     <div
       className="rounded-[24px] overflow-hidden relative"
       style={{
-        backgroundColor: "oklch(1 0 0)",
-        border: "1px solid oklch(0.92 0.005 110)",
+        backgroundColor: "var(--color-accent)",
+        border: "1px solid oklch(0.3 0.025 122)",
         boxShadow:
-          "0 30px 60px -20px oklch(0.18 0.02 122 / 0.18), 0 8px 20px -8px oklch(0.18 0.02 122 / 0.08)",
+          "0 40px 80px -30px oklch(0 0 0 / 0.55), 0 10px 25px -8px oklch(0.18 0.02 122 / 0.25)",
       }}
     >
-      {/* Top accent strip — discrete olive brand presence */}
+      {/* Inner highlight (1px top) */}
       <div
         aria-hidden
-        className="absolute inset-x-0 top-0 h-1"
+        className="pointer-events-none absolute inset-0 rounded-[24px]"
         style={{
-          background: "linear-gradient(90deg, oklch(0.62 0.17 125) 0%, oklch(0.55 0.16 125) 100%)",
+          boxShadow: "inset 0 1px 0 oklch(1 0 0 / 0.08)",
         }}
       />
 
-      <div className="px-7 pt-8 lg:px-9 lg:pt-10">
+      <div className="px-7 pt-8 lg:px-9 lg:pt-10 relative">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <p className="text-[11px] uppercase tracking-[0.16em] text-muted-foreground font-semibold">
+            <p
+              className="text-[11px] uppercase tracking-[0.16em] font-semibold"
+              style={{ color: "oklch(0.65 0.015 115)" }}
+            >
               Diagnóstico estratégico
             </p>
-            <p className="mt-1.5 text-[18px] font-semibold text-foreground tracking-tight">
+            <p className="mt-1.5 text-[18px] font-semibold text-white tracking-tight">
               Conversa de 30 min · gratuita
             </p>
           </div>
           <span
             className="inline-flex items-center gap-1.5 text-[10px] uppercase tracking-[0.14em] font-semibold rounded-full px-2.5 py-1 shrink-0"
             style={{
-              backgroundColor: "oklch(0.62 0.17 125 / 0.1)",
-              color: "oklch(0.4 0.14 125)",
+              backgroundColor: "oklch(1 0 0 / 0.08)",
+              color: "oklch(0.85 0.04 110)",
+              border: "1px solid oklch(1 0 0 / 0.1)",
             }}
           >
             <span
               className="h-1.5 w-1.5 rounded-full"
-              style={{ backgroundColor: "oklch(0.62 0.17 125)" }}
+              style={{ backgroundColor: "oklch(0.82 0.2 115)" }}
             />
             Vagas abertas
           </span>
         </div>
       </div>
 
-      <div className="px-7 pb-8 pt-6 lg:px-9 lg:pb-10 lg:pt-7">
+      <div className="px-7 pb-8 pt-6 lg:px-9 lg:pb-10 lg:pt-7 relative">
         {submitted ? (
           <div className="text-center py-10">
             <CheckCircle2
               className="h-11 w-11 mx-auto"
-              style={{ color: "var(--color-olive)" }}
+              style={{ color: "oklch(0.82 0.2 115)" }}
               strokeWidth={1.5}
             />
-            <h3 className="mt-5 text-[20px] font-semibold text-foreground">
-              Recebemos seu contato.
-            </h3>
-            <p className="mt-2 text-[14px] text-sage leading-[1.6] max-w-[320px] mx-auto">
+            <h3 className="mt-5 text-[20px] font-semibold text-white">Recebemos seu contato.</h3>
+            <p
+              className="mt-2 text-[14px] leading-[1.6] max-w-[320px] mx-auto"
+              style={{ color: "oklch(0.72 0.02 115)" }}
+            >
               Um sócio do time vai te mandar opções de horário em até 1 dia útil.
             </p>
           </div>
@@ -103,7 +108,7 @@ export function HeroForm() {
                 type="text"
                 required
                 placeholder="Seu nome completo"
-                className="form-input"
+                className="form-input-dark"
               />
             </FormField>
 
@@ -113,7 +118,7 @@ export function HeroForm() {
                 type="email"
                 required
                 placeholder="voce@suaempresa.com"
-                className="form-input"
+                className="form-input-dark"
               />
             </FormField>
 
@@ -123,13 +128,13 @@ export function HeroForm() {
                 type="tel"
                 required
                 placeholder="(11) 99999-9999"
-                className="form-input"
+                className="form-input-dark"
               />
             </FormField>
 
             <div className="grid sm:grid-cols-2 gap-3">
               <FormField id="role" label="Cargo" required>
-                <select id="role" required defaultValue="" className="form-input">
+                <select id="role" required defaultValue="" className="form-input-dark">
                   <option value="" disabled>
                     Selecione
                   </option>
@@ -141,7 +146,7 @@ export function HeroForm() {
                 </select>
               </FormField>
               <FormField id="revenue" label="Faturamento" required>
-                <select id="revenue" required defaultValue="" className="form-input">
+                <select id="revenue" required defaultValue="" className="form-input-dark">
                   <option value="" disabled>
                     Selecione
                   </option>
@@ -159,24 +164,28 @@ export function HeroForm() {
                 id="company"
                 type="text"
                 placeholder="Nome da sua empresa"
-                className="form-input"
+                className="form-input-dark"
               />
             </FormField>
 
             <button
               type="submit"
               disabled={loading}
-              className="cta-primary mt-2 w-full justify-center disabled:opacity-60"
+              className="mt-2 w-full inline-flex items-center justify-center gap-2 rounded-full px-6 py-4 text-[14px] font-bold transition-all disabled:opacity-60 hover:-translate-y-0.5"
+              style={{
+                backgroundColor: "oklch(1 0 0)",
+                color: "oklch(0.14 0.02 122)",
+                boxShadow: "0 8px 24px -8px oklch(1 0 0 / 0.3)",
+              }}
             >
               {loading ? "Enviando..." : "Quero saber mais sobre o Business"}
-              {!loading && (
-                <span className="arrow">
-                  <ArrowRight className="h-3.5 w-3.5" strokeWidth={2.5} />
-                </span>
-              )}
+              {!loading && <ArrowRight className="h-4 w-4" strokeWidth={2.5} />}
             </button>
 
-            <p className="pt-2 text-[11.5px] text-muted-foreground text-center leading-relaxed">
+            <p
+              className="pt-2 text-[11.5px] text-center leading-relaxed"
+              style={{ color: "oklch(0.65 0.015 115)" }}
+            >
               Seus dados não são compartilhados. Sem SPAM. Cancele a qualquer momento.
             </p>
           </form>
@@ -199,10 +208,14 @@ function FormField({
 }) {
   return (
     <div>
-      <label htmlFor={id} className="block text-[12px] font-semibold text-foreground mb-1.5">
+      <label
+        htmlFor={id}
+        className="block text-[12px] font-semibold mb-1.5"
+        style={{ color: "oklch(0.85 0.02 110)" }}
+      >
         {label}
         {required && (
-          <span className="ml-1" style={{ color: "var(--color-olive)" }}>
+          <span className="ml-1" style={{ color: "oklch(0.82 0.2 115)" }}>
             ·
           </span>
         )}
