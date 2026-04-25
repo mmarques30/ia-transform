@@ -79,35 +79,37 @@ export function AnimatedLogoMark({ size = 96, className }: LogoMarkProps) {
       style={{ width: size, height: size }}
       aria-hidden="true"
     >
-      {/* Outer rotating halo — creates the "tech orbit" feeling */}
+      {/* Outer rotating halo — "tech orbit" feeling */}
       <span
-        className="absolute inset-0 rounded-full motion-safe:animate-[ia-orbit_22s_linear_infinite]"
+        className="ia-anim-orbit absolute inset-0 rounded-full"
         style={{
           backgroundImage:
-            "conic-gradient(from 0deg, transparent 0deg, oklch(0.82 0.2 115 / 0.55) 80deg, transparent 160deg, oklch(0.62 0.17 125 / 0.4) 260deg, transparent 340deg)",
-          filter: "blur(10px)",
-          transform: "scale(1.45)",
-          opacity: 0.7,
+            "conic-gradient(from 0deg, transparent 0deg, oklch(0.82 0.2 115 / 0.6) 80deg, transparent 160deg, oklch(0.62 0.17 125 / 0.5) 260deg, transparent 340deg)",
+          filter: "blur(12px)",
+          opacity: 0.85,
         }}
       />
       {/* Glow pulse layer */}
       <span
-        className="absolute inset-0 rounded-[18px] motion-safe:animate-[ia-pulse-glow_3.6s_ease-in-out_infinite]"
+        className="ia-anim-pulse-glow absolute inset-0 rounded-[18px]"
         style={{
-          backgroundColor: "oklch(0.82 0.2 115 / 0.5)",
-          filter: "blur(18px)",
+          backgroundColor: "oklch(0.82 0.2 115 / 0.6)",
+          filter: "blur(20px)",
         }}
       />
 
-      {/* The mark itself — breathes subtly */}
+      {/* The mark — breathes subtly */}
       <svg
         width={size}
         height={size}
         viewBox="0 0 64 64"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className="relative motion-safe:animate-[ia-breathe_4s_ease-in-out_infinite]"
-        style={{ display: "block", filter: "drop-shadow(0 8px 24px oklch(0.58 0.16 125 / 0.35))" }}
+        className="ia-anim-breathe relative"
+        style={{
+          display: "block",
+          filter: "drop-shadow(0 8px 24px oklch(0.58 0.16 125 / 0.4))",
+        }}
       >
         <defs>
           <mask id={`ia-mark-anim-${size}`}>
@@ -120,12 +122,7 @@ export function AnimatedLogoMark({ size = 96, className }: LogoMarkProps) {
         <rect width="64" height="64" rx="13" fill="#8BAB23" />
         <rect width="64" height="64" fill="white" mask={`url(#ia-mark-anim-${size})`} />
         {/* Diamond pulses out of phase */}
-        <polygon
-          points="32,28 36,32 32,36 28,32"
-          fill="white"
-          className="motion-safe:animate-[ia-diamond_2.4s_ease-in-out_infinite]"
-          style={{ transformOrigin: "32px 32px", transformBox: "fill-box" }}
-        />
+        <polygon className="ia-anim-diamond" points="32,28 36,32 32,36 28,32" fill="white" />
       </svg>
     </div>
   );
