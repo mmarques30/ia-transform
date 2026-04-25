@@ -6,8 +6,16 @@ export function Footer() {
       <div className="container-page">
         <div className="grid md:grid-cols-3 gap-8">
           <div>
-            <Logo />
-            <p className="mt-3 text-[13px] text-muted-foreground leading-relaxed max-w-[280px]">
+            <div className="flex items-center gap-2.5">
+              <Logo size={34} />
+              <span
+                className="text-muted-foreground text-[13px] font-normal border-l border-border pl-3 ml-1"
+                style={{ letterSpacing: "0.02em" }}
+              >
+                Business
+              </span>
+            </div>
+            <p className="mt-4 text-[13px] text-muted-foreground leading-relaxed max-w-[280px]">
               IA aplicada ao trabalho real.
             </p>
             <p className="mt-3 text-[11px] font-mono" style={{ color: "var(--color-primary)" }}>

@@ -45,45 +45,52 @@ export function Impact() {
       />
 
       <div className="container-page relative">
-        <div className="grid lg:grid-cols-[5fr_7fr] gap-10 lg:gap-14 items-center max-w-[1200px] mx-auto">
-          <div>
-            <Reveal>
-              <span className="label-chip">
-                <span className="dot" />
-                Impacto operacional
-              </span>
-            </Reveal>
-            <Reveal delay={0.05}>
-              <h2 className="h-mix mt-6 text-[32px] sm:text-[40px] lg:text-[48px] text-foreground">
-                Quando a empresa
-                <br />
-                deixa de operar
-                <br />
-                <em>no improviso,</em>
-                <br />o impacto é imediato.
-              </h2>
-            </Reveal>
-            <Reveal delay={0.1}>
-              <p className="mt-7 text-[15.5px] text-sage leading-[1.65] max-w-[440px]">
-                O Business é uma solução de estruturação operacional com IA, criada pra empresas que
-                precisam organizar a casa antes de escalar.
-              </p>
-            </Reveal>
-          </div>
-
-          <Reveal delay={0.2}>
-            <ImpactMonitor />
+        {/* ATO 1 — A virada operacional (claim + monitor) */}
+        <div className="text-center max-w-[760px] mx-auto">
+          <Reveal>
+            <span className="label-chip">
+              <span className="dot" />
+              Impacto operacional
+            </span>
+          </Reveal>
+          <Reveal delay={0.05}>
+            <h2 className="h-mix mt-6 text-[36px] sm:text-[44px] lg:text-[54px] text-foreground">
+              Quando a empresa para de operar <em>no improviso</em>,
+              <br className="hidden sm:block" /> o jogo muda em <em>todos</em> os indicadores.
+            </h2>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <p className="mt-5 text-[16px] text-sage leading-[1.6] max-w-[600px] mx-auto">
+              Não é um KPI subindo isolado. É a operação inteira ganhando estrutura — e os números
+              acompanhando.
+            </p>
           </Reveal>
         </div>
 
-        {/* Verticais — agora com mockups reais por segmento */}
-        <div className="mt-24 lg:mt-28">
-          <Reveal>
-            <p className="text-center text-[11px] uppercase tracking-[0.16em] text-muted-foreground font-semibold">
-              Empresas que organizamos
+        <Reveal delay={0.15}>
+          <div className="mt-12 max-w-[1080px] mx-auto">
+            <ImpactMonitor />
+          </div>
+        </Reveal>
+
+        {/* PONTE — divisor narrativo entre impacto e personalização */}
+        <div className="mt-24 lg:mt-32 flex flex-col items-center">
+          <span
+            aria-hidden
+            className="block h-px w-24"
+            style={{
+              background:
+                "linear-gradient(90deg, transparent, var(--color-primary), transparent)",
+            }}
+          />
+          <Reveal delay={0.05}>
+            <p className="mt-6 text-center text-[11px] uppercase tracking-[0.18em] font-semibold text-muted-foreground">
+              Mesma metodologia · Sistemas distintos
             </p>
-            <h3 className="mt-4 text-center text-[24px] lg:text-[32px] font-bold text-foreground tracking-tight max-w-[760px] mx-auto">
-              Cada vertical roda{" "}
+          </Reveal>
+          <Reveal delay={0.1}>
+            <h3 className="mt-4 text-center text-[28px] sm:text-[34px] lg:text-[40px] font-bold text-foreground tracking-tight max-w-[820px] mx-auto leading-[1.15]">
+              E esse impacto roda em um{" "}
               <em
                 style={{
                   color: "var(--color-primary)",
@@ -92,42 +99,47 @@ export function Impact() {
                   fontWeight: 400,
                 }}
               >
-                seu próprio sistema
+                sistema próprio
               </em>{" "}
-              — adaptado por segmento.
+              pra cada vertical.
             </h3>
           </Reveal>
+          <Reveal delay={0.15}>
+            <p className="mt-5 text-center text-[15px] text-sage leading-[1.6] max-w-[560px] mx-auto">
+              Mesmo método de estruturação. Implementação adaptada ao jeito de operar de cada
+              segmento.
+            </p>
+          </Reveal>
+        </div>
 
-          <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-[1100px] mx-auto">
-            {VERTICALS.map((v, i) => (
-              <Reveal key={v.label} delay={(i % 3) * 0.06}>
-                <div className="tech-card overflow-hidden h-full flex flex-col">
-                  {/* Mockup */}
-                  <div
-                    className="aspect-[16/9] relative overflow-hidden"
-                    style={{
-                      backgroundColor: "oklch(0.97 0.004 110)",
-                      borderBottom: "1px solid var(--color-border)",
-                    }}
-                  >
-                    <v.Mockup />
-                  </div>
-                  {/* Footer label */}
-                  <div className="relative px-5 py-4 flex items-center justify-between">
-                    <p
-                      className="text-[10px] uppercase tracking-[0.16em] font-semibold"
-                      style={{ color: "var(--color-muted-foreground)" }}
-                    >
-                      Sistema {v.brand}
-                    </p>
-                    <p className="text-[16px] font-bold tracking-tight text-foreground">
-                      {v.label}
-                    </p>
-                  </div>
+        {/* ATO 2 — Personalização por vertical */}
+        <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-[1100px] mx-auto">
+          {VERTICALS.map((v, i) => (
+            <Reveal key={v.label} delay={(i % 3) * 0.06}>
+              <div className="tech-card overflow-hidden h-full flex flex-col">
+                <div
+                  className="aspect-[16/9] relative overflow-hidden"
+                  style={{
+                    backgroundColor: "oklch(0.97 0.004 110)",
+                    borderBottom: "1px solid var(--color-border)",
+                  }}
+                >
+                  <v.Mockup />
                 </div>
-              </Reveal>
-            ))}
-          </div>
+                <div className="relative px-5 py-4 flex items-center justify-between">
+                  <p
+                    className="text-[10px] uppercase tracking-[0.16em] font-semibold"
+                    style={{ color: "var(--color-muted-foreground)" }}
+                  >
+                    Sistema {v.brand}
+                  </p>
+                  <p className="text-[16px] font-bold tracking-tight text-foreground">
+                    {v.label}
+                  </p>
+                </div>
+              </div>
+            </Reveal>
+          ))}
         </div>
       </div>
     </section>
@@ -173,33 +185,38 @@ function ImpactMonitor() {
         </span>
       </div>
 
-      <div className="px-5 lg:px-6 pt-5 pb-3 flex items-end justify-between">
+      <div className="px-6 lg:px-8 pt-6 pb-4 flex items-end justify-between border-b" style={{ borderColor: "oklch(0.94 0.005 110)" }}>
         <div>
           <p className="text-[10.5px] uppercase tracking-[0.16em] text-muted-foreground font-semibold">
             Operação · últimos 90 dias
           </p>
-          <p className="mt-1 text-[18px] font-bold tracking-tight text-foreground">
-            6 indicadores chave
+          <p className="mt-1.5 text-[20px] font-bold tracking-tight text-foreground">
+            Antes vs. depois da estruturação
           </p>
         </div>
-        <span
-          className="text-[24px] font-bold tracking-tight"
-          style={{ color: "oklch(0.55 0.16 125)" }}
-        >
-          +73%
-        </span>
+        <div className="text-right">
+          <span
+            className="block text-[32px] font-bold tracking-tight leading-none"
+            style={{ color: "oklch(0.55 0.16 125)" }}
+          >
+            +73%
+          </span>
+          <span className="block mt-1 text-[10px] uppercase tracking-[0.14em] text-muted-foreground font-semibold">
+            ganho médio
+          </span>
+        </div>
       </div>
 
-      <div className="px-5 lg:px-6 pb-5 lg:pb-6 space-y-3.5">
+      <div className="px-6 lg:px-8 py-6 grid sm:grid-cols-2 gap-x-8 gap-y-4">
         {METRICS.map((m) => {
           const isGood = m.trend === m.isGoodWhen;
           const TrendIcon = m.trend === "up" ? ArrowUp : ArrowDown;
           return (
             <div key={m.label}>
-              <div className="flex items-center justify-between mb-1.5">
-                <p className="text-[13px] text-foreground font-medium">{m.label}</p>
+              <div className="flex items-center justify-between mb-2">
+                <p className="text-[13.5px] text-foreground font-medium">{m.label}</p>
                 <span
-                  className="inline-flex items-center gap-1 text-[12px] font-bold tracking-tight"
+                  className="inline-flex items-center gap-1 text-[13px] font-bold tracking-tight"
                   style={{
                     color: isGood ? "oklch(0.55 0.16 125)" : "oklch(0.55 0.16 25)",
                   }}
