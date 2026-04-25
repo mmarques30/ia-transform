@@ -109,10 +109,16 @@ function SystemsCover() {
         }}
       >
         <img
-          src="https://i.ibb.co/0jJmgsPg/capa-biz-sistemas.png"
+          src="/brand/capa_biz_sistemas.jpg"
           alt="Sistemas IAplicada Business — interfaces de operação"
           loading="lazy"
           className="block w-full h-auto"
+          onError={(e) => {
+            // fallback caso o arquivo local não esteja servindo
+            const img = e.currentTarget;
+            const fallback = "https://i.ibb.co/0jJmgsPg/capa-biz-sistemas.png";
+            if (img.src !== fallback) img.src = fallback;
+          }}
         />
       </div>
     </div>
