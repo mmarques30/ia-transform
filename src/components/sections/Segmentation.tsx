@@ -31,12 +31,6 @@ const BENEFITS: Benefit[] = [
   },
   {
     n: "03",
-    label: "Gestão",
-    text: "Indicador semanal pra cada área. Reunião de gestão deixa de ser desabafo.",
-    Mockup: GestaoMockup,
-  },
-  {
-    n: "04",
     label: "Previsibilidade",
     text: "Você sabe o que vai entrar, o que vai sair e onde está o gargalo do mês.",
     Mockup: PrevisibilidadeMockup,
@@ -95,9 +89,9 @@ export function Segmentation() {
           </div>
         </div>
 
-        {/* When structure changes — clean 2-col split com mockups reais */}
-        <div className="mt-24 lg:mt-28 grid lg:grid-cols-[5fr_7fr] gap-10 lg:gap-14 items-start max-w-[1100px] mx-auto">
-          <div className="lg:pt-2">
+        {/* When structure changes — centered header + single row of aligned cards */}
+        <div className="mt-24 lg:mt-28 max-w-[1100px] mx-auto">
+          <div className="text-center max-w-[720px] mx-auto">
             <Reveal>
               <span className="label-chip">
                 <span className="dot" />
@@ -111,56 +105,54 @@ export function Segmentation() {
               </h3>
             </Reveal>
             <Reveal delay={0.1}>
-              <p className="mt-6 text-[16px] text-sage leading-[1.65] max-w-[440px]">
+              <p className="mt-5 text-[16px] text-sage leading-[1.65] max-w-[600px] mx-auto">
                 Cada card abaixo é um indicador real que muda quando a operação ganha estrutura. Não
                 é promessa — é o antes e depois.
               </p>
             </Reveal>
           </div>
 
-          <Reveal delay={0.15}>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {BENEFITS.map((b, i) => (
-                <Reveal key={b.label} delay={i * 0.06}>
-                  <div className="tech-card overflow-hidden h-full flex flex-col">
-                    {/* Mini mockup */}
-                    <div
-                      className="aspect-[16/9] relative overflow-hidden"
-                      style={{
-                        backgroundColor: "oklch(0.97 0.004 110)",
-                        borderBottom: "1px solid var(--color-border)",
-                      }}
-                    >
-                      <b.Mockup />
-                    </div>
-                    {/* Content */}
-                    <div className="relative p-5 flex flex-col grow">
-                      <div className="flex items-center gap-2.5">
-                        <span
-                          className="num-display text-[11px] tracking-wider"
-                          style={{ color: "var(--color-muted-foreground)" }}
-                        >
-                          {b.n}
-                        </span>
-                        <span
-                          className="h-[1px] flex-1"
-                          style={{
-                            background: "linear-gradient(90deg, var(--color-primary), transparent)",
-                          }}
-                        />
-                      </div>
-                      <p className="relative mt-3 text-[18px] font-bold tracking-tight text-foreground">
-                        {b.label}
-                      </p>
-                      <p className="relative mt-1.5 text-[13.5px] leading-[1.5] text-sage">
-                        {b.text}
-                      </p>
-                    </div>
+          <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 items-stretch">
+            {BENEFITS.map((b, i) => (
+              <Reveal key={b.label} delay={i * 0.06}>
+                <div className="tech-card overflow-hidden h-full flex flex-col">
+                  {/* Mini mockup */}
+                  <div
+                    className="aspect-[16/9] relative overflow-hidden"
+                    style={{
+                      backgroundColor: "oklch(0.97 0.004 110)",
+                      borderBottom: "1px solid var(--color-border)",
+                    }}
+                  >
+                    <b.Mockup />
                   </div>
-                </Reveal>
-              ))}
-            </div>
-          </Reveal>
+                  {/* Content */}
+                  <div className="relative p-5 flex flex-col grow">
+                    <div className="flex items-center gap-2.5">
+                      <span
+                        className="num-display text-[11px] tracking-wider"
+                        style={{ color: "var(--color-muted-foreground)" }}
+                      >
+                        {b.n}
+                      </span>
+                      <span
+                        className="h-[1px] flex-1"
+                        style={{
+                          background: "linear-gradient(90deg, var(--color-primary), transparent)",
+                        }}
+                      />
+                    </div>
+                    <p className="relative mt-3 text-[18px] font-bold tracking-tight text-foreground">
+                      {b.label}
+                    </p>
+                    <p className="relative mt-1.5 text-[13.5px] leading-[1.5] text-sage">
+                      {b.text}
+                    </p>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -289,48 +281,6 @@ function EstruturaMockup() {
         <span className="font-semibold" style={{ color: "oklch(0.55 0.16 125)" }}>
           documentado
         </span>
-      </div>
-    </div>
-  );
-}
-
-/** Gestão — 3 KPIs semanais em mini-grid */
-function GestaoMockup() {
-  const KPIS = [
-    { l: "Vendas", v: "R$ 142k", d: "+8%", up: true },
-    { l: "Ops", v: "94%", d: "+2pp", up: true },
-    { l: "CAC", v: "184", d: "−9%", up: true },
-  ];
-  return (
-    <div className="absolute inset-0 p-3 flex flex-col gap-1.5">
-      <div className="flex items-center justify-between">
-        <p className="text-[8px] uppercase tracking-wider font-semibold text-muted-foreground">
-          Painel da diretoria · sem 12
-        </p>
-        <span className="text-[7px] text-muted-foreground">seg 7h</span>
-      </div>
-
-      <div className="grid grid-cols-3 gap-1 flex-1">
-        {KPIS.map((k) => (
-          <div
-            key={k.l}
-            className="rounded p-1.5 flex flex-col justify-between"
-            style={{
-              backgroundColor: "oklch(1 0 0)",
-              border: "1px solid oklch(0.92 0.005 110)",
-            }}
-          >
-            <p className="text-[7px] uppercase tracking-wider text-muted-foreground">{k.l}</p>
-            <p className="text-[12px] font-bold leading-none text-foreground">{k.v}</p>
-            <p
-              className="text-[7px] font-semibold inline-flex items-center gap-0.5"
-              style={{ color: "oklch(0.55 0.16 125)" }}
-            >
-              <ArrowUp className="h-1.5 w-1.5" strokeWidth={2.5} />
-              {k.d}
-            </p>
-          </div>
-        ))}
       </div>
     </div>
   );

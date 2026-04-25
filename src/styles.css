@@ -372,6 +372,32 @@
   .ia-anim-shimmer {
     animation: ia-shimmer 8s ease-in-out infinite;
   }
+  .ia-anim-bar-rise {
+    transform-origin: left center;
+    animation: ia-bar-rise 3.6s ease-in-out infinite;
+  }
+  .ia-anim-scan-x {
+    animation: ia-scan-x 3.2s ease-in-out infinite;
+  }
+  .ia-anim-fill-loop {
+    animation: ia-fill-loop 4.4s ease-in-out infinite;
+  }
+  .ia-anim-tick-up {
+    animation: ia-tick-up 2.8s ease-in-out infinite;
+  }
+  .ia-anim-heartbeat {
+    animation: ia-heartbeat 1.6s ease-in-out infinite;
+  }
+  .ia-anim-marquee-y {
+    animation: ia-marquee-y 8s linear infinite;
+  }
+  .ia-anim-blink {
+    animation: ia-blink 1.4s ease-in-out infinite;
+  }
+  .ia-anim-progress-dash {
+    stroke-dasharray: 6 4;
+    animation: ia-progress-dash 1.6s linear infinite;
+  }
 
   /* Tech backgrounds — clean, animated, elegant */
   .tech-bg-grid {
@@ -486,6 +512,88 @@
     opacity: 0.85;
   }
 }
+@keyframes ia-bar-rise {
+  0%,
+  100% {
+    transform: scaleX(var(--bar-min, 0.55));
+  }
+  50% {
+    transform: scaleX(var(--bar-max, 1));
+  }
+}
+@keyframes ia-scan-x {
+  0% {
+    transform: translateX(-110%);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(110%);
+    opacity: 0;
+  }
+}
+@keyframes ia-fill-loop {
+  0% {
+    width: 0%;
+  }
+  60% {
+    width: var(--fill-target, 78%);
+  }
+  100% {
+    width: var(--fill-target, 78%);
+  }
+}
+@keyframes ia-tick-up {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(-2px);
+    opacity: 0.85;
+  }
+}
+@keyframes ia-heartbeat {
+  0%,
+  60%,
+  100% {
+    transform: scale(1);
+  }
+  20% {
+    transform: scale(1.18);
+  }
+  40% {
+    transform: scale(0.95);
+  }
+}
+@keyframes ia-marquee-y {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-50%);
+  }
+}
+@keyframes ia-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.25;
+  }
+}
+@keyframes ia-progress-dash {
+  to {
+    stroke-dashoffset: -20;
+  }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .ticker-track,
@@ -495,7 +603,15 @@
   .ia-anim-orbit,
   .ia-anim-rotate-slow,
   .ia-anim-grid-drift,
-  .ia-anim-shimmer {
+  .ia-anim-shimmer,
+  .ia-anim-bar-rise,
+  .ia-anim-scan-x,
+  .ia-anim-fill-loop,
+  .ia-anim-tick-up,
+  .ia-anim-heartbeat,
+  .ia-anim-marquee-y,
+  .ia-anim-blink,
+  .ia-anim-progress-dash {
     animation: none !important;
   }
 }
