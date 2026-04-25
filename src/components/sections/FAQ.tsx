@@ -9,11 +9,11 @@ import {
 const FAQS = [
   {
     q: "Quanto dura um projeto?",
-    a: "De 3 a 12 meses. Construção de sistema costuma ser 3–6 meses. Mentoria é anual.",
+    a: "De 1 a 6 meses, conforme o escopo. A mentoria é um programa à parte e deve ser consultada direto com o time da IAplicada — a Mari abre vagas esporadicamente.",
   },
   {
     q: "Qual o investimento?",
-    a: "Entre R$ 15k e R$ 80k/mês, dependendo do escopo e porte. Valor fechado depois do diagnóstico.",
+    a: "A partir de R$ 9.997, dependendo do escopo e porte da operação. Valor fechado depois do diagnóstico.",
   },
   {
     q: "Substitui consultoria, agência ou fábrica de software?",
