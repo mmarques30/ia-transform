@@ -336,65 +336,89 @@
     background-size: 48px 48px;
   }
 
-  /* Ticker for the keyword strip (like "Clareza ✽ Análise ✽ Eficiência") */
-  @keyframes ticker-scroll {
-    from {
-      transform: translateX(0);
-    }
-    to {
-      transform: translateX(-50%);
-    }
-  }
   .ticker-track {
     display: inline-flex;
     gap: 2rem;
     animation: ticker-scroll 40s linear infinite;
   }
 
-  /* AnimatedLogoMark — tech motion inspired by AI brand identities */
-  @keyframes ia-breathe {
-    0%,
-    100% {
-      transform: scale(1);
-    }
-    50% {
-      transform: scale(1.04);
-    }
+  /* AnimatedLogoMark utility classes — referenciadas direto nos elementos
+     ao invés de usar arbitrary classes do Tailwind (que não estavam
+     resolvendo em produção). */
+  .ia-anim-breathe {
+    animation: ia-breathe 4s ease-in-out infinite;
+    transform-origin: center;
   }
-  @keyframes ia-pulse-glow {
-    0%,
-    100% {
-      opacity: 0.35;
-      transform: scale(0.95);
-    }
-    50% {
-      opacity: 0.7;
-      transform: scale(1.05);
-    }
+  .ia-anim-pulse-glow {
+    animation: ia-pulse-glow 3.6s ease-in-out infinite;
+    transform-origin: center;
   }
-  @keyframes ia-diamond {
-    0%,
-    100% {
-      transform: scale(1);
-      opacity: 1;
-    }
-    50% {
-      transform: scale(1.6);
-      opacity: 0.6;
-    }
+  .ia-anim-diamond {
+    animation: ia-diamond 2.4s ease-in-out infinite;
+    transform-origin: 32px 32px;
+    transform-box: fill-box;
   }
-  @keyframes ia-orbit {
-    from {
-      transform: rotate(0deg) scale(1.45);
-    }
-    to {
-      transform: rotate(360deg) scale(1.45);
-    }
+  .ia-anim-orbit {
+    animation: ia-orbit 22s linear infinite;
+    transform-origin: center;
   }
+}
 
-  @media (prefers-reduced-motion: reduce) {
-    .ticker-track {
-      animation: none;
-    }
+/* Keyframes — fora de @layer pra serem globais e não escopadas */
+@keyframes ticker-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+@keyframes ia-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.04);
+  }
+}
+@keyframes ia-pulse-glow {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.95);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.08);
+  }
+}
+@keyframes ia-diamond {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.7);
+    opacity: 0.55;
+  }
+}
+@keyframes ia-orbit {
+  from {
+    transform: rotate(0deg) scale(1.45);
+  }
+  to {
+    transform: rotate(360deg) scale(1.45);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track,
+  .ia-anim-breathe,
+  .ia-anim-pulse-glow,
+  .ia-anim-diamond,
+  .ia-anim-orbit {
+    animation: none !important;
   }
 }
