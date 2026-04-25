@@ -12,10 +12,12 @@ interface LogoMarkProps {
   className?: string;
 }
 
+/** Path to the official IAplicada logo asset (the file the user uploaded). */
+const LOGO_SRC = "/brand/capa_biz_sistemas.jpg";
+
 /**
- * IAplicada logo (mark + wordmark).
- * SVG is inlined here so it never breaks due to asset serving / 404. The
- * file at /public/brand/logo.svg is kept in sync for OG/social use only.
+ * IAplicada logo (mark + wordmark) using the OFFICIAL asset that lives in
+ * /public/brand/. No SVG recreation anymore.
  */
 export function Logo({ showWordmark = true, size = 32, className, style }: LogoProps) {
   return (
@@ -36,43 +38,33 @@ export function Logo({ showWordmark = true, size = 32, className, style }: LogoP
   );
 }
 
-/**
- * Just the mark — a rounded olive square with 4 white petals + a small
- * center diamond (the actual IAplicada glyph).
- */
+/** Standalone mark — uses the real official logo image. */
 export function LogoMark({ size = 32, className }: LogoMarkProps) {
   return (
-    <svg
+    <img
+      src={LOGO_SRC}
       width={size}
       height={size}
-      viewBox="0 0 64 64"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
+      alt="IAplicada"
       className={className}
-      aria-hidden="true"
-    >
-      <defs>
-        <mask id={`ia-mark-mask-${size}`}>
-          <rect width="64" height="64" fill="black" />
-          <circle cx="32" cy="32" r="23" fill="white" />
-          <rect x="30" y="6" width="4" height="52" rx="2" fill="black" />
-          <rect x="6" y="30" width="52" height="4" rx="2" fill="black" />
-          <polygon points="32,28 36,32 32,36 28,32" fill="white" />
-        </mask>
-      </defs>
-      <rect width="64" height="64" rx="13" fill="#8BAB23" />
-      <rect width="64" height="64" fill="white" mask={`url(#ia-mark-mask-${size})`} />
-    </svg>
+      style={{
+        display: "block",
+        width: size,
+        height: size,
+        borderRadius: Math.round(size * 0.21), // ~13/64 to match the rounded square
+        objectFit: "cover",
+      }}
+    />
   );
 }
 
 /**
- * Animated mark — same glyph but with tech motion inspired by AI brand identities
- * (Caitlyn / Kallan-style). The whole symbol breathes (subtle scale + glow pulse),
- * the diamond at the center pulses out of phase, and a soft halo orbits around the
- * rounded square. Keeps everything readable and respects prefers-reduced-motion.
+ * Animated mark — same official logo with tech motion (orbit halo, breath,
+ * pulse glow). The diamond pulse precisava de SVG separado então removi:
+ * agora o efeito vem de glow + breathe + orbit ao redor da imagem real.
  */
 export function AnimatedLogoMark({ size = 96, className }: LogoMarkProps) {
+  const radius = Math.round(size * 0.21);
   return (
     <div
       className={`relative inline-block ${className ?? ""}`}
@@ -91,39 +83,28 @@ export function AnimatedLogoMark({ size = 96, className }: LogoMarkProps) {
       />
       {/* Glow pulse layer */}
       <span
-        className="ia-anim-pulse-glow absolute inset-0 rounded-[18px]"
+        className="ia-anim-pulse-glow absolute inset-0"
         style={{
           backgroundColor: "oklch(0.82 0.2 115 / 0.6)",
           filter: "blur(20px)",
+          borderRadius: radius,
         }}
       />
 
       {/* The mark — breathes subtly */}
-      <svg
-        width={size}
-        height={size}
-        viewBox="0 0 64 64"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
+      <img
+        src={LOGO_SRC}
+        alt=""
         className="ia-anim-breathe relative"
         style={{
           display: "block",
+          width: size,
+          height: size,
+          borderRadius: radius,
+          objectFit: "cover",
           filter: "drop-shadow(0 8px 24px oklch(0.58 0.16 125 / 0.4))",
         }}
-      >
-        <defs>
-          <mask id={`ia-mark-anim-${size}`}>
-            <rect width="64" height="64" fill="black" />
-            <circle cx="32" cy="32" r="23" fill="white" />
-            <rect x="30" y="6" width="4" height="52" rx="2" fill="black" />
-            <rect x="6" y="30" width="52" height="4" rx="2" fill="black" />
-          </mask>
-        </defs>
-        <rect width="64" height="64" rx="13" fill="#8BAB23" />
-        <rect width="64" height="64" fill="white" mask={`url(#ia-mark-anim-${size})`} />
-        {/* Diamond pulses out of phase */}
-        <polygon className="ia-anim-diamond" points="32,28 36,32 32,36 28,32" fill="white" />
-      </svg>
+      />
     </div>
   );
 }

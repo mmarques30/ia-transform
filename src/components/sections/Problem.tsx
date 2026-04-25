@@ -1,31 +1,23 @@
 import { Reveal } from "@/components/Reveal";
-import { Sparkles, Database, Zap, FileText } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
 
-interface ProblemItem {
-  icon: LucideIcon;
-  title: string;
-  text: string;
-}
-
-const PROBLEMS: ProblemItem[] = [
+const PROBLEMS = [
   {
-    icon: Sparkles,
+    n: "01",
     title: "Softwares prontos que obrigam sua empresa a se adaptar",
     text: "Você molda a operação ao software, e não o contrário. Resultado: workflow torto e time frustrado.",
   },
   {
-    icon: Database,
+    n: "02",
     title: "ERPs caros que prometem controle e entregam complexidade",
     text: "Módulos genéricos, consultoria cara, 18 meses de implementação — e ninguém usa metade.",
   },
   {
-    icon: Zap,
+    n: "03",
     title: "Automações soltas que só aceleram processos ruins",
     text: "Acelerar o errado não resolve. Automação sem estrutura é só caos mais rápido.",
   },
   {
-    icon: FileText,
+    n: "04",
     title: "Consultorias que entregam relatórios, mas não deixam execução",
     text: "Slide bonito, deliverable teórico, zero sistema em produção. Na semana seguinte, nada mudou.",
   },
@@ -57,22 +49,26 @@ export function Problem() {
 
         <div className="mt-16 grid md:grid-cols-2 gap-5 max-w-[980px] mx-auto">
           {PROBLEMS.map((p, i) => (
-            <Reveal key={p.title} delay={i * 0.05}>
-              <div className="card-soft p-7 lg:p-8 h-full relative">
-                <div
-                  className="absolute top-0 left-7 h-[2px] w-10"
-                  style={{ backgroundColor: "var(--color-primary)" }}
-                />
-                <div
-                  className="h-10 w-10 rounded-lg flex items-center justify-center"
-                  style={{ backgroundColor: "var(--color-olive)" }}
-                >
-                  <p.icon className="h-5 w-5 text-white" strokeWidth={1.75} />
+            <Reveal key={p.n} delay={i * 0.05}>
+              <div className="tech-card p-7 lg:p-8 h-full">
+                <div className="relative flex items-center gap-3">
+                  <span
+                    className="num-display text-[14px] tracking-wider"
+                    style={{ color: "var(--color-primary)" }}
+                  >
+                    {p.n}
+                  </span>
+                  <span
+                    className="h-[1px] flex-1"
+                    style={{
+                      background: "linear-gradient(90deg, var(--color-primary), transparent)",
+                    }}
+                  />
                 </div>
-                <h3 className="mt-5 text-[17px] lg:text-[18px] font-semibold text-foreground leading-snug">
+                <h3 className="relative mt-6 text-[18px] lg:text-[20px] font-bold tracking-tight text-foreground leading-[1.3]">
                   {p.title}
                 </h3>
-                <p className="mt-3 text-[14.5px] text-sage leading-[1.6]">{p.text}</p>
+                <p className="relative mt-3 text-[14.5px] text-sage leading-[1.6]">{p.text}</p>
               </div>
             </Reveal>
           ))}
