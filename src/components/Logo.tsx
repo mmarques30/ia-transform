@@ -1,10 +1,12 @@
 import type { CSSProperties } from "react";
 
 interface LogoProps {
-  /** Altura em pixels da logo horizontal. */
+  /** Altura em pixels da logo. Default 22 (compacto pra header). */
   size?: number;
   className?: string;
   style?: CSSProperties;
+  /** Esconde o wordmark "IAplicada" — útil pra contextos de só ícone. */
+  iconOnly?: boolean;
 }
 
 interface LogoMarkProps {
@@ -12,35 +14,70 @@ interface LogoMarkProps {
   className?: string;
 }
 
-/** Logo horizontal completa (mark + wordmark) — fundo escuro embutido. */
-const LOGO_FULL_SRC = "/brand/iaplicada-logo.jpg";
-/** Mark quadrada (só o ícone) — usada em pontos isolados (ex.: Authority). */
+/** Path da imagem quadrada (ainda usado em Authority + AnimatedLogoMark). */
 const LOGO_MARK_SRC = "/brand/capa_biz_sistemas.jpg";
 
-/**
- * Logo horizontal completa da IAplicada — usa o asset oficial em
- * /public/brand/iaplicada-logo.jpg. Como a imagem já contém o wordmark, não
- * acrescentamos texto "iaplicada" ao lado.
- */
-export function Logo({ size = 34, className, style }: LogoProps) {
+const PETAL_DARK = "oklch(0.42 0.13 125)";
+const PETAL_BRIGHT = "oklch(0.72 0.2 122)";
+
+/** Quatrefoil (4 pétalas, 2 tons de oliva) — versão SVG inline da marca. */
+function Quatrefoil({ size = 22 }: { size?: number }) {
   return (
-    <img
-      src={LOGO_FULL_SRC}
-      alt="IAplicada"
-      className={className}
-      style={{
-        display: "block",
-        height: size,
-        width: "auto",
-        borderRadius: Math.round(size * 0.18),
-        objectFit: "contain",
-        ...style,
-      }}
-    />
+    <svg
+      viewBox="-32 -32 64 64"
+      width={size}
+      height={size}
+      aria-hidden
+      style={{ display: "block", flexShrink: 0 }}
+    >
+      {[
+        { rot: 45, fill: PETAL_DARK },
+        { rot: 135, fill: PETAL_BRIGHT },
+        { rot: 225, fill: PETAL_DARK },
+        { rot: 315, fill: PETAL_BRIGHT },
+      ].map(({ rot, fill }) => (
+        <ellipse
+          key={rot}
+          cx="0"
+          cy="-15"
+          rx="11"
+          ry="17"
+          fill={fill}
+          transform={`rotate(${rot})`}
+        />
+      ))}
+    </svg>
   );
 }
 
-/** Mark quadrada — só o ícone, fundo embutido. */
+/**
+ * Logo IAplicada — SVG inline (sem fundo preto), com mark + wordmark.
+ * Tamanho default compacto (22px) pra caber em headers e footers sem dominar.
+ */
+export function Logo({ size = 22, className, style, iconOnly = false }: LogoProps) {
+  return (
+    <span
+      className={`inline-flex items-center gap-2 ${className ?? ""}`}
+      style={style}
+    >
+      <Quatrefoil size={size} />
+      {!iconOnly && (
+        <span
+          className="font-semibold tracking-tight text-foreground"
+          style={{
+            fontSize: Math.round(size * 0.78),
+            letterSpacing: "-0.01em",
+            lineHeight: 1,
+          }}
+        >
+          IAplicada
+        </span>
+      )}
+    </span>
+  );
+}
+
+/** Mark quadrada — só o ícone (mantida pra Authority etc). */
 export function LogoMark({ size = 32, className }: LogoMarkProps) {
   return (
     <img
@@ -60,10 +97,7 @@ export function LogoMark({ size = 32, className }: LogoMarkProps) {
   );
 }
 
-/**
- * Mark animada (orbit halo + breath + glow). Mantém a versão quadrada da
- * marca pra preservar o impacto visual no Authority.
- */
+/** Mark animada (orbit halo + breath + glow). */
 export function AnimatedLogoMark({ size = 96, className }: LogoMarkProps) {
   const radius = Math.round(size * 0.21);
   return (

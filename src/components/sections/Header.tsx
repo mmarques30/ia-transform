@@ -28,7 +28,7 @@ export function Header() {
     >
       <div className="container-page flex items-center justify-between w-full">
         <a href="#top" className="flex items-center gap-2.5">
-          <Logo size={34} />
+          <Logo size={22} />
           <span
             className="hidden sm:inline text-muted-foreground text-[13px] font-normal border-l border-border pl-3 ml-1"
             style={{ letterSpacing: "0.02em" }}
