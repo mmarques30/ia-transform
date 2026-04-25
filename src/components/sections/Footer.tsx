@@ -7,7 +7,7 @@ export function Footer() {
         <div className="grid md:grid-cols-3 gap-8">
           <div>
             <div className="flex items-center gap-2.5">
-              <Logo size={34} />
+              <Logo size={22} />
               <span
                 className="text-muted-foreground text-[13px] font-normal border-l border-border pl-3 ml-1"
                 style={{ letterSpacing: "0.02em" }}
