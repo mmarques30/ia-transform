@@ -350,4 +350,51 @@
     gap: 2rem;
     animation: ticker-scroll 40s linear infinite;
   }
+
+  /* AnimatedLogoMark — tech motion inspired by AI brand identities */
+  @keyframes ia-breathe {
+    0%,
+    100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.04);
+    }
+  }
+  @keyframes ia-pulse-glow {
+    0%,
+    100% {
+      opacity: 0.35;
+      transform: scale(0.95);
+    }
+    50% {
+      opacity: 0.7;
+      transform: scale(1.05);
+    }
+  }
+  @keyframes ia-diamond {
+    0%,
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1.6);
+      opacity: 0.6;
+    }
+  }
+  @keyframes ia-orbit {
+    from {
+      transform: rotate(0deg) scale(1.45);
+    }
+    to {
+      transform: rotate(360deg) scale(1.45);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ticker-track {
+      animation: none;
+    }
+  }
 }

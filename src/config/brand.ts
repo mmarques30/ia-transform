@@ -45,10 +45,9 @@ export const FOUNDER = {
   name: "Mariana Marques",
   role: "Fundadora · IAplicada",
   photoSrc: "/brand/mariana.jpg",
-  // Placeholder neutro até a foto oficial ser dropada em /public/brand/mariana.jpg.
-  // ID conhecido e estável do Unsplash (mulher profissional em escritório).
-  photoFallback:
-    "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=900&q=80",
+  // Foto pública enviada pela Mari via ibb.co.
+  // Sobrescrita automaticamente quando /brand/mariana.jpg existir localmente.
+  photoFallback: "https://i.ibb.co/NzfQDRG/final-composite-1.jpg",
   bio: "Fundei a IAplicada em 2022 depois de ver boas empresas travarem em pilotos de IA. Hoje conduzimos implementações com um time curado de especialistas.",
   socials: {
     linkedin: "https://www.linkedin.com/in/marianaqmarques/",

@@ -1,7 +1,7 @@
 import { Reveal } from "@/components/Reveal";
 import { ArrowRight } from "lucide-react";
 import { FOUNDER } from "@/config/brand";
-import { LogoMark } from "@/components/Logo";
+import { LogoMark, AnimatedLogoMark } from "@/components/Logo";
 
 export function Authority() {
   return (
@@ -27,7 +27,7 @@ export function Authority() {
         <div className="grid lg:grid-cols-[1.05fr_1fr] gap-12 lg:gap-16 items-center">
           <div>
             <Reveal>
-              <LogoMark size={56} />
+              <AnimatedLogoMark size={64} />
             </Reveal>
 
             <Reveal delay={0.05}>
