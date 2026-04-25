@@ -1,5 +1,6 @@
 import { Reveal } from "@/components/Reveal";
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight, Sparkles, LayoutGrid, Compass, TrendingUp } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
 const PATTERNS = [
   "Financeiro fragmentado",
@@ -9,7 +10,49 @@ const PATTERNS = [
   "Risco constante de erro",
 ];
 
-const BENEFITS = ["Liberdade", "Estrutura", "Gestão", "Previsibilidade"];
+interface Benefit {
+  Icon: LucideIcon;
+  label: string;
+  text: string;
+  tint: string;
+  border: string;
+  iconColor: string;
+}
+
+const BENEFITS: Benefit[] = [
+  {
+    Icon: Sparkles,
+    label: "Liberdade",
+    text: "O dono sai da operação. Decisão deixa de depender de uma cabeça só.",
+    tint: "linear-gradient(180deg, oklch(0.97 0.045 80) 0%, oklch(0.99 0.015 80) 100%)",
+    border: "oklch(0.85 0.06 80)",
+    iconColor: "oklch(0.55 0.13 60)",
+  },
+  {
+    Icon: LayoutGrid,
+    label: "Estrutura",
+    text: "Processos no mesmo lugar, papéis claros, hand-off documentado.",
+    tint: "linear-gradient(180deg, oklch(0.96 0.04 125) 0%, oklch(0.99 0.015 125) 100%)",
+    border: "oklch(0.82 0.08 125)",
+    iconColor: "oklch(0.45 0.16 125)",
+  },
+  {
+    Icon: Compass,
+    label: "Gestão",
+    text: "Indicador semanal pra cada área. Reunião de gestão deixa de ser desabafo.",
+    tint: "linear-gradient(180deg, oklch(0.96 0.025 240) 0%, oklch(0.99 0.01 240) 100%)",
+    border: "oklch(0.84 0.05 240)",
+    iconColor: "oklch(0.45 0.13 240)",
+  },
+  {
+    Icon: TrendingUp,
+    label: "Previsibilidade",
+    text: "Você sabe o que vai entrar, o que vai sair, e onde tá o gargalo do mês.",
+    tint: "linear-gradient(180deg, oklch(0.96 0.035 195) 0%, oklch(0.99 0.012 195) 100%)",
+    border: "oklch(0.82 0.06 195)",
+    iconColor: "oklch(0.45 0.13 195)",
+  },
+];
 
 export function Segmentation() {
   return (
@@ -65,42 +108,64 @@ export function Segmentation() {
           </div>
         </div>
 
-        {/* When structure changes */}
-        <div className="mt-28 grid lg:grid-cols-[1fr_1fr] gap-12 lg:gap-16 items-center max-w-[1100px] mx-auto card-soft p-8 lg:p-12">
+        {/* When structure changes — clean 2-col split with 2x2 benefit grid */}
+        <div className="mt-24 lg:mt-28 grid lg:grid-cols-[5fr_7fr] gap-10 lg:gap-14 items-center max-w-[1100px] mx-auto">
           <div>
             <Reveal>
-              <h3 className="h-mix text-[32px] sm:text-[40px] lg:text-[46px] text-foreground">
+              <span className="label-chip">
+                <span className="dot" />
+                Resultado real
+              </span>
+            </Reveal>
+            <Reveal delay={0.05}>
+              <h3 className="h-mix mt-5 text-[32px] sm:text-[40px] lg:text-[46px] text-foreground">
                 Quando a estrutura muda,
                 <br />o <em>jogo muda</em>.
               </h3>
             </Reveal>
             <Reveal delay={0.1}>
-              <p className="mt-6 text-[16px] text-sage leading-[1.6] max-w-[440px]">
+              <p className="mt-6 text-[16px] text-sage leading-[1.65] max-w-[440px]">
                 E isso não depende do tamanho da empresa, mas da maturidade da gestão.
               </p>
             </Reveal>
           </div>
 
-          <div className="relative">
-            <Reveal delay={0.15}>
-              <div className="flex flex-col items-end gap-4">
-                {BENEFITS.map((b, i) => (
+          <Reveal delay={0.15}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {BENEFITS.map((b, i) => (
+                <Reveal key={b.label} delay={i * 0.06}>
                   <div
-                    key={b}
-                    className="inline-flex items-center gap-2.5 rounded-full px-5 py-2.5 text-[15px] font-semibold"
+                    className="rounded-2xl p-6 h-full transition-transform hover:-translate-y-0.5"
                     style={{
-                      backgroundColor: "var(--color-olive)",
-                      color: "oklch(0.1 0.01 110)",
-                      transform: `translateX(${i * -14}px)`,
+                      background: b.tint,
+                      border: `1px solid ${b.border}`,
                     }}
                   >
-                    <Check className="h-4 w-4" strokeWidth={3} />
-                    {b}
+                    <span
+                      className="h-10 w-10 rounded-xl flex items-center justify-center"
+                      style={{
+                        backgroundColor: "oklch(1 0 0)",
+                        border: `1px solid ${b.border}`,
+                      }}
+                    >
+                      <b.Icon
+                        className="h-5 w-5"
+                        style={{ color: b.iconColor }}
+                        strokeWidth={1.75}
+                      />
+                    </span>
+                    <p
+                      className="mt-5 text-[16px] font-bold tracking-tight"
+                      style={{ color: b.iconColor }}
+                    >
+                      {b.label}
+                    </p>
+                    <p className="mt-1.5 text-[13.5px] leading-[1.5] text-sage">{b.text}</p>
                   </div>
-                ))}
-              </div>
-            </Reveal>
-          </div>
+                </Reveal>
+              ))}
+            </div>
+          </Reveal>
         </div>
       </div>
     </section>
