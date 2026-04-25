@@ -1,7 +1,7 @@
 import type { CSSProperties } from "react";
 
 interface LogoProps {
-  showWordmark?: boolean;
+  /** Altura em pixels da logo horizontal. */
   size?: number;
   className?: string;
   style?: CSSProperties;
@@ -12,37 +12,39 @@ interface LogoMarkProps {
   className?: string;
 }
 
-/** Path to the official IAplicada logo asset (the file the user uploaded). */
-const LOGO_SRC = "/brand/capa_biz_sistemas.jpg";
+/** Logo horizontal completa (mark + wordmark) — fundo escuro embutido. */
+const LOGO_FULL_SRC = "/brand/iaplicada-logo.jpg";
+/** Mark quadrada (só o ícone) — usada em pontos isolados (ex.: Authority). */
+const LOGO_MARK_SRC = "/brand/capa_biz_sistemas.jpg";
 
 /**
- * IAplicada logo (mark + wordmark) using the OFFICIAL asset that lives in
- * /public/brand/. No SVG recreation anymore.
+ * Logo horizontal completa da IAplicada — usa o asset oficial em
+ * /public/brand/iaplicada-logo.jpg. Como a imagem já contém o wordmark, não
+ * acrescentamos texto "iaplicada" ao lado.
  */
-export function Logo({ showWordmark = true, size = 32, className, style }: LogoProps) {
+export function Logo({ size = 34, className, style }: LogoProps) {
   return (
-    <span className={`inline-flex items-center gap-2.5 ${className ?? ""}`} style={style}>
-      <LogoMark size={size} />
-      {showWordmark && (
-        <span
-          className="font-semibold tracking-tight text-foreground"
-          style={{
-            fontSize: size >= 32 ? "18px" : "16px",
-            letterSpacing: "-0.02em",
-          }}
-        >
-          iaplicada
-        </span>
-      )}
-    </span>
+    <img
+      src={LOGO_FULL_SRC}
+      alt="IAplicada"
+      className={className}
+      style={{
+        display: "block",
+        height: size,
+        width: "auto",
+        borderRadius: Math.round(size * 0.18),
+        objectFit: "contain",
+        ...style,
+      }}
+    />
   );
 }
 
-/** Standalone mark — uses the real official logo image. */
+/** Mark quadrada — só o ícone, fundo embutido. */
 export function LogoMark({ size = 32, className }: LogoMarkProps) {
   return (
     <img
-      src={LOGO_SRC}
+      src={LOGO_MARK_SRC}
       width={size}
       height={size}
       alt="IAplicada"
@@ -51,7 +53,7 @@ export function LogoMark({ size = 32, className }: LogoMarkProps) {
         display: "block",
         width: size,
         height: size,
-        borderRadius: Math.round(size * 0.21), // ~13/64 to match the rounded square
+        borderRadius: Math.round(size * 0.21),
         objectFit: "cover",
       }}
     />
@@ -59,9 +61,8 @@ export function LogoMark({ size = 32, className }: LogoMarkProps) {
 }
 
 /**
- * Animated mark — same official logo with tech motion (orbit halo, breath,
- * pulse glow). The diamond pulse precisava de SVG separado então removi:
- * agora o efeito vem de glow + breathe + orbit ao redor da imagem real.
+ * Mark animada (orbit halo + breath + glow). Mantém a versão quadrada da
+ * marca pra preservar o impacto visual no Authority.
  */
 export function AnimatedLogoMark({ size = 96, className }: LogoMarkProps) {
   const radius = Math.round(size * 0.21);
@@ -71,7 +72,6 @@ export function AnimatedLogoMark({ size = 96, className }: LogoMarkProps) {
       style={{ width: size, height: size }}
       aria-hidden="true"
     >
-      {/* Outer rotating halo — "tech orbit" feeling */}
       <span
         className="ia-anim-orbit absolute inset-0 rounded-full"
         style={{
@@ -81,7 +81,6 @@ export function AnimatedLogoMark({ size = 96, className }: LogoMarkProps) {
           opacity: 0.85,
         }}
       />
-      {/* Glow pulse layer */}
       <span
         className="ia-anim-pulse-glow absolute inset-0"
         style={{
@@ -90,10 +89,8 @@ export function AnimatedLogoMark({ size = 96, className }: LogoMarkProps) {
           borderRadius: radius,
         }}
       />
-
-      {/* The mark — breathes subtly */}
       <img
-        src={LOGO_SRC}
+        src={LOGO_MARK_SRC}
         alt=""
         className="ia-anim-breathe relative"
         style={{
