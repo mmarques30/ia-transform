@@ -5,13 +5,21 @@ const TOOL_BADGES = ["Monday", "Make", "n8n", "Notion"];
 export function Solution() {
   return (
     <section className="py-[100px] lg:py-[140px] bg-background relative overflow-hidden">
+      {/* Tech animated grid drift */}
       <div
-        className="pointer-events-none absolute inset-0 opacity-[0.25]"
+        className="pointer-events-none absolute inset-0 tech-bg-grid ia-anim-grid-drift opacity-[0.35]"
         style={{
-          backgroundImage:
-            "linear-gradient(to right, oklch(0.82 0.02 122 / 0.3) 1px, transparent 1px), linear-gradient(to bottom, oklch(0.82 0.02 122 / 0.3) 1px, transparent 1px)",
-          backgroundSize: "56px 56px",
           maskImage: "radial-gradient(ellipse 60% 50% at 30% 50%, black 20%, transparent 80%)",
+        }}
+      />
+      {/* Soft lime glow */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -top-40 right-0 h-[460px] w-[460px] rounded-full ia-anim-shimmer"
+        style={{
+          background:
+            "radial-gradient(circle at center, oklch(0.62 0.17 125 / 0.16) 0%, transparent 70%)",
+          filter: "blur(40px)",
         }}
       />
 
