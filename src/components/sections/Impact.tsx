@@ -1,5 +1,14 @@
 import { Reveal } from "@/components/Reveal";
-import { ChevronRight } from "lucide-react";
+import {
+  ChevronRight,
+  ShoppingCart,
+  Factory,
+  Briefcase,
+  HeartPulse,
+  Wrench,
+  GraduationCap,
+} from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
 const IMPACTS = [
   "Menos tarefas manuais",
@@ -10,35 +19,65 @@ const IMPACTS = [
   "Crescimento com controle",
 ];
 
+interface Segment {
+  Icon: LucideIcon;
+  label: string;
+  /** Soft tint backgrounds — cada segmento tem um tom próprio. */
+  tint: string;
+  border: string;
+  iconColor: string;
+}
+
+const SEGMENTS: Segment[] = [
+  {
+    Icon: ShoppingCart,
+    label: "Varejo",
+    tint: "linear-gradient(180deg, oklch(0.97 0.045 80) 0%, oklch(0.99 0.015 80) 100%)",
+    border: "oklch(0.85 0.06 80)",
+    iconColor: "oklch(0.55 0.13 60)",
+  },
+  {
+    Icon: Factory,
+    label: "Indústria",
+    tint: "linear-gradient(180deg, oklch(0.95 0.03 240) 0%, oklch(0.99 0.01 240) 100%)",
+    border: "oklch(0.82 0.06 240)",
+    iconColor: "oklch(0.45 0.13 240)",
+  },
+  {
+    Icon: Briefcase,
+    label: "Consultoria",
+    tint: "linear-gradient(180deg, oklch(0.96 0.04 125) 0%, oklch(0.99 0.015 125) 100%)",
+    border: "oklch(0.82 0.08 125)",
+    iconColor: "oklch(0.45 0.16 125)",
+  },
+  {
+    Icon: HeartPulse,
+    label: "Saúde",
+    tint: "linear-gradient(180deg, oklch(0.96 0.035 25) 0%, oklch(0.99 0.012 25) 100%)",
+    border: "oklch(0.85 0.06 25)",
+    iconColor: "oklch(0.5 0.15 25)",
+  },
+  {
+    Icon: Wrench,
+    label: "Serviços",
+    tint: "linear-gradient(180deg, oklch(0.96 0.025 280) 0%, oklch(0.99 0.01 280) 100%)",
+    border: "oklch(0.82 0.05 280)",
+    iconColor: "oklch(0.45 0.14 280)",
+  },
+  {
+    Icon: GraduationCap,
+    label: "Educação",
+    tint: "linear-gradient(180deg, oklch(0.96 0.03 195) 0%, oklch(0.99 0.012 195) 100%)",
+    border: "oklch(0.82 0.06 195)",
+    iconColor: "oklch(0.45 0.13 195)",
+  },
+];
+
 export function Impact() {
   return (
     <section className="py-[100px] lg:py-[140px] bg-background">
       <div className="container-page">
-        <Reveal>
-          <div className="text-center mb-14">
-            <a href="#top" className="cta-primary inline-flex">
-              Entender como funciona o diagnóstico
-              <span className="arrow">
-                <svg
-                  width="14"
-                  height="14"
-                  viewBox="0 0 14 14"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M2 7H12M12 7L7 2M12 7L7 12"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </span>
-            </a>
-          </div>
-        </Reveal>
-
+        {/* Headline + benefícios */}
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start max-w-[1100px] mx-auto card-soft p-8 lg:p-12">
           <div>
             <Reveal>
@@ -86,6 +125,45 @@ export function Impact() {
                 Controle gera crescimento sustentável.
               </p>
             </Reveal>
+          </div>
+        </div>
+
+        {/* Grid de segmentos — cada um com tom próprio, mostrando que serve pra vários verticais */}
+        <div className="mt-20 lg:mt-24">
+          <Reveal>
+            <p className="text-center text-[11px] uppercase tracking-[0.16em] text-muted-foreground font-semibold">
+              Empresas que organizamos
+            </p>
+            <h3 className="mt-4 text-center text-[22px] lg:text-[28px] font-semibold text-foreground tracking-tight max-w-[680px] mx-auto">
+              Operações diferentes, mesma estrutura — adaptada por segmento.
+            </h3>
+          </Reveal>
+
+          <div className="mt-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 max-w-[1100px] mx-auto">
+            {SEGMENTS.map((s, i) => (
+              <Reveal key={s.label} delay={(i % 6) * 0.04}>
+                <div
+                  className="rounded-2xl p-5 h-full flex flex-col items-start gap-4 transition-transform hover:-translate-y-0.5"
+                  style={{
+                    background: s.tint,
+                    border: `1px solid ${s.border}`,
+                  }}
+                >
+                  <span
+                    className="h-10 w-10 rounded-xl flex items-center justify-center"
+                    style={{
+                      backgroundColor: "oklch(1 0 0)",
+                      border: `1px solid ${s.border}`,
+                    }}
+                  >
+                    <s.Icon className="h-5 w-5" style={{ color: s.iconColor }} strokeWidth={1.75} />
+                  </span>
+                  <p className="text-[14px] font-semibold" style={{ color: s.iconColor }}>
+                    {s.label}
+                  </p>
+                </div>
+              </Reveal>
+            ))}
           </div>
         </div>
       </div>
