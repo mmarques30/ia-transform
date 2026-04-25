@@ -134,33 +134,38 @@ export function Segmentation() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {BENEFITS.map((b, i) => (
                 <Reveal key={b.label} delay={i * 0.06}>
-                  <div
-                    className="rounded-2xl p-6 h-full transition-transform hover:-translate-y-0.5"
-                    style={{
-                      background: b.tint,
-                      border: `1px solid ${b.border}`,
-                    }}
-                  >
-                    <span
-                      className="h-10 w-10 rounded-xl flex items-center justify-center"
-                      style={{
-                        backgroundColor: "oklch(1 0 0)",
-                        border: `1px solid ${b.border}`,
-                      }}
-                    >
-                      <b.Icon
-                        className="h-5 w-5"
-                        style={{ color: b.iconColor }}
-                        strokeWidth={1.75}
-                      />
-                    </span>
+                  <div className="tech-card p-6 h-full">
+                    <div className="relative flex items-start justify-between">
+                      <span
+                        className="h-11 w-11 rounded-xl flex items-center justify-center"
+                        style={{
+                          backgroundColor: "oklch(0.97 0.005 110)",
+                          border: `1px solid var(--color-border)`,
+                        }}
+                      >
+                        <b.Icon
+                          className="h-5 w-5"
+                          style={{ color: b.iconColor }}
+                          strokeWidth={1.5}
+                        />
+                      </span>
+                      <span
+                        className="num-display text-[11px] tracking-wider"
+                        style={{ color: "var(--color-muted-foreground)" }}
+                      >
+                        0{i + 1}
+                      </span>
+                    </div>
                     <p
-                      className="mt-5 text-[16px] font-bold tracking-tight"
-                      style={{ color: b.iconColor }}
+                      className="relative mt-5 text-[10px] uppercase tracking-[0.18em] font-semibold"
+                      style={{ color: b.iconColor, opacity: 0.8 }}
                     >
+                      Resultado
+                    </p>
+                    <p className="relative mt-1 text-[18px] font-bold tracking-tight text-foreground">
                       {b.label}
                     </p>
-                    <p className="mt-1.5 text-[13.5px] leading-[1.5] text-sage">{b.text}</p>
+                    <p className="relative mt-2 text-[13.5px] leading-[1.55] text-sage">{b.text}</p>
                   </div>
                 </Reveal>
               ))}

@@ -75,8 +75,16 @@ const SEGMENTS: Segment[] = [
 
 export function Impact() {
   return (
-    <section className="py-[100px] lg:py-[140px] bg-background">
-      <div className="container-page">
+    <section className="py-[100px] lg:py-[140px] bg-background relative overflow-hidden">
+      {/* Tech background — drifting dots */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 tech-bg-dots ia-anim-grid-drift opacity-50"
+        style={{
+          maskImage: "radial-gradient(ellipse 70% 60% at 50% 50%, black 30%, transparent 90%)",
+        }}
+      />
+      <div className="container-page relative">
         {/* Headline + benefícios */}
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start max-w-[1100px] mx-auto card-soft p-8 lg:p-12">
           <div>
@@ -139,28 +147,34 @@ export function Impact() {
             </h3>
           </Reveal>
 
-          <div className="mt-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 max-w-[1100px] mx-auto">
+          <div className="mt-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 max-w-[1100px] mx-auto">
             {SEGMENTS.map((s, i) => (
               <Reveal key={s.label} delay={(i % 6) * 0.04}>
-                <div
-                  className="rounded-2xl p-5 h-full flex flex-col items-start gap-4 transition-transform hover:-translate-y-0.5"
-                  style={{
-                    background: s.tint,
-                    border: `1px solid ${s.border}`,
-                  }}
-                >
+                <div className="tech-card p-5 h-full flex flex-col items-start gap-4">
                   <span
-                    className="h-10 w-10 rounded-xl flex items-center justify-center"
+                    className="relative h-10 w-10 rounded-xl flex items-center justify-center"
                     style={{
-                      backgroundColor: "oklch(1 0 0)",
-                      border: `1px solid ${s.border}`,
+                      backgroundColor: "oklch(0.97 0.005 110)",
+                      border: `1px solid var(--color-border)`,
                     }}
                   >
-                    <s.Icon className="h-5 w-5" style={{ color: s.iconColor }} strokeWidth={1.75} />
+                    <s.Icon
+                      className="h-5 w-5 relative z-10"
+                      style={{ color: s.iconColor }}
+                      strokeWidth={1.5}
+                    />
                   </span>
-                  <p className="text-[14px] font-semibold" style={{ color: s.iconColor }}>
-                    {s.label}
-                  </p>
+                  <div className="relative">
+                    <p
+                      className="text-[10px] uppercase tracking-[0.16em] font-semibold"
+                      style={{ color: s.iconColor, opacity: 0.75 }}
+                    >
+                      Vertical
+                    </p>
+                    <p className="mt-1 text-[15px] font-semibold tracking-tight text-foreground">
+                      {s.label}
+                    </p>
+                  </div>
                 </div>
               </Reveal>
             ))}

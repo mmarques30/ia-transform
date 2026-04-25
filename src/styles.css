@@ -362,6 +362,55 @@
     animation: ia-orbit 22s linear infinite;
     transform-origin: center;
   }
+  .ia-anim-rotate-slow {
+    animation: ia-rotate 22s linear infinite;
+    transform-origin: center;
+  }
+  .ia-anim-grid-drift {
+    animation: ia-grid-drift 24s linear infinite;
+  }
+  .ia-anim-shimmer {
+    animation: ia-shimmer 8s ease-in-out infinite;
+  }
+
+  /* Tech backgrounds — clean, animated, elegant */
+  .tech-bg-grid {
+    background-image:
+      linear-gradient(to right, oklch(0.85 0.02 122 / 0.5) 1px, transparent 1px),
+      linear-gradient(to bottom, oklch(0.85 0.02 122 / 0.5) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+  .tech-bg-dots {
+    background-image: radial-gradient(oklch(0.62 0.17 125 / 0.18) 1px, transparent 1.5px);
+    background-size: 24px 24px;
+  }
+  .tech-card {
+    position: relative;
+    background-color: oklch(1 0 0);
+    border: 1px solid var(--color-border);
+    border-radius: 20px;
+    overflow: hidden;
+    transition:
+      transform 0.25s ease,
+      border-color 0.25s ease,
+      box-shadow 0.25s ease;
+  }
+  .tech-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(oklch(0.62 0.17 125 / 0.08) 0.8px, transparent 1px);
+    background-size: 18px 18px;
+    opacity: 0.6;
+    pointer-events: none;
+  }
+  .tech-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--color-olive);
+    box-shadow:
+      0 20px 40px -16px oklch(0.18 0.02 122 / 0.18),
+      0 0 0 1px var(--color-olive);
+  }
 }
 
 /* Keyframes — fora de @layer pra serem globais e não escopadas */
@@ -412,13 +461,41 @@
     transform: rotate(360deg) scale(1.45);
   }
 }
+@keyframes ia-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes ia-grid-drift {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 56px 56px;
+  }
+}
+@keyframes ia-shimmer {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.85;
+  }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .ticker-track,
   .ia-anim-breathe,
   .ia-anim-pulse-glow,
   .ia-anim-diamond,
-  .ia-anim-orbit {
+  .ia-anim-orbit,
+  .ia-anim-rotate-slow,
+  .ia-anim-grid-drift,
+  .ia-anim-shimmer {
     animation: none !important;
   }
 }
