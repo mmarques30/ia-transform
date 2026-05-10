@@ -1,102 +1,66 @@
-import { useState, type FormEvent } from "react";
-import { useNavigate } from "@tanstack/react-router";
-import { ArrowRight, AlertCircle } from "lucide-react";
+import { useEffect, useRef } from "react";
 
-const FORM_ENDPOINT = "https://ciwdlceyjsnlnunktqzx.supabase.co/functions/v1/form-submit";
 const FORM_SLUG = "business";
-
-const REVENUE_BANDS = [
-  "Até R$ 1M/ano",
-  "R$ 1M a R$ 5M/ano",
-  "R$ 5M a R$ 20M/ano",
-  "R$ 20M a R$ 50M/ano",
-  "Acima de R$ 50M/ano",
-];
-
-const ROLES = [
-  "CEO / Fundador(a)",
-  "Sócio(a)",
-  "C-level (CFO, COO, CMO)",
-  "Head ou Diretor(a)",
-  "Coordenador(a)",
-];
-
-interface FormPayload {
-  form_slug: string;
-  name: string;
-  email: string;
-  phone: string;
-  role: string;
-  revenue: string;
-  company: string;
-  website: string;
-  utm_source: string;
-  utm_medium: string;
-  utm_campaign: string;
-  utm_term: string;
-  utm_content: string;
-}
+const FORM_ORIGIN = "https://id-preview--ce4ae4c7-4381-4764-a549-46545bb9de13.lovable.app";
+const UTM_KEYS = [
+  "utm_source",
+  "utm_medium",
+  "utm_campaign",
+  "utm_term",
+  "utm_content",
+] as const;
 
 /**
- * HeroForm — campos nativos React. Submete pra função Edge da Supabase
- * (form-submit) com payload JSON (form_slug + dados + UTMs) e, em caso de
- * sucesso, navega pra /thank-you-business.
+ * HeroForm — wrapper escuro + iframe oficial do form Business no Lovable.
+ * Implementa o snippet exato fornecido pela IAplicada: cria o iframe via DOM
+ * API depois do mount, propaga UTMs da URL atual e escuta `iaplicada-form-resize`
+ * pra ajustar altura dinamicamente.
  */
 export function HeroForm() {
-  const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    if (loading) return;
-    setError(null);
-    setLoading(true);
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
 
-    try {
-      const fd = new FormData(e.currentTarget);
-      const params =
-        typeof window !== "undefined"
-          ? new URLSearchParams(window.location.search)
-          : new URLSearchParams();
+    const params = new URLSearchParams(window.location.search);
+    const utmQuery = UTM_KEYS.map(
+      (k) => `${k}=${encodeURIComponent(params.get(k) ?? "")}`,
+    ).join("&");
 
-      const payload: FormPayload = {
-        form_slug: FORM_SLUG,
-        name: String(fd.get("name") ?? "").trim(),
-        email: String(fd.get("email") ?? "").trim(),
-        phone: String(fd.get("phone") ?? "").trim(),
-        role: String(fd.get("role") ?? "").trim(),
-        revenue: String(fd.get("revenue") ?? "").trim(),
-        company: String(fd.get("company") ?? "").trim(),
-        website: String(fd.get("website") ?? "").trim(),
-        utm_source: params.get("utm_source") ?? "",
-        utm_medium: params.get("utm_medium") ?? "",
-        utm_campaign: params.get("utm_campaign") ?? "",
-        utm_term: params.get("utm_term") ?? "",
-        utm_content: params.get("utm_content") ?? "",
-      };
+    const iframe = document.createElement("iframe");
+    iframe.src = `${FORM_ORIGIN}/form/${FORM_SLUG}?${utmQuery}&embed=1`;
+    iframe.style.width = "100%";
+    iframe.style.minHeight = "720px";
+    iframe.style.border = "0";
+    iframe.style.borderRadius = "12px";
+    iframe.style.display = "block";
+    iframe.style.backgroundColor = "#ffffff";
+    iframe.setAttribute("loading", "lazy");
+    iframe.setAttribute("title", "Formulário IAplicada");
+    iframe.setAttribute(
+      "allow",
+      "clipboard-write; clipboard-read; payment; autoplay; encrypted-media",
+    );
 
-      const res = await fetch(FORM_ENDPOINT, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+    container.appendChild(iframe);
 
-      if (!res.ok) {
-        const text = await res.text().catch(() => "");
-        throw new Error(text || `Falha no envio (HTTP ${res.status})`);
+    function onMessage(e: MessageEvent) {
+      const data = e.data as { type?: string; slug?: string; height?: number } | null;
+      if (!data || data.type !== "iaplicada-form-resize" || data.slug !== FORM_SLUG) return;
+      if (typeof data.height === "number") {
+        iframe.style.height = `${data.height + 20}px`;
       }
-
-      navigate({ to: "/thank-you-business" });
-    } catch (err) {
-      setError(
-        err instanceof Error
-          ? err.message
-          : "Não conseguimos enviar agora. Tente novamente em alguns instantes.",
-      );
-      setLoading(false);
     }
-  }
+    window.addEventListener("message", onMessage);
+
+    return () => {
+      window.removeEventListener("message", onMessage);
+      if (iframe.parentNode === container) {
+        container.removeChild(iframe);
+      }
+    };
+  }, []);
 
   return (
     <div
@@ -146,174 +110,21 @@ export function HeroForm() {
         </div>
       </div>
 
-      <div className="px-7 pb-8 pt-6 lg:px-9 lg:pb-10 lg:pt-7 relative">
-        <form onSubmit={handleSubmit} className="space-y-3.5" noValidate>
-          <FormField id="name" label="Nome completo" required>
-            <input
-              id="name"
-              name="name"
-              type="text"
-              required
-              autoComplete="name"
-              placeholder="Seu nome completo"
-              className="form-input-dark"
-            />
-          </FormField>
+      <div className="px-3 pb-3 pt-5 lg:px-4 lg:pb-4 lg:pt-6 relative">
+        <div
+          ref={containerRef}
+          id="iaplicada-form-business"
+          className="overflow-hidden rounded-[12px]"
+          style={{ backgroundColor: "oklch(1 0 0)", width: "100%", maxWidth: 640, margin: "0 auto" }}
+        />
 
-          <FormField id="email" label="E-mail corporativo" required>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              required
-              autoComplete="email"
-              placeholder="voce@suaempresa.com"
-              className="form-input-dark"
-            />
-          </FormField>
-
-          <FormField id="phone" label="Telefone com DDD" required>
-            <input
-              id="phone"
-              name="phone"
-              type="tel"
-              required
-              autoComplete="tel"
-              placeholder="(11) 99999-9999"
-              className="form-input-dark"
-            />
-          </FormField>
-
-          <div className="grid sm:grid-cols-2 gap-3">
-            <FormField id="role" label="Cargo" required>
-              <select
-                id="role"
-                name="role"
-                required
-                defaultValue=""
-                className="form-input-dark"
-              >
-                <option value="" disabled>
-                  Selecione
-                </option>
-                {ROLES.map((r) => (
-                  <option key={r} value={r}>
-                    {r}
-                  </option>
-                ))}
-              </select>
-            </FormField>
-            <FormField id="revenue" label="Faturamento" required>
-              <select
-                id="revenue"
-                name="revenue"
-                required
-                defaultValue=""
-                className="form-input-dark"
-              >
-                <option value="" disabled>
-                  Selecione
-                </option>
-                {REVENUE_BANDS.map((r) => (
-                  <option key={r} value={r}>
-                    {r}
-                  </option>
-                ))}
-              </select>
-            </FormField>
-          </div>
-
-          <FormField id="company" label="Empresa" required>
-            <input
-              id="company"
-              name="company"
-              type="text"
-              required
-              autoComplete="organization"
-              placeholder="Nome da sua empresa"
-              className="form-input-dark"
-            />
-          </FormField>
-
-          <FormField id="website" label="Site da empresa">
-            <input
-              id="website"
-              name="website"
-              type="url"
-              placeholder="https://suaempresa.com"
-              className="form-input-dark"
-              autoComplete="url"
-            />
-          </FormField>
-
-          {error && (
-            <div
-              role="alert"
-              className="flex items-start gap-2 rounded-md px-3 py-2.5 text-[12.5px]"
-              style={{
-                backgroundColor: "oklch(0.32 0.13 25 / 0.3)",
-                border: "1px solid oklch(0.55 0.18 25 / 0.5)",
-                color: "oklch(0.92 0.06 25)",
-              }}
-            >
-              <AlertCircle className="h-4 w-4 mt-0.5 shrink-0" strokeWidth={2} />
-              <span>{error}</span>
-            </div>
-          )}
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="mt-2 w-full inline-flex items-center justify-center gap-2 rounded-full px-6 py-4 text-[14px] font-bold transition-all disabled:opacity-60 disabled:cursor-not-allowed hover:-translate-y-0.5"
-            style={{
-              backgroundColor: "oklch(1 0 0)",
-              color: "oklch(0.14 0.02 122)",
-              boxShadow: "0 8px 24px -8px oklch(1 0 0 / 0.3)",
-            }}
-          >
-            {loading ? "Enviando..." : "Quero saber mais sobre o Business"}
-            {!loading && <ArrowRight className="h-4 w-4" strokeWidth={2.5} />}
-          </button>
-
-          <p
-            className="pt-2 text-[11.5px] text-center leading-relaxed"
-            style={{ color: "oklch(0.65 0.015 115)" }}
-          >
-            Seus dados não são compartilhados. Sem SPAM. Cancele a qualquer momento.
-          </p>
-        </form>
+        <p
+          className="pt-4 text-[11.5px] text-center leading-relaxed"
+          style={{ color: "oklch(0.65 0.015 115)" }}
+        >
+          Seus dados não são compartilhados. Sem SPAM. Cancele a qualquer momento.
+        </p>
       </div>
     </div>
   );
 }
-
-function FormField({
-  id,
-  label,
-  required,
-  children,
-}: {
-  id: string;
-  label: string;
-  required?: boolean;
-  children: React.ReactNode;
-}) {
-  return (
-    <div>
-      <label
-        htmlFor={id}
-        className="block text-[12px] font-semibold mb-1.5"
-        style={{ color: "oklch(0.85 0.02 110)" }}
-      >
-        {label}
-        {required && (
-          <span className="ml-1" style={{ color: "oklch(0.82 0.2 115)" }}>
-            ·
-          </span>
-        )}
-      </label>
-      {children}
-    </div>
-  );
-}
-
