@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
-import { Logo } from "@/components/Logo";
 import { ArrowRight } from "lucide-react";
+
+/** Marca completa (mark + wordmark) — asset oficial em /public/brand/. */
+const LOGO_FULL_SRC = "/brand/Marca%20completa%20fundo%20claro%20(1).png";
 
 const NAV = [
   { href: "#sistemas", label: "Sistemas" },
@@ -28,7 +30,11 @@ export function Header() {
     >
       <div className="container-page flex items-center justify-between w-full">
         <a href="#top" className="flex items-center gap-2.5">
-          <Logo size={22} />
+          <img
+            src={LOGO_FULL_SRC}
+            alt="IAplicada"
+            style={{ height: 26, width: "auto", display: "block" }}
+          />
           <span
             className="hidden sm:inline text-muted-foreground text-[13px] font-normal border-l border-border pl-3 ml-1"
             style={{ letterSpacing: "0.02em" }}
