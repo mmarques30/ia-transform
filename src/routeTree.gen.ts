@@ -9,8 +9,14 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ThankYouBusinessRouteImport } from './routes/thank-you-business'
 import { Route as IndexRouteImport } from './routes/index'
 
+const ThankYouBusinessRoute = ThankYouBusinessRouteImport.update({
+  id: '/thank-you-business',
+  path: '/thank-you-business',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -19,24 +25,28 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/thank-you-business': typeof ThankYouBusinessRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/thank-you-business': typeof ThankYouBusinessRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/thank-you-business': typeof ThankYouBusinessRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/thank-you-business'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/thank-you-business'
+  id: '__root__' | '/' | '/thank-you-business'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ThankYouBusinessRoute: typeof ThankYouBusinessRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +58,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/thank-you-business': {
+      id: '/thank-you-business'
+      path: '/thank-you-business'
+      fullPath: '/thank-you-business'
+      preLoaderRoute: typeof ThankYouBusinessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ThankYouBusinessRoute: ThankYouBusinessRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
