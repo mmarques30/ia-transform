@@ -8,12 +8,20 @@ import {
 
 const FAQS = [
   {
+    q: "Qual é o prazo de implementação?",
+    a: "Entregas a partir de 1 semana, conforme o escopo. Acompanhamento da operação por até 12 meses.",
+  },
+  {
     q: "Quanto dura um projeto?",
     a: "De 1 a 6 meses, conforme o escopo. A mentoria é um programa à parte e deve ser consultada direto com o time da IAplicada — a Mari abre vagas esporadicamente.",
   },
   {
     q: "Qual o investimento?",
     a: "A partir de R$ 9.997, dependendo do escopo e porte da operação. Valor fechado depois do diagnóstico.",
+  },
+  {
+    q: "Como é a cobrança?",
+    a: "Cobrança mensal, com contrato e nota fiscal. Pagamento via boleto.",
   },
   {
     q: "Substitui consultoria, agência ou fábrica de software?",
@@ -26,14 +34,6 @@ const FAQS = [
   {
     q: "Vocês assinam NDA?",
     a: "Sim, antes de qualquer conversa aprofundada.",
-  },
-  {
-    q: "Como é a cobrança?",
-    a: "Mensal, contrato PJ, nota fiscal, boleto ou transferência.",
-  },
-  {
-    q: "Diferença entre Business e Academy?",
-    a: "Academy é capacitação individual. Business é implementação na empresa inteira.",
   },
   {
     q: "Como garante continuidade depois?",

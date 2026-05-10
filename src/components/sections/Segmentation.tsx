@@ -2,7 +2,7 @@ import { Reveal } from "@/components/Reveal";
 import { ArrowRight, ArrowUp } from "lucide-react";
 
 const PATTERNS = [
-  "Financeiro fragmentado",
+  "Financeiro descentralizado",
   "Relatórios manuais",
   "Dados espalhados",
   "Decisões lentas",
@@ -19,20 +19,20 @@ interface Benefit {
 const BENEFITS: Benefit[] = [
   {
     n: "01",
-    label: "Liberdade",
-    text: "O dono sai da operação. Decisão deixa de depender de uma cabeça só.",
+    label: "Autonomia",
+    text: "A operação deixa de depender de uma única pessoa. Decisão distribuída, com base em processo.",
     Mockup: LiberdadeMockup,
   },
   {
     n: "02",
     label: "Estrutura",
-    text: "Processos no mesmo lugar, papéis claros, hand-off documentado.",
+    text: "Processos centralizados, papéis definidos e handoffs documentados.",
     Mockup: EstruturaMockup,
   },
   {
     n: "03",
     label: "Previsibilidade",
-    text: "Você sabe o que vai entrar, o que vai sair e onde está o gargalo do mês.",
+    text: "Visibilidade sobre entrada, saída e gargalos operacionais.",
     Mockup: PrevisibilidadeMockup,
   },
 ];
@@ -41,17 +41,18 @@ export function Segmentation() {
   return (
     <section className="py-[100px] lg:py-[140px] bg-background">
       <div className="container-page">
-        {/* Same pattern of chaos */}
+        {/* Same pattern of inefficiency */}
         <div className="text-center max-w-[820px] mx-auto">
           <Reveal>
             <h2 className="h-mix text-[36px] sm:text-[44px] lg:text-[54px] text-foreground">
               Empresas diferentes.
-              <br />O <em>mesmo padrão</em> de caos.
+              <br />O <em>mesmo padrão</em> de ineficiência operacional.
             </h2>
           </Reveal>
           <Reveal delay={0.05}>
-            <p className="mt-5 text-[16px] text-sage leading-[1.6] max-w-[600px] mx-auto">
-              Indústrias, consultorias, empresas de serviço, operações em crescimento.
+            <p className="mt-5 text-[16px] text-sage leading-[1.6] max-w-[640px] mx-auto">
+              Indústrias, serviços e operações em crescimento enfrentando os mesmos gargalos
+              estruturais.
             </p>
           </Reveal>
         </div>
@@ -100,14 +101,15 @@ export function Segmentation() {
             </Reveal>
             <Reveal delay={0.05}>
               <h3 className="h-mix mt-5 text-[32px] sm:text-[40px] lg:text-[46px] text-foreground">
-                Quando a estrutura muda,
-                <br />o <em>jogo muda</em>.
+                Quando a estrutura muda, os
+                <br />
+                <em>indicadores</em> passam a responder.
               </h3>
             </Reveal>
             <Reveal delay={0.1}>
-              <p className="mt-5 text-[16px] text-sage leading-[1.65] max-w-[600px] mx-auto">
-                Cada card abaixo é um indicador real que muda quando a operação ganha estrutura. Não
-                é promessa — é o antes e depois.
+              <p className="mt-5 text-[16px] text-sage leading-[1.65] max-w-[640px] mx-auto">
+                Resultados não são isolados. São consequência de uma empresa estruturada. Os
+                indicadores abaixo refletem o impacto direto da estrutura na operação.
               </p>
             </Reveal>
           </div>

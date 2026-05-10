@@ -84,9 +84,9 @@ export function Authority() {
             <div className="mt-10 space-y-4 text-sage text-[15.5px] leading-[1.65] max-w-[520px]">
               <Reveal delay={0.15}>
                 <p>
-                  A IAplicada nasceu da experiência prática em operações complexas — anos lidando
-                  com rotinas, indicadores e gargalos em negócios líderes de e-commerce, indústria e
-                  mineração.
+                  A IAplicada nasce da prática operacional — estruturando rotinas, indicadores e
+                  destravando gargalos em operações complexas de e-commerce, indústria, mineração,
+                  serviços e tecnologia SaaS.
                 </p>
               </Reveal>
 
@@ -112,7 +112,7 @@ export function Authority() {
             </div>
 
             <Reveal delay={0.28}>
-              <a href="#top" className="mt-10 cta-primary">
+              <a href="#diagnostico-form" className="mt-10 cta-primary">
                 Entender como funciona o diagnóstico
                 <span className="arrow">
                   <svg

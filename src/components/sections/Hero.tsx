@@ -65,7 +65,7 @@ export function Hero() {
           </div>
 
           <Reveal delay={0.1}>
-            <div className="lg:sticky lg:top-24">
+            <div id="diagnostico-form" className="lg:sticky lg:top-24 scroll-mt-24">
               <HeroForm />
             </div>
           </Reveal>

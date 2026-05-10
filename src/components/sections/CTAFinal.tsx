@@ -24,7 +24,7 @@ export function CTAFinal() {
             </p>
           </Reveal>
           <Reveal delay={0.1}>
-            <a href="#top" className="mt-10 cta-primary">
+            <a href="#diagnostico-form" className="mt-10 cta-primary">
               <ArrowUp className="h-4 w-4" />
               Agendar diagnóstico
               <span className="arrow">

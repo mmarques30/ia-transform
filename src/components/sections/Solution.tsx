@@ -62,7 +62,7 @@ export function Solution() {
             </Reveal>
 
             <Reveal delay={0.15}>
-              <a href="#top" className="mt-10 cta-primary">
+              <a href="#diagnostico-form" className="mt-10 cta-primary">
                 Quero conhecer o Business
                 <span className="arrow">
                   <svg
