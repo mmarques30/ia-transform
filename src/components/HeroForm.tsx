@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 const FORM_SLUG = "business";
 const FORM_ORIGIN = "https://id-preview--ce4ae4c7-4381-4764-a549-46545bb9de13.lovable.app";
@@ -10,39 +10,56 @@ const UTM_KEYS = [
   "utm_content",
 ] as const;
 
-interface ResizeMessage {
-  type: "iaplicada-form-resize";
-  slug: string;
-  height: number;
-}
-
 /**
- * Wrapper dark com chip "Diagnóstico estratégico / Vagas abertas" + iframe
- * embed oficial do formulário Business (lovable.app). Captura UTMs da URL
- * atual e repassa pro iframe, e escuta a mensagem `iaplicada-form-resize`
- * pra ajustar a altura dinamicamente.
+ * Wrapper escuro com chip "Diagnóstico estratégico" + embed do formulário
+ * oficial da IAplicada via iframe (lovable.app). Implementa exatamente o
+ * snippet oficial: cria o iframe via DOM API depois do mount, captura UTMs
+ * da URL atual e escuta `iaplicada-form-resize` pra ajustar altura.
  */
 export function HeroForm() {
-  const iframeRef = useRef<HTMLIFrameElement>(null);
-  const [iframeSrc, setIframeSrc] = useState<string>("");
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
     const params = new URLSearchParams(window.location.search);
     const utmQuery = UTM_KEYS.map(
       (k) => `${k}=${encodeURIComponent(params.get(k) ?? "")}`,
     ).join("&");
-    setIframeSrc(`${FORM_ORIGIN}/form/${FORM_SLUG}?${utmQuery}&embed=1`);
 
-    function onMessage(e: MessageEvent<ResizeMessage>) {
-      const data = e.data;
+    const iframe = document.createElement("iframe");
+    iframe.src = `${FORM_ORIGIN}/form/${FORM_SLUG}?${utmQuery}&embed=1`;
+    iframe.style.width = "100%";
+    iframe.style.minHeight = "720px";
+    iframe.style.border = "0";
+    iframe.style.borderRadius = "12px";
+    iframe.style.display = "block";
+    iframe.style.backgroundColor = "#ffffff";
+    iframe.setAttribute("loading", "lazy");
+    iframe.setAttribute("title", "Formulário IAplicada");
+    iframe.setAttribute(
+      "allow",
+      "clipboard-write; clipboard-read; payment; autoplay; encrypted-media",
+    );
+
+    container.appendChild(iframe);
+
+    function onMessage(e: MessageEvent) {
+      const data = e.data as { type?: string; slug?: string; height?: number } | null;
       if (!data || data.type !== "iaplicada-form-resize" || data.slug !== FORM_SLUG) return;
-      if (iframeRef.current) {
-        iframeRef.current.style.height = `${data.height + 20}px`;
+      if (typeof data.height === "number") {
+        iframe.style.height = `${data.height + 20}px`;
       }
     }
-
     window.addEventListener("message", onMessage);
-    return () => window.removeEventListener("message", onMessage);
+
+    return () => {
+      window.removeEventListener("message", onMessage);
+      if (iframe.parentNode === container) {
+        container.removeChild(iframe);
+      }
+    };
   }, []);
 
   return (
@@ -55,7 +72,6 @@ export function HeroForm() {
           "0 40px 80px -30px oklch(0 0 0 / 0.55), 0 10px 25px -8px oklch(0.18 0.02 122 / 0.25)",
       }}
     >
-      {/* Inner highlight (1px top) */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 rounded-[24px]"
@@ -96,25 +112,11 @@ export function HeroForm() {
 
       <div className="px-3 pb-3 pt-5 lg:px-4 lg:pb-4 lg:pt-6 relative">
         <div
+          ref={containerRef}
           id="iaplicada-form-business"
           className="overflow-hidden rounded-[12px]"
-          style={{ backgroundColor: "oklch(1 0 0)" }}
-        >
-          {iframeSrc && (
-            <iframe
-              ref={iframeRef}
-              src={iframeSrc}
-              loading="lazy"
-              title="Formulário IAplicada"
-              style={{
-                width: "100%",
-                minHeight: 720,
-                border: 0,
-                display: "block",
-              }}
-            />
-          )}
-        </div>
+          style={{ backgroundColor: "oklch(1 0 0)", width: "100%", maxWidth: 640, margin: "0 auto" }}
+        />
 
         <p
           className="pt-4 text-[11.5px] text-center leading-relaxed"
