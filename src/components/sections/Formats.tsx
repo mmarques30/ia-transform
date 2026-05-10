@@ -69,7 +69,7 @@ export function Formats() {
           <div className="mt-14 text-center">
             <p className="text-sage">O formato certo pra você a gente descobre em 30 minutos.</p>
             <a
-              href="#cta-final"
+              href="#diagnostico-form"
               className="mt-4 inline-flex items-center gap-2 text-primary-glow hover:text-primary font-semibold transition-colors"
             >
               Agendar diagnóstico

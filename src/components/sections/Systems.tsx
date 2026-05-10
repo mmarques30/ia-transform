@@ -110,7 +110,7 @@ export function Systems() {
         <Reveal delay={0.2}>
           <div className="mt-12 text-center">
             <a
-              href="#cta-final"
+              href="#diagnostico-form"
               className="inline-flex items-center gap-2 text-foreground font-semibold text-[15px] hover:text-primary transition-colors"
             >
               Quero construir um desses pra minha operação

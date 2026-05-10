@@ -75,14 +75,13 @@ export function Impact() {
           </Reveal>
           <Reveal delay={0.05}>
             <h2 className="h-mix mt-6 text-[36px] sm:text-[44px] lg:text-[54px] text-foreground">
-              Quando a empresa para de operar <em>no improviso</em>,
-              <br className="hidden sm:block" /> o jogo muda em <em>todos</em> os indicadores.
+              Sem improviso, a operação ganha <em>previsibilidade</em>
+              <br className="hidden sm:block" /> — e os indicadores acompanham.
             </h2>
           </Reveal>
           <Reveal delay={0.1}>
             <p className="mt-5 text-[16px] text-sage leading-[1.6] max-w-[600px] mx-auto">
-              Não é um KPI subindo isolado. É a operação inteira ganhando estrutura — e os números
-              acompanhando.
+              Não é um KPI isolado. É a operação estruturada refletindo nos resultados.
             </p>
           </Reveal>
         </div>
@@ -110,7 +109,7 @@ export function Impact() {
           </Reveal>
           <Reveal delay={0.1}>
             <h3 className="mt-4 text-center text-[28px] sm:text-[34px] lg:text-[40px] font-bold text-foreground tracking-tight max-w-[820px] mx-auto leading-[1.15]">
-              E esse impacto roda em um{" "}
+              Uma mesma metodologia,{" "}
               <em
                 style={{
                   color: "var(--color-primary)",
@@ -119,15 +118,14 @@ export function Impact() {
                   fontWeight: 400,
                 }}
               >
-                sistema próprio
+                adaptada
               </em>{" "}
-              pra cada vertical.
+              para sua empresa.
             </h3>
           </Reveal>
           <Reveal delay={0.15}>
             <p className="mt-5 text-center text-[15px] text-sage leading-[1.6] max-w-[560px] mx-auto">
-              Mesmo método de estruturação. Implementação adaptada ao jeito de operar de cada
-              segmento.
+              Mesma metodologia. Implementação adaptada ao contexto de cada segmento.
             </p>
           </Reveal>
         </div>

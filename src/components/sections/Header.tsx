@@ -50,7 +50,7 @@ export function Header() {
         </nav>
 
         <a
-          href="#top"
+          href="#diagnostico-form"
           className="inline-flex items-center gap-1.5 justify-center rounded-md bg-accent text-accent-foreground font-semibold text-[13px] px-4 py-2.5 hover:bg-primary hover:text-primary-foreground transition-colors"
         >
           Agendar diagnóstico

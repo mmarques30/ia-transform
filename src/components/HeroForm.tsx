@@ -14,7 +14,7 @@ const ROLES = [
   "Sócio(a)",
   "C-level (CFO, COO, CMO)",
   "Head ou Diretor(a)",
-  "Líder de transformação",
+  "Coordenador(a)",
 ];
 
 /**
@@ -164,6 +164,15 @@ export function HeroForm() {
                 id="company"
                 type="text"
                 placeholder="Nome da sua empresa"
+                className="form-input-dark"
+              />
+            </FormField>
+
+            <FormField id="website" label="Site da empresa">
+              <input
+                id="website"
+                type="url"
+                placeholder="https://suaempresa.com"
                 className="form-input-dark"
               />
             </FormField>

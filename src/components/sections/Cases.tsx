@@ -4,7 +4,8 @@ interface CaseStudy {
   segment: string;
   company: string;
   size: string;
-  summary: string;
+  before: string;
+  after: string;
   metrics: { value: string; label: string }[];
   quote: string;
   author: string;
@@ -16,8 +17,10 @@ const CASES: CaseStudy[] = [
     segment: "Varejo",
     company: "Grupo de varejo",
     size: "~2.500 colaboradores",
-    summary:
-      "Atendimento explodindo, ferramenta de IA comprada e parada. Em 12 semanas, 40 atendentes operando o novo fluxo.",
+    before:
+      "Atendimento sobrecarregado, filas crescentes e IA sem adoção — investimento parado.",
+    after:
+      "Fluxo estruturado, adoção operacional da IA e ganho de eficiência no atendimento.",
     metrics: [
       { value: "−47%", label: "tempo de resposta" },
       { value: "3,2×", label: "1º contato" },
@@ -31,8 +34,10 @@ const CASES: CaseStudy[] = [
     segment: "Fintech",
     company: "Fintech Série A",
     size: "~80 colaboradores",
-    summary:
-      "CEO queria acelerar ops sem contratar. 6 processos mapeados, 4 automatizados, 1 assistente interno.",
+    before:
+      "Operação no limite de capacidade, crescimento dependente de novas contratações.",
+    after:
+      "Operação estruturada, com automação e escala sem expansão de time.",
     metrics: [
       { value: "+22h", label: "ops/semana" },
       { value: "0", label: "contratações" },
@@ -46,8 +51,10 @@ const CASES: CaseStudy[] = [
     segment: "Indústria",
     company: "Grupo industrial",
     size: "~5.000 colaboradores",
-    summary:
-      "6 iniciativas de IA em paralelo, sem coordenação. Mentoria com C-level e governança viraram o jogo.",
+    before:
+      "Múltiplas iniciativas de IA desconectadas, sem governança e com baixa eficiência de investimento.",
+    after:
+      "Estrutura de governança implementada, com priorização por ROI e execução coordenada.",
     metrics: [
       { value: "6→3", label: "frentes com ROI" },
       { value: "R$ 2,1M", label: "eficiência ano 1" },
@@ -72,9 +79,9 @@ export function Cases() {
           </Reveal>
           <Reveal delay={0.05}>
             <h2 className="h-mix mt-6 text-[36px] sm:text-[44px] lg:text-[54px] text-foreground">
-              O que acontece <em>quando IA chega</em>
+              O que acontece quando a <em>IAplicada</em>
               <br />
-              no operacional.
+              chega na empresa.
             </h2>
           </Reveal>
         </div>
@@ -108,7 +115,29 @@ export function Cases() {
                 <div className="p-6 flex flex-col grow">
                   <h3 className="text-[18px] font-semibold text-foreground">{c.company}</h3>
                   <p className="mt-1 text-[12px] text-muted-foreground">{c.size}</p>
-                  <p className="mt-4 text-[14px] text-sage leading-[1.55]">{c.summary}</p>
+
+                  <div className="mt-4 space-y-3">
+                    <div>
+                      <p
+                        className="text-[10px] uppercase tracking-[0.16em] font-bold"
+                        style={{ color: "oklch(0.55 0.16 25)" }}
+                      >
+                        Antes
+                      </p>
+                      <p className="mt-1 text-[13.5px] text-sage leading-[1.55]">{c.before}</p>
+                    </div>
+                    <div>
+                      <p
+                        className="text-[10px] uppercase tracking-[0.16em] font-bold"
+                        style={{ color: "var(--color-primary)" }}
+                      >
+                        Depois
+                      </p>
+                      <p className="mt-1 text-[13.5px] text-foreground leading-[1.55] font-medium">
+                        {c.after}
+                      </p>
+                    </div>
+                  </div>
 
                   <div className="mt-5 grid grid-cols-3 gap-3 py-4 border-y border-border">
                     {c.metrics.map((m) => (

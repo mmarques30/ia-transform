@@ -77,13 +77,13 @@ export function Process() {
             <h2 className="h-mix text-[36px] sm:text-[44px] lg:text-[54px] text-foreground">
               Tudo começa com um diagnóstico
               <br />
-              para um <em>MAPA ESTRATÉGICO</em>.
+              para construir um <em>mapa estratégico</em>.
             </h2>
           </Reveal>
 
           <Reveal delay={0.1}>
             <div className="mt-8 flex flex-wrap justify-center gap-x-10 gap-y-3 text-[15px] text-foreground font-semibold">
-              {["Primeiro, eu escuto.", "Depois, eu analiso.", "Só então, eu desenho."].map((s) => (
+              {["Escuta do contexto", "Análise dos dados e processos", "Estruturação do plano"].map((s) => (
                 <span key={s} className="inline-flex items-center gap-2">
                   <ChevronRight
                     className="h-4 w-4"
@@ -167,7 +167,7 @@ export function Process() {
 
         <Reveal delay={0.3}>
           <div className="mt-14 text-center">
-            <a href="#top" className="cta-primary">
+            <a href="#diagnostico-form" className="cta-primary">
               Quero um mapa estratégico
               <span className="arrow">
                 <svg
