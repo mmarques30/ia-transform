@@ -49,11 +49,11 @@ export const Route = createRootRoute({
       { name: "twitter:card", content: "summary_large_image" },
       { property: "og:title", content: "IAplicada Business · IA aplicada ao operacional da sua empresa" },
       { name: "twitter:title", content: "IAplicada Business · IA aplicada ao operacional da sua empresa" },
-      { name: "description", content: "IAplicada Business implements AI within companies for measurable operational transformation." },
-      { property: "og:description", content: "IAplicada Business implements AI within companies for measurable operational transformation." },
-      { name: "twitter:description", content: "IAplicada Business implements AI within companies for measurable operational transformation." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/3fac0f94-6af2-4873-ac88-eb6a4a7a0fed/id-preview-608ca20a--3e493d3c-70cb-40da-85f3-b2dbd161c1a9.lovable.app-1778460138210.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/3fac0f94-6af2-4873-ac88-eb6a4a7a0fed/id-preview-608ca20a--3e493d3c-70cb-40da-85f3-b2dbd161c1a9.lovable.app-1778460138210.png" },
+      { name: "description", content: "Não construímos por hype. Cada sistema é projetado pra resolver um problema operacional específico." },
+      { property: "og:description", content: "Não construímos por hype. Cada sistema é projetado pra resolver um problema operacional específico." },
+      { name: "twitter:description", content: "Não construímos por hype. Cada sistema é projetado pra resolver um problema operacional específico." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/fde05dc6-5082-4a73-81e9-b28976a83f73/id-preview-a4fc7d30--3e493d3c-70cb-40da-85f3-b2dbd161c1a9.lovable.app-1778460552018.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/fde05dc6-5082-4a73-81e9-b28976a83f73/id-preview-a4fc7d30--3e493d3c-70cb-40da-85f3-b2dbd161c1a9.lovable.app-1778460552018.png" },
     ],
     links: [
       {
