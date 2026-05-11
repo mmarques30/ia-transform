@@ -47,6 +47,13 @@ export const Route = createRootRoute({
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { property: "og:title", content: "IAplicada Business · IA aplicada ao operacional da sua empresa" },
+      { name: "twitter:title", content: "IAplicada Business · IA aplicada ao operacional da sua empresa" },
+      { name: "description", content: "IAplicada Business implements AI within companies for measurable operational transformation." },
+      { property: "og:description", content: "IAplicada Business implements AI within companies for measurable operational transformation." },
+      { name: "twitter:description", content: "IAplicada Business implements AI within companies for measurable operational transformation." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/3fac0f94-6af2-4873-ac88-eb6a4a7a0fed/id-preview-608ca20a--3e493d3c-70cb-40da-85f3-b2dbd161c1a9.lovable.app-1778460138210.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/3fac0f94-6af2-4873-ac88-eb6a4a7a0fed/id-preview-608ca20a--3e493d3c-70cb-40da-85f3-b2dbd161c1a9.lovable.app-1778460138210.png" },
     ],
     links: [
       {
