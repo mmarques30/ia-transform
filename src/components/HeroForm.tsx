@@ -102,16 +102,16 @@ export function HeroForm() {
     <div
       className="rounded-[24px] overflow-hidden relative"
       style={{
-        backgroundColor: "var(--color-accent)",
-        border: "1px solid oklch(0.3 0.025 122)",
+        backgroundColor: "oklch(0.995 0.003 110)",
+        border: "1px solid oklch(0.88 0.02 115)",
         boxShadow:
-          "0 40px 80px -30px oklch(0 0 0 / 0.55), 0 10px 25px -8px oklch(0.18 0.02 122 / 0.25)",
+          "0 30px 60px -25px oklch(0.18 0.02 122 / 0.18), 0 10px 25px -10px oklch(0.18 0.02 122 / 0.08)",
       }}
     >
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 rounded-[24px]"
-        style={{ boxShadow: "inset 0 1px 0 oklch(1 0 0 / 0.08)" }}
+        style={{ boxShadow: "inset 0 1px 0 oklch(1 0 0 / 0.9)" }}
       />
 
       <div className="px-7 pt-8 lg:px-9 lg:pt-10 relative">
@@ -119,25 +119,28 @@ export function HeroForm() {
           <div>
             <p
               className="text-[11px] uppercase tracking-[0.16em] font-semibold"
-              style={{ color: "oklch(0.65 0.015 115)" }}
+              style={{ color: "oklch(0.5 0.015 115)" }}
             >
               Diagnóstico estratégico
             </p>
-            <p className="mt-1.5 text-[18px] font-semibold text-white tracking-tight">
+            <p
+              className="mt-1.5 text-[18px] font-semibold tracking-tight"
+              style={{ color: "oklch(0.18 0.02 122)" }}
+            >
               Conversa de 30 min · gratuita
             </p>
           </div>
           <span
             className="inline-flex items-center gap-1.5 text-[10px] uppercase tracking-[0.14em] font-semibold rounded-full px-2.5 py-1 shrink-0"
             style={{
-              backgroundColor: "oklch(1 0 0 / 0.08)",
-              color: "oklch(0.85 0.04 110)",
-              border: "1px solid oklch(1 0 0 / 0.1)",
+              backgroundColor: "oklch(0.96 0.025 125)",
+              color: "var(--color-primary)",
+              border: "1px solid oklch(0.85 0.05 125)",
             }}
           >
             <span
               className="h-1.5 w-1.5 rounded-full"
-              style={{ backgroundColor: "oklch(0.82 0.2 115)" }}
+              style={{ backgroundColor: "var(--color-primary)" }}
             />
             Vagas abertas
           </span>
@@ -154,7 +157,7 @@ export function HeroForm() {
               required
               autoComplete="name"
               placeholder="Seu nome completo"
-              className="form-input-dark"
+              className="form-input"
             />
           </Field>
 
@@ -166,7 +169,7 @@ export function HeroForm() {
               required
               autoComplete="email"
               placeholder="voce@suaempresa.com"
-              className="form-input-dark"
+              className="form-input"
             />
           </Field>
 
@@ -178,7 +181,7 @@ export function HeroForm() {
               required
               autoComplete="tel"
               placeholder="(11) 99999-9999"
-              className="form-input-dark"
+              className="form-input"
             />
           </Field>
 
@@ -189,7 +192,7 @@ export function HeroForm() {
                 name="cargo"
                 required
                 defaultValue=""
-                className="form-input-dark"
+                className="form-input"
               >
                 <option value="" disabled>
                   Selecione
@@ -207,7 +210,7 @@ export function HeroForm() {
                 name="faixa_de_faturamento"
                 required
                 defaultValue=""
-                className="form-input-dark"
+                className="form-input"
               >
                 <option value="" disabled>
                   Selecione
@@ -228,7 +231,7 @@ export function HeroForm() {
               type="text"
               autoComplete="organization"
               placeholder="Nome da sua empresa"
-              className="form-input-dark"
+              className="form-input"
             />
           </Field>
 
@@ -239,7 +242,7 @@ export function HeroForm() {
               type="url"
               autoComplete="url"
               placeholder="https://suaempresa.com"
-              className="form-input-dark"
+              className="form-input"
             />
           </Field>
 
@@ -248,9 +251,9 @@ export function HeroForm() {
               role="alert"
               className="flex items-start gap-2 rounded-md px-3 py-2.5 text-[12.5px]"
               style={{
-                backgroundColor: "oklch(0.32 0.13 25 / 0.3)",
-                border: "1px solid oklch(0.55 0.18 25 / 0.5)",
-                color: "oklch(0.92 0.06 25)",
+                backgroundColor: "oklch(0.96 0.05 25)",
+                border: "1px solid oklch(0.82 0.1 25)",
+                color: "oklch(0.4 0.16 25)",
               }}
             >
               <AlertCircle className="h-4 w-4 mt-0.5 shrink-0" strokeWidth={2} />
@@ -263,9 +266,10 @@ export function HeroForm() {
             disabled={loading}
             className="mt-2 w-full inline-flex items-center justify-center gap-2 rounded-full px-6 py-4 text-[14px] font-bold transition-all disabled:opacity-60 disabled:cursor-not-allowed hover:-translate-y-0.5"
             style={{
-              backgroundColor: "oklch(1 0 0)",
-              color: "oklch(0.14 0.02 122)",
-              boxShadow: "0 8px 24px -8px oklch(1 0 0 / 0.3)",
+              backgroundColor: "var(--color-accent)",
+              color: "oklch(1 0 0)",
+              boxShadow:
+                "0 1px 0 0 oklch(1 0 0 / 0.12) inset, 0 14px 32px -10px oklch(0.18 0.02 122 / 0.45)",
             }}
           >
             {loading ? "Enviando..." : "Quero saber mais sobre o Business"}
@@ -274,7 +278,7 @@ export function HeroForm() {
 
           <p
             className="pt-2 text-[11.5px] text-center leading-relaxed"
-            style={{ color: "oklch(0.65 0.015 115)" }}
+            style={{ color: "oklch(0.55 0.015 115)" }}
           >
             Seus dados não são compartilhados. Sem SPAM. Cancele a qualquer momento.
           </p>
@@ -300,11 +304,11 @@ function Field({
       <label
         htmlFor={id}
         className="block text-[12px] font-semibold mb-1.5"
-        style={{ color: "oklch(0.85 0.02 110)" }}
+        style={{ color: "oklch(0.32 0.02 122)" }}
       >
         {label}
         {required && (
-          <span className="ml-1" style={{ color: "oklch(0.82 0.2 115)" }}>
+          <span className="ml-1" style={{ color: "var(--color-primary)" }}>
             ·
           </span>
         )}
