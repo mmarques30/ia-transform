@@ -1,6 +1,6 @@
 import { Reveal } from "@/components/Reveal";
 import { HeroForm } from "@/components/HeroForm";
-import { Clock, Sparkles, Zap, User } from "lucide-react";
+import { User } from "lucide-react";
 
 /**
  * Avatares de clientes da seção "Centenas de empresários impactados".
@@ -105,9 +105,9 @@ export function Hero() {
 
             <Reveal delay={0.18}>
               <div className="mt-8 grid grid-cols-3 gap-3 max-w-[520px]">
-                <Stat Icon={Clock} value="30 dias" label="prazo médio de entrega" />
-                <Stat Icon={Sparkles} value="100%" label="sistema sob medida" />
-                <Stat Icon={Zap} value="−30h/sem" label="trabalho manual eliminado" />
+                <Stat value="30 dias" label="prazo médio de entrega" />
+                <Stat value="100%" label="sistema sob medida" />
+                <Stat value="−30h/sem" label="trabalho manual eliminado" />
               </div>
             </Reveal>
 
@@ -132,15 +132,7 @@ export function Hero() {
   );
 }
 
-function Stat({
-  Icon,
-  value,
-  label,
-}: {
-  Icon: typeof Clock;
-  value: string;
-  label: string;
-}) {
+function Stat({ value, label }: { value: string; label: string }) {
   return (
     <div
       className="rounded-xl p-3.5"
@@ -151,19 +143,14 @@ function Stat({
         WebkitBackdropFilter: "blur(8px)",
       }}
     >
-      <Icon
-        className="h-4 w-4"
-        strokeWidth={2.2}
-        style={{ color: "var(--color-primary)" }}
-      />
       <div
-        className="mt-2 font-bold leading-none text-[16px] sm:text-[18px] tracking-tight"
+        className="font-bold leading-none text-[18px] sm:text-[20px] tracking-tight"
         style={{ color: "oklch(0.18 0.02 122)" }}
       >
         {value}
       </div>
       <p
-        className="mt-1 text-[10.5px] leading-tight"
+        className="mt-1.5 text-[10.5px] leading-tight"
         style={{ color: "oklch(0.45 0.015 115)" }}
       >
         {label}
