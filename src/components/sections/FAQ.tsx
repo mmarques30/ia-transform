@@ -21,11 +21,11 @@ const FAQS = [
   },
   {
     q: "Como é a cobrança?",
-    a: "Cobrança mensal, com contrato e nota fiscal. Pagamento via boleto.",
+    a: "Trabalhamos com entrada + parcelas, com contrato e nota fiscal. O pagamento pode ser feito via boleto ou cartão de crédito — você escolhe o que faz mais sentido pro fluxo de caixa da empresa.",
   },
   {
     q: "Substitui consultoria, agência ou fábrica de software?",
-    a: "Não. Complementa. Trabalhamos lado a lado com times internos e fornecedores técnicos.",
+    a: "Depende do escopo contratado. Em muitos casos, sim — a IAplicada assume frentes que antes ficavam com consultoria, agência ou fábrica. Em outros, integramos com sistemas já implementados e trabalhamos lado a lado com times internos e fornecedores existentes.",
   },
   {
     q: "O time precisa ter base técnica?",
