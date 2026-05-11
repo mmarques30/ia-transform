@@ -1,5 +1,16 @@
 import { Logo } from "@/components/Logo";
 
+const PRODUCTS = [
+  { label: "Business", href: "/" },
+  { label: "Academy", href: "https://academy.iaplicada.com" },
+];
+
+const SOCIAL = [
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/marianamarquescabral/" },
+  { label: "Instagram", href: "https://www.instagram.com/marimarquescb/" },
+  { label: "YouTube", href: "https://www.youtube.com/@iaplicadaa" },
+];
+
 export function Footer() {
   return (
     <footer className="py-12 border-t border-border bg-background">
@@ -28,13 +39,21 @@ export function Footer() {
               Produtos
             </p>
             <ul className="mt-3 space-y-2 text-[13px]">
-              {["Business", "Academy", "Skills"].map((l) => (
-                <li key={l}>
-                  <a href="#" className="text-sage hover:text-foreground transition-colors">
-                    {l}
-                  </a>
-                </li>
-              ))}
+              {PRODUCTS.map((p) => {
+                const external = p.href.startsWith("http");
+                return (
+                  <li key={p.label}>
+                    <a
+                      href={p.href}
+                      target={external ? "_blank" : undefined}
+                      rel={external ? "noopener noreferrer" : undefined}
+                      className="text-sage hover:text-foreground transition-colors"
+                    >
+                      {p.label}
+                    </a>
+                  </li>
+                );
+              })}
             </ul>
           </div>
 
@@ -43,21 +62,18 @@ export function Footer() {
               Redes
             </p>
             <ul className="mt-3 space-y-2 text-[13px]">
-              <li>
-                <a href="#" className="text-sage hover:text-foreground transition-colors">
-                  LinkedIn
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-sage hover:text-foreground transition-colors">
-                  Instagram
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-sage hover:text-foreground transition-colors">
-                  YouTube
-                </a>
-              </li>
+              {SOCIAL.map((s) => (
+                <li key={s.label}>
+                  <a
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sage hover:text-foreground transition-colors"
+                  >
+                    {s.label}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
