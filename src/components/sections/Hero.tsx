@@ -1,6 +1,6 @@
 import { Reveal } from "@/components/Reveal";
 import { HeroForm } from "@/components/HeroForm";
-import { Clock, Users, Zap, User } from "lucide-react";
+import { Clock, Sparkles, Zap, User } from "lucide-react";
 
 /**
  * Avatares de clientes da seção "Centenas de empresários impactados".
@@ -106,7 +106,7 @@ export function Hero() {
             <Reveal delay={0.18}>
               <div className="mt-8 grid grid-cols-3 gap-3 max-w-[520px]">
                 <Stat Icon={Clock} value="30 dias" label="prazo médio de entrega" />
-                <Stat Icon={Users} value="40+ PMEs" label="com sistema rodando" />
+                <Stat Icon={Sparkles} value="100%" label="sistema sob medida" />
                 <Stat Icon={Zap} value="−30h/sem" label="trabalho manual eliminado" />
               </div>
             </Reveal>
