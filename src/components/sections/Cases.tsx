@@ -15,53 +15,53 @@ interface CaseStudy {
 const CASES: CaseStudy[] = [
   {
     segment: "Varejo",
-    company: "Grupo de varejo",
-    size: "~2.500 colaboradores",
+    company: "Rede de varejo regional",
+    size: "~45 colaboradores · 6 lojas",
     before:
-      "Atendimento sobrecarregado, filas crescentes e IA sem adoção — investimento parado.",
+      "Sócios travados no operacional, fechamento de mês em planilhas e sem visibilidade entre lojas.",
     after:
-      "Fluxo estruturado, adoção operacional da IA e ganho de eficiência no atendimento.",
+      "Painel único de vendas e estoque, reposição automatizada e sócios fora da rotina diária.",
     metrics: [
-      { value: "−47%", label: "tempo de resposta" },
-      { value: "3,2×", label: "1º contato" },
-      { value: "12 sem", label: "go-live" },
+      { value: "−30h", label: "sócios/semana" },
+      { value: "+18%", label: "margem" },
+      { value: "8 sem", label: "go-live" },
     ],
-    quote: "A diferença apareceu na terceira semana.",
-    author: "Diretora de CX",
+    quote: "Voltei a tocar a estratégia.",
+    author: "Sócia-fundadora",
     Scene: VarejoScene,
   },
   {
-    segment: "Fintech",
-    company: "Fintech Série A",
-    size: "~80 colaboradores",
+    segment: "Tech",
+    company: "SaaS B2B",
+    size: "~28 colaboradores",
     before:
-      "Operação no limite de capacidade, crescimento dependente de novas contratações.",
+      "Time pequeno apagando incêndio, processos espalhados pelo Slack e pipeline sem clareza.",
     after:
-      "Operação estruturada, com automação e escala sem expansão de time.",
+      "Pipeline estruturado, papéis definidos e entregas com previsibilidade — sem aumentar o time.",
     metrics: [
-      { value: "+22h", label: "ops/semana" },
+      { value: "+40%", label: "capacidade time" },
       { value: "0", label: "contratações" },
-      { value: "R$ 480k", label: "economia anual" },
+      { value: "6 sem", label: "go-live" },
     ],
-    quote: "Mudou a cara da operação em 3 meses.",
+    quote: "A operação começou a respirar.",
     author: "CEO",
     Scene: FintechScene,
   },
   {
     segment: "Indústria",
-    company: "Grupo industrial",
-    size: "~5.000 colaboradores",
+    company: "Indústria de pequeno porte",
+    size: "~85 colaboradores",
     before:
-      "Múltiplas iniciativas de IA desconectadas, sem governança e com baixa eficiência de investimento.",
+      "Produção desorganizada, ordens duplicadas e gargalo recorrente na expedição.",
     after:
-      "Estrutura de governança implementada, com priorização por ROI e execução coordenada.",
+      "Fluxo de ordens claro, expedição com SLA e fábrica rodando previsível.",
     metrics: [
-      { value: "6→3", label: "frentes com ROI" },
-      { value: "R$ 2,1M", label: "eficiência ano 1" },
-      { value: "5 áreas", label: "alta maturidade" },
+      { value: "−40%", label: "retrabalho" },
+      { value: "+25%", label: "expedição" },
+      { value: "10 sem", label: "go-live" },
     ],
-    quote: "Virou parte do nosso time de liderança.",
-    author: "CEO",
+    quote: "Hoje eu sei o que vai sair amanhã.",
+    author: "Diretor industrial",
     Scene: IndustriaScene,
   },
 ];
@@ -83,6 +83,12 @@ export function Cases() {
               <br />
               chega na empresa.
             </h2>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <p className="mt-5 text-[15.5px] text-sage leading-[1.6] max-w-[620px] mx-auto">
+              PMEs reais — entre 20 e 100 colaboradores — que pararam de depender do dono no
+              operacional.
+            </p>
           </Reveal>
         </div>
 
