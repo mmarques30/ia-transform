@@ -98,8 +98,12 @@ function RootShell({ children }: { children: React.ReactNode }) {
 
 function RootComponent() {
   useEffect(() => {
-    const projectId = import.meta.env.VITE_CLARITY_PROJECT_ID;
-    if (projectId) initClarity(projectId);
+    // Project ID público (mesmo valor que apareceria inline em <script>).
+    // Pode ser sobrescrito via VITE_CLARITY_PROJECT_ID pra ambientes
+    // separados (ex.: staging com outro ID) sem mexer no código.
+    const projectId =
+      import.meta.env.VITE_CLARITY_PROJECT_ID || "wpgxq27fhi";
+    initClarity(projectId);
   }, []);
 
   return <Outlet />;
