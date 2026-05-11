@@ -1,6 +1,8 @@
+import { useEffect } from "react";
 import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
+import { initClarity } from "@/lib/clarity";
 
 function NotFoundComponent() {
   return (
@@ -95,5 +97,10 @@ function RootShell({ children }: { children: React.ReactNode }) {
 }
 
 function RootComponent() {
+  useEffect(() => {
+    const projectId = import.meta.env.VITE_CLARITY_PROJECT_ID;
+    if (projectId) initClarity(projectId);
+  }, []);
+
   return <Outlet />;
 }
