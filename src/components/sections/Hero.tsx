@@ -114,16 +114,9 @@ export function Hero() {
             <Reveal delay={0.24}>
               <div className="mt-10 flex items-center gap-4">
                 <AvatarStack />
-                <div className="leading-tight">
-                  <p className="text-[14px] text-foreground font-semibold">
-                    Centenas de empresários impactados.
-                  </p>
-                  <p className="mt-1 text-[12.5px] text-muted-foreground">
-                    Conduzido por{" "}
-                    <span className="font-semibold text-foreground">Mari Marques</span> · fundadora
-                    IAplicada
-                  </p>
-                </div>
+                <p className="text-[14px] text-foreground font-semibold leading-tight">
+                  Centenas de empresários impactados.
+                </p>
               </div>
             </Reveal>
           </div>
