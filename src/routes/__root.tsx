@@ -1,8 +1,8 @@
-import { useEffect } from "react";
 import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
-import { initClarity } from "@/lib/clarity";
+
+const CLARITY_PROJECT_ID = "wpgxq27fhi";
 
 function NotFoundComponent() {
   return (
@@ -76,6 +76,11 @@ export const Route = createRootRoute({
         href: appCss,
       },
     ],
+    scripts: [
+      {
+        children: `(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","${CLARITY_PROJECT_ID}");`,
+      },
+    ],
   }),
   shellComponent: RootShell,
   component: RootComponent,
@@ -97,14 +102,5 @@ function RootShell({ children }: { children: React.ReactNode }) {
 }
 
 function RootComponent() {
-  useEffect(() => {
-    // Project ID público (mesmo valor que apareceria inline em <script>).
-    // Pode ser sobrescrito via VITE_CLARITY_PROJECT_ID pra ambientes
-    // separados (ex.: staging com outro ID) sem mexer no código.
-    const projectId =
-      import.meta.env.VITE_CLARITY_PROJECT_ID || "wpgxq27fhi";
-    initClarity(projectId);
-  }, []);
-
   return <Outlet />;
 }
