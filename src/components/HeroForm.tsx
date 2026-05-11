@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 
 const FORM_SLUG = "business";
-const FORM_ORIGIN = "https://id-preview--ce4ae4c7-4381-4764-a549-46545bb9de13.lovable.app";
+const FORM_ORIGIN = "https://saasiaplicada.lovable.app";
 const UTM_KEYS = [
   "utm_source",
   "utm_medium",
