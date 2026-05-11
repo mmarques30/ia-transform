@@ -1,8 +1,9 @@
-import { useEffect } from "react";
 import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
-import { initClarity } from "@/lib/clarity";
+
+const CLARITY_PROJECT_ID = "wpgxq27fhi";
+const META_PIXEL_ID = "619312151238896";
 
 function NotFoundComponent() {
   return (
@@ -76,6 +77,16 @@ export const Route = createRootRoute({
         href: appCss,
       },
     ],
+    scripts: [
+      // Microsoft Clarity — heatmaps, session replays, frustration signals
+      {
+        children: `(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","${CLARITY_PROJECT_ID}");`,
+      },
+      // Meta Pixel — conversões / remarketing Facebook/Instagram Ads
+      {
+        children: `!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${META_PIXEL_ID}');fbq('track','PageView');`,
+      },
+    ],
   }),
   shellComponent: RootShell,
   component: RootComponent,
@@ -89,6 +100,16 @@ function RootShell({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
+        {/* Meta Pixel — fallback noscript pra browsers sem JS / bots */}
+        <noscript>
+          <img
+            height="1"
+            width="1"
+            style={{ display: "none" }}
+            src={`https://www.facebook.com/tr?id=${META_PIXEL_ID}&ev=PageView&noscript=1`}
+            alt=""
+          />
+        </noscript>
         {children}
         <Scripts />
       </body>
@@ -97,14 +118,5 @@ function RootShell({ children }: { children: React.ReactNode }) {
 }
 
 function RootComponent() {
-  useEffect(() => {
-    // Project ID público (mesmo valor que apareceria inline em <script>).
-    // Pode ser sobrescrito via VITE_CLARITY_PROJECT_ID pra ambientes
-    // separados (ex.: staging com outro ID) sem mexer no código.
-    const projectId =
-      import.meta.env.VITE_CLARITY_PROJECT_ID || "wpgxq27fhi";
-    initClarity(projectId);
-  }, []);
-
   return <Outlet />;
 }
