@@ -5,16 +5,35 @@ import { Clock, Users, Zap, User } from "lucide-react";
 /**
  * Avatares de clientes da seção "Centenas de empresários impactados".
  *
- * Pra trocar pelos rostos reais: coloque os arquivos em `public/clients/`
- * e troque `src` aqui (ex.: `src: "/clients/mari.jpg"`). Quando `src` for
- * `null`, o avatar mostra apenas um ícone de silhueta no círculo
- * brand-colored — sem iniciais inventadas.
+ * URLs atuais são stock photos do serviço randomuser.me (uso livre,
+ * licença CC). Pra trocar pelos rostos reais dos clientes:
+ *   1) jogue os arquivos em `public/clients/`
+ *   2) troque `src` aqui (ex.: `src: "/clients/joana.jpg"`)
+ *
+ * Quando `src` falha ou é null, mostra ícone de silhueta no círculo
+ * brand-colored como fallback.
  */
 const CLIENT_AVATARS: { src: string | null; bg: string; alt: string }[] = [
-  { src: null, bg: "oklch(0.62 0.17 125)", alt: "Cliente IAplicada" },
-  { src: null, bg: "oklch(0.55 0.16 125)", alt: "Cliente IAplicada" },
-  { src: null, bg: "oklch(0.48 0.14 122)", alt: "Cliente IAplicada" },
-  { src: null, bg: "oklch(0.42 0.12 122)", alt: "Cliente IAplicada" },
+  {
+    src: "https://randomuser.me/api/portraits/women/68.jpg",
+    bg: "oklch(0.62 0.17 125)",
+    alt: "Cliente IAplicada",
+  },
+  {
+    src: "https://randomuser.me/api/portraits/men/32.jpg",
+    bg: "oklch(0.55 0.16 125)",
+    alt: "Cliente IAplicada",
+  },
+  {
+    src: "https://randomuser.me/api/portraits/women/44.jpg",
+    bg: "oklch(0.48 0.14 122)",
+    alt: "Cliente IAplicada",
+  },
+  {
+    src: "https://randomuser.me/api/portraits/men/76.jpg",
+    bg: "oklch(0.42 0.12 122)",
+    alt: "Cliente IAplicada",
+  },
 ];
 
 export function Hero() {
@@ -95,16 +114,9 @@ export function Hero() {
             <Reveal delay={0.24}>
               <div className="mt-10 flex items-center gap-4">
                 <AvatarStack />
-                <div className="leading-tight">
-                  <p className="text-[14px] text-foreground font-semibold">
-                    Centenas de empresários impactados.
-                  </p>
-                  <p className="mt-1 text-[12.5px] text-muted-foreground">
-                    Conduzido por{" "}
-                    <span className="font-semibold text-foreground">Mari Marques</span> · fundadora
-                    IAplicada
-                  </p>
-                </div>
+                <p className="text-[14px] text-foreground font-semibold leading-tight">
+                  Centenas de empresários impactados.
+                </p>
               </div>
             </Reveal>
           </div>
