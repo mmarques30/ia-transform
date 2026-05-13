@@ -131,12 +131,14 @@ export function HeroForm() {
             </p>
           </div>
           <span
-            className="inline-flex items-center gap-1.5 text-[10px] uppercase tracking-[0.14em] font-semibold rounded-full px-2.5 py-1 shrink-0"
+            className="inline-flex items-center gap-1.5 text-[10px] uppercase tracking-[0.14em] font-semibold rounded-full px-2.5 py-1 shrink-0 select-none"
             style={{
               backgroundColor: "oklch(0.96 0.025 125)",
               color: "var(--color-primary)",
               border: "1px solid oklch(0.85 0.05 125)",
+              cursor: "default",
             }}
+            aria-hidden
           >
             <span
               className="h-1.5 w-1.5 rounded-full"

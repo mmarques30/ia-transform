@@ -68,9 +68,24 @@ export const Route = createRootRoute({
         href: "https://fonts.gstatic.com",
         crossOrigin: "anonymous",
       },
+      // Preload da folha de estilo do Google Fonts pra o browser baixar
+      // mais cedo (paralelo com o resto do HTML). Reduz LCP em ~200-400ms
+      // em conexões médias.
+      {
+        rel: "preload",
+        as: "style",
+        href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap",
+      },
       {
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap",
+      },
+      // Preload da logo (LCP candidate na maioria dos viewports)
+      {
+        rel: "preload",
+        as: "image",
+        href: "/brand/iaplicada-logo-light.png",
+        fetchpriority: "high",
       },
       {
         rel: "stylesheet",
