@@ -5,35 +5,15 @@ import { User } from "lucide-react";
 /**
  * Avatares de clientes da seção "Centenas de empresários impactados".
  *
- * URLs atuais são stock photos do serviço randomuser.me (uso livre,
- * licença CC). Pra trocar pelos rostos reais dos clientes:
- *   1) jogue os arquivos em `public/clients/`
- *   2) troque `src` aqui (ex.: `src: "/clients/joana.jpg"`)
- *
- * Quando `src` falha ou é null, mostra ícone de silhueta no círculo
- * brand-colored como fallback.
+ * Fotos hospedadas localmente em `public/clients/` (stock CC) — não dependem
+ * de CDN externa, o que é crítico pro LCP. Pra trocar pelas reais, basta
+ * substituir os arquivos mantendo os mesmos nomes ou ajustar `src` aqui.
  */
 const CLIENT_AVATARS: { src: string | null; bg: string; alt: string }[] = [
-  {
-    src: "https://randomuser.me/api/portraits/women/68.jpg",
-    bg: "oklch(0.62 0.17 125)",
-    alt: "Cliente IAplicada",
-  },
-  {
-    src: "https://randomuser.me/api/portraits/men/32.jpg",
-    bg: "oklch(0.55 0.16 125)",
-    alt: "Cliente IAplicada",
-  },
-  {
-    src: "https://randomuser.me/api/portraits/women/44.jpg",
-    bg: "oklch(0.48 0.14 122)",
-    alt: "Cliente IAplicada",
-  },
-  {
-    src: "https://randomuser.me/api/portraits/men/76.jpg",
-    bg: "oklch(0.42 0.12 122)",
-    alt: "Cliente IAplicada",
-  },
+  { src: "/clients/women-68.jpg", bg: "oklch(0.62 0.17 125)", alt: "Cliente IAplicada" },
+  { src: "/clients/men-32.jpg", bg: "oklch(0.55 0.16 125)", alt: "Cliente IAplicada" },
+  { src: "/clients/women-44.jpg", bg: "oklch(0.48 0.14 122)", alt: "Cliente IAplicada" },
+  { src: "/clients/men-76.jpg", bg: "oklch(0.42 0.12 122)", alt: "Cliente IAplicada" },
 ];
 
 export function Hero() {
@@ -182,7 +162,11 @@ function MarqueeStrip() {
         }}
       />
 
-      <div className="ticker-track py-3.5">
+      <div
+        className="ticker-track py-3.5 select-none"
+        style={{ cursor: "default" }}
+        aria-hidden
+      >
         {seq.map((item, i) => (
           <span key={i} className="inline-flex items-center gap-8">
             <span
@@ -192,7 +176,6 @@ function MarqueeStrip() {
               {item}
             </span>
             <span
-              aria-hidden
               className="inline-block"
               style={{
                 color: "var(--color-primary)",
@@ -218,6 +201,7 @@ function Stat({ value, label }: { value: string; label: string }) {
         border: "1px solid oklch(0.85 0.03 115)",
         backdropFilter: "blur(8px)",
         WebkitBackdropFilter: "blur(8px)",
+        cursor: "default",
       }}
     >
       <div
@@ -238,15 +222,23 @@ function Stat({ value, label }: { value: string; label: string }) {
 
 function AvatarStack() {
   return (
-    <div className="flex -space-x-2.5">
+    <div className="flex -space-x-2.5" aria-hidden>
       {CLIENT_AVATARS.map((a, i) => (
         <span
           key={i}
-          className="h-9 w-9 rounded-full ring-2 ring-background flex items-center justify-center overflow-hidden"
-          style={{ backgroundColor: a.bg }}
+          className="h-9 w-9 rounded-full ring-2 ring-background flex items-center justify-center overflow-hidden select-none"
+          style={{ backgroundColor: a.bg, cursor: "default" }}
         >
           {a.src ? (
-            <img src={a.src} alt={a.alt} className="h-full w-full object-cover" />
+            <img
+              src={a.src}
+              alt={a.alt}
+              width={36}
+              height={36}
+              loading="lazy"
+              decoding="async"
+              className="h-full w-full object-cover"
+            />
           ) : (
             <User
               aria-hidden

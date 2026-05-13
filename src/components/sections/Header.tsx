@@ -33,6 +33,10 @@ export function Header() {
           <img
             src={LOGO_FULL_SRC}
             alt="IAplicada"
+            width={110}
+            height={26}
+            fetchPriority="high"
+            decoding="async"
             style={{ height: 26, width: "auto", display: "block" }}
           />
           <span
