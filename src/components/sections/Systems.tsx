@@ -1,50 +1,62 @@
 import { Reveal } from "@/components/Reveal";
 import { ArrowRight } from "lucide-react";
-import {
-  AtendimentoMockup,
-  CopilotoMockup,
-  BackofficeMockup,
-  RelatorioMockup,
-  AssistenteMockup,
-  DashboardMockup,
-} from "@/components/mockups/SystemMockups";
 
-const SYSTEMS = [
+interface SystemCase {
+  tag: string;
+  title: string;
+  text: string;
+  img: string;
+  alt: string;
+}
+
+const SYSTEMS: SystemCase[] = [
   {
-    tag: "Atendimento",
-    title: "Triagem inteligente de tickets",
-    text: "IA lê, classifica e sugere resposta. Atendente só revisa e envia.",
-    Mockup: AtendimentoMockup,
+    tag: "Arquitetura",
+    title: "Tarefas por obra em um lugar só",
+    text:
+      "Cronograma, KPIs em tempo real e IA que responde sobre status, financeiro e atrasos sem abrir planilha.",
+    img: "/clients/quadra-arquitetura.png",
+    alt: "Painel de Tarefas por Obra da Quadra Arquitetura",
   },
   {
-    tag: "Backoffice",
-    title: "Conciliação automática de NF",
-    text: "Bate boletos, contratos e ERP. Só sobe pra humano o que diverge.",
-    Mockup: BackofficeMockup,
+    tag: "Tributário",
+    title: "Resumo financeiro de recuperação",
+    text:
+      "5 KPIs vivos, progresso de compensação e exportação direta pra Excel e PDF — fim do retrabalho mensal.",
+    img: "/clients/focus-tax.png",
+    alt: "Dashboard de resumo financeiro da Focus Tax",
   },
   {
-    tag: "Comercial",
-    title: "Copiloto de proposta",
-    text: "Gera draft comercial a partir de briefing e histórico de ganhos.",
-    Mockup: CopilotoMockup,
+    tag: "Fiscal",
+    title: "Catálogo único de ferramentas",
+    text:
+      "15+ ferramentas categorizadas por área fiscal, com manual integrado. Zero troca de contexto.",
+    img: "/clients/catalogo-ferramentas-fiscais.png",
+    alt: "Catálogo de ferramentas fiscais",
   },
   {
-    tag: "Gestão",
-    title: "Relatório executivo semanal",
-    text: "Lê planilhas, CRM e e-mail e entrega 1 página pra diretoria.",
-    Mockup: RelatorioMockup,
+    tag: "Operação",
+    title: "Painel estratégico multi-cliente",
+    text:
+      "Filtros por urgência, KPIs vivos e alerta priorizado das tarefas atrasadas. Reunião de status virou gestão por exceção.",
+    img: "/clients/psa-tax.png",
+    alt: "Painel estratégico de operação tributária da PSA TAX",
   },
   {
-    tag: "Interno",
-    title: "Assistente de políticas",
-    text: "Responde dúvidas do time com base em docs internos, com fonte.",
-    Mockup: AssistenteMockup,
+    tag: "Comunidade",
+    title: "Plataforma editorial + mentora IA",
+    text:
+      "Fórum categorizado, rituais da semana, diretório de membras e a Uiara — IA que responde dúvidas 24/7.",
+    img: "/clients/uiara-comunidade.png",
+    alt: "Plataforma de comunidade Uiara",
   },
   {
-    tag: "Dados",
-    title: "Dashboard operacional em linguagem natural",
-    text: "Pergunta em português, recebe gráfico e insight acionável.",
-    Mockup: DashboardMockup,
+    tag: "Indústria",
+    title: "Dashboard executivo de margem",
+    text:
+      "Receita faturada, margem real por pedido, saldo a receber e tendência mensal — tudo numa tela.",
+    img: "/clients/industria-moveis-dashboard.png",
+    alt: "Dashboard executivo de uma indústria de móveis",
   },
 ];
 
@@ -74,8 +86,8 @@ export function Systems() {
           </div>
           <Reveal delay={0.1}>
             <p className="text-[16px] text-sage leading-[1.55] max-w-[360px]">
-              Seis exemplos reais de sistemas que saíram do diagnóstico pra operação. Cada um
-              construído em 4 a 12 semanas.
+              Seis sistemas reais já rodando — de arquitetura a indústria. Cada um construído em 4
+              a 12 semanas.
             </p>
           </Reveal>
         </div>
@@ -91,7 +103,13 @@ export function Systems() {
                   className="aspect-[16/10] relative overflow-hidden border-b border-border"
                   style={{ backgroundColor: "var(--color-surface)" }}
                 >
-                  <s.Mockup />
+                  <img
+                    src={s.img}
+                    alt={s.alt}
+                    loading="lazy"
+                    decoding="async"
+                    className="absolute inset-0 w-full h-full object-cover object-top"
+                  />
                 </div>
                 <div className="p-6 flex flex-col grow">
                   <p className="text-[11px] uppercase tracking-[0.14em] text-primary font-semibold">
