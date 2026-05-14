@@ -438,9 +438,18 @@
       0 0 0 1px var(--color-olive);
   }
 
+  /* Carrossel de sistemas — esconde scrollbar mantendo scroll horizontal
+     funcional (touch, trackpad, programático via .scrollBy). */
+  .systems-track {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .systems-track::-webkit-scrollbar {
+    display: none;
+  }
+
   /* Reveal — fade-up de entrada acionado por IntersectionObserver no
-     componente <Reveal />. Substitui framer-motion v12 (que era a maior
-     fonte de trabalho na main-thread durante hidratação). */
+     componente <Reveal />. */
   .reveal {
     opacity: 0;
     transform: translateY(16px);

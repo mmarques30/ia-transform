@@ -1,5 +1,6 @@
+import { useEffect, useRef, useState } from "react";
 import { Reveal } from "@/components/Reveal";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 
 interface SystemCase {
   tag: string;
@@ -64,7 +65,7 @@ export function Systems() {
   return (
     <section
       id="sistemas"
-      className="py-[100px] lg:py-[140px]"
+      className="py-[100px] lg:py-[140px] overflow-hidden"
       style={{ backgroundColor: "var(--color-surface)" }}
     >
       <div className="container-page">
@@ -91,40 +92,13 @@ export function Systems() {
             </p>
           </Reveal>
         </div>
+      </div>
 
-        <div className="mt-14 grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {SYSTEMS.map((s, i) => (
-            <Reveal key={s.title} delay={(i % 3) * 0.05}>
-              <article
-                className="group rounded-xl border border-border bg-card overflow-hidden h-full flex flex-col transition-shadow hover:shadow-lg"
-                style={{ boxShadow: "var(--shadow-card)" }}
-              >
-                <div
-                  className="aspect-[16/10] relative overflow-hidden border-b border-border"
-                  style={{ backgroundColor: "var(--color-surface)" }}
-                >
-                  <img
-                    src={s.img}
-                    alt={s.alt}
-                    loading="lazy"
-                    decoding="async"
-                    className="absolute inset-0 w-full h-full object-cover object-top"
-                  />
-                </div>
-                <div className="p-6 flex flex-col grow">
-                  <p className="text-[11px] uppercase tracking-[0.14em] text-primary font-semibold">
-                    {s.tag}
-                  </p>
-                  <h3 className="mt-2 text-[18px] font-semibold text-foreground leading-snug">
-                    {s.title}
-                  </h3>
-                  <p className="mt-2 text-[14px] text-sage leading-[1.55]">{s.text}</p>
-                </div>
-              </article>
-            </Reveal>
-          ))}
-        </div>
+      <Reveal delay={0.15}>
+        <SystemsCarousel />
+      </Reveal>
 
+      <div className="container-page">
         <Reveal delay={0.2}>
           <div className="mt-12 text-center">
             <a
@@ -138,5 +112,122 @@ export function Systems() {
         </Reveal>
       </div>
     </section>
+  );
+}
+
+function SystemsCarousel() {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [canPrev, setCanPrev] = useState(false);
+  const [canNext, setCanNext] = useState(true);
+
+  function updateNav() {
+    const el = trackRef.current;
+    if (!el) return;
+    setCanPrev(el.scrollLeft > 8);
+    setCanNext(el.scrollLeft + el.clientWidth < el.scrollWidth - 8);
+  }
+
+  useEffect(() => {
+    const el = trackRef.current;
+    if (!el) return;
+    updateNav();
+    el.addEventListener("scroll", updateNav, { passive: true });
+    window.addEventListener("resize", updateNav);
+    return () => {
+      el.removeEventListener("scroll", updateNav);
+      window.removeEventListener("resize", updateNav);
+    };
+  }, []);
+
+  function scrollByCard(dir: -1 | 1) {
+    const el = trackRef.current;
+    if (!el) return;
+    const card = el.querySelector<HTMLElement>("[data-system-card]");
+    const step = card ? card.offsetWidth + 24 : el.clientWidth * 0.9;
+    el.scrollBy({ left: dir * step, behavior: "smooth" });
+  }
+
+  return (
+    <div className="mt-12 lg:mt-14 relative">
+      {/* Track full-bleed: usa padding inline pra alinhar o primeiro card
+          ao container-page e deixa os próximos vazarem pra fora da viewport. */}
+      <div
+        ref={trackRef}
+        className="systems-track flex gap-6 overflow-x-auto scroll-smooth pb-4"
+        style={{
+          scrollSnapType: "x mandatory",
+          paddingInline: "max(1.25rem, calc((100vw - 1240px) / 2))",
+          scrollPaddingInline: "max(1.25rem, calc((100vw - 1240px) / 2))",
+        }}
+      >
+        {SYSTEMS.map((s) => (
+          <article
+            key={s.title}
+            data-system-card
+            className="group shrink-0 rounded-xl border border-border bg-card overflow-hidden flex flex-col transition-shadow hover:shadow-lg"
+            style={{
+              width: "min(86vw, 640px)",
+              scrollSnapAlign: "start",
+              boxShadow: "var(--shadow-card)",
+            }}
+          >
+            <div
+              className="aspect-[16/9] relative overflow-hidden border-b border-border"
+              style={{ backgroundColor: "var(--color-surface)" }}
+            >
+              <img
+                src={s.img}
+                alt={s.alt}
+                loading="lazy"
+                decoding="async"
+                className="absolute inset-0 w-full h-full object-cover object-top"
+              />
+            </div>
+            <div className="p-6 lg:p-7 flex flex-col grow">
+              <p className="text-[11px] uppercase tracking-[0.14em] text-primary font-semibold">
+                {s.tag}
+              </p>
+              <h3 className="mt-2 text-[20px] lg:text-[22px] font-semibold text-foreground leading-snug">
+                {s.title}
+              </h3>
+              <p className="mt-2 text-[14.5px] text-sage leading-[1.55]">{s.text}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      {/* Botões de nav — desktop apenas */}
+      <div className="container-page mt-5 hidden md:flex items-center justify-end gap-2">
+        <CarouselButton
+          aria-label="Card anterior"
+          disabled={!canPrev}
+          onClick={() => scrollByCard(-1)}
+        >
+          <ChevronLeft className="h-4 w-4" strokeWidth={2.5} />
+        </CarouselButton>
+        <CarouselButton
+          aria-label="Próximo card"
+          disabled={!canNext}
+          onClick={() => scrollByCard(1)}
+        >
+          <ChevronRight className="h-4 w-4" strokeWidth={2.5} />
+        </CarouselButton>
+      </div>
+    </div>
+  );
+}
+
+function CarouselButton({
+  children,
+  ...props
+}: React.ButtonHTMLAttributes<HTMLButtonElement>) {
+  return (
+    <button
+      type="button"
+      className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border bg-background text-foreground transition-all hover:border-primary hover:text-primary disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:border-border disabled:hover:text-foreground"
+      {...props}
+    >
+      {children}
+    </button>
   );
 }
