@@ -7,58 +7,44 @@ interface CaseStudy {
   before: string;
   after: string;
   metrics: { value: string; label: string }[];
-  quote: string;
-  author: string;
 }
 
 const CASES: CaseStudy[] = [
   {
     segment: "Varejo",
     company: "Rede de varejo regional",
-    size: "~45 colaboradores · 6 lojas",
-    before:
-      "Sócios travados no operacional, fechamento de mês em planilhas e sem visibilidade entre lojas.",
-    after:
-      "Painel único de vendas e estoque, reposição automatizada e sócios fora da rotina diária.",
+    size: "~45 colab · 6 lojas",
+    before: "Sócios no operacional. Sem visibilidade entre lojas.",
+    after: "Painel único + reposição automática. Sócios fora da rotina.",
     metrics: [
       { value: "−30h", label: "sócios/semana" },
       { value: "+18%", label: "margem" },
       { value: "8 sem", label: "go-live" },
     ],
-    quote: "Voltei a tocar a estratégia.",
-    author: "Sócia-fundadora",
   },
   {
     segment: "Tech",
     company: "SaaS B2B",
-    size: "~28 colaboradores",
-    before:
-      "Time pequeno apagando incêndio, processos espalhados pelo Slack e pipeline sem clareza.",
-    after:
-      "Pipeline estruturado, papéis definidos e entregas com previsibilidade — sem aumentar o time.",
+    size: "~28 colab",
+    before: "Time apagando incêndio. Pipeline sem clareza.",
+    after: "Pipeline estruturado. Entregas previsíveis sem aumentar time.",
     metrics: [
       { value: "+40%", label: "capacidade time" },
       { value: "0", label: "contratações" },
       { value: "6 sem", label: "go-live" },
     ],
-    quote: "A operação começou a respirar.",
-    author: "CEO",
   },
   {
     segment: "Indústria",
     company: "Indústria de pequeno porte",
-    size: "~85 colaboradores",
-    before:
-      "Produção desorganizada, ordens duplicadas e gargalo recorrente na expedição.",
-    after:
-      "Fluxo de ordens claro, expedição com SLA e fábrica rodando previsível.",
+    size: "~85 colab",
+    before: "Produção desorganizada. Gargalo na expedição.",
+    after: "Fluxo claro de ordens. Expedição com SLA.",
     metrics: [
       { value: "−40%", label: "retrabalho" },
       { value: "+25%", label: "expedição" },
       { value: "10 sem", label: "go-live" },
     ],
-    quote: "Hoje eu sei o que vai sair amanhã.",
-    author: "Diretor industrial",
   },
 ];
 
@@ -158,12 +144,6 @@ export function Cases() {
                 </div>
 
                 {/* Quote — discreto */}
-                <blockquote className="mt-auto pt-6">
-                  <p className="text-foreground text-[13.5px] leading-[1.5] italic">"{c.quote}"</p>
-                  <footer className="mt-1.5 text-[11.5px] text-muted-foreground">
-                    — {c.author}
-                  </footer>
-                </blockquote>
               </article>
             </Reveal>
           ))}
