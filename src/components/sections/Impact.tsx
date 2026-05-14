@@ -134,7 +134,7 @@ export function Impact() {
               <div className="tech-card overflow-hidden h-full flex flex-col">
                 {/* Imagem real do dashboard */}
                 <div
-                  className="aspect-[4/3] relative overflow-hidden"
+                  className="aspect-[16/9] relative overflow-hidden"
                   style={{
                     backgroundColor: "oklch(0.94 0.005 110)",
                     borderBottom: "1px solid var(--color-border)",
@@ -144,7 +144,8 @@ export function Impact() {
                     src={v.image}
                     alt={`Dashboard ${v.brand} — ${v.label}`}
                     loading="lazy"
-                    className="absolute inset-0 w-full h-full object-cover"
+                    decoding="async"
+                    className="absolute inset-0 w-full h-full object-cover object-top"
                   />
                   {/* Gradient overlay no topo pra legibilidade do chip brandado */}
                   <div
