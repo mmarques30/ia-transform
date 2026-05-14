@@ -67,6 +67,10 @@ export function HeroForm() {
         utm_campaign: params.get("utm_campaign") ?? "",
         utm_term: params.get("utm_term") ?? "",
         utm_content: params.get("utm_content") ?? "",
+        // Click IDs do Meta Ads e Google Ads — usados pra attribution e
+        // pra Conversions API. A Edge Function persiste em raw_data.
+        fbclid: params.get("fbclid") ?? "",
+        gclid: params.get("gclid") ?? "",
       };
 
       const res = await fetch(FORM_ENDPOINT, {
