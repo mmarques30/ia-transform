@@ -163,7 +163,8 @@ function DashboardWindow() {
         <img
           src="/clients/recuperacao-tributaria-varejo.png"
           alt="LP de captação do Diagnóstico Tributário pra varejo"
-          loading="lazy"
+          loading="eager"
+          fetchPriority="high"
           decoding="async"
           className="absolute inset-0 w-full h-full object-contain"
         />
@@ -200,7 +201,8 @@ function MetricsWindow() {
         <img
           src="/clients/psa-consultores-agro.png"
           alt="Site institucional da PSA Consultores no agronegócio"
-          loading="lazy"
+          loading="eager"
+          fetchPriority="high"
           decoding="async"
           className="absolute inset-0 w-full h-full object-contain"
         />

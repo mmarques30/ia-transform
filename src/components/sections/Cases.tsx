@@ -78,7 +78,7 @@ export function Cases() {
             colunas (md+) e horizontais entre rows (mobile). Sem ilustrações. */}
         <div className="cases-grid mt-16 lg:mt-20 grid md:grid-cols-3 max-w-[1180px] mx-auto">
           {CASES.map((c, i) => (
-            <Reveal key={c.company} delay={i * 0.06}>
+            <Reveal key={c.company} delay={i * 0.06} className="h-full">
               <article className="px-2 md:px-7 py-8 md:py-2 h-full flex flex-col">
                 {/* Numerador + segment */}
                 <div className="flex items-baseline gap-3">
@@ -123,9 +123,10 @@ export function Cases() {
                   </p>
                 </div>
 
-                {/* Métricas — sem border-y de card, só uma linha sutil acima */}
+                {/* Métricas — mt-auto empurra pro pé, alinhando o bloco
+                    entre os 3 cards mesmo com textos de tamanhos diferentes */}
                 <div
-                  className="mt-6 grid grid-cols-3 gap-3 pt-5"
+                  className="mt-auto pt-5 grid grid-cols-3 gap-3"
                   style={{ borderTop: "1px solid var(--color-border)" }}
                 >
                   {c.metrics.map((m) => (
@@ -142,8 +143,6 @@ export function Cases() {
                     </div>
                   ))}
                 </div>
-
-                {/* Quote — discreto */}
               </article>
             </Reveal>
           ))}
