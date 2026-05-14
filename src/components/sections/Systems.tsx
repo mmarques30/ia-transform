@@ -1,4 +1,3 @@
-import { useEffect, useRef } from "react";
 import { Reveal } from "@/components/Reveal";
 import { ArrowRight } from "lucide-react";
 
@@ -116,96 +115,33 @@ export function Systems() {
 }
 
 /**
- * Carrossel de sistemas — scroll horizontal contínuo (rAF).
+ * Carrossel de sistemas — marquee CSS puro.
  *
- * O array SYSTEMS é renderizado 2× pra criar um loop invisível: quando o
- * scroll passa do meio (scrollWidth / 2), subtraímos esse valor do
- * scrollLeft e como o conteúdo se repete, o usuário não percebe o "rewind".
+ * Os cards são duplicados (12 ao total) e o track inteiro é traduzido
+ * via `transform: translateX` em loop infinito (60s). Quando chega em
+ * `-50%`, retorna pra `0%` — como o conteúdo se repete, o usuário não
+ * percebe o "rewind".
  *
- * Pausa em hover / focus / touch / aba em background / prefers-reduced-motion.
+ * GPU-accelerated (compositor cuida do paint) — não bloqueia main thread
+ * e renderiza as imagens com filtragem nítida.
+ *
+ * Pausa em hover/focus (CSS). Respeita prefers-reduced-motion.
  */
 function SystemsCarousel() {
-  const trackRef = useRef<HTMLDivElement>(null);
-  const pausedRef = useRef(false);
-
-  useEffect(() => {
-    const el = trackRef.current;
-    if (!el) return;
-
-    const reduced =
-      typeof window !== "undefined" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduced) return;
-
-    // 0.45px/frame ≈ 27 px/s a 60fps — leve o bastante pra ler enquanto
-    // desliza (passa um card de ~640px a cada ~24s).
-    const SPEED_PX_PER_FRAME = 0.45;
-    let rafId = 0;
-    let halfWidth = 0;
-
-    const recalc = () => {
-      halfWidth = el.scrollWidth / 2;
-    };
-    recalc();
-
-    const tick = () => {
-      if (!pausedRef.current && !document.hidden && halfWidth > 0) {
-        let next = el.scrollLeft + SPEED_PX_PER_FRAME;
-        if (next >= halfWidth) next -= halfWidth;
-        el.scrollLeft = next;
-      }
-      rafId = requestAnimationFrame(tick);
-    };
-    rafId = requestAnimationFrame(tick);
-
-    const pause = () => {
-      pausedRef.current = true;
-    };
-    const resume = () => {
-      pausedRef.current = false;
-    };
-
-    el.addEventListener("mouseenter", pause);
-    el.addEventListener("mouseleave", resume);
-    el.addEventListener("focusin", pause);
-    el.addEventListener("focusout", resume);
-    el.addEventListener("touchstart", pause, { passive: true });
-    el.addEventListener("touchend", resume, { passive: true });
-    window.addEventListener("resize", recalc);
-
-    return () => {
-      cancelAnimationFrame(rafId);
-      el.removeEventListener("mouseenter", pause);
-      el.removeEventListener("mouseleave", resume);
-      el.removeEventListener("focusin", pause);
-      el.removeEventListener("focusout", resume);
-      el.removeEventListener("touchstart", pause);
-      el.removeEventListener("touchend", resume);
-      window.removeEventListener("resize", recalc);
-    };
-  }, []);
-
-  // Duplica os cards pra que o loop de rewind seja invisível.
   const loop = [...SYSTEMS, ...SYSTEMS];
 
   return (
-    <div className="mt-12 lg:mt-14 relative">
-      <div
-        ref={trackRef}
-        className="systems-track flex gap-6 overflow-x-auto pb-4"
-        style={{
-          paddingInline: "max(1.25rem, calc((100vw - 1240px) / 2))",
-        }}
-      >
+    <div className="systems-viewport mt-12 lg:mt-14 relative overflow-hidden">
+      <div className="systems-loop flex gap-6">
         {loop.map((s, i) => (
           <article
             key={`${s.title}-${i}`}
-            data-system-card
-            className="group shrink-0 rounded-xl border border-border bg-card overflow-hidden flex flex-col transition-shadow hover:shadow-lg"
+            className="shrink-0 rounded-xl border border-border bg-card overflow-hidden flex flex-col"
             style={{
               width: "min(86vw, 640px)",
               boxShadow: "var(--shadow-card)",
             }}
+            aria-hidden={i >= SYSTEMS.length}
           >
             <div
               className="aspect-[16/9] relative overflow-hidden border-b border-border"
@@ -214,6 +150,8 @@ function SystemsCarousel() {
               <img
                 src={s.img}
                 alt={s.alt}
+                width={1280}
+                height={720}
                 loading="lazy"
                 decoding="async"
                 className="absolute inset-0 w-full h-full object-cover object-top"
