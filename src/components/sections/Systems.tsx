@@ -146,7 +146,7 @@ function SystemsCarousel() {
               <img
                 src={s.img}
                 alt={s.alt}
-                loading="lazy"
+                loading="eager"
                 decoding="async"
                 className="absolute inset-0 w-full h-full object-cover object-top"
               />
