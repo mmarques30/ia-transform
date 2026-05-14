@@ -119,6 +119,7 @@ function SystemsCarousel() {
   const trackRef = useRef<HTMLDivElement>(null);
   const [canPrev, setCanPrev] = useState(false);
   const [canNext, setCanNext] = useState(true);
+  const pausedRef = useRef(false);
 
   function updateNav() {
     const el = trackRef.current;
@@ -136,6 +137,57 @@ function SystemsCarousel() {
     return () => {
       el.removeEventListener("scroll", updateNav);
       window.removeEventListener("resize", updateNav);
+    };
+  }, []);
+
+  // Autoplay: avança 1 card a cada 4.5s, faz loop quando chega no fim.
+  // Pausa em hover / focus / touch / quando a aba não está visível /
+  // quando o usuário pede prefers-reduced-motion.
+  useEffect(() => {
+    const el = trackRef.current;
+    if (!el) return;
+
+    const reduced =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) return;
+
+    const tick = () => {
+      if (pausedRef.current) return;
+      if (document.hidden) return;
+      const card = el.querySelector<HTMLElement>("[data-system-card]");
+      const step = card ? card.offsetWidth + 24 : el.clientWidth * 0.9;
+      const atEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 8;
+      el.scrollTo({
+        left: atEnd ? 0 : el.scrollLeft + step,
+        behavior: "smooth",
+      });
+    };
+
+    const intervalId = window.setInterval(tick, 4500);
+
+    const pause = () => {
+      pausedRef.current = true;
+    };
+    const resume = () => {
+      pausedRef.current = false;
+    };
+
+    el.addEventListener("mouseenter", pause);
+    el.addEventListener("mouseleave", resume);
+    el.addEventListener("focusin", pause);
+    el.addEventListener("focusout", resume);
+    el.addEventListener("touchstart", pause, { passive: true });
+    el.addEventListener("touchend", resume, { passive: true });
+
+    return () => {
+      clearInterval(intervalId);
+      el.removeEventListener("mouseenter", pause);
+      el.removeEventListener("mouseleave", resume);
+      el.removeEventListener("focusin", pause);
+      el.removeEventListener("focusout", resume);
+      el.removeEventListener("touchstart", pause);
+      el.removeEventListener("touchend", resume);
     };
   }, []);
 
