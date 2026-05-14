@@ -99,7 +99,7 @@ export function Solution() {
  */
 function SystemsComposition() {
   return (
-    <div className="relative aspect-[5/4] w-full">
+    <div className="relative aspect-[3/2] w-full">
       {/* Soft glow behind */}
       <div
         aria-hidden
@@ -110,7 +110,7 @@ function SystemsComposition() {
         }}
       />
 
-      {/* Background card — KPIs dashboard (charcoal premium) */}
+      {/* Background card — Diag. Tributário (charcoal premium) */}
       <div
         className="absolute right-0 top-0 w-[78%] h-[72%] rounded-2xl overflow-hidden"
         style={{
@@ -122,7 +122,7 @@ function SystemsComposition() {
         <DashboardWindow />
       </div>
 
-      {/* Foreground card — Realtime metrics (white) */}
+      {/* Foreground card — PSA Consultores (white) */}
       <div
         className="absolute left-0 bottom-0 w-[62%] h-[58%] rounded-2xl overflow-hidden bg-white"
         style={{
@@ -132,24 +132,6 @@ function SystemsComposition() {
         }}
       >
         <MetricsWindow />
-      </div>
-
-      {/* Floating notification chip top-right */}
-      <div
-        className="absolute right-4 top-4 lg:right-6 lg:top-6 inline-flex items-center gap-2 rounded-full px-3 py-1.5 backdrop-blur-md"
-        style={{
-          backgroundColor: "oklch(0.95 0.22 115 / 0.95)",
-          color: "oklch(0.18 0.02 122)",
-          boxShadow: "0 8px 24px -8px oklch(0.18 0.02 122 / 0.3)",
-        }}
-      >
-        <span
-          className="h-1.5 w-1.5 rounded-full"
-          style={{ backgroundColor: "oklch(0.18 0.02 122)" }}
-        />
-        <span className="text-[10.5px] uppercase tracking-[0.14em] font-bold">
-          Sincronizado · 23s atrás
-        </span>
       </div>
     </div>
   );
@@ -172,14 +154,18 @@ function DashboardWindow() {
         </div>
       </div>
 
-      {/* Screenshot real */}
-      <div className="flex-1 relative overflow-hidden">
+      {/* Screenshot real — object-contain garante que a LP inteira apareça
+          sem corte. O bg do card (dark) cobre eventual letterbox. */}
+      <div
+        className="flex-1 relative overflow-hidden"
+        style={{ backgroundColor: "oklch(0.18 0.02 122)" }}
+      >
         <img
           src="/clients/recuperacao-tributaria-varejo.png"
           alt="LP de captação do Diagnóstico Tributário pra varejo"
           loading="lazy"
           decoding="async"
-          className="absolute inset-0 w-full h-full object-cover object-top"
+          className="absolute inset-0 w-full h-full object-contain"
         />
       </div>
     </div>
@@ -206,14 +192,17 @@ function MetricsWindow() {
         </div>
       </div>
 
-      {/* Screenshot real */}
-      <div className="flex-1 relative overflow-hidden">
+      {/* Screenshot real — object-contain garante o site inteiro sem corte */}
+      <div
+        className="flex-1 relative overflow-hidden"
+        style={{ backgroundColor: "oklch(0.97 0.005 110)" }}
+      >
         <img
           src="/clients/psa-consultores-agro.png"
           alt="Site institucional da PSA Consultores no agronegócio"
           loading="lazy"
           decoding="async"
-          className="absolute inset-0 w-full h-full object-cover object-top"
+          className="absolute inset-0 w-full h-full object-contain"
         />
       </div>
     </div>
