@@ -452,7 +452,10 @@
   .systems-loop {
     width: max-content;
     animation: systems-marquee 80s linear infinite;
-    will-change: transform;
+    /* Sem will-change: transform aqui — durante a animação contínua,
+       Chrome rasteriza em modo "fast" e degrada nitidez das imagens.
+       Cada card recebe transform: translateZ(0) próprio (no JSX), o
+       que força layer GPU sem derrubar a qualidade. */
     padding-inline: max(1.25rem, calc((100vw - 1240px) / 2));
   }
   .systems-viewport:hover .systems-loop,

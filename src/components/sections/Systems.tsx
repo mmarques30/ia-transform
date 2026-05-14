@@ -134,8 +134,9 @@ function SystemsCarousel() {
             aria-hidden={i >= SYSTEMS.length}
             className="group shrink-0 rounded-xl border border-border bg-card overflow-hidden flex flex-col transition-shadow hover:shadow-lg"
             style={{
-              width: "min(86vw, 640px)",
+              width: "min(88vw, 780px)",
               boxShadow: "var(--shadow-card)",
+              transform: "translateZ(0)",
             }}
           >
             <div
