@@ -1,20 +1,5 @@
 import { Reveal } from "@/components/Reveal";
 import { HeroForm } from "@/components/HeroForm";
-import { User } from "lucide-react";
-
-/**
- * Avatares de clientes da seção "Centenas de empresários impactados".
- *
- * Fotos hospedadas localmente em `public/clients/` (stock CC) — não dependem
- * de CDN externa, o que é crítico pro LCP. Pra trocar pelas reais, basta
- * substituir os arquivos mantendo os mesmos nomes ou ajustar `src` aqui.
- */
-const CLIENT_AVATARS: { src: string | null; bg: string; alt: string }[] = [
-  { src: "/clients/women-68.jpg", bg: "oklch(0.62 0.17 125)", alt: "Cliente IAplicada" },
-  { src: "/clients/men-32.jpg", bg: "oklch(0.55 0.16 125)", alt: "Cliente IAplicada" },
-  { src: "/clients/women-44.jpg", bg: "oklch(0.48 0.14 122)", alt: "Cliente IAplicada" },
-  { src: "/clients/men-76.jpg", bg: "oklch(0.42 0.12 122)", alt: "Cliente IAplicada" },
-];
 
 export function Hero() {
   return (
@@ -86,7 +71,7 @@ export function Hero() {
 
             <Reveal delay={0.15}>
               <p className="mt-4 text-[16px] text-sage leading-[1.6] max-w-[520px]">
-                Sem enrolação. Um sistema totalmente adaptado e exclusivo para a sua operação — com
+                Sem enrolação. Um sistema totalmente adaptado e exclusivo para a sua operação com
                 IA aplicada pra substituir planilhas e tarefas manuais por fluxos automáticos.
               </p>
             </Reveal>
@@ -100,12 +85,9 @@ export function Hero() {
             </Reveal>
 
             <Reveal delay={0.24}>
-              <div className="mt-10 flex items-center gap-4">
-                <AvatarStack />
-                <p className="text-[14px] text-foreground font-semibold leading-tight">
-                  Centenas de empresários impactados.
-                </p>
-              </div>
+              <p className="mt-10 text-[14px] text-foreground font-semibold leading-tight">
+                +30 empresas atendidas e transformadas.
+              </p>
             </Reveal>
           </div>
 
@@ -220,35 +202,3 @@ function Stat({ value, label }: { value: string; label: string }) {
   );
 }
 
-function AvatarStack() {
-  return (
-    <div className="flex -space-x-2.5" aria-hidden>
-      {CLIENT_AVATARS.map((a, i) => (
-        <span
-          key={i}
-          className="h-9 w-9 rounded-full ring-2 ring-background flex items-center justify-center overflow-hidden select-none"
-          style={{ backgroundColor: a.bg, cursor: "default" }}
-        >
-          {a.src ? (
-            <img
-              src={a.src}
-              alt={a.alt}
-              width={36}
-              height={36}
-              loading="lazy"
-              decoding="async"
-              className="h-full w-full object-cover"
-            />
-          ) : (
-            <User
-              aria-hidden
-              className="h-4 w-4"
-              strokeWidth={2}
-              style={{ color: "oklch(1 0 0 / 0.8)" }}
-            />
-          )}
-        </span>
-      ))}
-    </div>
-  );
-}
