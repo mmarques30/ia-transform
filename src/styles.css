@@ -438,14 +438,31 @@
       0 0 0 1px var(--color-olive);
   }
 
-  /* Carrossel de sistemas — esconde scrollbar mantendo scroll horizontal
-     funcional (touch, trackpad, programático via .scrollBy). */
-  .systems-track {
+  /* Carrossel de sistemas — marquee CSS GPU-accelerated.
+     O .systems-loop é traduzido de 0 a -50% via animation (50% = uma
+     cópia completa, já que a lista é duplicada no JSX). Pausa em
+     hover/focus do viewport. Respeita prefers-reduced-motion. */
+  .systems-viewport {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
-  .systems-track::-webkit-scrollbar {
+  .systems-viewport::-webkit-scrollbar {
     display: none;
+  }
+  .systems-loop {
+    width: max-content;
+    animation: systems-marquee 80s linear infinite;
+    will-change: transform;
+    padding-inline: max(1.25rem, calc((100vw - 1240px) / 2));
+  }
+  .systems-viewport:hover .systems-loop,
+  .systems-viewport:focus-within .systems-loop {
+    animation-play-state: paused;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .systems-loop {
+      animation: none;
+    }
   }
 
   /* Reveal — fade-up de entrada acionado por IntersectionObserver no
@@ -474,6 +491,14 @@
 
 /* Keyframes — fora de @layer pra serem globais e não escopadas */
 @keyframes ticker-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+@keyframes systems-marquee {
   from {
     transform: translateX(0);
   }

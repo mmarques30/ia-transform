@@ -1,4 +1,3 @@
-import { useEffect, useRef } from "react";
 import { Reveal } from "@/components/Reveal";
 import { ArrowRight } from "lucide-react";
 
@@ -59,30 +58,6 @@ const SYSTEMS: SystemCase[] = [
     img: "/clients/industria-moveis-dashboard.png",
     alt: "Dashboard executivo de uma indústria de móveis",
   },
-  {
-    tag: "Advocacia",
-    title: "Área interna com pipeline de casos",
-    text:
-      "Login próprio, identidade visual alinhada e backend integrado pra gerir leads e casos centralizados.",
-    img: "/clients/borges-zembruski.png",
-    alt: "Plataforma interna do Borges Zembruski Advocacia",
-  },
-  {
-    tag: "Varejo",
-    title: "LP de captação com qualificação automática",
-    text:
-      "Headline de impacto, formulário inteligente capturando CNPJ + faturamento e badges de credibilidade.",
-    img: "/clients/recuperacao-tributaria-varejo.png",
-    alt: "LP de recuperação tributária pra varejo",
-  },
-  {
-    tag: "Agronegócio",
-    title: "Site institucional + área do cliente",
-    text:
-      "Posicionamento de autoridade no agro com navegação clara e área do cliente integrada pro relacionamento contínuo.",
-    img: "/clients/psa-consultores-agro.png",
-    alt: "Site institucional da PSA Consultores",
-  },
 ];
 
 export function Systems() {
@@ -111,8 +86,8 @@ export function Systems() {
           </div>
           <Reveal delay={0.1}>
             <p className="text-[16px] text-sage leading-[1.55] max-w-[360px]">
-              Nove sistemas reais já rodando — de arquitetura a agronegócio. Cada um construído em
-              4 a 12 semanas.
+              Seis sistemas reais já rodando — de arquitetura a indústria. Cada um construído em 4
+              a 12 semanas.
             </p>
           </Reveal>
         </div>
@@ -140,91 +115,23 @@ export function Systems() {
 }
 
 /**
- * Carrossel de sistemas — scroll horizontal contínuo (rAF).
+ * Carrossel de sistemas — marquee CSS GPU-accelerated.
  *
- * O array SYSTEMS é renderizado 2× pra criar um loop invisível: quando o
- * scroll passa do meio (scrollWidth / 2), subtraímos esse valor do
- * scrollLeft e como o conteúdo se repete, o usuário não percebe o "rewind".
- *
- * Pausa em hover / focus / touch / aba em background / prefers-reduced-motion.
+ * Os cards são duplicados (12) e o `.systems-loop` é traduzido de 0
+ * a -50% via @keyframes (transform). Como a lista se repete, o usuário
+ * não percebe o "rewind". Pausa em hover/focus via CSS, respeita
+ * prefers-reduced-motion.
  */
 function SystemsCarousel() {
-  const trackRef = useRef<HTMLDivElement>(null);
-  const pausedRef = useRef(false);
-
-  useEffect(() => {
-    const el = trackRef.current;
-    if (!el) return;
-
-    const reduced =
-      typeof window !== "undefined" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduced) return;
-
-    // 0.45px/frame ≈ 27 px/s a 60fps — leve o bastante pra ler enquanto
-    // desliza (passa um card de ~640px a cada ~24s).
-    const SPEED_PX_PER_FRAME = 0.45;
-    let rafId = 0;
-    let halfWidth = 0;
-
-    const recalc = () => {
-      halfWidth = el.scrollWidth / 2;
-    };
-    recalc();
-
-    const tick = () => {
-      if (!pausedRef.current && !document.hidden && halfWidth > 0) {
-        let next = el.scrollLeft + SPEED_PX_PER_FRAME;
-        if (next >= halfWidth) next -= halfWidth;
-        el.scrollLeft = next;
-      }
-      rafId = requestAnimationFrame(tick);
-    };
-    rafId = requestAnimationFrame(tick);
-
-    const pause = () => {
-      pausedRef.current = true;
-    };
-    const resume = () => {
-      pausedRef.current = false;
-    };
-
-    el.addEventListener("mouseenter", pause);
-    el.addEventListener("mouseleave", resume);
-    el.addEventListener("focusin", pause);
-    el.addEventListener("focusout", resume);
-    el.addEventListener("touchstart", pause, { passive: true });
-    el.addEventListener("touchend", resume, { passive: true });
-    window.addEventListener("resize", recalc);
-
-    return () => {
-      cancelAnimationFrame(rafId);
-      el.removeEventListener("mouseenter", pause);
-      el.removeEventListener("mouseleave", resume);
-      el.removeEventListener("focusin", pause);
-      el.removeEventListener("focusout", resume);
-      el.removeEventListener("touchstart", pause);
-      el.removeEventListener("touchend", resume);
-      window.removeEventListener("resize", recalc);
-    };
-  }, []);
-
-  // Duplica os cards pra que o loop de rewind seja invisível.
   const loop = [...SYSTEMS, ...SYSTEMS];
 
   return (
-    <div className="mt-12 lg:mt-14 relative">
-      <div
-        ref={trackRef}
-        className="systems-track flex gap-6 overflow-x-auto pb-4"
-        style={{
-          paddingInline: "max(1.25rem, calc((100vw - 1240px) / 2))",
-        }}
-      >
+    <div className="systems-viewport mt-12 lg:mt-14 relative overflow-hidden">
+      <div className="systems-loop flex gap-6">
         {loop.map((s, i) => (
           <article
             key={`${s.title}-${i}`}
-            data-system-card
+            aria-hidden={i >= SYSTEMS.length}
             className="group shrink-0 rounded-xl border border-border bg-card overflow-hidden flex flex-col transition-shadow hover:shadow-lg"
             style={{
               width: "min(86vw, 640px)",
