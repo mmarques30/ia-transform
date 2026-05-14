@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Reveal } from "@/components/Reveal";
 import { ArrowDown, ArrowUp, Activity } from "lucide-react";
 
@@ -16,6 +17,34 @@ const METRICS: Metric[] = [
   { label: "Confiança em decisões", delta: "+74%", fill: 74, trend: "up", isGoodWhen: "up" },
   { label: "Dependência do dono", delta: "−71%", fill: 29, trend: "down", isGoodWhen: "down" },
   { label: "Crescimento previsível", delta: "+92%", fill: 92, trend: "up", isGoodWhen: "up" },
+];
+
+interface Showcase {
+  brand: string;
+  segment: string;
+  context: string;
+  image: string;
+}
+
+const SHOWCASES: Showcase[] = [
+  {
+    brand: "Borges Zembruski",
+    segment: "Advocacia",
+    context: "Área interna com pipeline de leads e casos",
+    image: "/clients/borges-zembruski.png",
+  },
+  {
+    brand: "Diag. Tributário",
+    segment: "Varejo",
+    context: "LP de captação com qualificação automática",
+    image: "/clients/recuperacao-tributaria-varejo.png",
+  },
+  {
+    brand: "PSA Consultores",
+    segment: "Agronegócio",
+    context: "Site institucional + área do cliente",
+    image: "/clients/psa-consultores-agro.png",
+  },
 ];
 
 export function Impact() {
@@ -56,8 +85,131 @@ export function Impact() {
             <ImpactMonitor />
           </div>
         </Reveal>
+
+        <Reveal delay={0.2}>
+          <div className="mt-16 lg:mt-20 max-w-[1080px] mx-auto">
+            <ClientShowcase />
+          </div>
+        </Reveal>
       </div>
     </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Client showcase — 3 screenshots reais rotacionando no frame mockup */
+/* ------------------------------------------------------------------ */
+
+function ClientShowcase() {
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) return;
+    const id = window.setInterval(() => {
+      setIndex((i) => (i + 1) % SHOWCASES.length);
+    }, 5000);
+    return () => clearInterval(id);
+  }, []);
+
+  const current = SHOWCASES[index];
+
+  return (
+    <div
+      className="rounded-2xl overflow-hidden"
+      style={{
+        backgroundColor: "oklch(1 0 0)",
+        border: "1px solid oklch(0.92 0.005 110)",
+        boxShadow:
+          "0 30px 60px -20px oklch(0.18 0.02 122 / 0.18), 0 8px 20px -8px oklch(0.18 0.02 122 / 0.08)",
+      }}
+    >
+      {/* Window chrome */}
+      <div
+        className="flex items-center justify-between px-5 py-3.5 border-b"
+        style={{
+          borderColor: "oklch(0.92 0.005 110)",
+          backgroundColor: "oklch(0.985 0.004 110)",
+        }}
+      >
+        <div className="flex items-center gap-2">
+          <span className="h-2 w-2 rounded-full bg-red-400/60" />
+          <span className="h-2 w-2 rounded-full bg-yellow-400/60" />
+          <span className="h-2 w-2 rounded-full bg-green-400/60" />
+          <p className="ml-2 text-[10.5px] font-mono text-muted-foreground transition-opacity duration-300">
+            iaplicada · {current.brand.toLowerCase()}
+          </p>
+        </div>
+        <span
+          className="inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider"
+          style={{ color: "oklch(0.55 0.16 145)" }}
+        >
+          <Activity className="h-2.5 w-2.5" strokeWidth={2.5} />
+          ao vivo
+        </span>
+      </div>
+
+      {/* Stack de imagens com cross-fade */}
+      <div
+        className="aspect-[16/9] relative"
+        style={{ backgroundColor: "oklch(0.94 0.005 110)" }}
+      >
+        {SHOWCASES.map((s, i) => (
+          <img
+            key={s.image}
+            src={s.image}
+            alt={`Dashboard ${s.brand}`}
+            loading={i === 0 ? "eager" : "lazy"}
+            decoding="async"
+            className={`absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-700 ${
+              i === index ? "opacity-100" : "opacity-0"
+            }`}
+          />
+        ))}
+      </div>
+
+      {/* Footer: label + dots */}
+      <div
+        className="px-5 py-4 border-t flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-[12.5px]"
+        style={{
+          borderColor: "oklch(0.92 0.005 110)",
+          backgroundColor: "oklch(0.985 0.004 110)",
+        }}
+      >
+        <div className="flex items-center gap-2.5">
+          <span
+            className="text-[10px] uppercase tracking-[0.16em] font-semibold"
+            style={{ color: "var(--color-muted-foreground)" }}
+          >
+            {current.segment}
+          </span>
+          <span aria-hidden className="text-muted-foreground">
+            ·
+          </span>
+          <span className="text-foreground font-semibold">{current.brand}</span>
+          <span aria-hidden className="hidden sm:inline text-muted-foreground">
+            ·
+          </span>
+          <span className="hidden sm:inline text-sage">{current.context}</span>
+        </div>
+        <div className="flex gap-1.5 self-end sm:self-auto">
+          {SHOWCASES.map((s, i) => (
+            <button
+              key={s.brand}
+              type="button"
+              onClick={() => setIndex(i)}
+              aria-label={`Mostrar ${s.brand}`}
+              className="h-1.5 rounded-full transition-all"
+              style={{
+                width: i === index ? 24 : 6,
+                backgroundColor:
+                  i === index ? "var(--color-primary)" : "var(--color-border)",
+              }}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }
 
