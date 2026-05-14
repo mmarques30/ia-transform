@@ -28,28 +28,25 @@ interface Vertical {
 
 const VERTICALS: Vertical[] = [
   {
+    label: "Advocacia",
+    brand: "Borges Zembruski",
+    context: "Área interna com pipeline de leads e casos",
+    accent: "oklch(0.55 0.16 25)",
+    image: "/clients/borges-zembruski.png",
+  },
+  {
     label: "Varejo",
-    brand: "Lumia",
-    context: "Painel de vendas multi-loja",
+    brand: "Diag. Tributário",
+    context: "LP de captação com qualificação automática",
     accent: "oklch(0.6 0.16 45)",
-    image:
-      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1400&q=80",
+    image: "/clients/recuperacao-tributaria-varejo.png",
   },
   {
-    label: "Indústria",
-    brand: "Forjana",
-    context: "OEE em tempo real por linha",
-    accent: "oklch(0.45 0.14 240)",
-    image:
-      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1400&q=80",
-  },
-  {
-    label: "Saúde",
-    brand: "Clínica Ípê",
-    context: "Agenda + prontuário integrados",
-    accent: "oklch(0.55 0.18 25)",
-    image:
-      "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1400&q=80",
+    label: "Agronegócio",
+    brand: "PSA Consultores",
+    context: "Site institucional + área do cliente",
+    accent: "oklch(0.55 0.16 125)",
+    image: "/clients/psa-consultores-agro.png",
   },
 ];
 
