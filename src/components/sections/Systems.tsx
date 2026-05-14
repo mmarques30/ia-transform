@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { Reveal } from "@/components/Reveal";
-import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 interface SystemCase {
   tag: string;
@@ -115,34 +115,19 @@ export function Systems() {
   );
 }
 
+/**
+ * Carrossel de sistemas — scroll horizontal contínuo (rAF).
+ *
+ * O array SYSTEMS é renderizado 2× pra criar um loop invisível: quando o
+ * scroll passa do meio (scrollWidth / 2), subtraímos esse valor do
+ * scrollLeft e como o conteúdo se repete, o usuário não percebe o "rewind".
+ *
+ * Pausa em hover / focus / touch / aba em background / prefers-reduced-motion.
+ */
 function SystemsCarousel() {
   const trackRef = useRef<HTMLDivElement>(null);
-  const [canPrev, setCanPrev] = useState(false);
-  const [canNext, setCanNext] = useState(true);
   const pausedRef = useRef(false);
 
-  function updateNav() {
-    const el = trackRef.current;
-    if (!el) return;
-    setCanPrev(el.scrollLeft > 8);
-    setCanNext(el.scrollLeft + el.clientWidth < el.scrollWidth - 8);
-  }
-
-  useEffect(() => {
-    const el = trackRef.current;
-    if (!el) return;
-    updateNav();
-    el.addEventListener("scroll", updateNav, { passive: true });
-    window.addEventListener("resize", updateNav);
-    return () => {
-      el.removeEventListener("scroll", updateNav);
-      window.removeEventListener("resize", updateNav);
-    };
-  }, []);
-
-  // Autoplay: avança 1 card a cada 4.5s, faz loop quando chega no fim.
-  // Pausa em hover / focus / touch / quando a aba não está visível /
-  // quando o usuário pede prefers-reduced-motion.
   useEffect(() => {
     const el = trackRef.current;
     if (!el) return;
@@ -152,19 +137,26 @@ function SystemsCarousel() {
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduced) return;
 
-    const tick = () => {
-      if (pausedRef.current) return;
-      if (document.hidden) return;
-      const card = el.querySelector<HTMLElement>("[data-system-card]");
-      const step = card ? card.offsetWidth + 24 : el.clientWidth * 0.9;
-      const atEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 8;
-      el.scrollTo({
-        left: atEnd ? 0 : el.scrollLeft + step,
-        behavior: "smooth",
-      });
-    };
+    // 0.45px/frame ≈ 27 px/s a 60fps — leve o bastante pra ler enquanto
+    // desliza (passa um card de ~640px a cada ~24s).
+    const SPEED_PX_PER_FRAME = 0.45;
+    let rafId = 0;
+    let halfWidth = 0;
 
-    const intervalId = window.setInterval(tick, 4500);
+    const recalc = () => {
+      halfWidth = el.scrollWidth / 2;
+    };
+    recalc();
+
+    const tick = () => {
+      if (!pausedRef.current && !document.hidden && halfWidth > 0) {
+        let next = el.scrollLeft + SPEED_PX_PER_FRAME;
+        if (next >= halfWidth) next -= halfWidth;
+        el.scrollLeft = next;
+      }
+      rafId = requestAnimationFrame(tick);
+    };
+    rafId = requestAnimationFrame(tick);
 
     const pause = () => {
       pausedRef.current = true;
@@ -179,47 +171,39 @@ function SystemsCarousel() {
     el.addEventListener("focusout", resume);
     el.addEventListener("touchstart", pause, { passive: true });
     el.addEventListener("touchend", resume, { passive: true });
+    window.addEventListener("resize", recalc);
 
     return () => {
-      clearInterval(intervalId);
+      cancelAnimationFrame(rafId);
       el.removeEventListener("mouseenter", pause);
       el.removeEventListener("mouseleave", resume);
       el.removeEventListener("focusin", pause);
       el.removeEventListener("focusout", resume);
       el.removeEventListener("touchstart", pause);
       el.removeEventListener("touchend", resume);
+      window.removeEventListener("resize", recalc);
     };
   }, []);
 
-  function scrollByCard(dir: -1 | 1) {
-    const el = trackRef.current;
-    if (!el) return;
-    const card = el.querySelector<HTMLElement>("[data-system-card]");
-    const step = card ? card.offsetWidth + 24 : el.clientWidth * 0.9;
-    el.scrollBy({ left: dir * step, behavior: "smooth" });
-  }
+  // Duplica os cards pra que o loop de rewind seja invisível.
+  const loop = [...SYSTEMS, ...SYSTEMS];
 
   return (
     <div className="mt-12 lg:mt-14 relative">
-      {/* Track full-bleed: usa padding inline pra alinhar o primeiro card
-          ao container-page e deixa os próximos vazarem pra fora da viewport. */}
       <div
         ref={trackRef}
-        className="systems-track flex gap-6 overflow-x-auto scroll-smooth pb-4"
+        className="systems-track flex gap-6 overflow-x-auto pb-4"
         style={{
-          scrollSnapType: "x mandatory",
           paddingInline: "max(1.25rem, calc((100vw - 1240px) / 2))",
-          scrollPaddingInline: "max(1.25rem, calc((100vw - 1240px) / 2))",
         }}
       >
-        {SYSTEMS.map((s) => (
+        {loop.map((s, i) => (
           <article
-            key={s.title}
+            key={`${s.title}-${i}`}
             data-system-card
             className="group shrink-0 rounded-xl border border-border bg-card overflow-hidden flex flex-col transition-shadow hover:shadow-lg"
             style={{
               width: "min(86vw, 640px)",
-              scrollSnapAlign: "start",
               boxShadow: "var(--shadow-card)",
             }}
           >
@@ -247,39 +231,6 @@ function SystemsCarousel() {
           </article>
         ))}
       </div>
-
-      {/* Botões de nav — desktop apenas */}
-      <div className="container-page mt-5 hidden md:flex items-center justify-end gap-2">
-        <CarouselButton
-          aria-label="Card anterior"
-          disabled={!canPrev}
-          onClick={() => scrollByCard(-1)}
-        >
-          <ChevronLeft className="h-4 w-4" strokeWidth={2.5} />
-        </CarouselButton>
-        <CarouselButton
-          aria-label="Próximo card"
-          disabled={!canNext}
-          onClick={() => scrollByCard(1)}
-        >
-          <ChevronRight className="h-4 w-4" strokeWidth={2.5} />
-        </CarouselButton>
-      </div>
     </div>
-  );
-}
-
-function CarouselButton({
-  children,
-  ...props
-}: React.ButtonHTMLAttributes<HTMLButtonElement>) {
-  return (
-    <button
-      type="button"
-      className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border bg-background text-foreground transition-all hover:border-primary hover:text-primary disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:border-border disabled:hover:text-foreground"
-      {...props}
-    >
-      {children}
-    </button>
   );
 }
