@@ -59,6 +59,30 @@ const SYSTEMS: SystemCase[] = [
     img: "/clients/industria-moveis-dashboard.png",
     alt: "Dashboard executivo de uma indústria de móveis",
   },
+  {
+    tag: "Advocacia",
+    title: "Área interna com pipeline de casos",
+    text:
+      "Login próprio, identidade visual alinhada e backend integrado pra gerir leads e casos centralizados.",
+    img: "/clients/borges-zembruski.png",
+    alt: "Plataforma interna do Borges Zembruski Advocacia",
+  },
+  {
+    tag: "Varejo",
+    title: "LP de captação com qualificação automática",
+    text:
+      "Headline de impacto, formulário inteligente capturando CNPJ + faturamento e badges de credibilidade.",
+    img: "/clients/recuperacao-tributaria-varejo.png",
+    alt: "LP de recuperação tributária pra varejo",
+  },
+  {
+    tag: "Agronegócio",
+    title: "Site institucional + área do cliente",
+    text:
+      "Posicionamento de autoridade no agro com navegação clara e área do cliente integrada pro relacionamento contínuo.",
+    img: "/clients/psa-consultores-agro.png",
+    alt: "Site institucional da PSA Consultores",
+  },
 ];
 
 export function Systems() {
@@ -87,8 +111,8 @@ export function Systems() {
           </div>
           <Reveal delay={0.1}>
             <p className="text-[16px] text-sage leading-[1.55] max-w-[360px]">
-              Seis sistemas reais já rodando — de arquitetura a indústria. Cada um construído em 4
-              a 12 semanas.
+              Nove sistemas reais já rodando — de arquitetura a agronegócio. Cada um construído em
+              4 a 12 semanas.
             </p>
           </Reveal>
         </div>
