@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { ArrowRight } from "lucide-react";
 
 /** Marca completa (mark + wordmark) — asset oficial em /public/brand/. */
-const LOGO_FULL_SRC = "/brand/iaplicada-logo-light.png";
+const LOGO_FULL_SRC = "/brand/iaplicada-logo-menu.jpg";
 
 const NAV = [
   { href: "#sistemas", label: "Sistemas" },
