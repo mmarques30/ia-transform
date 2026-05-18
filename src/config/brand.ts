@@ -44,9 +44,8 @@ export const CLIENTS: ClientLogo[] = [
 export const FOUNDER = {
   name: "Mariana Marques",
   role: "Fundadora · IAplicada",
-  // Foto oficial da Mari (final_composite (1).png).
-  // Espaços/parênteses no nome do arquivo precisam ser URL-encoded.
-  photoSrc: "/brand/final_composite%20(1).png",
+  // Foto oficial da Mari (final_composite.webp).
+  photoSrc: "/brand/final_composite.webp",
   // Fallback público (ibb.co) caso o arquivo local não esteja disponível.
   photoFallback: "https://i.ibb.co/NzfQDRG/final-composite-1.jpg",
   bio: "Fundei a IAplicada em 2022 depois de ver boas empresas travarem em pilotos de IA. Hoje conduzimos implementações com um time curado de especialistas.",

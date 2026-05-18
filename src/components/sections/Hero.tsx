@@ -146,7 +146,7 @@ function MarqueeStrip() {
 
       <div
         className="ticker-track py-3.5 select-none"
-        style={{ cursor: "default" }}
+        style={{ cursor: "default", pointerEvents: "none" }}
         aria-hidden
       >
         {seq.map((item, i) => (
@@ -176,16 +176,7 @@ function MarqueeStrip() {
 
 function Stat({ value, label }: { value: string; label: string }) {
   return (
-    <div
-      className="rounded-xl p-3.5"
-      style={{
-        backgroundColor: "oklch(1 0 0 / 0.65)",
-        border: "1px solid oklch(0.85 0.03 115)",
-        backdropFilter: "blur(8px)",
-        WebkitBackdropFilter: "blur(8px)",
-        cursor: "default",
-      }}
-    >
+    <div className="px-1 py-1.5" style={{ cursor: "default" }}>
       <div
         className="font-bold leading-none text-[18px] sm:text-[20px] tracking-tight"
         style={{ color: "oklch(0.18 0.02 122)" }}

@@ -15,7 +15,7 @@ const SYSTEMS: SystemCase[] = [
     title: "Tarefas por obra em um lugar só",
     text:
       "Cronograma, KPIs em tempo real e IA que responde sobre status, financeiro e atrasos sem abrir planilha.",
-    img: "/clients/quadra-arquitetura.png",
+    img: "/clients/quadra-arquitetura.webp",
     alt: "Painel de Tarefas por Obra da Quadra Arquitetura",
   },
   {
@@ -23,7 +23,7 @@ const SYSTEMS: SystemCase[] = [
     title: "Resumo financeiro de recuperação",
     text:
       "5 KPIs vivos, progresso de compensação e exportação direta pra Excel e PDF — fim do retrabalho mensal.",
-    img: "/clients/focus-tax.png",
+    img: "/clients/focus-tax.webp",
     alt: "Dashboard de resumo financeiro da Focus Tax",
   },
   {
@@ -31,7 +31,7 @@ const SYSTEMS: SystemCase[] = [
     title: "Catálogo único de ferramentas",
     text:
       "15+ ferramentas categorizadas por área fiscal, com manual integrado. Zero troca de contexto.",
-    img: "/clients/catalogo-ferramentas-fiscais.png",
+    img: "/clients/catalogo-ferramentas-fiscais.webp",
     alt: "Catálogo de ferramentas fiscais",
   },
   {
@@ -39,7 +39,7 @@ const SYSTEMS: SystemCase[] = [
     title: "Painel estratégico multi-cliente",
     text:
       "Filtros por urgência, KPIs vivos e alerta priorizado das tarefas atrasadas. Reunião de status virou gestão por exceção.",
-    img: "/clients/psa-tax.png",
+    img: "/clients/psa-tax.webp",
     alt: "Painel estratégico de operação tributária da PSA TAX",
   },
   {
@@ -47,7 +47,7 @@ const SYSTEMS: SystemCase[] = [
     title: "Plataforma editorial + mentora IA",
     text:
       "Fórum categorizado, rituais da semana, diretório de membras e a Uiara — IA que responde dúvidas 24/7.",
-    img: "/clients/uiara-comunidade.png",
+    img: "/clients/uiara-comunidade.webp",
     alt: "Plataforma de comunidade Uiara",
   },
   {
@@ -55,7 +55,7 @@ const SYSTEMS: SystemCase[] = [
     title: "Dashboard executivo de margem",
     text:
       "Receita faturada, margem real por pedido, saldo a receber e tendência mensal — tudo numa tela.",
-    img: "/clients/industria-moveis-dashboard.png",
+    img: "/clients/industria-moveis-dashboard.webp",
     alt: "Dashboard executivo de uma indústria de móveis",
   },
 ];
@@ -146,7 +146,7 @@ function SystemsCarousel() {
               <img
                 src={s.img}
                 alt={s.alt}
-                loading="eager"
+                loading="lazy"
                 decoding="async"
                 className="absolute inset-0 w-full h-full object-cover object-top"
               />

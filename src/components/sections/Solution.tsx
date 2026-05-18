@@ -161,10 +161,9 @@ function DashboardWindow() {
         style={{ backgroundColor: "oklch(0.18 0.02 122)" }}
       >
         <img
-          src="/clients/recuperacao-tributaria-varejo.png"
+          src="/clients/recuperacao-tributaria-varejo.webp"
           alt="LP de captação do Diagnóstico Tributário pra varejo"
-          loading="eager"
-          fetchPriority="high"
+          loading="lazy"
           decoding="async"
           className="absolute inset-0 w-full h-full object-contain"
         />
@@ -199,10 +198,9 @@ function MetricsWindow() {
         style={{ backgroundColor: "oklch(0.97 0.005 110)" }}
       >
         <img
-          src="/clients/psa-consultores-agro.png"
+          src="/clients/psa-consultores-agro.webp"
           alt="Site institucional da PSA Consultores no agronegócio"
-          loading="eager"
-          fetchPriority="high"
+          loading="lazy"
           decoding="async"
           className="absolute inset-0 w-full h-full object-contain"
         />
