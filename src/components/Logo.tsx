@@ -5,8 +5,6 @@ interface LogoProps {
   size?: number;
   className?: string;
   style?: CSSProperties;
-  /** Esconde o wordmark "IAplicada" — útil pra contextos de só ícone. */
-  iconOnly?: boolean;
 }
 
 interface LogoMarkProps {
@@ -14,64 +12,35 @@ interface LogoMarkProps {
   className?: string;
 }
 
+/** Marca completa oficial (símbolo de 4 pétalas + wordmark IAplicada). */
+const LOGO_FULL_SRC = "/brand/iaplicada-logo-light.png";
+/** Aspect ratio do PNG oficial (2108x500). */
+const LOGO_FULL_RATIO = 2108 / 500;
+
 /** Path da imagem quadrada (ainda usado em Authority + AnimatedLogoMark). */
 const LOGO_MARK_SRC = "/brand/capa_biz_sistemas.jpg";
 
 /**
- * Símbolo oficial — flor de 4 pétalas + diamante central em branco sobre
- * quadrado oliva arredondado. Replica /public/brand/logo.svg inline pra
- * garantir nitidez em qualquer tamanho.
+ * Logo IAplicada — símbolo oficial + wordmark, servido como PNG oficial
+ * (`/brand/iaplicada-logo-light.png`). Use `size` pra controlar a altura.
  */
-function LogoSymbol({ size = 22 }: { size?: number }) {
+export function Logo({ size = 22, className, style }: LogoProps) {
+  const width = Math.round(size * LOGO_FULL_RATIO);
   return (
-    <svg
-      width={size}
+    <img
+      src={LOGO_FULL_SRC}
+      alt="IAplicada"
+      width={width}
       height={size}
-      viewBox="0 0 128 128"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden
-      style={{ display: "block", flexShrink: 0 }}
-    >
-      <defs>
-        <mask id="ia-logo-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="128" height="128">
-          <rect width="128" height="128" fill="black" />
-          <circle cx="64" cy="64" r="48" fill="white" />
-          <rect x="60" y="10" width="8" height="108" rx="4" fill="black" />
-          <rect x="10" y="60" width="108" height="8" rx="4" fill="black" />
-          <polygon points="64,57 71,64 64,71 57,64" fill="white" />
-        </mask>
-      </defs>
-      <rect width="128" height="128" rx="24" fill="#8BAB23" />
-      <rect width="128" height="128" fill="white" mask="url(#ia-logo-mask)" />
-    </svg>
-  );
-}
-
-/**
- * Logo IAplicada — símbolo oficial (SVG inline) + wordmark.
- * Tamanho compacto por default pra caber em headers e footers sem dominar.
- */
-export function Logo({ size = 22, className, style, iconOnly = false }: LogoProps) {
-  return (
-    <span
-      className={`inline-flex items-center gap-2 ${className ?? ""}`}
-      style={style}
-    >
-      <LogoSymbol size={size} />
-      {!iconOnly && (
-        <span
-          className="font-semibold tracking-tight text-foreground"
-          style={{
-            fontSize: Math.round(size * 0.78),
-            letterSpacing: "-0.01em",
-            lineHeight: 1,
-          }}
-        >
-          IAplicada
-        </span>
-      )}
-    </span>
+      decoding="async"
+      className={className}
+      style={{
+        display: "block",
+        height: size,
+        width: "auto",
+        ...style,
+      }}
+    />
   );
 }
 
