@@ -55,24 +55,23 @@ export function Hero() {
 
             <Reveal delay={0.05}>
               <h1 className="h-mix mt-7 text-[42px] sm:text-[54px] lg:text-[64px] text-foreground">
-                Sua empresa <em>organizada</em>
+                Sua operação saindo
                 <br />
-                em até 30 dias em
+                da <em>planilha</em> em até
                 <br />
-                um único lugar.
+                30 dias.
               </h1>
             </Reveal>
 
             <Reveal delay={0.1}>
               <p className="mt-7 text-[18px] lg:text-[20px] text-foreground font-semibold leading-[1.4]">
-                Sem DEV. Sem soluções engessadas.
+                Sem DEV interno. Você acompanha, seu time opera.
               </p>
             </Reveal>
 
             <Reveal delay={0.15}>
               <p className="mt-4 text-[16px] text-sage leading-[1.6] max-w-[520px]">
-                Sem enrolação. Um sistema totalmente adaptado e exclusivo para a sua operação com
-                IA aplicada pra substituir planilhas e tarefas manuais por fluxos automáticos.
+                A gente implementa os fluxos automáticos da sua operação com IA aplicada.
               </p>
             </Reveal>
 
@@ -203,7 +202,7 @@ function ClientsProof() {
         ))}
       </div>
       <p className="text-[14px] text-foreground font-semibold leading-tight">
-        +30 empresas transformadas.
+        +30 empresas implementando IA no operacional.
       </p>
     </div>
   );

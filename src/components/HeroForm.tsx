@@ -446,7 +446,7 @@ export function HeroForm() {
                 "0 1px 0 0 oklch(1 0 0 / 0.12) inset, 0 14px 32px -10px oklch(0.18 0.02 122 / 0.45)",
             }}
           >
-            {loading ? "Enviando..." : "Quero saber mais sobre o Business"}
+            {loading ? "Enviando..." : "Agendar diagnóstico"}
             {!loading && <ArrowRight className="h-4 w-4" strokeWidth={2.5} />}
           </button>
 
