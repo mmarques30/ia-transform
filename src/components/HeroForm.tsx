@@ -54,6 +54,16 @@ export function HeroForm() {
     setError(null);
     setLoading(true);
 
+    /**
+     * eventID — único por submissão. Usado pra deduplicação do evento
+     * Lead no Meta Pixel: dispara aqui (client-side, antes do redirect)
+     * E também no thank-you-business.tsx (backup, caso o usuário feche
+     * a aba antes do PageView da thank-you).
+     */
+    const eventID = `lead_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`;
+
+    console.log("[form] submit start", { eventID });
+
     try {
       const fd = new FormData(e.currentTarget);
       const params =
@@ -83,6 +93,10 @@ export function HeroForm() {
         // pra Conversions API. A Edge Function persiste em raw_data.
         fbclid: params.get("fbclid") ?? "",
         gclid: params.get("gclid") ?? "",
+        // Mesmo eventID que dispara no fbq client. Permite a Edge Function
+        // mandar Conversions API com o mesmo ID se quiser deduplicar
+        // server-side no futuro.
+        event_id: eventID,
       };
 
       const res = await fetch(FORM_ENDPOINT, {
@@ -103,13 +117,59 @@ export function HeroForm() {
         );
       }
 
-      navigate({ to: "/thank-you-business" });
+      console.log("[form] api ok");
+
+      // Dispara Lead no Meta Pixel com eventID pra deduplicação.
+      // window.fbq é injetado pelo script inline no __root.tsx.
+      type FbqFn = (
+        action: "track",
+        event: string,
+        params?: Record<string, unknown>,
+        opts?: { eventID: string },
+      ) => void;
+      const fbq = (window as unknown as { fbq?: FbqFn }).fbq;
+      if (typeof fbq === "function") {
+        fbq(
+          "track",
+          "Lead",
+          {
+            content_name: "business_diagnostic",
+            content_category: "business",
+          },
+          { eventID },
+        );
+        console.log("[form] pixel fired", { eventID });
+      } else {
+        console.warn("[form] fbq not available — Pixel não disparado");
+      }
+
+      // Marca conversão no Clarity pra correlacionar com a sessão.
+      type ClarityFn = (action: string, ...args: unknown[]) => void;
+      const clarity = (window as unknown as { clarity?: ClarityFn }).clarity;
+      if (typeof clarity === "function") {
+        clarity("event", "form_submit_success");
+        clarity("set", "lead_event_id", eventID);
+      }
+
+      console.log("[form] redirecting");
+      navigate({ to: "/thank-you-business", search: { eid: eventID } });
     } catch (err) {
-      setError(
+      const message =
         err instanceof Error
           ? err.message
-          : "Não conseguimos enviar agora. Tente novamente em alguns instantes.",
-      );
+          : "Não conseguimos enviar agora. Tente novamente em alguns instantes.";
+
+      console.error("[form] submit failed", message);
+
+      // Registra falha no Clarity pra investigar via session replay.
+      type ClarityFn = (action: string, ...args: unknown[]) => void;
+      const clarity = (window as unknown as { clarity?: ClarityFn }).clarity;
+      if (typeof clarity === "function") {
+        clarity("event", "form_submit_error");
+        clarity("set", "form_submit_error_message", message);
+      }
+
+      setError(message);
       setLoading(false);
     }
   }

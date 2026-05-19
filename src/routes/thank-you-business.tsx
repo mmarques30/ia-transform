@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   CheckCircle2,
@@ -10,7 +11,15 @@ import { Header } from "@/components/sections/Header";
 import { Footer } from "@/components/sections/Footer";
 import { Reveal } from "@/components/Reveal";
 
+interface ThankYouSearch {
+  /** Event ID recebido do HeroForm pra deduplicação do evento Lead no Meta. */
+  eid?: string;
+}
+
 export const Route = createFileRoute("/thank-you-business")({
+  validateSearch: (search: Record<string, unknown>): ThankYouSearch => ({
+    eid: typeof search.eid === "string" ? search.eid : undefined,
+  }),
   head: () => ({
     meta: [
       { title: "Inscrição confirmada · IAplicada Business" },
@@ -25,6 +34,42 @@ export const Route = createFileRoute("/thank-you-business")({
   }),
   component: ThankYouBusinessPage,
 });
+
+/**
+ * Dispara o evento Lead no Meta Pixel como backup pro disparo client-side
+ * que rodou no HeroForm antes do redirect. O eventID é o mesmo, então o
+ * Meta deduplica automaticamente. Se chegou aqui sem eid (acesso direto,
+ * F5 etc), não dispara — evita falso-positivo em conversão.
+ */
+function useFireLeadBackup(eid: string | undefined) {
+  useEffect(() => {
+    if (!eid) {
+      console.log("[thank-you] no eid, skipping Lead backup");
+      return;
+    }
+    type FbqFn = (
+      action: "track",
+      event: string,
+      params?: Record<string, unknown>,
+      opts?: { eventID: string },
+    ) => void;
+    const fbq = (window as unknown as { fbq?: FbqFn }).fbq;
+    if (typeof fbq !== "function") {
+      console.warn("[thank-you] fbq not available — Lead backup não disparado");
+      return;
+    }
+    fbq(
+      "track",
+      "Lead",
+      {
+        content_name: "business_diagnostic",
+        content_category: "business",
+      },
+      { eventID: eid },
+    );
+    console.log("[thank-you] Lead backup fired", { eventID: eid });
+  }, [eid]);
+}
 
 const NEXT_STEPS = [
   {
@@ -45,6 +90,9 @@ const NEXT_STEPS = [
 ];
 
 function ThankYouBusinessPage() {
+  const { eid } = Route.useSearch();
+  useFireLeadBackup(eid);
+
   return (
     <main className="min-h-screen bg-background text-foreground">
       <Header />
