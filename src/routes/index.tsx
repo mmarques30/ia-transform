@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Header } from "@/components/sections/Header";
 import { Hero } from "@/components/sections/Hero";
+import { ICP } from "@/components/sections/ICP";
 import { Problem } from "@/components/sections/Problem";
 import { Solution } from "@/components/sections/Solution";
 import { Systems } from "@/components/sections/Systems";
@@ -54,6 +55,7 @@ function BusinessLanding() {
       <Process />
       <Impact />
       <Authority />
+      <ICP />
       <Comparison />
       <Segmentation />
       <FAQ />

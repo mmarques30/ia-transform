@@ -304,7 +304,23 @@ export function HeroForm() {
           </button>
 
           <p
-            className="pt-2 text-[11.5px] text-center leading-relaxed"
+            className="pt-3 text-[12.5px] text-center leading-relaxed"
+            style={{ color: "oklch(0.45 0.015 115)" }}
+          >
+            Empresa menor?{" "}
+            <a
+              href="https://academy.iaplicada.com"
+              target="_blank"
+              rel="noopener"
+              className="font-semibold underline underline-offset-2 hover:no-underline"
+              style={{ color: "var(--color-primary)" }}
+            >
+              Conheça a Mentoria 1:1 IAplicada
+            </a>
+          </p>
+
+          <p
+            className="pt-1 text-[11.5px] text-center leading-relaxed"
             style={{ color: "oklch(0.55 0.015 115)" }}
           >
             Ao enviar, você concorda em receber comunicações da IAplicada.
