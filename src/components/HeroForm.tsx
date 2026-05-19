@@ -3,6 +3,10 @@ import { useNavigate } from "@tanstack/react-router";
 import { ArrowRight, AlertCircle } from "lucide-react";
 
 const FORM_ENDPOINT = "https://ciwdlceyjsnlnunktqzx.supabase.co/functions/v1/form-submit";
+/** Anon key (JWT legacy) do projeto CRMIAplicada — exigido pelo Authorization
+ *  Bearer da Edge Function form-submit (verify_jwt=true). Publicável no client. */
+const FORM_API_KEY =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNpd2RsY2V5anNubG51bmt0cXp4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyMTU3OTksImV4cCI6MjA4OTc5MTc5OX0.tl-7gEObYBB7wDUS5_pKh9UyRlJQNdnWPiRpMFYrbUM";
 const FORM_SLUG = "business";
 
 const CARGOS = [
@@ -75,7 +79,11 @@ export function HeroForm() {
 
       const res = await fetch(FORM_ENDPOINT, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${FORM_API_KEY}`,
+          apikey: FORM_API_KEY,
+        },
         body: JSON.stringify(payload),
       });
 
