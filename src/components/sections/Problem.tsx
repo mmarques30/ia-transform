@@ -73,6 +73,14 @@ export function Problem() {
             </Reveal>
           ))}
         </div>
+
+        <Reveal delay={0.2}>
+          <p className="mt-10 text-center text-[13.5px] text-sage leading-[1.6] max-w-[760px] mx-auto">
+            <span className="font-semibold text-foreground">Sintomas comuns:</span>{" "}
+            financeiro descentralizado, relatórios manuais, dados espalhados, decisões lentas,
+            risco de erro.
+          </p>
+        </Reveal>
       </div>
     </section>
   );
