@@ -438,7 +438,7 @@ export function HeroForm() {
           <button
             type="submit"
             disabled={loading}
-            className="mt-2 w-full inline-flex items-center justify-center gap-2 rounded-full px-6 py-4 text-[14px] font-bold transition-all disabled:opacity-60 disabled:cursor-not-allowed hover:-translate-y-0.5"
+            className="mt-2 w-full inline-flex items-center justify-center gap-2 rounded-full px-6 py-4 text-[14px] font-bold transition-[transform,opacity,box-shadow] disabled:opacity-60 disabled:cursor-not-allowed hover:-translate-y-0.5"
             style={{
               backgroundColor: "var(--color-accent)",
               color: "oklch(1 0 0)",
