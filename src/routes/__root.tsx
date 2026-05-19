@@ -41,22 +41,27 @@ export const Route = createRootRoute({
       { name: "author", content: "IAplicada" },
       {
         property: "og:title",
-        content: "IAplicada Business · IA entregue, rodando e medida",
+        content: "IAplicada Business · IA aplicada ao operacional da sua empresa",
       },
       {
         property: "og:description",
         content:
-          "Diagnóstico em 2 semanas, sistemas de IA construídos sob medida, treinamento e handover. 6 vagas por trimestre.",
+          "Não construímos por hype. Cada sistema é projetado pra resolver um problema operacional específico.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://iaplicada.com/" },
+      { property: "og:image", content: "https://iaplicada.com/brand/capa_biz_sistemas.jpg" },
       { name: "twitter:card", content: "summary_large_image" },
-      { property: "og:title", content: "IAplicada Business · IA aplicada ao operacional da sua empresa" },
-      { name: "twitter:title", content: "IAplicada Business · IA aplicada ao operacional da sua empresa" },
-      { name: "description", content: "Não construímos por hype. Cada sistema é projetado pra resolver um problema operacional específico." },
-      { property: "og:description", content: "Não construímos por hype. Cada sistema é projetado pra resolver um problema operacional específico." },
-      { name: "twitter:description", content: "Não construímos por hype. Cada sistema é projetado pra resolver um problema operacional específico." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/fde05dc6-5082-4a73-81e9-b28976a83f73/id-preview-a4fc7d30--3e493d3c-70cb-40da-85f3-b2dbd161c1a9.lovable.app-1778460552018.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/fde05dc6-5082-4a73-81e9-b28976a83f73/id-preview-a4fc7d30--3e493d3c-70cb-40da-85f3-b2dbd161c1a9.lovable.app-1778460552018.png" },
+      {
+        name: "twitter:title",
+        content: "IAplicada Business · IA aplicada ao operacional da sua empresa",
+      },
+      {
+        name: "twitter:description",
+        content:
+          "Não construímos por hype. Cada sistema é projetado pra resolver um problema operacional específico.",
+      },
+      { name: "twitter:image", content: "https://iaplicada.com/brand/capa_biz_sistemas.jpg" },
     ],
     links: [
       {
@@ -93,13 +98,23 @@ export const Route = createRootRoute({
       },
     ],
     scripts: [
-      // Microsoft Clarity — heatmaps, session replays, frustration signals
+      // Microsoft Clarity — heatmaps, session replays, frustration signals.
+      // Inicializa cedo pra capturar a sessão desde o primeiro paint.
+      //
+      // Em ambiente de preview/iframe do Lovable o tráfego polui as
+      // métricas (acessos do editor, não usuários reais). Sinaliza
+      // environment=production só quando o hostname for o domínio real,
+      // permitindo filtrar via segmento no dashboard do Clarity.
       {
-        children: `(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","${CLARITY_PROJECT_ID}");`,
+        children: `(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","${CLARITY_PROJECT_ID}");try{if(window.location&&window.location.hostname==="iaplicada.com"){window.clarity("set","environment","production");}else{window.clarity("set","environment","preview");}}catch(e){}`,
       },
-      // Meta Pixel — conversões / remarketing Facebook/Instagram Ads
+      // Meta Pixel — conversões / remarketing Facebook/Instagram Ads.
+      // Define a função fbq() imediatamente (com fila) e dispara
+      // init + PageView, mas atrasa o download do fbevents.js externo em
+      // 2s pra não competir com o LCP. Quando o script carrega, a fila
+      // é drenada e os eventos vão na ordem certa.
       {
-        children: `!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${META_PIXEL_ID}');fbq('track','PageView');`,
+        children: `!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.defer=!0;t.src=v;setTimeout(function(){s=b.getElementsByTagName(e)[0];if(s&&s.parentNode){s.parentNode.insertBefore(t,s);}else{b.head.appendChild(t);}},2000);}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${META_PIXEL_ID}');fbq('track','PageView');`,
       },
     ],
   }),
