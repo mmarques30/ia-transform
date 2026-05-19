@@ -44,8 +44,8 @@ export function Hero() {
         />
 
         <div className="container-page relative">
-        <div className="grid lg:grid-cols-[1.05fr_1fr] gap-12 lg:gap-16 items-start">
-          <div className="lg:pt-6">
+        <div className="grid lg:grid-cols-[1.05fr_1fr] gap-12 lg:gap-16 items-center">
+          <div>
             <Reveal>
               <span className="label-chip">
                 <span className="dot" />
