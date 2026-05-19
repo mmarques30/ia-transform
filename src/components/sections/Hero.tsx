@@ -77,17 +77,7 @@ export function Hero() {
             </Reveal>
 
             <Reveal delay={0.18}>
-              <div className="mt-8 grid grid-cols-3 gap-3 max-w-[520px]">
-                <Stat value="30 dias" label="prazo médio de entrega" />
-                <Stat value="100%" label="sistema sob medida" />
-                <Stat value="−30h/sem" label="trabalho manual eliminado" />
-              </div>
-            </Reveal>
-
-            <Reveal delay={0.24}>
-              <p className="mt-10 text-[14px] text-foreground font-semibold leading-tight">
-                +30 empresas atendidas e transformadas.
-              </p>
+              <ClientsProof />
             </Reveal>
           </div>
 
@@ -109,7 +99,6 @@ export function Hero() {
  * o loop CSS (.ticker-track translateX(-50%)) ficar contínuo.
  */
 const MARQUEE_ITEMS = [
-  "Atendemos PMEs até hoje",
   "30 dias prazo médio",
   "Sem DEV",
   "Diagnóstico em 30 min",
@@ -174,20 +163,47 @@ function MarqueeStrip() {
   );
 }
 
-function Stat({ value, label }: { value: string; label: string }) {
+/**
+ * Prova social visual — stack de mini-thumbs reais dos clientes (sobrepostos
+ * em círculos) + frase "+30 empresas transformadas". Substitui o bloco de
+ * stats textual e dá densidade visual sem inventar fotos genéricas.
+ */
+const PROOF_THUMBS = [
+  { src: "/clients/quadra-arquitetura.webp", alt: "Quadra Arquitetura" },
+  { src: "/clients/focus-tax.webp", alt: "Focus Tax" },
+  { src: "/clients/psa-tax.webp", alt: "PSA Tax" },
+  { src: "/clients/uiara-comunidade.webp", alt: "Comunidade Uiara" },
+  { src: "/clients/industria-moveis-dashboard.webp", alt: "Indústria de móveis" },
+];
+
+function ClientsProof() {
+  const SIZE = 40;
   return (
-    <div className="px-1 py-1.5" style={{ cursor: "default" }}>
-      <div
-        className="font-bold leading-none text-[18px] sm:text-[20px] tracking-tight"
-        style={{ color: "oklch(0.18 0.02 122)" }}
-      >
-        {value}
+    <div className="mt-8 flex items-center gap-4">
+      <div className="flex" aria-hidden>
+        {PROOF_THUMBS.map((t, i) => (
+          <img
+            key={t.src}
+            src={t.src}
+            alt={t.alt}
+            width={SIZE}
+            height={SIZE}
+            loading="lazy"
+            decoding="async"
+            className="rounded-full object-cover"
+            style={{
+              width: SIZE,
+              height: SIZE,
+              marginLeft: i === 0 ? 0 : -12,
+              border: "2px solid var(--color-background)",
+              boxShadow: "0 2px 6px -2px oklch(0.18 0.02 122 / 0.25)",
+              zIndex: PROOF_THUMBS.length - i,
+            }}
+          />
+        ))}
       </div>
-      <p
-        className="mt-1.5 text-[10.5px] leading-tight"
-        style={{ color: "oklch(0.45 0.015 115)" }}
-      >
-        {label}
+      <p className="text-[14px] text-foreground font-semibold leading-tight">
+        +30 empresas transformadas.
       </p>
     </div>
   );
