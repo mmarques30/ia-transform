@@ -1,6 +1,23 @@
-import { useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FocusEvent, type FormEvent } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { ArrowRight, AlertCircle } from "lucide-react";
+
+/**
+ * Wrapper safe pro Clarity. window.clarity é injetado pelo snippet no
+ * __root.tsx — pode não estar pronto se o usuário interagir muito cedo,
+ * ou pode estar bloqueado por adblocker. Falha silenciosa nesses casos.
+ */
+type ClarityFn = (action: string, ...args: unknown[]) => void;
+function trackClarity(action: string, ...args: unknown[]): void {
+  if (typeof window === "undefined") return;
+  const fn = (window as unknown as { clarity?: ClarityFn }).clarity;
+  if (typeof fn !== "function") return;
+  try {
+    fn(action, ...args);
+  } catch (err) {
+    console.warn("[clarity] tracking failed", err);
+  }
+}
 
 const FORM_ENDPOINT = "https://ciwdlceyjsnlnunktqzx.supabase.co/functions/v1/form-submit";
 const FORM_SLUG = "business";
@@ -47,6 +64,79 @@ export function HeroForm() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  /**
+   * Refs de tracking — fora do state pra evitar re-renders. Cada flag
+   * garante "dispara só uma vez" pros eventos one-shot do Clarity.
+   */
+  const cardRef = useRef<HTMLDivElement>(null);
+  const viewFired = useRef(false);
+  const startFired = useRef(false);
+  const fieldsCompleted = useRef<Set<string>>(new Set());
+  const submitted = useRef(false);
+  const hasAnyValue = useRef(false);
+
+  /**
+   * IntersectionObserver: dispara form_view quando >=50% do card está
+   * visível. Cobre o caso de scroll-down (visitor desceu sem ver o form)
+   * vs. acima da dobra (impressão imediata).
+   */
+  useEffect(() => {
+    if (!cardRef.current) return;
+    const node = cardRef.current;
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting && !viewFired.current) {
+            viewFired.current = true;
+            trackClarity("event", "form_view");
+            io.disconnect();
+            break;
+          }
+        }
+      },
+      { threshold: 0.5 },
+    );
+    io.observe(node);
+    return () => io.disconnect();
+  }, []);
+
+  /**
+   * beforeunload: se o usuário interagiu com pelo menos 1 campo mas
+   * não submeteu, registra form_abandon. Útil pra medir fricção dos
+   * campos finais (cargo / faixa / setor).
+   */
+  useEffect(() => {
+    const onBeforeUnload = () => {
+      if (submitted.current) return;
+      if (!hasAnyValue.current) return;
+      trackClarity("event", "form_abandon");
+    };
+    window.addEventListener("beforeunload", onBeforeUnload);
+    return () => window.removeEventListener("beforeunload", onBeforeUnload);
+  }, []);
+
+  /**
+   * Delegação no <form>: primeiro focus em qualquer campo → form_start.
+   * Blur com valor preenchido → form_field_complete_<name> (uma vez por
+   * field). Marca hasAnyValue pra alimentar o form_abandon.
+   */
+  function handleFocusCapture(_e: FocusEvent<HTMLFormElement>) {
+    if (startFired.current) return;
+    startFired.current = true;
+    trackClarity("event", "form_start");
+  }
+
+  function handleBlurCapture(e: FocusEvent<HTMLFormElement>) {
+    const target = e.target as HTMLInputElement | HTMLSelectElement | null;
+    if (!target || !target.name) return;
+    const value = (target.value ?? "").trim();
+    if (!value) return;
+    hasAnyValue.current = true;
+    if (fieldsCompleted.current.has(target.name)) return;
+    fieldsCompleted.current.add(target.name);
+    trackClarity("event", `form_field_complete_${target.name}`);
+  }
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -143,13 +233,9 @@ export function HeroForm() {
         console.warn("[form] fbq not available — Pixel não disparado");
       }
 
-      // Marca conversão no Clarity pra correlacionar com a sessão.
-      type ClarityFn = (action: string, ...args: unknown[]) => void;
-      const clarity = (window as unknown as { clarity?: ClarityFn }).clarity;
-      if (typeof clarity === "function") {
-        clarity("event", "form_submit_success");
-        clarity("set", "lead_event_id", eventID);
-      }
+      trackClarity("event", "form_submit_success");
+      trackClarity("set", "lead_event_id", eventID);
+      submitted.current = true;
 
       console.log("[form] redirecting");
       navigate({ to: "/thank-you-business", search: { eid: eventID } });
@@ -160,14 +246,8 @@ export function HeroForm() {
           : "Não conseguimos enviar agora. Tente novamente em alguns instantes.";
 
       console.error("[form] submit failed", message);
-
-      // Registra falha no Clarity pra investigar via session replay.
-      type ClarityFn = (action: string, ...args: unknown[]) => void;
-      const clarity = (window as unknown as { clarity?: ClarityFn }).clarity;
-      if (typeof clarity === "function") {
-        clarity("event", "form_submit_error");
-        clarity("set", "form_submit_error_message", message);
-      }
+      trackClarity("event", "form_submit_error");
+      trackClarity("set", "form_submit_error_message", message);
 
       setError(message);
       setLoading(false);
@@ -176,6 +256,7 @@ export function HeroForm() {
 
   return (
     <div
+      ref={cardRef}
       className="rounded-[24px] overflow-hidden relative"
       style={{
         backgroundColor: "oklch(0.995 0.003 110)",
@@ -226,7 +307,13 @@ export function HeroForm() {
       </div>
 
       <div className="px-7 pb-8 pt-6 lg:px-9 lg:pb-10 lg:pt-7 relative">
-        <form onSubmit={handleSubmit} className="space-y-3.5" noValidate>
+        <form
+          onSubmit={handleSubmit}
+          onFocusCapture={handleFocusCapture}
+          onBlurCapture={handleBlurCapture}
+          className="space-y-3.5"
+          noValidate
+        >
           <Field id="firstname" label="Nome completo" required>
             <input
               id="firstname"
