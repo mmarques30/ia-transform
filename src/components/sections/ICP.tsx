@@ -40,7 +40,7 @@ export function ICP() {
             <a
               href="https://academy.iaplicada.com"
               target="_blank"
-              rel="noopener"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-lg px-4 py-3 text-[13px] font-semibold transition-colors group"
               style={{
                 backgroundColor: "oklch(1 0 0)",
