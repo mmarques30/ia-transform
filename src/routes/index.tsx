@@ -8,7 +8,6 @@ import { Systems } from "@/components/sections/Systems";
 import { OliveWave } from "@/components/sections/OliveWave";
 import { Process } from "@/components/sections/Process";
 import { Impact } from "@/components/sections/Impact";
-import { Segmentation } from "@/components/sections/Segmentation";
 import { Comparison } from "@/components/sections/Comparison";
 import { Authority } from "@/components/sections/Authority";
 import { FAQ } from "@/components/sections/FAQ";
@@ -57,7 +56,6 @@ function BusinessLanding() {
       <Authority />
       <ICP />
       <Comparison />
-      <Segmentation />
       <FAQ />
       <CTAFinal />
       <Footer />
