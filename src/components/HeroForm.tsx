@@ -458,7 +458,7 @@ export function HeroForm() {
             <a
               href="https://academy.iaplicada.com"
               target="_blank"
-              rel="noopener"
+              rel="noopener noreferrer"
               className="font-semibold underline underline-offset-2 hover:no-underline"
               style={{ color: "var(--color-primary)" }}
             >
