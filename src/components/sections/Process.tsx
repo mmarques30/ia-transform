@@ -2,8 +2,6 @@ import { Reveal } from "@/components/Reveal";
 import { ChevronRight, CalendarDays, Search, Sparkles, LayoutDashboard } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
-const KEYWORDS = ["Clareza", "Análise", "Eficiência", "Inovação", "Produtividade"];
-
 interface Step {
   n: string;
   title: string;
@@ -46,31 +44,6 @@ const STEPS: Step[] = [
 export function Process() {
   return (
     <section id="abordagem" className="bg-background relative overflow-hidden">
-      {/* Animated keyword ticker */}
-      <div
-        className="border-y py-4 overflow-hidden"
-        style={{
-          borderColor: "var(--color-border)",
-          backgroundColor: "var(--color-surface)",
-        }}
-      >
-        <div className="ticker-track whitespace-nowrap">
-          {[...KEYWORDS, ...KEYWORDS, ...KEYWORDS, ...KEYWORDS].map((k, i) => (
-            <span
-              key={i}
-              className="inline-flex items-center gap-6 text-[28px] lg:text-[40px] font-serif italic font-light"
-              style={{ color: "oklch(0.58 0.16 125 / 0.35)" }}
-            >
-              <span
-                className="h-3 w-3 rounded-full"
-                style={{ backgroundColor: "oklch(0.62 0.17 125 / 0.4)" }}
-              />
-              {k}
-            </span>
-          ))}
-        </div>
-      </div>
-
       <div className="container-page py-[100px] lg:py-[140px] relative">
         <div className="text-center max-w-[820px] mx-auto">
           <Reveal>
