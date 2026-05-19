@@ -5,7 +5,6 @@ import { Logo } from "@/components/Logo";
 const NAV = [
   { href: "#sistemas", label: "Sistemas" },
   { href: "#abordagem", label: "Abordagem" },
-  { href: "#cases", label: "Cases" },
   { href: "#time", label: "Time" },
   { href: "#faq", label: "FAQ" },
 ];
