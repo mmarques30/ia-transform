@@ -169,11 +169,11 @@ function MarqueeStrip() {
  * stats textual e dá densidade visual sem inventar fotos genéricas.
  */
 const PROOF_THUMBS = [
-  { src: "/clients/quadra-arquitetura.webp", alt: "Quadra Arquitetura" },
-  { src: "/clients/focus-tax.webp", alt: "Focus Tax" },
-  { src: "/clients/psa-tax.webp", alt: "PSA Tax" },
-  { src: "/clients/uiara-comunidade.webp", alt: "Comunidade Uiara" },
-  { src: "/clients/industria-moveis-dashboard.webp", alt: "Indústria de móveis" },
+  { src: "/clients/people/person-1.webp", alt: "" },
+  { src: "/clients/people/person-5.webp", alt: "" },
+  { src: "/clients/people/person-2.webp", alt: "" },
+  { src: "/clients/people/person-3.webp", alt: "" },
+  { src: "/clients/people/person-4.webp", alt: "" },
 ];
 
 function ClientsProof() {
