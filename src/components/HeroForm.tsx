@@ -307,7 +307,7 @@ export function HeroForm() {
             className="pt-2 text-[11.5px] text-center leading-relaxed"
             style={{ color: "oklch(0.55 0.015 115)" }}
           >
-            Seus dados não são compartilhados. Sem SPAM. Cancele a qualquer momento.
+            Ao enviar, você concorda em receber comunicações da IAplicada.
           </p>
         </form>
       </div>
