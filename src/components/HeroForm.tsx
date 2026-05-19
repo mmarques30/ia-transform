@@ -5,21 +5,33 @@ import { ArrowRight, AlertCircle } from "lucide-react";
 const FORM_ENDPOINT = "https://ciwdlceyjsnlnunktqzx.supabase.co/functions/v1/form-submit";
 const FORM_SLUG = "business";
 
+/** Opções sincronizadas com form_fields do CRM (slug=business). */
 const CARGOS = [
-  "CEO / Fundador(a)",
-  "Sócio(a)",
-  "C-level (CFO, COO, CMO)",
-  "Head / Diretor(a)",
-  "Coordenador(a)",
-  "Outro",
+  "CEO / Fundador / Sócio",
+  "Diretor / Head",
+  "Gerente",
+  "Coordenador / Supervisor",
+  "Analista",
 ];
 
 const FAIXAS = [
-  "Até R$ 1M/ano",
-  "R$ 1M a R$ 5M/ano",
-  "R$ 5M a R$ 20M/ano",
-  "R$ 20M a R$ 50M/ano",
-  "Acima de R$ 50M/ano",
+  "Menos de R$ 1 milhão",
+  "Entre 1MM e 5MM",
+  "Entre 5MM e 10MM",
+  "Entre 10MM e 50MM",
+  "Acima de 50MM",
+];
+
+const SETORES = [
+  "Contabilidade",
+  "Logística",
+  "Marketing/Agência",
+  "Consultoria",
+  "Varejo",
+  "Alimentação",
+  "Beleza",
+  "Eventos",
+  "Outros",
 ];
 
 /**
@@ -56,7 +68,7 @@ export function HeroForm() {
         cargo: String(fd.get("cargo") ?? "").trim(),
         faixa_de_faturamento: String(fd.get("faixa_de_faturamento") ?? "").trim(),
         company: String(fd.get("company") ?? "").trim(),
-        website: String(fd.get("website") ?? "").trim(),
+        setor_do_mercado: String(fd.get("setor_do_mercado") ?? "").trim(),
       };
 
       const payload = {
@@ -230,26 +242,35 @@ export function HeroForm() {
             </Field>
           </div>
 
-          <Field id="company" label="Empresa">
+          <Field id="company" label="Empresa" required>
             <input
               id="company"
               name="company"
               type="text"
+              required
               autoComplete="organization"
               placeholder="Nome da sua empresa"
               className="form-input"
             />
           </Field>
 
-          <Field id="website" label="Site da empresa">
-            <input
-              id="website"
-              name="website"
-              type="url"
-              autoComplete="url"
-              placeholder="https://suaempresa.com"
+          <Field id="setor_do_mercado" label="Setor" required>
+            <select
+              id="setor_do_mercado"
+              name="setor_do_mercado"
+              required
+              defaultValue=""
               className="form-input"
-            />
+            >
+              <option value="" disabled>
+                Selecione
+              </option>
+              {SETORES.map((s) => (
+                <option key={s} value={s}>
+                  {s}
+                </option>
+              ))}
+            </select>
           </Field>
 
           {error && (
