@@ -107,6 +107,18 @@ export function Authority() {
                       </span>
                     ))}
                   </div>
+                  <p
+                    className="mt-4 text-[14px] leading-[1.55]"
+                    style={{ color: "oklch(0.32 0.03 122)" }}
+                  >
+                    <span
+                      className="font-semibold"
+                      style={{ color: "var(--color-primary)" }}
+                    >
+                      + liderou implementação em 17 PMEs
+                    </span>{" "}
+                    nos últimos meses.
+                  </p>
                 </div>
               </Reveal>
             </div>
