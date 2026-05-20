@@ -196,6 +196,29 @@
     font-weight: 400;
   }
 
+  /* Selects compartilham .form-input mas precisam reset do chrome nativo
+     pra ficar do mesmo tamanho/aparência dos inputs textuais. */
+  select.form-input {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding-right: 40px;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none' stroke='%23787569' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 4.5l3 3 3-3'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-size: 12px;
+    cursor: pointer;
+  }
+  /* Quando o select está com a option vazia ('Selecione') selecionada,
+     pintar o texto na cor de placeholder pra match com os inputs. */
+  select.form-input:has(option[value=""]:checked) {
+    color: oklch(0.6 0.01 115);
+    font-weight: 400;
+  }
+  select.form-input::-ms-expand {
+    display: none;
+  }
+
   /* Dark variant — inputs sobre card preto (HeroForm) */
   .form-input-dark {
     width: 100%;
