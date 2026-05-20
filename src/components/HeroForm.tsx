@@ -287,11 +287,10 @@ export function HeroForm() {
               Conte sobre sua operação
             </p>
             <p
-              className="mt-1.5 text-[13px] leading-relaxed"
+              className="mt-1.5 text-[13px] leading-relaxed whitespace-nowrap"
               style={{ color: "oklch(0.45 0.015 115)" }}
             >
-              Nossa equipe comercial retorna em até 24h{" "}
-              <span className="whitespace-nowrap">pelo WhatsApp.</span>
+              Retornamos em até 24h pelo WhatsApp.
             </p>
           </div>
           <span
