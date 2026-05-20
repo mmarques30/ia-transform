@@ -155,6 +155,8 @@ function SystemsCarousel() {
               <img
                 src={s.img}
                 alt={s.alt}
+                width={520}
+                height={293}
                 loading="lazy"
                 decoding="async"
                 className={
