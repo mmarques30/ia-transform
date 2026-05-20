@@ -104,7 +104,7 @@ export function Systems() {
               href="#diagnostico-form"
               className="inline-flex items-center gap-2 text-foreground font-semibold text-[15px] hover:text-primary transition-colors"
             >
-              Quero construir um desses pra minha operação
+              Quero um sistema assim pra minha operação
               <ArrowRight className="h-4 w-4" />
             </a>
           </div>
@@ -128,7 +128,12 @@ function SystemsCarousel() {
   return (
     <div className="systems-viewport mt-12 lg:mt-14 relative overflow-hidden">
       <div className="systems-loop flex gap-6">
-        {loop.map((s, i) => (
+        {loop.map((s, i) => {
+          // Card Fiscal: o screenshot original é dark mode — quebra a
+          // paleta do carrossel (5 outros são light). Aplica wrapper
+          // claro + object-contain + padding pra harmonizar moldura.
+          const isDarkScreenshot = s.tag === "Fiscal";
+          return (
           <article
             key={`${s.title}-${i}`}
             aria-hidden={i >= SYSTEMS.length}
@@ -141,14 +146,22 @@ function SystemsCarousel() {
           >
             <div
               className="aspect-[16/9] relative overflow-hidden border-b border-border"
-              style={{ backgroundColor: "var(--color-surface)" }}
+              style={{
+                backgroundColor: isDarkScreenshot
+                  ? "oklch(0.97 0.012 115)"
+                  : "var(--color-surface)",
+              }}
             >
               <img
                 src={s.img}
                 alt={s.alt}
                 loading="lazy"
                 decoding="async"
-                className="absolute inset-0 w-full h-full object-cover object-top"
+                className={
+                  isDarkScreenshot
+                    ? "absolute inset-0 w-full h-full object-contain p-4"
+                    : "absolute inset-0 w-full h-full object-cover object-top"
+                }
               />
             </div>
             <div className="p-6 lg:p-7 flex flex-col grow">
@@ -161,7 +174,8 @@ function SystemsCarousel() {
               <p className="mt-2 text-[14.5px] text-sage leading-[1.55]">{s.text}</p>
             </div>
           </article>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

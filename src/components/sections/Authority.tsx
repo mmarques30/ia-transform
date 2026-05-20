@@ -84,9 +84,8 @@ export function Authority() {
             <div className="mt-10 space-y-4 text-sage text-[15.5px] leading-[1.65] max-w-[520px]">
               <Reveal delay={0.15}>
                 <p>
-                  A IAplicada nasce da prática operacional — estruturando rotinas, indicadores e
-                  destravando gargalos em operações complexas de e-commerce, indústria, mineração,
-                  serviços e tecnologia SaaS.
+                  A IAplicada nasce da operação real. Aprendemos em gigantes onde caos é
+                  inaceitável — e adaptamos esse padrão pra PMEs que precisam parar de improvisar.
                 </p>
               </Reveal>
 
@@ -94,7 +93,7 @@ export function Authority() {
               <Reveal delay={0.2}>
                 <div className="mt-6 pt-6 border-t border-border">
                   <p className="text-[10.5px] uppercase tracking-[0.18em] text-muted-foreground font-semibold">
-                    Operações que conhecemos por dentro
+                    De onde vem o método
                   </p>
                   <div className="mt-4 flex flex-wrap items-center gap-x-7 gap-y-3">
                     {ENTERPRISE_REFS.map((name) => (
@@ -115,9 +114,9 @@ export function Authority() {
                       className="font-semibold"
                       style={{ color: "var(--color-primary)" }}
                     >
-                      + liderou implementação em 17 PMEs
+                      Aplicado hoje em +17 PMEs
                     </span>{" "}
-                    nos últimos meses.
+                    · serviços, indústria, varejo.
                   </p>
                 </div>
               </Reveal>

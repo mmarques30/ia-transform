@@ -15,7 +15,8 @@ export function ICP() {
           className="mx-auto max-w-[920px] rounded-2xl px-8 py-9 lg:px-12 lg:py-11 grid lg:grid-cols-[1fr_auto] gap-8 items-center"
           style={{
             backgroundColor: "oklch(0.97 0.012 115)",
-            border: "1px solid oklch(0.88 0.025 115)",
+            border: "1px solid oklch(0.82 0.03 115)",
+            boxShadow: "0 1px 2px oklch(0.18 0.02 122 / 0.04)",
           }}
         >
           <div>

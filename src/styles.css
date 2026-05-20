@@ -171,9 +171,9 @@
     border-radius: 12px;
     background-color: oklch(1 0 0);
     border: 1px solid oklch(0.92 0.005 110);
-    padding: 13px 16px;
+    padding: 11px 14px;
     color: oklch(0.18 0.02 122);
-    font-size: 14.5px;
+    font-size: 14px;
     font-weight: 500;
     transition:
       border-color 0.15s ease,

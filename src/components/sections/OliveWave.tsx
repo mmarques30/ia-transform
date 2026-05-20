@@ -16,20 +16,6 @@ export function OliveWave() {
       className="relative pt-[80px] pb-[120px] lg:pt-[100px] lg:pb-[140px] overflow-hidden"
       style={{ background: "var(--gradient-olive-wave)" }}
     >
-      {/* Smooth wave divider on top */}
-      <svg
-        aria-hidden
-        viewBox="0 0 1440 80"
-        preserveAspectRatio="none"
-        className="absolute top-0 inset-x-0 w-full h-[60px] lg:h-[80px]"
-        style={{ display: "block" }}
-      >
-        <path
-          d="M0,0 L1440,0 L1440,40 C1080,80 720,80 360,40 C240,28 120,28 0,40 Z"
-          fill="var(--color-background)"
-        />
-      </svg>
-
       {/* Tech grid drift in subtle white over olive */}
       <div
         aria-hidden
