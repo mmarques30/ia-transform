@@ -42,21 +42,34 @@ export const Route = createFileRoute("/")({
   component: BusinessLanding,
 });
 
+const SpacerM = () => <div aria-hidden className="h-12 lg:h-16" />;
+const SpacerL = () => <div aria-hidden className="h-20 lg:h-28" />;
+
 function BusinessLanding() {
   return (
     <main className="min-h-screen bg-background text-foreground">
       <Header />
       <Hero />
+      <SpacerL />
       <Problem />
+      <SpacerM />
       <Solution />
+      <SpacerL />
       <Systems />
       <OliveWave />
+      <SpacerL />
       <Process />
+      <SpacerM />
       <Impact />
+      <SpacerL />
       <Authority />
+      <SpacerM />
       <ICP />
+      <SpacerL />
       <Comparison />
+      <SpacerM />
       <FAQ />
+      <SpacerL />
       <CTAFinal />
       <Footer />
     </main>
