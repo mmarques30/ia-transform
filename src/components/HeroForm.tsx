@@ -275,7 +275,13 @@ export function HeroForm() {
         <div className="flex items-start justify-between gap-4">
           <div>
             <p
-              className="text-[18px] font-semibold tracking-tight"
+              className="text-[11px] uppercase tracking-[0.16em] font-semibold"
+              style={{ color: "oklch(0.5 0.015 115)" }}
+            >
+              Diagnóstico
+            </p>
+            <p
+              className="mt-1.5 text-[18px] font-semibold tracking-tight"
               style={{ color: "oklch(0.18 0.02 122)" }}
             >
               Conte sobre sua operação
