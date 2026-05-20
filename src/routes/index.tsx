@@ -42,22 +42,47 @@ export const Route = createFileRoute("/")({
   component: BusinessLanding,
 });
 
+function NumberedSection({
+  n,
+  label,
+  children,
+  onDark = false,
+}: {
+  n: string;
+  label: string;
+  children: React.ReactNode;
+  onDark?: boolean;
+}) {
+  return (
+    <div className="relative">
+      <span
+        aria-hidden
+        className="pointer-events-none absolute top-10 lg:top-14 left-4 sm:left-6 lg:left-12 z-10 text-[11px] font-mono tracking-[0.18em] uppercase"
+        style={{ color: onDark ? "oklch(1 0 0 / 0.55)" : "oklch(0 0 0 / 0.45)" }}
+      >
+        {n} / {label}
+      </span>
+      {children}
+    </div>
+  );
+}
+
 function BusinessLanding() {
   return (
     <main className="min-h-screen bg-background text-foreground">
       <Header />
       <Hero />
-      <Problem />
-      <Solution />
-      <Systems />
-      <OliveWave />
-      <Process />
-      <Impact />
-      <Authority />
-      <ICP />
-      <Comparison />
-      <FAQ />
-      <CTAFinal />
+      <NumberedSection n="01" label="O Problema"><Problem /></NumberedSection>
+      <NumberedSection n="02" label="A Resposta"><Solution /></NumberedSection>
+      <NumberedSection n="03" label="Sistemas"><Systems /></NumberedSection>
+      <NumberedSection n="04" label="Diagnóstico" onDark><OliveWave /></NumberedSection>
+      <NumberedSection n="05" label="Processo"><Process /></NumberedSection>
+      <NumberedSection n="06" label="Impacto"><Impact /></NumberedSection>
+      <NumberedSection n="07" label="Quem entrega"><Authority /></NumberedSection>
+      <NumberedSection n="08" label="Para quem"><ICP /></NumberedSection>
+      <NumberedSection n="09" label="Comparativo"><Comparison /></NumberedSection>
+      <NumberedSection n="10" label="Dúvidas"><FAQ /></NumberedSection>
+      <NumberedSection n="11" label="Próximo passo"><CTAFinal /></NumberedSection>
       <Footer />
     </main>
   );
