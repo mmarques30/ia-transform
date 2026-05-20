@@ -271,7 +271,7 @@ export function HeroForm() {
         style={{ boxShadow: "inset 0 1px 0 oklch(1 0 0 / 0.9)" }}
       />
 
-      <div className="px-7 pt-8 lg:px-9 lg:pt-10 relative">
+      <div className="px-7 pt-6 lg:px-9 lg:pt-7 relative">
         <div className="flex items-start justify-between gap-4">
           <div>
             <p
@@ -290,7 +290,8 @@ export function HeroForm() {
               className="mt-1.5 text-[13px] leading-relaxed"
               style={{ color: "oklch(0.45 0.015 115)" }}
             >
-              Nossa equipe comercial retorna em até 24h pelo WhatsApp.
+              Nossa equipe comercial retorna em até 24h{" "}
+              <span className="whitespace-nowrap">pelo WhatsApp.</span>
             </p>
           </div>
           <span
@@ -312,12 +313,12 @@ export function HeroForm() {
         </div>
       </div>
 
-      <div className="px-7 pb-8 pt-6 lg:px-9 lg:pb-10 lg:pt-7 relative">
+      <div className="px-7 pb-6 pt-5 lg:px-9 lg:pb-7 lg:pt-5 relative">
         <form
           onSubmit={handleSubmit}
           onFocusCapture={handleFocusCapture}
           onBlurCapture={handleBlurCapture}
-          className="space-y-3.5"
+          className="space-y-2.5"
           noValidate
         >
           <Field id="firstname" label="Nome Completo" required>
@@ -442,7 +443,7 @@ export function HeroForm() {
           <button
             type="submit"
             disabled={loading}
-            className="mt-2 w-full inline-flex items-center justify-center gap-2 rounded-full px-6 py-4 text-[14px] font-bold transition-[transform,opacity,box-shadow] disabled:opacity-60 disabled:cursor-not-allowed hover:-translate-y-0.5"
+            className="mt-1 w-full inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-[14px] font-bold transition-[transform,opacity,box-shadow] disabled:opacity-60 disabled:cursor-not-allowed hover:-translate-y-0.5"
             style={{
               backgroundColor: "var(--color-accent)",
               color: "oklch(1 0 0)",
@@ -455,7 +456,7 @@ export function HeroForm() {
           </button>
 
           <p
-            className="pt-3 text-[12.5px] text-center leading-relaxed"
+            className="pt-2 text-[12.5px] text-center leading-relaxed"
             style={{ color: "oklch(0.45 0.015 115)" }}
           >
             Empresa menor?{" "}
@@ -498,7 +499,7 @@ function Field({
     <div>
       <label
         htmlFor={id}
-        className="block text-[12px] font-semibold mb-1.5"
+        className="block text-[12px] font-semibold mb-1"
         style={{ color: "oklch(0.32 0.02 122)" }}
       >
         {label}
