@@ -13,7 +13,7 @@ const STATEMENTS = [
 export function OliveWave() {
   return (
     <section
-      className="relative pt-[80px] pb-[120px] lg:pt-[100px] lg:pb-[140px] overflow-hidden"
+      className="relative pt-[80px] pb-[120px] lg:pt-[100px] lg:pb-[140px] overflow-hidden [clip-path:polygon(0_20px,100%_0,100%_calc(100%-20px),0_100%)] lg:[clip-path:polygon(0_36px,100%_0,100%_calc(100%-36px),0_100%)]"
       style={{ background: "var(--gradient-olive-wave)" }}
     >
       {/* Tech grid drift in subtle white over olive */}
