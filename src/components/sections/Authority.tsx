@@ -173,7 +173,10 @@ function FounderCard() {
         <img
           src={FOUNDER.photoSrc}
           alt={FOUNDER.name}
+          width={400}
+          height={500}
           loading="lazy"
+          decoding="async"
           className="absolute inset-0 h-full w-full object-cover"
           style={{ objectPosition: "center 25%" }}
           onError={(e) => {
