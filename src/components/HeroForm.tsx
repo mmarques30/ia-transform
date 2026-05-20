@@ -275,16 +275,16 @@ export function HeroForm() {
         <div className="flex items-start justify-between gap-4">
           <div>
             <p
-              className="text-[11px] uppercase tracking-[0.16em] font-semibold"
-              style={{ color: "oklch(0.5 0.015 115)" }}
-            >
-              Diagnóstico estratégico
-            </p>
-            <p
-              className="mt-1.5 text-[18px] font-semibold tracking-tight"
+              className="text-[18px] font-semibold tracking-tight"
               style={{ color: "oklch(0.18 0.02 122)" }}
             >
-              Conversa de 30 min · gratuita
+              Conte sobre sua operação
+            </p>
+            <p
+              className="mt-1.5 text-[13px] leading-relaxed"
+              style={{ color: "oklch(0.45 0.015 115)" }}
+            >
+              Nossa equipe comercial retorna em até 24h pelo WhatsApp.
             </p>
           </div>
           <span
@@ -314,14 +314,14 @@ export function HeroForm() {
           className="space-y-3.5"
           noValidate
         >
-          <Field id="firstname" label="Nome completo" required>
+          <Field id="firstname" label="Nome Completo" required>
             <input
               id="firstname"
               name="firstname"
               type="text"
               required
               autoComplete="name"
-              placeholder="Seu nome completo"
+              placeholder="João da Silva"
               className="form-input"
             />
           </Field>
@@ -333,7 +333,7 @@ export function HeroForm() {
               type="email"
               required
               autoComplete="email"
-              placeholder="voce@suaempresa.com"
+              placeholder="voce@email.com"
               className="form-input"
             />
           </Field>
@@ -350,45 +350,6 @@ export function HeroForm() {
             />
           </Field>
 
-          <div className="grid sm:grid-cols-2 gap-3">
-            <Field id="cargo" label="Cargo" required>
-              <select
-                id="cargo"
-                name="cargo"
-                required
-                defaultValue=""
-                className="form-input"
-              >
-                <option value="" disabled>
-                  Selecione
-                </option>
-                {CARGOS.map((c) => (
-                  <option key={c} value={c}>
-                    {c}
-                  </option>
-                ))}
-              </select>
-            </Field>
-            <Field id="faixa_de_faturamento" label="Faturamento anual da empresa" required>
-              <select
-                id="faixa_de_faturamento"
-                name="faixa_de_faturamento"
-                required
-                defaultValue=""
-                className="form-input"
-              >
-                <option value="" disabled>
-                  Selecione
-                </option>
-                {FAIXAS.map((f) => (
-                  <option key={f} value={f}>
-                    {f}
-                  </option>
-                ))}
-              </select>
-            </Field>
-          </div>
-
           <Field id="company" label="Empresa" required>
             <input
               id="company"
@@ -396,16 +357,53 @@ export function HeroForm() {
               type="text"
               required
               autoComplete="organization"
-              placeholder="Nome da sua empresa"
+              placeholder="Ex: Construtora Souza"
               className="form-input"
             />
           </Field>
 
-          <Field id="setor_do_mercado" label="Setor" required>
+          <Field id="cargo" label="Seu cargo" required>
+            <select
+              id="cargo"
+              name="cargo"
+              required
+              defaultValue=""
+              className="form-input"
+            >
+              <option value="" disabled>
+                Selecione
+              </option>
+              {CARGOS.map((c) => (
+                <option key={c} value={c}>
+                  {c}
+                </option>
+              ))}
+            </select>
+          </Field>
+
+          <Field id="faixa_de_faturamento" label="Faturamento anual da empresa" required>
+            <select
+              id="faixa_de_faturamento"
+              name="faixa_de_faturamento"
+              required
+              defaultValue=""
+              className="form-input"
+            >
+              <option value="" disabled>
+                Selecione
+              </option>
+              {FAIXAS.map((f) => (
+                <option key={f} value={f}>
+                  {f}
+                </option>
+              ))}
+            </select>
+          </Field>
+
+          <Field id="setor_do_mercado" label="Setor da empresa (opcional)">
             <select
               id="setor_do_mercado"
               name="setor_do_mercado"
-              required
               defaultValue=""
               className="form-input"
             >
@@ -446,7 +444,7 @@ export function HeroForm() {
                 "0 1px 0 0 oklch(1 0 0 / 0.12) inset, 0 14px 32px -10px oklch(0.18 0.02 122 / 0.45)",
             }}
           >
-            {loading ? "Enviando..." : "Agendar diagnóstico"}
+            {loading ? "Enviando..." : "SOLICITAR DIAGNÓSTICO"}
             {!loading && <ArrowRight className="h-4 w-4" strokeWidth={2.5} />}
           </button>
 
@@ -470,7 +468,8 @@ export function HeroForm() {
             className="pt-1 text-[11.5px] text-center leading-relaxed"
             style={{ color: "oklch(0.55 0.015 115)" }}
           >
-            Ao enviar, você concorda em receber comunicações da IAplicada.
+            Ao enviar, você concorda em receber comunicações da IAplicada por WhatsApp e email.
+            Pode cancelar a qualquer momento.
           </p>
         </form>
       </div>
