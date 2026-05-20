@@ -1,13 +1,5 @@
 import { Reveal } from "@/components/Reveal";
-import { ArrowRight, ArrowUp } from "lucide-react";
-
-const PATTERNS = [
-  "Financeiro descentralizado",
-  "Relatórios manuais",
-  "Dados espalhados",
-  "Decisões lentas",
-  "Risco constante de erro",
-];
+import { ArrowUp } from "lucide-react";
 
 interface Benefit {
   n: string;
@@ -41,57 +33,8 @@ export function Segmentation() {
   return (
     <section className="py-[100px] lg:py-[140px] bg-background">
       <div className="container-page">
-        {/* Same pattern of inefficiency */}
-        <div className="text-center max-w-[820px] mx-auto">
-          <Reveal>
-            <h2 className="h-mix text-[36px] sm:text-[44px] lg:text-[54px] text-foreground">
-              Empresas diferentes.
-              <br />O <em>mesmo padrão</em> de ineficiência operacional.
-            </h2>
-          </Reveal>
-          <Reveal delay={0.05}>
-            <p className="mt-5 text-[16px] text-sage leading-[1.6] max-w-[640px] mx-auto">
-              Indústrias, serviços e operações em crescimento enfrentando os mesmos gargalos
-              estruturais.
-            </p>
-          </Reveal>
-        </div>
-
-        <Reveal delay={0.1}>
-          <p className="mt-12 text-center text-[18px] font-semibold text-foreground">
-            O cenário se repete:
-          </p>
-        </Reveal>
-
-        <div className="mt-10 relative">
-          <div
-            aria-hidden
-            className="hidden md:block absolute left-[5%] right-[5%] top-[13px]"
-            style={{
-              height: "1px",
-              backgroundImage:
-                "repeating-linear-gradient(to right, oklch(0.6 0.14 125 / 0.6) 0 6px, transparent 6px 14px)",
-            }}
-          />
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-y-8 gap-x-4 relative max-w-[1000px] mx-auto">
-            {PATTERNS.map((p, i) => (
-              <Reveal key={p} delay={i * 0.05}>
-                <div className="flex flex-col items-center text-center">
-                  <span
-                    className="h-7 w-7 rounded-full flex items-center justify-center relative z-10"
-                    style={{ backgroundColor: "var(--color-olive)" }}
-                  >
-                    <ArrowRight className="h-3.5 w-3.5 text-white" strokeWidth={2.5} />
-                  </span>
-                  <p className="mt-4 text-[14px] font-semibold text-foreground">{p}</p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-
         {/* When structure changes — centered header + single row of aligned cards */}
-        <div className="mt-24 lg:mt-28 max-w-[1100px] mx-auto">
+        <div className="max-w-[1100px] mx-auto">
           <div className="text-center max-w-[720px] mx-auto">
             <Reveal>
               <span className="label-chip">

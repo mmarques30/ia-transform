@@ -326,7 +326,7 @@ export function HeroForm() {
             />
           </Field>
 
-          <Field id="email" label="E-mail corporativo" required>
+          <Field id="email" label="E-mail" required>
             <input
               id="email"
               name="email"
@@ -338,7 +338,7 @@ export function HeroForm() {
             />
           </Field>
 
-          <Field id="phone" label="Telefone com DDD" required>
+          <Field id="phone" label="WhatsApp com DDD" required>
             <input
               id="phone"
               name="phone"
@@ -369,7 +369,7 @@ export function HeroForm() {
                 ))}
               </select>
             </Field>
-            <Field id="faixa_de_faturamento" label="Faixa de faturamento" required>
+            <Field id="faixa_de_faturamento" label="Faturamento anual da empresa" required>
               <select
                 id="faixa_de_faturamento"
                 name="faixa_de_faturamento"
