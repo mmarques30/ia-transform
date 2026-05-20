@@ -104,7 +104,7 @@ export function Systems() {
               href="#diagnostico-form"
               className="inline-flex items-center gap-2 text-foreground font-semibold text-[15px] hover:text-primary transition-colors"
             >
-              Quero construir um desses pra minha operação
+              Quero um sistema assim pra minha operação
               <ArrowRight className="h-4 w-4" />
             </a>
           </div>

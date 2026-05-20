@@ -26,6 +26,9 @@ export function Solution() {
       <div className="container-page relative">
         <div className="max-w-[720px] mx-auto text-center">
           <Reveal>
+            <p className="text-[12px] uppercase tracking-[0.16em] font-semibold text-muted-foreground mb-3">
+              Construído sobre o stack que você (ou seu time) já usa:
+            </p>
             <div className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-1.5">
               {TOOL_BADGES.map((t, i) => (
                 <span
