@@ -58,7 +58,11 @@ export function FAQ() {
         </Reveal>
 
         <Reveal delay={0.1}>
-          <Accordion type="single" collapsible className="mt-10 w-full">
+          <Accordion
+            type="multiple"
+            defaultValue={["item-0", "item-2"]}
+            className="mt-10 w-full"
+          >
             {FAQS.map((item, i) => (
               <AccordionItem key={i} value={`item-${i}`} className="border-b border-border">
                 <AccordionTrigger className="text-left text-foreground hover:text-primary text-[16px] font-semibold py-5">
