@@ -475,8 +475,7 @@ export function HeroForm() {
             className="pt-1 text-[11.5px] text-center leading-relaxed"
             style={{ color: "oklch(0.55 0.015 115)" }}
           >
-            Ao enviar, você concorda em receber comunicações da IAplicada por WhatsApp e email.
-            Pode cancelar a qualquer momento.
+            Ao enviar, você autoriza contato por WhatsApp e email. Cancele quando quiser.
           </p>
         </form>
       </div>
