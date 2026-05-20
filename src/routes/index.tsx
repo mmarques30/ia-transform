@@ -42,21 +42,34 @@ export const Route = createFileRoute("/")({
   component: BusinessLanding,
 });
 
+const Hairline = () => (
+  <div aria-hidden className="h-px w-full" style={{ backgroundColor: "oklch(0 0 0 / 0.06)" }} />
+);
+
 function BusinessLanding() {
   return (
     <main className="min-h-screen bg-background text-foreground">
       <Header />
       <Hero />
+      <Hairline />
       <Problem />
+      <Hairline />
       <Solution />
+      <Hairline />
       <Systems />
       <OliveWave />
       <Process />
+      <Hairline />
       <Impact />
+      <Hairline />
       <Authority />
+      <Hairline />
       <ICP />
+      <Hairline />
       <Comparison />
+      <Hairline />
       <FAQ />
+      <Hairline />
       <CTAFinal />
       <Footer />
     </main>
