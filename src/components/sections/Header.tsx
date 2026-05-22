@@ -21,11 +21,89 @@ export function Header() {
 
   return (
     <header
-      className={`fixed top-0 inset-x-0 z-50 h-[72px] flex items-center transition-all duration-200 ${
-        scrolled ? "bg-background/85 backdrop-blur-md border-b border-border" : "bg-transparent"
+      className={`fixed top-0 inset-x-0 z-50 h-[72px] flex items-center transition-all duration-300 ${
+        scrolled
+          ? "bg-background/80 backdrop-blur-lg border-b border-border/60"
+          : "bg-transparent border-b border-transparent"
       }`}
     >
-      <div className="container-page flex items-center justify-between w-full">
+      {/* Ornamento geométrico scroll-aware atrás de tudo */}
+      <div
+        aria-hidden
+        className={`pointer-events-none absolute inset-0 overflow-hidden transition-opacity duration-500 ${
+          scrolled ? "opacity-100" : "opacity-60"
+        }`}
+      >
+        {/* Polígono angular esquerdo — mesma família da diagonal do OliveWave */}
+        <svg
+          className="absolute -left-8 top-0 h-full w-[420px]"
+          viewBox="0 0 420 72"
+          preserveAspectRatio="none"
+        >
+          <defs>
+            <linearGradient id="hdr-grad-l" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stopColor="oklch(0.75 0.20 122)" stopOpacity="0.18" />
+              <stop offset="100%" stopColor="oklch(0.75 0.20 122)" stopOpacity="0" />
+            </linearGradient>
+          </defs>
+          <polygon points="0,0 280,0 360,72 0,72" fill="url(#hdr-grad-l)" />
+          <line
+            x1="280"
+            y1="0"
+            x2="360"
+            y2="72"
+            stroke="oklch(0.75 0.20 122)"
+            strokeOpacity="0.25"
+            strokeWidth="1"
+          />
+        </svg>
+
+        {/* Polígono angular direito — espelhado */}
+        <svg
+          className="absolute -right-8 top-0 h-full w-[380px]"
+          viewBox="0 0 380 72"
+          preserveAspectRatio="none"
+        >
+          <defs>
+            <linearGradient id="hdr-grad-r" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stopColor="oklch(0.75 0.20 122)" stopOpacity="0" />
+              <stop offset="100%" stopColor="oklch(0.75 0.20 122)" stopOpacity="0.18" />
+            </linearGradient>
+          </defs>
+          <polygon points="60,0 380,0 380,72 0,72" fill="url(#hdr-grad-r)" />
+          <line
+            x1="60"
+            y1="0"
+            x2="0"
+            y2="72"
+            stroke="oklch(0.75 0.20 122)"
+            strokeOpacity="0.25"
+            strokeWidth="1"
+          />
+        </svg>
+
+        {/* Glow ambient atrás da logo */}
+        <div
+          className="absolute left-0 top-1/2 -translate-y-1/2 h-[140px] w-[280px] rounded-full blur-3xl"
+          style={{
+            background:
+              "radial-gradient(ellipse at center, oklch(0.75 0.20 122 / 0.25), transparent 70%)",
+          }}
+        />
+
+        {/* Grid drift sutil ao centro */}
+        <div
+          className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-[640px] opacity-[0.06]"
+          style={{
+            backgroundImage:
+              "linear-gradient(to right, oklch(0.96 0.012 110) 1px, transparent 1px)",
+            backgroundSize: "32px 100%",
+            maskImage: "linear-gradient(to right, transparent, black 30%, black 70%, transparent)",
+          }}
+        />
+      </div>
+
+      <div className="container-page flex items-center justify-between w-full relative z-10">
         <a href="#top" className="flex items-center gap-2.5">
           <Logo size={26} />
           <span
@@ -50,7 +128,7 @@ export function Header() {
 
         <a
           href="#diagnostico-form"
-          className="inline-flex items-center gap-1.5 justify-center rounded-md bg-accent text-accent-foreground font-semibold text-[13px] px-4 py-2.5 hover:bg-primary hover:text-primary-foreground transition-colors"
+          className="inline-flex items-center gap-1.5 justify-center rounded-md bg-primary text-primary-foreground font-semibold text-[13px] px-4 py-2.5 hover:bg-primary/90 transition-colors"
         >
           Agendar diagnóstico
           <ArrowRight className="h-3.5 w-3.5" />

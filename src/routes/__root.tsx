@@ -1,6 +1,8 @@
 import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
+import { useEffect } from "react";
 
 import appCss from "../styles.css?url";
+import { initLenis, destroyLenis } from "../lib/motion";
 
 const CLARITY_PROJECT_ID = "wpgxq27fhi";
 const META_PIXEL_ID = "619312151238896";
@@ -148,5 +150,9 @@ function RootShell({ children }: { children: React.ReactNode }) {
 }
 
 function RootComponent() {
+  useEffect(() => {
+    initLenis();
+    return () => destroyLenis();
+  }, []);
   return <Outlet />;
 }
