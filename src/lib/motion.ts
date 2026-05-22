@@ -81,4 +81,4 @@ export function pinSection(
   });
 }
 
-export { gsap, ScrollTrigger };
+export { gsap, ScrollTrigger, SplitText };
