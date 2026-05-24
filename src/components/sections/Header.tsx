@@ -91,16 +91,6 @@ export function Header() {
           }}
         />
 
-        {/* Grid drift sutil ao centro */}
-        <div
-          className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-[640px] opacity-[0.06]"
-          style={{
-            backgroundImage:
-              "linear-gradient(to right, oklch(0.96 0.012 110) 1px, transparent 1px)",
-            backgroundSize: "32px 100%",
-            maskImage: "linear-gradient(to right, transparent, black 30%, black 70%, transparent)",
-          }}
-        />
       </div>
 
       <div className="container-page flex items-center justify-between w-full relative z-10">

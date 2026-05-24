@@ -75,54 +75,53 @@ float fbm(vec2 p) {
 void main() {
   vec2 uv = vUv;
   vec2 aspect = vec2(uResolution.x / uResolution.y, 1.0);
-  vec2 p = (uv - 0.5) * aspect * 1.6;
+  /* Escala menor = linhas maiores e mais espaçadas (mais clean) */
+  vec2 p = (uv - 0.5) * aspect * 0.95;
 
-  float t = uTime * 0.03;
+  /* Movimento bem lento e delicado */
+  float t = uTime * 0.012;
 
-  /* Scroll desloca o campo (as linhas "fluem" conforme rola) */
-  p.y += uScroll * 0.18;
+  /* Scroll desloca o campo sutilmente */
+  p.y += uScroll * 0.09;
 
-  /* Mouse empurra o campo sutilmente */
+  /* Mouse empurra o campo de forma muito sutil (raio amplo, força baixa) */
   vec2 mouseInfluence = (uMouse - 0.5) * aspect;
-  float mouseDist = length(p - mouseInfluence * 1.6);
-  p += normalize(mouseInfluence * 1.6 - p + 0.001) * 0.10 * exp(-mouseDist * 1.5);
+  float mouseDist = length(p - mouseInfluence * 0.95);
+  p += normalize(mouseInfluence * 0.95 - p + 0.001) * 0.025 * exp(-mouseDist * 1.0);
 
   /* Campo topográfico — fbm animado lentamente */
   float field = fbm(p + vec2(t, t * 0.6));
 
-  /* Linhas de contorno (topographic map) — assinatura do landonorris.
-     Pega onde o campo cruza níveis igualmente espaçados. Largura fixa
-     (sem fwidth pra evitar dependência de derivatives no WebGL). */
-  float levels = 7.0;
+  /* Linhas de contorno espaçadas (poucos níveis = mapa clean). */
+  float levels = 3.5;
   float v = field * levels;
   float lineDist = abs(fract(v) - 0.5);
-  float contour = 1.0 - smoothstep(0.0, 0.06, lineDist);
+  float contour = 1.0 - smoothstep(0.0, 0.045, lineDist);
 
   /* Blobs orgânicos suaves — regiões altas do campo */
-  float blob = smoothstep(0.15, 0.85, field);
+  float blob = smoothstep(0.15, 0.9, field);
 
   /* Cores da marca */
   vec3 limeColor = vec3(0.72, 0.86, 0.18);
   vec3 olive = vec3(0.30, 0.40, 0.10);
   vec3 charcoalA = vec3(0.085, 0.092, 0.082);
-  vec3 charcoalB = vec3(0.11, 0.13, 0.075);
+  vec3 charcoalB = vec3(0.105, 0.122, 0.078);
 
-  /* Tom base varia com o scroll → cada "dobra" ganha leve mudança de
-     temperatura, como as transições de cor do landonorris. */
-  float zone = sin(uScroll * 0.45) * 0.5 + 0.5;
+  /* Tom base varia com o scroll de forma muito sutil */
+  float zone = sin(uScroll * 0.35) * 0.5 + 0.5;
   vec3 base = mix(charcoalA, charcoalB, zone);
 
   vec3 color = base;
-  /* Blobs olive suaves */
-  color += olive * blob * 0.16;
-  /* Linhas de contorno em lime */
-  color += limeColor * contour * 0.14;
-  /* Realce lime onde linha + blob coincidem */
-  color += limeColor * contour * blob * 0.10;
+  /* Blobs olive bem sutis */
+  color += olive * blob * 0.10;
+  /* Linhas de contorno em lime, discretas */
+  color += limeColor * contour * 0.09;
+  /* Leve realce onde linha + blob coincidem */
+  color += limeColor * contour * blob * 0.06;
 
   /* Vinheta sutil */
   float vignette = smoothstep(1.5, 0.3, length((uv - 0.5) * vec2(1.0, 1.35)));
-  color *= 0.85 + vignette * 0.15;
+  color *= 0.88 + vignette * 0.12;
 
   gl_FragColor = vec4(color, 1.0);
 }
@@ -191,10 +190,10 @@ export function BrandBackground() {
 
     const loop = () => {
       const elapsed = (performance.now() - start) / 1000;
-      /* Easing pra suavizar mouse + scroll */
-      mouseX += (targetMouseX - mouseX) * 0.05;
-      mouseY += (targetMouseY - mouseY) * 0.05;
-      scroll += (targetScroll - scroll) * 0.08;
+      /* Easing bem lento pra um movimento delicado (mouse menos reativo) */
+      mouseX += (targetMouseX - mouseX) * 0.018;
+      mouseY += (targetMouseY - mouseY) * 0.018;
+      scroll += (targetScroll - scroll) * 0.06;
 
       program.uniforms.uTime.value = reduced ? 0 : elapsed;
       program.uniforms.uMouse.value = [mouseX, mouseY];

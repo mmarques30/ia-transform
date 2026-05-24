@@ -14,17 +14,6 @@ export function ICP() {
           className="relative mx-auto max-w-[1080px] overflow-hidden [clip-path:polygon(24px_0,100%_0,100%_calc(100%-24px),calc(100%-24px)_100%,0_100%,0_24px)] lg:[clip-path:polygon(32px_0,100%_0,100%_calc(100%-32px),calc(100%-32px)_100%,0_100%,0_32px)]"
           style={{ backgroundColor: "oklch(0.18 0.02 122)" }}
         >
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-0 opacity-[0.08]"
-            style={{
-              backgroundImage:
-                "linear-gradient(to right, oklch(1 0 0 / 0.7) 1px, transparent 1px), linear-gradient(to bottom, oklch(1 0 0 / 0.7) 1px, transparent 1px)",
-              backgroundSize: "48px 48px",
-              maskImage: "radial-gradient(ellipse 70% 90% at 50% 50%, black 30%, transparent 90%)",
-            }}
-          />
-
           <div className="relative px-8 py-10 lg:px-14 lg:py-14 grid lg:grid-cols-[1fr_auto] gap-10 items-center">
             <div>
               <Reveal>
