@@ -212,21 +212,22 @@ function ThankYouContabilPage() {
               </Reveal>
               <Reveal delay={0.05}>
                 <h2 className="h-mix mt-3 text-[26px] sm:text-[32px] lg:text-[36px] text-foreground">
-                  A sua empresa em <em>todas as telas</em>.
+                  O seu escritório em <em>todas as telas</em>.
                 </h2>
               </Reveal>
               <Reveal delay={0.1}>
                 <p className="mt-4 text-[15px] text-sage leading-[1.65]">
-                  Depois do diagnóstico, é isso que a gente constrói com você — um sistema próprio
-                  que mostra a operação em tempo real, no desktop, tablet e celular.
+                  Depois do diagnóstico, é isso que a gente constrói com você — rotinas
+                  automatizadas e a operação do escritório em tempo real, no desktop, tablet e
+                  celular.
                 </p>
               </Reveal>
               <Reveal delay={0.15}>
                 <ul className="mt-6 space-y-2.5">
                   {[
-                    "Indicadores em tempo real, acessíveis a quem decide",
-                    "Processos documentados e papéis claros",
-                    "Operação que roda sem depender do dono",
+                    "Conciliação e apuração automatizadas no fluxo do time",
+                    "Rotinas documentadas e padronizadas dentro do sistema",
+                    "Fechamento que roda sem virar a noite",
                   ].map((line) => (
                     <li
                       key={line}
