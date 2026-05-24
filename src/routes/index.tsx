@@ -59,9 +59,8 @@ function BusinessLanding() {
     <main className="min-h-screen bg-background text-foreground">
       <Header />
       <Hero />
-      <SpacerL />
+      <Problem />
       <LegacyLight>
-        <Problem />
         <SpacerM />
         <Solution />
         <SpacerL />
