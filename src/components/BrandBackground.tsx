@@ -75,53 +75,48 @@ float fbm(vec2 p) {
 void main() {
   vec2 uv = vUv;
   vec2 aspect = vec2(uResolution.x / uResolution.y, 1.0);
-  /* Escala menor = linhas maiores e mais espaçadas (mais clean) */
-  vec2 p = (uv - 0.5) * aspect * 0.95;
 
   /* Movimento bem lento e delicado */
-  float t = uTime * 0.012;
+  float t = uTime * 0.02;
 
-  /* Scroll desloca o campo sutilmente */
-  p.y += uScroll * 0.09;
+  /* Mouse desloca de forma muito sutil */
+  vec2 m = (uMouse - 0.5);
 
-  /* Mouse empurra o campo de forma muito sutil (raio amplo, força baixa) */
-  vec2 mouseInfluence = (uMouse - 0.5) * aspect;
-  float mouseDist = length(p - mouseInfluence * 0.95);
-  p += normalize(mouseInfluence * 0.95 - p + 0.001) * 0.025 * exp(-mouseDist * 1.0);
+  /* Linhas de fluxo horizontais (data streams) — finas, paralelas e
+     bem espaçadas, com ondulação orgânica suave. Remete a fluxo de
+     dados / sinal, mais 'tecnológico' que o contorno topográfico. */
+  float spacing = 0.14;          /* distância vertical entre linhas */
+  float lineWidth = 0.0016;      /* espessura fina */
 
-  /* Campo topográfico — fbm animado lentamente */
-  float field = fbm(p + vec2(t, t * 0.6));
+  /* Ondulação: cada linha desloca verticalmente conforme x, com noise
+     suave + leve resposta a scroll/mouse */
+  float wave =
+      sin(uv.x * 5.0 + t * 2.0) * 0.012
+    + snoise(vec2(uv.x * 2.2 + t, uScroll * 0.15 + m.x * 0.4)) * 0.022;
 
-  /* Linhas de contorno espaçadas (poucos níveis = mapa clean). */
-  float levels = 3.5;
-  float v = field * levels;
-  float lineDist = abs(fract(v) - 0.5);
-  float contour = 1.0 - smoothstep(0.0, 0.045, lineDist);
+  float yWaved = uv.y + wave + uScroll * 0.04 + m.y * 0.015;
+  float idx = yWaved / spacing;
+  float lineDist = abs(fract(idx) - 0.5) * spacing;
+  float line = 1.0 - smoothstep(lineWidth, lineWidth + 0.0022, lineDist);
 
-  /* Blobs orgânicos suaves — regiões altas do campo */
-  float blob = smoothstep(0.15, 0.9, field);
+  /* Fade horizontal: linhas mais brilhantes no centro, somem nas bordas
+     (dá foco e evita poluição) */
+  float hFade = smoothstep(0.0, 0.28, uv.x) * smoothstep(1.0, 0.72, uv.x);
+  /* Variação suave de intensidade ao longo de x (pulsos de "dados") */
+  float pulse = 0.55 + 0.45 * snoise(vec2(uv.x * 1.5 - t * 1.5, idx * 0.3));
+
+  float intensity = line * hFade * pulse;
 
   /* Cores da marca */
   vec3 limeColor = vec3(0.72, 0.86, 0.18);
-  vec3 olive = vec3(0.30, 0.40, 0.10);
-  vec3 charcoalA = vec3(0.085, 0.092, 0.082);
-  vec3 charcoalB = vec3(0.105, 0.122, 0.078);
+  vec3 charcoal = vec3(0.088, 0.096, 0.084);
 
-  /* Tom base varia com o scroll de forma muito sutil */
-  float zone = sin(uScroll * 0.35) * 0.5 + 0.5;
-  vec3 base = mix(charcoalA, charcoalB, zone);
-
-  vec3 color = base;
-  /* Blobs olive bem sutis */
-  color += olive * blob * 0.10;
-  /* Linhas de contorno em lime, discretas */
-  color += limeColor * contour * 0.09;
-  /* Leve realce onde linha + blob coincidem */
-  color += limeColor * contour * blob * 0.06;
+  vec3 color = charcoal;
+  color += limeColor * intensity * 0.16;
 
   /* Vinheta sutil */
-  float vignette = smoothstep(1.5, 0.3, length((uv - 0.5) * vec2(1.0, 1.35)));
-  color *= 0.88 + vignette * 0.12;
+  float vignette = smoothstep(1.5, 0.35, length((uv - 0.5) * vec2(1.0, 1.3)));
+  color *= 0.9 + vignette * 0.1;
 
   gl_FragColor = vec4(color, 1.0);
 }
