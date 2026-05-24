@@ -92,13 +92,11 @@ export function Systems() {
         </div>
       </div>
 
-      <Reveal delay={0.15}>
-        <SystemsCarousel />
-      </Reveal>
-
       <div className="container-page relative">
+        <SystemsGrid />
+
         <Reveal delay={0.2}>
-          <div className="mt-12 text-center">
+          <div className="mt-14 text-center">
             <a
               href="#diagnostico-form"
               className="inline-flex items-center gap-2 text-foreground font-semibold text-[15px] hover:text-primary transition-colors"
@@ -114,72 +112,65 @@ export function Systems() {
 }
 
 /**
- * Carrossel de sistemas — marquee CSS GPU-accelerated.
- *
- * Os cards são duplicados (12) e o `.systems-loop` é traduzido de 0
- * a -50% via @keyframes (transform). Como a lista se repete, o usuário
- * não percebe o "rewind". Pausa em hover/focus via CSS, respeita
- * prefers-reduced-motion.
+ * Grid de sistemas — cards fixos em 2 colunas (estilo galeria editorial).
+ * No hover: a imagem ganha ênfase (zoom sutil + overlay escuro some),
+ * borda lime e leve elevação. Cantos cortados (linguagem geométrica
+ * da marca). Stagger reveal por índice.
  */
-function SystemsCarousel() {
-  const loop = [...SYSTEMS, ...SYSTEMS];
-
+function SystemsGrid() {
   return (
-    <div className="systems-viewport mt-12 lg:mt-14 relative overflow-hidden">
-      <div className="systems-loop flex gap-6">
-        {loop.map((s, i) => {
-          // Card Fiscal: o screenshot original é dark mode — quebra a
-          // paleta do carrossel (5 outros são light). Aplica wrapper
-          // claro + object-contain + padding pra harmonizar moldura.
-          const isDarkScreenshot = s.tag === "Fiscal";
-          return (
-          <article
-            key={`${s.title}-${i}`}
-            aria-hidden={i >= SYSTEMS.length}
-            className="group shrink-0 border border-border bg-card overflow-hidden flex flex-col transition-all hover:border-primary/40"
-            style={{
-              width: "min(82vw, 520px)",
-              boxShadow: "var(--shadow-card)",
-              transform: "translateZ(0)",
-              clipPath:
-                "polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)",
-            }}
-          >
-            <div
-              className="aspect-[16/9] relative overflow-hidden border-b border-border"
+    <div className="mt-12 lg:mt-16 grid sm:grid-cols-2 gap-5 lg:gap-7 max-w-[1080px] mx-auto">
+      {SYSTEMS.map((s, i) => {
+        const isDarkScreenshot = s.tag === "Fiscal";
+        return (
+          <Reveal key={s.title} delay={i * 0.06}>
+            <article
+              className="group relative border border-border bg-card overflow-hidden flex flex-col h-full transition-all duration-300 hover:border-primary/50 hover:-translate-y-1"
               style={{
-                backgroundColor: isDarkScreenshot
-                  ? "oklch(0.97 0.012 115)"
-                  : "var(--color-surface)",
+                boxShadow: "var(--shadow-card)",
+                clipPath:
+                  "polygon(22px 0, 100% 0, 100% calc(100% - 22px), calc(100% - 22px) 100%, 0 100%, 0 22px)",
               }}
             >
-              <img
-                src={s.img}
-                alt={s.alt}
-                width={520}
-                height={293}
-                loading="lazy"
-                decoding="async"
-                className={
-                  isDarkScreenshot
-                    ? "absolute inset-0 w-full h-full object-contain p-4"
-                    : "absolute inset-0 w-full h-full object-cover object-top"
-                }
-              />
-            </div>
-            <div className="p-6 lg:p-7 flex flex-col grow">
-              <p className="text-[11px] uppercase tracking-[0.14em] text-primary font-semibold">
-                {s.tag}
-              </p>
-              <h3 className="mt-2 text-[20px] lg:text-[22px] font-semibold text-foreground leading-snug">
-                {s.title}
-              </h3>
-              <p className="mt-2 text-[14.5px] text-sage leading-[1.55]">{s.text}</p>
-            </div>
-          </article>
-          );
-        })}
-      </div>
+              <div
+                className="aspect-[16/9] relative overflow-hidden border-b border-border"
+                style={{
+                  backgroundColor: isDarkScreenshot
+                    ? "oklch(0.97 0.012 115)"
+                    : "var(--color-surface)",
+                }}
+              >
+                <img
+                  src={s.img}
+                  alt={s.alt}
+                  width={520}
+                  height={293}
+                  loading="lazy"
+                  decoding="async"
+                  className={`absolute inset-0 w-full h-full transition-transform duration-500 ease-out group-hover:scale-[1.05] ${
+                    isDarkScreenshot ? "object-contain p-4" : "object-cover object-top"
+                  }`}
+                />
+                {/* Overlay escuro que some no hover → dá ênfase à imagem */}
+                <div
+                  aria-hidden
+                  className="absolute inset-0 transition-opacity duration-300 group-hover:opacity-0"
+                  style={{ backgroundColor: "oklch(0.14 0.018 122 / 0.35)" }}
+                />
+              </div>
+              <div className="p-6 lg:p-7 flex flex-col grow">
+                <p className="text-[11px] uppercase tracking-[0.14em] text-primary font-semibold">
+                  {s.tag}
+                </p>
+                <h3 className="mt-2 text-[20px] lg:text-[22px] font-semibold text-foreground leading-snug">
+                  {s.title}
+                </h3>
+                <p className="mt-2 text-[14.5px] text-sage leading-[1.55]">{s.text}</p>
+              </div>
+            </article>
+          </Reveal>
+        );
+      })}
     </div>
   );
 }
