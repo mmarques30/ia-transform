@@ -10,6 +10,7 @@ import {
 import { Header } from "@/components/sections/Header";
 import { Footer } from "@/components/sections/Footer";
 import { Reveal } from "@/components/Reveal";
+import { BrandBackground } from "@/components/BrandBackground";
 
 interface ThankYouSearch {
   /** Event ID recebido do HeroForm pra deduplicação do evento Lead no Meta. */
@@ -94,35 +95,27 @@ function ThankYouBusinessPage() {
   useFireLeadBackup(eid);
 
   return (
-    <main className="min-h-screen bg-background text-foreground">
+    <main className="min-h-screen text-foreground">
+      <BrandBackground />
       <Header />
 
       {/* HERO confirmação */}
       <section
         id="top"
         className="relative pt-[140px] pb-[60px] lg:pt-[180px] lg:pb-[70px] overflow-hidden"
-        style={{ background: "var(--gradient-hero)" }}
+        style={{
+          background:
+            "radial-gradient(ellipse 80% 55% at 50% 0%, oklch(0.22 0.03 122 / 0.5) 0%, transparent 75%)",
+        }}
       >
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 opacity-[0.35]"
-          style={{
-            backgroundImage:
-              "linear-gradient(to right, oklch(0.82 0.02 122 / 0.3) 1px, transparent 1px), linear-gradient(to bottom, oklch(0.82 0.02 122 / 0.3) 1px, transparent 1px)",
-            backgroundSize: "56px 56px",
-            maskImage:
-              "radial-gradient(ellipse 60% 50% at 50% 30%, black 20%, transparent 80%)",
-          }}
-        />
-
         <div className="container-page relative">
           <div className="text-center max-w-[720px] mx-auto">
             <Reveal>
               <span
                 className="inline-flex h-16 w-16 items-center justify-center rounded-full"
                 style={{
-                  backgroundColor: "oklch(0.97 0.025 125)",
-                  border: "1px solid oklch(0.85 0.05 125)",
+                  backgroundColor: "oklch(0.75 0.20 122 / 0.12)",
+                  border: "1px solid oklch(0.75 0.20 122 / 0.35)",
                 }}
               >
                 <CheckCircle2
@@ -156,7 +149,7 @@ function ThankYouBusinessPage() {
       </section>
 
       {/* PRÓXIMOS PASSOS — instruções claras */}
-      <section className="py-[70px] lg:py-[100px] bg-background">
+      <section className="section-veil py-[70px] lg:py-[100px]">
         <div className="container-page">
           <div className="max-w-[1080px] mx-auto">
             <div className="text-center max-w-[640px] mx-auto">
@@ -185,8 +178,8 @@ function ThankYouBusinessPage() {
                     <span
                       className="inline-flex h-10 w-10 items-center justify-center rounded-xl"
                       style={{
-                        backgroundColor: "oklch(0.97 0.025 125)",
-                        border: "1px solid oklch(0.85 0.05 125)",
+                        backgroundColor: "oklch(0.75 0.20 122 / 0.12)",
+                        border: "1px solid oklch(0.75 0.20 122 / 0.35)",
                       }}
                     >
                       <step.Icon
@@ -208,19 +201,7 @@ function ThankYouBusinessPage() {
       </section>
 
       {/* MOCKUPS compactos — preview do produto */}
-      <section
-        className="py-[70px] lg:py-[90px] relative overflow-hidden"
-        style={{ backgroundColor: "var(--color-surface)" }}
-      >
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 tech-bg-dots opacity-40"
-          style={{
-            maskImage:
-              "radial-gradient(ellipse 70% 60% at 50% 50%, black 30%, transparent 90%)",
-          }}
-        />
-
+      <section className="section-veil py-[70px] lg:py-[90px] relative overflow-hidden">
         <div className="container-page relative">
           <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-center max-w-[1100px] mx-auto">
             <div className="lg:order-1 order-2">
@@ -275,7 +256,7 @@ function ThankYouBusinessPage() {
       </section>
 
       {/* CTA voltar */}
-      <section className="py-[50px] lg:py-[70px] bg-background">
+      <section className="section-veil py-[50px] lg:py-[70px]">
         <div className="container-page">
           <Reveal>
             <div className="text-center">
