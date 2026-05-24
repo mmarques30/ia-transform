@@ -79,7 +79,7 @@ export function Comparison() {
           </Reveal>
           <Reveal delay={0.1}>
             <p className="mt-5 text-[16px] text-sage leading-[1.6] max-w-[600px] mx-auto">
-              5 critérios estratégicos. ERP, fábrica de software, squads internos — e nós.
+              5 critérios estratégicos. ERP, fábrica de software, squads internos e nós.
             </p>
           </Reveal>
         </div>

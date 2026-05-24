@@ -33,7 +33,7 @@ export function Impact() {
           <Reveal delay={0.05}>
             <h2 className="h-mix mt-6 text-[36px] sm:text-[44px] lg:text-[54px] text-foreground">
               Sem improviso, a operação ganha <em>previsibilidade</em>
-              <br className="hidden sm:block" /> — e os indicadores acompanham.
+              <br className="hidden sm:block" /> e os indicadores acompanham.
             </h2>
           </Reveal>
           <Reveal delay={0.1}>

@@ -11,7 +11,7 @@ const PROBLEMS = [
   {
     n: "02",
     title: "ERPs caros que prometem controle e entregam complexidade",
-    text: "Módulos genéricos, consultoria cara, 18 meses de implementação — e ninguém usa metade.",
+    text: "Módulos genéricos, consultoria cara, 18 meses de implementação, e ninguém usa metade.",
   },
   {
     n: "03",
