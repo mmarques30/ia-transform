@@ -1,5 +1,6 @@
 import { Reveal } from "@/components/Reveal";
 import { Check, X, Minus } from "lucide-react";
+import { TiltCard } from "@/components/TiltCard";
 
 type Status = "no" | "partial" | "yes";
 
@@ -88,8 +89,9 @@ export function Comparison() {
         </div>
 
         <Reveal delay={0.15}>
-          <div
-            className="mt-14 rounded-2xl border border-border overflow-hidden max-w-[1080px] mx-auto"
+          <TiltCard
+            className="mt-14 rounded-2xl border border-border overflow-hidden max-w-[1080px] mx-auto relative"
+            maxTilt={4}
             style={{
               backgroundColor: "var(--color-card)",
               boxShadow: "var(--shadow-card)",
@@ -137,7 +139,7 @@ export function Comparison() {
                 </div>
               ))}
             </div>
-          </div>
+          </TiltCard>
         </Reveal>
       </div>
     </section>

@@ -59,34 +59,33 @@ float snoise(vec2 v) {
   return 130.0 * dot(m, g);
 }
 
-/* Desenha 1 pétala como blob suave centrado em (cx, cy) com rotação rot. */
-float petal(vec2 p, vec2 c, float rot, float size) {
-  vec2 d = p - c;
-  /* Rotacionar */
-  float s = sin(rot), co = cos(rot);
-  d = vec2(d.x * co - d.y * s, d.x * s + d.y * co);
-  /* Forma de pétala: elipse alongada */
-  d.x *= 2.5;
-  float r = length(d);
-  return smoothstep(size, size * 0.5, r);
-}
-
-/* O símbolo IAplicada: 4 pétalas formando flor + diamond central */
+/* Símbolo IAplicada fiel ao SVG /brand/logo.svg:
+   círculo externo com 2 pills (horizontal + vertical) cortando =
+   formando 4 quadrantes/pétalas + diamond central pequeno. */
 float iaSymbol(vec2 p, vec2 center, float scale, float rotation) {
   vec2 lp = (p - center) / scale;
+  /* Rotação */
+  float s = sin(rotation), co = cos(rotation);
+  lp = vec2(lp.x * co - lp.y * s, lp.x * s + lp.y * co);
 
-  float petals = 0.0;
-  /* 4 pétalas a 0°, 90°, 180°, 270° */
-  petals += petal(lp, vec2(0.0,  0.55), rotation,                0.55);
-  petals += petal(lp, vec2(0.55, 0.0),  rotation + 1.5707,        0.55);
-  petals += petal(lp, vec2(0.0, -0.55), rotation + 3.1415,        0.55);
-  petals += petal(lp, vec2(-0.55, 0.0), rotation + 4.7123,        0.55);
+  /* Círculo principal com soft edge */
+  float r = length(lp);
+  float circle = 1.0 - smoothstep(0.40, 0.48, r);
 
-  /* Diamond central */
-  float dia = max(abs(lp.x), abs(lp.y));
-  float diamond = smoothstep(0.18, 0.10, max(abs(lp.x) + abs(lp.y) * 0.5, abs(lp.y) + abs(lp.x) * 0.5));
+  /* Pill horizontal — corta o círculo formando 2 pétalas (sup + inf) */
+  float pillH = (1.0 - smoothstep(0.05, 0.075, abs(lp.y)))
+              * (1.0 - smoothstep(0.42, 0.50, abs(lp.x)));
 
-  return clamp(petals + diamond * 0.6, 0.0, 1.0);
+  /* Pill vertical — corta formando as outras 2 pétalas (esq + dir) */
+  float pillV = (1.0 - smoothstep(0.05, 0.075, abs(lp.x)))
+              * (1.0 - smoothstep(0.42, 0.50, abs(lp.y)));
+
+  /* Diamond central pequeno re-adicionado */
+  float d = abs(lp.x) + abs(lp.y);
+  float diamond = 1.0 - smoothstep(0.06, 0.095, d);
+
+  /* Símbolo = círculo MENOS as 2 pills MAIS o diamond central */
+  return clamp(circle - (pillH + pillV) + diamond, 0.0, 1.0);
 }
 
 void main() {
