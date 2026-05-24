@@ -59,80 +59,70 @@ float snoise(vec2 v) {
   return 130.0 * dot(m, g);
 }
 
-/* Símbolo IAplicada fiel ao SVG /brand/logo.svg:
-   círculo externo com 2 pills (horizontal + vertical) cortando =
-   formando 4 quadrantes/pétalas + diamond central pequeno. */
-float iaSymbol(vec2 p, vec2 center, float scale, float rotation) {
-  vec2 lp = (p - center) / scale;
-  /* Rotação */
-  float s = sin(rotation), co = cos(rotation);
-  lp = vec2(lp.x * co - lp.y * s, lp.x * s + lp.y * co);
-
-  /* Círculo principal com soft edge */
-  float r = length(lp);
-  float circle = 1.0 - smoothstep(0.40, 0.48, r);
-
-  /* Pill horizontal — corta o círculo formando 2 pétalas (sup + inf) */
-  float pillH = (1.0 - smoothstep(0.05, 0.075, abs(lp.y)))
-              * (1.0 - smoothstep(0.42, 0.50, abs(lp.x)));
-
-  /* Pill vertical — corta formando as outras 2 pétalas (esq + dir) */
-  float pillV = (1.0 - smoothstep(0.05, 0.075, abs(lp.x)))
-              * (1.0 - smoothstep(0.42, 0.50, abs(lp.y)));
-
-  /* Diamond central pequeno re-adicionado */
-  float d = abs(lp.x) + abs(lp.y);
-  float diamond = 1.0 - smoothstep(0.06, 0.095, d);
-
-  /* Símbolo = círculo MENOS as 2 pills MAIS o diamond central */
-  return clamp(circle - (pillH + pillV) + diamond, 0.0, 1.0);
+/* Fractal Brownian Motion — soma de oitavas de noise pra um campo
+   orgânico e suave (base das linhas topográficas estilo landonorris). */
+float fbm(vec2 p) {
+  float v = 0.0;
+  float a = 0.5;
+  for (int i = 0; i < 5; i++) {
+    v += a * snoise(p);
+    p = p * 2.0 + vec2(13.7, 7.3);
+    a *= 0.5;
+  }
+  return v;
 }
 
 void main() {
   vec2 uv = vUv;
   vec2 aspect = vec2(uResolution.x / uResolution.y, 1.0);
-  vec2 p = (uv - 0.5) * aspect;
+  vec2 p = (uv - 0.5) * aspect * 1.6;
 
-  /* Scroll offset desloca o campo verticalmente */
-  float scrollOffset = uScroll * 0.15;
+  float t = uTime * 0.03;
 
-  /* Noise pra deformação orgânica */
-  float n1 = snoise(p * 1.5 + uTime * 0.04);
-  float n2 = snoise(p * 3.0 - uTime * 0.06);
-  vec2 displace = vec2(n1, n2) * 0.08;
+  /* Scroll desloca o campo (as linhas "fluem" conforme rola) */
+  p.y += uScroll * 0.18;
 
-  /* Mouse pulls field sutil */
+  /* Mouse empurra o campo sutilmente */
   vec2 mouseInfluence = (uMouse - 0.5) * aspect;
-  float mouseDist = length(p - mouseInfluence);
-  displace += normalize(mouseInfluence - p + 0.001) * 0.04 * exp(-mouseDist * 2.0);
+  float mouseDist = length(p - mouseInfluence * 1.6);
+  p += normalize(mouseInfluence * 1.6 - p + 0.001) * 0.10 * exp(-mouseDist * 1.5);
 
-  vec2 distorted = p + displace;
+  /* Campo topográfico — fbm animado lentamente */
+  float field = fbm(p + vec2(t, t * 0.6));
 
-  /* 3 instâncias do símbolo em escalas/posições diferentes */
-  float t = uTime * 0.05;
-  float s1 = iaSymbol(distorted, vec2(-0.55, 0.35 - scrollOffset), 0.32,  t);
-  float s2 = iaSymbol(distorted, vec2( 0.45, -0.20 - scrollOffset * 0.6), 0.55, -t * 0.7);
-  float s3 = iaSymbol(distorted, vec2(-0.30, -0.60 + scrollOffset * 0.3), 0.28,  t * 1.3);
+  /* Linhas de contorno (topographic map) — assinatura do landonorris.
+     Pega onde o campo cruza níveis igualmente espaçados. Largura fixa
+     (sem fwidth pra evitar dependência de derivatives no WebGL). */
+  float levels = 7.0;
+  float v = field * levels;
+  float lineDist = abs(fract(v) - 0.5);
+  float contour = 1.0 - smoothstep(0.0, 0.06, lineDist);
 
-  float intensity = max(max(s1, s2), s3);
+  /* Blobs orgânicos suaves — regiões altas do campo */
+  float blob = smoothstep(0.15, 0.85, field);
 
-  /* Lime saturado (var(--primary) ≈ oklch(0.75 0.20 122)) — aprox sRGB */
+  /* Cores da marca */
   vec3 limeColor = vec3(0.72, 0.86, 0.18);
-  vec3 olive = vec3(0.32, 0.42, 0.10);
-  vec3 charcoal = vec3(0.10, 0.105, 0.10);
+  vec3 olive = vec3(0.30, 0.40, 0.10);
+  vec3 charcoalA = vec3(0.085, 0.092, 0.082);
+  vec3 charcoalB = vec3(0.11, 0.13, 0.075);
 
-  /* Background charcoal com pétalas lime visíveis mas sutis (não competem
-     com o conteúdo das sections). */
-  vec3 color = charcoal;
-  color += olive * intensity * 0.22;
-  color += limeColor * pow(intensity, 3.0) * 0.12;
+  /* Tom base varia com o scroll → cada "dobra" ganha leve mudança de
+     temperatura, como as transições de cor do landonorris. */
+  float zone = sin(uScroll * 0.45) * 0.5 + 0.5;
+  vec3 base = mix(charcoalA, charcoalB, zone);
 
-  /* Glow extra nos centros das pétalas */
-  color += limeColor * smoothstep(0.85, 1.0, intensity) * 0.10;
+  vec3 color = base;
+  /* Blobs olive suaves */
+  color += olive * blob * 0.16;
+  /* Linhas de contorno em lime */
+  color += limeColor * contour * 0.14;
+  /* Realce lime onde linha + blob coincidem */
+  color += limeColor * contour * blob * 0.10;
 
-  /* Vinheta sutil pra dar profundidade */
-  float vignette = smoothstep(1.4, 0.4, length((uv - 0.5) * vec2(1.0, 1.4)));
-  color *= 0.88 + vignette * 0.12;
+  /* Vinheta sutil */
+  float vignette = smoothstep(1.5, 0.3, length((uv - 0.5) * vec2(1.0, 1.35)));
+  color *= 0.85 + vignette * 0.15;
 
   gl_FragColor = vec4(color, 1.0);
 }
