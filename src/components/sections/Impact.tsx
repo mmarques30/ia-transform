@@ -1,7 +1,6 @@
 import { useEffect, useRef } from "react";
 import { Reveal } from "@/components/Reveal";
 import { ArrowDown, ArrowUp, Activity } from "lucide-react";
-import { gsap, ScrollTrigger } from "@/lib/motion";
 
 interface Metric {
   label: string;
@@ -71,39 +70,51 @@ function ImpactMonitor() {
     const bars = el.querySelectorAll<HTMLElement>(".impact-bar-fill");
     const deltas = el.querySelectorAll<HTMLElement>(".impact-delta");
 
-    if (reduced) {
-      bars.forEach((b) => (b.style.width = b.dataset.fill + "%"));
-      return;
-    }
+    if (reduced) return; /* inline width = fill já fica correto */
 
-    gsap.set(bars, { width: "0%" });
-    gsap.set(deltas, { opacity: 0, y: 6 });
-
-    const st = ScrollTrigger.create({
-      trigger: el,
-      start: "top 78%",
-      once: true,
-      onEnter: () => {
-        bars.forEach((b, i) => {
-          gsap.to(b, {
-            width: (b.dataset.fill || "0") + "%",
-            duration: 1.1,
-            delay: i * 0.08,
-            ease: "power3.out",
-          });
-        });
-        gsap.to(deltas, {
-          opacity: 1,
-          y: 0,
-          duration: 0.5,
-          stagger: 0.08,
-          delay: 0.2,
-          ease: "power2.out",
-        });
-      },
+    /* Estado inicial: barras vazias + deltas escondidos */
+    bars.forEach((b) => {
+      b.style.width = "0%";
+    });
+    deltas.forEach((d) => {
+      d.style.opacity = "0";
+      d.style.transform = "translateY(6px)";
     });
 
-    return () => st.kill();
+    let played = false;
+    const play = () => {
+      if (played) return;
+      played = true;
+      bars.forEach((b, i) => {
+        b.style.transition = `width 1s cubic-bezier(0.22, 1, 0.36, 1) ${i * 0.08}s`;
+        requestAnimationFrame(() => {
+          b.style.width = (b.dataset.fill || "0") + "%";
+        });
+      });
+      deltas.forEach((d, i) => {
+        const delay = 0.25 + i * 0.08;
+        d.style.transition = `opacity 0.5s ease ${delay}s, transform 0.5s ease ${delay}s`;
+        requestAnimationFrame(() => {
+          d.style.opacity = "1";
+          d.style.transform = "translateY(0)";
+        });
+      });
+    };
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            play();
+            io.disconnect();
+          }
+        });
+      },
+      { threshold: 0.25 },
+    );
+    io.observe(el);
+
+    return () => io.disconnect();
   }, []);
 
   return (
