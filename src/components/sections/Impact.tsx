@@ -1,5 +1,7 @@
+import { useEffect, useRef } from "react";
 import { Reveal } from "@/components/Reveal";
 import { ArrowDown, ArrowUp, Activity } from "lucide-react";
+import { gsap, ScrollTrigger } from "@/lib/motion";
 
 interface Metric {
   label: string;
@@ -59,8 +61,54 @@ export function Impact() {
 /* ------------------------------------------------------------------ */
 
 function ImpactMonitor() {
+  const monitorRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = monitorRef.current;
+    if (!el) return;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const bars = el.querySelectorAll<HTMLElement>(".impact-bar-fill");
+    const deltas = el.querySelectorAll<HTMLElement>(".impact-delta");
+
+    if (reduced) {
+      bars.forEach((b) => (b.style.width = b.dataset.fill + "%"));
+      return;
+    }
+
+    gsap.set(bars, { width: "0%" });
+    gsap.set(deltas, { opacity: 0, y: 6 });
+
+    const st = ScrollTrigger.create({
+      trigger: el,
+      start: "top 78%",
+      once: true,
+      onEnter: () => {
+        bars.forEach((b, i) => {
+          gsap.to(b, {
+            width: (b.dataset.fill || "0") + "%",
+            duration: 1.1,
+            delay: i * 0.08,
+            ease: "power3.out",
+          });
+        });
+        gsap.to(deltas, {
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+          stagger: 0.08,
+          delay: 0.2,
+          ease: "power2.out",
+        });
+      },
+    });
+
+    return () => st.kill();
+  }, []);
+
   return (
     <div
+      ref={monitorRef}
       className="rounded-2xl overflow-hidden"
       style={{
         backgroundColor: "oklch(1 0 0)",
@@ -135,7 +183,7 @@ function ImpactMonitor() {
                   {m.label}
                 </p>
                 <span
-                  className="inline-flex items-center gap-1 text-[13px] font-bold tracking-tight"
+                  className="impact-delta inline-flex items-center gap-1 text-[13px] font-bold tracking-tight"
                   style={{
                     color: isGood ? "oklch(0.55 0.16 125)" : "oklch(0.55 0.16 25)",
                   }}
@@ -149,7 +197,8 @@ function ImpactMonitor() {
                 style={{ backgroundColor: "oklch(0.95 0.005 110)" }}
               >
                 <div
-                  className="h-full rounded-full"
+                  className="impact-bar-fill h-full rounded-full"
+                  data-fill={m.fill}
                   style={{
                     width: `${m.fill}%`,
                     background: isGood

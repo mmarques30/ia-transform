@@ -92,40 +92,38 @@ void main() {
   vec2 aspect = vec2(uResolution.x / uResolution.y, 1.0);
   vec2 p = (uv - 0.5) * aspect;
 
-  /* Movimento bem lento e delicado */
-  float t = uTime * 0.02;
+  float t = uTime * 0.035;
   vec2 m = (uMouse - 0.5);
 
-  /* Repetição vertical: um ícone da marca grande por dobra, fluindo
-     suavemente com o scroll (alinhado/centralizado em cada seção). */
-  float period = 1.05;
-  float worldY = p.y + uScroll * 0.9;
-  float cellIndex = floor(worldY / period + 0.5);
-  float cellY = worldY - cellIndex * period;
+  /* Fluxo vertical contínuo — conecta as dobras (a luz "atravessa" as
+     seções conforme o scroll, sem reiniciar). */
+  vec2 q = p * 1.05;
+  q.y += uScroll * 0.45;
+  q += m * 0.06;
 
-  /* Leve drift horizontal único por célula + resposta sutil ao mouse */
-  float driftX = sin(t * 0.6 + cellIndex * 1.7) * 0.04 + m.x * 0.03;
-  vec2 ip = vec2(p.x - driftX, cellY + m.y * 0.02);
+  /* Campo de aurora — fbm em camadas, deformado por si mesmo (domain
+     warping). Gera manchas de luz difusas e fluidas, SEM linhas/bordas. */
+  float n1 = fbm(q + vec2(t * 0.6, t * 0.35));
+  float n2 = fbm(q * 1.6 + vec2(-t * 0.4, t * 0.5) + n1 * 0.8);
+  float n3 = fbm(q * 0.7 - vec2(t * 0.25, 0.0) + n2 * 0.4);
 
-  /* Rotação muito lenta, alternando sentido por célula */
-  float rot = t * 0.35 * (mod(cellIndex, 2.0) < 1.0 ? 1.0 : -1.0);
-  float si = sin(rot), co = cos(rot);
-  ip = vec2(ip.x * co - ip.y * si, ip.x * si + ip.y * co);
+  /* Glows suaves (gradientes, não contornos) */
+  float auroraA = smoothstep(-0.2, 0.9, n1);
+  float auroraB = smoothstep(0.0, 1.0, n2);
+  float core = pow(smoothstep(0.35, 1.0, n3), 2.0);
 
-  /* Outline do símbolo (wireframe sutil, não preenchido) */
-  float sym = iaSymbol(ip, 0.42);
-  float outline = smoothstep(0.32, 0.5, sym) - smoothstep(0.5, 0.66, sym);
-
-  /* Cores da marca */
   vec3 limeColor = vec3(0.72, 0.86, 0.18);
-  vec3 charcoal = vec3(0.088, 0.096, 0.084);
+  vec3 olive = vec3(0.28, 0.40, 0.10);
+  vec3 charcoal = vec3(0.082, 0.090, 0.078);
 
   vec3 color = charcoal;
-  color += limeColor * outline * 0.085;
+  color += olive * auroraA * 0.18;          /* base olive difusa */
+  color += olive * auroraB * 0.10;          /* segunda camada */
+  color += limeColor * core * 0.10;         /* realces lime nos núcleos */
 
-  /* Vinheta sutil */
-  float vignette = smoothstep(1.5, 0.3, length((uv - 0.5) * vec2(1.0, 1.3)));
-  color *= 0.9 + vignette * 0.1;
+  /* Vinheta sutil pra concentrar a luz no centro */
+  float vignette = smoothstep(1.7, 0.2, length((uv - 0.5) * vec2(1.0, 1.25)));
+  color *= 0.82 + vignette * 0.18;
 
   gl_FragColor = vec4(color, 1.0);
 }
