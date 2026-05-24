@@ -53,7 +53,7 @@ export function Problem() {
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top top",
-          end: "+=280%",
+          end: "+=200%",
           pin: true,
           scrub: 0.8,
           anticipatePin: 1,
@@ -73,14 +73,14 @@ export function Problem() {
         0,
       );
 
-      tl.to(subtitleRef.current, { opacity: 1, y: 0, duration: 0.4 }, 0.6);
+      tl.to(subtitleRef.current, { opacity: 1, y: 0, duration: 0.3 }, 0.45);
 
       const cards = cardsRef.current?.querySelectorAll(".problem-card") || [];
       cards.forEach((card, i) => {
         tl.to(
           card,
-          { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" },
-          0.9 + i * 0.55,
+          { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" },
+          0.55 + i * 0.22,
         );
       });
 
@@ -90,7 +90,7 @@ export function Problem() {
         0,
       );
 
-      tl.to(symptomRef.current, { opacity: 1, y: 0, duration: 0.4 }, 3.0);
+      tl.to(symptomRef.current, { opacity: 1, y: 0, duration: 0.3 }, 1.5);
     }, sectionRef);
 
     return () => {
@@ -103,7 +103,7 @@ export function Problem() {
     <section
       ref={sectionRef}
       className="relative"
-      style={{ minHeight: "380vh", backgroundColor: "var(--color-background)" }}
+      style={{ minHeight: "300vh", backgroundColor: "var(--color-background)" }}
     >
       <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center">
         <svg

@@ -1,7 +1,40 @@
+import { useEffect, useRef } from "react";
 import { Reveal } from "@/components/Reveal";
 import { HeroForm } from "@/components/HeroForm";
+import { gsap, ScrollTrigger, SplitText } from "@/lib/motion";
 
 export function Hero() {
+  const headingRef = useRef<HTMLHeadingElement>(null);
+
+  useEffect(() => {
+    if (!headingRef.current) return;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) return;
+
+    const split = new SplitText(headingRef.current, { type: "chars,words" });
+    gsap.from(split.chars, {
+      opacity: 0,
+      rotateX: -70,
+      y: 18,
+      duration: 0.7,
+      stagger: { each: 0.022, from: "start" },
+      ease: "power3.out",
+      delay: 0.2,
+      scrollTrigger: {
+        trigger: headingRef.current,
+        start: "top 90%",
+        once: true,
+      },
+    });
+
+    return () => {
+      split.revert();
+      ScrollTrigger.getAll().forEach((t) => {
+        if (t.trigger === headingRef.current) t.kill();
+      });
+    };
+  }, []);
+
   return (
     <section
       id="top"
@@ -16,19 +49,19 @@ export function Hero() {
       {/* Wrapper relativo pra texture/glow respeitarem o conteúdo abaixo
           da marquee, sem sobrepor a faixa preta. */}
       <div className="relative pt-[48px] lg:pt-[72px]">
-        {/* Grid texture sutil */}
+        {/* Grid texture sutil em lime/8 sobre dark */}
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 opacity-[0.35]"
+          className="pointer-events-none absolute inset-0 opacity-[0.22]"
           style={{
             backgroundImage:
-              "linear-gradient(to right, oklch(0.82 0.02 122 / 0.3) 1px, transparent 1px), linear-gradient(to bottom, oklch(0.82 0.02 122 / 0.3) 1px, transparent 1px)",
+              "linear-gradient(to right, oklch(0.75 0.20 122 / 0.5) 1px, transparent 1px), linear-gradient(to bottom, oklch(0.75 0.20 122 / 0.5) 1px, transparent 1px)",
             backgroundSize: "56px 56px",
             maskImage: "radial-gradient(ellipse 70% 60% at 40% 30%, black 20%, transparent 80%)",
           }}
         />
 
-        {/* Glow oliva atrás do form pra dar profundidade */}
+        {/* Glow lime atrás do form pra dar profundidade no dark */}
         <div
           aria-hidden
           className="pointer-events-none absolute hidden lg:block"
@@ -38,56 +71,75 @@ export function Hero() {
             width: "55%",
             height: "70%",
             background:
-              "radial-gradient(ellipse at center, oklch(0.78 0.18 122 / 0.18) 0%, transparent 60%)",
-            filter: "blur(60px)",
+              "radial-gradient(ellipse at center, oklch(0.75 0.20 122 / 0.28) 0%, transparent 60%)",
+            filter: "blur(80px)",
+          }}
+        />
+
+        {/* Glow charcoal warm atrás da headline esquerda */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute hidden lg:block"
+          style={{
+            top: "20%",
+            left: "-10%",
+            width: "40%",
+            height: "50%",
+            background:
+              "radial-gradient(ellipse at center, oklch(0.35 0.05 125 / 0.5) 0%, transparent 70%)",
+            filter: "blur(70px)",
           }}
         />
 
         <div className="container-page relative">
-        <div className="grid lg:grid-cols-[1.05fr_1fr] gap-12 lg:gap-16 items-center">
-          <div>
-            <Reveal>
-              <span className="label-chip">
-                <span className="dot" />
-                IAplicada · Business
-              </span>
-            </Reveal>
+          <div className="grid lg:grid-cols-[1.05fr_1fr] gap-12 lg:gap-16 items-center">
+            <div>
+              <Reveal>
+                <span className="label-chip">
+                  <span className="dot" />
+                  IAplicada · Business
+                </span>
+              </Reveal>
 
-            <Reveal delay={0.05}>
-              <h1 className="h-mix mt-7 text-[42px] sm:text-[54px] lg:text-[64px] text-foreground">
-                Sua operação saindo
+              <h1
+                ref={headingRef}
+                className="h-mix mt-7 text-[42px] sm:text-[54px] lg:text-[64px] text-foreground"
+                style={{ perspective: "800px" }}
+              >
+                Sua empresa
                 <br />
-                da <em>planilha</em> em até
+                saindo da
+                <br />
+                <em>planilha</em> em até
                 <br />
                 30 dias.
               </h1>
-            </Reveal>
+
+              <Reveal delay={0.1}>
+                <p className="mt-7 text-[18px] lg:text-[20px] text-foreground font-semibold leading-[1.4]">
+                  Sem DEV interno. Você acompanha, seu time opera.
+                </p>
+              </Reveal>
+
+              <Reveal delay={0.15}>
+                <p className="mt-4 text-[16px] text-sage leading-[1.6] max-w-[520px]">
+                  A gente implementa os fluxos automáticos da sua operação com IA aplicada.
+                </p>
+              </Reveal>
+
+              <Reveal delay={0.18}>
+                <ClientsProof />
+              </Reveal>
+            </div>
 
             <Reveal delay={0.1}>
-              <p className="mt-7 text-[18px] lg:text-[20px] text-foreground font-semibold leading-[1.4]">
-                Sem DEV interno. Você acompanha, seu time opera.
-              </p>
-            </Reveal>
-
-            <Reveal delay={0.15}>
-              <p className="mt-4 text-[16px] text-sage leading-[1.6] max-w-[520px]">
-                A gente implementa os fluxos automáticos da sua operação com IA aplicada.
-              </p>
-            </Reveal>
-
-            <Reveal delay={0.18}>
-              <ClientsProof />
+              <div id="diagnostico-form" className="lg:sticky lg:top-24 scroll-mt-24">
+                <HeroForm />
+              </div>
             </Reveal>
           </div>
-
-          <Reveal delay={0.1}>
-            <div id="diagnostico-form" className="lg:sticky lg:top-24 scroll-mt-24">
-              <HeroForm />
-            </div>
-          </Reveal>
         </div>
       </div>
-    </div>
     </section>
   );
 }
@@ -107,14 +159,14 @@ const MARQUEE_ITEMS = [
 
 function MarqueeStrip() {
   const seq = [...MARQUEE_ITEMS, ...MARQUEE_ITEMS];
-  const FADE = "oklch(0.13 0.012 122)";
+  const FADE = "oklch(0.10 0.012 122)";
   return (
     <div
       className="relative overflow-hidden"
       style={{
         backgroundColor: FADE,
-        borderTop: "1px solid oklch(0.22 0.02 122)",
-        borderBottom: "1px solid oklch(0.22 0.02 122)",
+        borderTop: "1px solid oklch(0.28 0.04 122)",
+        borderBottom: "1px solid oklch(0.28 0.04 122)",
       }}
     >
       <div
@@ -141,7 +193,7 @@ function MarqueeStrip() {
           <span key={i} className="inline-flex items-center gap-8">
             <span
               className="text-[11.5px] uppercase tracking-[0.16em] font-semibold whitespace-nowrap"
-              style={{ color: "oklch(0.95 0.012 110)" }}
+              style={{ color: "oklch(0.96 0.012 110)" }}
             >
               {item}
             </span>
@@ -195,7 +247,7 @@ function ClientsProof() {
               height: SIZE,
               marginLeft: i === 0 ? 0 : -12,
               border: "2px solid var(--color-background)",
-              boxShadow: "0 2px 6px -2px oklch(0.18 0.02 122 / 0.25)",
+              boxShadow: "0 2px 6px -2px oklch(0 0 0 / 0.5)",
               zIndex: PROOF_THUMBS.length - i,
             }}
           />
@@ -207,4 +259,3 @@ function ClientsProof() {
     </div>
   );
 }
-

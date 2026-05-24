@@ -225,8 +225,8 @@ function MobileRow({ label, cell, highlight }: { label: string; cell: Cell; high
       className="flex items-center gap-2 rounded-lg px-2.5 py-2"
       style={
         highlight
-          ? { backgroundColor: "oklch(0.62 0.17 125 / 0.08)" }
-          : { backgroundColor: "oklch(0.97 0.004 110)" }
+          ? { backgroundColor: "oklch(0.75 0.20 122 / 0.12)" }
+          : { backgroundColor: "var(--color-card)" }
       }
     >
       <StatusIcon status={cell.status} />

@@ -60,31 +60,29 @@ function BusinessLanding() {
       <Header />
       <Hero />
       <Problem />
-      <LegacyLight>
-        <SpacerM />
-        <Solution />
-        <SpacerL />
-        <Systems />
-      </LegacyLight>
+      <SpacerM />
+      <Solution />
+      <SpacerL />
+      <Systems />
       <OliveWave />
       <SpacerL />
       <LegacyLight>
         <Process />
-        <SpacerM />
-        <Impact />
-        <SpacerL />
+      </LegacyLight>
+      <SpacerM />
+      <Impact />
+      <SpacerL />
+      <LegacyLight>
         <Authority />
       </LegacyLight>
       <SpacerM />
       <ICP />
       <SpacerL />
-      <LegacyLight>
-        <Comparison />
-        <SpacerM />
-        <FAQ />
-        <SpacerL />
-        <CTAFinal />
-      </LegacyLight>
+      <Comparison />
+      <SpacerM />
+      <FAQ />
+      <SpacerL />
+      <CTAFinal />
       <Footer />
     </main>
   );

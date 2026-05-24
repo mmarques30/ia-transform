@@ -271,23 +271,23 @@ export function HeroForm() {
         style={{ boxShadow: "inset 0 1px 0 oklch(1 0 0 / 0.9)" }}
       />
 
-      <div className="px-7 pt-6 lg:px-9 lg:pt-7 relative">
-        <div className="flex items-start justify-between gap-4">
+      <div className="px-6 pt-5 lg:px-7 lg:pt-6 relative">
+        <div className="flex items-start justify-between gap-3">
           <div>
             <p
-              className="text-[11px] uppercase tracking-[0.16em] font-semibold"
+              className="text-[10.5px] uppercase tracking-[0.16em] font-semibold"
               style={{ color: "oklch(0.5 0.015 115)" }}
             >
               Diagnóstico
             </p>
             <p
-              className="mt-1.5 text-[18px] font-semibold tracking-tight"
+              className="mt-1 text-[16.5px] font-semibold tracking-tight"
               style={{ color: "oklch(0.18 0.02 122)" }}
             >
               Conte sobre sua operação
             </p>
             <p
-              className="mt-1.5 text-[13px] leading-relaxed"
+              className="mt-1 text-[12.5px] leading-relaxed"
               style={{ color: "oklch(0.45 0.015 115)" }}
             >
               Nossa equipe comercial retorna em até 24h.
@@ -312,12 +312,12 @@ export function HeroForm() {
         </div>
       </div>
 
-      <div className="px-7 pb-6 pt-5 lg:px-9 lg:pb-7 lg:pt-5 relative">
+      <div className="px-6 pb-5 pt-4 lg:px-7 lg:pb-6 lg:pt-4 relative">
         <form
           onSubmit={handleSubmit}
           onFocusCapture={handleFocusCapture}
           onBlurCapture={handleBlurCapture}
-          className="space-y-2.5"
+          className="space-y-2"
           noValidate
         >
           <Field id="firstname" label="Nome Completo" required>
@@ -444,10 +444,10 @@ export function HeroForm() {
             disabled={loading}
             className="mt-1 w-full inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-[14px] font-bold transition-[transform,opacity,box-shadow] disabled:opacity-60 disabled:cursor-not-allowed hover:-translate-y-0.5"
             style={{
-              backgroundColor: "var(--color-accent)",
+              backgroundColor: "oklch(0.18 0.02 122)",
               color: "oklch(1 0 0)",
               boxShadow:
-                "0 1px 0 0 oklch(1 0 0 / 0.12) inset, 0 14px 32px -10px oklch(0.18 0.02 122 / 0.45)",
+                "0 1px 0 0 oklch(1 0 0 / 0.12) inset, 0 14px 32px -10px oklch(0 0 0 / 0.5)",
             }}
           >
             {loading ? "Enviando..." : "SOLICITAR DIAGNÓSTICO"}
@@ -474,7 +474,7 @@ export function HeroForm() {
             className="pt-1 text-[11.5px] text-center leading-relaxed"
             style={{ color: "oklch(0.55 0.015 115)" }}
           >
-            Ao enviar, você autoriza contato por WhatsApp e email. Cancele quando quiser.
+            Ao enviar, você autoriza contato por WhatsApp e email.
           </p>
         </form>
       </div>
