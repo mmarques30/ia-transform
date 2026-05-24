@@ -3,7 +3,12 @@ import { Reveal } from "@/components/Reveal";
 import { HeroForm } from "@/components/HeroForm";
 import { gsap, ScrollTrigger, SplitText } from "@/lib/motion";
 
-export function Hero() {
+interface HeroProps {
+  formSlug?: string;
+  thankYouPath?: string;
+}
+
+export function Hero({ formSlug, thankYouPath }: HeroProps = {}) {
   const headingRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
@@ -125,7 +130,7 @@ export function Hero() {
 
             <Reveal delay={0.1}>
               <div id="diagnostico-form" className="lg:sticky lg:top-24 scroll-mt-24">
-                <HeroForm />
+                <HeroForm formSlug={formSlug} thankYouPath={thankYouPath} />
               </div>
             </Reveal>
           </div>
