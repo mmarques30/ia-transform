@@ -4,7 +4,7 @@ import { Hero } from "@/components/sections/contabil/Hero";
 import { ICP } from "@/components/sections/contabil/ICP";
 import { Problem } from "@/components/sections/contabil/Problem";
 import { Solution } from "@/components/sections/contabil/Solution";
-import { Systems } from "@/components/sections/Systems";
+import { Systems } from "@/components/sections/contabil/Systems";
 import { OliveWave } from "@/components/sections/contabil/OliveWave";
 import { ClientLogos } from "@/components/sections/ClientLogos";
 import { Process } from "@/components/sections/contabil/Process";
