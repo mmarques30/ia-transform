@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { gsap, ScrollTrigger, SplitText } from "@/lib/motion";
+import { TiltCard } from "@/components/TiltCard";
 
 const PROBLEMS = [
   {
@@ -53,10 +54,8 @@ export function Problem() {
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top top",
-          end: "+=200%",
-          pin: true,
+          end: "bottom bottom",
           scrub: 0.8,
-          anticipatePin: 1,
         },
       });
 
@@ -185,7 +184,11 @@ export function Problem() {
             className="mt-10 lg:mt-14 grid md:grid-cols-2 gap-4 lg:gap-5 max-w-[980px] mx-auto"
           >
             {PROBLEMS.map((p) => (
-              <div key={p.n} className="problem-card tech-card p-6 lg:p-7">
+              <TiltCard
+                key={p.n}
+                className="problem-card tech-card p-6 lg:p-7 relative"
+                maxTilt={6}
+              >
                 <div className="flex items-center gap-3">
                   <span
                     className="num-display text-[13px] tracking-wider"
@@ -204,7 +207,7 @@ export function Problem() {
                   {p.title}
                 </h3>
                 <p className="mt-2 text-[13.5px] text-sage leading-[1.55]">{p.text}</p>
-              </div>
+              </TiltCard>
             ))}
           </div>
 

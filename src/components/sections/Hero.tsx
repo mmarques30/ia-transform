@@ -39,7 +39,10 @@ export function Hero() {
     <section
       id="top"
       className="relative pb-[80px] lg:pb-[120px] overflow-hidden"
-      style={{ background: "var(--gradient-hero)" }}
+      style={{
+        background:
+          "radial-gradient(ellipse 80% 55% at 50% 0%, oklch(0.22 0.03 122 / 0.5) 0%, transparent 75%)",
+      }}
     >
       {/* Faixa preta marquee — fica logo abaixo do header fixo, dá respiro
           entre o nav e a headline e ancora um tom premium ao topo da LP. */}
