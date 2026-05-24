@@ -10,11 +10,23 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ThankYouBusinessRouteImport } from './routes/thank-you-business'
+import { Route as ContabilThankYouRouteImport } from './routes/contabil-thank-you'
+import { Route as ContabilRouteImport } from './routes/contabil'
 import { Route as IndexRouteImport } from './routes/index'
 
 const ThankYouBusinessRoute = ThankYouBusinessRouteImport.update({
   id: '/thank-you-business',
   path: '/thank-you-business',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContabilThankYouRoute = ContabilThankYouRouteImport.update({
+  id: '/contabil-thank-you',
+  path: '/contabil-thank-you',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContabilRoute = ContabilRouteImport.update({
+  id: '/contabil',
+  path: '/contabil',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -25,27 +37,40 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/contabil': typeof ContabilRoute
+  '/contabil-thank-you': typeof ContabilThankYouRoute
   '/thank-you-business': typeof ThankYouBusinessRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/contabil': typeof ContabilRoute
+  '/contabil-thank-you': typeof ContabilThankYouRoute
   '/thank-you-business': typeof ThankYouBusinessRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/contabil': typeof ContabilRoute
+  '/contabil-thank-you': typeof ContabilThankYouRoute
   '/thank-you-business': typeof ThankYouBusinessRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/thank-you-business'
+  fullPaths: '/' | '/contabil' | '/contabil-thank-you' | '/thank-you-business'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/thank-you-business'
-  id: '__root__' | '/' | '/thank-you-business'
+  to: '/' | '/contabil' | '/contabil-thank-you' | '/thank-you-business'
+  id:
+    | '__root__'
+    | '/'
+    | '/contabil'
+    | '/contabil-thank-you'
+    | '/thank-you-business'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ContabilRoute: typeof ContabilRoute
+  ContabilThankYouRoute: typeof ContabilThankYouRoute
   ThankYouBusinessRoute: typeof ThankYouBusinessRoute
 }
 
@@ -56,6 +81,20 @@ declare module '@tanstack/react-router' {
       path: '/thank-you-business'
       fullPath: '/thank-you-business'
       preLoaderRoute: typeof ThankYouBusinessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contabil-thank-you': {
+      id: '/contabil-thank-you'
+      path: '/contabil-thank-you'
+      fullPath: '/contabil-thank-you'
+      preLoaderRoute: typeof ContabilThankYouRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contabil': {
+      id: '/contabil'
+      path: '/contabil'
+      fullPath: '/contabil'
+      preLoaderRoute: typeof ContabilRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -70,8 +109,19 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ContabilRoute: ContabilRoute,
+  ContabilThankYouRoute: ContabilThankYouRoute,
   ThankYouBusinessRoute: ThankYouBusinessRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}

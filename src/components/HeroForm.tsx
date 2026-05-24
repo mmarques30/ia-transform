@@ -20,7 +20,13 @@ function trackClarity(action: string, ...args: unknown[]): void {
 }
 
 const FORM_ENDPOINT = "https://ciwdlceyjsnlnunktqzx.supabase.co/functions/v1/form-submit";
-const FORM_SLUG = "business";
+
+interface HeroFormProps {
+  /** Slug do funil — define a origem do lead no CRM. Default: business. */
+  formSlug?: string;
+  /** Rota da página de obrigado pra onde redireciona após o envio. */
+  thankYouPath?: string;
+}
 
 /** Opções sincronizadas com form_fields do CRM (slug=business). */
 const CARGOS = [
@@ -60,7 +66,10 @@ const SETORES = [
  * UTMs capturadas de window.location.search e enviadas junto ao payload.
  * Em caso de sucesso, navega pra /thank-you-business.
  */
-export function HeroForm() {
+export function HeroForm({
+  formSlug = "business",
+  thankYouPath = "/thank-you-business",
+}: HeroFormProps = {}) {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -172,7 +181,7 @@ export function HeroForm() {
       };
 
       const payload = {
-        form_slug: FORM_SLUG,
+        form_slug: formSlug,
         fields,
         utm_source: params.get("utm_source") ?? "",
         utm_medium: params.get("utm_medium") ?? "",
@@ -238,7 +247,7 @@ export function HeroForm() {
       submitted.current = true;
 
       console.log("[form] redirecting");
-      navigate({ to: "/thank-you-business", search: { eid: eventID } });
+      navigate({ to: thankYouPath, search: { eid: eventID } });
     } catch (err) {
       const message =
         err instanceof Error
