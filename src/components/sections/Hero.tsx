@@ -49,21 +49,9 @@ export function Hero() {
       <div className="h-[72px]" aria-hidden />
       <MarqueeStrip />
 
-      {/* Wrapper relativo pra texture/glow respeitarem o conteúdo abaixo
+      {/* Wrapper relativo pra glow respeitarem o conteúdo abaixo
           da marquee, sem sobrepor a faixa preta. */}
       <div className="relative pt-[48px] lg:pt-[72px]">
-        {/* Grid texture sutil em lime/8 sobre dark */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 opacity-[0.22]"
-          style={{
-            backgroundImage:
-              "linear-gradient(to right, oklch(0.75 0.20 122 / 0.5) 1px, transparent 1px), linear-gradient(to bottom, oklch(0.75 0.20 122 / 0.5) 1px, transparent 1px)",
-            backgroundSize: "56px 56px",
-            maskImage: "radial-gradient(ellipse 70% 60% at 40% 30%, black 20%, transparent 80%)",
-          }}
-        />
-
         {/* Glow lime atrás do form pra dar profundidade no dark */}
         <div
           aria-hidden

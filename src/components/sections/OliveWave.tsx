@@ -12,19 +12,18 @@ const STATEMENTS = [
  */
 export function OliveWave() {
   return (
-    <section
-      className="relative pt-[80px] pb-[120px] lg:pt-[100px] lg:pb-[140px] overflow-hidden [clip-path:polygon(0_20px,100%_0,100%_calc(100%-20px),0_100%)] lg:[clip-path:polygon(0_36px,100%_0,100%_calc(100%-36px),0_100%)]"
-      style={{ background: "var(--gradient-olive-wave)" }}
-    >
-      {/* Tech grid drift in subtle white over olive */}
+    <section className="relative pt-[120px] pb-[140px] lg:pt-[150px] lg:pb-[170px] overflow-hidden">
+      {/* Olive wash com fade vertical nas bordas — funde suavemente com o
+          WebGL das sections vizinhas (sem corte diagonal duro). */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 ia-anim-grid-drift opacity-[0.18]"
+        className="pointer-events-none absolute inset-0"
         style={{
-          backgroundImage:
-            "linear-gradient(to right, oklch(1 0 0 / 0.5) 1px, transparent 1px), linear-gradient(to bottom, oklch(1 0 0 / 0.5) 1px, transparent 1px)",
-          backgroundSize: "56px 56px",
-          maskImage: "radial-gradient(ellipse 60% 80% at 50% 50%, black 30%, transparent 90%)",
+          background: "var(--gradient-olive-wave)",
+          maskImage:
+            "linear-gradient(to bottom, transparent 0%, black 16%, black 84%, transparent 100%)",
+          WebkitMaskImage:
+            "linear-gradient(to bottom, transparent 0%, black 16%, black 84%, transparent 100%)",
         }}
       />
 
