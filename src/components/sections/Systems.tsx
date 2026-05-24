@@ -64,10 +64,32 @@ export function Systems() {
   return (
     <section
       id="sistemas"
-      className="py-[100px] lg:py-[140px] overflow-hidden"
-      style={{ backgroundColor: "var(--color-surface)" }}
+      className="py-[100px] lg:py-[140px] overflow-hidden relative"
+      style={{ backgroundColor: "var(--color-background)" }}
     >
-      <div className="container-page">
+      {/* Glow lime atrás do título */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute top-[-10%] left-[-5%] w-[600px] h-[400px] rounded-full"
+        style={{
+          background:
+            "radial-gradient(ellipse at center, oklch(0.75 0.20 122 / 0.18) 0%, transparent 70%)",
+          filter: "blur(60px)",
+        }}
+      />
+      {/* Grid drift sutil */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 opacity-[0.05]"
+        style={{
+          backgroundImage:
+            "linear-gradient(to right, oklch(0.96 0.012 110) 1px, transparent 1px), linear-gradient(to bottom, oklch(0.96 0.012 110) 1px, transparent 1px)",
+          backgroundSize: "56px 56px",
+          maskImage: "radial-gradient(ellipse 80% 60% at 50% 30%, black 30%, transparent 90%)",
+        }}
+      />
+
+      <div className="container-page relative">
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 max-w-[1100px]">
           <div className="max-w-[620px]">
             <Reveal>
@@ -97,7 +119,7 @@ export function Systems() {
         <SystemsCarousel />
       </Reveal>
 
-      <div className="container-page">
+      <div className="container-page relative">
         <Reveal delay={0.2}>
           <div className="mt-12 text-center">
             <a
@@ -137,11 +159,13 @@ function SystemsCarousel() {
           <article
             key={`${s.title}-${i}`}
             aria-hidden={i >= SYSTEMS.length}
-            className="group shrink-0 rounded-xl border border-border bg-card overflow-hidden flex flex-col transition-shadow hover:shadow-lg"
+            className="group shrink-0 border border-border bg-card overflow-hidden flex flex-col transition-all hover:border-primary/40"
             style={{
               width: "min(82vw, 520px)",
               boxShadow: "var(--shadow-card)",
               transform: "translateZ(0)",
+              clipPath:
+                "polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)",
             }}
           >
             <div

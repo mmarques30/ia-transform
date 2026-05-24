@@ -91,7 +91,7 @@ export const Route = createRootRoute({
       {
         rel: "preload",
         as: "image",
-        href: "/brand/iaplicada-logo-light.png",
+        href: "/brand/iaplicada-logo-dark.png",
         fetchpriority: "high",
       },
       {

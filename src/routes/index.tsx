@@ -63,28 +63,26 @@ function BusinessLanding() {
       <SpacerM />
       <Solution />
       <SpacerL />
-      <LegacyLight>
-        <Systems />
-      </LegacyLight>
+      <Systems />
       <OliveWave />
       <SpacerL />
       <LegacyLight>
         <Process />
-        <SpacerM />
-        <Impact />
-        <SpacerL />
+      </LegacyLight>
+      <SpacerM />
+      <Impact />
+      <SpacerL />
+      <LegacyLight>
         <Authority />
       </LegacyLight>
       <SpacerM />
       <ICP />
       <SpacerL />
-      <LegacyLight>
-        <Comparison />
-        <SpacerM />
-        <FAQ />
-        <SpacerL />
-        <CTAFinal />
-      </LegacyLight>
+      <Comparison />
+      <SpacerM />
+      <FAQ />
+      <SpacerL />
+      <CTAFinal />
       <Footer />
     </main>
   );

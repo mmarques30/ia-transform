@@ -5,6 +5,8 @@ interface LogoProps {
   size?: number;
   className?: string;
   style?: CSSProperties;
+  /** Variant baseada no fundo onde a logo será exibida. Default "dark". */
+  variant?: "dark" | "light";
 }
 
 interface LogoMarkProps {
@@ -12,8 +14,10 @@ interface LogoMarkProps {
   className?: string;
 }
 
-/** Marca completa oficial (símbolo de 4 pétalas + wordmark IAplicada). */
-const LOGO_FULL_SRC = "/brand/iaplicada-logo-light.png";
+/** Marca completa oficial — versão pra fundo escuro (default na LP dark). */
+const LOGO_DARK_SRC = "/brand/iaplicada-logo-dark.png";
+/** Marca completa oficial — versão pra fundo claro. */
+const LOGO_LIGHT_SRC = "/brand/iaplicada-logo-light.png";
 /** Aspect ratio do PNG oficial (2108x500). */
 const LOGO_FULL_RATIO = 2108 / 500;
 
@@ -21,14 +25,16 @@ const LOGO_FULL_RATIO = 2108 / 500;
 const LOGO_MARK_SRC = "/brand/capa_biz_sistemas.jpg";
 
 /**
- * Logo IAplicada — símbolo oficial + wordmark, servido como PNG oficial
- * (`/brand/iaplicada-logo-light.png`). Use `size` pra controlar a altura.
+ * Logo IAplicada — símbolo oficial + wordmark. `variant="dark"` (default)
+ * usa a versão pensada pra fundos escuros; `variant="light"` é o asset
+ * antigo pra fundos creme.
  */
-export function Logo({ size = 22, className, style }: LogoProps) {
+export function Logo({ size = 22, className, style, variant = "dark" }: LogoProps) {
   const width = Math.round(size * LOGO_FULL_RATIO);
+  const src = variant === "light" ? LOGO_LIGHT_SRC : LOGO_DARK_SRC;
   return (
     <img
-      src={LOGO_FULL_SRC}
+      src={src}
       alt="IAplicada"
       width={width}
       height={size}
