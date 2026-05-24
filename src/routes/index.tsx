@@ -60,10 +60,10 @@ function BusinessLanding() {
       <Header />
       <Hero />
       <Problem />
+      <SpacerM />
+      <Solution />
+      <SpacerL />
       <LegacyLight>
-        <SpacerM />
-        <Solution />
-        <SpacerL />
         <Systems />
       </LegacyLight>
       <OliveWave />
