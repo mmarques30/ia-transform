@@ -3,6 +3,7 @@ import { useEffect } from "react";
 
 import appCss from "../styles.css?url";
 import { initLenis, destroyLenis } from "../lib/motion";
+import { BrandBackground } from "../components/BrandBackground";
 
 const CLARITY_PROJECT_ID = "wpgxq27fhi";
 const META_PIXEL_ID = "619312151238896";
@@ -154,5 +155,10 @@ function RootComponent() {
     initLenis();
     return () => destroyLenis();
   }, []);
-  return <Outlet />;
+  return (
+    <>
+      <BrandBackground />
+      <Outlet />
+    </>
+  );
 }
