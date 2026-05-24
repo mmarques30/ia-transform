@@ -92,7 +92,9 @@ export function Systems() {
         </div>
       </div>
 
-      <div className="container-page relative">
+      {/* Grid mais largo que o container padrão pra caber mais cards por
+          dobra (estilo galeria landonorris), sem ficar centralizado/estreito. */}
+      <div className="relative mx-auto w-full max-w-[1440px] px-6 lg:px-10">
         <SystemsGrid />
 
         <Reveal delay={0.2}>
@@ -119,7 +121,7 @@ export function Systems() {
  */
 function SystemsGrid() {
   return (
-    <div className="mt-12 lg:mt-16 grid sm:grid-cols-2 gap-5 lg:gap-7 max-w-[1080px] mx-auto">
+    <div className="mt-12 lg:mt-16 grid sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
       {SYSTEMS.map((s, i) => {
         const isDarkScreenshot = s.tag === "Fiscal";
         return (
