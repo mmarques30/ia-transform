@@ -21,21 +21,8 @@ export function Authority() {
   return (
     <section
       id="time"
-      className="py-[100px] lg:py-[140px] relative overflow-hidden"
-      style={{ backgroundColor: "var(--color-surface)" }}
+      className="section-veil py-[100px] lg:py-[140px] relative overflow-hidden"
     >
-      {/* subtle diagonal grid texture */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-[0.4]"
-        style={{
-          backgroundImage:
-            "linear-gradient(to right, oklch(0.82 0.03 122 / 0.3) 1px, transparent 1px)",
-          backgroundSize: "72px 100%",
-          maskImage: "linear-gradient(90deg, transparent, black 25%, black 75%, transparent)",
-        }}
-      />
-
       <div className="container-page relative">
         <div className="grid lg:grid-cols-[1.05fr_1fr] gap-12 lg:gap-16 items-start">
           {/* LEFT — content */}
@@ -99,17 +86,13 @@ export function Authority() {
                     {ENTERPRISE_REFS.map((name) => (
                       <span
                         key={name}
-                        className="text-[15px] font-semibold tracking-tight"
-                        style={{ color: "oklch(0.32 0.03 122)" }}
+                        className="text-[15px] font-semibold tracking-tight text-foreground"
                       >
                         {name}
                       </span>
                     ))}
                   </div>
-                  <p
-                    className="mt-4 text-[14px] leading-[1.55]"
-                    style={{ color: "oklch(0.32 0.03 122)" }}
-                  >
+                  <p className="mt-4 text-[14px] leading-[1.55] text-sage">
                     <span
                       className="font-semibold"
                       style={{ color: "var(--color-primary)" }}

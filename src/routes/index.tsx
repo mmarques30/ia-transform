@@ -42,46 +42,21 @@ export const Route = createFileRoute("/")({
   component: BusinessLanding,
 });
 
-const SpacerM = () => <div aria-hidden className="h-12 lg:h-16" />;
-const SpacerL = () => <div aria-hidden className="h-20 lg:h-28" />;
-
-/**
- * Wrapper temporário durante o redesign Lote 5. Aplica paleta light
- * em sections que ainda não foram migradas pro dark editorial.
- * Cada section vai sair daqui conforme o Lote 5.2/5.3 avança.
- */
-const LegacyLight = ({ children }: { children: React.ReactNode }) => (
-  <div data-theme="light">{children}</div>
-);
-
 function BusinessLanding() {
   return (
-    <main className="min-h-screen bg-background text-foreground">
+    <main className="min-h-screen text-foreground">
       <Header />
       <Hero />
       <Problem />
-      <SpacerM />
       <Solution />
-      <SpacerL />
       <Systems />
       <OliveWave />
-      <SpacerL />
-      <LegacyLight>
-        <Process />
-      </LegacyLight>
-      <SpacerM />
+      <Process />
       <Impact />
-      <SpacerL />
-      <LegacyLight>
-        <Authority />
-      </LegacyLight>
-      <SpacerM />
+      <Authority />
       <ICP />
-      <SpacerL />
       <Comparison />
-      <SpacerM />
       <FAQ />
-      <SpacerL />
       <CTAFinal />
       <Footer />
     </main>

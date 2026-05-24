@@ -43,7 +43,7 @@ const STEPS: Step[] = [
 
 export function Process() {
   return (
-    <section id="abordagem" className="bg-background relative overflow-hidden">
+    <section id="abordagem" className="section-veil relative overflow-hidden">
       <div className="container-page py-[100px] lg:py-[140px] relative">
         <div className="text-center max-w-[820px] mx-auto">
           <Reveal>

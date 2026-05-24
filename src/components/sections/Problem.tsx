@@ -99,12 +99,8 @@ export function Problem() {
   }, []);
 
   return (
-    <section
-      ref={sectionRef}
-      className="relative"
-      style={{ minHeight: "300vh", backgroundColor: "var(--color-background)" }}
-    >
-      <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center">
+    <section ref={sectionRef} className="relative" style={{ minHeight: "300vh" }}>
+      <div className="section-veil sticky top-0 h-screen w-full overflow-hidden flex items-center">
         <svg
           aria-hidden
           className="pointer-events-none absolute inset-0 w-full h-full opacity-[0.18]"
@@ -146,16 +142,6 @@ export function Problem() {
             })}
           </g>
         </svg>
-
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 opacity-[0.04]"
-          style={{
-            backgroundImage:
-              "linear-gradient(to right, oklch(0.96 0.012 110) 1px, transparent 1px), linear-gradient(to bottom, oklch(0.96 0.012 110) 1px, transparent 1px)",
-            backgroundSize: "56px 56px",
-          }}
-        />
 
         <div className="relative z-10 container-page w-full">
           <div className="text-center max-w-[860px] mx-auto">

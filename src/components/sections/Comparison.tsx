@@ -63,11 +63,7 @@ const STATUS_COLOR: Record<Status, string> = {
 
 export function Comparison() {
   return (
-    <section
-      id="comparativo"
-      className="py-[100px] lg:py-[140px]"
-      style={{ backgroundColor: "var(--color-surface)" }}
-    >
+    <section id="comparativo" className="section-veil py-[100px] lg:py-[140px]">
       <div className="container-page">
         <div className="text-center max-w-[820px] mx-auto">
           <Reveal>
