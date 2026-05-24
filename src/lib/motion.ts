@@ -32,6 +32,8 @@ export function initLenis(): Lenis | null {
   gsap.ticker.add((time) => lenisInstance?.raf(time * 1000));
   gsap.ticker.lagSmoothing(0);
 
+  (window as unknown as { lenis?: Lenis }).lenis = lenisInstance;
+
   return lenisInstance;
 }
 
