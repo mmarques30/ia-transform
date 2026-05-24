@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { Reveal } from "@/components/Reveal";
-import { EmbedForm } from "@/components/EmbedForm";
+import { HeroForm } from "@/components/HeroForm";
 import { gsap, ScrollTrigger, SplitText } from "@/lib/motion";
 
 export function Hero() {
@@ -109,7 +109,7 @@ export function Hero() {
 
             <Reveal delay={0.1}>
               <div id="diagnostico-form" className="lg:sticky lg:top-24 scroll-mt-24">
-                <EmbedForm slug="business-contabil" />
+                <HeroForm formSlug="business-contabil" thankYouPath="/contabil-thank-you" />
               </div>
             </Reveal>
           </div>
