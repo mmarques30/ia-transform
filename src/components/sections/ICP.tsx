@@ -8,7 +8,7 @@ import { ArrowRight } from "lucide-react";
  */
 export function ICP() {
   return (
-    <section className="py-[60px] lg:py-[80px] bg-background">
+    <section className="section-veil py-[60px] lg:py-[80px]">
       <div className="container-page">
         <div
           className="relative mx-auto max-w-[1080px] overflow-hidden [clip-path:polygon(24px_0,100%_0,100%_calc(100%-24px),calc(100%-24px)_100%,0_100%,0_24px)] lg:[clip-path:polygon(32px_0,100%_0,100%_calc(100%-32px),calc(100%-32px)_100%,0_100%,0_32px)]"

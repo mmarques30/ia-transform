@@ -64,31 +64,8 @@ export function Systems() {
   return (
     <section
       id="sistemas"
-      className="py-[100px] lg:py-[140px] overflow-hidden relative"
-      style={{ backgroundColor: "var(--color-background)" }}
+      className="section-veil py-[100px] lg:py-[140px] overflow-hidden relative"
     >
-      {/* Glow lime atrás do título */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute top-[-10%] left-[-5%] w-[600px] h-[400px] rounded-full"
-        style={{
-          background:
-            "radial-gradient(ellipse at center, oklch(0.75 0.20 122 / 0.18) 0%, transparent 70%)",
-          filter: "blur(60px)",
-        }}
-      />
-      {/* Grid drift sutil */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-[0.05]"
-        style={{
-          backgroundImage:
-            "linear-gradient(to right, oklch(0.96 0.012 110) 1px, transparent 1px), linear-gradient(to bottom, oklch(0.96 0.012 110) 1px, transparent 1px)",
-          backgroundSize: "56px 56px",
-          maskImage: "radial-gradient(ellipse 80% 60% at 50% 30%, black 30%, transparent 90%)",
-        }}
-      />
-
       <div className="container-page relative">
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 max-w-[1100px]">
           <div className="max-w-[620px]">

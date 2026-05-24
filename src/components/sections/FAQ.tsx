@@ -43,7 +43,7 @@ const FAQS = [
 
 export function FAQ() {
   return (
-    <section id="faq" className="py-[90px] lg:py-[120px] bg-background">
+    <section id="faq" className="section-veil py-[90px] lg:py-[120px]">
       <div className="container-page max-w-[820px]">
         <Reveal>
           <span className="label-chip">

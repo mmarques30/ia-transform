@@ -132,12 +132,19 @@
   }
 
   body {
-    background-color: var(--color-background);
+    background-color: transparent;
     color: var(--color-foreground);
     font-family: var(--font-sans);
     font-feature-settings: "ss01", "cv11";
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+  }
+
+  /* Véu translúcido — aplicado nas sections pra escurecer o WebGL o
+     suficiente pra leitura, deixando o background da marca vazar de forma
+     uniforme em toda a LP. Substitui os bg sólidos antigos. */
+  .section-veil {
+    background-color: oklch(0.14 0.018 122 / 0.62);
   }
 
   ::selection {

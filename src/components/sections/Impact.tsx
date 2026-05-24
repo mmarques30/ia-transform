@@ -20,15 +20,7 @@ const METRICS: Metric[] = [
 
 export function Impact() {
   return (
-    <section className="py-[100px] lg:py-[140px] bg-background relative overflow-hidden">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 tech-bg-dots ia-anim-grid-drift opacity-50"
-        style={{
-          maskImage: "radial-gradient(ellipse 70% 60% at 50% 50%, black 30%, transparent 90%)",
-        }}
-      />
-
+    <section className="section-veil py-[100px] lg:py-[140px] relative overflow-hidden">
       <div className="container-page relative">
         {/* ATO 1 — A virada operacional (claim + monitor) */}
         <div className="text-center max-w-[760px] mx-auto">
@@ -88,7 +80,7 @@ function ImpactMonitor() {
           <span className="h-2 w-2 rounded-full bg-red-400/60" />
           <span className="h-2 w-2 rounded-full bg-yellow-400/60" />
           <span className="h-2 w-2 rounded-full bg-green-400/60" />
-          <p className="ml-2 text-[10.5px] font-mono text-muted-foreground">
+          <p className="ml-2 text-[10.5px] font-mono" style={{ color: "oklch(0.5 0.015 115)" }}>
             iaplicada · monitor operacional
           </p>
         </div>
@@ -103,10 +95,16 @@ function ImpactMonitor() {
 
       <div className="px-6 lg:px-8 pt-6 pb-4 flex items-end justify-between border-b" style={{ borderColor: "oklch(0.94 0.005 110)" }}>
         <div>
-          <p className="text-[10.5px] uppercase tracking-[0.16em] text-muted-foreground font-semibold">
+          <p
+            className="text-[10.5px] uppercase tracking-[0.16em] font-semibold"
+            style={{ color: "oklch(0.5 0.015 115)" }}
+          >
             Operação · últimos 90 dias
           </p>
-          <p className="mt-1.5 text-[20px] font-bold tracking-tight text-foreground">
+          <p
+            className="mt-1.5 text-[20px] font-bold tracking-tight"
+            style={{ color: "oklch(0.18 0.02 122)" }}
+          >
             Antes vs. depois da estruturação
           </p>
         </div>
@@ -117,7 +115,10 @@ function ImpactMonitor() {
           >
             +73%
           </span>
-          <span className="block mt-1 text-[10px] uppercase tracking-[0.14em] text-muted-foreground font-semibold">
+          <span
+            className="block mt-1 text-[10px] uppercase tracking-[0.14em] font-semibold"
+            style={{ color: "oklch(0.5 0.015 115)" }}
+          >
             ganho médio
           </span>
         </div>
@@ -130,7 +131,9 @@ function ImpactMonitor() {
           return (
             <div key={m.label}>
               <div className="flex items-center justify-between mb-2">
-                <p className="text-[13.5px] text-foreground font-medium">{m.label}</p>
+                <p className="text-[13.5px] font-medium" style={{ color: "oklch(0.22 0.02 122)" }}>
+                  {m.label}
+                </p>
                 <span
                   className="inline-flex items-center gap-1 text-[13px] font-bold tracking-tight"
                   style={{
@@ -167,7 +170,9 @@ function ImpactMonitor() {
           backgroundColor: "oklch(0.985 0.004 110)",
         }}
       >
-        <span className="text-muted-foreground">Calculado sobre média de 80+ implementações</span>
+        <span style={{ color: "oklch(0.5 0.015 115)" }}>
+          Calculado sobre média de 80+ implementações
+        </span>
         <span
           className="font-semibold inline-flex items-center gap-1"
           style={{ color: "oklch(0.55 0.16 125)" }}

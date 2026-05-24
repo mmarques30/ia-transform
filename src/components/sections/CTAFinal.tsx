@@ -3,11 +3,7 @@ import { ArrowUp } from "lucide-react";
 
 export function CTAFinal() {
   return (
-    <section
-      id="cta-final"
-      className="py-[100px] lg:py-[140px]"
-      style={{ backgroundColor: "var(--color-surface)" }}
-    >
+    <section id="cta-final" className="section-veil py-[100px] lg:py-[140px]">
       <div className="container-page">
         <div className="max-w-[820px] mx-auto text-center">
           <Reveal>
