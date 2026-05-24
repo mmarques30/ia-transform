@@ -37,13 +37,13 @@ const COLABORADORES = [
   "Mais de 100 colaboradores",
 ];
 
-/** Maior consumo de tempo no escritório (do material da vertical contábil). */
-const CONSOME_TEMPO = [
-  "Conciliações bancárias manuais",
-  "Fechamento mensal trava o time",
-  "Cliente atrasa documentos",
-  "Apuração de impostos consome o dia",
-  "Atendimento engole tempo de gestão",
+/** Faixa de faturamento anual — sincronizado com o form business-contabil. */
+const FAIXAS = [
+  "Menos de R$ 1 milhão",
+  "Entre 1MM e 5MM",
+  "Entre 5MM e 10MM",
+  "Entre 10MM e 50MM",
+  "Acima de 50MM",
 ];
 
 /**
@@ -162,7 +162,7 @@ export function HeroForm({
         phone: String(fd.get("phone") ?? "").trim(),
         company: String(fd.get("company") ?? "").trim(),
         colaboradores: String(fd.get("colaboradores") ?? "").trim(),
-        maior_consumo_tempo: String(fd.get("maior_consumo_tempo") ?? "").trim(),
+        faixa_de_faturamento: String(fd.get("faixa_de_faturamento") ?? "").trim(),
       };
 
       const payload = {
@@ -381,10 +381,10 @@ Conte sobre o seu escritório
             </select>
           </Field>
 
-          <Field id="maior_consumo_tempo" label="O que mais consome tempo hoje?" required>
+          <Field id="faixa_de_faturamento" label="Faturamento anual do escritório" required>
             <select
-              id="maior_consumo_tempo"
-              name="maior_consumo_tempo"
+              id="faixa_de_faturamento"
+              name="faixa_de_faturamento"
               required
               defaultValue=""
               className="form-input"
@@ -392,9 +392,9 @@ Conte sobre o seu escritório
               <option value="" disabled>
                 Selecione
               </option>
-              {CONSOME_TEMPO.map((c) => (
-                <option key={c} value={c}>
-                  {c}
+              {FAIXAS.map((f) => (
+                <option key={f} value={f}>
+                  {f}
                 </option>
               ))}
             </select>
