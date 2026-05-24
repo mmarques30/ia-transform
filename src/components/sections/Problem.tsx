@@ -54,10 +54,8 @@ export function Problem() {
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top top",
-          end: "+=200%",
-          pin: true,
+          end: "bottom bottom",
           scrub: 0.8,
-          anticipatePin: 1,
         },
       });
 
