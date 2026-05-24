@@ -12,18 +12,18 @@ const STATEMENTS = [
  */
 export function OliveWave() {
   return (
-    <section className="relative pt-[120px] pb-[140px] lg:pt-[150px] lg:pb-[170px] overflow-hidden">
-      {/* Olive wash com fade vertical nas bordas — funde suavemente com o
-          WebGL das sections vizinhas (sem corte diagonal duro). */}
+    <section className="relative pt-[150px] pb-[170px] lg:pt-[190px] lg:pb-[210px] overflow-hidden">
+      {/* Olive wash com fade vertical longo nas bordas — funde de forma
+          bem gradual com o WebGL das sections vizinhas (sem linha de corte). */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0"
         style={{
           background: "var(--gradient-olive-wave)",
           maskImage:
-            "linear-gradient(to bottom, transparent 0%, black 16%, black 84%, transparent 100%)",
+            "linear-gradient(to bottom, transparent 0%, black 34%, black 66%, transparent 100%)",
           WebkitMaskImage:
-            "linear-gradient(to bottom, transparent 0%, black 16%, black 84%, transparent 100%)",
+            "linear-gradient(to bottom, transparent 0%, black 34%, black 66%, transparent 100%)",
         }}
       />
 
@@ -44,14 +44,14 @@ export function OliveWave() {
             <span
               className="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[10px] uppercase tracking-[0.18em] font-semibold backdrop-blur-sm"
               style={{
-                borderColor: "oklch(0.18 0.02 122 / 0.25)",
-                backgroundColor: "oklch(0.18 0.02 122 / 0.1)",
-                color: "oklch(0.18 0.02 122)",
+                borderColor: "oklch(0.96 0.012 110 / 0.3)",
+                backgroundColor: "oklch(0.96 0.012 110 / 0.08)",
+                color: "oklch(0.96 0.012 110)",
               }}
             >
               <span
                 className="h-1.5 w-1.5 rounded-full"
-                style={{ backgroundColor: "oklch(0.18 0.02 122)" }}
+                style={{ backgroundColor: "oklch(0.88 0.20 118)" }}
               />
               Diagnóstico
             </span>
@@ -60,10 +60,10 @@ export function OliveWave() {
           <Reveal delay={0.05}>
             <h2
               className="h-mix mt-7 text-[36px] sm:text-[48px] lg:text-[60px] tracking-tight"
-              style={{ color: "oklch(0.12 0.02 122)" }}
+              style={{ color: "oklch(0.97 0.012 110)" }}
             >
               O problema não é falta de esforço.
-              <br />É <em style={{ color: "oklch(0.18 0.02 122)" }}>falta de estrutura.</em>
+              <br />É <em style={{ color: "oklch(0.88 0.20 118)" }}>falta de estrutura.</em>
             </h2>
           </Reveal>
 
@@ -75,18 +75,18 @@ export function OliveWave() {
                   key={s.label}
                   className="flex items-center gap-3 sm:px-6 lg:px-8 first:pl-0 last:pr-0"
                   style={{
-                    borderLeft: i > 0 ? "1px solid oklch(0.18 0.02 122 / 0.2)" : undefined,
+                    borderLeft: i > 0 ? "1px solid oklch(0.96 0.012 110 / 0.2)" : undefined,
                   }}
                 >
                   <p
                     className="text-[14px] lg:text-[15px] leading-tight"
-                    style={{ color: "oklch(0.18 0.02 122 / 0.7)" }}
+                    style={{ color: "oklch(0.96 0.012 110 / 0.7)" }}
                   >
                     {s.label}
                   </p>
                   <p
                     className="text-[18px] lg:text-[22px] font-bold tracking-tight"
-                    style={{ color: "oklch(0.12 0.02 122)" }}
+                    style={{ color: "oklch(0.97 0.012 110)" }}
                   >
                     {s.highlight}.
                   </p>
@@ -99,12 +99,12 @@ export function OliveWave() {
           <Reveal delay={0.2}>
             <p
               className="mt-14 text-[28px] sm:text-[36px] lg:text-[44px] font-bold leading-[1.15] tracking-tight"
-              style={{ color: "oklch(0.1 0.01 122)" }}
+              style={{ color: "oklch(0.97 0.012 110)" }}
             >
               Mas tudo ainda{" "}
               <em
                 style={{
-                  color: "oklch(0.95 0.22 115)",
+                  color: "oklch(0.90 0.21 116)",
                   fontStyle: "italic",
                   fontFamily: "var(--font-serif)",
                   fontWeight: 400,
@@ -120,7 +120,7 @@ export function OliveWave() {
           <Reveal delay={0.26}>
             <p
               className="mt-8 text-[13.5px] leading-[1.6] max-w-[560px] mx-auto"
-              style={{ color: "oklch(0.18 0.02 122 / 0.75)" }}
+              style={{ color: "oklch(0.96 0.012 110 / 0.7)" }}
             >
               Sem estrutura, todo crescimento aumenta risco, caos e desgaste. E essa conta sempre
               chega.
