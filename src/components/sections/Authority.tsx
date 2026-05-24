@@ -72,7 +72,7 @@ export function Authority() {
               <Reveal delay={0.15}>
                 <p>
                   A IAplicada nasce da operação real. Aprendemos em gigantes onde caos é
-                  inaceitável — e adaptamos esse padrão pra PMEs que precisam parar de improvisar.
+                  inaceitável e adaptamos esse padrão pra PMEs que precisam parar de improvisar.
                 </p>
               </Reveal>
 

@@ -12,7 +12,11 @@ export function ICP() {
       <div className="container-page">
         <div
           className="relative mx-auto max-w-[1080px] overflow-hidden [clip-path:polygon(24px_0,100%_0,100%_calc(100%-24px),calc(100%-24px)_100%,0_100%,0_24px)] lg:[clip-path:polygon(32px_0,100%_0,100%_calc(100%-32px),calc(100%-32px)_100%,0_100%,0_32px)]"
-          style={{ backgroundColor: "oklch(0.18 0.02 122)" }}
+          style={{
+            background:
+              "linear-gradient(145deg, oklch(0.26 0.035 122) 0%, oklch(0.19 0.028 122) 60%)",
+            boxShadow: "inset 0 0 0 1px oklch(0.75 0.20 122 / 0.22)",
+          }}
         >
           <div className="relative px-8 py-10 lg:px-14 lg:py-14 grid lg:grid-cols-[1fr_auto] gap-10 items-center">
             <div>

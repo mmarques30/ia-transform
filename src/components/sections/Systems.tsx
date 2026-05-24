@@ -85,7 +85,7 @@ export function Systems() {
           </div>
           <Reveal delay={0.1}>
             <p className="text-[16px] text-sage leading-[1.55] max-w-[360px]">
-              Seis sistemas reais já rodando — de arquitetura a indústria. Cada um construído em 4
+              Seis sistemas reais já rodando, de arquitetura a indústria. Cada um construído em 4
               a 12 semanas.
             </p>
           </Reveal>

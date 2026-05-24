@@ -39,7 +39,7 @@ export function Solution() {
               Uma plataforma de gestão e automação feita{" "}
               <span className="text-foreground font-semibold">sob medida para a sua empresa</span>
               , que usa IA para substituir planilhas e tarefas manuais por fluxos automáticos e
-              dashboards que mostram exatamente onde estão os gargalos do seu crescimento — sem
+              dashboards que mostram exatamente onde estão os gargalos do seu crescimento, sem
               depender de time de TI.
             </p>
           </Reveal>
