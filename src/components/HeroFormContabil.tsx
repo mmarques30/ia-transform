@@ -158,7 +158,6 @@ export function HeroForm({
 
       const fields = {
         firstname: String(fd.get("firstname") ?? "").trim(),
-        email: String(fd.get("email") ?? "").trim(),
         phone: String(fd.get("phone") ?? "").trim(),
         company: String(fd.get("company") ?? "").trim(),
         colaboradores: String(fd.get("colaboradores") ?? "").trim(),
@@ -321,24 +320,12 @@ Conte sobre o seu escritório
               type="text"
               required
               autoComplete="name"
-              placeholder="João da Silva"
+              placeholder="Seu nome completo"
               className="form-input"
             />
           </Field>
 
-          <Field id="email" label="E-mail" required>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              required
-              autoComplete="email"
-              placeholder="voce@email.com"
-              className="form-input"
-            />
-          </Field>
-
-          <Field id="phone" label="WhatsApp com DDD" required>
+          <Field id="phone" label="Telefone com DDD" required>
             <input
               id="phone"
               name="phone"
@@ -350,19 +337,19 @@ Conte sobre o seu escritório
             />
           </Field>
 
-          <Field id="company" label="Nome do escritório" required>
+          <Field id="company" label="Empresa" required>
             <input
               id="company"
               name="company"
               type="text"
               required
               autoComplete="organization"
-              placeholder="Ex: Silva Contabilidade"
+              placeholder="Nome da empresa"
               className="form-input"
             />
           </Field>
 
-          <Field id="colaboradores" label="Colaboradores no escritório" required>
+          <Field id="colaboradores" label="Número de colaboradores" required>
             <select
               id="colaboradores"
               name="colaboradores"
@@ -371,7 +358,7 @@ Conte sobre o seu escritório
               className="form-input"
             >
               <option value="" disabled>
-                Selecione
+                Número de empregados ativos
               </option>
               {COLABORADORES.map((c) => (
                 <option key={c} value={c}>
@@ -381,7 +368,7 @@ Conte sobre o seu escritório
             </select>
           </Field>
 
-          <Field id="faixa_de_faturamento" label="Faturamento anual do escritório" required>
+          <Field id="faixa_de_faturamento" label="Faturamento anual da empresa" required>
             <select
               id="faixa_de_faturamento"
               name="faixa_de_faturamento"
@@ -390,7 +377,7 @@ Conte sobre o seu escritório
               className="form-input"
             >
               <option value="" disabled>
-                Selecione
+                Faturamento anual do escritório
               </option>
               {FAIXAS.map((f) => (
                 <option key={f} value={f}>
@@ -426,31 +413,16 @@ Conte sobre o seu escritório
                 "0 1px 0 0 oklch(1 0 0 / 0.12) inset, 0 14px 32px -10px oklch(0 0 0 / 0.5)",
             }}
           >
-            {loading ? "Enviando..." : "SOLICITAR DIAGNÓSTICO"}
+            {loading ? "Enviando..." : "ENVIAR"}
             {!loading && <ArrowRight className="h-4 w-4" strokeWidth={2.5} />}
           </button>
 
           <p
-            className="pt-2 text-[12.5px] text-center leading-relaxed"
-            style={{ color: "oklch(0.45 0.015 115)" }}
-          >
-            Empresa menor?{" "}
-            <a
-              href="https://academy.iaplicada.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-semibold underline underline-offset-2 hover:no-underline"
-              style={{ color: "var(--color-primary)" }}
-            >
-              Conheça a Mentoria 1:1 IAplicada
-            </a>
-          </p>
-
-          <p
-            className="pt-1 text-[11.5px] text-center leading-relaxed"
+            className="pt-2 text-[11.5px] text-center leading-relaxed"
             style={{ color: "oklch(0.55 0.015 115)" }}
           >
-            Ao enviar, você autoriza contato por WhatsApp e email.
+            Ao enviar, você concorda em receber comunicações da IAplicada por WhatsApp e email.
+            Pode cancelar a qualquer momento.
           </p>
         </form>
       </div>
