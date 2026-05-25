@@ -421,7 +421,6 @@ Conte sobre o seu escritório
             style={{ color: "oklch(0.55 0.015 115)" }}
           >
             Ao enviar, você concorda em receber comunicações da IAplicada por WhatsApp e email.
-            Pode cancelar a qualquer momento.
           </p>
         </form>
       </div>
