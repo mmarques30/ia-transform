@@ -38,11 +38,11 @@ const COLABORADORES = [
 
 /** Faixa de faturamento anual — sincronizado com o form business-contabil. */
 const FAIXAS = [
-  "Menos de R$ 1 milhão",
-  "Entre 1MM e 5MM",
-  "Entre 5MM e 10MM",
-  "Entre 10MM e 50MM",
-  "Acima de 50MM",
+  "menos de R$ 1 milhão",
+  "Entre R$ 1MM e R$ 5MM",
+  "Entre R$ 5MM e R$ 10MM",
+  "Entre R$ 10MM e R$ 50MM",
+  "Acima de R$ 50MM",
 ];
 
 /**
@@ -159,8 +159,8 @@ export function HeroForm({
         firstname: String(fd.get("firstname") ?? "").trim(),
         phone: String(fd.get("phone") ?? "").trim(),
         company: String(fd.get("company") ?? "").trim(),
-        colaboradores: String(fd.get("colaboradores") ?? "").trim(),
-        faixa_de_faturamento: String(fd.get("faixa_de_faturamento") ?? "").trim(),
+        numero_de_colaboradores: String(fd.get("numero_de_colaboradores") ?? "").trim(),
+        faixa_de_faturamento_anual: String(fd.get("faixa_de_faturamento_anual") ?? "").trim(),
       };
 
       const payload = {
@@ -348,10 +348,10 @@ Conte sobre o seu escritório
             />
           </Field>
 
-          <Field id="colaboradores" label="Número de colaboradores" required>
+          <Field id="numero_de_colaboradores" label="Número de colaboradores" required>
             <select
-              id="colaboradores"
-              name="colaboradores"
+              id="numero_de_colaboradores"
+              name="numero_de_colaboradores"
               required
               defaultValue=""
               className="form-input"
@@ -367,10 +367,10 @@ Conte sobre o seu escritório
             </select>
           </Field>
 
-          <Field id="faixa_de_faturamento" label="Faturamento anual da empresa" required>
+          <Field id="faixa_de_faturamento_anual" label="Faturamento anual da empresa" required>
             <select
-              id="faixa_de_faturamento"
-              name="faixa_de_faturamento"
+              id="faixa_de_faturamento_anual"
+              name="faixa_de_faturamento_anual"
               required
               defaultValue=""
               className="form-input"
