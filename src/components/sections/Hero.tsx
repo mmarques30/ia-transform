@@ -1,7 +1,5 @@
-import { useEffect, useRef } from "react";
 import { Reveal } from "@/components/Reveal";
 import { HeroForm } from "@/components/HeroForm";
-import { gsap, ScrollTrigger, SplitText } from "@/lib/motion";
 
 interface HeroProps {
   formSlug?: string;
@@ -9,37 +7,6 @@ interface HeroProps {
 }
 
 export function Hero({ formSlug, thankYouPath }: HeroProps = {}) {
-  const headingRef = useRef<HTMLHeadingElement>(null);
-
-  useEffect(() => {
-    if (!headingRef.current) return;
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduced) return;
-
-    const split = new SplitText(headingRef.current, { type: "chars,words" });
-    gsap.from(split.chars, {
-      opacity: 0,
-      rotateX: -70,
-      y: 18,
-      duration: 0.7,
-      stagger: { each: 0.022, from: "start" },
-      ease: "power3.out",
-      delay: 0.2,
-      scrollTrigger: {
-        trigger: headingRef.current,
-        start: "top 90%",
-        once: true,
-      },
-    });
-
-    return () => {
-      split.revert();
-      ScrollTrigger.getAll().forEach((t) => {
-        if (t.trigger === headingRef.current) t.kill();
-      });
-    };
-  }, []);
-
   return (
     <section
       id="top"
@@ -97,11 +64,7 @@ export function Hero({ formSlug, thankYouPath }: HeroProps = {}) {
                 </span>
               </Reveal>
 
-              <h1
-                ref={headingRef}
-                className="h-mix mt-7 text-[42px] sm:text-[54px] lg:text-[64px] text-foreground"
-                style={{ perspective: "800px" }}
-              >
+              <h1 className="h-mix mt-7 text-[42px] sm:text-[54px] lg:text-[64px] text-foreground">
                 Sua empresa
                 <br />
                 saindo da
