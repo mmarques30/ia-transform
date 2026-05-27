@@ -72,14 +72,14 @@ export function Problem() {
         0,
       );
 
-      tl.to(subtitleRef.current, { opacity: 1, y: 0, duration: 0.3 }, 0.45);
+      tl.to(subtitleRef.current, { opacity: 1, y: 0, duration: 0.3 }, 0.3);
 
       const cards = cardsRef.current?.querySelectorAll(".problem-card") || [];
       cards.forEach((card, i) => {
         tl.to(
           card,
           { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" },
-          0.55 + i * 0.22,
+          0.42 + i * 0.12,
         );
       });
 
@@ -89,7 +89,7 @@ export function Problem() {
         0,
       );
 
-      tl.to(symptomRef.current, { opacity: 1, y: 0, duration: 0.3 }, 1.5);
+      tl.to(symptomRef.current, { opacity: 1, y: 0, duration: 0.3 }, 0.95);
     }, sectionRef);
 
     return () => {
@@ -99,7 +99,7 @@ export function Problem() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative" style={{ minHeight: "300vh" }}>
+    <section ref={sectionRef} className="relative" style={{ minHeight: "200vh" }}>
       <div className="section-veil sticky top-0 h-screen w-full overflow-hidden flex items-center">
         <svg
           aria-hidden
