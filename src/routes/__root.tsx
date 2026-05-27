@@ -6,6 +6,9 @@ import { initLenis, destroyLenis } from "../lib/motion";
 import { BrandBackground } from "../components/BrandBackground";
 
 const CLARITY_PROJECT_ID = "wpgxq27fhi";
+// Vertical contábil (/contabil e /contabil-thank-you) usa um projeto Clarity
+// próprio pra isolar as métricas dessa LP das da LP geral.
+const CLARITY_PROJECT_ID_CONTABIL = "wxsk6a8ej4";
 const META_PIXEL_ID = "619312151238896";
 
 function NotFoundComponent() {
@@ -108,8 +111,13 @@ export const Route = createRootRoute({
       // métricas (acessos do editor, não usuários reais). Sinaliza
       // environment=production só quando o hostname for o domínio real,
       // permitindo filtrar via segmento no dashboard do Clarity.
+      //
+      // O projeto Clarity é escolhido em runtime pelo pathname: rotas da
+      // vertical contábil (/contabil*) sobem pro projeto próprio; o resto
+      // pro projeto geral. Carrega um único tag por página (sem dupla
+      // contagem).
       {
-        children: `(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","${CLARITY_PROJECT_ID}");try{if(window.location&&window.location.hostname==="iaplicada.com"){window.clarity("set","environment","production");}else{window.clarity("set","environment","preview");}}catch(e){}`,
+        children: `(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script",(window.location&&window.location.pathname&&window.location.pathname.indexOf("/contabil")===0)?"${CLARITY_PROJECT_ID_CONTABIL}":"${CLARITY_PROJECT_ID}");try{if(window.location&&window.location.hostname==="iaplicada.com"){window.clarity("set","environment","production");}else{window.clarity("set","environment","preview");}}catch(e){}`,
       },
       // Meta Pixel — conversões / remarketing Facebook/Instagram Ads.
       // Define a função fbq() imediatamente (com fila) e dispara
