@@ -139,7 +139,9 @@ export function BrandBackground() {
     const renderer = new Renderer({
       alpha: false,
       antialias: false,
-      dpr: Math.min(window.devicePixelRatio, 1.5),
+      // DPR 1 — o fundo é difuso, não precisa de retina; corta ~55% dos
+      // pixels por frame (alívio direto de GPU/main-thread → INP).
+      dpr: 1,
     });
     const gl = renderer.gl;
     const canvas = gl.canvas as HTMLCanvasElement;
@@ -189,27 +191,58 @@ export function BrandBackground() {
     let mouseY = 0.5;
     let scroll = 0;
     const start = performance.now();
+    let last = 0;
+    const FRAME_MS = 1000 / 30; // throttle ~30fps (fundo lento, imperceptível)
 
-    const loop = () => {
-      const elapsed = (performance.now() - start) / 1000;
-      /* Easing bem lento pra um movimento delicado (mouse menos reativo) */
-      mouseX += (targetMouseX - mouseX) * 0.018;
-      mouseY += (targetMouseY - mouseY) * 0.018;
-      scroll += (targetScroll - scroll) * 0.06;
-
-      program.uniforms.uTime.value = reduced ? 0 : elapsed;
+    const renderFrame = (now: number) => {
+      mouseX += (targetMouseX - mouseX) * 0.036;
+      mouseY += (targetMouseY - mouseY) * 0.036;
+      scroll += (targetScroll - scroll) * 0.12;
+      program.uniforms.uTime.value = (now - start) / 1000;
       program.uniforms.uMouse.value = [mouseX, mouseY];
       program.uniforms.uScroll.value = scroll;
       renderer.render({ scene: mesh });
-      raf = requestAnimationFrame(loop);
     };
-    loop();
+
+    /* prefers-reduced-motion: pinta um frame estático e não inicia o loop
+       — zero trabalho contínuo na main thread. */
+    if (reduced) {
+      renderFrame(performance.now());
+    } else {
+      const loop = (now: number) => {
+        raf = requestAnimationFrame(loop);
+        if (now - last < FRAME_MS) return; // cap a 30fps
+        last = now;
+        renderFrame(now);
+      };
+      raf = requestAnimationFrame(loop);
+    }
+
+    /* Pausa o loop quando a aba está em background (não desperdiça frames). */
+    const onVisibility = () => {
+      if (reduced) return;
+      if (document.hidden) {
+        cancelAnimationFrame(raf);
+        raf = 0;
+      } else if (!raf) {
+        last = 0;
+        const loop = (now: number) => {
+          raf = requestAnimationFrame(loop);
+          if (now - last < FRAME_MS) return;
+          last = now;
+          renderFrame(now);
+        };
+        raf = requestAnimationFrame(loop);
+      }
+    };
+    document.addEventListener("visibilitychange", onVisibility);
 
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", resize);
       window.removeEventListener("mousemove", onMouse);
       window.removeEventListener("scroll", onScroll);
+      document.removeEventListener("visibilitychange", onVisibility);
       canvas.remove();
     };
   }, []);
