@@ -601,61 +601,54 @@ export function Calculadora() {
   return (
     <section
       id="calculadora"
-      className="section-veil py-[80px] lg:py-[120px] relative overflow-hidden scroll-mt-24"
+      className="relative py-[80px] lg:py-[140px] overflow-hidden scroll-mt-24"
+      style={{ backgroundColor: "oklch(0.16 0.022 70)" }}
     >
       <div className="container-page relative">
         {/* Header da seção — só no estado inicial */}
         {!iniciada && (
-          <div className="max-w-[820px] mx-auto text-center">
+          <div className="max-w-[860px] mx-auto text-center">
             <Reveal>
-              <span className="label-chip">
-                <span className="dot" />
-                Calculadora
-              </span>
-            </Reveal>
-            <Reveal delay={0.05}>
-              <h2 className="h-mix mt-6 text-[32px] sm:text-[40px] lg:text-[52px] leading-[1.1] text-foreground">
-                Quanto seu escritório <em>ganharia</em> com IA?
-              </h2>
-            </Reveal>
-            <Reveal delay={0.1}>
-              <p className="mt-6 text-[15.5px] lg:text-[17px] text-sage leading-[1.6] max-w-[620px] mx-auto">
-                4 etapas, 3 minutos. Resultado completo na tela com horas liberadas, economia
-                mensal e por onde começar.
+              <p className="text-[11.5px] uppercase tracking-[0.22em] font-semibold text-muted-foreground">
+                O diagnóstico · gratuito · 3 minutos
               </p>
             </Reveal>
+            <Reveal delay={0.05}>
+              <h2 className="h-mix mt-7 lg:mt-9 text-[40px] sm:text-[56px] lg:text-[72px] leading-[0.98] tracking-[-0.025em] text-foreground">
+                Conta aberta. <em>3 minutos.</em>
+              </h2>
+            </Reveal>
 
-            {/* Strip "O que você recebe" — Seção 4 do brief original
-                trazida de volta como banda integrada (não vira dobra). */}
-            <Reveal delay={0.14}>
-              <div className="mt-10 max-w-[760px] mx-auto">
-                <p className="text-[10.5px] uppercase tracking-[0.22em] font-semibold text-muted-foreground">
-                  Você sai daqui com
-                </p>
-                <div className="mt-3 grid grid-cols-2 md:grid-cols-4 gap-2">
-                  {[
-                    "Cenário atual quantificado",
-                    "Cenário com IA, tarefa a tarefa",
-                    "Projeção em 12 meses",
-                    "3 recomendações priorizadas",
-                  ].map((entrega) => (
-                    <div
-                      key={entrega}
-                      className="text-left rounded-xl px-3.5 py-3 text-[12.5px] text-foreground/85 leading-[1.3]"
-                      style={{
-                        backgroundColor: "oklch(0.18 0.025 122 / 0.4)",
-                        border: "1px solid oklch(0.55 0.06 122 / 0.3)",
-                      }}
-                    >
-                      {entrega}
-                    </div>
-                  ))}
-                </div>
+            {/* 3-step horizontal — substitui o Process antigo */}
+            <Reveal delay={0.1}>
+              <div className="mt-10 lg:mt-12 flex flex-wrap items-center justify-center gap-x-4 lg:gap-x-7 gap-y-2 text-[12.5px] lg:text-[14px] text-foreground/80">
+                {["Responda 8 perguntas", "Veja na hora", "Receba trilha no WhatsApp"].map(
+                  (step, i) => (
+                    <span key={step} className="inline-flex items-center gap-3">
+                      <span
+                        className="num-display text-[16px] lg:text-[18px]"
+                        style={{ color: "var(--color-primary)" }}
+                      >
+                        0{i + 1}
+                      </span>
+                      <span className="tracking-tight">{step}</span>
+                      {i < 2 && (
+                        <span
+                          aria-hidden
+                          className="hidden sm:inline mx-2 opacity-40"
+                          style={{ color: "var(--color-primary)" }}
+                        >
+                          →
+                        </span>
+                      )}
+                    </span>
+                  ),
+                )}
               </div>
             </Reveal>
 
             <Reveal delay={0.18}>
-              <div className="mt-9 flex justify-center">
+              <div className="mt-12 flex justify-center">
                 <button type="button" onClick={() => setIniciada(true)} className="cta-primary">
                   Começar diagnóstico
                   <span className="arrow">

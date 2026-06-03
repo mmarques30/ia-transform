@@ -1,33 +1,35 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Header } from "@/components/sections/Header";
 import { Hero } from "@/components/sections/contabilcalculo/Hero";
+import { DorResposta } from "@/components/sections/contabilcalculo/DorResposta";
 import { Calculadora } from "@/components/sections/contabilcalculo/Calculadora";
-import { Process } from "@/components/sections/contabilcalculo/Process";
 import { AuthorityCompact } from "@/components/sections/contabilcalculo/AuthorityCompact";
 import { FAQ } from "@/components/sections/contabilcalculo/FAQ";
 import { CTAFinal } from "@/components/sections/contabilcalculo/CTAFinal";
 import { Footer } from "@/components/sections/Footer";
 
 /**
- * /contabilcalculo — LP da calculadora de IA pra contábil.
+ * /contabilcalculo — versão one-page editorial.
  *
- * Estrutura focada na ferramenta interativa, com fluxo encadeado em
- * vez de dobras isoladas:
- *   Hero (preview do resultado)
- *   Process (3 passos curtos — set de expectativa antes da calc)
- *   Calculadora (ferramenta + strip "o que você recebe")
- *   AuthorityCompact (ecossistema + 3 cases contábeis com thumbnails)
- *   CTAFinal (empurrão de conversão)
- *   FAQ (5 perguntas — última camada de objeção)
+ * Estrutura como spread de magazine, sem dobras isoladas:
+ *   1. Hero — manifesto + dashboard real com callouts dos resultados
+ *   2. DorResposta — 2-col editorial (sequência narrativa + virada)
+ *   3. Calculadora — heart interativo (warm bg + cards charcoal por
+ *      dentro, cria "dark insert" estilo magazine)
+ *   4. AuthorityCompact — typography hero dos 3 clientes + assinatura Mari
+ *   5. FAQ — Q&A editorial 2-col, tudo aberto, sem accordion
+ *   6. CTAFinal — manifesto curto de fechamento
  *
- * Removido vs versão inicial: Problem, Solution, ParaQuem (drop —
- * conteúdo absorvido pelo Hero e pela própria calculadora).
+ * Background warm sepia-dark (oklch 0.14–0.16, hue 70) único pra essa
+ * LP — diferencia visualmente das outras LPs contábeis (que usam
+ * charcoal cool, hue 122). Continua dark, só ganha tom mais editorial.
  *
- * Form submission: a calculadora posta pro form-submit com slug
- * "contabil-calculadora" (form dedicado, exige só firstname/email/phone
- * — o resto vai pra raw_data). Lead é distinguível no CRM pelo
- * page_url=/contabilcalculo + utm_term=contabil-calculo.
+ * Form submission: calculadora posta no form-submit (slug
+ * business-contabil) com fields da calc + scores no raw_data.
  */
+
+const WARM_PAGE_BG = "oklch(0.16 0.022 70)";
+
 export const Route = createFileRoute("/contabilcalculo")({
   head: () => ({
     meta: [
@@ -51,7 +53,7 @@ export const Route = createFileRoute("/contabilcalculo")({
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "theme-color", content: "#FAFAF7" },
+      { name: "theme-color", content: "#1c1812" },
       { name: "robots", content: "noindex, nofollow" },
     ],
   }),
@@ -60,14 +62,17 @@ export const Route = createFileRoute("/contabilcalculo")({
 
 function ContabilCalculoLanding() {
   return (
-    <main className="min-h-screen text-foreground">
+    <main
+      className="min-h-screen text-foreground"
+      style={{ backgroundColor: WARM_PAGE_BG }}
+    >
       <Header homePath="/contabilcalculo" />
       <Hero />
-      <Process />
+      <DorResposta />
       <Calculadora />
       <AuthorityCompact />
-      <CTAFinal />
       <FAQ />
+      <CTAFinal />
       <Footer />
     </main>
   );
