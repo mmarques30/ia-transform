@@ -30,7 +30,17 @@ import { FORM_ENDPOINT, FORM_HEADERS, captureTrafficContext } from "@/lib/formSu
  * CONSTANTES
  * ────────────────────────────────────────────────────────── */
 
-const FORM_SLUG = "contabil-calculadora";
+/**
+ * Slug do form configurado no CRM com mapeamentos automáticos:
+ *   colaboradores → contacts.numero_de_liderados
+ *   tier → contacts.lead_tier
+ *   lead_score → contacts.lead_score
+ *   economia_mensal → contacts.economia_mensal
+ *   gargalo_principal → contacts.gargalo_principal
+ * Demais campos (horas_*, fit_score, pain_score, etc) ficam em
+ * form_submissions.raw_data acessíveis via SQL.
+ */
+const FORM_SLUG = "business-contabil";
 
 /** % de redução por tarefa baseado nos benchmarks da IAplicada. */
 const TASK_REDUCTION: Record<TaskKey, number> = {
