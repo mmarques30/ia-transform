@@ -28,15 +28,8 @@ export function ParaQuem() {
     >
       <div className="container-page relative">
         <div className="max-w-[860px] mx-auto text-center">
-          <Reveal>
-            <span className="label-chip">
-              <span className="dot" />
-              ICP
-            </span>
-          </Reveal>
-
           <Reveal delay={0.05}>
-            <h2 className="h-mix mt-6 text-[32px] sm:text-[40px] lg:text-[52px] text-foreground">
+            <h2 className="h-mix text-[32px] sm:text-[40px] lg:text-[52px] text-foreground">
               É <em>pra você</em> se:
             </h2>
           </Reveal>
