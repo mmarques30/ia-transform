@@ -15,9 +15,9 @@ import { Footer } from "@/components/sections/Footer";
  *   Hero (com mockup visual do resultado)
  *   Calculadora (4 etapas + resultado)
  *   Process (3 passos com flow visual)
- *   AuthorityCompact (foto Mari + 1 parágrafo + cases)
- *   FAQ (4 perguntas essenciais)
- *   CTAFinal
+ *   AuthorityCompact (Mari + ecossistema + 3 cases contábeis)
+ *   CTAFinal (último empurrão de conversão)
+ *   FAQ (4 perguntas — última dobra pra quem ainda tem dúvida)
  *
  * Removido vs versão inicial: Problem, Solution, ParaQuem (drop —
  * conteúdo absorvido pelo Hero e pela própria calculadora).
@@ -65,8 +65,8 @@ function ContabilCalculoLanding() {
       <Calculadora />
       <Process />
       <AuthorityCompact />
-      <FAQ />
       <CTAFinal />
+      <FAQ />
       <Footer />
     </main>
   );
