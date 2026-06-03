@@ -46,6 +46,18 @@ const FAIXAS = [
 ];
 
 /**
+ * Microcopy escalonada no botão durante o submit. A Edge Function gasta
+ * ~3-5s rodando ~14 queries (form, contato, deal, qualify, etc) — o texto
+ * em estágios dá percepção de progresso e tira a sensação de travado.
+ */
+const LOADING_STAGES: Array<{ at: number; text: string }> = [
+  { at: 0, text: "Enviando..." },
+  { at: 600, text: "Validando seus dados..." },
+  { at: 1800, text: "Criando seu acesso..." },
+  { at: 3200, text: "Quase lá..." },
+];
+
+/**
  * HeroFormContabil — mesma técnica do HeroForm da geral (campos nativos
  * React, POST pra Edge Function form-submit, tracking Clarity + Meta
  * Pixel, redirect), mas com os campos da vertical contábil. Conserva o
@@ -57,7 +69,29 @@ export function HeroForm({
 }: HeroFormProps = {}) {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [loadingMsg, setLoadingMsg] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const loadingTimers = useRef<number[]>([]);
+
+  function clearLoadingStages() {
+    for (const t of loadingTimers.current) clearTimeout(t);
+    loadingTimers.current = [];
+  }
+  function startLoadingStages() {
+    clearLoadingStages();
+    for (const stage of LOADING_STAGES) {
+      if (stage.at === 0) {
+        setLoadingMsg(stage.text);
+      } else {
+        loadingTimers.current.push(
+          window.setTimeout(() => setLoadingMsg(stage.text), stage.at),
+        );
+      }
+    }
+  }
+
+  /** Cleanup dos timers no unmount pra não vazar setTimeout. */
+  useEffect(() => clearLoadingStages, []);
 
   /**
    * Refs de tracking — fora do state pra evitar re-renders. Cada flag
@@ -137,6 +171,7 @@ export function HeroForm({
     if (loading) return;
     setError(null);
     setLoading(true);
+    startLoadingStages();
 
     /**
      * eventID — único por submissão. Usado pra deduplicação do evento
@@ -238,6 +273,7 @@ export function HeroForm({
       trackClarity("set", "lead_event_id", eventID);
       submitted.current = true;
 
+      clearLoadingStages();
       console.log("[form] redirecting");
       navigate({ to: thankYouPath, search: { eid: eventID } });
     } catch (err) {
@@ -250,6 +286,8 @@ export function HeroForm({
       trackClarity("event", "form_submit_error");
       trackClarity("set", "form_submit_error_message", message);
 
+      clearLoadingStages();
+      setLoadingMsg("");
       setError(message);
       setLoading(false);
     }
@@ -421,7 +459,7 @@ Conte sobre o seu escritório
                 "0 1px 0 0 oklch(1 0 0 / 0.12) inset, 0 14px 32px -10px oklch(0 0 0 / 0.5)",
             }}
           >
-            {loading ? "Enviando..." : "ENVIAR"}
+            {loading ? loadingMsg || "Enviando..." : "ENVIAR"}
             {!loading && <ArrowRight className="h-4 w-4" strokeWidth={2.5} />}
           </button>
 
