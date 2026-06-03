@@ -46,7 +46,7 @@ export const Route = createFileRoute("/contabil")({
 function ContabilLanding() {
   return (
     <main className="min-h-screen text-foreground">
-      <Header />
+      <Header homePath="/contabil" />
       <Hero />
       <Problem />
       <Solution />

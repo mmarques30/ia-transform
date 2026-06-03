@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import appCss from "../styles.css?url";
 import { initLenis, destroyLenis } from "../lib/motion";
 import { BrandBackground } from "../components/BrandBackground";
+import { isInAppBrowser } from "../lib/useEnv";
 
 const CLARITY_PROJECT_ID = "wpgxq27fhi";
 // Vertical contábil (/contabil e /contabil-thank-you) usa um projeto Clarity
@@ -160,6 +161,10 @@ function RootShell({ children }: { children: React.ReactNode }) {
 
 function RootComponent() {
   useEffect(() => {
+    // Lenis adiciona inércia ao scroll. Bom no desktop, mas no WebView
+    // do IG/FB ele briga com o gesto nativo de swipe-back e deixa o
+    // scroll "borrachudo". Pulamos init nesse contexto.
+    if (isInAppBrowser()) return;
     initLenis();
     return () => destroyLenis();
   }, []);
