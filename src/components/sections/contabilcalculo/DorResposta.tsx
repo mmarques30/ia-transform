@@ -6,8 +6,9 @@ import { Reveal } from "@/components/Reveal";
  * "4 clientes / 2 auxiliares / margem some"). À direita, a resposta
  * em parágrafo editorial. Sem cards, sem ícones — pura tipografia.
  */
-const WARM_BG = "oklch(0.14 0.02 70)";
-const WARM_BORDER = "oklch(0.32 0.025 70 / 0.5)";
+// Bg brand charcoal (hue 122, não warm sepia) pra ficar coerente com o resto.
+const SECTION_BG = "oklch(0.13 0.018 122)";
+const SECTION_BORDER = "oklch(0.3 0.04 122 / 0.5)";
 
 const DOR = [
   "Você fecha 4 clientes novos.",
@@ -19,7 +20,7 @@ export function DorResposta() {
   return (
     <section
       className="relative py-[80px] lg:py-[140px]"
-      style={{ backgroundColor: WARM_BG }}
+      style={{ backgroundColor: SECTION_BG }}
     >
       <div className="container-page relative">
         <div className="grid lg:grid-cols-[1fr_1.1fr] gap-12 lg:gap-20 items-start">
@@ -57,7 +58,7 @@ export function DorResposta() {
 
               <p
                 className="mt-12 lg:mt-14 pt-6 text-[16px] lg:text-[18px] text-foreground/85 leading-[1.55] max-w-[420px]"
-                style={{ borderTop: `1px solid ${WARM_BORDER}` }}
+                style={{ borderTop: `1px solid ${SECTION_BORDER}` }}
               >
                 O problema não é vender mais. É que sua operação{" "}
                 <span className="text-foreground font-semibold">

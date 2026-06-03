@@ -6,8 +6,8 @@ import { FOUNDER } from "@/config/brand";
  * 3 nomes de clientes como hero typographic (serif italic gigante)
  * numerados em sequência. Assinatura discreta da fundadora no rodapé.
  */
-const WARM_BG = "oklch(0.16 0.022 70)";
-const WARM_BORDER = "oklch(0.32 0.025 70 / 0.5)";
+const SECTION_BG = "oklch(0.13 0.018 122)";
+const SECTION_BORDER = "oklch(0.3 0.04 122 / 0.5)";
 
 const CASES = [
   {
@@ -32,7 +32,7 @@ export function AuthorityCompact() {
     <section
       id="quem-entrega"
       className="relative py-[80px] lg:py-[140px]"
-      style={{ backgroundColor: WARM_BG }}
+      style={{ backgroundColor: SECTION_BG }}
     >
       <div className="container-page relative">
         {/* Topo — eyebrow + título editorial */}
@@ -93,7 +93,7 @@ export function AuthorityCompact() {
         <Reveal delay={0.4}>
           <div
             className="mt-20 lg:mt-28 pt-7 flex items-center gap-5"
-            style={{ borderTop: `1px solid ${WARM_BORDER}` }}
+            style={{ borderTop: `1px solid ${SECTION_BORDER}` }}
           >
             <img
               src={FOUNDER.photoSrc}

@@ -602,7 +602,7 @@ export function Calculadora() {
     <section
       id="calculadora"
       className="relative py-[80px] lg:py-[140px] overflow-hidden scroll-mt-24"
-      style={{ backgroundColor: "oklch(0.16 0.022 70)" }}
+      style={{ backgroundColor: "oklch(0.13 0.018 122)" }}
     >
       <div className="container-page relative">
         {/* Header da seção — só no estado inicial */}

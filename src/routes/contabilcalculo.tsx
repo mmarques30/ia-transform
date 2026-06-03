@@ -28,7 +28,8 @@ import { Footer } from "@/components/sections/Footer";
  * business-contabil) com fields da calc + scores no raw_data.
  */
 
-const WARM_PAGE_BG = "oklch(0.16 0.022 70)";
+// Brand charcoal (hue 122), não warm sepia. Coerente com as outras LPs.
+const PAGE_BG = "oklch(0.14 0.018 122)";
 
 export const Route = createFileRoute("/contabilcalculo")({
   head: () => ({
@@ -53,7 +54,7 @@ export const Route = createFileRoute("/contabilcalculo")({
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "theme-color", content: "#1c1812" },
+      { name: "theme-color", content: "#FAFAF7" },
       { name: "robots", content: "noindex, nofollow" },
     ],
   }),
@@ -64,7 +65,7 @@ function ContabilCalculoLanding() {
   return (
     <main
       className="min-h-screen text-foreground"
-      style={{ backgroundColor: WARM_PAGE_BG }}
+      style={{ backgroundColor: PAGE_BG }}
     >
       <Header homePath="/contabilcalculo" />
       <Hero />

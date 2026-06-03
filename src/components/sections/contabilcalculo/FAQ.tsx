@@ -5,8 +5,8 @@ import { Reveal } from "@/components/Reveal";
  * accordion. Lista enxuta de 5 perguntas focadas no contexto da
  * calculadora. Tipografia editorial pura, sem moldura de card.
  */
-const WARM_BG = "oklch(0.14 0.02 70)";
-const WARM_BORDER = "oklch(0.32 0.025 70 / 0.4)";
+const SECTION_BG = "oklch(0.13 0.018 122)";
+const SECTION_BORDER = "oklch(0.3 0.04 122 / 0.4)";
 
 const FAQS = [
   {
@@ -36,7 +36,7 @@ export function FAQ() {
     <section
       id="faq"
       className="relative py-[80px] lg:py-[140px]"
-      style={{ backgroundColor: WARM_BG }}
+      style={{ backgroundColor: SECTION_BG }}
     >
       <div className="container-page relative max-w-[1080px]">
         <Reveal>
@@ -58,7 +58,7 @@ export function FAQ() {
                 className={`grid lg:grid-cols-[1fr_1.4fr] gap-4 lg:gap-12 py-7 lg:py-9 ${
                   i === 0 ? "" : ""
                 }`}
-                style={{ borderTop: i === 0 ? "none" : `1px solid ${WARM_BORDER}` }}
+                style={{ borderTop: i === 0 ? "none" : `1px solid ${SECTION_BORDER}` }}
               >
                 <p
                   className="text-[19px] sm:text-[22px] lg:text-[26px] leading-[1.15] text-foreground tracking-tight"
