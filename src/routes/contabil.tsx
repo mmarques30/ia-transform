@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Header } from "@/components/sections/Header";
 import { Hero } from "@/components/sections/contabil/Hero";
-import { ICP } from "@/components/sections/contabil/ICP";
 import { Problem } from "@/components/sections/contabil/Problem";
 import { Solution } from "@/components/sections/contabil/Solution";
 import { Systems } from "@/components/sections/contabil/Systems";
@@ -56,7 +55,6 @@ function ContabilLanding() {
       <Process />
       <Impact />
       <Authority />
-      <ICP />
       <Comparison />
       <FAQ />
       <CTAFinal />
