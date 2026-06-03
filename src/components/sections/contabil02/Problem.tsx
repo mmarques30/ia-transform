@@ -1,221 +1,98 @@
-import { useEffect, useRef } from "react";
-import { gsap, ScrollTrigger, SplitText } from "@/lib/motion";
-import { TiltCard } from "@/components/TiltCard";
+import { Reveal } from "@/components/Reveal";
 
-const PROBLEMS = [
+/**
+ * Problema / Dor — sequência narrativa que dá continuidade ao slide 2 do
+ * criativo ("Você fecha 4 clientes novos. Contrata 2 auxiliares. A margem
+ * some. Conhecido?"). Reusa a mecânica do anúncio pra que quem veio do
+ * tráfego pago sinta que a LP confirma o diagnóstico em vez de recomeçar
+ * do zero.
+ *
+ * Estrutura: 3 statements numerados em sequência + fecho empático. Mobile
+ * empilha vertical; desktop vira linha com connectors entre as etapas.
+ */
+const SEQUENCE = [
   {
     n: "01",
-    title: "Contratar mais um júnior pra dar conta do volume",
-    text: "Mais gente na mesma rotina manual só adia o problema. O custo sobe, o gargalo continua.",
+    text: "Você fecha 4 clientes novos.",
   },
   {
     n: "02",
-    title: "Software contábil que obriga o escritório a se adaptar",
-    text: "Domínio, Alterdata, Omie. Bons sistemas, mas o time ainda concilia, classifica e apura na mão.",
+    text: "Contrata 2 auxiliares.",
   },
   {
     n: "03",
-    title: "Fechamento mensal que trava o time todo mês",
-    text: "Dia 25 chega e todo mundo fica até as 22h. Mês que vem, de novo. E de novo.",
-  },
-  {
-    n: "04",
-    title: "Curso de IA que ninguém aplica no dia a dia",
-    text: "Aula genérica, certificado bonito, zero rotina automatizada em produção. Na segunda, nada mudou.",
+    text: "A margem some.",
   },
 ];
 
 export function Problem() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const headingRef = useRef<HTMLHeadingElement>(null);
-  const subtitleRef = useRef<HTMLParagraphElement>(null);
-  const cardsRef = useRef<HTMLDivElement>(null);
-  const symptomRef = useRef<HTMLParagraphElement>(null);
-  const dialRef = useRef<SVGSVGElement>(null);
-
-  useEffect(() => {
-    if (!sectionRef.current || !headingRef.current) return;
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduced) return;
-    // No mobile a section não usa pin/scrub (ver JSX abaixo) — pula a
-    // animação inteira, deixando os elementos visíveis no estado default.
-    // Sem isso o gsap.set(opacity: 0) deixaria tudo invisível pra sempre.
-    if (window.innerWidth < 1024) return;
-
-    const split = new SplitText(headingRef.current, { type: "chars,words" });
-
-    const ctx = gsap.context(() => {
-      gsap.set(split.chars, { opacity: 0, rotateX: -75, y: 16 });
-      gsap.set(subtitleRef.current, { opacity: 0, y: 14 });
-      gsap.set(cardsRef.current?.querySelectorAll(".problem-card") || [], {
-        opacity: 0,
-        y: 60,
-      });
-      gsap.set(symptomRef.current, { opacity: 0, y: 14 });
-      gsap.set(dialRef.current, { rotate: 0, scale: 0.85, opacity: 0.4 });
-
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top top",
-          end: "bottom bottom",
-          scrub: 0.8,
-        },
-      });
-
-      tl.to(
-        split.chars,
-        {
-          opacity: 1,
-          rotateX: 0,
-          y: 0,
-          duration: 0.6,
-          stagger: { each: 0.02, from: "start" },
-          ease: "power3.out",
-        },
-        0,
-      );
-
-      tl.to(subtitleRef.current, { opacity: 1, y: 0, duration: 0.3 }, 0.3);
-
-      const cards = cardsRef.current?.querySelectorAll(".problem-card") || [];
-      cards.forEach((card, i) => {
-        tl.to(
-          card,
-          { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" },
-          0.42 + i * 0.12,
-        );
-      });
-
-      tl.to(
-        dialRef.current,
-        { rotate: 360, scale: 1, opacity: 0.7, ease: "none" },
-        0,
-      );
-
-      tl.to(symptomRef.current, { opacity: 1, y: 0, duration: 0.3 }, 0.95);
-    }, sectionRef);
-
-    return () => {
-      split.revert();
-      ctx.revert();
-    };
-  }, []);
-
   return (
-    /* Mobile: section flui naturalmente (sem pin, sem overflow-hidden, sem
-       sticky). O scroll-jacking funciona em desktop mas no mobile cortava
-       cards 3 e 4 (4 cards stacked > 1 viewport). Desktop mantém 200vh
-       de pin spacer + sticky inner pro scrub do GSAP rolar a animação. */
-    <section ref={sectionRef} className="relative lg:min-h-[200vh]">
-      <div className="section-veil w-full flex items-center py-[80px] lg:py-0 lg:sticky lg:top-0 lg:h-screen lg:overflow-hidden">
-        <svg
-          aria-hidden
-          className="pointer-events-none absolute inset-0 w-full h-full opacity-[0.18]"
-          viewBox="0 0 1440 900"
-          preserveAspectRatio="none"
-        >
-          <defs>
-            <linearGradient id="problem-line" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stopColor="oklch(0.75 0.20 122)" stopOpacity="0" />
-              <stop offset="50%" stopColor="oklch(0.75 0.20 122)" stopOpacity="0.8" />
-              <stop offset="100%" stopColor="oklch(0.75 0.20 122)" stopOpacity="0" />
-            </linearGradient>
-          </defs>
-          <line
-            x1="-100"
-            y1="0"
-            x2="1540"
-            y2="900"
-            stroke="url(#problem-line)"
-            strokeWidth="1"
-          />
-        </svg>
-
-        <svg
-          ref={dialRef}
-          aria-hidden
-          className="hidden lg:block pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[680px] h-[680px]"
-          viewBox="0 0 680 680"
-          style={{ transformOrigin: "center center" }}
-        >
-          <g fill="oklch(0.75 0.20 122)">
-            {Array.from({ length: 60 }).map((_, i) => {
-              const angle = (i / 60) * Math.PI * 2;
-              const cx = 340 + Math.cos(angle) * 320;
-              const cy = 340 + Math.sin(angle) * 320;
-              const r = i % 5 === 0 ? 4 : 1.5;
-              const op = i % 5 === 0 ? 0.9 : 0.3;
-              return <circle key={i} cx={cx} cy={cy} r={r} opacity={op} />;
-            })}
-          </g>
-        </svg>
-
-        <div className="relative z-10 container-page w-full">
-          <div className="text-center max-w-[860px] mx-auto">
+    <section
+      id="problema"
+      className="section-veil relative overflow-hidden py-[80px] lg:py-[140px]"
+    >
+      <div className="container-page relative">
+        <div className="max-w-[860px] mx-auto text-center">
+          <Reveal>
             <span className="label-chip">
               <span className="dot" />O cenário do escritório
             </span>
-            <h2
-              ref={headingRef}
-              className="h-mix mt-6 text-[36px] sm:text-[44px] lg:text-[58px] text-foreground"
-              style={{ perspective: "800px" }}
-            >
-              Seu time já tá no limite.
-              <br />
-              Contratar mais gente <em>não é a resposta.</em>
-            </h2>
-            <p
-              ref={subtitleRef}
-              className="mt-6 text-[17px] text-sage leading-[1.6] max-w-[620px] mx-auto"
-            >
-              O problema não é falta de gente. É rotina manual demais pra quem você já tem.
-            </p>
-          </div>
+          </Reveal>
 
-          <div
-            ref={cardsRef}
-            className="mt-10 lg:mt-14 grid md:grid-cols-2 gap-4 lg:gap-5 max-w-[980px] mx-auto"
-          >
-            {PROBLEMS.map((p) => (
-              <TiltCard
-                key={p.n}
-                className="problem-card tech-card p-6 lg:p-7 relative"
-                maxTilt={6}
-              >
-                <div className="flex items-center gap-3">
+          <Reveal delay={0.05}>
+            <h2 className="h-mix mt-6 text-[36px] sm:text-[44px] lg:text-[58px] text-foreground">
+              A conta que <em>ninguém faz.</em>
+            </h2>
+          </Reveal>
+        </div>
+
+        {/* Sequência — 3 statements em cascata. Cada um tem o número grande
+            em olive como ponto de ancoragem visual. */}
+        <div className="mt-14 lg:mt-20 max-w-[1100px] mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-4">
+            {SEQUENCE.map((step, i) => (
+              <Reveal key={step.n} delay={0.1 + i * 0.08}>
+                <div className="relative flex flex-col items-center text-center px-4 lg:px-6">
                   <span
-                    className="num-display text-[13px] tracking-wider"
+                    className="num-display text-[42px] lg:text-[56px] leading-none"
                     style={{ color: "var(--color-primary)" }}
                   >
-                    {p.n}
+                    {step.n}
                   </span>
-                  <span
-                    className="h-[1px] flex-1"
-                    style={{
-                      background: "linear-gradient(90deg, var(--color-primary), transparent)",
-                    }}
-                  />
+                  <p className="mt-5 text-[20px] lg:text-[24px] font-semibold tracking-tight text-foreground leading-[1.25]">
+                    {step.text}
+                  </p>
+                  {/* Connector → entre statements no desktop */}
+                  {i < SEQUENCE.length - 1 && (
+                    <span
+                      aria-hidden
+                      className="hidden lg:block absolute right-[-18px] top-[20px] text-[22px]"
+                      style={{ color: "oklch(0.55 0.08 125 / 0.5)" }}
+                    >
+                      →
+                    </span>
+                  )}
                 </div>
-                <h3 className="mt-4 text-[16px] lg:text-[18px] font-bold tracking-tight text-foreground leading-[1.3]">
-                  {p.title}
-                </h3>
-                <p className="mt-2 text-[13.5px] text-sage leading-[1.55]">{p.text}</p>
-              </TiltCard>
+              </Reveal>
             ))}
           </div>
-
-          {/* "Sintomas comuns" — escondido no mobile pra evitar parede
-              de texto extra na seção de cards. Desktop mantém. */}
-          <p
-            ref={symptomRef}
-            className="hidden lg:block mt-8 text-center text-[13.5px] text-sage leading-[1.6] max-w-[760px] mx-auto"
-          >
-            <span className="font-semibold text-foreground">Sintomas comuns:</span>{" "}
-            conciliações bancárias manuais, fechamento que atrasa, cliente que não manda documento,
-            apuração que consome o dia, atendimento que engole a gestão.
-          </p>
         </div>
+
+        {/* Fecho empático — recupera a mecânica "Conhecido?" do criativo */}
+        <Reveal delay={0.4}>
+          <div className="mt-14 lg:mt-20 max-w-[760px] mx-auto text-center">
+            <p
+              className="text-[24px] lg:text-[32px] italic text-foreground"
+              style={{ fontFamily: '"Instrument Serif", serif', lineHeight: 1.2 }}
+            >
+              Conhecido?
+            </p>
+            <p className="mt-5 text-[15.5px] lg:text-[17px] text-sage leading-[1.6]">
+              O problema não é vender mais. É que sua operação{" "}
+              <span className="text-foreground font-semibold">não escala sem gente</span>.
+            </p>
+          </div>
+        </Reveal>
       </div>
     </section>
   );
