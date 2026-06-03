@@ -1,6 +1,14 @@
 import { Reveal } from "@/components/Reveal";
-import { HeroForm } from "@/components/HeroFormContabil";
+import { ArrowRight } from "lucide-react";
 
+/**
+ * Hero da /contabilcalculo — CTA leva pra a calculadora (em vez do
+ * formulário tradicional). A copy promete uma resposta em 3 min com
+ * número exato em R$, alinhando com o criativo "quantas horas perde".
+ *
+ * O componente da calculadora vem em PR 2; aqui o CTA aponta pra
+ * #calculadora (anchor placeholder).
+ */
 export function Hero() {
   return (
     <section
@@ -14,7 +22,7 @@ export function Hero() {
       <div className="h-[72px]" aria-hidden />
       <MarqueeStrip />
 
-      <div className="relative pt-[48px] lg:pt-[72px]">
+      <div className="relative pt-[48px] lg:pt-[80px] pb-[40px] lg:pb-[60px]">
         <div
           aria-hidden
           className="pointer-events-none absolute hidden lg:block"
@@ -43,59 +51,45 @@ export function Hero() {
         />
 
         <div className="container-page relative">
-          <div className="grid lg:grid-cols-[1.05fr_1fr] gap-8 lg:gap-16 items-center">
-            <div>
-              <Reveal>
-                <span className="label-chip">
-                  <span className="dot" />
-                  IAplicada · Contábil
-                </span>
-              </Reveal>
+          <div className="max-w-[860px] mx-auto text-center">
+            <Reveal>
+              <span className="label-chip">
+                <span className="dot" />
+                Inteligência artificial para escritório contábil
+              </span>
+            </Reveal>
 
-              {/*
-                h1 mobile reduzido pra que o form fique visível na primeira
-                dobra do WebView (95% do tráfego). De 40px → 32px no mobile;
-                desktop mantido em 58px.
-              */}
-              <h1 className="h-mix mt-6 lg:mt-7 text-[32px] sm:text-[44px] lg:text-[58px] leading-[1.05] text-foreground">
-                Contratar mais um <em>júnior</em> não vai salvar o seu fechamento.
-              </h1>
-
-              <Reveal delay={0.1}>
-                <p className="mt-5 lg:mt-7 text-[16px] lg:text-[19px] text-foreground font-semibold leading-[1.5]">
-                  A IAplicada coloca o seu escritório contábil rodando com IA em 2 meses.
-                </p>
-              </Reveal>
-
-              {/* Subhead secundário — escondido no mobile pra aliviar o
-                  excesso de texto na primeira dobra. No desktop continua
-                  visível como contexto adicional. */}
-              <Reveal delay={0.15}>
-                <p className="hidden lg:block mt-3 lg:mt-4 text-[14.5px] lg:text-[16px] text-sage leading-[1.6] max-w-[540px]">
-                  Primeira rotina em produção em 7 dias. Time autônomo no fim. Sem promessa de
-                  mágica, só método.
-                </p>
-              </Reveal>
-
-              {/* ClientsProof — visível apenas no desktop dentro da coluna esquerda. */}
-              <Reveal delay={0.18}>
-                <div className="hidden lg:block">
-                  <ClientsProof />
-                </div>
-              </Reveal>
-            </div>
+            <h1 className="h-mix mt-6 lg:mt-7 text-[32px] sm:text-[44px] lg:text-[60px] leading-[1.05] text-foreground">
+              Em 3 minutos, descubra quantas <em>horas</em> (e quantos <em>R$</em>) seu
+              escritório contábil pode recuperar com IA.
+            </h1>
 
             <Reveal delay={0.1}>
-              <div id="diagnostico-form" className="mt-6 lg:mt-0 lg:sticky lg:top-24 scroll-mt-24">
-                <HeroForm />
+              <p className="mt-6 lg:mt-8 text-[16px] lg:text-[19px] text-sage leading-[1.55] max-w-[680px] mx-auto">
+                Um diagnóstico gratuito que mostra, com a conta aberta, onde sua equipe perde
+                tempo em tarefas que a IA já automatiza e quanto isso custa pra você todo mês.
+              </p>
+            </Reveal>
+
+            <Reveal delay={0.18}>
+              <div className="mt-10 flex justify-center">
+                <a href="#calculadora" className="cta-primary">
+                  Fazer meu diagnóstico gratuito
+                  <span className="arrow">
+                    <ArrowRight className="h-3.5 w-3.5" strokeWidth={2.5} />
+                  </span>
+                </a>
               </div>
             </Reveal>
 
-            {/* ClientsProof — versão mobile vem DEPOIS do form, fora da
-                primeira dobra. No desktop, esta versão fica oculta porque
-                já aparece na coluna esquerda. */}
-            <Reveal delay={0.18}>
-              <div className="lg:hidden">
+            <Reveal delay={0.24}>
+              <p className="mt-5 text-[12px] uppercase tracking-[0.18em] font-semibold text-muted-foreground">
+                100% gratuito · Resultado na hora · Cerca de 3 minutos · Sem cartão de crédito
+              </p>
+            </Reveal>
+
+            <Reveal delay={0.3}>
+              <div className="mt-12 flex justify-center">
                 <ClientsProof />
               </div>
             </Reveal>
@@ -108,11 +102,11 @@ export function Hero() {
 
 /* Marquee — stats da vertical contábil */
 const MARQUEE_ITEMS = [
-  "2 meses pra autonomia",
-  "Primeira rotina em 7 dias",
+  "+700 profissionais",
+  "+100 empresas",
   "10 a 100 colaboradores",
-  "+41% crescimento do setor",
-  "+1800% de ROI em automação",
+  "Cálculo em 3 minutos",
+  "Sem cartão de crédito",
 ];
 
 function MarqueeStrip() {
@@ -172,9 +166,9 @@ const PROOF_THUMBS = [
 ];
 
 function ClientsProof() {
-  const SIZE = 40;
+  const SIZE = 36;
   return (
-    <div className="mt-8 flex items-center gap-4">
+    <div className="flex items-center gap-4">
       <div className="flex" aria-hidden>
         {PROOF_THUMBS.map((t, i) => (
           <img
@@ -189,7 +183,7 @@ function ClientsProof() {
             style={{
               width: SIZE,
               height: SIZE,
-              marginLeft: i === 0 ? 0 : -12,
+              marginLeft: i === 0 ? 0 : -10,
               border: "2px solid var(--color-background)",
               boxShadow: "0 2px 6px -2px oklch(0 0 0 / 0.5)",
               zIndex: PROOF_THUMBS.length - i,
@@ -197,8 +191,8 @@ function ClientsProof() {
           />
         ))}
       </div>
-      <p className="text-[14px] text-foreground font-semibold leading-tight">
-        +700 profissionais usando a IAplicada dentro das empresas.
+      <p className="text-[13.5px] text-foreground font-semibold leading-tight text-left">
+        +700 profissionais usando a IAplicada dentro das empresas
       </p>
     </div>
   );

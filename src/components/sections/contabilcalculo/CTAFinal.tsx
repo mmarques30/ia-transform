@@ -1,46 +1,40 @@
 import { Reveal } from "@/components/Reveal";
-import { ArrowUp } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
+/**
+ * Seção 9 do brief — CTA Final.
+ * "3 minutos. R$ 0. A conta aberta na sua tela."
+ */
 export function CTAFinal() {
   return (
     <section id="cta-final" className="section-veil py-[100px] lg:py-[140px]">
       <div className="container-page">
         <div className="max-w-[820px] mx-auto text-center">
           <Reveal>
-            <h2 className="h-mix text-[40px] sm:text-[48px] lg:text-[60px] text-foreground">
-              45 minutos. Você sai com
-              <br />
-              <em>clareza do seu escritório.</em>
+            <h2 className="h-mix text-[36px] sm:text-[48px] lg:text-[60px] text-foreground leading-[1.05]">
+              3 minutos. <em>R$ 0.</em> A conta aberta na sua tela.
             </h2>
           </Reveal>
           <Reveal delay={0.05}>
-            <p className="mt-6 text-[16px] text-sage leading-[1.65] max-w-[520px] mx-auto">
-              O diagnóstico é sem custo, sem follow-up insistente. Você sai com um mapa de onde o
-              escritório perde hora, mesmo se a gente não fechar.
+            <p className="mt-6 text-[16px] lg:text-[18px] text-sage leading-[1.65] max-w-[600px] mx-auto">
+              Você não precisa decidir nada agora sobre IA. Precisa saber o tamanho do problema.
+              Depois, com o número na mão, você decide se vale ou não a pena.
             </p>
           </Reveal>
           <Reveal delay={0.1}>
-            <a href="#diagnostico-form" className="mt-10 cta-primary">
-              <ArrowUp className="h-4 w-4" />
-              Quero o diagnóstico do meu escritório
-              <span className="arrow">
-                <svg
-                  width="14"
-                  height="14"
-                  viewBox="0 0 14 14"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M2 7H12M12 7L7 2M12 7L7 12"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </span>
-            </a>
+            <div className="mt-10 flex justify-center">
+              <a href="#calculadora" className="cta-primary">
+                Fazer meu diagnóstico gratuito
+                <span className="arrow">
+                  <ArrowRight className="h-3.5 w-3.5" strokeWidth={2.5} />
+                </span>
+              </a>
+            </div>
+          </Reveal>
+          <Reveal delay={0.15}>
+            <p className="mt-5 text-[12px] uppercase tracking-[0.18em] font-semibold text-muted-foreground">
+              Sem cartão · Sem compromisso · Resultado em até 3 minutos
+            </p>
           </Reveal>
         </div>
       </div>
