@@ -413,21 +413,39 @@ async function postToForm(fields: SubmitPayloadFields): Promise<void> {
  * ────────────────────────────────────────────────────────── */
 
 function ProgressBar({ etapa }: { etapa: number }) {
-  const pct = Math.round(((etapa + 1) / TOTAL_ETAPAS) * 100);
+  // Dots como progress refinado em vez de barra chunky
   return (
-    <div>
-      <div className="flex items-center justify-between text-[11.5px] uppercase tracking-[0.18em] font-semibold text-muted-foreground">
-        <span>
-          Etapa {etapa + 1} de {TOTAL_ETAPAS}
-        </span>
-        <span>{pct}%</span>
+    <div className="flex items-center justify-between gap-4">
+      <div className="flex items-center gap-2">
+        {Array.from({ length: TOTAL_ETAPAS - 1 }).map((_, i) => {
+          const active = i === etapa;
+          const done = i < etapa;
+          return (
+            <span key={i} className="flex items-center">
+              <span
+                className="block h-1.5 rounded-full transition-all duration-300"
+                style={{
+                  width: active ? 28 : 8,
+                  backgroundColor: done || active
+                    ? "var(--color-primary)"
+                    : "oklch(0.3 0.04 122 / 0.4)",
+                }}
+              />
+              {i < TOTAL_ETAPAS - 2 && (
+                <span
+                  className="mx-1.5 h-[1px] w-3"
+                  style={{
+                    backgroundColor: "oklch(0.3 0.04 122 / 0.4)",
+                  }}
+                />
+              )}
+            </span>
+          );
+        })}
       </div>
-      <div className="mt-2 h-1 w-full rounded-full bg-border overflow-hidden">
-        <div
-          className="h-full transition-all duration-300"
-          style={{ width: `${pct}%`, backgroundColor: "var(--color-primary)" }}
-        />
-      </div>
+      <span className="text-[10.5px] uppercase tracking-[0.2em] font-semibold text-muted-foreground">
+        Etapa {etapa + 1} de {TOTAL_ETAPAS - 1}
+      </span>
     </div>
   );
 }
@@ -675,99 +693,73 @@ export function Calculadora() {
           </>
         )}
 
-        {/* Wizard — aparece quando iniciada */}
-        {iniciada && (
-          <div className="max-w-[860px] mx-auto">
-            <Reveal>
-              <div
-                className="rounded-2xl border border-border p-6 lg:p-10"
-                style={{ backgroundColor: "oklch(0.18 0.025 122 / 0.55)" }}
-              >
-                {/* Header */}
-                <div className="flex items-center gap-3 mb-6">
-                  <span
-                    className="inline-flex h-10 w-10 items-center justify-center rounded-xl"
-                    style={{
-                      backgroundColor: "oklch(0.75 0.20 122 / 0.14)",
-                      border: "1px solid oklch(0.75 0.20 122 / 0.4)",
-                    }}
-                  >
-                    <Calculator
-                      className="h-5 w-5"
-                      strokeWidth={2}
-                      style={{ color: "var(--color-primary)" }}
-                    />
-                  </span>
-                  <div>
-                    <p className="text-[10.5px] uppercase tracking-[0.2em] font-semibold text-muted-foreground">
-                      Calculadora
-                    </p>
-                    <p className="text-[15.5px] lg:text-[17px] font-bold text-foreground tracking-tight">
-                      Quanto seu escritório contábil ganharia com IA
-                    </p>
-                  </div>
-                </div>
+        {/* Wizard — aparece quando iniciada. Steps 0-3: wrapper sutil
+            (não modal pesado). Step 4 (resultado): full-width editorial
+            sem card — vira a página inteira. */}
+        {iniciada && etapa < 4 && (
+          <Reveal>
+            <div className="max-w-[720px] mx-auto">
+              {/* Header minimalista — progress + label de step */}
+              <ProgressBar etapa={etapa} />
 
-                {etapa < 4 && <ProgressBar etapa={etapa} />}
-
-                <div className="mt-7">
-                  {etapa === 0 && (
-                    <LeadGateStep lead={lead} setLead={setLead} />
-                  )}
-                  {etapa === 1 && (
-                    <EscritorioStep escritorio={escritorio} setEscritorio={setEscritorio} />
-                  )}
-                  {etapa === 2 && <HorasStep horas={horas} setHoras={setHoras} />}
-                  {etapa === 3 && (
-                    <GargaloStep
-                      gargalo={gargalo}
-                      setGargalo={setGargalo}
-                      maturidade={maturidade}
-                      setMaturidade={setMaturidade}
-                    />
-                  )}
-                  {etapa === 4 && (
-                    <ResultadoStep
-                      lead={lead}
-                      resultado={resultado}
-                      score={score}
-                      gargalo={gargalo}
-                    />
-                  )}
-                </div>
-
-                {error && (
-                  <div
-                    role="alert"
-                    className="mt-5 flex items-start gap-2 rounded-md px-3 py-2.5 text-[13px]"
-                    style={{
-                      backgroundColor: "oklch(0.96 0.05 25 / 0.18)",
-                      border: "1px solid oklch(0.65 0.16 25 / 0.5)",
-                      color: "oklch(0.82 0.18 25)",
-                    }}
-                  >
-                    <AlertCircle className="h-4 w-4 mt-0.5 shrink-0" strokeWidth={2} />
-                    <span>{error}</span>
-                  </div>
+              <div className="mt-9 lg:mt-12">
+                {etapa === 0 && <LeadGateStep lead={lead} setLead={setLead} />}
+                {etapa === 1 && (
+                  <EscritorioStep escritorio={escritorio} setEscritorio={setEscritorio} />
                 )}
-
-                {etapa < 4 && (
-                  <NavButtons
-                    onBack={etapa > 0 ? handleBack : undefined}
-                    onNext={handleNext}
-                    nextLabel={etapa === 3 ? "Ver meu diagnóstico" : "Próximo"}
-                    nextDisabled={
-                      (etapa === 0 && !canAdvanceFromGate) ||
-                      (etapa === 1 && !canAdvanceFromEscritorio)
-                    }
-                    loading={loading && etapa === 3}
-                    showBack={etapa > 0}
+                {etapa === 2 && <HorasStep horas={horas} setHoras={setHoras} />}
+                {etapa === 3 && (
+                  <GargaloStep
+                    gargalo={gargalo}
+                    setGargalo={setGargalo}
+                    maturidade={maturidade}
+                    setMaturidade={setMaturidade}
                   />
                 )}
               </div>
-            </Reveal>
-          </div>
+
+              {error && (
+                <div
+                  role="alert"
+                  className="mt-5 flex items-start gap-2 rounded-md px-3 py-2.5 text-[13px]"
+                  style={{
+                    backgroundColor: "oklch(0.96 0.05 25 / 0.18)",
+                    border: "1px solid oklch(0.65 0.16 25 / 0.5)",
+                    color: "oklch(0.82 0.18 25)",
+                  }}
+                >
+                  <AlertCircle className="h-4 w-4 mt-0.5 shrink-0" strokeWidth={2} />
+                  <span>{error}</span>
+                </div>
+              )}
+
+              <NavButtons
+                onBack={etapa > 0 ? handleBack : undefined}
+                onNext={handleNext}
+                nextLabel={etapa === 3 ? "Ver meu diagnóstico" : "Próximo"}
+                nextDisabled={
+                  (etapa === 0 && !canAdvanceFromGate) ||
+                  (etapa === 1 && !canAdvanceFromEscritorio)
+                }
+                loading={loading && etapa === 3}
+                showBack={etapa > 0}
+              />
+            </div>
+          </Reveal>
         )}
+
+        {/* Resultado — full editorial sem card */}
+        {iniciada && etapa === 4 && (
+          <Reveal>
+            <ResultadoStep
+              lead={lead}
+              resultado={resultado}
+              score={score}
+              gargalo={gargalo}
+            />
+          </Reveal>
+        )}
+
       </div>
     </section>
   );
@@ -1290,35 +1282,165 @@ function ResultadoStep({
         </div>
       </div>
 
-      {/* CTA final */}
-      <div
-        className="mt-7 rounded-2xl p-5 lg:p-6"
-        style={{
-          background: "linear-gradient(135deg, oklch(0.35 0.06 125), oklch(0.45 0.1 122))",
-          border: "1px solid oklch(0.75 0.20 122 / 0.55)",
-        }}
-      >
-        <p className="text-[16px] lg:text-[18px] font-bold text-foreground">
-          Quer ajuda para implementar?
+      {/* Como a IAplicada implementaria isso — TIMELINE QUE CRIA URGÊNCIA */}
+      <div className="mt-12 lg:mt-16 pt-10 lg:pt-12 border-t border-border">
+        <p className="text-[10.5px] uppercase tracking-[0.22em] font-semibold text-muted-foreground">
+          A trilha
         </p>
-        <p className="mt-1.5 text-[13.5px] text-foreground/85 leading-[1.55]">
-          Nosso time analisa o seu diagnóstico e monta uma proposta personalizada pro seu
-          escritório.
-        </p>
-        <a
-          href="https://wa.me/5511999999999"
-          target="_blank"
-          rel="noreferrer noopener"
-          className="mt-4 inline-flex items-center gap-2 rounded-full px-5 py-3 text-[14px] font-bold transition-transform hover:-translate-y-0.5"
+        <h3
+          className="mt-4 text-[26px] sm:text-[34px] lg:text-[42px] leading-[1.02] tracking-[-0.02em] text-foreground"
+          style={{ fontFamily: '"Instrument Serif", serif' }}
+        >
+          Como a IAplicada leva você
+          <br />
+          <em>do diagnóstico ao R$ {Math.round(resultado.economiaAnual / 1000)}k.</em>
+        </h3>
+
+        <div className="mt-10 lg:mt-12 grid lg:grid-cols-3 gap-6 lg:gap-8 relative">
+          {/* Linha conectora desktop */}
+          <span
+            aria-hidden
+            className="hidden lg:block absolute top-6 left-[16.67%] right-[16.67%] h-[1px]"
+            style={{
+              background:
+                "linear-gradient(90deg, transparent, oklch(0.55 0.08 125 / 0.5) 20%, oklch(0.55 0.08 125 / 0.5) 80%, transparent)",
+            }}
+          />
+          {[
+            {
+              n: "Semana 1",
+              title: "Diagnóstico aprofundado + primeira rotina",
+              text: "Validamos o cenário deste diagnóstico com sua equipe e colocamos a 1ª automação em produção.",
+            },
+            {
+              n: "Semanas 2 a 7",
+              title: "Rotinas prioritárias automatizadas",
+              text: `Atacamos primeiro o gargalo (${gargalo}) e depois as próximas. Documentação e treino acontecem junto.`,
+            },
+            {
+              n: "Semana 8",
+              title: "Time autônomo. A gente sai.",
+              text: "Seu time opera sozinho as rotinas. Você fica com o ganho mensal recorrente.",
+            },
+          ].map((step, i) => (
+            <div key={step.n} className="relative">
+              {/* Bolinha numerada — fica em cima da linha conectora */}
+              <span
+                className="num-display relative z-10 inline-flex h-12 w-12 items-center justify-center rounded-full text-[14px]"
+                style={{
+                  backgroundColor: "var(--color-background)",
+                  border: "1.5px solid var(--color-primary)",
+                  color: "var(--color-primary)",
+                }}
+              >
+                {i + 1}
+              </span>
+              <p
+                className="mt-5 text-[11px] uppercase tracking-[0.22em] font-semibold"
+                style={{ color: "var(--color-primary)" }}
+              >
+                {step.n}
+              </p>
+              <p className="mt-3 text-[16px] lg:text-[18px] font-bold tracking-tight text-foreground leading-[1.25]">
+                {step.title}
+              </p>
+              <p className="mt-2.5 text-[13.5px] text-sage leading-[1.55]">{step.text}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Métrica de urgência embaixo da timeline */}
+        <div
+          className="mt-10 lg:mt-12 inline-flex items-center gap-2.5 rounded-full px-4 py-2"
           style={{
-            backgroundColor: "oklch(0.99 0.005 110)",
-            color: "oklch(0.18 0.02 122)",
-            boxShadow: "0 10px 24px -10px oklch(0 0 0 / 0.5)",
+            backgroundColor: "oklch(0.75 0.20 122 / 0.12)",
+            border: "1px solid oklch(0.75 0.20 122 / 0.45)",
           }}
         >
-          <MessageCircle className="h-4 w-4" strokeWidth={2.5} />
-          Falar com um especialista
-        </a>
+          <span
+            className="num-display text-[18px] leading-none"
+            style={{ color: "var(--color-primary)" }}
+          >
+            R$ {Math.round(resultado.economiaMensal / 1000)}k
+          </span>
+          <span className="text-[12px] uppercase tracking-[0.14em] font-semibold text-foreground/85">
+            de economia/mês deixados na mesa por cada mês que você espera
+          </span>
+        </div>
+      </div>
+
+      {/* CTA FINAL — bloco premium de conversão */}
+      <div
+        className="mt-12 lg:mt-16 rounded-3xl overflow-hidden relative"
+        style={{
+          background: "linear-gradient(135deg, oklch(0.16 0.04 122), oklch(0.22 0.06 122))",
+          border: "1.5px solid oklch(0.75 0.20 122 / 0.55)",
+          boxShadow: "0 30px 60px -25px oklch(0.75 0.20 122 / 0.35)",
+        }}
+      >
+        <div
+          aria-hidden
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(ellipse 60% 100% at 50% 0%, oklch(0.75 0.20 122 / 0.18), transparent 70%)",
+          }}
+        />
+        <div className="relative p-7 lg:p-12">
+          <p
+            className="text-[10.5px] uppercase tracking-[0.22em] font-semibold"
+            style={{ color: "var(--color-primary)" }}
+          >
+            O próximo passo
+          </p>
+          <h3
+            className="mt-4 text-[28px] sm:text-[36px] lg:text-[46px] leading-[1.02] tracking-[-0.02em] text-foreground"
+            style={{ fontFamily: '"Instrument Serif", serif' }}
+          >
+            Quero ver isso{" "}
+            <em>rodando no meu escritório.</em>
+          </h3>
+          <p className="mt-5 text-[14.5px] lg:text-[16px] text-foreground/85 leading-[1.55] max-w-[560px]">
+            Em 30 minutos com a Mari e o time, montamos a proposta personalizada pro seu
+            escritório com base nesse diagnóstico — quais rotinas, em que ordem, com que
+            ROI esperado.
+          </p>
+
+          <div className="mt-7 lg:mt-9 flex flex-col sm:flex-row gap-3">
+            <a
+              href="https://wa.me/5511999999999"
+              target="_blank"
+              rel="noreferrer noopener"
+              className="inline-flex items-center gap-2 rounded-full px-5 py-3 text-[14px] font-bold transition-transform hover:-translate-y-0.5"
+              style={{
+                backgroundColor: "var(--color-primary)",
+                color: "oklch(0.14 0.02 122)",
+                boxShadow: "0 12px 28px -10px oklch(0.75 0.2 122 / 0.55)",
+              }}
+            >
+              <MessageCircle className="h-4 w-4" strokeWidth={2.5} />
+              Falar agora pelo WhatsApp
+            </a>
+            <a
+              href="https://wa.me/5511999999999?text=Quero%20agendar%2030%20min%20com%20a%20Mari"
+              target="_blank"
+              rel="noreferrer noopener"
+              className="inline-flex items-center gap-2 rounded-full px-5 py-3 text-[14px] font-semibold transition-colors"
+              style={{
+                backgroundColor: "transparent",
+                color: "var(--color-foreground)",
+                border: "1px solid oklch(1 0 0 / 0.25)",
+              }}
+            >
+              Agendar 30 min com a Mari
+              <span aria-hidden>→</span>
+            </a>
+          </div>
+
+          <p className="mt-5 text-[11px] uppercase tracking-[0.18em] font-semibold text-muted-foreground">
+            Sem custo · Sem compromisso · Resposta em até 1 dia útil
+          </p>
+        </div>
       </div>
 
       {/* Score interno — comentado, vai pro CRM mas não pra tela */}
