@@ -17,31 +17,19 @@ import {
 const FAQS = [
   {
     q: "O diagnóstico é mesmo gratuito?",
-    a: "É. 100%. Você responde 8 perguntas, vê o resultado completo na hora. Não pedimos cartão de crédito em nenhum momento. Pedimos seu contato pra te enviar as recomendações personalizadas pelo WhatsApp.",
+    a: "É. 100%. Você responde 8 perguntas, vê o resultado completo na hora. Sem cartão de crédito. Pedimos só contato pra te enviar as recomendações personalizadas pelo WhatsApp.",
   },
   {
     q: "Vocês vão me ligar enchendo o saco?",
-    a: "Não. A gente te manda um WhatsApp depois do diagnóstico com as recomendações. Se você quiser conversar com alguém do nosso time pra entender como aplicar, é só responder. Se não quiser, você ficou com seu diagnóstico gratuito e a gente segue cada um seu caminho.",
+    a: "Não. A gente te manda um WhatsApp depois do diagnóstico com as recomendações. Se quiser conversar pra entender como aplicar, é só responder. Se não quiser, você ficou com seu diagnóstico e segue cada um seu caminho.",
   },
   {
-    q: "Quanto tempo leva mesmo?",
-    a: "Cerca de 3 minutos. As perguntas vêm com valores padrão de mercado pré-preenchidos. Você só ajusta pra refletir seu escritório.",
-  },
-  {
-    q: "Meus dados vão pra onde?",
-    a: "Pro nosso CRM, e só. Não compartilhamos com ninguém, não vendemos lista, não usamos em treinamento. Política de privacidade completa no rodapé.",
+    q: "Meus dados vão pra onde? (LGPD)",
+    a: "Pro nosso CRM, e só. Não compartilhamos com ninguém, não vendemos lista, não usamos em treinamento. A operação fica sob seu controle e respeitamos a LGPD.",
   },
   {
     q: "IA vai substituir contador?",
-    a: "Não. IA substitui tarefa operacional repetitiva. O conhecimento técnico, a relação com o cliente, a interpretação fiscal, o conselho: isso continua sendo você. O que muda é que sua equipe deixa de gastar 60% do tempo classificando lançamento e passa a usar esse tempo no que o cliente paga mais por.",
-  },
-  {
-    q: "Preciso entender de tecnologia pra usar IA no escritório?",
-    a: "Não. A trilha que a IAplicada propõe começa pela aplicação prática. Você não precisa virar dev nem cientista de dados. Precisa saber onde aplicar e como configurar. Disso a gente cuida.",
-  },
-  {
-    q: "E se eu já uso alguma ferramenta de IA?",
-    a: "Melhor ainda. O diagnóstico vai te mostrar o que você ainda não atacou e onde tem dinheiro pra recuperar mesmo com o que já roda hoje.",
+    a: "Não. IA substitui tarefa operacional repetitiva. Conhecimento técnico, relação com cliente, interpretação fiscal, conselho: isso continua sendo você. O que muda é que sua equipe deixa de gastar 60% do tempo em lançamento e passa a usar esse tempo no que o cliente paga mais por.",
   },
 ];
 
