@@ -211,16 +211,25 @@ export function HeroForm({
       ) => void;
       const fbq = (window as unknown as { fbq?: FbqFn }).fbq;
       if (typeof fbq === "function") {
-        fbq(
-          "track",
-          "Lead",
-          {
-            content_name: "business_diagnostic",
-            content_category: "business",
-          },
-          { eventID },
-        );
-        console.log("[form] pixel fired", { eventID });
+        // try/catch: in-app browsers (Instagram/Facebook) injetam
+        // `window.webkit.messageHandlers` e o fbevents.js às vezes lança
+        // ao tocar nesse bridge. Sem o try/catch, o throw aborta o
+        // navigate() abaixo — lead já está salvo, mas o usuário vê
+        // "Falha no envio" e o funnel parece quebrado.
+        try {
+          fbq(
+            "track",
+            "Lead",
+            {
+              content_name: "business_diagnostic",
+              content_category: "business",
+            },
+            { eventID },
+          );
+          console.log("[form] pixel fired", { eventID });
+        } catch (err) {
+          console.warn("[form] pixel throw — seguindo pro redirect", err);
+        }
       } else {
         console.warn("[form] fbq not available — Pixel não disparado");
       }
