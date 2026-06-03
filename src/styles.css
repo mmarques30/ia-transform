@@ -347,30 +347,52 @@
     transform: translateX(2px);
   }
 
-  /* Secondary CTA — outline pill, mesmo footprint do primary mas sem peso
-     visual de fundo. Pra quando há dois caminhos lado a lado e o secundário
-     precisa coexistir sem competir. */
+  /* Secondary CTA — par visual do .cta-primary. Mesma proporção, mesmo
+     padding, mesma bolinha-seta, só muda fill (sólido charcoal) → outline
+     branco translúcido. A bolinha da seta acompanha: outline olive em vez
+     de fundo branco, mas com as mesmas dimensões. Resultado: par coerente
+     onde o olho lê "duas opções do mesmo sistema" em vez de dois sistemas. */
   .cta-secondary {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.625rem;
     background-color: transparent;
     color: var(--color-foreground);
     font-weight: 600;
     font-size: 14.5px;
-    padding: 14px 24px;
+    padding: 14px 22px 14px 26px;
     border-radius: 999px;
     border: 1px solid oklch(1 0 0 / 0.18);
     transition:
+      transform 0.18s ease,
       border-color 0.2s ease,
       background-color 0.2s ease,
       color 0.2s ease;
     letter-spacing: -0.005em;
   }
+  .cta-secondary .arrow {
+    height: 28px;
+    width: 28px;
+    border-radius: 999px;
+    background-color: oklch(0.75 0.2 122 / 0.1);
+    border: 1px solid oklch(0.75 0.2 122 / 0.45);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-primary);
+    transition:
+      transform 0.2s ease,
+      background-color 0.2s ease;
+  }
   .cta-secondary:hover {
     border-color: oklch(0.75 0.2 122 / 0.55);
-    background-color: oklch(0.75 0.2 122 / 0.08);
-    color: var(--color-primary);
+    background-color: oklch(0.75 0.2 122 / 0.05);
+    color: var(--color-foreground);
+    transform: translateY(-1px);
+  }
+  .cta-secondary:hover .arrow {
+    transform: translateX(2px);
+    background-color: oklch(0.75 0.2 122 / 0.22);
   }
 
   /* Olive variant — for sections where charcoal would be too heavy */
