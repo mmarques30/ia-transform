@@ -11,7 +11,7 @@ import { Process } from "@/components/sections/contabil02/Process";
 import { Impact } from "@/components/sections/contabil02/Impact";
 import { CTAIntermediate } from "@/components/sections/contabil02/CTAIntermediate";
 import { Comparison } from "@/components/sections/Comparison";
-import { Authority } from "@/components/sections/contabil02/Authority";
+import { Authority } from "@/components/sections/Authority";
 import { FAQ } from "@/components/sections/contabil02/FAQ";
 import { CTAFinal } from "@/components/sections/contabil02/CTAFinal";
 import { Footer } from "@/components/sections/Footer";

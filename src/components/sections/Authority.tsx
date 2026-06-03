@@ -1,41 +1,52 @@
 import { Reveal } from "@/components/Reveal";
-import { LogoMark } from "@/components/Logo";
+import { FOUNDER } from "@/config/brand";
 
 /**
- * "Sobre a IAplicada" — composição em 4 quadrantes em torno de uma marca
- * central com peso de marca real. Inspirado em Stillwood Residences:
- * o centro carrega o símbolo dominante (sem moldura, com profundidade em
- * camadas SVG) e os 4 cantos respondem à pergunta que o público frio faz
- * quando clica no logo do header: "quem são vocês, de onde veio o método,
- * funciona em escala, e o que isso prova?".
+ * Sobre a IAplicada — versão editorial one-page.
  *
- * A composição ecossistêmica vem de uma camada SVG atrás de tudo: anéis
- * concêntricos amplos + 4 linhas diagonais que ligam o centro aos
- * quadrantes, sugerindo nodos conectados. Zero JS extra.
+ * 3 bandas verticais sequenciais, sem cards isolados:
+ *
+ *   1. VISÃO DA FUNDADORA
+ *      Foto da Mariana 3/4 portrait à esquerda, manifesto + bio à
+ *      direita. Quote tipográfica forte como gancho.
+ *
+ *   2. ECOSSISTEMA
+ *      Manifesto curto explicando o que é a IAplicada + 3 stats
+ *      gigantes (+100 empresas / +700 profissionais / +80 implementações).
+ *
+ *   3. RESULTADOS CONECTADOS
+ *      3 cases reais (Focus FinTax / PSA Consultores / LCR Contabilidade)
+ *      com nome em typography hero + outcome quantificado que prova o
+ *      que a fundadora prometeu.
+ *
+ * Compartilhada por /, /contabil e /contabil02.
  */
-const QUADRANTS = [
+
+const CASES = [
   {
     n: "01",
-    label: "Tecnologia não é moda",
-    text: "Não construímos por hype. Cada sistema é projetado pra resolver um problema operacional específico.",
+    name: "Focus FinTax",
+    vertical: "Recuperação tributária",
+    outcome: "5 KPIs vivos de recuperação. Exportação direta. Fim do retrabalho mensal.",
+    metric: "−68% tempo de fechamento",
   },
   {
     n: "02",
-    label: "É ferramenta estratégica",
-    text: "Operação que se mede, escala e sustenta sem depender de uma cabeça só.",
+    name: "PSA Consultores",
+    vertical: "Agronegócio · Tributário",
+    outcome:
+      "Painel multi-cliente com filtros por urgência. Reunião de status virou gestão por exceção.",
+    metric: "+84% capacidade de carteira",
   },
   {
     n: "03",
-    label: "De onde vem o método",
-    text: "Aprendido em operação real de gigantes. Depois adaptado pra PMEs que precisam parar de improvisar.",
-    enterpriseRefs: ["Mercado Livre", "Suzano", "AngloGold Ashanti"],
+    name: "LCR Contabilidade",
+    vertical: "Operação completa",
+    outcome:
+      "Conciliação, apuração e atendimento rodando no fluxo do time. Sem trocar de sistema.",
+    metric: "+700 profissionais ativos",
   },
-  {
-    n: "04",
-    label: "Aplicado em escala",
-    text: "+17 PMEs ativas em serviços, indústria e varejo. +700 profissionais usando dentro das empresas.",
-  },
-] as const;
+];
 
 export function Authority() {
   return (
@@ -44,148 +55,187 @@ export function Authority() {
       className="section-veil py-[100px] lg:py-[160px] relative overflow-hidden"
     >
       <div className="container-page relative">
-        {/* Header row — chip + título + meta-label */}
-        <div className="relative flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12 lg:mb-20">
-          <div>
-            <Reveal>
-              <span className="label-chip">
-                <span className="dot" />
-                Quem lidera
-              </span>
-            </Reveal>
-            <Reveal delay={0.05}>
-              <h2 className="h-mix mt-5 text-[36px] sm:text-[44px] lg:text-[56px] text-foreground">
-                Sobre a <em>IAplicada</em>.
-              </h2>
-            </Reveal>
-          </div>
-          <Reveal delay={0.1}>
-            <p className="text-[11.5px] uppercase tracking-[0.18em] font-semibold text-muted-foreground max-w-[280px] lg:text-right">
-              // método ancorado no operacional real
-            </p>
-          </Reveal>
-        </div>
-
-        {/* Watermark "operação real" — desktop only */}
-        <p
-          aria-hidden
-          className="hidden lg:block absolute pointer-events-none select-none"
-          style={{
-            bottom: "6%",
-            left: "50%",
-            transform: "translateX(-50%)",
-            fontFamily: '"Instrument Serif", serif',
-            fontSize: "clamp(160px, 22vw, 300px)",
-            fontStyle: "italic",
-            color: "transparent",
-            WebkitTextStroke: "1px oklch(0.55 0.06 122 / 0.18)",
-            letterSpacing: "-0.04em",
-            lineHeight: 1,
-            whiteSpace: "nowrap",
-            zIndex: 0,
-          }}
-        >
-          operação real
-        </p>
-
-        {/* DESKTOP: composição em 3 colunas (Q1 | centro | Q2 / Q3 | _ | Q4)
-            com a camada de ecossistema (anéis + linhas) atrás. */}
-        <div className="hidden lg:block relative">
-          <EcosystemRings />
-
-          <div className="relative grid lg:grid-cols-[1fr_1.3fr_1fr] gap-y-24 gap-x-10 z-10">
-            <Reveal>
-              <Quadrant {...QUADRANTS[0]} corner="tl" />
-            </Reveal>
-
-            <div className="flex row-span-2 items-center justify-center">
-              <CenterMark />
-            </div>
-
-            <Reveal delay={0.05}>
-              <Quadrant {...QUADRANTS[1]} corner="tr" />
-            </Reveal>
-
-            <Reveal delay={0.1}>
-              <Quadrant {...QUADRANTS[2]} corner="bl" />
-            </Reveal>
-
-            <Reveal delay={0.15}>
-              <Quadrant {...QUADRANTS[3]} corner="br" />
-            </Reveal>
-          </div>
-        </div>
-
-        {/* MOBILE: stack vertical com a marca como âncora no topo + 4
-            quadrantes em cards sutis. A composição "quadrantes orbitando
-            o centro" não traduz pra coluna única — então o centro vira
-            o cabeçalho visual da seção e os quadrantes viram contexto
-            estruturado abaixo. */}
-        <div className="lg:hidden flex flex-col gap-5">
+        {/* ════════════════ BANDA 1: VISÃO DA FUNDADORA ════════════════ */}
+        <div className="grid lg:grid-cols-[5fr_7fr] gap-10 lg:gap-16 items-start">
+          {/* FOTO — 3/4 portrait, sem moldura cartesiana */}
           <Reveal>
-            <div className="flex justify-center py-2">
-              <CenterMark />
-            </div>
-          </Reveal>
-          {QUADRANTS.map((q, i) => (
-            <Reveal key={q.n} delay={(i + 1) * 0.05}>
+            <div className="relative">
               <div
-                className="rounded-xl border border-border p-5"
+                className="relative aspect-[3/4] w-full max-w-[440px] mx-auto lg:mx-0 rounded-2xl overflow-hidden"
                 style={{
-                  backgroundColor: "oklch(0.18 0.025 122 / 0.4)",
+                  border: "1px solid oklch(0.55 0.06 122 / 0.5)",
+                  boxShadow:
+                    "0 36px 80px -30px oklch(0 0 0 / 0.7), 0 0 80px -30px oklch(0.75 0.20 122 / 0.35)",
                 }}
               >
-                <Quadrant {...q} corner="tl" />
+                <img
+                  src={FOUNDER.photoSrc}
+                  alt={FOUNDER.name}
+                  width={440}
+                  height={585}
+                  loading="lazy"
+                  decoding="async"
+                  className="absolute inset-0 h-full w-full object-cover"
+                  onError={(e) => {
+                    const img = e.currentTarget;
+                    if (img.src.includes(FOUNDER.photoSrc.split("/").pop()!)) {
+                      img.src = FOUNDER.photoFallback;
+                    }
+                  }}
+                />
               </div>
-            </Reveal>
-          ))}
+              {/* Tag inferior na foto */}
+              <div className="mt-5 flex items-center gap-3">
+                <span
+                  aria-hidden
+                  className="h-[1px] w-8"
+                  style={{
+                    background: "linear-gradient(90deg, var(--color-primary), transparent)",
+                  }}
+                />
+                <p className="text-[10.5px] uppercase tracking-[0.22em] font-semibold text-muted-foreground">
+                  Fundadora · IAplicada · Desde 2022
+                </p>
+              </div>
+            </div>
+          </Reveal>
+
+          {/* MANIFESTO + BIO */}
+          <Reveal delay={0.1}>
+            <div className="lg:pt-6">
+              <p
+                className="text-[11.5px] uppercase tracking-[0.22em] font-semibold"
+                style={{ color: "var(--color-primary)" }}
+              >
+                Visão da fundadora
+              </p>
+
+              {/* Quote-hero — manifesto tipográfico */}
+              <p
+                className="mt-6 lg:mt-7 text-[34px] sm:text-[44px] lg:text-[58px] leading-[1.02] tracking-[-0.025em] text-foreground"
+                style={{ fontFamily: '"Instrument Serif", serif' }}
+              >
+                <span
+                  className="opacity-50 mr-2 align-top text-[44px] sm:text-[56px] lg:text-[72px]"
+                  aria-hidden
+                  style={{ color: "var(--color-primary)" }}
+                >
+                  &ldquo;
+                </span>
+                <em>{FOUNDER.manifesto}</em>
+              </p>
+
+              <p className="mt-8 text-[15.5px] lg:text-[17px] text-sage leading-[1.6] max-w-[560px]">
+                {FOUNDER.bio}
+              </p>
+
+              <div className="mt-7 flex items-center gap-4">
+                <p className="text-[15px] lg:text-[16px] font-bold tracking-tight text-foreground">
+                  {FOUNDER.name}
+                </p>
+                <span aria-hidden className="text-muted-foreground">·</span>
+                <p className="text-[12.5px] uppercase tracking-[0.18em] font-semibold text-muted-foreground">
+                  {FOUNDER.role}
+                </p>
+              </div>
+            </div>
+          </Reveal>
         </div>
 
-        {/* Dual CTA — primário + secundário com mesmo peso visual de pill */}
-        <Reveal delay={0.25}>
-          <div className="mt-14 lg:mt-20 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 relative z-10">
-            <a href="#diagnostico-form" className="cta-primary">
-              Entender como funciona o diagnóstico
-              <span className="arrow">
-                <svg
-                  width="14"
-                  height="14"
-                  viewBox="0 0 14 14"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  aria-hidden
-                >
-                  <path
-                    d="M2 7H12M12 7L7 2M12 7L7 12"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
+        {/* ════════════════ BANDA 2: ECOSSISTEMA ════════════════ */}
+        <Reveal delay={0.15}>
+          <div className="mt-20 lg:mt-32 pt-14 lg:pt-20 border-t border-border">
+            <div className="max-w-[820px]">
+              <p
+                className="text-[11.5px] uppercase tracking-[0.22em] font-semibold"
+                style={{ color: "var(--color-primary)" }}
+              >
+                Ecossistema IAplicada
+              </p>
+              <h2 className="h-mix mt-6 lg:mt-8 text-[34px] sm:text-[44px] lg:text-[60px] leading-[0.98] tracking-[-0.02em] text-foreground">
+                Operação real. <em>Em produção.</em>
+              </h2>
+              <p className="mt-7 text-[15.5px] lg:text-[18px] text-sage leading-[1.6] max-w-[640px]">
+                A IAplicada não vende slide. Implementa IA dentro do fluxo da empresa, com a
+                equipe que já está lá, sob a marca do cliente. Vertical contábil, fintech,
+                indústria, varejo — todos rodando.
+              </p>
+            </div>
+
+            <div className="mt-12 lg:mt-16 grid grid-cols-3 gap-4 lg:gap-12">
+              <BigStat value="+100" label="Empresas no ecossistema" />
+              <BigStat value="+700" label="Profissionais usando IA" />
+              <BigStat value="+80" label="Implementações em produção" />
+            </div>
+          </div>
+        </Reveal>
+
+        {/* ════════════════ BANDA 3: RESULTADOS CONECTADOS ════════════════ */}
+        <Reveal delay={0.2}>
+          <div className="mt-20 lg:mt-32 pt-14 lg:pt-20 border-t border-border">
+            <div className="max-w-[820px]">
+              <p
+                className="text-[11.5px] uppercase tracking-[0.22em] font-semibold"
+                style={{ color: "var(--color-primary)" }}
+              >
+                Resultados que provam
+              </p>
+              <h2 className="h-mix mt-6 lg:mt-8 text-[34px] sm:text-[44px] lg:text-[60px] leading-[0.98] tracking-[-0.02em] text-foreground">
+                3 clientes. <em>3 operações rodando.</em>
+              </h2>
+            </div>
+
+            <div className="mt-12 lg:mt-16 grid lg:grid-cols-3 gap-10 lg:gap-12">
+              {CASES.map((c) => (
+                <article key={c.name} className="relative">
+                  <p
+                    className="num-display text-[20px] leading-none"
+                    style={{
+                      color: "oklch(0.55 0.08 125 / 0.6)",
+                      letterSpacing: "-0.02em",
+                    }}
+                  >
+                    {c.n}
+                  </p>
+                  <p
+                    className="mt-3 text-[28px] sm:text-[34px] lg:text-[38px] leading-[1.02] text-foreground"
+                    style={{
+                      fontFamily: '"Instrument Serif", serif',
+                      fontStyle: "italic",
+                      letterSpacing: "-0.015em",
+                    }}
+                  >
+                    {c.name}
+                  </p>
+                  <p className="mt-2 text-[10.5px] uppercase tracking-[0.18em] font-semibold text-muted-foreground">
+                    {c.vertical}
+                  </p>
+                  <span
+                    aria-hidden
+                    className="block mt-5 mb-5 h-[1px] w-12"
+                    style={{
+                      background:
+                        "linear-gradient(90deg, var(--color-primary), transparent)",
+                    }}
                   />
-                </svg>
-              </span>
-            </a>
-            <a href="#abordagem" className="cta-secondary">
-              Ler metodologia
-              <span className="arrow">
-                <svg
-                  width="14"
-                  height="14"
-                  viewBox="0 0 14 14"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  aria-hidden
-                >
-                  <path
-                    d="M2 7H12M12 7L7 2M12 7L7 12"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </span>
-            </a>
+                  <p className="text-[14px] lg:text-[14.5px] text-sage leading-[1.55]">
+                    {c.outcome}
+                  </p>
+                  {/* Métrica conectada — chip olive embaixo */}
+                  <div
+                    className="mt-5 inline-flex items-center gap-1.5 rounded-md px-2.5 py-1 text-[12px] font-bold"
+                    style={{
+                      backgroundColor: "oklch(0.75 0.20 122 / 0.14)",
+                      border: "1px solid oklch(0.75 0.20 122 / 0.45)",
+                      color: "var(--color-primary)",
+                    }}
+                  >
+                    <span aria-hidden>↗</span>
+                    {c.metric}
+                  </div>
+                </article>
+              ))}
+            </div>
           </div>
         </Reveal>
       </div>
@@ -193,240 +243,21 @@ export function Authority() {
   );
 }
 
-interface QuadrantProps {
-  n: string;
-  label: string;
-  text: string;
-  enterpriseRefs?: readonly string[];
-  corner: "tl" | "tr" | "bl" | "br";
-}
-
-function Quadrant({ n, label, text, enterpriseRefs, corner }: QuadrantProps) {
-  const isRight = corner === "tr" || corner === "br";
+function BigStat({ value, label }: { value: string; label: string }) {
   return (
-    <div className={isRight ? "lg:text-right" : "lg:text-left"}>
+    <div>
       <p
-        className="text-[10.5px] uppercase tracking-[0.22em] font-semibold"
-        style={{ color: "oklch(0.78 0.08 125)" }}
+        className="num-display text-[36px] sm:text-[52px] lg:text-[72px] leading-none"
+        style={{
+          color: "var(--color-primary)",
+          letterSpacing: "-0.025em",
+        }}
       >
-        {n} <span className="text-muted-foreground">·</span> {label}
+        {value}
       </p>
-      <p
-        className={`mt-3 text-[14.5px] text-foreground leading-[1.6] max-w-[280px] ${
-          isRight ? "lg:ml-auto" : ""
-        }`}
-      >
-        {text}
+      <p className="mt-3 text-[10.5px] lg:text-[12px] uppercase tracking-[0.16em] font-semibold text-muted-foreground leading-tight">
+        {label}
       </p>
-      {enterpriseRefs && (
-        <div
-          className={`mt-5 flex flex-wrap gap-x-5 gap-y-2 ${
-            isRight ? "lg:justify-end" : ""
-          }`}
-        >
-          {enterpriseRefs.map((name) => (
-            <span
-              key={name}
-              className="text-[13px] font-bold tracking-tight text-foreground whitespace-nowrap"
-              style={{ letterSpacing: "0.01em" }}
-            >
-              {name}
-            </span>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
-
-/**
- * EcosystemRings — camada decorativa que dá a sensação de "rede conectada"
- * entre os quadrantes e a marca central. Anéis concêntricos grandes +
- * 4 linhas diagonais finas que partem do centro em direção aos quadrantes,
- * com nodos discretos onde as linhas tocam o anel externo.
- *
- * Posicionada absoluta atrás do grid (z-0). Desktop only — no mobile o
- * stack vertical já comunica a relação visual sem precisar das linhas.
- */
-function EcosystemRings() {
-  return (
-    <svg
-      aria-hidden
-      className="hidden lg:block absolute inset-0 w-full h-full pointer-events-none"
-      viewBox="0 0 1200 600"
-      preserveAspectRatio="xMidYMid meet"
-      style={{ zIndex: 1 }}
-    >
-      <defs>
-        <radialGradient id="ring-fade" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="oklch(0.75 0.20 122)" stopOpacity="0.35" />
-          <stop offset="70%" stopColor="oklch(0.55 0.08 125)" stopOpacity="0.18" />
-          <stop offset="100%" stopColor="oklch(0.55 0.08 125)" stopOpacity="0" />
-        </radialGradient>
-        <linearGradient id="line-fade-tl" x1="600" y1="300" x2="0" y2="0" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="oklch(0.75 0.20 122)" stopOpacity="0.5" />
-          <stop offset="100%" stopColor="oklch(0.55 0.08 125)" stopOpacity="0" />
-        </linearGradient>
-        <linearGradient id="line-fade-tr" x1="600" y1="300" x2="1200" y2="0" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="oklch(0.75 0.20 122)" stopOpacity="0.5" />
-          <stop offset="100%" stopColor="oklch(0.55 0.08 125)" stopOpacity="0" />
-        </linearGradient>
-        <linearGradient id="line-fade-bl" x1="600" y1="300" x2="0" y2="600" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="oklch(0.75 0.20 122)" stopOpacity="0.5" />
-          <stop offset="100%" stopColor="oklch(0.55 0.08 125)" stopOpacity="0" />
-        </linearGradient>
-        <linearGradient id="line-fade-br" x1="600" y1="300" x2="1200" y2="600" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="oklch(0.75 0.20 122)" stopOpacity="0.5" />
-          <stop offset="100%" stopColor="oklch(0.55 0.08 125)" stopOpacity="0" />
-        </linearGradient>
-      </defs>
-
-      {/* Anéis concêntricos — grandes, baixa opacidade. O externo é tracejado;
-          o interno sólido. Centro alinhado com a marca central. */}
-      <circle
-        cx="600"
-        cy="300"
-        r="280"
-        fill="none"
-        stroke="oklch(0.55 0.08 125 / 0.32)"
-        strokeWidth="0.6"
-        strokeDasharray="2 7"
-      />
-      <circle
-        cx="600"
-        cy="300"
-        r="200"
-        fill="none"
-        stroke="oklch(0.55 0.08 125 / 0.22)"
-        strokeWidth="0.6"
-      />
-      <circle
-        cx="600"
-        cy="300"
-        r="130"
-        fill="none"
-        stroke="oklch(0.55 0.08 125 / 0.4)"
-        strokeWidth="0.6"
-      />
-
-      {/* Halo radial sutil atrás da marca central */}
-      <circle cx="600" cy="300" r="180" fill="url(#ring-fade)" />
-
-      {/* 4 linhas diagonais — conectam centro aos quadrantes. Fade gradiente
-          do centro pra fora, sugerindo "energia" emanando da marca. */}
-      <line x1="600" y1="300" x2="180" y2="60" stroke="url(#line-fade-tl)" strokeWidth="0.7" />
-      <line x1="600" y1="300" x2="1020" y2="60" stroke="url(#line-fade-tr)" strokeWidth="0.7" />
-      <line x1="600" y1="300" x2="180" y2="540" stroke="url(#line-fade-bl)" strokeWidth="0.7" />
-      <line x1="600" y1="300" x2="1020" y2="540" stroke="url(#line-fade-br)" strokeWidth="0.7" />
-
-      {/* Nodos nos extremos das linhas — ponto de conexão visual com cada
-          quadrante. */}
-      {[
-        [180, 60],
-        [1020, 60],
-        [180, 540],
-        [1020, 540],
-      ].map(([cx, cy]) => (
-        <g key={`${cx}-${cy}`}>
-          <circle cx={cx} cy={cy} r="3" fill="oklch(0.75 0.20 122 / 0.55)" />
-          <circle
-            cx={cx}
-            cy={cy}
-            r="7"
-            fill="none"
-            stroke="oklch(0.75 0.20 122 / 0.3)"
-            strokeWidth="0.5"
-          />
-        </g>
-      ))}
-    </svg>
-  );
-}
-
-/**
- * Marca central com profundidade — versão sem moldura. O logo é o
- * destaque visual da composição: tamanho generoso (160px no desktop),
- * 4 camadas empilhadas para criar relevo (back blur, mid shadow, glint,
- * crisp front) e um halo olive radial atrás. Embaixo, stat "+17 PMES
- * ATIVAS" tipografado como um número de destaque, não como label.
- */
-function CenterMark() {
-  return (
-    <div className="relative flex flex-col items-center" style={{ width: 280 }}>
-      <div className="relative" style={{ width: 220, height: 220 }}>
-        {/* Halo radial — olive glow forte, suaviza nas bordas */}
-        <div
-          aria-hidden
-          className="absolute inset-0 m-auto"
-          style={{
-            width: 240,
-            height: 240,
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            borderRadius: "50%",
-            background:
-              "radial-gradient(circle, oklch(0.75 0.20 122 / 0.55) 0%, oklch(0.75 0.20 122 / 0.1) 45%, transparent 70%)",
-            filter: "blur(24px)",
-          }}
-        />
-
-        {/* Camadas empilhadas — efeito de profundidade real */}
-        <div className="absolute inset-0 flex items-center justify-center">
-          {/* Back layer — escala maior + blur forte + baixa opacidade */}
-          <div
-            aria-hidden
-            className="absolute"
-            style={{
-              transform: "scale(1.28)",
-              filter: "blur(14px)",
-              opacity: 0.4,
-            }}
-          >
-            <LogoMark size={160} />
-          </div>
-          {/* Mid layer — sombra projetada olive */}
-          <div
-            aria-hidden
-            className="absolute"
-            style={{
-              transform: "scale(1.08) translateY(4px)",
-              filter: "drop-shadow(0 10px 32px oklch(0.75 0.20 122 / 0.65))",
-              opacity: 0.6,
-            }}
-          >
-            <LogoMark size={160} />
-          </div>
-          {/* Glint — leve highlight branco no topo */}
-          <div
-            aria-hidden
-            className="absolute"
-            style={{
-              transform: "scale(1.02) translateY(-2px)",
-              filter: "drop-shadow(0 -2px 6px oklch(1 0 0 / 0.25))",
-              opacity: 0.5,
-              mixBlendMode: "screen",
-            }}
-          >
-            <LogoMark size={160} />
-          </div>
-          {/* Front layer — nítida, é o que o olho lê */}
-          <LogoMark size={160} />
-        </div>
-      </div>
-
-      {/* Stat em destaque — "+17 PMEs ativas" como número, não como label */}
-      <div className="mt-6 text-center">
-        <p
-          className="num-display text-[28px] leading-none"
-          style={{ color: "var(--color-primary)" }}
-        >
-          +17
-        </p>
-        <p className="mt-1.5 text-[10.5px] uppercase tracking-[0.22em] font-semibold text-muted-foreground">
-          PMEs ativas
-        </p>
-      </div>
     </div>
   );
 }
