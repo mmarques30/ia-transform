@@ -503,7 +503,7 @@ Conte sobre o seu escritório
             className="pt-2 text-[11.5px] text-center leading-relaxed"
             style={{ color: "oklch(0.55 0.015 115)" }}
           >
-            Ao enviar, você concorda em receber comunicações da IAplicada por WhatsApp e email.
+            Ao enviar, você autoriza contato por WhatsApp e email.
           </p>
         </form>
       </div>
