@@ -16,20 +16,24 @@ import {
  */
 const FAQS = [
   {
-    q: "O diagnóstico é mesmo gratuito?",
-    a: "É. 100%. Você responde 8 perguntas, vê o resultado completo na hora. Sem cartão de crédito. Pedimos só contato pra te enviar as recomendações personalizadas pelo WhatsApp.",
+    q: "Os números do diagnóstico são reais ou marketing?",
+    a: "Reais. Os percentuais de redução por tarefa (40% a 75%) vêm de benchmarks de +80 implementações da IAplicada no setor contábil. O valor em R$ é calculado em cima do SEU custo/hora que você preencheu, não de média genérica.",
   },
   {
-    q: "Vocês vão me ligar enchendo o saco?",
-    a: "Não. A gente te manda um WhatsApp depois do diagnóstico com as recomendações. Se quiser conversar pra entender como aplicar, é só responder. Se não quiser, você ficou com seu diagnóstico e segue cada um seu caminho.",
+    q: "Quanto tempo leva mesmo? Esses 3 minutos são reais?",
+    a: "Sim. As 8 perguntas vêm com valores padrão de mercado já pré-preenchidos. Você ajusta o que não bate com a sua realidade e vê o resultado direto na tela. Sem espera, sem PDF que chega amanhã.",
   },
   {
-    q: "Meus dados vão pra onde? (LGPD)",
-    a: "Pro nosso CRM, e só. Não compartilhamos com ninguém, não vendemos lista, não usamos em treinamento. A operação fica sob seu controle e respeitamos a LGPD.",
+    q: "Depois do diagnóstico, vou ser bombardeado de e-mail e ligação?",
+    a: "Não. Mandamos um WhatsApp uma vez com a trilha personalizada de próximos passos. Se você responder, a gente conversa. Se não, ficou com o seu diagnóstico e segue cada um seu caminho. Sem ligação fria, sem cadência insistente.",
   },
   {
-    q: "IA vai substituir contador?",
-    a: "Não. IA substitui tarefa operacional repetitiva. Conhecimento técnico, relação com cliente, interpretação fiscal, conselho: isso continua sendo você. O que muda é que sua equipe deixa de gastar 60% do tempo em lançamento e passa a usar esse tempo no que o cliente paga mais por.",
+    q: "Meus dados ficam onde? Vocês vendem lista?",
+    a: "Não vendemos, não compartilhamos, não usamos pra treinar IA. Os dados ficam no nosso CRM próprio, conformidade LGPD. Quando viramos cliente, assinamos NDA antes de qualquer projeto.",
+  },
+  {
+    q: "E se eu não quiser implementar com vocês depois?",
+    a: "O diagnóstico é seu de qualquer jeito. Você pode pegar as 3 frentes priorizadas e implementar internamente, com agência ou consultoria. Se quiser conversar com a gente sobre como acelerar, é uma conversa opcional, não condição.",
   },
 ];
 

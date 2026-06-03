@@ -11,13 +11,14 @@ import { Footer } from "@/components/sections/Footer";
 /**
  * /contabilcalculo — LP da calculadora de IA pra contábil.
  *
- * Estrutura enxuta (6 dobras) focada na ferramenta interativa:
- *   Hero (com mockup visual do resultado)
- *   Calculadora (4 etapas + resultado)
- *   Process (3 passos com flow visual)
- *   AuthorityCompact (Mari + ecossistema + 3 cases contábeis)
- *   CTAFinal (último empurrão de conversão)
- *   FAQ (4 perguntas — última dobra pra quem ainda tem dúvida)
+ * Estrutura focada na ferramenta interativa, com fluxo encadeado em
+ * vez de dobras isoladas:
+ *   Hero (preview do resultado)
+ *   Process (3 passos curtos — set de expectativa antes da calc)
+ *   Calculadora (ferramenta + strip "o que você recebe")
+ *   AuthorityCompact (ecossistema + 3 cases contábeis com thumbnails)
+ *   CTAFinal (empurrão de conversão)
+ *   FAQ (5 perguntas — última camada de objeção)
  *
  * Removido vs versão inicial: Problem, Solution, ParaQuem (drop —
  * conteúdo absorvido pelo Hero e pela própria calculadora).
@@ -62,8 +63,8 @@ function ContabilCalculoLanding() {
     <main className="min-h-screen text-foreground">
       <Header homePath="/contabilcalculo" />
       <Hero />
-      <Calculadora />
       <Process />
+      <Calculadora />
       <AuthorityCompact />
       <CTAFinal />
       <FAQ />
