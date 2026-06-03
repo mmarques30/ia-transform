@@ -88,30 +88,23 @@ export function Authority() {
           operação real
         </p>
 
-        {/* Composição: grid de 4 quadrantes com a marca central no eixo,
-            cercados pela camada de ecossistema (anéis + linhas) em SVG. */}
-        <div className="relative">
-          {/* EcosystemRings — apenas desktop, ocupa toda a área do grid */}
+        {/* DESKTOP: composição em 3 colunas (Q1 | centro | Q2 / Q3 | _ | Q4)
+            com a camada de ecossistema (anéis + linhas) atrás. */}
+        <div className="hidden lg:block relative">
           <EcosystemRings />
 
-          <div className="relative grid grid-cols-1 lg:grid-cols-[1fr_1.3fr_1fr] gap-y-12 lg:gap-y-24 lg:gap-x-10 z-10">
+          <div className="relative grid lg:grid-cols-[1fr_1.3fr_1fr] gap-y-24 gap-x-10 z-10">
             <Reveal>
               <Quadrant {...QUADRANTS[0]} corner="tl" />
             </Reveal>
 
-            {/* Coluna central desktop — span 2 rows */}
-            <div className="hidden lg:flex lg:row-span-2 items-center justify-center">
+            <div className="flex row-span-2 items-center justify-center">
               <CenterMark />
             </div>
 
             <Reveal delay={0.05}>
               <Quadrant {...QUADRANTS[1]} corner="tr" />
             </Reveal>
-
-            {/* Mobile: marca central entre top e bottom rows */}
-            <div className="flex lg:hidden items-center justify-center py-6">
-              <CenterMark />
-            </div>
 
             <Reveal delay={0.1}>
               <Quadrant {...QUADRANTS[2]} corner="bl" />
@@ -121,6 +114,31 @@ export function Authority() {
               <Quadrant {...QUADRANTS[3]} corner="br" />
             </Reveal>
           </div>
+        </div>
+
+        {/* MOBILE: stack vertical com a marca como âncora no topo + 4
+            quadrantes em cards sutis. A composição "quadrantes orbitando
+            o centro" não traduz pra coluna única — então o centro vira
+            o cabeçalho visual da seção e os quadrantes viram contexto
+            estruturado abaixo. */}
+        <div className="lg:hidden flex flex-col gap-5">
+          <Reveal>
+            <div className="flex justify-center py-2">
+              <CenterMark />
+            </div>
+          </Reveal>
+          {QUADRANTS.map((q, i) => (
+            <Reveal key={q.n} delay={(i + 1) * 0.05}>
+              <div
+                className="rounded-xl border border-border p-5"
+                style={{
+                  backgroundColor: "oklch(0.18 0.025 122 / 0.4)",
+                }}
+              >
+                <Quadrant {...q} corner="tl" />
+              </div>
+            </Reveal>
+          ))}
         </div>
 
         {/* Dual CTA — primário + secundário com mesmo peso visual de pill */}

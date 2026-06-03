@@ -60,7 +60,7 @@ export function FAQ() {
         <Reveal delay={0.1}>
           <Accordion
             type="multiple"
-            defaultValue={["item-0", "item-2"]}
+            defaultValue={[]}
             className="mt-10 w-full"
           >
             {FAQS.map((item, i) => (
