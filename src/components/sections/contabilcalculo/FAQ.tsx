@@ -1,72 +1,82 @@
 import { Reveal } from "@/components/Reveal";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 
 /**
- * FAQ específico da /contabilcalculo — perguntas que ataacam objeções
- * reais da calculadora (gratuidade, persistência de contato, dados,
- * substituição vs assistência, tecnologia, IA já em uso).
- *
- * Forkado da FAQ compartilhada porque o tom é completamente diferente
- * (calculadora vs. consultoria full).
+ * FAQ editorial — pergunta + resposta lado a lado, tudo aberto, sem
+ * accordion. Lista enxuta de 5 perguntas focadas no contexto da
+ * calculadora. Tipografia editorial pura, sem moldura de card.
  */
+const WARM_BG = "oklch(0.14 0.02 70)";
+const WARM_BORDER = "oklch(0.32 0.025 70 / 0.4)";
+
 const FAQS = [
   {
-    q: "Os números do diagnóstico são reais ou marketing?",
-    a: "Reais. Os percentuais de redução por tarefa (40% a 75%) vêm de benchmarks de +80 implementações da IAplicada no setor contábil. O valor em R$ é calculado em cima do SEU custo/hora que você preencheu, não de média genérica.",
+    q: "Os números são reais ou marketing?",
+    a: "Reais. Os percentuais de redução por tarefa (40% a 75%) vêm de benchmarks de +80 implementações da IAplicada no setor contábil. O valor em R$ é calculado em cima do seu custo/hora.",
   },
   {
-    q: "Quanto tempo leva mesmo? Esses 3 minutos são reais?",
-    a: "Sim. As 8 perguntas vêm com valores padrão de mercado já pré-preenchidos. Você ajusta o que não bate com a sua realidade e vê o resultado direto na tela. Sem espera, sem PDF que chega amanhã.",
+    q: "Esses 3 minutos são reais?",
+    a: "Sim. As perguntas vêm com valores padrão de mercado já pré-preenchidos. Você ajusta o que não bate e vê o resultado direto na tela.",
   },
   {
-    q: "Depois do diagnóstico, vou ser bombardeado de e-mail e ligação?",
-    a: "Não. Mandamos um WhatsApp uma vez com a trilha personalizada de próximos passos. Se você responder, a gente conversa. Se não, ficou com o seu diagnóstico e segue cada um seu caminho. Sem ligação fria, sem cadência insistente.",
+    q: "Vou ser bombardeado depois?",
+    a: "Não. Um WhatsApp uma vez com a trilha personalizada. Se responder, a gente conversa. Se não, ficou com o diagnóstico e cada um segue o seu caminho.",
   },
   {
-    q: "Meus dados ficam onde? Vocês vendem lista?",
-    a: "Não vendemos, não compartilhamos, não usamos pra treinar IA. Os dados ficam no nosso CRM próprio, conformidade LGPD. Quando viramos cliente, assinamos NDA antes de qualquer projeto.",
+    q: "Meus dados ficam onde?",
+    a: "No nosso CRM próprio. Não vendemos, não compartilhamos, não usamos pra treinar IA. Conformidade LGPD. NDA quando viramos cliente.",
   },
   {
-    q: "E se eu não quiser implementar com vocês depois?",
-    a: "O diagnóstico é seu de qualquer jeito. Você pode pegar as 3 frentes priorizadas e implementar internamente, com agência ou consultoria. Se quiser conversar com a gente sobre como acelerar, é uma conversa opcional, não condição.",
+    q: "E se eu não quiser implementar com vocês?",
+    a: "O diagnóstico é seu de qualquer jeito. Pode aplicar internamente, com agência ou consultoria. A conversa comigo é opcional, não condição.",
   },
 ];
 
 export function FAQ() {
   return (
-    <section id="faq" className="section-veil py-[90px] lg:py-[120px]">
-      <div className="container-page max-w-[820px]">
+    <section
+      id="faq"
+      className="relative py-[80px] lg:py-[140px]"
+      style={{ backgroundColor: WARM_BG }}
+    >
+      <div className="container-page relative max-w-[1080px]">
         <Reveal>
-          <span className="label-chip">
-            <span className="dot" />
-            Perguntas frequentes
-          </span>
+          <p className="text-[11.5px] uppercase tracking-[0.22em] font-semibold text-muted-foreground">
+            O que sempre aparece
+          </p>
         </Reveal>
         <Reveal delay={0.05}>
-          <h2 className="h-mix mt-6 text-[36px] sm:text-[44px] lg:text-[52px] text-foreground">
-            Perguntas que <em>sempre aparecem</em>.
+          <h2 className="h-mix mt-7 text-[36px] sm:text-[48px] lg:text-[60px] leading-[1.02] tracking-[-0.02em] text-foreground max-w-[700px]">
+            5 dúvidas. <em>Sem rodeio.</em>
           </h2>
         </Reveal>
 
-        <Reveal delay={0.1}>
-          <Accordion type="multiple" defaultValue={[]} className="mt-10 w-full">
-            {FAQS.map((item, i) => (
-              <AccordionItem key={i} value={`item-${i}`} className="border-b border-border">
-                <AccordionTrigger className="text-left text-foreground hover:text-primary text-[16px] font-semibold py-5">
+        {/* Lista — cada Q&A em grid 2-col, separador horizontal entre */}
+        <div className="mt-14 lg:mt-20">
+          {FAQS.map((item, i) => (
+            <Reveal key={i} delay={0.06 + i * 0.04}>
+              <div
+                className={`grid lg:grid-cols-[1fr_1.4fr] gap-4 lg:gap-12 py-7 lg:py-9 ${
+                  i === 0 ? "" : ""
+                }`}
+                style={{ borderTop: i === 0 ? "none" : `1px solid ${WARM_BORDER}` }}
+              >
+                <p
+                  className="text-[19px] sm:text-[22px] lg:text-[26px] leading-[1.15] text-foreground tracking-tight"
+                  style={{
+                    fontFamily: '"Instrument Serif", serif',
+                    fontStyle: "italic",
+                    letterSpacing: "-0.015em",
+                  }}
+                >
                   {item.q}
-                </AccordionTrigger>
-                <AccordionContent className="text-sage leading-[1.6] text-[15px] pb-5">
+                </p>
+                <p className="text-[14.5px] lg:text-[15.5px] text-sage leading-[1.6]">
                   {item.a}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </Reveal>
+                </p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
       </div>
     </section>
   );
