@@ -3,61 +3,64 @@ import { Header } from "@/components/sections/Header";
 import { Hero } from "@/components/sections/contabilcalculo/Hero";
 import { Problem } from "@/components/sections/contabilcalculo/Problem";
 import { Solution } from "@/components/sections/contabilcalculo/Solution";
-import { Systems } from "@/components/sections/contabilcalculo/Systems";
-import { OliveWave } from "@/components/sections/contabilcalculo/OliveWave";
-import { ClientLogos } from "@/components/sections/ClientLogos";
+import { Calculadora } from "@/components/sections/contabilcalculo/Calculadora";
 import { Process } from "@/components/sections/contabilcalculo/Process";
-import { Impact } from "@/components/sections/contabilcalculo/Impact";
-import { Comparison } from "@/components/sections/Comparison";
+import { ParaQuem } from "@/components/sections/contabilcalculo/ParaQuem";
 import { Authority } from "@/components/sections/Authority";
-import { FAQ } from "@/components/sections/FAQ";
+import { FAQ } from "@/components/sections/contabilcalculo/FAQ";
 import { CTAFinal } from "@/components/sections/contabilcalculo/CTAFinal";
 import { Footer } from "@/components/sections/Footer";
 
 /**
- * /contabilcalculo — duplicata da /contabil pra iteração / A/B test.
+ * /contabilcalculo — LP da calculadora de economia com IA pra
+ * escritórios contábeis. Mais objetiva que /contabil — toda a copy
+ * gira em torno do diagnóstico de 3 minutos.
  *
- * Estrutura técnica idêntica e todas as melhorias recentes (in-app
- * WebView perf, mobile-first hero, Problem flow natural, Solution
- * arejada, copy sem travessões, form auth headers, etc.).
+ * Estrutura (mais enxuta que /contabil/contabil02):
+ *   Hero (CTA pra calculadora)
+ *   Problem (você sabe quanto perde?)
+ *   Solution (virada + 4 entregáveis)
+ *   Calculadora (placeholder em PR 1; ferramenta real em PR 2)
+ *   Process (3 passos)
+ *   ParaQuem (ICP positivo + negativo)
+ *   Authority (compartilhada, sem fork)
+ *   FAQ (forkada com perguntas da calculadora)
+ *   CTAFinal (3 min · R$ 0)
  *
- * Componentes clonados pra src/components/sections/contabilcalculo/ —
- * essa LP evolui independente da /contabil baseline e da /contabil02.
- * Sections compartilhadas (ClientLogos, Authority, Comparison, FAQ,
- * Header, Footer) continuam sendo as mesmas, então melhorias nelas
- * valem pras 3 LPs.
+ * Form submission: a calculadora (PR 2) vai postar pro mesmo
+ * form-submit com fields extras (colaboradores, horas/tarefa, gargalo,
+ * scores). utm_term automático já é "contabil-calculo" (definido em
+ * HeroFormContabil.tsx — vamos reusar a mesma lógica).
  *
- * Submissão de form: reusa HeroFormContabil. Leads das 3 LPs são
- * distinguíveis no CRM pelo utm_term automático:
- *   /contabil          → contabil-v1
- *   /contabil02        → contabil-v2
- *   /contabilcalculo   → contabil-calculo
+ * SEO: noindex/nofollow por enquanto. Calculadora é mais funcional
+ * pra Ads do que SEO orgânico.
  */
 export const Route = createFileRoute("/contabilcalculo")({
   head: () => ({
     meta: [
       {
-        title: "IA para escritório contábil · IAplicada · Primeira rotina em 7 dias",
+        title:
+          "Calculadora de IA pra Escritório Contábil · IAplicada · Em 3 minutos",
       },
       {
         name: "description",
         content:
-          "A IAplicada coloca o seu escritório contábil rodando com IA em 2 meses. Primeira rotina automatizada em 7 dias. Método aplicado, sem curso e sem software engessado.",
+          "Em 3 minutos, descubra quantas horas e quantos R$ seu escritório contábil pode recuperar com IA. Diagnóstico gratuito, resultado na hora, sem cartão de crédito.",
       },
       {
         property: "og:title",
-        content: "IA para escritório contábil · IAplicada",
+        content: "Calculadora de IA pra Escritório Contábil · IAplicada",
       },
       {
         property: "og:description",
         content:
-          "Contratar mais um júnior não vai salvar o seu fechamento. Automatize conciliação, apuração e obrigações no fluxo que seu time já conhece.",
+          "Em 3 minutos, descubra quantas horas (e quantos R$) seu escritório pode recuperar com IA. Sem cartão.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "theme-color", content: "#FAFAF7" },
-      // A/B variant: noindex até decidir qual versão vai pra SEO real.
-      // Remova quando quiser indexar essa LP também.
+      // LP de calculadora é mais funcional pra Ads do que pra SEO
+      // orgânico. Remova quando quiser indexar.
       { name: "robots", content: "noindex, nofollow" },
     ],
   }),
@@ -71,13 +74,10 @@ function ContabilCalculoLanding() {
       <Hero />
       <Problem />
       <Solution />
-      <Systems />
-      <OliveWave />
-      <ClientLogos />
+      <Calculadora />
       <Process />
-      <Impact />
+      <ParaQuem />
       <Authority />
-      <Comparison />
       <FAQ />
       <CTAFinal />
       <Footer />
