@@ -602,62 +602,77 @@ export function Calculadora() {
     <section
       id="calculadora"
       className="relative py-[80px] lg:py-[140px] overflow-hidden scroll-mt-24"
-      style={{ backgroundColor: "oklch(0.13 0.018 122)" }}
     >
       <div className="container-page relative">
         {/* Header da seção — só no estado inicial */}
         {!iniciada && (
-          <div className="max-w-[860px] mx-auto text-center">
+          <>
+            {/* Top meta — spread 03 */}
             <Reveal>
-              <p className="text-[11.5px] uppercase tracking-[0.22em] font-semibold text-muted-foreground">
-                O diagnóstico · gratuito · 3 minutos
-              </p>
-            </Reveal>
-            <Reveal delay={0.05}>
-              <h2 className="h-mix mt-7 lg:mt-9 text-[40px] sm:text-[56px] lg:text-[72px] leading-[0.98] tracking-[-0.025em] text-foreground">
-                Conta aberta. <em>3 minutos.</em>
-              </h2>
+              <div className="flex items-start justify-between gap-4 mb-14 lg:mb-20">
+                <p className="text-[10.5px] uppercase tracking-[0.22em] font-semibold text-muted-foreground leading-tight">
+                  Spread 03 · O diagnóstico
+                </p>
+                <p
+                  className="num-display text-[20px] lg:text-[24px] leading-none"
+                  style={{
+                    color: "var(--color-primary)",
+                    letterSpacing: "-0.02em",
+                  }}
+                >
+                  03
+                </p>
+              </div>
             </Reveal>
 
-            {/* 3-step horizontal — substitui o Process antigo */}
-            <Reveal delay={0.1}>
-              <div className="mt-10 lg:mt-12 flex flex-wrap items-center justify-center gap-x-4 lg:gap-x-7 gap-y-2 text-[12.5px] lg:text-[14px] text-foreground/80">
-                {["Responda 8 perguntas", "Veja na hora", "Receba trilha no WhatsApp"].map(
-                  (step, i) => (
-                    <span key={step} className="inline-flex items-center gap-3">
-                      <span
-                        className="num-display text-[16px] lg:text-[18px]"
-                        style={{ color: "var(--color-primary)" }}
-                      >
-                        0{i + 1}
-                      </span>
-                      <span className="tracking-tight">{step}</span>
-                      {i < 2 && (
+            <div className="max-w-[920px]">
+              <Reveal delay={0.05}>
+                <h2 className="h-mix text-[44px] sm:text-[60px] lg:text-[88px] leading-[0.92] tracking-[-0.03em] text-foreground">
+                  Conta aberta.
+                  <br />
+                  <em>3 minutos.</em>
+                </h2>
+              </Reveal>
+
+              <Reveal delay={0.1}>
+                <div className="mt-10 lg:mt-14 flex flex-wrap items-center gap-x-5 lg:gap-x-9 gap-y-3 text-[12.5px] lg:text-[14.5px] text-foreground/85">
+                  {["Responda 8 perguntas", "Veja na hora", "Receba pelo WhatsApp"].map(
+                    (step, i) => (
+                      <span key={step} className="inline-flex items-center gap-3">
                         <span
-                          aria-hidden
-                          className="hidden sm:inline mx-2 opacity-40"
+                          className="num-display text-[16px] lg:text-[20px]"
                           style={{ color: "var(--color-primary)" }}
                         >
-                          →
+                          0{i + 1}
                         </span>
-                      )}
-                    </span>
-                  ),
-                )}
-              </div>
-            </Reveal>
+                        <span className="tracking-tight">{step}</span>
+                        {i < 2 && (
+                          <span
+                            aria-hidden
+                            className="hidden sm:inline ml-3 opacity-30"
+                            style={{ color: "var(--color-primary)" }}
+                          >
+                            ─
+                          </span>
+                        )}
+                      </span>
+                    ),
+                  )}
+                </div>
+              </Reveal>
 
-            <Reveal delay={0.18}>
-              <div className="mt-12 flex justify-center">
-                <button type="button" onClick={() => setIniciada(true)} className="cta-primary">
-                  Começar diagnóstico
-                  <span className="arrow">
-                    <ArrowRight className="h-3.5 w-3.5" strokeWidth={2.5} />
-                  </span>
-                </button>
-              </div>
-            </Reveal>
-          </div>
+              <Reveal delay={0.18}>
+                <div className="mt-12 lg:mt-14">
+                  <button type="button" onClick={() => setIniciada(true)} className="cta-primary">
+                    Começar diagnóstico
+                    <span className="arrow">
+                      <ArrowRight className="h-3.5 w-3.5" strokeWidth={2.5} />
+                    </span>
+                  </button>
+                </div>
+              </Reveal>
+            </div>
+          </>
         )}
 
         {/* Wizard — aparece quando iniciada */}
