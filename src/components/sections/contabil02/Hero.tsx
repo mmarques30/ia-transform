@@ -45,45 +45,34 @@ export function Hero() {
         <div className="container-page relative">
           <div className="grid lg:grid-cols-[1.05fr_1fr] gap-8 lg:gap-16 items-center">
             <div>
+              {/*
+                Eyebrow = onde mora a keyword de SEO ("inteligência artificial
+                para escritório contábil"). Pequeno em cima, libera o H1
+                pra ser curto e bater o criativo. SEO continua coberto por
+                title + meta + FAQ schema.
+              */}
               <Reveal>
                 <span className="label-chip">
                   <span className="dot" />
-                  IAplicada Business · Escritórios Contábeis
+                  Inteligência artificial para escritório contábil
                 </span>
               </Reveal>
 
               {/*
-                H1 longo intencionalmente — começa com a expressão de busca
-                ("Inteligência artificial para escritório contábil") pra SEO
-                + GEO (AI Overviews / ChatGPT / Perplexity), seguida do
-                gancho do criativo campeão ("1,5 funcionário") pra message
-                match com quem veio do anúncio. Os dois objetivos cabem
-                numa frase só.
+                H1 visível — curto, com impacto, message match exato com o
+                criativo campeão ("1,5 funcionário"). 1-2 linhas no máximo;
+                a SEO da página fica no eyebrow + title + meta + FAQPage
+                JSON-LD.
               */}
-              <h1 className="h-mix mt-6 lg:mt-7 text-[28px] sm:text-[38px] lg:text-[52px] leading-[1.08] text-foreground">
-                Inteligência artificial para escritório contábil: cada cliente novo custa{" "}
-                <em>1,5 funcionário</em>. Até a IA entrar na conta.
+              <h1 className="h-mix mt-6 lg:mt-7 text-[32px] sm:text-[44px] lg:text-[58px] leading-[1.05] text-foreground">
+                Cada cliente novo custa <em>1,5 funcionário</em>. Até a IA entrar na conta.
               </h1>
 
-              {/* Parágrafo-definição — fonte que IA extrai pra responder
-                  "como usar IA em contabilidade". Inicia com "A IAplicada é"
-                  pra entidade reconhecível por LLM. Visível no desktop;
-                  no mobile o subhead mais curto fica no lugar. */}
+              {/* Subhead — entrega o "como" da promessa em uma frase só. */}
               <Reveal delay={0.1}>
-                <p className="hidden lg:block mt-7 text-[17px] lg:text-[18px] text-sage leading-[1.6] max-w-[560px]">
-                  A IAplicada é a consultoria que aplica inteligência artificial dentro do
-                  escritório contábil para automatizar lançamento, conciliação bancária, apuração e
-                  fechamento, no fluxo que o seu time já usa. Primeira rotina rodando em 7 dias,
-                  time autônomo em 2 meses.
-                </p>
-              </Reveal>
-
-              {/* Subhead mobile — versão curta do parágrafo-definição,
-                  mantém a promessa principal sem virar parede de texto. */}
-              <Reveal delay={0.1}>
-                <p className="lg:hidden mt-5 text-[16px] text-foreground font-semibold leading-[1.5]">
-                  Sua operação não escala sem gente porque lançamento, conciliação e fechamento
-                  ainda são manuais.
+                <p className="mt-6 lg:mt-7 text-[16px] lg:text-[18px] text-sage leading-[1.55] max-w-[560px]">
+                  A IAplicada automatiza lançamento, conciliação e fechamento no fluxo que seu time
+                  já usa. Primeira rotina rodando em 7 dias.
                 </p>
               </Reveal>
 
