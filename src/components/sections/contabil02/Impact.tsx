@@ -11,11 +11,9 @@ interface Metric {
 }
 
 const METRICS: Metric[] = [
-  { label: "Conciliação bancária", delta: "−68%", fill: 32, trend: "down", isGoodWhen: "down" },
-  { label: "Tempo de fechamento", delta: "−57%", fill: 43, trend: "down", isGoodWhen: "down" },
-  { label: "Apuração de impostos", delta: "−61%", fill: 39, trend: "down", isGoodWhen: "down" },
+  { label: "Conciliação bancária", delta: "+73%", fill: 73, trend: "up", isGoodWhen: "up" },
+  { label: "Tempo de fechamento", delta: "−68%", fill: 32, trend: "down", isGoodWhen: "down" },
   { label: "Capacidade de carteira", delta: "+84%", fill: 84, trend: "up", isGoodWhen: "up" },
-  { label: "Dependência de júnior", delta: "−71%", fill: 29, trend: "down", isGoodWhen: "down" },
   { label: "Margem por cliente", delta: "+92%", fill: 92, trend: "up", isGoodWhen: "up" },
 ];
 
@@ -28,19 +26,18 @@ export function Impact() {
           <Reveal>
             <span className="label-chip">
               <span className="dot" />
-              Impacto operacional
+              Prova social
             </span>
           </Reveal>
           <Reveal delay={0.05}>
             <h2 className="h-mix mt-6 text-[36px] sm:text-[44px] lg:text-[54px] text-foreground">
-              Resultado dos escritórios <em>com a IAplicada</em>
-              <br className="hidden sm:block" /> medido em ROI, não em promessa.
+              Resultado medido em <em>ROI</em>,
+              <br className="hidden sm:block" /> não em promessa.
             </h2>
           </Reveal>
           <Reveal delay={0.1}>
-            <p className="mt-5 text-[16px] text-sage leading-[1.6] max-w-[600px] mx-auto">
-              R$ 250 mil de economia. 1.829% de ROI no DIFAL automatizado. 1.635% no PIS/COFINS. 10
-              processos automatizados em 2 meses.
+            <p className="mt-5 text-[14px] uppercase tracking-[0.18em] font-semibold text-muted-foreground">
+              Calculado sobre média de 80+ implementações
             </p>
           </Reveal>
         </div>

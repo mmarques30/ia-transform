@@ -48,37 +48,54 @@ export function Hero() {
               <Reveal>
                 <span className="label-chip">
                   <span className="dot" />
-                  IAplicada · Contábil
+                  IAplicada Business · Escritórios Contábeis
                 </span>
               </Reveal>
 
               {/*
-                h1 mobile reduzido pra que o form fique visível na primeira
-                dobra do WebView (95% do tráfego). De 40px → 32px no mobile;
-                desktop mantido em 58px.
+                H1 longo intencionalmente — começa com a expressão de busca
+                ("Inteligência artificial para escritório contábil") pra SEO
+                + GEO (AI Overviews / ChatGPT / Perplexity), seguida do
+                gancho do criativo campeão ("1,5 funcionário") pra message
+                match com quem veio do anúncio. Os dois objetivos cabem
+                numa frase só.
               */}
-              <h1 className="h-mix mt-6 lg:mt-7 text-[32px] sm:text-[44px] lg:text-[58px] leading-[1.05] text-foreground">
-                Contratar mais um <em>júnior</em> não vai salvar o seu fechamento.
+              <h1 className="h-mix mt-6 lg:mt-7 text-[28px] sm:text-[38px] lg:text-[52px] leading-[1.08] text-foreground">
+                Inteligência artificial para escritório contábil: cada cliente novo custa{" "}
+                <em>1,5 funcionário</em>. Até a IA entrar na conta.
               </h1>
 
+              {/* Parágrafo-definição — fonte que IA extrai pra responder
+                  "como usar IA em contabilidade". Inicia com "A IAplicada é"
+                  pra entidade reconhecível por LLM. Visível no desktop;
+                  no mobile o subhead mais curto fica no lugar. */}
               <Reveal delay={0.1}>
-                <p className="mt-5 lg:mt-7 text-[16px] lg:text-[19px] text-foreground font-semibold leading-[1.5]">
-                  A IAplicada coloca o seu escritório contábil rodando com IA em 2 meses.
+                <p className="hidden lg:block mt-7 text-[17px] lg:text-[18px] text-sage leading-[1.6] max-w-[560px]">
+                  A IAplicada é a consultoria que aplica inteligência artificial dentro do
+                  escritório contábil para automatizar lançamento, conciliação bancária, apuração e
+                  fechamento, no fluxo que o seu time já usa. Primeira rotina rodando em 7 dias,
+                  time autônomo em 2 meses.
                 </p>
               </Reveal>
 
-              {/* Subhead secundário — escondido no mobile pra aliviar o
-                  excesso de texto na primeira dobra. No desktop continua
-                  visível como contexto adicional. */}
-              <Reveal delay={0.15}>
-                <p className="hidden lg:block mt-3 lg:mt-4 text-[14.5px] lg:text-[16px] text-sage leading-[1.6] max-w-[540px]">
-                  Primeira rotina em produção em 7 dias. Time autônomo no fim. Sem promessa de
-                  mágica, só método.
+              {/* Subhead mobile — versão curta do parágrafo-definição,
+                  mantém a promessa principal sem virar parede de texto. */}
+              <Reveal delay={0.1}>
+                <p className="lg:hidden mt-5 text-[16px] text-foreground font-semibold leading-[1.5]">
+                  Sua operação não escala sem gente porque lançamento, conciliação e fechamento
+                  ainda são manuais.
+                </p>
+              </Reveal>
+
+              {/* Linha de qualificação — pega quem é dentro do ICP logo de cara */}
+              <Reveal delay={0.18}>
+                <p className="mt-5 text-[11.5px] uppercase tracking-[0.18em] font-semibold text-muted-foreground">
+                  Pra escritórios contábeis de 10 a 100 colaboradores
                 </p>
               </Reveal>
 
               {/* ClientsProof — visível apenas no desktop dentro da coluna esquerda. */}
-              <Reveal delay={0.18}>
+              <Reveal delay={0.22}>
                 <div className="hidden lg:block">
                   <ClientsProof />
                 </div>

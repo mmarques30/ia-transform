@@ -12,23 +12,23 @@ interface Step {
 
 const STEPS: Step[] = [
   {
-    n: "1",
-    title: "Semana 1 · Mapeamento",
-    text: "Auditoria das rotinas, ranking dos ladrões de hora e a primeira automação em produção.",
+    n: "0",
+    title: "Diagnóstico · 30 min",
+    text: "A gente mapeia onde seu escritório perde hora. Você sai com 3 frentes priorizadas e tempo de retorno.",
     Icon: CalendarDays,
     Mockup: AgendaMockup,
   },
   {
-    n: "2-4",
-    title: "Sem 2 a 4 · Rotinas prioritárias",
-    text: "Lançamento, conciliação, classificação e obrigações. Uma a uma, no fluxo que seu time já conhece.",
+    n: "1",
+    title: "Semana 1 · Primeira rotina",
+    text: "Primeira rotina automatizada já rodando em produção, no fluxo que seu time já conhece.",
     Icon: Search,
     Mockup: ImersaoMockup,
   },
   {
-    n: "5-7",
-    title: "Sem 5 a 7 · Padronização",
-    text: "Documentação dos processos novos dentro do sistema do escritório. Vídeo curto, passo a passo.",
+    n: "2-7",
+    title: "Semanas 2 a 7 · Rotinas prioritárias",
+    text: "Lançamento, conciliação, apuração e obrigações. Uma a uma. Documentação e padronização junto.",
     Icon: Sparkles,
     Mockup: AnaliseMockup,
   },
@@ -47,16 +47,20 @@ export function Process() {
       <div className="container-page py-[100px] lg:py-[140px] relative">
         <div className="text-center max-w-[820px] mx-auto">
           <Reveal>
-            <h2 className="h-mix text-[36px] sm:text-[44px] lg:text-[54px] text-foreground">
-              Em apenas 8 semanas,
-              <br />
-              o escritório <em>opera sozinho</em>.
+            <span className="label-chip">
+              <span className="dot" />
+              Como funciona
+            </span>
+          </Reveal>
+          <Reveal delay={0.05}>
+            <h2 className="h-mix mt-6 text-[36px] sm:text-[44px] lg:text-[54px] text-foreground">
+              Da primeira conversa ao time <em>operando sozinho</em>.
             </h2>
           </Reveal>
 
           <Reveal delay={0.1}>
             <div className="mt-8 flex flex-wrap justify-center gap-x-10 gap-y-3 text-[15px] text-foreground font-semibold">
-              {["Você escolhe as rotinas", "Sem trocar de sistema", "Time operando sozinho"].map((s) => (
+              {["Sem trocar de sistema", "Sem depender de TI", "Time operando sozinho"].map((s) => (
                 <span key={s} className="inline-flex items-center gap-2">
                   <ChevronRight
                     className="h-4 w-4"

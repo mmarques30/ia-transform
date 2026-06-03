@@ -7,22 +7,22 @@ export function CTAFinal() {
       <div className="container-page">
         <div className="max-w-[820px] mx-auto text-center">
           <Reveal>
-            <h2 className="h-mix text-[40px] sm:text-[48px] lg:text-[60px] text-foreground">
-              45 minutos. Você sai com
+            <h2 className="h-mix text-[40px] sm:text-[48px] lg:text-[60px] text-foreground leading-[1.05]">
+              30 minutos. Você sai com
               <br />
               <em>clareza do seu escritório.</em>
             </h2>
           </Reveal>
           <Reveal delay={0.05}>
-            <p className="mt-6 text-[16px] text-sage leading-[1.65] max-w-[520px] mx-auto">
-              O diagnóstico é sem custo, sem follow-up insistente. Você sai com um mapa de onde o
-              escritório perde hora, mesmo se a gente não fechar.
+            <p className="mt-6 text-[16px] text-sage leading-[1.65] max-w-[560px] mx-auto">
+              Sem genérico, sem enrolação. As 3 frentes que mais consomem hora, priorizadas, com
+              tempo estimado de retorno.
             </p>
           </Reveal>
           <Reveal delay={0.1}>
             <a href="#diagnostico-form" className="mt-10 cta-primary">
               <ArrowUp className="h-4 w-4" />
-              Quero o diagnóstico do meu escritório
+              Quero o diagnóstico
               <span className="arrow">
                 <svg
                   width="14"
@@ -41,6 +41,11 @@ export function CTAFinal() {
                 </svg>
               </span>
             </a>
+          </Reveal>
+          <Reveal delay={0.15}>
+            <p className="mt-5 text-[12px] uppercase tracking-[0.18em] font-semibold text-muted-foreground">
+              Gratuito · 100% online · sem compromisso
+            </p>
           </Reveal>
         </div>
       </div>

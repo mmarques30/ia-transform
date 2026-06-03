@@ -3,14 +3,16 @@ import { Header } from "@/components/sections/Header";
 import { Hero } from "@/components/sections/contabil02/Hero";
 import { Problem } from "@/components/sections/contabil02/Problem";
 import { Solution } from "@/components/sections/contabil02/Solution";
+import { ParaQuem } from "@/components/sections/contabil02/ParaQuem";
 import { Systems } from "@/components/sections/contabil02/Systems";
 import { OliveWave } from "@/components/sections/contabil02/OliveWave";
 import { ClientLogos } from "@/components/sections/ClientLogos";
 import { Process } from "@/components/sections/contabil02/Process";
 import { Impact } from "@/components/sections/contabil02/Impact";
+import { CTAIntermediate } from "@/components/sections/contabil02/CTAIntermediate";
 import { Comparison } from "@/components/sections/Comparison";
-import { Authority } from "@/components/sections/Authority";
-import { FAQ } from "@/components/sections/FAQ";
+import { Authority } from "@/components/sections/contabil02/Authority";
+import { FAQ } from "@/components/sections/contabil02/FAQ";
 import { CTAFinal } from "@/components/sections/contabil02/CTAFinal";
 import { Footer } from "@/components/sections/Footer";
 
@@ -68,12 +70,14 @@ function Contabil02Landing() {
       <Hero />
       <Problem />
       <Solution />
+      <ParaQuem />
+      <Authority />
+      <Impact />
       <Systems />
       <OliveWave />
       <ClientLogos />
       <Process />
-      <Impact />
-      <Authority />
+      <CTAIntermediate />
       <Comparison />
       <FAQ />
       <CTAFinal />
