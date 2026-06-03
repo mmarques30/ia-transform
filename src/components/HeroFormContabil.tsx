@@ -495,7 +495,7 @@ Conte sobre o seu escritório
                 "0 1px 0 0 oklch(1 0 0 / 0.12) inset, 0 14px 32px -10px oklch(0 0 0 / 0.5)",
             }}
           >
-            {loading ? loadingMsg || "Enviando..." : "ENVIAR"}
+            {loading ? loadingMsg || "Enviando..." : "Quero meu Diagnóstico Gratuito"}
             {!loading && <ArrowRight className="h-4 w-4" strokeWidth={2.5} />}
           </button>
 
@@ -503,7 +503,7 @@ Conte sobre o seu escritório
             className="pt-2 text-[11.5px] text-center leading-relaxed"
             style={{ color: "oklch(0.55 0.015 115)" }}
           >
-            Ao enviar, você concorda em receber comunicações da IAplicada por WhatsApp e email.
+            Ao enviar, você autoriza contato por WhatsApp e email.
           </p>
         </form>
       </div>
