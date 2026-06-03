@@ -3,32 +3,27 @@ import { Header } from "@/components/sections/Header";
 import { Hero } from "@/components/sections/contabilcalculo/Hero";
 import { DorResposta } from "@/components/sections/contabilcalculo/DorResposta";
 import { Calculadora } from "@/components/sections/contabilcalculo/Calculadora";
-import { AuthorityCompact } from "@/components/sections/contabilcalculo/AuthorityCompact";
 import { FAQ } from "@/components/sections/contabilcalculo/FAQ";
 import { CTAFinal } from "@/components/sections/contabilcalculo/CTAFinal";
 import { Footer } from "@/components/sections/Footer";
 
 /**
- * /contabilcalculo — versão one-page editorial.
+ * /contabilcalculo — LP focada 100% no diagnóstico.
  *
- * Estrutura como spread de magazine, sem dobras isoladas:
- *   1. Hero — manifesto + dashboard real com callouts dos resultados
- *   2. DorResposta — 2-col editorial (sequência narrativa + virada)
- *   3. Calculadora — heart interativo (warm bg + cards charcoal por
- *      dentro, cria "dark insert" estilo magazine)
- *   4. AuthorityCompact — typography hero dos 3 clientes + assinatura Mari
- *   5. FAQ — Q&A editorial 2-col, tudo aberto, sem accordion
- *   6. CTAFinal — manifesto curto de fechamento
+ * Estrutura enxuta, sem Authority/Quem entrega — essa LP é pra captar
+ * lead via calculadora, não pra apresentar a IAplicada. Authority vive
+ * nas LPs principais (/, /contabil, /contabil02).
  *
- * Background warm sepia-dark (oklch 0.14–0.16, hue 70) único pra essa
- * LP — diferencia visualmente das outras LPs contábeis (que usam
- * charcoal cool, hue 122). Continua dark, só ganha tom mais editorial.
+ *   1. Hero — proposta + mockup lateral
+ *   2. DorResposta — dor narrativa + virada
+ *   3. Calculadora — heart interativo + 6 frentes visuais
+ *   4. FAQ — accordion focado no resultado/benefício
+ *   5. CTAFinal — fechamento
  *
  * Form submission: calculadora posta no form-submit (slug
  * business-contabil) com fields da calc + scores no raw_data.
  */
 
-// Brand charcoal (hue 122), não warm sepia. Coerente com as outras LPs.
 const PAGE_BG = "oklch(0.14 0.018 122)";
 
 export const Route = createFileRoute("/contabilcalculo")({
@@ -71,7 +66,6 @@ function ContabilCalculoLanding() {
       <Hero />
       <DorResposta />
       <Calculadora />
-      <AuthorityCompact />
       <FAQ />
       <CTAFinal />
       <Footer />

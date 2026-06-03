@@ -2,14 +2,11 @@ import { Reveal } from "@/components/Reveal";
 import { ArrowRight } from "lucide-react";
 
 /**
- * Manifesto — abertura da /contabilcalculo no formato one-page art-director.
+ * Hero da /contabilcalculo.
  *
- * Sem chip "eyebrow" tradicional — usa margin meta + número de spread
- * "01" como design. H1 ASSIMÉTRICO à esquerda (não centralizado),
- * mockup full-width abaixo, stats strip como separador editorial.
- *
- * Bg charcoal padrão (sem section-veil) — cria continuidade com as
- * próximas dobras no flow one-page.
+ * Sem top meta + sem numeração — entra direto na proposta.
+ * Layout 2-col equilibrado: copy à esquerda + mockup laptop+tablet
+ * lateral à direita como complemento (não dominante).
  */
 
 export function Hero() {
@@ -17,7 +14,6 @@ export function Hero() {
     <section id="top" className="relative overflow-hidden">
       <div className="h-[72px]" aria-hidden />
 
-      {/* Glow olive sutil no topo */}
       <div
         aria-hidden
         className="pointer-events-none absolute top-0 inset-x-0 h-[70%]"
@@ -27,53 +23,28 @@ export function Hero() {
         }}
       />
 
-      <div className="relative pt-[40px] lg:pt-[56px] pb-[100px] lg:pb-[140px]">
+      <div className="relative pt-[48px] lg:pt-[80px] pb-[80px] lg:pb-[120px]">
         <div className="container-page relative">
-          {/* Top meta — design editorial em vez de chip */}
-          <Reveal>
-            <div className="flex items-start justify-between gap-4 mb-12 lg:mb-20">
-              <p className="text-[10.5px] uppercase tracking-[0.22em] font-semibold text-muted-foreground leading-tight max-w-[260px]">
-                IAplicada · Diagnóstico contábil
-                <br />
-                <span className="opacity-60">2025 · Versão calculadora</span>
-              </p>
-              <p
-                className="num-display text-[20px] lg:text-[24px] leading-none"
-                style={{
-                  color: "var(--color-primary)",
-                  letterSpacing: "-0.02em",
-                }}
-              >
-                01
-              </p>
-            </div>
-          </Reveal>
-
-          {/* H1 ASSIMÉTRICO — alinhado à esquerda, mistura sans + italic */}
-          <div className="grid lg:grid-cols-[1.4fr_1fr] gap-10 lg:gap-16 items-end">
+          {/* GRID 2-col equilibrado: copy esquerda, mockup direita */}
+          <div className="grid lg:grid-cols-[1.2fr_1fr] gap-10 lg:gap-14 items-center">
+            {/* COPY — esquerda */}
             <div>
-              <h1 className="h-mix text-[36px] sm:text-[48px] lg:text-[64px] leading-[0.96] tracking-[-0.025em] text-foreground">
-                Em <em>3 minutos</em>,
-                <br />
-                quantas horas
-                <br />
-                <span className="text-muted-foreground/80">(e quantos R$)</span>
-                <br />
-                seu escritório
-                <br />
-                <em>recupera com IA.</em>
-              </h1>
-            </div>
+              <Reveal>
+                <h1 className="h-mix text-[40px] sm:text-[54px] lg:text-[72px] leading-[0.96] tracking-[-0.025em] text-foreground">
+                  Em <em>3 minutos</em>, quantas horas{" "}
+                  <span className="text-muted-foreground/85">(e quantos R$)</span> seu
+                  escritório recupera com IA.
+                </h1>
+              </Reveal>
 
-            {/* Coluna direita — sub + CTA + microcopy */}
-            <div className="lg:pb-4">
               <Reveal delay={0.1}>
-                <p className="text-[15px] lg:text-[17px] text-sage leading-[1.55]">
+                <p className="mt-7 lg:mt-9 text-[16px] lg:text-[18px] text-sage leading-[1.55] max-w-[520px]">
                   Diagnóstico gratuito. Conta aberta na tela. Sem cartão, sem cadastro.
                 </p>
               </Reveal>
+
               <Reveal delay={0.18}>
-                <div className="mt-7 lg:mt-9">
+                <div className="mt-9 lg:mt-11">
                   <a href="#calculadora" className="cta-primary">
                     Fazer meu diagnóstico
                     <span className="arrow">
@@ -82,29 +53,19 @@ export function Hero() {
                   </a>
                 </div>
               </Reveal>
+
               <Reveal delay={0.24}>
                 <p className="mt-5 text-[10.5px] uppercase tracking-[0.2em] font-semibold text-muted-foreground">
-                  100% grátis · 3 minutos
+                  100% grátis · 3 minutos · Sem cartão
                 </p>
               </Reveal>
             </div>
-          </div>
 
-          {/* MOCKUP full-width abaixo */}
-          <Reveal delay={0.28}>
-            <div className="mt-16 lg:mt-24 max-w-[1080px] mx-auto">
+            {/* MOCKUP — direita, complementar (não dominante) */}
+            <Reveal delay={0.18}>
               <LaptopWithTablet />
-            </div>
-          </Reveal>
-
-          {/* STRIP de stats — separador editorial */}
-          <Reveal delay={0.36}>
-            <div className="mt-16 lg:mt-24 pt-7 border-t border-border grid grid-cols-3 gap-4 lg:gap-12 max-w-[920px] mx-auto">
-              <StatLine value="+700" label="Profissionais usando IAplicada" />
-              <StatLine value="+100" label="Empresas no ecossistema" />
-              <StatLine value="8 sem" label="Até o time operar sozinho" />
-            </div>
-          </Reveal>
+            </Reveal>
+          </div>
         </div>
       </div>
     </section>
@@ -115,16 +76,16 @@ function LaptopWithTablet() {
   return (
     <div className="relative">
       <div
-        className="relative rounded-[14px] overflow-hidden"
+        className="relative rounded-[12px] overflow-hidden"
         style={{
           backgroundColor: "oklch(0.10 0.012 122)",
           border: "1px solid oklch(0.55 0.06 122 / 0.45)",
           boxShadow:
-            "0 40px 100px -40px oklch(0 0 0 / 0.7), 0 0 100px -40px oklch(0.75 0.20 122 / 0.35)",
+            "0 30px 70px -30px oklch(0 0 0 / 0.65), 0 0 70px -30px oklch(0.75 0.20 122 / 0.32)",
         }}
       >
         <div
-          className="flex items-center gap-3 px-4 py-2.5"
+          className="flex items-center gap-3 px-3.5 py-2"
           style={{
             backgroundColor: "oklch(0.13 0.015 122)",
             borderBottom: "1px solid oklch(0.55 0.06 122 / 0.3)",
@@ -132,20 +93,20 @@ function LaptopWithTablet() {
         >
           <span className="flex gap-1.5">
             <span
-              className="h-3 w-3 rounded-full"
+              className="h-2.5 w-2.5 rounded-full"
               style={{ backgroundColor: "oklch(0.65 0.18 25)" }}
             />
             <span
-              className="h-3 w-3 rounded-full"
+              className="h-2.5 w-2.5 rounded-full"
               style={{ backgroundColor: "oklch(0.75 0.16 80)" }}
             />
             <span
-              className="h-3 w-3 rounded-full"
+              className="h-2.5 w-2.5 rounded-full"
               style={{ backgroundColor: "oklch(0.65 0.18 135)" }}
             />
           </span>
           <span
-            className="hidden sm:inline-block flex-1 max-w-[280px] mx-auto text-center text-[10.5px] font-medium rounded px-3 py-1"
+            className="hidden sm:inline-block flex-1 max-w-[220px] mx-auto text-center text-[10px] font-medium rounded px-2.5 py-0.5"
             style={{
               backgroundColor: "oklch(0.18 0.015 122)",
               color: "oklch(0.75 0.02 115)",
@@ -165,13 +126,13 @@ function LaptopWithTablet() {
       </div>
 
       <div
-        className="absolute -bottom-6 -right-2 sm:-bottom-8 sm:-right-4 lg:-bottom-12 lg:-right-12 w-[38%] sm:w-[32%] lg:w-[28%] rounded-[10px] overflow-hidden"
+        className="absolute -bottom-5 -right-3 lg:-bottom-8 lg:-right-8 w-[42%] sm:w-[36%] lg:w-[36%] rounded-[8px] overflow-hidden"
         style={{
           backgroundColor: "oklch(0.10 0.012 122)",
           border: "1px solid oklch(0.55 0.06 122 / 0.5)",
           boxShadow:
-            "0 24px 60px -20px oklch(0 0 0 / 0.65), 0 0 40px -10px oklch(0.75 0.20 122 / 0.3)",
-          padding: "6px",
+            "0 18px 44px -16px oklch(0 0 0 / 0.6), 0 0 30px -10px oklch(0.75 0.20 122 / 0.28)",
+          padding: "5px",
         }}
       >
         <img
@@ -179,26 +140,10 @@ function LaptopWithTablet() {
           alt="Diagnóstico de recuperação tributária rodando no tablet"
           loading="lazy"
           decoding="async"
-          className="w-full h-auto block rounded-[6px]"
+          className="w-full h-auto block rounded-[4px]"
           style={{ display: "block" }}
         />
       </div>
-    </div>
-  );
-}
-
-function StatLine({ value, label }: { value: string; label: string }) {
-  return (
-    <div>
-      <p
-        className="num-display text-[26px] sm:text-[34px] lg:text-[42px] leading-none"
-        style={{ color: "var(--color-primary)", letterSpacing: "-0.02em" }}
-      >
-        {value}
-      </p>
-      <p className="mt-2 text-[11px] lg:text-[12px] uppercase tracking-[0.16em] font-semibold text-muted-foreground leading-tight">
-        {label}
-      </p>
     </div>
   );
 }

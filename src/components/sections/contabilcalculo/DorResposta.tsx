@@ -20,24 +20,6 @@ export function DorResposta() {
   return (
     <section className="relative py-[80px] lg:py-[140px]">
       <div className="container-page relative">
-        {/* Header de spread — número 02 + breadcrumb editorial */}
-        <Reveal>
-          <div className="flex items-start justify-between gap-4 mb-14 lg:mb-20">
-            <p className="text-[10.5px] uppercase tracking-[0.22em] font-semibold text-muted-foreground leading-tight">
-              Spread 02 · A conta que ninguém faz
-            </p>
-            <p
-              className="num-display text-[20px] lg:text-[24px] leading-none"
-              style={{
-                color: "var(--color-primary)",
-                letterSpacing: "-0.02em",
-              }}
-            >
-              02
-            </p>
-          </div>
-        </Reveal>
-
         <div className="grid lg:grid-cols-[5fr_6fr] gap-12 lg:gap-20 items-start">
           {/* ESQUERDA — título serif italic + sequência */}
           <div>
