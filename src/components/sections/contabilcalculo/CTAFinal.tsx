@@ -5,14 +5,14 @@ import { ArrowRight } from "lucide-react";
  * Fechamento editorial — manifesto curto + CTA. Sem caption, sem
  * lista, sem stats. Foco na frase que decide.
  */
-const WARM_BG = "oklch(0.16 0.022 70)";
+const SECTION_BG = "oklch(0.13 0.018 122)";
 
 export function CTAFinal() {
   return (
     <section
       id="cta-final"
       className="relative py-[100px] lg:py-[160px] overflow-hidden"
-      style={{ backgroundColor: WARM_BG }}
+      style={{ backgroundColor: SECTION_BG }}
     >
       {/* Glow sutil pra dar peso ao fechamento */}
       <div
