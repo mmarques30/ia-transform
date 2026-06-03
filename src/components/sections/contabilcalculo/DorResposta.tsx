@@ -1,14 +1,14 @@
 import { Reveal } from "@/components/Reveal";
 
 /**
- * Dor + Resposta — seção editorial 2-col da /contabilcalculo.
- * À esquerda, sequência numerada da dor (espelha o slide do criativo
- * "4 clientes / 2 auxiliares / margem some"). À direita, a resposta
- * em parágrafo editorial. Sem cards, sem ícones — pura tipografia.
+ * Spread 02 — Dor + Resposta em formato editorial magazine.
+ *
+ * Layout 2-col assimétrico, sem eyebrow chip, sem títulos óbvios.
+ * Lado esquerdo = título serif italic enorme da dor + sequência 01/02/03.
+ * Lado direito = resposta em parágrafo editorial com destaque tipográfico.
+ *
+ * Bg charcoal padrão (sem section-veil) — flow contínuo com Hero acima.
  */
-// Bg brand charcoal (hue 122, não warm sepia) pra ficar coerente com o resto.
-const SECTION_BG = "oklch(0.13 0.018 122)";
-const SECTION_BORDER = "oklch(0.3 0.04 122 / 0.5)";
 
 const DOR = [
   "Você fecha 4 clientes novos.",
@@ -18,23 +18,49 @@ const DOR = [
 
 export function DorResposta() {
   return (
-    <section
-      className="relative py-[80px] lg:py-[140px]"
-      style={{ backgroundColor: SECTION_BG }}
-    >
+    <section className="relative py-[80px] lg:py-[140px]">
       <div className="container-page relative">
-        <div className="grid lg:grid-cols-[1fr_1.1fr] gap-12 lg:gap-20 items-start">
-          {/* DOR — sequência narrativa numerada */}
-          <Reveal>
-            <div>
-              <p className="text-[11.5px] uppercase tracking-[0.22em] font-semibold text-muted-foreground">
-                A conta que ninguém faz
-              </p>
-              <div className="mt-10 space-y-9 lg:space-y-12">
+        {/* Header de spread — número 02 + breadcrumb editorial */}
+        <Reveal>
+          <div className="flex items-start justify-between gap-4 mb-14 lg:mb-20">
+            <p className="text-[10.5px] uppercase tracking-[0.22em] font-semibold text-muted-foreground leading-tight">
+              Spread 02 · A conta que ninguém faz
+            </p>
+            <p
+              className="num-display text-[20px] lg:text-[24px] leading-none"
+              style={{
+                color: "var(--color-primary)",
+                letterSpacing: "-0.02em",
+              }}
+            >
+              02
+            </p>
+          </div>
+        </Reveal>
+
+        <div className="grid lg:grid-cols-[5fr_6fr] gap-12 lg:gap-20 items-start">
+          {/* ESQUERDA — título serif italic + sequência */}
+          <div>
+            <Reveal>
+              <h2
+                className="text-[40px] sm:text-[56px] lg:text-[72px] leading-[0.95] tracking-[-0.025em] text-foreground"
+                style={{ fontFamily: '"Instrument Serif", serif' }}
+              >
+                Sua operação
+                <br />
+                <em className="text-muted-foreground/85">não escala</em>
+                <br />
+                sem gente.
+              </h2>
+            </Reveal>
+
+            {/* Sequência da dor */}
+            <Reveal delay={0.1}>
+              <div className="mt-14 lg:mt-16 space-y-8 lg:space-y-10">
                 {DOR.map((line, i) => (
-                  <div key={line}>
+                  <div key={line} className="flex items-baseline gap-5 lg:gap-7">
                     <p
-                      className="num-display text-[36px] lg:text-[44px] leading-none"
+                      className="num-display text-[22px] lg:text-[28px] leading-none shrink-0 w-10"
                       style={{
                         color: "oklch(0.55 0.08 125 / 0.7)",
                         letterSpacing: "-0.02em",
@@ -43,7 +69,7 @@ export function DorResposta() {
                       0{i + 1}
                     </p>
                     <p
-                      className="mt-3 text-[24px] sm:text-[28px] lg:text-[34px] leading-[1.15] text-foreground"
+                      className="text-[20px] sm:text-[24px] lg:text-[28px] leading-[1.2] text-foreground"
                       style={{
                         fontFamily: '"Instrument Serif", serif',
                         fontStyle: "italic",
@@ -55,42 +81,30 @@ export function DorResposta() {
                   </div>
                 ))}
               </div>
+            </Reveal>
+          </div>
 
-              <p
-                className="mt-12 lg:mt-14 pt-6 text-[16px] lg:text-[18px] text-foreground/85 leading-[1.55] max-w-[420px]"
-                style={{ borderTop: `1px solid ${SECTION_BORDER}` }}
-              >
-                O problema não é vender mais. É que sua operação{" "}
-                <span className="text-foreground font-semibold">
-                  não escala sem gente
-                </span>
-                .
-              </p>
-            </div>
-          </Reveal>
-
-          {/* RESPOSTA — parágrafo editorial */}
-          <Reveal delay={0.1}>
-            <div className="lg:pt-3">
-              <p className="text-[11.5px] uppercase tracking-[0.22em] font-semibold text-muted-foreground">
+          {/* DIREITA — resposta editorial */}
+          <Reveal delay={0.15}>
+            <div className="lg:pt-8">
+              <p className="text-[10.5px] uppercase tracking-[0.22em] font-semibold text-muted-foreground">
                 A virada
               </p>
-              <h2 className="h-mix mt-7 lg:mt-9 text-[32px] sm:text-[42px] lg:text-[52px] leading-[1.02] tracking-[-0.02em] text-foreground">
-                A IA <em>não substitui</em> contador.
-              </h2>
-              <p className="mt-7 text-[16px] lg:text-[19px] text-sage leading-[1.6]">
-                Assume o pedaço operacional que tomava o tempo da equipe pra ela voltar ao que
-                paga melhor: consultoria, planejamento tributário, relação com o cliente.
+              <p className="mt-8 text-[18px] lg:text-[22px] leading-[1.45] text-foreground tracking-[-0.01em]">
+                A IA <em className="text-primary">não substitui</em> contador. Assume o pedaço
+                operacional que tomava o tempo da equipe pra ela voltar ao que paga melhor:{" "}
+                <span className="font-semibold">consultoria</span>,{" "}
+                <span className="font-semibold">planejamento</span> e{" "}
+                <span className="font-semibold">relação com cliente</span>.
               </p>
-              <p className="mt-5 text-[16px] lg:text-[19px] text-foreground leading-[1.6]">
-                Em <span className="font-bold">7 dias</span>, primeira rotina automatizada em
-                produção. Em{" "}
-                <span className="font-bold">8 semanas</span>, time autônomo. Sem trocar de
-                sistema, sem depender de TI.
+              <p className="mt-7 text-[15px] lg:text-[17px] text-sage leading-[1.55]">
+                Em <span className="font-bold text-foreground">7 dias</span>, primeira rotina
+                automatizada em produção. Em{" "}
+                <span className="font-bold text-foreground">8 semanas</span>, time autônomo.
+                Sem trocar de sistema. Sem depender de TI.
               </p>
 
-              {/* Linha conectora pra Calculadora */}
-              <div className="mt-12 lg:mt-16 flex items-center gap-4">
+              <div className="mt-12 lg:mt-14 flex items-center gap-4">
                 <span
                   aria-hidden
                   className="h-[1px] flex-1"
@@ -101,10 +115,10 @@ export function DorResposta() {
                 />
                 <a
                   href="#calculadora"
-                  className="text-[12px] uppercase tracking-[0.22em] font-semibold whitespace-nowrap hover:opacity-80 transition-opacity"
+                  className="text-[11px] uppercase tracking-[0.22em] font-semibold whitespace-nowrap hover:opacity-80 transition-opacity"
                   style={{ color: "var(--color-primary)" }}
                 >
-                  Quanto isso vale pra você ↓
+                  Quanto vale pra você ↓
                 </a>
               </div>
             </div>
