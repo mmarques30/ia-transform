@@ -1,67 +1,40 @@
 import { Reveal } from "@/components/Reveal";
 import { FOUNDER } from "@/config/brand";
+import { LogoMark } from "@/components/Logo";
 
 /**
- * Sobre a IAplicada — versão editorial one-page.
+ * Sobre a IAplicada — versão single-spread densa.
  *
- * 3 bandas verticais sequenciais, sem cards isolados:
- *
- *   1. VISÃO DA FUNDADORA
- *      Foto da Mariana 3/4 portrait à esquerda, manifesto + bio à
- *      direita. Quote tipográfica forte como gancho.
- *
- *   2. ECOSSISTEMA
- *      Manifesto curto explicando o que é a IAplicada + 3 stats
- *      gigantes (+100 empresas / +700 profissionais / +80 implementações).
- *
- *   3. RESULTADOS CONECTADOS
- *      3 cases reais (Focus FinTax / PSA Consultores / LCR Contabilidade)
- *      com nome em typography hero + outcome quantificado que prova o
- *      que a fundadora prometeu.
+ * Reformulada após review: cortei as 3 bandas que ampliavam demais a
+ * seção. Agora é UM spread compacto, estratégico, com tudo conectado:
+ * foto Mari à esquerda + bloco editorial à direita contendo logo,
+ * manifesto, passagens enterprise, stats agregados e métricas dos cases
+ * tudo inline. Sem espaço vazio, sem expansão desnecessária.
  *
  * Compartilhada por /, /contabil e /contabil02.
  */
 
-const CASES = [
-  {
-    n: "01",
-    name: "Focus FinTax",
-    vertical: "Recuperação tributária",
-    outcome: "5 KPIs vivos de recuperação. Exportação direta. Fim do retrabalho mensal.",
-    metric: "−68% tempo de fechamento",
-  },
-  {
-    n: "02",
-    name: "PSA Consultores",
-    vertical: "Agronegócio · Tributário",
-    outcome:
-      "Painel multi-cliente com filtros por urgência. Reunião de status virou gestão por exceção.",
-    metric: "+84% capacidade de carteira",
-  },
-  {
-    n: "03",
-    name: "LCR Contabilidade",
-    vertical: "Operação completa",
-    outcome:
-      "Conciliação, apuração e atendimento rodando no fluxo do time. Sem trocar de sistema.",
-    metric: "+700 profissionais ativos",
-  },
+const ENTERPRISE = ["Mercado Livre", "Suzano", "AngloGold Ashanti"];
+
+const RESULT_METRICS = [
+  { label: "Tempo de fechamento", value: "−68%" },
+  { label: "Capacidade de carteira", value: "+84%" },
+  { label: "Margem por cliente", value: "+92%" },
 ];
 
 export function Authority() {
   return (
     <section
       id="time"
-      className="section-veil py-[100px] lg:py-[160px] relative overflow-hidden"
+      className="section-veil py-[80px] lg:py-[130px] relative overflow-hidden"
     >
-      <div className="container-page relative">
-        {/* ════════════════ BANDA 1: VISÃO DA FUNDADORA ════════════════ */}
+      <div className="container-page relative max-w-[1180px]">
         <div className="grid lg:grid-cols-[5fr_7fr] gap-10 lg:gap-16 items-start">
-          {/* FOTO — 3/4 portrait, sem moldura cartesiana */}
+          {/* FOTO — left col */}
           <Reveal>
             <div className="relative">
               <div
-                className="relative aspect-[3/4] w-full max-w-[440px] mx-auto lg:mx-0 rounded-2xl overflow-hidden"
+                className="relative aspect-[3/4] w-full max-w-[420px] mx-auto lg:mx-0 rounded-2xl overflow-hidden"
                 style={{
                   border: "1px solid oklch(0.55 0.06 122 / 0.5)",
                   boxShadow:
@@ -71,8 +44,8 @@ export function Authority() {
                 <img
                   src={FOUNDER.photoSrc}
                   alt={FOUNDER.name}
-                  width={440}
-                  height={585}
+                  width={420}
+                  height={560}
                   loading="lazy"
                   decoding="async"
                   className="absolute inset-0 h-full w-full object-cover"
@@ -84,8 +57,8 @@ export function Authority() {
                   }}
                 />
               </div>
-              {/* Tag inferior na foto */}
-              <div className="mt-5 flex items-center gap-3">
+              {/* Caption discreto abaixo da foto */}
+              <div className="mt-4 flex items-center gap-3">
                 <span
                   aria-hidden
                   className="h-[1px] w-8"
@@ -94,30 +67,39 @@ export function Authority() {
                   }}
                 />
                 <p className="text-[10.5px] uppercase tracking-[0.22em] font-semibold text-muted-foreground">
-                  Fundadora · IAplicada · Desde 2022
+                  Fundadora · IAplicada
                 </p>
               </div>
             </div>
           </Reveal>
 
-          {/* MANIFESTO + BIO */}
+          {/* BLOCO EDITORIAL — right col, denso */}
           <Reveal delay={0.1}>
-            <div className="lg:pt-6">
-              <p
-                className="text-[11.5px] uppercase tracking-[0.22em] font-semibold"
-                style={{ color: "var(--color-primary)" }}
-              >
-                Visão da fundadora
-              </p>
+            <div className="lg:pt-2">
+              {/* Topo — eyebrow + logo IAplicada */}
+              <div className="flex items-center justify-between gap-4 pb-5 border-b border-border">
+                <p
+                  className="text-[11px] uppercase tracking-[0.22em] font-semibold"
+                  style={{ color: "var(--color-primary)" }}
+                >
+                  Quem entrega · Sobre a IAplicada
+                </p>
+                <span className="inline-flex items-center gap-2 opacity-80">
+                  <LogoMark size={20} />
+                  <span className="text-[11px] uppercase tracking-[0.18em] font-bold text-foreground">
+                    IAplicada
+                  </span>
+                </span>
+              </div>
 
-              {/* Quote-hero — manifesto tipográfico */}
+              {/* Quote-hero */}
               <p
-                className="mt-6 lg:mt-7 text-[34px] sm:text-[44px] lg:text-[58px] leading-[1.02] tracking-[-0.025em] text-foreground"
+                className="mt-7 lg:mt-9 text-[30px] sm:text-[40px] lg:text-[52px] leading-[1.02] tracking-[-0.025em] text-foreground"
                 style={{ fontFamily: '"Instrument Serif", serif' }}
               >
                 <span
-                  className="opacity-50 mr-2 align-top text-[44px] sm:text-[56px] lg:text-[72px]"
                   aria-hidden
+                  className="opacity-50 mr-1.5 align-top text-[38px] sm:text-[52px] lg:text-[66px]"
                   style={{ color: "var(--color-primary)" }}
                 >
                   &ldquo;
@@ -125,137 +107,98 @@ export function Authority() {
                 <em>{FOUNDER.manifesto}</em>
               </p>
 
-              <p className="mt-8 text-[15.5px] lg:text-[17px] text-sage leading-[1.6] max-w-[560px]">
+              {/* Bio — passagens enterprise */}
+              <p className="mt-6 text-[15px] lg:text-[16.5px] text-sage leading-[1.6]">
                 {FOUNDER.bio}
               </p>
 
-              <div className="mt-7 flex items-center gap-4">
+              {/* Assinatura + passagens explícitas */}
+              <div className="mt-7 flex flex-col sm:flex-row sm:items-baseline gap-3 sm:gap-5">
                 <p className="text-[15px] lg:text-[16px] font-bold tracking-tight text-foreground">
                   {FOUNDER.name}
                 </p>
-                <span aria-hidden className="text-muted-foreground">·</span>
-                <p className="text-[12.5px] uppercase tracking-[0.18em] font-semibold text-muted-foreground">
-                  {FOUNDER.role}
+                <span aria-hidden className="hidden sm:inline text-muted-foreground">·</span>
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
+                  {ENTERPRISE.map((name, i) => (
+                    <span key={name} className="inline-flex items-center gap-3">
+                      <span
+                        className="text-[12.5px] lg:text-[13px] font-bold tracking-tight text-foreground"
+                        style={{ letterSpacing: "0.01em" }}
+                      >
+                        {name}
+                      </span>
+                      {i < ENTERPRISE.length - 1 && (
+                        <span
+                          aria-hidden
+                          className="opacity-30 text-[12px]"
+                          style={{ color: "var(--color-primary)" }}
+                        >
+                          ·
+                        </span>
+                      )}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Strip de stats — separador editorial */}
+              <div className="mt-9 pt-6 border-t border-border">
+                <p className="text-[10.5px] uppercase tracking-[0.22em] font-semibold text-muted-foreground">
+                  Operação rodando
                 </p>
+                <div className="mt-4 grid grid-cols-3 gap-3 lg:gap-6">
+                  <InlineStat value="+100" label="Empresas" />
+                  <InlineStat value="+700" label="Profissionais" />
+                  <InlineStat value="+80" label="Implementações" />
+                </div>
+              </div>
+
+              {/* Resultados entregues — chips de métricas */}
+              <div className="mt-7 pt-6 border-t border-border">
+                <p className="text-[10.5px] uppercase tracking-[0.22em] font-semibold text-muted-foreground">
+                  Resultados médios entregues
+                </p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {RESULT_METRICS.map((m) => (
+                    <div
+                      key={m.label}
+                      className="inline-flex items-center gap-2 rounded-md px-3 py-1.5"
+                      style={{
+                        backgroundColor: "oklch(0.75 0.20 122 / 0.12)",
+                        border: "1px solid oklch(0.75 0.20 122 / 0.4)",
+                      }}
+                    >
+                      <span
+                        className="num-display text-[15px] lg:text-[16px] leading-none"
+                        style={{ color: "var(--color-primary)" }}
+                      >
+                        {m.value}
+                      </span>
+                      <span className="text-[11px] uppercase tracking-[0.14em] font-semibold text-foreground/85">
+                        {m.label}
+                      </span>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </Reveal>
         </div>
-
-        {/* ════════════════ BANDA 2: ECOSSISTEMA ════════════════ */}
-        <Reveal delay={0.15}>
-          <div className="mt-20 lg:mt-32 pt-14 lg:pt-20 border-t border-border">
-            <div className="max-w-[820px]">
-              <p
-                className="text-[11.5px] uppercase tracking-[0.22em] font-semibold"
-                style={{ color: "var(--color-primary)" }}
-              >
-                Ecossistema IAplicada
-              </p>
-              <h2 className="h-mix mt-6 lg:mt-8 text-[34px] sm:text-[44px] lg:text-[60px] leading-[0.98] tracking-[-0.02em] text-foreground">
-                Operação real. <em>Em produção.</em>
-              </h2>
-              <p className="mt-7 text-[15.5px] lg:text-[18px] text-sage leading-[1.6] max-w-[640px]">
-                A IAplicada não vende slide. Implementa IA dentro do fluxo da empresa, com a
-                equipe que já está lá, sob a marca do cliente. Vertical contábil, fintech,
-                indústria, varejo — todos rodando.
-              </p>
-            </div>
-
-            <div className="mt-12 lg:mt-16 grid grid-cols-3 gap-4 lg:gap-12">
-              <BigStat value="+100" label="Empresas no ecossistema" />
-              <BigStat value="+700" label="Profissionais usando IA" />
-              <BigStat value="+80" label="Implementações em produção" />
-            </div>
-          </div>
-        </Reveal>
-
-        {/* ════════════════ BANDA 3: RESULTADOS CONECTADOS ════════════════ */}
-        <Reveal delay={0.2}>
-          <div className="mt-20 lg:mt-32 pt-14 lg:pt-20 border-t border-border">
-            <div className="max-w-[820px]">
-              <p
-                className="text-[11.5px] uppercase tracking-[0.22em] font-semibold"
-                style={{ color: "var(--color-primary)" }}
-              >
-                Resultados que provam
-              </p>
-              <h2 className="h-mix mt-6 lg:mt-8 text-[34px] sm:text-[44px] lg:text-[60px] leading-[0.98] tracking-[-0.02em] text-foreground">
-                3 clientes. <em>3 operações rodando.</em>
-              </h2>
-            </div>
-
-            <div className="mt-12 lg:mt-16 grid lg:grid-cols-3 gap-10 lg:gap-12">
-              {CASES.map((c) => (
-                <article key={c.name} className="relative">
-                  <p
-                    className="num-display text-[20px] leading-none"
-                    style={{
-                      color: "oklch(0.55 0.08 125 / 0.6)",
-                      letterSpacing: "-0.02em",
-                    }}
-                  >
-                    {c.n}
-                  </p>
-                  <p
-                    className="mt-3 text-[28px] sm:text-[34px] lg:text-[38px] leading-[1.02] text-foreground"
-                    style={{
-                      fontFamily: '"Instrument Serif", serif',
-                      fontStyle: "italic",
-                      letterSpacing: "-0.015em",
-                    }}
-                  >
-                    {c.name}
-                  </p>
-                  <p className="mt-2 text-[10.5px] uppercase tracking-[0.18em] font-semibold text-muted-foreground">
-                    {c.vertical}
-                  </p>
-                  <span
-                    aria-hidden
-                    className="block mt-5 mb-5 h-[1px] w-12"
-                    style={{
-                      background:
-                        "linear-gradient(90deg, var(--color-primary), transparent)",
-                    }}
-                  />
-                  <p className="text-[14px] lg:text-[14.5px] text-sage leading-[1.55]">
-                    {c.outcome}
-                  </p>
-                  {/* Métrica conectada — chip olive embaixo */}
-                  <div
-                    className="mt-5 inline-flex items-center gap-1.5 rounded-md px-2.5 py-1 text-[12px] font-bold"
-                    style={{
-                      backgroundColor: "oklch(0.75 0.20 122 / 0.14)",
-                      border: "1px solid oklch(0.75 0.20 122 / 0.45)",
-                      color: "var(--color-primary)",
-                    }}
-                  >
-                    <span aria-hidden>↗</span>
-                    {c.metric}
-                  </div>
-                </article>
-              ))}
-            </div>
-          </div>
-        </Reveal>
       </div>
     </section>
   );
 }
 
-function BigStat({ value, label }: { value: string; label: string }) {
+function InlineStat({ value, label }: { value: string; label: string }) {
   return (
-    <div>
+    <div className="flex flex-col items-start">
       <p
-        className="num-display text-[36px] sm:text-[52px] lg:text-[72px] leading-none"
-        style={{
-          color: "var(--color-primary)",
-          letterSpacing: "-0.025em",
-        }}
+        className="num-display text-[28px] sm:text-[34px] lg:text-[42px] leading-none"
+        style={{ color: "var(--color-primary)", letterSpacing: "-0.02em" }}
       >
         {value}
       </p>
-      <p className="mt-3 text-[10.5px] lg:text-[12px] uppercase tracking-[0.16em] font-semibold text-muted-foreground leading-tight">
+      <p className="mt-2 text-[10px] lg:text-[11px] uppercase tracking-[0.18em] font-semibold text-muted-foreground">
         {label}
       </p>
     </div>

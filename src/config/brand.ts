@@ -49,9 +49,11 @@ export const FOUNDER = {
   // final_composite.webp anterior (que continua disponível).
   photoSrc: "/brand/mariana-marques.jpg",
   photoFallback: "/brand/final_composite.webp",
-  /** Manifesto da fundadora — frase curta e direta pra hero da Authority. */
-  manifesto: "IA não é hype. É operação que escala.",
-  bio: "Fundei a IAplicada em 2022 depois de ver boas empresas travarem em pilotos de IA. Hoje implementamos IA dentro da operação real de mais de 100 empresas, com a vertical contábil ativa entregando atendimento, conciliação e fechamento com agentes inteligentes.",
+  /** Manifesto da fundadora — frase curta e direta pra hero da Authority.
+      Reflete a passagem por operações enterprise (Mercado Livre, Suzano,
+      AngloGold) onde a Mariana aprendeu o padrão que trouxe pra IAplicada. */
+  manifesto: "Aprendi em ambientes onde caos não é opção.",
+  bio: "Antes da IAplicada, passei por Mercado Livre, Suzano e AngloGold. Trouxe pra cá o padrão de operação que não pode parar. Hoje implementamos IA dentro da operação real de mais de 100 empresas, com vertical contábil ativa entregando atendimento, conciliação e fechamento.",
   socials: {
     linkedin: "https://www.linkedin.com/in/marianaqmarques/",
     instagram: "https://www.instagram.com/marimarquescb/",
