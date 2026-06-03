@@ -113,7 +113,7 @@ export function Solution() {
 
           <Reveal delay={0.13}>
             <p className="mt-3 text-[15px] text-foreground font-semibold leading-[1.5] text-center">
-              Dentro do fluxo que seu time já conhece — sem trocar de sistema, sem depender de TI.
+              Dentro do fluxo que seu time já conhece. Sem trocar de sistema, sem depender de TI.
             </p>
           </Reveal>
 

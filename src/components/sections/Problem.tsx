@@ -37,6 +37,10 @@ export function Problem() {
     if (!sectionRef.current || !headingRef.current) return;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduced) return;
+    // No mobile a section não usa pin/scrub (ver JSX abaixo) — pula a
+    // animação inteira pra que os elementos fiquem visíveis no estado
+    // default. Sem isso o gsap.set(opacity: 0) deixaria tudo invisível.
+    if (window.innerWidth < 1024) return;
 
     const split = new SplitText(headingRef.current, { type: "chars,words" });
 
@@ -99,8 +103,13 @@ export function Problem() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative" style={{ minHeight: "200vh" }}>
-      <div className="section-veil sticky top-0 h-screen w-full overflow-hidden flex items-center">
+    /* Mobile: section flui naturalmente (sem pin, sem overflow-hidden,
+       sem sticky). O scroll-jacking funciona em desktop mas no mobile
+       cortava os últimos cards porque 4 cards stacked excedem 100vh.
+       Desktop mantém 200vh de pin spacer + sticky inner pro scrub do
+       GSAP rolar a animação. */
+    <section ref={sectionRef} className="relative lg:min-h-[200vh]">
+      <div className="section-veil w-full flex items-center py-[80px] lg:py-0 lg:sticky lg:top-0 lg:h-screen lg:overflow-hidden">
         <svg
           aria-hidden
           className="pointer-events-none absolute inset-0 w-full h-full opacity-[0.18]"
@@ -127,7 +136,7 @@ export function Problem() {
         <svg
           ref={dialRef}
           aria-hidden
-          className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[680px] h-[680px]"
+          className="hidden lg:block pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[680px] h-[680px]"
           viewBox="0 0 680 680"
           style={{ transformOrigin: "center center" }}
         >
@@ -197,9 +206,11 @@ export function Problem() {
             ))}
           </div>
 
+          {/* "Sintomas comuns" — escondido no mobile pra evitar parede
+              de texto extra na seção de cards. Desktop mantém. */}
           <p
             ref={symptomRef}
-            className="mt-8 text-center text-[13.5px] text-sage leading-[1.6] max-w-[760px] mx-auto"
+            className="hidden lg:block mt-8 text-center text-[13.5px] text-sage leading-[1.6] max-w-[760px] mx-auto"
           >
             <span className="font-semibold text-foreground">Sintomas comuns:</span>{" "}
             financeiro descentralizado, relatórios manuais, dados espalhados, decisões lentas,

@@ -22,7 +22,7 @@ const SYSTEMS: SystemCase[] = [
     tag: "Tributário",
     title: "Resumo financeiro de recuperação",
     text:
-      "5 KPIs vivos, progresso de compensação e exportação direta pra Excel e PDF — fim do retrabalho mensal.",
+      "5 KPIs vivos, progresso de compensação e exportação direta pra Excel e PDF. Fim do retrabalho mensal.",
     img: "/clients/focus-tax.webp",
     alt: "Dashboard de resumo financeiro da Focus Tax",
   },
@@ -46,7 +46,7 @@ const SYSTEMS: SystemCase[] = [
     tag: "Comunidade",
     title: "Plataforma editorial + mentora IA",
     text:
-      "Fórum categorizado, rituais da semana, diretório de membras e a Uiara — IA que responde dúvidas 24/7.",
+      "Fórum categorizado, rituais da semana, diretório de membras e a Uiara, IA que responde dúvidas 24/7.",
     img: "/clients/uiara-comunidade.webp",
     alt: "Plataforma de comunidade Uiara",
   },
@@ -54,7 +54,7 @@ const SYSTEMS: SystemCase[] = [
     tag: "Indústria",
     title: "Dashboard executivo de margem",
     text:
-      "Receita faturada, margem real por pedido, saldo a receber e tendência mensal — tudo numa tela.",
+      "Receita faturada, margem real por pedido, saldo a receber e tendência mensal. Tudo numa tela.",
     img: "/clients/industria-moveis-dashboard.webp",
     alt: "Dashboard executivo de uma indústria de móveis",
   },
