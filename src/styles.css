@@ -271,6 +271,19 @@
     display: none;
   }
 
+  /* Esconde os arrows nativos de input[type=number] quando renderizado
+     dentro de um Stepper customizado (já tem botões + / − próprios).
+     Aplica via classe pra não afetar inputs numéricos legítimos em
+     outras LPs. */
+  input[type="number"].no-spinner::-webkit-inner-spin-button,
+  input[type="number"].no-spinner::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type="number"].no-spinner {
+    -moz-appearance: textfield;
+  }
+
   /* Dark variant — inputs sobre card preto (HeroForm) */
   .form-input-dark {
     width: 100%;

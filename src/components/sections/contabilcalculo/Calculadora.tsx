@@ -77,93 +77,132 @@ const MATURIDADES: Array<{ key: MaturidadeKey; label: string; Icon: LucideIcon }
 ];
 
 /**
- * Recomendações priorizadas por gargalo. Baseado nos exemplos do brief
- * (página 11 mostrou as 3 do gargalo atendimento). Aqui cobrimos os 6
- * gargalos possíveis.
+ * Recomendações priorizadas por gargalo. Cada uma é uma capability real
+ * da IAplicada, não genérica. Tag de hora-economizada estimada por
+ * recomendação ajuda o lead a sentir o tamanho do ganho concreto.
  */
-const RECOMENDACOES: Record<GargaloKey, Array<{ title: string; text: string }>> = {
+const RECOMENDACOES: Record<
+  GargaloKey,
+  Array<{ tag: string; title: string; text: string; impact: string }>
+> = {
   atendimento: [
     {
-      title: "Agente de WhatsApp para dúvidas recorrentes",
-      text: "Responde 24/7 perguntas frequentes dos clientes (guias, prazos, status).",
+      tag: "Agente de WhatsApp",
+      title: "Atendente IA treinado nos documentos do escritório",
+      text: "Responde 24/7 com tom da casa, sabe quando escalar pra humano. Cliente não precisa esperar pra saber se a guia já saiu.",
+      impact: "~70% das dúvidas resolvidas sem o time",
     },
     {
-      title: "Triagem inteligente de e-mails",
-      text: "Classifica, prioriza e responde automaticamente mensagens simples.",
+      tag: "Triagem fiscal",
+      title: "Classificação automática de e-mails por intenção",
+      text: "Lê e identifica se é dúvida fiscal, pedido de guia, problema de cliente. Prioriza, redireciona e responde os simples sozinho.",
+      impact: "Time deixa de abrir 60% dos e-mails recebidos",
     },
     {
-      title: "Base de conhecimento conversacional",
-      text: "Cliente consulta regras fiscais e do escritório em linguagem natural.",
+      tag: "Base conversacional",
+      title: "RAG dos manuais e regras fiscais do escritório",
+      text: "Carrega PDFs, planilhas e regras do escritório. Cliente pergunta em linguagem natural, IA responde citando a fonte certa.",
+      impact: "Cada cliente vira self-service de 1ª linha",
     },
   ],
   conciliacao: [
     {
-      title: "Conciliação bancária automatizada",
-      text: "Match de extrato com lançamentos em lote, sinaliza divergências antes do fechamento.",
+      tag: "Lançamentos por contexto",
+      title: "Classificação contábil aprendida do histórico do escritório",
+      text: "IA estuda os lançamentos antigos por cliente, identifica os padrões e classifica novos em lote — auditável e revisável.",
+      impact: "75% dos lançamentos sem toque humano",
     },
     {
-      title: "Lançamentos por contexto e regra",
-      text: "IA classifica histórico baseado em padrões aprendidos do escritório.",
+      tag: "Match extrato × lançamento",
+      title: "Conciliação bancária em lote por contexto",
+      text: "Cruza extrato, NF e lançamento por valor, data, descrição e padrões. Sinaliza só o que precisa de olho humano.",
+      impact: "Equipe fecha mês 2 dias antes do prazo",
     },
     {
-      title: "Validação inteligente de outliers",
-      text: "Sinaliza padrões anômalos que indicam erro ou fraude antes do envio.",
+      tag: "Validador de outliers",
+      title: "Detecção de anomalias antes do fechamento",
+      text: "Compara cliente contra cliente e contra o histórico dele. Pega divergência, fraude e erro de digitação antes do envio.",
+      impact: "Reduz a 0 o risco de erro fiscal",
     },
   ],
   apuracao: [
     {
-      title: "Apuração assistida por IA",
-      text: "Calcula impostos sobre movimentações classificadas, com memória de cálculo automática.",
+      tag: "Apuração assistida",
+      title: "Cálculo de impostos com memória automática",
+      text: "Lê o movimento já classificado, aplica o regime certo, gera apuração e memória de cálculo em PDF pronta pra cliente.",
+      impact: "De 1 dia para 30 minutos por cliente",
     },
     {
-      title: "Conferência cruzada automatizada",
-      text: "Compara apuração contra notas, extratos e obrigações pra pegar inconsistência.",
+      tag: "Conferência cruzada",
+      title: "Cruzamento automático notas × extrato × obrigações",
+      text: "Compara as 3 fontes, sinaliza inconsistência por cliente com prioridade. Sem precisar fechar tudo manualmente.",
+      impact: "70% menos retrabalho na revisão",
     },
     {
-      title: "Geração de revisões antes do envio",
-      text: "Sinaliza divergências por cliente, prioriza pelo time revisar onde importa.",
+      tag: "Pré-revisão por cliente",
+      title: "Ranking dos clientes que precisam de olho humano",
+      text: "IA prioriza quem tem mais inconsistência, quem mudou de regime, quem está próximo de auto-arbitramento. Time revisa só os críticos.",
+      impact: "Sênior foca onde tem risco real",
     },
   ],
   guias: [
     {
-      title: "Emissão automatizada de guias",
-      text: "Gera guias com base na apuração, prontas pra envio. Sem retrabalho manual.",
+      tag: "Emissão automatizada",
+      title: "Geração e envio de guias com calendário próprio",
+      text: "Gera guia de cada obrigação, anexa documentos, programa o envio antes do prazo. Cliente recebe sem cobrar.",
+      impact: "0 guias atrasadas por esquecimento",
     },
     {
-      title: "Calendário fiscal inteligente",
-      text: "Avisa prazos próximos por cliente, com priorização e checklist do que falta.",
+      tag: "Anexação inteligente",
+      title: "Organização automática de documentos por obrigação",
+      text: "Lê PDFs, identifica o que é (DARF, NF, extrato), arquiva por obrigação e cliente. Acesso instantâneo na próxima vez.",
+      impact: "Tempo de busca de doc cai pra zero",
     },
     {
-      title: "Anexação automática de documentos",
-      text: "Pega documentos do escritório e do cliente, organiza por obrigação.",
+      tag: "Validação fiscal",
+      title: "Checagem da guia contra a apuração antes do envio",
+      text: "Confere se valor, código e cliente batem com a apuração. Se não bater, pausa e avisa o time.",
+      impact: "Erro fiscal vira exceção, não rotina",
     },
   ],
   onboarding: [
     {
-      title: "Onboarding automatizado de cliente",
-      text: "Coleta documentos, valida CNPJ e regime, gera contrato. Em horas, não semanas.",
+      tag: "Onboarding via WhatsApp",
+      title: "Cliente novo responde no WhatsApp, IA cadastra",
+      text: "Faz as 12 perguntas de cadastro em conversa natural, valida CNPJ, regime e documentos exigidos. Em 30 min, cadastro completo.",
+      impact: "Onboarding de 5 dias vira 1 hora",
     },
     {
-      title: "Importação inteligente de histórico",
-      text: "Migra dados do sistema antigo do cliente direto pro fluxo do escritório.",
+      tag: "Importação ERP-to-ERP",
+      title: "Migração inteligente do sistema antigo do cliente",
+      text: "Lê backup ou exportação do sistema anterior. Mapeia plano de contas, histórico de saldos, classifica e importa pro fluxo do escritório.",
+      impact: "Migração que levava semanas vira 1 dia",
     },
     {
-      title: "Checklist conversacional via WhatsApp",
-      text: "Cliente novo responde e a IA preenche o cadastro automaticamente.",
+      tag: "Contratação automatizada",
+      title: "Geração de contrato + nota com dados validados",
+      text: "Pega CNPJ, regime, porte, gera contrato com cláusulas certas e nota de honorário no padrão do escritório.",
+      impact: "Cliente novo entra no fluxo em horas",
     },
   ],
   relatorios: [
     {
-      title: "Relatórios gerenciais automatizados",
-      text: "Gerados mensalmente com gráficos e narrativa em linguagem natural.",
+      tag: "Relatório com narrativa",
+      title: "DRE, fluxo e indicadores com análise em linguagem natural",
+      text: "Gera o relatório padrão + um parágrafo explicando o que mudou no mês, o que vale atenção e onde o cliente deveria agir.",
+      impact: "Relatório vira consultoria embutida",
     },
     {
-      title: "Painel cliente-pronto em tempo real",
-      text: "DRE, fluxo e indicadores atualizados sem ninguém puxar dados manualmente.",
+      tag: "Painel cliente-pronto",
+      title: "Portal do cliente com KPIs vivos atualizados pela IA",
+      text: "Cliente entra e vê DRE, fluxo, comparação mês a mês. Tudo atualizado sem ninguém puxar planilha.",
+      impact: "Reuniões mensais ficam mais ricas",
     },
     {
-      title: "Alertas proativos por cliente",
-      text: "Sinaliza variações relevantes antes do cliente perguntar. Vira consultoria.",
+      tag: "Alertas proativos",
+      title: "IA antecipa o que o cliente vai perguntar",
+      text: "Detecta variação relevante (queda de margem, atraso de fornecedor, mudança de regime) e dispara alerta antes do cliente ligar.",
+      impact: "Escritório vira parceiro estratégico",
     },
   ],
 };
@@ -1039,126 +1078,204 @@ function ResultadoStep({
 }) {
   const recs = RECOMENDACOES[gargalo];
   const primeiroNome = lead.nome.trim().split(/\s+/)[0] || "você";
+  const reducaoPct = Math.round(
+    (resultado.totalHorasLiberadas / resultado.totalHorasAtuais) * 100,
+  );
   return (
     <div>
-      <div className="text-center">
-        <span
-          className="inline-flex items-center gap-2 text-[11.5px] uppercase tracking-[0.2em] font-semibold"
-          style={{ color: "var(--color-primary)" }}
-        >
-          <CheckCircle2 className="h-3.5 w-3.5" strokeWidth={2.5} />
-          Diagnóstico personalizado para {primeiroNome}
-        </span>
-        <h3 className="h-mix mt-3 text-[24px] sm:text-[30px] lg:text-[36px] text-foreground leading-[1.15]">
-          Veja o impacto real da IA no seu escritório
-        </h3>
-      </div>
-
-      {/* 3 KPI cards */}
-      <div className="mt-7 grid grid-cols-1 sm:grid-cols-3 gap-3">
-        <KPICard
-          Icon={Clock}
-          label="Horas/mês liberadas"
-          value={`${resultado.totalHorasLiberadas}h`}
-          tint="emerald"
-        />
-        <KPICard
-          Icon={TrendingDown}
-          label="Economia/mês"
-          value={formatR$(resultado.economiaMensal)}
-          tint="blue"
-        />
-        <KPICard
-          Icon={Users}
-          label="Equivalente a"
-          value={`${resultado.fteEquivalente} FTE`}
-          tint="amber"
-        />
-      </div>
-
-      {/* Economia anual em destaque */}
+      {/* HERO BANNER — número anual é o primeiro elemento.
+          Background com gradient + glow olive forte. */}
       <div
-        className="mt-4 rounded-2xl p-5 lg:p-6 text-center"
+        className="relative rounded-2xl p-6 lg:p-8 text-center overflow-hidden"
         style={{
-          backgroundColor: "oklch(0.13 0.012 122)",
-          border: "1px solid oklch(0.35 0.04 125 / 0.5)",
+          background:
+            "linear-gradient(135deg, oklch(0.13 0.02 122) 0%, oklch(0.18 0.04 122) 100%)",
+          border: "1.5px solid oklch(0.75 0.20 122 / 0.55)",
+          boxShadow: "0 24px 60px -24px oklch(0.75 0.20 122 / 0.4)",
         }}
       >
-        <p className="text-[11.5px] uppercase tracking-[0.2em] font-semibold text-muted-foreground">
-          Economia projetada em 12 meses
-        </p>
-        <p
-          className="num-display mt-2 text-[36px] lg:text-[48px] leading-none"
-          style={{ color: "var(--color-primary)" }}
-        >
-          {formatR$(resultado.economiaAnual)}
-        </p>
+        <div
+          aria-hidden
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(ellipse 70% 100% at 50% 0%, oklch(0.75 0.20 122 / 0.18), transparent 70%)",
+          }}
+        />
+        <div className="relative">
+          <span
+            className="inline-flex items-center gap-2 text-[10.5px] uppercase tracking-[0.22em] font-semibold"
+            style={{ color: "var(--color-primary)" }}
+          >
+            <CheckCircle2 className="h-3.5 w-3.5" strokeWidth={2.5} />
+            Diagnóstico de {primeiroNome}
+          </span>
+          <p className="mt-3 text-[12.5px] uppercase tracking-[0.18em] font-semibold text-muted-foreground">
+            Seu escritório recupera em 12 meses
+          </p>
+          <p
+            className="num-display mt-3 text-[52px] sm:text-[68px] lg:text-[88px] leading-[0.95]"
+            style={{
+              color: "var(--color-primary)",
+              letterSpacing: "-0.02em",
+              textShadow: "0 0 40px oklch(0.75 0.2 122 / 0.4)",
+            }}
+          >
+            {formatR$(resultado.economiaAnual)}
+          </p>
+          <p className="mt-4 text-[14px] lg:text-[16px] text-foreground/90 leading-[1.55] max-w-[480px] mx-auto">
+            <span className="font-bold text-foreground">
+              {resultado.totalHorasLiberadas} horas/mês
+            </span>{" "}
+            de trabalho que sua equipe deixa de gastar em tarefas operacionais. Equivale a{" "}
+            <span className="font-bold text-foreground">{resultado.fteEquivalente} funcionário</span>
+            {" "}em tempo integral.
+          </p>
+        </div>
       </div>
 
-      {/* Tabela tarefa por tarefa */}
+      {/* Comparison row — Hoje vs Com IA */}
+      <div className="mt-5 grid grid-cols-2 gap-3">
+        <ComparisonCard
+          label="Hoje"
+          value={`${resultado.totalHorasAtuais}h/mês`}
+          subValue={formatR$(resultado.totalHorasAtuais * (resultado.economiaMensal / resultado.totalHorasLiberadas || 60))}
+          tone="dim"
+        />
+        <ComparisonCard
+          label="Com IA"
+          value={`${resultado.totalHorasAtuais - resultado.totalHorasLiberadas}h/mês`}
+          subValue={`−${reducaoPct}% do tempo operacional`}
+          tone="primary"
+        />
+      </div>
+
+      {/* Tabela tarefa por tarefa com barras de progresso */}
       <div className="mt-7">
-        <p className="text-[13.5px] font-semibold text-foreground">
-          Veja a conta aberta, tarefa por tarefa
+        <p className="text-[12px] uppercase tracking-[0.18em] font-semibold text-muted-foreground">
+          Conta aberta, tarefa por tarefa
         </p>
-        <div className="mt-3 overflow-x-auto -mx-2 px-2">
-          <table className="w-full min-w-[440px] text-[13.5px]">
-            <thead>
-              <tr className="text-[11.5px] uppercase tracking-[0.14em] text-muted-foreground border-b border-border">
-                <th className="text-left py-2.5 pr-2 font-semibold">Tarefa</th>
-                <th className="text-right py-2.5 px-2 font-semibold">Hoje</th>
-                <th className="text-right py-2.5 px-2 font-semibold">Com IA</th>
-                <th className="text-right py-2.5 pl-2 font-semibold">Economia</th>
-              </tr>
-            </thead>
-            <tbody>
-              {resultado.porTarefa.map((t) => (
-                <tr key={t.key} className="border-b border-border/60">
-                  <td className="py-3 pr-2 text-foreground">{t.label}</td>
-                  <td className="py-3 px-2 text-right text-sage">{t.horasHoje}h</td>
-                  <td className="py-3 px-2 text-right text-sage">{t.horasComIA}h</td>
-                  <td
-                    className="py-3 pl-2 text-right font-bold"
+        <div className="mt-4 space-y-2.5">
+          {resultado.porTarefa.map((t) => {
+            const pctRed = t.horasHoje
+              ? Math.round(((t.horasHoje - t.horasComIA) / t.horasHoje) * 100)
+              : 0;
+            return (
+              <div
+                key={t.key}
+                className="rounded-xl p-3.5 lg:p-4"
+                style={{
+                  backgroundColor: "oklch(0.18 0.025 122 / 0.45)",
+                  border: "1px solid oklch(0.55 0.06 122 / 0.25)",
+                }}
+              >
+                <div className="flex items-center justify-between gap-3 flex-wrap">
+                  <p className="text-[13px] lg:text-[14px] font-semibold text-foreground flex-1 min-w-0">
+                    {t.label}
+                  </p>
+                  <p
+                    className="text-[13.5px] lg:text-[14.5px] font-bold whitespace-nowrap"
                     style={{ color: "var(--color-primary)" }}
                   >
-                    {formatR$(t.economiaR$)}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                    {formatR$(t.economiaR$)}/mês
+                  </p>
+                </div>
+                {/* Progress bar visual: ocupação atual vs com IA */}
+                <div className="mt-2.5 flex items-center gap-2.5">
+                  <span className="text-[10.5px] text-muted-foreground tabular-nums w-12">
+                    {t.horasHoje}h
+                  </span>
+                  <div
+                    className="flex-1 h-2 rounded-full overflow-hidden relative"
+                    style={{ backgroundColor: "oklch(0.10 0.012 122 / 0.7)" }}
+                  >
+                    {/* Barra completa "hoje" — base translúcida */}
+                    <div
+                      className="absolute inset-y-0 left-0 h-full"
+                      style={{
+                        width: "100%",
+                        backgroundColor: "oklch(0.55 0.06 122 / 0.3)",
+                      }}
+                    />
+                    {/* Barra "com IA" — ocupação reduzida em olive */}
+                    <div
+                      className="absolute inset-y-0 left-0 h-full transition-all duration-700"
+                      style={{
+                        width: `${(t.horasComIA / t.horasHoje) * 100}%`,
+                        background:
+                          "linear-gradient(90deg, oklch(0.75 0.20 122 / 0.65), oklch(0.55 0.16 122 / 0.55))",
+                      }}
+                    />
+                  </div>
+                  <span
+                    className="text-[10.5px] font-bold tabular-nums w-12 text-right"
+                    style={{ color: "var(--color-primary)" }}
+                  >
+                    −{pctRed}%
+                  </span>
+                </div>
+              </div>
+            );
+          })}
         </div>
-        <p className="mt-3 text-[11.5px] text-muted-foreground italic">
-          Percentuais de redução baseados em benchmarks do setor contábil (40% a 75% conforme a
-          tarefa).
+        <p className="mt-3 text-[11px] text-muted-foreground italic">
+          Percentuais de redução baseados em benchmarks de +80 implementações da IAplicada.
         </p>
       </div>
 
-      {/* Recomendações */}
-      <div className="mt-7">
-        <p className="text-[13.5px] font-semibold text-foreground flex items-center gap-2">
-          <Sparkles className="h-4 w-4" strokeWidth={2} style={{ color: "var(--color-primary)" }} />
-          Por onde começar (baseado no seu gargalo)
+      {/* Recomendações — agora mais ricas (tag + título + texto + impacto) */}
+      <div className="mt-8">
+        <p className="text-[12px] uppercase tracking-[0.18em] font-semibold text-muted-foreground flex items-center gap-2">
+          <Sparkles className="h-3.5 w-3.5" strokeWidth={2} style={{ color: "var(--color-primary)" }} />
+          Por onde começar · o que a IAplicada constrói pro seu gargalo
         </p>
-        <div className="mt-3 space-y-2.5">
+        <div className="mt-4 space-y-3">
           {recs.map((r, i) => (
             <div
               key={r.title}
-              className="rounded-xl border border-border p-4 flex items-start gap-3"
-              style={{ backgroundColor: "oklch(0.18 0.025 122 / 0.5)" }}
+              className="rounded-2xl p-4 lg:p-5 relative overflow-hidden"
+              style={{
+                backgroundColor: "oklch(0.18 0.025 122 / 0.55)",
+                border: "1px solid oklch(0.55 0.06 122 / 0.35)",
+              }}
             >
-              <span
-                className="num-display shrink-0 inline-flex h-7 w-7 items-center justify-center rounded-full text-[13px]"
-                style={{
-                  backgroundColor: "oklch(0.75 0.20 122 / 0.14)",
-                  border: "1px solid oklch(0.75 0.20 122 / 0.45)",
-                  color: "var(--color-primary)",
-                }}
-              >
-                {i + 1}
-              </span>
-              <div>
-                <p className="text-[14.5px] font-bold text-foreground">{r.title}</p>
-                <p className="mt-1 text-[13px] text-sage leading-[1.5]">{r.text}</p>
+              <div className="flex items-start gap-3.5">
+                <span
+                  className="num-display shrink-0 inline-flex h-8 w-8 items-center justify-center rounded-full text-[13.5px]"
+                  style={{
+                    backgroundColor: "oklch(0.75 0.20 122 / 0.18)",
+                    border: "1px solid oklch(0.75 0.20 122 / 0.55)",
+                    color: "var(--color-primary)",
+                  }}
+                >
+                  {i + 1}
+                </span>
+                <div className="flex-1 min-w-0">
+                  <span
+                    className="inline-block text-[9.5px] uppercase tracking-[0.16em] font-semibold px-2 py-0.5 rounded"
+                    style={{
+                      backgroundColor: "oklch(0.10 0.012 122 / 0.65)",
+                      color: "oklch(0.78 0.08 125)",
+                      border: "1px solid oklch(0.55 0.06 122 / 0.4)",
+                    }}
+                  >
+                    {r.tag}
+                  </span>
+                  <p className="mt-2 text-[14.5px] lg:text-[15.5px] font-bold text-foreground leading-tight">
+                    {r.title}
+                  </p>
+                  <p className="mt-2 text-[13px] text-sage leading-[1.55]">{r.text}</p>
+                  <div
+                    className="mt-3 inline-flex items-center gap-1.5 text-[11.5px] font-semibold rounded-md px-2 py-1"
+                    style={{
+                      backgroundColor: "oklch(0.75 0.20 122 / 0.12)",
+                      color: "var(--color-primary)",
+                    }}
+                  >
+                    <TrendingDown className="h-3 w-3" strokeWidth={2.5} />
+                    {r.impact}
+                  </div>
+                </div>
               </div>
             </div>
           ))}
@@ -1199,6 +1316,59 @@ function ResultadoStep({
       {/* Score interno — comentado, vai pro CRM mas não pra tela */}
       <p className="sr-only" aria-hidden>
         Internal score: {score.total}/100 ({score.tier})
+      </p>
+    </div>
+  );
+}
+
+/**
+ * Card de comparação "Hoje vs Com IA" no topo do resultado.
+ * tone="dim" pra estado atual (cinza), tone="primary" pra estado futuro
+ * (olive). Cria contraste visual imediato.
+ */
+function ComparisonCard({
+  label,
+  value,
+  subValue,
+  tone,
+}: {
+  label: string;
+  value: string;
+  subValue: string;
+  tone: "dim" | "primary";
+}) {
+  const isP = tone === "primary";
+  return (
+    <div
+      className="rounded-2xl p-4 lg:p-5"
+      style={{
+        backgroundColor: isP
+          ? "oklch(0.75 0.20 122 / 0.12)"
+          : "oklch(0.13 0.02 122 / 0.6)",
+        border: isP
+          ? "1.5px solid oklch(0.75 0.20 122 / 0.55)"
+          : "1px solid oklch(0.55 0.06 122 / 0.3)",
+      }}
+    >
+      <p
+        className="text-[10.5px] uppercase tracking-[0.2em] font-semibold"
+        style={{
+          color: isP ? "var(--color-primary)" : "oklch(0.7 0.02 115)",
+        }}
+      >
+        {label}
+      </p>
+      <p
+        className="num-display mt-1.5 text-[22px] lg:text-[28px] leading-none"
+        style={{ color: isP ? "var(--color-primary)" : "var(--color-foreground)" }}
+      >
+        {value}
+      </p>
+      <p
+        className="mt-2 text-[11.5px] leading-tight"
+        style={{ color: isP ? "var(--color-foreground)" : "oklch(0.65 0.015 115)" }}
+      >
+        {subValue}
       </p>
     </div>
   );
@@ -1380,7 +1550,7 @@ function Stepper({
           min={min}
           value={value}
           onChange={(e) => onChange(Math.max(min, Number(e.target.value) || 0))}
-          className={`bg-transparent text-center font-bold text-foreground focus:outline-none ${large ? "text-[18px] lg:text-[22px] w-full" : "text-[16px] w-14"}`}
+          className={`no-spinner bg-transparent text-center font-bold text-foreground focus:outline-none ${large ? "text-[18px] lg:text-[22px] w-full" : "text-[16px] w-14"}`}
           style={{ minWidth: 0 }}
         />
         {suffix && (
