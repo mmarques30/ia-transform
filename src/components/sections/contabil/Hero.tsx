@@ -67,8 +67,11 @@ export function Hero() {
                 </p>
               </Reveal>
 
+              {/* Subhead secundário — escondido no mobile pra aliviar o
+                  excesso de texto na primeira dobra. No desktop continua
+                  visível como contexto adicional. */}
               <Reveal delay={0.15}>
-                <p className="mt-3 lg:mt-4 text-[14.5px] lg:text-[16px] text-sage leading-[1.6] max-w-[540px]">
+                <p className="hidden lg:block mt-3 lg:mt-4 text-[14.5px] lg:text-[16px] text-sage leading-[1.6] max-w-[540px]">
                   Primeira rotina em produção em 7 dias. Time autônomo no fim. Sem promessa de
                   mágica — método.
                 </p>
