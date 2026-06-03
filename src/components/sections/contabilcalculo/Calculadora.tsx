@@ -625,26 +625,8 @@ export function Calculadora() {
         {/* Header da seção — só no estado inicial */}
         {!iniciada && (
           <>
-            {/* Top meta — spread 03 */}
-            <Reveal>
-              <div className="flex items-start justify-between gap-4 mb-14 lg:mb-20">
-                <p className="text-[10.5px] uppercase tracking-[0.22em] font-semibold text-muted-foreground leading-tight">
-                  Spread 03 · O diagnóstico
-                </p>
-                <p
-                  className="num-display text-[20px] lg:text-[24px] leading-none"
-                  style={{
-                    color: "var(--color-primary)",
-                    letterSpacing: "-0.02em",
-                  }}
-                >
-                  03
-                </p>
-              </div>
-            </Reveal>
-
-            <div className="max-w-[920px]">
-              <Reveal delay={0.05}>
+            <div className="max-w-[1080px]">
+              <Reveal>
                 <h2 className="h-mix text-[32px] sm:text-[44px] lg:text-[56px] leading-[0.96] tracking-[-0.025em] text-foreground">
                   Conta aberta.
                   <br />
@@ -652,34 +634,99 @@ export function Calculadora() {
                 </h2>
               </Reveal>
 
-              <Reveal delay={0.1}>
-                <div className="mt-10 lg:mt-14 flex flex-wrap items-center gap-x-5 lg:gap-x-9 gap-y-3 text-[12.5px] lg:text-[14.5px] text-foreground/85">
-                  {["Responda 8 perguntas", "Veja na hora", "Receba pelo WhatsApp"].map(
-                    (step, i) => (
-                      <span key={step} className="inline-flex items-center gap-3">
+              {/* Grid visual das 6 frentes contábeis que serão avaliadas —
+                  extraído da copy contábil (conciliação, atendimento,
+                  apuração, guias, onboarding, relatórios) */}
+              <Reveal delay={0.08}>
+                <div className="mt-12 lg:mt-16">
+                  <p className="text-[11px] uppercase tracking-[0.22em] font-semibold text-muted-foreground">
+                    6 frentes que a calculadora avalia
+                  </p>
+                  <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 lg:gap-3">
+                    {[
+                      { Icon: FileSpreadsheet, label: "Conciliação" },
+                      { Icon: MessageSquare, label: "Atendimento" },
+                      { Icon: Receipt, label: "Apuração" },
+                      { Icon: FileText, label: "Guias" },
+                      { Icon: UserPlus, label: "Onboarding" },
+                      { Icon: BarChart3, label: "Relatórios" },
+                    ].map((f) => (
+                      <div
+                        key={f.label}
+                        className="flex flex-col items-center text-center gap-2.5 rounded-xl px-3 py-4"
+                        style={{
+                          backgroundColor: "oklch(0.16 0.022 122 / 0.5)",
+                          border: "1px solid oklch(0.3 0.04 122 / 0.4)",
+                        }}
+                      >
                         <span
-                          className="num-display text-[16px] lg:text-[20px]"
-                          style={{ color: "var(--color-primary)" }}
+                          className="inline-flex h-9 w-9 items-center justify-center rounded-lg"
+                          style={{
+                            backgroundColor: "oklch(0.75 0.20 122 / 0.14)",
+                            border: "1px solid oklch(0.75 0.20 122 / 0.4)",
+                          }}
                         >
-                          0{i + 1}
-                        </span>
-                        <span className="tracking-tight">{step}</span>
-                        {i < 2 && (
-                          <span
-                            aria-hidden
-                            className="hidden sm:inline ml-3 opacity-30"
+                          <f.Icon
+                            className="h-4 w-4"
+                            strokeWidth={2}
                             style={{ color: "var(--color-primary)" }}
-                          >
-                            ─
-                          </span>
-                        )}
-                      </span>
-                    ),
-                  )}
+                          />
+                        </span>
+                        <p className="text-[12px] font-semibold text-foreground/90 leading-tight">
+                          {f.label}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </Reveal>
 
-              <Reveal delay={0.18}>
+              {/* Fluxo visual: input → resultado → entregáveis */}
+              <Reveal delay={0.14}>
+                <div className="mt-10 lg:mt-12 grid sm:grid-cols-[1fr_auto_1fr_auto_1fr] gap-4 sm:gap-2 items-center">
+                  {[
+                    {
+                      label: "Você responde",
+                      sub: "horas/tarefa + custo/hora do seu time",
+                    },
+                    {
+                      label: "Calculamos",
+                      sub: "% redução por tarefa × seu custo real",
+                    },
+                    {
+                      label: "Você sai com",
+                      sub: "3 frentes priorizadas + projeção 12 meses",
+                    },
+                  ].flatMap((step, i) => {
+                    const node = (
+                      <div key={step.label} className="text-center sm:text-left">
+                        <p
+                          className="text-[13.5px] lg:text-[15px] font-bold text-foreground tracking-tight"
+                        >
+                          {step.label}
+                        </p>
+                        <p className="mt-1 text-[12.5px] text-sage leading-[1.45]">
+                          {step.sub}
+                        </p>
+                      </div>
+                    );
+                    if (i === 2) return [node];
+                    return [
+                      node,
+                      <span
+                        key={`arrow-${i}`}
+                        aria-hidden
+                        className="hidden sm:inline-block text-[18px] opacity-40"
+                        style={{ color: "var(--color-primary)" }}
+                      >
+                        →
+                      </span>,
+                    ];
+                  })}
+                </div>
+              </Reveal>
+
+              <Reveal delay={0.2}>
                 <div className="mt-12 lg:mt-14">
                   <button type="button" onClick={() => setIniciada(true)} className="cta-primary">
                     Começar diagnóstico

@@ -24,21 +24,6 @@ export function CTAFinal() {
       />
 
       <div className="container-page relative">
-        {/* Header de spread */}
-        <Reveal>
-          <div className="flex items-start justify-between gap-4 mb-12 lg:mb-16">
-            <p className="text-[10.5px] uppercase tracking-[0.22em] font-semibold text-muted-foreground leading-tight">
-              Spread 06 · Decisão
-            </p>
-            <p
-              className="num-display text-[20px] lg:text-[24px] leading-none"
-              style={{ color: "var(--color-primary)", letterSpacing: "-0.02em" }}
-            >
-              06
-            </p>
-          </div>
-        </Reveal>
-
         <div className="max-w-[1000px]">
           <Reveal>
             <h2 className="h-mix text-[32px] sm:text-[44px] lg:text-[60px] leading-[0.96] tracking-[-0.025em] text-foreground">
