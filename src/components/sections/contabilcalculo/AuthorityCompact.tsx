@@ -109,11 +109,11 @@ export function AuthorityCompact() {
           <Reveal delay={0.12}>
             <div className="lg:pt-4">
               <p
-                className="text-[44px] sm:text-[60px] lg:text-[78px] leading-[0.98] tracking-[-0.025em] text-foreground"
+                className="text-[28px] sm:text-[36px] lg:text-[44px] leading-[1.05] tracking-[-0.02em] text-foreground"
                 style={{ fontFamily: '"Instrument Serif", serif' }}
               >
                 <span
-                  className="opacity-50 align-top text-[56px] sm:text-[72px] lg:text-[96px] mr-2"
+                  className="opacity-50 align-top text-[36px] sm:text-[44px] lg:text-[56px] mr-2"
                   aria-hidden
                   style={{ color: "var(--color-primary)" }}
                 >
@@ -211,7 +211,7 @@ function BigStat({ value, label }: { value: string; label: string }) {
   return (
     <div>
       <p
-        className="num-display text-[36px] sm:text-[52px] lg:text-[72px] leading-none"
+        className="num-display text-[28px] sm:text-[40px] lg:text-[54px] leading-none"
         style={{ color: "var(--color-primary)", letterSpacing: "-0.025em" }}
       >
         {value}

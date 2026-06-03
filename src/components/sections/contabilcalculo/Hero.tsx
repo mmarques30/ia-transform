@@ -52,7 +52,7 @@ export function Hero() {
           {/* H1 ASSIMÉTRICO — alinhado à esquerda, mistura sans + italic */}
           <div className="grid lg:grid-cols-[1.4fr_1fr] gap-10 lg:gap-16 items-end">
             <div>
-              <h1 className="h-mix text-[44px] sm:text-[64px] lg:text-[96px] leading-[0.92] tracking-[-0.03em] text-foreground">
+              <h1 className="h-mix text-[36px] sm:text-[48px] lg:text-[64px] leading-[0.96] tracking-[-0.025em] text-foreground">
                 Em <em>3 minutos</em>,
                 <br />
                 quantas horas

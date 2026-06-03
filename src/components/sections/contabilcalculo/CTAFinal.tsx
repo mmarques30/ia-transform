@@ -41,7 +41,7 @@ export function CTAFinal() {
 
         <div className="max-w-[1000px]">
           <Reveal>
-            <h2 className="h-mix text-[44px] sm:text-[64px] lg:text-[96px] leading-[0.92] tracking-[-0.03em] text-foreground">
+            <h2 className="h-mix text-[32px] sm:text-[44px] lg:text-[60px] leading-[0.96] tracking-[-0.025em] text-foreground">
               Você não precisa decidir
               <br />
               nada agora.

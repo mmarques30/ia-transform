@@ -627,7 +627,7 @@ export function Calculadora() {
 
             <div className="max-w-[920px]">
               <Reveal delay={0.05}>
-                <h2 className="h-mix text-[44px] sm:text-[60px] lg:text-[88px] leading-[0.92] tracking-[-0.03em] text-foreground">
+                <h2 className="h-mix text-[32px] sm:text-[44px] lg:text-[56px] leading-[0.96] tracking-[-0.025em] text-foreground">
                   Conta aberta.
                   <br />
                   <em>3 minutos.</em>
@@ -1122,7 +1122,7 @@ function ResultadoStep({
             Seu escritório recupera em 12 meses
           </p>
           <p
-            className="num-display mt-3 text-[52px] sm:text-[68px] lg:text-[88px] leading-[0.95]"
+            className="num-display mt-3 text-[40px] sm:text-[52px] lg:text-[68px] leading-[0.95]"
             style={{
               color: "var(--color-primary)",
               letterSpacing: "-0.02em",

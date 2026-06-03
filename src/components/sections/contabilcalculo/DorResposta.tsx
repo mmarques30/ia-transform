@@ -43,7 +43,7 @@ export function DorResposta() {
           <div>
             <Reveal>
               <h2
-                className="text-[40px] sm:text-[56px] lg:text-[72px] leading-[0.95] tracking-[-0.025em] text-foreground"
+                className="text-[28px] sm:text-[36px] lg:text-[48px] leading-[1] tracking-[-0.02em] text-foreground"
                 style={{ fontFamily: '"Instrument Serif", serif' }}
               >
                 Sua operação
