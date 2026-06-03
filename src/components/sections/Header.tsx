@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { ArrowRight } from "lucide-react";
+import { Link, useLocation } from "@tanstack/react-router";
 import { Logo } from "@/components/Logo";
 
 const NAV = [
@@ -9,8 +10,20 @@ const NAV = [
   { href: "#faq", label: "FAQ" },
 ];
 
-export function Header() {
+interface HeaderProps {
+  /**
+   * Caminho da LP de origem desta página (default "/"). Usado pelo clique
+   * no logo: se já estamos na rota destino, faz scroll-to-top; senão,
+   * navega de volta. Necessário pra que o logo numa thank-you page de
+   * uma vertical (ex: /contabil-thank-you) volte pra LP correta da
+   * vertical (/contabil), não pra LP business raiz.
+   */
+  homePath?: string;
+}
+
+export function Header({ homePath = "/" }: HeaderProps) {
   const [scrolled, setScrolled] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -94,15 +107,26 @@ export function Header() {
       </div>
 
       <div className="container-page flex items-center justify-between w-full relative z-10">
-        <a href="#top" className="flex items-center gap-2.5">
+        <Link
+          to={homePath}
+          className="flex items-center gap-2.5"
+          onClick={() => {
+            // Já estamos na LP destino: complementa a navegação com scroll
+            // pro topo. Em rotas diferentes (ex: numa thank-you page), o
+            // Link cuida da navegação real.
+            if (location.pathname === homePath) {
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }
+          }}
+        >
           <Logo size={26} />
           <span
             className="hidden sm:inline text-muted-foreground text-[13px] font-normal border-l border-border pl-3 ml-1"
             style={{ letterSpacing: "0.02em" }}
           >
-            Business
+            {homePath === "/contabil" ? "Contábil" : "Business"}
           </span>
-        </a>
+        </Link>
 
         <nav className="hidden lg:flex items-center gap-8">
           {NAV.map((item) => (

@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { Renderer, Program, Mesh, Triangle } from "ogl";
+import { isInAppBrowser } from "@/lib/useEnv";
 
 /**
  * Background WebGL com identidade da marca IAplicada (4 pétalas + diamond
@@ -134,6 +135,10 @@ export function BrandBackground() {
 
   useEffect(() => {
     if (!containerRef.current) return;
+    // Em WebView nativo de IG/FB/Messenger (95% do tráfego da LP), WebGL
+    // roda travado ou nem renderiza, e ainda gasta GPU. Pulamos init e
+    // o componente vira um background sólido controlado pelo CSS pai.
+    if (isInAppBrowser()) return;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const renderer = new Renderer({

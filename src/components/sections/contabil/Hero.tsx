@@ -43,7 +43,7 @@ export function Hero() {
         />
 
         <div className="container-page relative">
-          <div className="grid lg:grid-cols-[1.05fr_1fr] gap-12 lg:gap-16 items-center">
+          <div className="grid lg:grid-cols-[1.05fr_1fr] gap-8 lg:gap-16 items-center">
             <div>
               <Reveal>
                 <span className="label-chip">
@@ -52,31 +52,48 @@ export function Hero() {
                 </span>
               </Reveal>
 
-              <h1 className="h-mix mt-7 text-[40px] sm:text-[50px] lg:text-[58px] text-foreground">
+              {/*
+                h1 mobile reduzido pra que o form fique visível na primeira
+                dobra do WebView (95% do tráfego). De 40px → 32px no mobile;
+                desktop mantido em 58px.
+              */}
+              <h1 className="h-mix mt-6 lg:mt-7 text-[32px] sm:text-[44px] lg:text-[58px] leading-[1.05] text-foreground">
                 Contratar mais um <em>júnior</em> não vai salvar o seu fechamento.
               </h1>
 
               <Reveal delay={0.1}>
-                <p className="mt-7 text-[17px] lg:text-[19px] text-foreground font-semibold leading-[1.5]">
+                <p className="mt-5 lg:mt-7 text-[16px] lg:text-[19px] text-foreground font-semibold leading-[1.5]">
                   A IAplicada coloca o seu escritório contábil rodando com IA em 2 meses.
                 </p>
               </Reveal>
 
               <Reveal delay={0.15}>
-                <p className="mt-4 text-[16px] text-sage leading-[1.6] max-w-[540px]">
+                <p className="mt-3 lg:mt-4 text-[14.5px] lg:text-[16px] text-sage leading-[1.6] max-w-[540px]">
                   Primeira rotina em produção em 7 dias. Time autônomo no fim. Sem promessa de
                   mágica — método.
                 </p>
               </Reveal>
 
+              {/* ClientsProof — visível apenas no desktop dentro da coluna esquerda. */}
               <Reveal delay={0.18}>
-                <ClientsProof />
+                <div className="hidden lg:block">
+                  <ClientsProof />
+                </div>
               </Reveal>
             </div>
 
             <Reveal delay={0.1}>
-              <div id="diagnostico-form" className="lg:sticky lg:top-24 scroll-mt-24">
+              <div id="diagnostico-form" className="mt-6 lg:mt-0 lg:sticky lg:top-24 scroll-mt-24">
                 <HeroForm />
+              </div>
+            </Reveal>
+
+            {/* ClientsProof — versão mobile vem DEPOIS do form, fora da
+                primeira dobra. No desktop, esta versão fica oculta porque
+                já aparece na coluna esquerda. */}
+            <Reveal delay={0.18}>
+              <div className="lg:hidden">
+                <ClientsProof />
               </div>
             </Reveal>
           </div>

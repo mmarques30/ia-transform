@@ -97,7 +97,7 @@ function ThankYouContabilPage() {
   return (
     <main className="min-h-screen text-foreground">
       <BrandBackground />
-      <Header />
+      <Header homePath="/contabil" />
 
       {/* HERO confirmação */}
       <section
@@ -261,7 +261,7 @@ function ThankYouContabilPage() {
         <div className="container-page">
           <Reveal>
             <div className="text-center">
-              <Link to="/" className="cta-primary">
+              <Link to="/contabil" className="cta-primary">
                 Voltar pro site
                 <span className="arrow">
                   <ArrowRight className="h-3.5 w-3.5" />
