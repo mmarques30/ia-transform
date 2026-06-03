@@ -67,36 +67,30 @@ export function Hero() {
               </p>
             </Reveal>
 
-            {/* STAT-ÂNCORA — vislumbre do resultado em texto puro.
-                Linha fina divisória + frase âncora com o R$ em
-                num-display olive gigante. Sem card, sem moldura. */}
+            {/* STAT-ÂNCORA enxuta — só o número grande + 1 linha de
+                contexto. Antes tinha 4 linhas (intro + caption + valor +
+                outro), virou parede. */}
             <Reveal delay={0.32}>
-              <div className="mt-16 lg:mt-20 max-w-[680px] mx-auto">
+              <div className="mt-14 lg:mt-16 max-w-[640px] mx-auto">
                 <span
                   aria-hidden
-                  className="block h-[1px] w-16 mx-auto mb-7"
+                  className="block h-[1px] w-12 mx-auto mb-6"
                   style={{
                     background:
                       "linear-gradient(90deg, transparent, var(--color-primary), transparent)",
                   }}
                 />
-                <p className="text-[12px] uppercase tracking-[0.2em] font-semibold text-muted-foreground">
-                  Exemplo real · escritório de 5 colaboradores
-                </p>
-                <p className="mt-5 text-[15px] lg:text-[17px] text-sage leading-[1.55]">
-                  Recuperam em média
-                </p>
                 <p
-                  className="num-display mt-2 text-[52px] sm:text-[68px] lg:text-[88px] leading-none"
+                  className="num-display text-[48px] sm:text-[64px] lg:text-[84px] leading-none"
                   style={{
                     color: "var(--color-primary)",
                     letterSpacing: "-0.02em",
                   }}
                 >
-                  R$ 58.428
+                  R$ 58.428/ano
                 </p>
-                <p className="mt-3 text-[14px] lg:text-[15px] text-foreground/85 leading-[1.55]">
-                  em economia anual, com 81 horas/mês liberadas pra trabalho de maior valor.
+                <p className="mt-4 text-[12.5px] uppercase tracking-[0.18em] font-semibold text-muted-foreground">
+                  média recuperada em escritórios com 5 colaboradores
                 </p>
               </div>
             </Reveal>
