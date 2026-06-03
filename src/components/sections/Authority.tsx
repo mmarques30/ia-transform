@@ -16,12 +16,6 @@ import { LogoMark } from "@/components/Logo";
 
 const ENTERPRISE = ["Mercado Livre", "Suzano", "AngloGold Ashanti"];
 
-const RESULT_METRICS = [
-  { label: "Tempo de fechamento", value: "−68%" },
-  { label: "Capacidade de carteira", value: "+84%" },
-  { label: "Margem por cliente", value: "+92%" },
-];
-
 export function Authority() {
   return (
     <section
@@ -67,7 +61,7 @@ export function Authority() {
                   }}
                 />
                 <p className="text-[10.5px] uppercase tracking-[0.22em] font-semibold text-muted-foreground">
-                  Fundadora · IAplicada
+                  <span className="text-foreground">{FOUNDER.name}</span> · Fundadora · IAplicada
                 </p>
               </div>
             </div>
@@ -112,33 +106,28 @@ export function Authority() {
                 {FOUNDER.bio}
               </p>
 
-              {/* Assinatura + passagens explícitas */}
-              <div className="mt-7 flex flex-col sm:flex-row sm:items-baseline gap-3 sm:gap-5">
-                <p className="text-[15px] lg:text-[16px] font-bold tracking-tight text-foreground">
-                  {FOUNDER.name}
-                </p>
-                <span aria-hidden className="hidden sm:inline text-muted-foreground">·</span>
-                <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
-                  {ENTERPRISE.map((name, i) => (
-                    <span key={name} className="inline-flex items-center gap-3">
-                      <span
-                        className="text-[12.5px] lg:text-[13px] font-bold tracking-tight text-foreground"
-                        style={{ letterSpacing: "0.01em" }}
-                      >
-                        {name}
-                      </span>
-                      {i < ENTERPRISE.length - 1 && (
-                        <span
-                          aria-hidden
-                          className="opacity-30 text-[12px]"
-                          style={{ color: "var(--color-primary)" }}
-                        >
-                          ·
-                        </span>
-                      )}
+              {/* Passagens enterprise — nome saiu daqui (foi pra caption
+                  abaixo da foto). Linha agora carrega só os 3 cases. */}
+              <div className="mt-7 flex flex-wrap items-center gap-x-4 gap-y-1">
+                {ENTERPRISE.map((name, i) => (
+                  <span key={name} className="inline-flex items-center gap-3">
+                    <span
+                      className="text-[12.5px] lg:text-[13px] font-bold tracking-tight text-foreground"
+                      style={{ letterSpacing: "0.01em" }}
+                    >
+                      {name}
                     </span>
-                  ))}
-                </div>
+                    {i < ENTERPRISE.length - 1 && (
+                      <span
+                        aria-hidden
+                        className="opacity-30 text-[12px]"
+                        style={{ color: "var(--color-primary)" }}
+                      >
+                        ·
+                      </span>
+                    )}
+                  </span>
+                ))}
               </div>
 
               {/* Strip de stats — separador editorial */}
@@ -147,40 +136,12 @@ export function Authority() {
                   Operação rodando
                 </p>
                 <div className="mt-4 grid grid-cols-3 gap-3 lg:gap-6">
-                  <InlineStat value="+100" label="Empresas" />
+                  <InlineStat value="+40" label="Empresas" />
                   <InlineStat value="+700" label="Profissionais" />
-                  <InlineStat value="+80" label="Implementações" />
+                  <InlineStat value="+100" label="Implementações" />
                 </div>
               </div>
 
-              {/* Resultados entregues — chips de métricas */}
-              <div className="mt-7 pt-6 border-t border-border">
-                <p className="text-[10.5px] uppercase tracking-[0.22em] font-semibold text-muted-foreground">
-                  Resultados médios entregues
-                </p>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {RESULT_METRICS.map((m) => (
-                    <div
-                      key={m.label}
-                      className="inline-flex items-center gap-2 rounded-md px-3 py-1.5"
-                      style={{
-                        backgroundColor: "oklch(0.75 0.20 122 / 0.12)",
-                        border: "1px solid oklch(0.75 0.20 122 / 0.4)",
-                      }}
-                    >
-                      <span
-                        className="num-display text-[15px] lg:text-[16px] leading-none"
-                        style={{ color: "var(--color-primary)" }}
-                      >
-                        {m.value}
-                      </span>
-                      <span className="text-[11px] uppercase tracking-[0.14em] font-semibold text-foreground/85">
-                        {m.label}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
             </div>
           </Reveal>
         </div>
