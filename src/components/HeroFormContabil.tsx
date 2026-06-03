@@ -207,9 +207,11 @@ export function HeroForm({
       const pathname = typeof window !== "undefined" ? window.location.pathname : "";
       const defaultUtmTerm = pathname.startsWith("/contabil02")
         ? "contabil-v2"
-        : pathname.startsWith("/contabil")
-          ? "contabil-v1"
-          : "";
+        : pathname.startsWith("/contabilcalculo")
+          ? "contabil-calculo"
+          : pathname.startsWith("/contabil")
+            ? "contabil-v1"
+            : "";
       const urlUtmTerm = params.get("utm_term");
       const utmTerm = urlUtmTerm && urlUtmTerm.trim() ? urlUtmTerm : defaultUtmTerm;
       const utmContent = params.get("utm_content") ?? "";
