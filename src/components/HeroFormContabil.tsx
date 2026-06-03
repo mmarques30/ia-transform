@@ -495,7 +495,7 @@ Conte sobre o seu escritório
                 "0 1px 0 0 oklch(1 0 0 / 0.12) inset, 0 14px 32px -10px oklch(0 0 0 / 0.5)",
             }}
           >
-            {loading ? loadingMsg || "Enviando..." : "ENVIAR"}
+            {loading ? loadingMsg || "Enviando..." : "Quero meu Diagnóstico Gratuito"}
             {!loading && <ArrowRight className="h-4 w-4" strokeWidth={2.5} />}
           </button>
 
