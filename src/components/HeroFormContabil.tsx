@@ -44,15 +44,6 @@ const COLABORADORES = [
   "+ 50",
 ];
 
-/** Faixa de faturamento anual — sincronizado com o form business-contabil. */
-const FAIXAS = [
-  "menos de R$ 1 milhão",
-  "Entre R$ 1MM e R$ 5MM",
-  "Entre R$ 5MM e R$ 10MM",
-  "Entre R$ 10MM e R$ 50MM",
-  "Acima de R$ 50MM",
-];
-
 /**
  * Microcopy escalonada no botão durante o submit. A Edge Function gasta
  * ~3-5s rodando ~14 queries (form, contato, deal, qualify, etc) — o texto
@@ -200,16 +191,27 @@ export function HeroForm({
 
       const fields = {
         firstname: String(fd.get("firstname") ?? "").trim(),
+        email: String(fd.get("email") ?? "").trim(),
         phone: String(fd.get("phone") ?? "").trim(),
         company: String(fd.get("company") ?? "").trim(),
         numero_de_colaboradores: String(fd.get("numero_de_colaboradores") ?? "").trim(),
-        faixa_de_faturamento_anual: String(fd.get("faixa_de_faturamento_anual") ?? "").trim(),
       };
 
       const utmSource = params.get("utm_source") ?? "";
       const utmMedium = params.get("utm_medium") ?? "";
       const utmCampaign = params.get("utm_campaign") ?? "";
-      const utmTerm = params.get("utm_term") ?? "";
+      // utm_term: se o anúncio não setou, usa fallback baseado na LP de
+      // origem pra diferenciar leads de /contabil vs /contabil02 no
+      // pipeline do CRM. Ad UTM tem prioridade — só preenche default
+      // quando o param está ausente OU vazio.
+      const pathname = typeof window !== "undefined" ? window.location.pathname : "";
+      const defaultUtmTerm = pathname.startsWith("/contabil02")
+        ? "contabil-v2"
+        : pathname.startsWith("/contabil")
+          ? "contabil-v1"
+          : "";
+      const urlUtmTerm = params.get("utm_term");
+      const utmTerm = urlUtmTerm && urlUtmTerm.trim() ? urlUtmTerm : defaultUtmTerm;
       const utmContent = params.get("utm_content") ?? "";
       const fbclid = params.get("fbclid") ?? "";
       const gclid = params.get("gclid") ?? "";
@@ -412,6 +414,18 @@ Conte sobre o seu escritório
             />
           </Field>
 
+          <Field id="email" label="E-mail" required>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              required
+              autoComplete="email"
+              placeholder="seu@email.com"
+              className="form-input"
+            />
+          </Field>
+
           <Field id="phone" label="Telefone com DDD" required>
             <input
               id="phone"
@@ -450,25 +464,6 @@ Conte sobre o seu escritório
               {COLABORADORES.map((c) => (
                 <option key={c} value={c}>
                   {c}
-                </option>
-              ))}
-            </select>
-          </Field>
-
-          <Field id="faixa_de_faturamento_anual" label="Faturamento anual da empresa" required>
-            <select
-              id="faixa_de_faturamento_anual"
-              name="faixa_de_faturamento_anual"
-              required
-              defaultValue=""
-              className="form-input"
-            >
-              <option value="" disabled>
-                Faturamento anual do escritório
-              </option>
-              {FAIXAS.map((f) => (
-                <option key={f} value={f}>
-                  {f}
                 </option>
               ))}
             </select>
