@@ -10,7 +10,19 @@ import {
   CheckCircle2,
   MessageCircle,
   AlertCircle,
+  Minus,
+  Plus,
+  MessageSquare,
+  FileSpreadsheet,
+  Receipt,
+  FileText,
+  UserPlus,
+  BarChart3,
+  ZapOff,
+  Zap,
+  CheckCircle,
 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 import { FORM_ENDPOINT, FORM_HEADERS, captureTrafficContext } from "@/lib/formSubmit";
 
@@ -18,7 +30,7 @@ import { FORM_ENDPOINT, FORM_HEADERS, captureTrafficContext } from "@/lib/formSu
  * CONSTANTES
  * ────────────────────────────────────────────────────────── */
 
-const FORM_SLUG = "business-contabil";
+const FORM_SLUG = "contabil-calculadora";
 
 /** % de redução por tarefa baseado nos benchmarks da IAplicada. */
 const TASK_REDUCTION: Record<TaskKey, number> = {
@@ -39,19 +51,19 @@ const TASKS: Array<{ key: TaskKey; label: string; defaultHoras: number }> = [
   { key: "relatorios", label: "Geração de relatórios gerenciais", defaultHoras: 12 },
 ];
 
-const GARGALOS: Array<{ key: GargaloKey; label: string }> = [
-  { key: "atendimento", label: "Atendimento e dúvidas dos clientes" },
-  { key: "conciliacao", label: "Conciliação e lançamentos" },
-  { key: "apuracao", label: "Apuração e revisões" },
-  { key: "guias", label: "Guias e obrigações acessórias" },
-  { key: "onboarding", label: "Onboarding de novos clientes" },
-  { key: "relatorios", label: "Relatórios gerenciais" },
+const GARGALOS: Array<{ key: GargaloKey; label: string; Icon: LucideIcon }> = [
+  { key: "atendimento", label: "Atendimento e dúvidas", Icon: MessageSquare },
+  { key: "conciliacao", label: "Conciliação e lançamentos", Icon: FileSpreadsheet },
+  { key: "apuracao", label: "Apuração e revisões", Icon: Receipt },
+  { key: "guias", label: "Guias e obrigações", Icon: FileText },
+  { key: "onboarding", label: "Onboarding de novos clientes", Icon: UserPlus },
+  { key: "relatorios", label: "Relatórios gerenciais", Icon: BarChart3 },
 ];
 
-const MATURIDADES: Array<{ key: MaturidadeKey; label: string }> = [
-  { key: "nao-usamos", label: "Não usamos" },
-  { key: "testando", label: "Testando" },
-  { key: "ja-usamos", label: "Já usamos" },
+const MATURIDADES: Array<{ key: MaturidadeKey; label: string; Icon: LucideIcon }> = [
+  { key: "nao-usamos", label: "Não usamos", Icon: ZapOff },
+  { key: "testando", label: "Testando", Icon: Zap },
+  { key: "ja-usamos", label: "Já usamos", Icon: CheckCircle },
 ];
 
 /**
@@ -770,10 +782,12 @@ function EscritorioStep({
         />
         <FieldNumber
           id="calc-custo"
-          label="Custo médio por hora da equipe (R$)"
-          helpText="Inclui salário + encargos. Padrão do mercado: R$ 50 a R$ 80/hora."
+          label="Custo médio por hora da equipe"
+          helpText="Salário + encargos. Padrão do mercado: R$ 50 a R$ 80/hora."
           value={escritorio.custoHora}
           min={1}
+          step={5}
+          prefix="R$"
           onChange={(v) => setEscritorio({ ...escritorio, custoHora: v })}
         />
       </div>
@@ -803,31 +817,25 @@ function HorasStep({
         valores típicos.
       </p>
 
-      <div className="mt-6 space-y-3.5">
+      <div className="mt-6 space-y-3">
         {TASKS.map((t) => (
-          <div key={t.key} className="flex items-center justify-between gap-3">
-            <label htmlFor={`h-${t.key}`} className="text-[13.5px] lg:text-[14.5px] text-foreground flex-1">
+          <div
+            key={t.key}
+            className="flex items-center justify-between gap-3 rounded-xl px-4 py-3"
+            style={{ backgroundColor: "oklch(0.12 0.012 122 / 0.45)" }}
+          >
+            <label
+              htmlFor={`h-${t.key}`}
+              className="text-[13.5px] lg:text-[14.5px] text-foreground flex-1 leading-tight"
+            >
               {t.label}
             </label>
-            <div className="flex items-center gap-2 shrink-0">
-              <input
-                id={`h-${t.key}`}
-                type="number"
-                min={0}
-                value={horas[t.key]}
-                onChange={(e) =>
-                  setHoras({ ...horas, [t.key]: Math.max(0, Number(e.target.value) || 0) })
-                }
-                className="w-20 rounded-lg px-3 py-2 text-[14px] font-semibold text-foreground text-right"
-                style={{
-                  backgroundColor: "oklch(0.12 0.012 122 / 0.6)",
-                  border: "1px solid oklch(0.55 0.06 122 / 0.4)",
-                }}
-              />
-              <span className="text-[11.5px] uppercase tracking-[0.14em] font-semibold text-muted-foreground">
-                h/mês
-              </span>
-            </div>
+            <Stepper
+              id={`h-${t.key}`}
+              value={horas[t.key]}
+              onChange={(v) => setHoras({ ...horas, [t.key]: v })}
+              suffix="h"
+            />
           </div>
         ))}
       </div>
@@ -877,57 +885,97 @@ function GargaloStep({
         Vamos priorizar as recomendações pra essa área.
       </p>
 
-      <div className="mt-6 space-y-2.5">
-        {GARGALOS.map((g) => (
-          <button
-            key={g.key}
-            type="button"
-            onClick={() => setGargalo(g.key)}
-            className="w-full text-left rounded-xl px-4 py-3 text-[14.5px] transition-colors"
-            style={{
-              backgroundColor:
-                gargalo === g.key ? "oklch(0.75 0.20 122 / 0.12)" : "oklch(0.12 0.012 122 / 0.5)",
-              border:
-                gargalo === g.key
-                  ? "1px solid oklch(0.75 0.20 122 / 0.55)"
+      {/* Gargalo — cards 2x3 com ícone */}
+      <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+        {GARGALOS.map((g) => {
+          const active = gargalo === g.key;
+          return (
+            <button
+              key={g.key}
+              type="button"
+              onClick={() => setGargalo(g.key)}
+              className="text-center rounded-xl px-3 py-4 transition-all hover:-translate-y-0.5"
+              style={{
+                backgroundColor: active
+                  ? "oklch(0.75 0.20 122 / 0.14)"
+                  : "oklch(0.12 0.012 122 / 0.5)",
+                border: active
+                  ? "1.5px solid oklch(0.75 0.20 122 / 0.65)"
                   : "1px solid oklch(0.55 0.06 122 / 0.3)",
-              color: gargalo === g.key ? "var(--color-primary)" : "var(--color-foreground)",
-              fontWeight: gargalo === g.key ? 600 : 500,
-            }}
-          >
-            {g.label}
-          </button>
-        ))}
+              }}
+            >
+              <span
+                className="inline-flex h-9 w-9 items-center justify-center rounded-lg"
+                style={{
+                  backgroundColor: active
+                    ? "oklch(0.75 0.20 122 / 0.2)"
+                    : "oklch(0.18 0.025 122 / 0.5)",
+                }}
+              >
+                <g.Icon
+                  className="h-4 w-4"
+                  strokeWidth={2}
+                  style={{
+                    color: active ? "var(--color-primary)" : "oklch(0.6 0.04 122)",
+                  }}
+                />
+              </span>
+              <p
+                className="mt-2.5 text-[12.5px] leading-[1.25]"
+                style={{
+                  color: active ? "var(--color-primary)" : "var(--color-foreground)",
+                  fontWeight: active ? 700 : 500,
+                }}
+              >
+                {g.label}
+              </p>
+            </button>
+          );
+        })}
       </div>
 
+      {/* Maturidade — cards com ícones */}
       <div className="mt-8 pt-6 border-t border-border">
         <p className="text-[14.5px] font-semibold text-foreground">
           Vocês já usam alguma ferramenta com IA hoje?
         </p>
         <div className="mt-4 grid grid-cols-3 gap-2.5">
-          {MATURIDADES.map((m) => (
-            <button
-              key={m.key}
-              type="button"
-              onClick={() => setMaturidade(m.key)}
-              className="rounded-xl px-3 py-2.5 text-[13.5px] transition-colors"
-              style={{
-                backgroundColor:
-                  maturidade === m.key
-                    ? "oklch(0.75 0.20 122 / 0.12)"
+          {MATURIDADES.map((m) => {
+            const active = maturidade === m.key;
+            return (
+              <button
+                key={m.key}
+                type="button"
+                onClick={() => setMaturidade(m.key)}
+                className="text-center rounded-xl px-3 py-4 transition-all hover:-translate-y-0.5"
+                style={{
+                  backgroundColor: active
+                    ? "oklch(0.75 0.20 122 / 0.14)"
                     : "oklch(0.12 0.012 122 / 0.5)",
-                border:
-                  maturidade === m.key
-                    ? "1px solid oklch(0.75 0.20 122 / 0.55)"
+                  border: active
+                    ? "1.5px solid oklch(0.75 0.20 122 / 0.65)"
                     : "1px solid oklch(0.55 0.06 122 / 0.3)",
-                color:
-                  maturidade === m.key ? "var(--color-primary)" : "var(--color-foreground)",
-                fontWeight: maturidade === m.key ? 600 : 500,
-              }}
-            >
-              {m.label}
-            </button>
-          ))}
+                }}
+              >
+                <m.Icon
+                  className="mx-auto h-5 w-5"
+                  strokeWidth={2}
+                  style={{
+                    color: active ? "var(--color-primary)" : "oklch(0.6 0.04 122)",
+                  }}
+                />
+                <p
+                  className="mt-2 text-[13px]"
+                  style={{
+                    color: active ? "var(--color-primary)" : "var(--color-foreground)",
+                    fontWeight: active ? 700 : 500,
+                  }}
+                >
+                  {m.label}
+                </p>
+              </button>
+            );
+          })}
         </div>
       </div>
     </div>
@@ -1206,32 +1254,110 @@ interface FieldNumberProps {
   value: number;
   onChange: (v: number) => void;
   min?: number;
+  step?: number;
   helpText?: string;
+  prefix?: string;
 }
-function FieldNumber({ id, label, value, onChange, min = 0, helpText }: FieldNumberProps) {
+function FieldNumber({
+  id,
+  label,
+  value,
+  onChange,
+  min = 0,
+  step = 1,
+  helpText,
+  prefix,
+}: FieldNumberProps) {
   return (
     <div>
       <label
         htmlFor={id}
-        className="text-[12px] uppercase tracking-[0.14em] font-semibold text-muted-foreground"
+        className="text-[12.5px] lg:text-[13px] font-semibold text-foreground"
       >
         {label}
       </label>
-      <input
-        id={id}
-        type="number"
-        value={value}
-        min={min}
-        onChange={(e) => onChange(Math.max(min, Number(e.target.value) || 0))}
-        className="mt-1.5 w-full rounded-lg px-4 py-2.5 text-[15px] text-foreground focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/40"
-        style={{
-          backgroundColor: "oklch(0.12 0.012 122 / 0.6)",
-          border: "1px solid oklch(0.55 0.06 122 / 0.4)",
-        }}
-      />
+      <div className="mt-2 flex items-center gap-3">
+        <Stepper id={id} value={value} onChange={onChange} min={min} step={step} prefix={prefix} large />
+      </div>
       {helpText && (
-        <p className="mt-1.5 text-[11.5px] text-muted-foreground leading-[1.4]">{helpText}</p>
+        <p className="mt-2 text-[11.5px] text-muted-foreground leading-[1.4]">{helpText}</p>
       )}
+    </div>
+  );
+}
+
+/**
+ * Stepper interativo — input numérico com botões + / - de cada lado.
+ * Touch-friendly e mais intuitivo que digitar.
+ */
+interface StepperProps {
+  id: string;
+  value: number;
+  onChange: (v: number) => void;
+  min?: number;
+  step?: number;
+  suffix?: string;
+  prefix?: string;
+  large?: boolean;
+}
+function Stepper({
+  id,
+  value,
+  onChange,
+  min = 0,
+  step = 1,
+  suffix,
+  prefix,
+  large,
+}: StepperProps) {
+  const dec = () => onChange(Math.max(min, value - step));
+  const inc = () => onChange(value + step);
+  return (
+    <div
+      className={`inline-flex items-stretch rounded-xl overflow-hidden ${large ? "w-full" : ""}`}
+      style={{
+        backgroundColor: "oklch(0.10 0.012 122 / 0.55)",
+        border: "1px solid oklch(0.55 0.06 122 / 0.4)",
+      }}
+    >
+      <button
+        type="button"
+        onClick={dec}
+        aria-label="Diminuir"
+        className="flex items-center justify-center w-10 lg:w-11 transition-colors hover:bg-foreground/5"
+        style={{ color: "var(--color-primary)" }}
+      >
+        <Minus className="h-4 w-4" strokeWidth={2.5} />
+      </button>
+      <div className="flex-1 flex items-center justify-center gap-1.5 px-2 py-2.5 min-w-[80px]">
+        {prefix && (
+          <span className="text-[12.5px] text-muted-foreground">{prefix}</span>
+        )}
+        <input
+          id={id}
+          type="number"
+          inputMode="numeric"
+          min={min}
+          value={value}
+          onChange={(e) => onChange(Math.max(min, Number(e.target.value) || 0))}
+          className={`bg-transparent text-center font-bold text-foreground focus:outline-none ${large ? "text-[18px] lg:text-[22px] w-full" : "text-[16px] w-14"}`}
+          style={{ minWidth: 0 }}
+        />
+        {suffix && (
+          <span className="text-[11.5px] uppercase tracking-[0.12em] font-semibold text-muted-foreground">
+            {suffix}
+          </span>
+        )}
+      </div>
+      <button
+        type="button"
+        onClick={inc}
+        aria-label="Aumentar"
+        className="flex items-center justify-center w-10 lg:w-11 transition-colors hover:bg-foreground/5"
+        style={{ color: "var(--color-primary)" }}
+      >
+        <Plus className="h-4 w-4" strokeWidth={2.5} />
+      </button>
     </div>
   );
 }

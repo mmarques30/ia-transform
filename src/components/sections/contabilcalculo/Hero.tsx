@@ -1,28 +1,27 @@
 import { Reveal } from "@/components/Reveal";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Clock, TrendingDown, Users } from "lucide-react";
 
 /**
- * Hero da /contabilcalculo — CTA leva pra a calculadora (em vez do
- * formulário tradicional). A copy promete uma resposta em 3 min com
- * número exato em R$, alinhando com o criativo "quantas horas perde".
+ * Hero da /contabilcalculo — copy à esquerda + preview visual do
+ * resultado da calculadora à direita. O preview mostra o que o lead
+ * vai ver depois (3 KPIs + economia anual), funcionando como prova
+ * visual de saída antes mesmo de começar.
  *
- * O componente da calculadora vem em PR 2; aqui o CTA aponta pra
- * #calculadora (anchor placeholder).
+ * Layout 2-col no desktop, stack no mobile (preview vem depois do CTA).
  */
 export function Hero() {
   return (
     <section
       id="top"
-      className="relative pb-[80px] lg:pb-[120px] overflow-hidden"
+      className="relative pb-[60px] lg:pb-[80px] overflow-hidden"
       style={{
         background:
           "radial-gradient(ellipse 80% 55% at 50% 0%, oklch(0.22 0.03 122 / 0.5) 0%, transparent 75%)",
       }}
     >
       <div className="h-[72px]" aria-hidden />
-      <MarqueeStrip />
 
-      <div className="relative pt-[48px] lg:pt-[80px] pb-[40px] lg:pb-[60px]">
+      <div className="relative pt-[40px] lg:pt-[64px]">
         <div
           aria-hidden
           className="pointer-events-none absolute hidden lg:block"
@@ -36,62 +35,51 @@ export function Hero() {
             filter: "blur(80px)",
           }}
         />
-        <div
-          aria-hidden
-          className="pointer-events-none absolute hidden lg:block"
-          style={{
-            top: "20%",
-            left: "-10%",
-            width: "40%",
-            height: "50%",
-            background:
-              "radial-gradient(ellipse at center, oklch(0.35 0.05 125 / 0.5) 0%, transparent 70%)",
-            filter: "blur(70px)",
-          }}
-        />
 
         <div className="container-page relative">
-          <div className="max-w-[860px] mx-auto text-center">
-            <Reveal>
-              <span className="label-chip">
-                <span className="dot" />
-                Inteligência artificial para escritório contábil
-              </span>
-            </Reveal>
+          <div className="grid lg:grid-cols-[1fr_1fr] gap-10 lg:gap-14 items-center">
+            {/* Coluna texto */}
+            <div>
+              <Reveal>
+                <span className="label-chip">
+                  <span className="dot" />
+                  Inteligência artificial para escritório contábil
+                </span>
+              </Reveal>
 
-            <h1 className="h-mix mt-6 lg:mt-7 text-[32px] sm:text-[44px] lg:text-[60px] leading-[1.05] text-foreground">
-              Em 3 minutos, descubra quantas <em>horas</em> (e quantos <em>R$</em>) seu
-              escritório contábil pode recuperar com IA.
-            </h1>
+              <h1 className="h-mix mt-6 lg:mt-7 text-[32px] sm:text-[42px] lg:text-[54px] leading-[1.05] text-foreground">
+                Em 3 minutos, descubra quantas <em>horas</em> (e quantos <em>R$</em>) seu
+                escritório pode recuperar com IA.
+              </h1>
 
-            <Reveal delay={0.1}>
-              <p className="mt-6 lg:mt-8 text-[16px] lg:text-[19px] text-sage leading-[1.55] max-w-[680px] mx-auto">
-                Um diagnóstico gratuito que mostra, com a conta aberta, onde sua equipe perde
-                tempo em tarefas que a IA já automatiza e quanto isso custa pra você todo mês.
-              </p>
-            </Reveal>
+              <Reveal delay={0.1}>
+                <p className="mt-5 lg:mt-6 text-[15.5px] lg:text-[17px] text-sage leading-[1.55] max-w-[520px]">
+                  Diagnóstico gratuito que mostra, com a conta aberta, onde sua equipe perde
+                  tempo em tarefas que a IA já automatiza.
+                </p>
+              </Reveal>
 
-            <Reveal delay={0.18}>
-              <div className="mt-10 flex justify-center">
-                <a href="#calculadora" className="cta-primary">
-                  Fazer meu diagnóstico gratuito
-                  <span className="arrow">
-                    <ArrowRight className="h-3.5 w-3.5" strokeWidth={2.5} />
-                  </span>
-                </a>
-              </div>
-            </Reveal>
+              <Reveal delay={0.18}>
+                <div className="mt-8 flex flex-wrap items-center gap-4">
+                  <a href="#calculadora" className="cta-primary">
+                    Fazer meu diagnóstico gratuito
+                    <span className="arrow">
+                      <ArrowRight className="h-3.5 w-3.5" strokeWidth={2.5} />
+                    </span>
+                  </a>
+                </div>
+              </Reveal>
 
-            <Reveal delay={0.24}>
-              <p className="mt-5 text-[12px] uppercase tracking-[0.18em] font-semibold text-muted-foreground">
-                100% gratuito · Resultado na hora · Cerca de 3 minutos · Sem cartão de crédito
-              </p>
-            </Reveal>
+              <Reveal delay={0.24}>
+                <p className="mt-4 text-[11.5px] uppercase tracking-[0.18em] font-semibold text-muted-foreground">
+                  100% gratuito · 3 minutos · Sem cartão
+                </p>
+              </Reveal>
+            </div>
 
-            <Reveal delay={0.3}>
-              <div className="mt-12 flex justify-center">
-                <ClientsProof />
-              </div>
+            {/* Coluna preview do resultado */}
+            <Reveal delay={0.15}>
+              <ResultMockup />
             </Reveal>
           </div>
         </div>
@@ -100,99 +88,121 @@ export function Hero() {
   );
 }
 
-/* Marquee — stats da vertical contábil */
-const MARQUEE_ITEMS = [
-  "+700 profissionais",
-  "+100 empresas",
-  "10 a 100 colaboradores",
-  "Cálculo em 3 minutos",
-  "Sem cartão de crédito",
-];
-
-function MarqueeStrip() {
-  const seq = [...MARQUEE_ITEMS, ...MARQUEE_ITEMS];
-  const FADE = "oklch(0.10 0.012 122)";
+/**
+ * Mockup do que o lead vai ver no fim da calculadora. Números são
+ * ilustrativos (vêm do brief, mesmo exemplo da página 11). Marcado
+ * como "Exemplo" pra não confundir com diagnóstico real.
+ */
+function ResultMockup() {
   return (
     <div
-      className="relative overflow-hidden"
+      className="relative rounded-3xl border p-5 lg:p-6"
       style={{
-        backgroundColor: FADE,
-        borderTop: "1px solid oklch(0.28 0.04 122)",
-        borderBottom: "1px solid oklch(0.28 0.04 122)",
+        backgroundColor: "oklch(0.13 0.015 122 / 0.7)",
+        borderColor: "oklch(0.35 0.04 125 / 0.55)",
+        backdropFilter: "blur(8px)",
+        boxShadow: "0 30px 60px -30px oklch(0 0 0 / 0.65)",
       }}
     >
+      {/* Label "Exemplo" */}
+      <div className="flex items-center justify-between">
+        <span
+          className="inline-flex items-center gap-1.5 text-[10.5px] uppercase tracking-[0.18em] font-semibold px-2.5 py-1 rounded-full"
+          style={{
+            backgroundColor: "oklch(0.75 0.20 122 / 0.14)",
+            border: "1px solid oklch(0.75 0.20 122 / 0.45)",
+            color: "var(--color-primary)",
+          }}
+        >
+          Exemplo de resultado
+        </span>
+        <span className="text-[10px] uppercase tracking-[0.18em] font-semibold text-muted-foreground hidden sm:block">
+          escritório · 5 colaboradores
+        </span>
+      </div>
+
+      {/* 3 KPI tiles */}
+      <div className="mt-5 grid grid-cols-3 gap-2.5">
+        <MiniKPI Icon={Clock} label="Horas/mês" value="81h" tint="emerald" />
+        <MiniKPI Icon={TrendingDown} label="Economia/mês" value="R$ 4.869" tint="blue" />
+        <MiniKPI Icon={Users} label="Equivale a" value="0.5 FTE" tint="amber" />
+      </div>
+
+      {/* Banner economia anual */}
       <div
-        aria-hidden
-        className="pointer-events-none absolute inset-y-0 left-0 z-10 w-20"
-        style={{ background: `linear-gradient(90deg, ${FADE} 0%, transparent 100%)` }}
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-y-0 right-0 z-10 w-20"
-        style={{ background: `linear-gradient(270deg, ${FADE} 0%, transparent 100%)` }}
-      />
-      <div
-        className="ticker-track py-3.5 select-none"
-        style={{ cursor: "default", pointerEvents: "none" }}
-        aria-hidden
+        className="mt-3 rounded-2xl p-5 text-center"
+        style={{
+          backgroundColor: "oklch(0.10 0.012 122)",
+          border: "1px solid oklch(0.35 0.04 125 / 0.45)",
+        }}
       >
-        {seq.map((item, i) => (
-          <span key={i} className="inline-flex items-center gap-8">
-            <span
-              className="text-[11.5px] uppercase tracking-[0.16em] font-semibold whitespace-nowrap"
-              style={{ color: "oklch(0.96 0.012 110)" }}
-            >
-              {item}
+        <p className="text-[10.5px] uppercase tracking-[0.2em] font-semibold text-muted-foreground">
+          Economia em 12 meses
+        </p>
+        <p
+          className="num-display mt-2 text-[32px] lg:text-[40px] leading-none"
+          style={{ color: "var(--color-primary)" }}
+        >
+          R$ 58.428
+        </p>
+      </div>
+
+      {/* Mini "by task" linhas */}
+      <div className="mt-4 space-y-1.5">
+        {[
+          { t: "Conciliação bancária", e: "R$ 1.800" },
+          { t: "Atendimento ao cliente", e: "R$ 1.170" },
+          { t: "Apuração de impostos", e: "R$ 600" },
+        ].map((row) => (
+          <div
+            key={row.t}
+            className="flex items-center justify-between text-[12.5px] px-3 py-2 rounded-lg"
+            style={{ backgroundColor: "oklch(0.10 0.012 122 / 0.5)" }}
+          >
+            <span className="text-foreground/80 truncate pr-2">{row.t}</span>
+            <span className="font-bold whitespace-nowrap" style={{ color: "var(--color-primary)" }}>
+              {row.e}
             </span>
-            <span
-              className="inline-block"
-              style={{ color: "var(--color-primary)", fontSize: 9, lineHeight: 1 }}
-            >
-              ◆
-            </span>
-          </span>
+          </div>
         ))}
+        <p className="pt-2 text-center text-[10.5px] italic text-muted-foreground">
+          + 3 tarefas no resultado completo
+        </p>
       </div>
     </div>
   );
 }
 
-const PROOF_THUMBS = [
-  { src: "/clients/people/person-1.webp", alt: "" },
-  { src: "/clients/people/person-5.webp", alt: "" },
-  { src: "/clients/people/person-2.webp", alt: "" },
-  { src: "/clients/people/person-3.webp", alt: "" },
-  { src: "/clients/people/person-4.webp", alt: "" },
-];
-
-function ClientsProof() {
-  const SIZE = 36;
+function MiniKPI({
+  Icon,
+  label,
+  value,
+  tint,
+}: {
+  Icon: typeof Clock;
+  label: string;
+  value: string;
+  tint: "emerald" | "blue" | "amber";
+}) {
+  const tintMap = {
+    emerald: { bg: "oklch(0.75 0.20 122 / 0.12)", border: "oklch(0.75 0.20 122 / 0.45)" },
+    blue: { bg: "oklch(0.55 0.12 240 / 0.14)", border: "oklch(0.55 0.12 240 / 0.45)" },
+    amber: { bg: "oklch(0.75 0.16 80 / 0.14)", border: "oklch(0.75 0.16 80 / 0.45)" },
+  } as const;
+  const t = tintMap[tint];
   return (
-    <div className="flex items-center gap-4">
-      <div className="flex" aria-hidden>
-        {PROOF_THUMBS.map((t, i) => (
-          <img
-            key={t.src}
-            src={t.src}
-            alt={t.alt}
-            width={SIZE}
-            height={SIZE}
-            loading="lazy"
-            decoding="async"
-            className="rounded-full object-cover"
-            style={{
-              width: SIZE,
-              height: SIZE,
-              marginLeft: i === 0 ? 0 : -10,
-              border: "2px solid var(--color-background)",
-              boxShadow: "0 2px 6px -2px oklch(0 0 0 / 0.5)",
-              zIndex: PROOF_THUMBS.length - i,
-            }}
-          />
-        ))}
-      </div>
-      <p className="text-[13.5px] text-foreground font-semibold leading-tight text-left">
-        +700 profissionais usando a IAplicada dentro das empresas
+    <div
+      className="rounded-xl p-3"
+      style={{ backgroundColor: t.bg, border: `1px solid ${t.border}` }}
+    >
+      <Icon className="h-3.5 w-3.5 text-foreground/70" strokeWidth={2} />
+      <p className="mt-1.5 text-[9.5px] uppercase tracking-[0.14em] font-semibold text-muted-foreground leading-tight">
+        {label}
+      </p>
+      <p
+        className="num-display mt-1 text-[18px] lg:text-[22px] leading-none text-foreground whitespace-nowrap"
+      >
+        {value}
       </p>
     </div>
   );
