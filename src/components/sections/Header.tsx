@@ -124,7 +124,7 @@ export function Header({ homePath = "/" }: HeaderProps) {
             className="hidden sm:inline text-muted-foreground text-[13px] font-normal border-l border-border pl-3 ml-1"
             style={{ letterSpacing: "0.02em" }}
           >
-            {homePath === "/contabil" ? "Contábil" : "Business"}
+            {homePath.startsWith("/contabil") ? "Contábil" : "Business"}
           </span>
         </Link>
 
