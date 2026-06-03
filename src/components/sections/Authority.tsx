@@ -3,15 +3,15 @@ import { LogoMark } from "@/components/Logo";
 
 /**
  * "Sobre a IAplicada" — composição em 4 quadrantes em torno de uma marca
- * central com profundidade em camadas. Inspirado em Stillwood Residences:
- * o centro carrega o símbolo (com sensação de relevo via SVG empilhado) e
- * os 4 cantos respondem à pergunta que o público frio faz quando clica no
- * logo do header: "quem são vocês, de onde veio o método, funciona em
- * escala, e o que isso prova?".
+ * central com peso de marca real. Inspirado em Stillwood Residences:
+ * o centro carrega o símbolo dominante (sem moldura, com profundidade em
+ * camadas SVG) e os 4 cantos respondem à pergunta que o público frio faz
+ * quando clica no logo do header: "quem são vocês, de onde veio o método,
+ * funciona em escala, e o que isso prova?".
  *
- * Substituiu o card com foto da fundadora — a foto colocava o foco na
- * pessoa, e este público está perguntando sobre marca/produto. Mariana
- * volta como assinatura em outro contexto se necessário.
+ * A composição ecossistêmica vem de uma camada SVG atrás de tudo: anéis
+ * concêntricos amplos + 4 linhas diagonais que ligam o centro aos
+ * quadrantes, sugerindo nodos conectados. Zero JS extra.
  */
 const QUADRANTS = [
   {
@@ -66,21 +66,19 @@ export function Authority() {
           </Reveal>
         </div>
 
-        {/* Watermark "operação real" — desktop only, serif outline, baixa
-            opacidade. Dialoga com o "quiet spaces" da referência sem
-            competir com o conteúdo. */}
+        {/* Watermark "operação real" — desktop only */}
         <p
           aria-hidden
           className="hidden lg:block absolute pointer-events-none select-none"
           style={{
-            bottom: "8%",
+            bottom: "6%",
             left: "50%",
             transform: "translateX(-50%)",
             fontFamily: '"Instrument Serif", serif',
-            fontSize: "clamp(160px, 22vw, 280px)",
+            fontSize: "clamp(160px, 22vw, 300px)",
             fontStyle: "italic",
             color: "transparent",
-            WebkitTextStroke: "1px oklch(0.55 0.06 122 / 0.22)",
+            WebkitTextStroke: "1px oklch(0.55 0.06 122 / 0.18)",
             letterSpacing: "-0.04em",
             lineHeight: 1,
             whiteSpace: "nowrap",
@@ -90,42 +88,44 @@ export function Authority() {
           operação real
         </p>
 
-        {/* Composition: 4 quadrants around centered logo */}
-        <div className="relative grid grid-cols-1 lg:grid-cols-[1fr_1.2fr_1fr] gap-y-10 lg:gap-y-16 lg:gap-x-8 z-10">
-          {/* Q1 — top-left */}
-          <Reveal>
-            <Quadrant {...QUADRANTS[0]} corner="tl" />
-          </Reveal>
+        {/* Composição: grid de 4 quadrantes com a marca central no eixo,
+            cercados pela camada de ecossistema (anéis + linhas) em SVG. */}
+        <div className="relative">
+          {/* EcosystemRings — apenas desktop, ocupa toda a área do grid */}
+          <EcosystemRings />
 
-          {/* Center column — desktop spans 2 rows */}
-          <div className="hidden lg:flex lg:row-span-2 items-center justify-center">
-            <CenterMark />
+          <div className="relative grid grid-cols-1 lg:grid-cols-[1fr_1.3fr_1fr] gap-y-12 lg:gap-y-24 lg:gap-x-10 z-10">
+            <Reveal>
+              <Quadrant {...QUADRANTS[0]} corner="tl" />
+            </Reveal>
+
+            {/* Coluna central desktop — span 2 rows */}
+            <div className="hidden lg:flex lg:row-span-2 items-center justify-center">
+              <CenterMark />
+            </div>
+
+            <Reveal delay={0.05}>
+              <Quadrant {...QUADRANTS[1]} corner="tr" />
+            </Reveal>
+
+            {/* Mobile: marca central entre top e bottom rows */}
+            <div className="flex lg:hidden items-center justify-center py-6">
+              <CenterMark />
+            </div>
+
+            <Reveal delay={0.1}>
+              <Quadrant {...QUADRANTS[2]} corner="bl" />
+            </Reveal>
+
+            <Reveal delay={0.15}>
+              <Quadrant {...QUADRANTS[3]} corner="br" />
+            </Reveal>
           </div>
-
-          {/* Q2 — top-right */}
-          <Reveal delay={0.05}>
-            <Quadrant {...QUADRANTS[1]} corner="tr" />
-          </Reveal>
-
-          {/* Mobile-only: center mark entre top e bottom rows */}
-          <div className="flex lg:hidden items-center justify-center py-4">
-            <CenterMark />
-          </div>
-
-          {/* Q3 — bottom-left */}
-          <Reveal delay={0.1}>
-            <Quadrant {...QUADRANTS[2]} corner="bl" />
-          </Reveal>
-
-          {/* Q4 — bottom-right */}
-          <Reveal delay={0.15}>
-            <Quadrant {...QUADRANTS[3]} corner="br" />
-          </Reveal>
         </div>
 
-        {/* Dual CTA — primário (form) + secundário (ler metodologia) */}
+        {/* Dual CTA — primário + secundário com mesmo peso visual de pill */}
         <Reveal delay={0.25}>
-          <div className="mt-14 lg:mt-20 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-5 relative z-10">
+          <div className="mt-14 lg:mt-20 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 relative z-10">
             <a href="#diagnostico-form" className="cta-primary">
               Entender como funciona o diagnóstico
               <span className="arrow">
@@ -147,10 +147,7 @@ export function Authority() {
                 </svg>
               </span>
             </a>
-            <a
-              href="#abordagem"
-              className="inline-flex items-center gap-2 text-[13.5px] font-semibold text-foreground/75 hover:text-foreground transition-colors px-4 py-3 underline-offset-4 hover:underline"
-            >
+            <a href="#abordagem" className="cta-secondary">
               Ler metodologia
               <span aria-hidden>→</span>
             </a>
@@ -188,7 +185,9 @@ function Quadrant({ n, label, text, enterpriseRefs, corner }: QuadrantProps) {
       </p>
       {enterpriseRefs && (
         <div
-          className={`mt-5 flex flex-wrap gap-x-5 gap-y-2 ${isRight ? "lg:justify-end" : ""}`}
+          className={`mt-5 flex flex-wrap gap-x-5 gap-y-2 ${
+            isRight ? "lg:justify-end" : ""
+          }`}
         >
           {enterpriseRefs.map((name) => (
             <span
@@ -206,122 +205,192 @@ function Quadrant({ n, label, text, enterpriseRefs, corner }: QuadrantProps) {
 }
 
 /**
- * Marca central com profundidade — empilha 3 camadas do LogoMark
- * (blur de fundo, drop-shadow olive, camada nítida) num frame quadrado.
- * O anel concêntrico dashed gira lento e dialoga com a referência
- * (Stillwood). Zero JS extra: tudo SVG/CSS estático.
+ * EcosystemRings — camada decorativa que dá a sensação de "rede conectada"
+ * entre os quadrantes e a marca central. Anéis concêntricos grandes +
+ * 4 linhas diagonais finas que partem do centro em direção aos quadrantes,
+ * com nodos discretos onde as linhas tocam o anel externo.
+ *
+ * Posicionada absoluta atrás do grid (z-0). Desktop only — no mobile o
+ * stack vertical já comunica a relação visual sem precisar das linhas.
+ */
+function EcosystemRings() {
+  return (
+    <svg
+      aria-hidden
+      className="hidden lg:block absolute inset-0 w-full h-full pointer-events-none"
+      viewBox="0 0 1200 600"
+      preserveAspectRatio="xMidYMid meet"
+      style={{ zIndex: 1 }}
+    >
+      <defs>
+        <radialGradient id="ring-fade" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stopColor="oklch(0.75 0.20 122)" stopOpacity="0.35" />
+          <stop offset="70%" stopColor="oklch(0.55 0.08 125)" stopOpacity="0.18" />
+          <stop offset="100%" stopColor="oklch(0.55 0.08 125)" stopOpacity="0" />
+        </radialGradient>
+        <linearGradient id="line-fade-tl" x1="600" y1="300" x2="0" y2="0" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="oklch(0.75 0.20 122)" stopOpacity="0.5" />
+          <stop offset="100%" stopColor="oklch(0.55 0.08 125)" stopOpacity="0" />
+        </linearGradient>
+        <linearGradient id="line-fade-tr" x1="600" y1="300" x2="1200" y2="0" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="oklch(0.75 0.20 122)" stopOpacity="0.5" />
+          <stop offset="100%" stopColor="oklch(0.55 0.08 125)" stopOpacity="0" />
+        </linearGradient>
+        <linearGradient id="line-fade-bl" x1="600" y1="300" x2="0" y2="600" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="oklch(0.75 0.20 122)" stopOpacity="0.5" />
+          <stop offset="100%" stopColor="oklch(0.55 0.08 125)" stopOpacity="0" />
+        </linearGradient>
+        <linearGradient id="line-fade-br" x1="600" y1="300" x2="1200" y2="600" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="oklch(0.75 0.20 122)" stopOpacity="0.5" />
+          <stop offset="100%" stopColor="oklch(0.55 0.08 125)" stopOpacity="0" />
+        </linearGradient>
+      </defs>
+
+      {/* Anéis concêntricos — grandes, baixa opacidade. O externo é tracejado;
+          o interno sólido. Centro alinhado com a marca central. */}
+      <circle
+        cx="600"
+        cy="300"
+        r="280"
+        fill="none"
+        stroke="oklch(0.55 0.08 125 / 0.32)"
+        strokeWidth="0.6"
+        strokeDasharray="2 7"
+      />
+      <circle
+        cx="600"
+        cy="300"
+        r="200"
+        fill="none"
+        stroke="oklch(0.55 0.08 125 / 0.22)"
+        strokeWidth="0.6"
+      />
+      <circle
+        cx="600"
+        cy="300"
+        r="130"
+        fill="none"
+        stroke="oklch(0.55 0.08 125 / 0.4)"
+        strokeWidth="0.6"
+      />
+
+      {/* Halo radial sutil atrás da marca central */}
+      <circle cx="600" cy="300" r="180" fill="url(#ring-fade)" />
+
+      {/* 4 linhas diagonais — conectam centro aos quadrantes. Fade gradiente
+          do centro pra fora, sugerindo "energia" emanando da marca. */}
+      <line x1="600" y1="300" x2="180" y2="60" stroke="url(#line-fade-tl)" strokeWidth="0.7" />
+      <line x1="600" y1="300" x2="1020" y2="60" stroke="url(#line-fade-tr)" strokeWidth="0.7" />
+      <line x1="600" y1="300" x2="180" y2="540" stroke="url(#line-fade-bl)" strokeWidth="0.7" />
+      <line x1="600" y1="300" x2="1020" y2="540" stroke="url(#line-fade-br)" strokeWidth="0.7" />
+
+      {/* Nodos nos extremos das linhas — ponto de conexão visual com cada
+          quadrante. */}
+      {[
+        [180, 60],
+        [1020, 60],
+        [180, 540],
+        [1020, 540],
+      ].map(([cx, cy]) => (
+        <g key={`${cx}-${cy}`}>
+          <circle cx={cx} cy={cy} r="3" fill="oklch(0.75 0.20 122 / 0.55)" />
+          <circle
+            cx={cx}
+            cy={cy}
+            r="7"
+            fill="none"
+            stroke="oklch(0.75 0.20 122 / 0.3)"
+            strokeWidth="0.5"
+          />
+        </g>
+      ))}
+    </svg>
+  );
+}
+
+/**
+ * Marca central com profundidade — versão sem moldura. O logo é o
+ * destaque visual da composição: tamanho generoso (160px no desktop),
+ * 4 camadas empilhadas para criar relevo (back blur, mid shadow, glint,
+ * crisp front) e um halo olive radial atrás. Embaixo, stat "+17 PMES
+ * ATIVAS" tipografado como um número de destaque, não como label.
  */
 function CenterMark() {
   return (
-    <div className="relative" style={{ width: 280, height: 280 }}>
-      {/* Outer concentric rings — dashed, rotação lenta */}
-      <svg
-        aria-hidden
-        className="absolute inset-0 ia-anim-rotate-slow"
-        viewBox="0 0 280 280"
-        style={{ animationDuration: "80s" }}
-      >
-        <circle
-          cx="140"
-          cy="140"
-          r="132"
-          fill="none"
-          stroke="oklch(0.55 0.08 125 / 0.4)"
-          strokeWidth="0.5"
-          strokeDasharray="2 6"
+    <div className="relative flex flex-col items-center" style={{ width: 280 }}>
+      <div className="relative" style={{ width: 220, height: 220 }}>
+        {/* Halo radial — olive glow forte, suaviza nas bordas */}
+        <div
+          aria-hidden
+          className="absolute inset-0 m-auto"
+          style={{
+            width: 240,
+            height: 240,
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            borderRadius: "50%",
+            background:
+              "radial-gradient(circle, oklch(0.75 0.20 122 / 0.55) 0%, oklch(0.75 0.20 122 / 0.1) 45%, transparent 70%)",
+            filter: "blur(24px)",
+          }}
         />
-        <circle
-          cx="140"
-          cy="140"
-          r="108"
-          fill="none"
-          stroke="oklch(0.55 0.08 125 / 0.22)"
-          strokeWidth="0.5"
-        />
-      </svg>
 
-      {/* Olive glow atrás do frame */}
-      <div
-        aria-hidden
-        className="absolute"
-        style={{
-          width: 200,
-          height: 200,
-          borderRadius: "50%",
-          background:
-            "radial-gradient(circle, oklch(0.75 0.20 122 / 0.42) 0%, transparent 65%)",
-          filter: "blur(28px)",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-        }}
-      />
-
-      {/* Frame quadrado central com glassmorphism sutil */}
-      <div
-        className="absolute"
-        style={{
-          width: 168,
-          height: 168,
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          border: "1px solid oklch(0.55 0.08 125 / 0.45)",
-          borderRadius: "10px",
-          backgroundColor: "oklch(0.08 0.01 122 / 0.5)",
-          backdropFilter: "blur(8px)",
-          WebkitBackdropFilter: "blur(8px)",
-        }}
-      >
-        {/* Camadas empilhadas do LogoMark — efeito de profundidade */}
+        {/* Camadas empilhadas — efeito de profundidade real */}
         <div className="absolute inset-0 flex items-center justify-center">
-          {/* Camada traseira — escala maior + blur + low opacity */}
+          {/* Back layer — escala maior + blur forte + baixa opacidade */}
           <div
             aria-hidden
             className="absolute"
             style={{
-              transform: "scale(1.2)",
-              filter: "blur(10px)",
-              opacity: 0.35,
+              transform: "scale(1.28)",
+              filter: "blur(14px)",
+              opacity: 0.4,
             }}
           >
-            <LogoMark size={68} />
+            <LogoMark size={160} />
           </div>
-          {/* Camada média — sombra projetada */}
+          {/* Mid layer — sombra projetada olive */}
           <div
             aria-hidden
             className="absolute"
             style={{
-              transform: "scale(1.06)",
-              filter: "drop-shadow(0 8px 28px oklch(0.75 0.20 122 / 0.55))",
-              opacity: 0.7,
+              transform: "scale(1.08) translateY(4px)",
+              filter: "drop-shadow(0 10px 32px oklch(0.75 0.20 122 / 0.65))",
+              opacity: 0.6,
             }}
           >
-            <LogoMark size={68} />
+            <LogoMark size={160} />
           </div>
-          {/* Camada frontal — nítida */}
-          <LogoMark size={76} />
+          {/* Glint — leve highlight branco no topo */}
+          <div
+            aria-hidden
+            className="absolute"
+            style={{
+              transform: "scale(1.02) translateY(-2px)",
+              filter: "drop-shadow(0 -2px 6px oklch(1 0 0 / 0.25))",
+              opacity: 0.5,
+              mixBlendMode: "screen",
+            }}
+          >
+            <LogoMark size={160} />
+          </div>
+          {/* Front layer — nítida, é o que o olho lê */}
+          <LogoMark size={160} />
         </div>
+      </div>
 
-        {/* Labels de canto — meta-info visual à la Stillwood */}
-        <span
-          className="absolute -top-3 left-4 text-[9px] uppercase tracking-[0.22em] font-semibold px-2"
-          style={{
-            color: "oklch(0.78 0.08 125)",
-            backgroundColor: "var(--color-background)",
-          }}
+      {/* Stat em destaque — "+17 PMEs ativas" como número, não como label */}
+      <div className="mt-6 text-center">
+        <p
+          className="num-display text-[28px] leading-none"
+          style={{ color: "var(--color-primary)" }}
         >
-          // iaplicada
-        </span>
-        <span
-          className="absolute -bottom-3 right-4 text-[9px] uppercase tracking-[0.22em] font-semibold px-2"
-          style={{
-            color: "oklch(0.78 0.08 125)",
-            backgroundColor: "var(--color-background)",
-          }}
-        >
-          +17 pmes
-        </span>
+          +17
+        </p>
+        <p className="mt-1.5 text-[10.5px] uppercase tracking-[0.22em] font-semibold text-muted-foreground">
+          PMEs ativas
+        </p>
       </div>
     </div>
   );
