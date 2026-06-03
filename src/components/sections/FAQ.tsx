@@ -13,7 +13,7 @@ const FAQS = [
   },
   {
     q: "Quanto dura um projeto?",
-    a: "De 1 a 6 meses, conforme o escopo. A mentoria é um programa à parte e deve ser consultada direto com o time da IAplicada — a Mari abre vagas esporadicamente.",
+    a: "De 1 a 6 meses, conforme o escopo. A mentoria é um programa à parte e deve ser consultada direto com o time da IAplicada. A Mari abre vagas esporadicamente.",
   },
   {
     q: "Qual o investimento?",
@@ -21,11 +21,11 @@ const FAQS = [
   },
   {
     q: "Como é a cobrança?",
-    a: "Trabalhamos com entrada + parcelas, com contrato e nota fiscal. O pagamento pode ser feito via boleto ou cartão de crédito — você escolhe o que faz mais sentido pro fluxo de caixa da empresa.",
+    a: "Trabalhamos com entrada + parcelas, com contrato e nota fiscal. O pagamento pode ser feito via boleto ou cartão de crédito. Você escolhe o que faz mais sentido pro fluxo de caixa da empresa.",
   },
   {
     q: "Substitui consultoria, agência ou fábrica de software?",
-    a: "Depende do escopo contratado. Em muitos casos, sim — a IAplicada assume frentes que antes ficavam com consultoria, agência ou fábrica. Em outros, integramos com sistemas já implementados e trabalhamos lado a lado com times internos e fornecedores existentes.",
+    a: "Depende do escopo contratado. Em muitos casos, sim: a IAplicada assume frentes que antes ficavam com consultoria, agência ou fábrica. Em outros, integramos com sistemas já implementados e trabalhamos lado a lado com times internos e fornecedores existentes.",
   },
   {
     q: "O time precisa ter base técnica?",

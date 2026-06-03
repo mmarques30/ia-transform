@@ -86,7 +86,7 @@ const NEXT_STEPS = [
   {
     Icon: Inbox,
     title: "Se não encontrar o e-mail",
-    text: "Confira a caixa de spam ou promoções — em alguns provedores chega por lá.",
+    text: "Confira a caixa de spam ou promoções. Em alguns provedores chega por lá.",
   },
 ];
 

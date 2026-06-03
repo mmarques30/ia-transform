@@ -12,13 +12,13 @@ const FORMATS = [
     icon: Wrench,
     title: "Implementação sob demanda",
     meta: "Por projeto · 3 a 6 meses",
-    text: "Para desafios específicos — automação de um processo crítico, construção de um assistente interno, reengenharia de um fluxo. Desenhamos, construímos, treinamos e deixamos documentado. O time opera sozinho no fim.",
+    text: "Para desafios específicos: automação de um processo crítico, construção de um assistente interno, reengenharia de um fluxo. Desenhamos, construímos, treinamos e deixamos documentado. O time opera sozinho no fim.",
   },
   {
     icon: GraduationCap,
     title: "Capacitação de lideranças",
     meta: "Turmas fechadas · 8 a 12 sem",
-    text: "Para squads de líderes e times operacionais que precisam subir o nível de IA aplicada no contexto real do cargo — não em aulas genéricas. Casos reais da empresa viram material de aula.",
+    text: "Para squads de líderes e times operacionais que precisam subir o nível de IA aplicada no contexto real do cargo, não em aulas genéricas. Casos reais da empresa viram material de aula.",
   },
 ];
 

@@ -27,7 +27,7 @@ const QUADRANTS = [
   {
     n: "03",
     label: "De onde vem o método",
-    text: "Aprendido em operação real de gigantes — depois adaptado pra PMEs que precisam parar de improvisar.",
+    text: "Aprendido em operação real de gigantes. Depois adaptado pra PMEs que precisam parar de improvisar.",
     enterpriseRefs: ["Mercado Livre", "Suzano", "AngloGold Ashanti"],
   },
   {

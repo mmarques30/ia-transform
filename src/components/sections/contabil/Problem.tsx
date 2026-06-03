@@ -11,7 +11,7 @@ const PROBLEMS = [
   {
     n: "02",
     title: "Software contábil que obriga o escritório a se adaptar",
-    text: "Domínio, Alterdata, Omie — bons sistemas, mas o time ainda concilia, classifica e apura na mão.",
+    text: "Domínio, Alterdata, Omie. Bons sistemas, mas o time ainda concilia, classifica e apura na mão.",
   },
   {
     n: "03",
@@ -205,9 +205,11 @@ export function Problem() {
             ))}
           </div>
 
+          {/* "Sintomas comuns" — escondido no mobile pra evitar parede
+              de texto extra na seção de cards. Desktop mantém. */}
           <p
             ref={symptomRef}
-            className="mt-8 text-center text-[13.5px] text-sage leading-[1.6] max-w-[760px] mx-auto"
+            className="hidden lg:block mt-8 text-center text-[13.5px] text-sage leading-[1.6] max-w-[760px] mx-auto"
           >
             <span className="font-semibold text-foreground">Sintomas comuns:</span>{" "}
             conciliações bancárias manuais, fechamento que atrasa, cliente que não manda documento,

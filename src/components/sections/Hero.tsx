@@ -80,8 +80,11 @@ export function Hero({ formSlug, thankYouPath }: HeroProps = {}) {
                 </p>
               </Reveal>
 
+              {/* Subhead secundário — escondido no mobile pra aliviar
+                  excesso de texto na primeira dobra. Desktop continua
+                  visível como contexto adicional. */}
               <Reveal delay={0.15}>
-                <p className="mt-4 text-[16px] text-sage leading-[1.6] max-w-[520px]">
+                <p className="hidden lg:block mt-4 text-[16px] text-sage leading-[1.6] max-w-[520px]">
                   A gente implementa os fluxos automáticos da sua operação com IA aplicada.
                 </p>
               </Reveal>

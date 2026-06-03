@@ -43,7 +43,7 @@ export const Route = createRootRoute({
       {
         name: "description",
         content:
-          "Programa de diagnóstico, construção e continuidade de IA aplicada pra empresas de 50 a 2.000 pessoas. A gente implementa — seu time opera.",
+          "Programa de diagnóstico, construção e continuidade de IA aplicada pra empresas de 50 a 2.000 pessoas. A gente implementa. Seu time opera.",
       },
       { name: "author", content: "IAplicada" },
       {
