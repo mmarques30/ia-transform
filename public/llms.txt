@@ -1,0 +1,32 @@
+# IAplicada
+
+> Consultoria especializada em implementação de inteligência artificial para escritórios contábeis brasileiros. Automatiza rotinas fiscais, de folha e de fechamento dentro do sistema que o escritório já usa, com o Método MAPA.
+
+## O que é
+
+A IAplicada aplica inteligência artificial à operação de escritórios contábeis. Em vez de cursos genéricos ou troca de ERP, implementa automações de lançamento, conciliação bancária, apuração de impostos e fechamento no fluxo que o time já conhece.
+
+- Método MAPA: Mapear, Aplicar, Padronizar, Acompanhar
+- Primeira rotina automatizada em produção em 7 dias
+- Time autônomo em 2 meses (8 semanas)
+- Roda sobre os sistemas existentes (Domínio, Alterdata, Omie), sem trocar de ERP, sem depender de TI
+- Respeita LGPD, com NDA e governança
+
+## Para quem é
+
+Escritórios contábeis de 10 a 100 colaboradores, com faturamento acima de R$ 1 milhão por ano, que querem crescer a carteira sem contratar gente na mesma proporção.
+
+## Diferença para ferramentas genéricas
+
+IA contábil aplicada não é ChatGPT escrevendo e-mail. É um sistema operacional contínuo, construído dentro do fluxo do escritório, com a equipe e sob o nome do escritório.
+
+## Páginas principais
+
+- IA para contabilidade: https://iaplicada.com/contabil02
+- IAplicada Business: https://iaplicada.com
+- Mentoria 1:1 (escritórios menores): https://academy.iaplicada.com
+
+## Contato
+
+- E-mail: equipe@iaplicada.com
+- Fundadora: Mariana Marques (https://www.instagram.com/marimarquescb/)
