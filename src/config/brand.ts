@@ -44,11 +44,14 @@ export const CLIENTS: ClientLogo[] = [
 export const FOUNDER = {
   name: "Mariana Marques",
   role: "Fundadora · IAplicada",
-  // Foto oficial da Mari (final_composite.webp).
-  photoSrc: "/brand/final_composite.webp",
-  // Fallback público (ibb.co) caso o arquivo local não esteja disponível.
-  photoFallback: "https://i.ibb.co/NzfQDRG/final-composite-1.jpg",
-  bio: "Fundei a IAplicada em 2022 depois de ver boas empresas travarem em pilotos de IA. Hoje conduzimos implementações com um time curado de especialistas.",
+  // Foto oficial da Mari — retrato profissional com fundo olive
+  // matching a marca. Adicionada em jun/2025 substituindo o
+  // final_composite.webp anterior (que continua disponível).
+  photoSrc: "/brand/mariana-marques.jpg",
+  photoFallback: "/brand/final_composite.webp",
+  /** Manifesto da fundadora — frase curta e direta pra hero da Authority. */
+  manifesto: "IA não é hype. É operação que escala.",
+  bio: "Fundei a IAplicada em 2022 depois de ver boas empresas travarem em pilotos de IA. Hoje implementamos IA dentro da operação real de mais de 100 empresas, com a vertical contábil ativa entregando atendimento, conciliação e fechamento com agentes inteligentes.",
   socials: {
     linkedin: "https://www.linkedin.com/in/marianaqmarques/",
     instagram: "https://www.instagram.com/marimarquescb/",
