@@ -585,8 +585,38 @@ export function Calculadora() {
                 mensal e por onde começar.
               </p>
             </Reveal>
-            <Reveal delay={0.15}>
-              <div className="mt-10 flex justify-center">
+
+            {/* Strip "O que você recebe" — Seção 4 do brief original
+                trazida de volta como banda integrada (não vira dobra). */}
+            <Reveal delay={0.14}>
+              <div className="mt-10 max-w-[760px] mx-auto">
+                <p className="text-[10.5px] uppercase tracking-[0.22em] font-semibold text-muted-foreground">
+                  Você sai daqui com
+                </p>
+                <div className="mt-3 grid grid-cols-2 md:grid-cols-4 gap-2">
+                  {[
+                    "Cenário atual quantificado",
+                    "Cenário com IA, tarefa a tarefa",
+                    "Projeção em 12 meses",
+                    "3 recomendações priorizadas",
+                  ].map((entrega) => (
+                    <div
+                      key={entrega}
+                      className="text-left rounded-xl px-3.5 py-3 text-[12.5px] text-foreground/85 leading-[1.3]"
+                      style={{
+                        backgroundColor: "oklch(0.18 0.025 122 / 0.4)",
+                        border: "1px solid oklch(0.55 0.06 122 / 0.3)",
+                      }}
+                    >
+                      {entrega}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
+
+            <Reveal delay={0.18}>
+              <div className="mt-9 flex justify-center">
                 <button type="button" onClick={() => setIniciada(true)} className="cta-primary">
                   Começar diagnóstico
                   <span className="arrow">
