@@ -215,18 +215,44 @@ export function HeroForm({
         setor_do_mercado: String(fd.get("setor_do_mercado") ?? "").trim(),
       };
 
+      const utmSource = params.get("utm_source") ?? "";
+      const utmMedium = params.get("utm_medium") ?? "";
+      const utmCampaign = params.get("utm_campaign") ?? "";
+      const utmTerm = params.get("utm_term") ?? "";
+      const utmContent = params.get("utm_content") ?? "";
+      const fbclid = params.get("fbclid") ?? "";
+      const gclid = params.get("gclid") ?? "";
+
       const payload = {
         form_slug: formSlug,
         fields,
-        utm_source: params.get("utm_source") ?? "",
-        utm_medium: params.get("utm_medium") ?? "",
-        utm_campaign: params.get("utm_campaign") ?? "",
-        utm_term: params.get("utm_term") ?? "",
-        utm_content: params.get("utm_content") ?? "",
-        // Click IDs do Meta Ads e Google Ads — usados pra attribution e
-        // pra Conversions API. A Edge Function persiste em raw_data.
-        fbclid: params.get("fbclid") ?? "",
-        gclid: params.get("gclid") ?? "",
+        // ─── Shape esperada pela Edge Function form-submit ───
+        // A Edge Function lê utm.source / attribution.fbclid / meta.page_url.
+        // Antes mandávamos só os campos top-level (utm_source, fbclid, ...) e
+        // a função caía no fallback `deriveSourceFromReferrer('')` → gravava
+        // utm_source='direct' independente do tráfego real.
+        utm: {
+          source: utmSource,
+          medium: utmMedium,
+          campaign: utmCampaign,
+          term: utmTerm,
+          content: utmContent,
+        },
+        attribution: { fbclid, gclid },
+        meta: {
+          page_url: typeof window !== "undefined" ? window.location.href : "",
+          referrer: typeof document !== "undefined" ? document.referrer : "",
+          user_agent: typeof navigator !== "undefined" ? navigator.userAgent : "",
+        },
+        // Backwards-compat: mantém o shape antigo (top-level) caso algum
+        // consumidor ainda dependa. A Edge Function ignora silenciosamente.
+        utm_source: utmSource,
+        utm_medium: utmMedium,
+        utm_campaign: utmCampaign,
+        utm_term: utmTerm,
+        utm_content: utmContent,
+        fbclid,
+        gclid,
         // Mesmo eventID que dispara no fbq client. Permite a Edge Function
         // mandar Conversions API com o mesmo ID se quiser deduplicar
         // server-side no futuro.
