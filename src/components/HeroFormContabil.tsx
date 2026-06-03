@@ -21,6 +21,14 @@ function trackClarity(action: string, ...args: unknown[]): void {
 
 const FORM_ENDPOINT = "https://ciwdlceyjsnlnunktqzx.supabase.co/functions/v1/form-submit";
 
+// Anon JWT do Supabase. A Edge Function form-submit está configurada com
+// verify_jwt=true, então o gateway Kong rejeita (HTTP 401) qualquer
+// request sem Authorization: Bearer <jwt>. Esta chave é pública por
+// design — é o que o cliente Supabase já expõe em qualquer integração
+// frontend. NÃO confunda com SERVICE_ROLE_KEY, essa sim sigilosa.
+const SUPABASE_ANON_KEY =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNpd2RsY2V5anNubG51bmt0cXp4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyMTU3OTksImV4cCI6MjA4OTc5MTc5OX0.tl-7gEObYBB7wDUS5_pKh9UyRlJQNdnWPiRpMFYrbUM";
+
 interface HeroFormProps {
   /** Slug do funil — define a origem do lead no CRM. Default: business-contabil. */
   formSlug?: string;
@@ -244,7 +252,14 @@ export function HeroForm({
 
       const res = await fetch(FORM_ENDPOINT, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          // apikey é exigido pelo Kong gateway do Supabase; Authorization
+          // Bearer é validado pelo verify_jwt=true da Edge Function. Sem
+          // os dois, a request volta com HTTP 401 antes da função rodar.
+          apikey: SUPABASE_ANON_KEY,
+          Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+        },
         body: JSON.stringify(payload),
       });
 
