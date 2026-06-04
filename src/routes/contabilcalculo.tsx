@@ -72,7 +72,7 @@ function ContabilCalculoLanding() {
         className="min-h-screen text-foreground"
         style={{ backgroundColor: PAGE_BG }}
       >
-        <Header homePath="/contabilcalculo" />
+        <Header homePath="/contabilcalculo" hideCta />
         <Hero />
         <ClientLogos />
         <Metrics />
