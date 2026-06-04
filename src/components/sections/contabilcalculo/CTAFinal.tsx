@@ -1,30 +1,31 @@
-import { Reveal } from "@/components/Reveal";
 import { ArrowRight } from "lucide-react";
+import { Reveal } from "@/components/Reveal";
 import { useDiagnostico } from "./DiagnosticoContext";
 
 /**
- * CTAFinal — fechamento com display type ainda mais oversized que o
- * hero, criando ascending visual ao final da página. Headline ocupa
- * a tela toda. Glow olive sutil. CTA único.
+ * CTAFinal — fechamento centralizado. Display type reduzido pra
+ * harmonizar com o resto da página (não mais ascending 104px).
+ * Sem paragraph extra "3 minutos. Conta aberta. Sem cartão." —
+ * a página inteira já comunicou isso.
  */
 export function CTAFinal() {
   const { open } = useDiagnostico();
   return (
     <section
       id="cta-final"
-      className="relative py-[140px] lg:py-[200px] overflow-hidden"
+      className="relative py-[120px] lg:py-[160px] overflow-hidden"
     >
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse 65% 65% at 50% 50%, oklch(0.75 0.20 122 / 0.14) 0%, transparent 70%)",
+            "radial-gradient(ellipse 60% 65% at 50% 50%, oklch(0.75 0.20 122 / 0.13) 0%, transparent 70%)",
         }}
       />
 
       <div className="container-page relative">
-        <div className="max-w-[1200px]">
+        <div className="max-w-[860px] mx-auto text-center">
           <Reveal>
             <p
               className="text-[11px] uppercase tracking-[0.28em] font-bold"
@@ -35,23 +36,16 @@ export function CTAFinal() {
           </Reveal>
           <Reveal delay={0.05}>
             <h2
-              className="h-mix mt-7 lg:mt-9 text-[44px] sm:text-[64px] lg:text-[104px] leading-[0.92] text-foreground"
-              style={{ letterSpacing: "-0.04em" }}
+              className="h-mix mt-7 lg:mt-9 text-[36px] sm:text-[48px] lg:text-[68px] leading-[1.0] text-foreground"
+              style={{ letterSpacing: "-0.032em" }}
             >
-              Você não precisa
-              <br />
-              decidir nada agora.
-              <br />
+              Você não precisa decidir nada agora.
+              {" "}
               <em>Precisa do número.</em>
             </h2>
           </Reveal>
-          <Reveal delay={0.15}>
-            <p className="mt-10 lg:mt-14 text-[17px] lg:text-[20px] text-sage leading-[1.55] max-w-[560px]">
-              3 minutos. Conta aberta. Sem cartão.
-            </p>
-          </Reveal>
-          <Reveal delay={0.22}>
-            <div className="mt-12 lg:mt-16">
+          <Reveal delay={0.18}>
+            <div className="mt-10 lg:mt-12">
               <button type="button" onClick={open} className="cta-primary">
                 Fazer meu diagnóstico
                 <span className="arrow">
