@@ -622,121 +622,133 @@ export function Calculadora() {
       className="relative py-[80px] lg:py-[140px] overflow-hidden scroll-mt-24"
     >
       <div className="container-page relative">
-        {/* Header da seção — só no estado inicial */}
+        {/* Header da seção — só no estado inicial. Padrão visual /contabil:
+            label-chip + h-mix centralizado + sub + tech-cards. */}
         {!iniciada && (
           <>
-            <div className="max-w-[1080px]">
+            <div className="text-center max-w-[820px] mx-auto">
               <Reveal>
-                <h2 className="h-mix text-[32px] sm:text-[44px] lg:text-[56px] leading-[0.96] tracking-[-0.025em] text-foreground">
-                  Conta aberta.
-                  <br />
-                  <em>3 minutos.</em>
+                <span className="label-chip">
+                  <span className="dot" />O diagnóstico
+                </span>
+              </Reveal>
+              <Reveal delay={0.05}>
+                <h2 className="h-mix mt-6 text-[32px] sm:text-[42px] lg:text-[54px] leading-[1.05] text-foreground">
+                  Quanto a IA pode <em>devolver</em> pro seu escritório.
                 </h2>
               </Reveal>
-
-              {/* Grid visual das 6 frentes contábeis que serão avaliadas —
-                  extraído da copy contábil (conciliação, atendimento,
-                  apuração, guias, onboarding, relatórios) */}
-              <Reveal delay={0.08}>
-                <div className="mt-12 lg:mt-16">
-                  <p className="text-[11px] uppercase tracking-[0.22em] font-semibold text-muted-foreground">
-                    6 frentes que a calculadora avalia
-                  </p>
-                  <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 lg:gap-3">
-                    {[
-                      { Icon: FileSpreadsheet, label: "Conciliação" },
-                      { Icon: MessageSquare, label: "Atendimento" },
-                      { Icon: Receipt, label: "Apuração" },
-                      { Icon: FileText, label: "Guias" },
-                      { Icon: UserPlus, label: "Onboarding" },
-                      { Icon: BarChart3, label: "Relatórios" },
-                    ].map((f) => (
-                      <div
-                        key={f.label}
-                        className="flex flex-col items-center text-center gap-2.5 rounded-xl px-3 py-4"
-                        style={{
-                          backgroundColor: "oklch(0.16 0.022 122 / 0.5)",
-                          border: "1px solid oklch(0.3 0.04 122 / 0.4)",
-                        }}
-                      >
-                        <span
-                          className="inline-flex h-9 w-9 items-center justify-center rounded-lg"
-                          style={{
-                            backgroundColor: "oklch(0.75 0.20 122 / 0.14)",
-                            border: "1px solid oklch(0.75 0.20 122 / 0.4)",
-                          }}
-                        >
-                          <f.Icon
-                            className="h-4 w-4"
-                            strokeWidth={2}
-                            style={{ color: "var(--color-primary)" }}
-                          />
-                        </span>
-                        <p className="text-[12px] font-semibold text-foreground/90 leading-tight">
-                          {f.label}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </Reveal>
-
-              {/* Fluxo visual: input → resultado → entregáveis */}
-              <Reveal delay={0.14}>
-                <div className="mt-10 lg:mt-12 grid sm:grid-cols-[1fr_auto_1fr_auto_1fr] gap-4 sm:gap-2 items-center">
-                  {[
-                    {
-                      label: "Você responde",
-                      sub: "horas/tarefa + custo/hora do seu time",
-                    },
-                    {
-                      label: "Calculamos",
-                      sub: "% redução por tarefa × seu custo real",
-                    },
-                    {
-                      label: "Você sai com",
-                      sub: "3 frentes priorizadas + projeção 12 meses",
-                    },
-                  ].flatMap((step, i) => {
-                    const node = (
-                      <div key={step.label} className="text-center sm:text-left">
-                        <p
-                          className="text-[13.5px] lg:text-[15px] font-bold text-foreground tracking-tight"
-                        >
-                          {step.label}
-                        </p>
-                        <p className="mt-1 text-[12.5px] text-sage leading-[1.45]">
-                          {step.sub}
-                        </p>
-                      </div>
-                    );
-                    if (i === 2) return [node];
-                    return [
-                      node,
-                      <span
-                        key={`arrow-${i}`}
-                        aria-hidden
-                        className="hidden sm:inline-block text-[18px] opacity-40"
-                        style={{ color: "var(--color-primary)" }}
-                      >
-                        →
-                      </span>,
-                    ];
-                  })}
-                </div>
-              </Reveal>
-
-              <Reveal delay={0.2}>
-                <div className="mt-12 lg:mt-14">
-                  <button type="button" onClick={() => setIniciada(true)} className="cta-primary">
-                    Começar diagnóstico
-                    <span className="arrow">
-                      <ArrowRight className="h-3.5 w-3.5" strokeWidth={2.5} />
-                    </span>
-                  </button>
-                </div>
+              <Reveal delay={0.1}>
+                <p className="mt-6 text-[16px] lg:text-[17px] text-sage leading-[1.6] max-w-[620px] mx-auto">
+                  Diagnóstico gratuito que abre a conta tarefa por tarefa. Você ajusta com a sua
+                  realidade e vê o resultado completo na tela em 3 minutos.
+                </p>
               </Reveal>
             </div>
+
+            {/* 6 frentes em tech-cards centralizados */}
+            <Reveal delay={0.14}>
+              <div className="mt-12 lg:mt-16 max-w-[1100px] mx-auto">
+                <p className="text-center text-[11.5px] uppercase tracking-[0.22em] font-semibold text-muted-foreground">
+                  6 frentes que a calculadora avalia
+                </p>
+                <div className="mt-7 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 lg:gap-4">
+                  {[
+                    { Icon: FileSpreadsheet, label: "Conciliação" },
+                    { Icon: MessageSquare, label: "Atendimento" },
+                    { Icon: Receipt, label: "Apuração" },
+                    { Icon: FileText, label: "Guias" },
+                    { Icon: UserPlus, label: "Onboarding" },
+                    { Icon: BarChart3, label: "Relatórios" },
+                  ].map((f) => (
+                    <div
+                      key={f.label}
+                      className="tech-card p-4 lg:p-5 flex flex-col items-center text-center gap-3"
+                    >
+                      <span
+                        className="inline-flex h-10 w-10 items-center justify-center rounded-xl"
+                        style={{
+                          backgroundColor: "oklch(0.75 0.20 122 / 0.14)",
+                          border: "1px solid oklch(0.75 0.20 122 / 0.4)",
+                        }}
+                      >
+                        <f.Icon
+                          className="h-4 w-4"
+                          strokeWidth={2}
+                          style={{ color: "var(--color-primary)" }}
+                        />
+                      </span>
+                      <p className="text-[13px] font-bold text-foreground tracking-tight leading-tight">
+                        {f.label}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
+
+            {/* Fluxo de entregáveis — padrão /contabil/Solution
+                (3 colunas com num + h3 + texto curto, sem cards pesados) */}
+            <Reveal delay={0.2}>
+              <div className="mt-14 lg:mt-20 max-w-[1100px] mx-auto">
+                <p className="text-center text-[11.5px] uppercase tracking-[0.22em] font-semibold text-muted-foreground">
+                  Você sai daqui com
+                </p>
+                <div className="mt-7 grid md:grid-cols-3 gap-5 lg:gap-8 max-w-[960px] mx-auto">
+                  {[
+                    {
+                      n: "01",
+                      title: "Cenário atual quantificado",
+                      text: "Total de horas que sua equipe gasta hoje em tarefas automatizáveis, em R$ pelo seu custo real.",
+                    },
+                    {
+                      n: "02",
+                      title: "Conta aberta, tarefa por tarefa",
+                      text: "Quanto cada rotina contábil custa hoje, quanto custaria com IA e quanto sobra de margem.",
+                    },
+                    {
+                      n: "03",
+                      title: "3 frentes priorizadas",
+                      text: "Onde começar pra ter o maior ROI no seu caso específico, baseado no seu gargalo declarado.",
+                    },
+                  ].map((step) => (
+                    <div key={step.n} className="text-left">
+                      <div className="flex items-center gap-3">
+                        <span
+                          className="num-display text-[14px] tracking-wider"
+                          style={{ color: "var(--color-primary)" }}
+                        >
+                          {step.n}
+                        </span>
+                        <span
+                          className="h-[1px] flex-1"
+                          style={{
+                            background:
+                              "linear-gradient(90deg, var(--color-primary), transparent)",
+                          }}
+                        />
+                      </div>
+                      <h3 className="mt-4 text-[16px] lg:text-[18px] font-bold tracking-tight text-foreground leading-[1.3]">
+                        {step.title}
+                      </h3>
+                      <p className="mt-2 text-[13.5px] text-sage leading-[1.55]">{step.text}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
+
+            <Reveal delay={0.28}>
+              <div className="mt-12 lg:mt-16 flex justify-center">
+                <button
+                  type="button"
+                  onClick={() => setIniciada(true)}
+                  className="inline-flex items-center gap-2 justify-center rounded-md bg-primary text-primary-foreground font-semibold text-[14.5px] px-5 py-3 hover:bg-primary/90 transition-colors"
+                >
+                  Começar diagnóstico
+                  <ArrowRight className="h-3.5 w-3.5" strokeWidth={2.5} />
+                </button>
+              </div>
+            </Reveal>
           </>
         )}
 
