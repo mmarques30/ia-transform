@@ -33,7 +33,11 @@ const CLIENTS: Client[] = [
   // { name: "LCR Contadores", logo: "/clients/lcr_contadores_logo.jpeg" },
   { name: "Borges & Zembruski", logo: "/clients/borges-zembruski-logo.png" },
   { name: "Recon", logo: "/clients/recon-logo-proposal.png" },
-  { name: "Focus FinTax" },
+  { name: "Focus FinTax", logo: "/clients/focus-fintax-logo.png" },
+  // Turystar — arquivo (1.png) é RGB sem canal alpha (fundo branco
+  // sólido). Com o filter brightness(0) invert(1), apareceria como
+  // retângulo branco invisível (mesmo bug do antigo LCR jpeg).
+  // Pra ativar: subir versão PNG/SVG com fundo TRANSPARENTE.
   { name: "Turystar" },
   { name: "Uiara Intimates" },
 ];
