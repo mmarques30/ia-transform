@@ -41,7 +41,10 @@ const FEATURES: Feature[] = [
 
 export function DorResposta() {
   return (
-    <section className="relative py-[100px] lg:py-[160px] overflow-hidden">
+    <section
+      id="cenario"
+      className="relative py-[100px] lg:py-[160px] overflow-hidden scroll-mt-24"
+    >
       <div className="container-page relative">
         <div className="max-w-[900px] mx-auto text-center">
           <Reveal>
