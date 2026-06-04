@@ -1,4 +1,5 @@
 import { Reveal } from "@/components/Reveal";
+import { useDiagnostico } from "./DiagnosticoContext";
 
 /**
  * DorResposta — pattern dos feature cards do nextsense.io:
@@ -32,6 +33,7 @@ const FEATURES = [
 ];
 
 export function DorResposta() {
+  const { open } = useDiagnostico();
   return (
     <section className="relative py-[100px] lg:py-[160px] overflow-hidden">
       <div className="container-page relative">
@@ -150,14 +152,15 @@ export function DorResposta() {
               trocar de sistema, sem depender de TI.
             </p>
 
-            <a
-              href="#calculadora"
+            <button
+              type="button"
+              onClick={open}
               className="mt-12 inline-flex items-center gap-2 text-[12px] uppercase tracking-[0.22em] font-bold hover:opacity-80 transition-opacity"
               style={{ color: "var(--color-primary)" }}
             >
               Quanto isso vale pra você
-              <span aria-hidden>↓</span>
-            </a>
+              <span aria-hidden>→</span>
+            </button>
           </div>
         </Reveal>
       </div>

@@ -7,6 +7,7 @@ import { DorResposta } from "@/components/sections/contabilcalculo/DorResposta";
 import { Calculadora } from "@/components/sections/contabilcalculo/Calculadora";
 import { FAQ } from "@/components/sections/contabilcalculo/FAQ";
 import { CTAFinal } from "@/components/sections/contabilcalculo/CTAFinal";
+import { DiagnosticoProvider } from "@/components/sections/contabilcalculo/DiagnosticoContext";
 import { Footer } from "@/components/sections/Footer";
 
 /**
@@ -19,9 +20,14 @@ import { Footer } from "@/components/sections/Footer";
  *   2. ClientLogos — credibilidade imediata pós-hero
  *   3. Metrics — 4 números oversized (75% / 7d / 8sem / +80)
  *   4. DorResposta — 3 cards full-bleed + bloco "A virada"
- *   5. Calculadora — heart interativo
- *   6. FAQ — 3 grupos com ícones de categoria
- *   7. CTAFinal — display type ascending oversized
+ *   5. Calculadora — marketing intro + wizard em MODAL global
+ *   6. CTAFinal — display type ascending oversized
+ *   7. FAQ — 3 grupos com ícones de categoria
+ *
+ * O wizard da calc roda em modal full-screen disparado por qualquer
+ * CTA "Fazer meu diagnóstico" da página. State (etapas + resultado)
+ * vive na própria Calculadora; abertura controlada via
+ * DiagnosticoProvider context.
  *
  * Form submission: calculadora posta no form-submit (slug
  * business-contabil) com fields da calc + scores no raw_data.
@@ -61,19 +67,21 @@ export const Route = createFileRoute("/contabilcalculo")({
 
 function ContabilCalculoLanding() {
   return (
-    <main
-      className="min-h-screen text-foreground"
-      style={{ backgroundColor: PAGE_BG }}
-    >
-      <Header homePath="/contabilcalculo" />
-      <Hero />
-      <ClientLogos />
-      <Metrics />
-      <DorResposta />
-      <Calculadora />
-      <FAQ />
-      <CTAFinal />
-      <Footer />
-    </main>
+    <DiagnosticoProvider>
+      <main
+        className="min-h-screen text-foreground"
+        style={{ backgroundColor: PAGE_BG }}
+      >
+        <Header homePath="/contabilcalculo" />
+        <Hero />
+        <ClientLogos />
+        <Metrics />
+        <DorResposta />
+        <Calculadora />
+        <CTAFinal />
+        <FAQ />
+        <Footer />
+      </main>
+    </DiagnosticoProvider>
   );
 }
