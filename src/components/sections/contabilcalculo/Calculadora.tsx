@@ -1142,54 +1142,104 @@ function ResultadoStep({
   );
   return (
     <div>
-      {/* HERO BANNER — número anual é o primeiro elemento.
-          Background com gradient + glow olive forte. */}
+      {/* HERO BANNER — painel CLARO sobre fundo escuro pra contraste alto.
+          Sem glow, sem text-shadow, sem gradient — tudo limpo e definido.
+          Stripe olive vertical à esquerda funciona como acento gráfico. */}
       <div
-        className="relative rounded-2xl p-6 lg:p-8 text-center overflow-hidden"
+        className="relative rounded-2xl overflow-hidden"
         style={{
-          background:
-            "linear-gradient(135deg, oklch(0.13 0.02 122) 0%, oklch(0.18 0.04 122) 100%)",
-          border: "1.5px solid oklch(0.75 0.20 122 / 0.55)",
-          boxShadow: "0 24px 60px -24px oklch(0.75 0.20 122 / 0.4)",
+          backgroundColor: "oklch(0.97 0.012 110)",
+          border: "1px solid oklch(0.75 0.20 122 / 0.4)",
         }}
       >
-        <div
+        {/* Stripe olive vertical no canto esquerdo */}
+        <span
           aria-hidden
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background:
-              "radial-gradient(ellipse 70% 100% at 50% 0%, oklch(0.75 0.20 122 / 0.18), transparent 70%)",
-          }}
+          className="absolute top-0 bottom-0 left-0 w-[5px]"
+          style={{ backgroundColor: "var(--color-primary)" }}
         />
-        <div className="relative">
-          <span
-            className="inline-flex items-center gap-2 text-[10.5px] uppercase tracking-[0.22em] font-semibold"
-            style={{ color: "var(--color-primary)" }}
+        <div className="relative p-6 lg:p-9 pl-8 lg:pl-11">
+          <div className="flex items-center justify-between gap-4 flex-wrap">
+            <span
+              className="inline-flex items-center gap-2 text-[10.5px] uppercase tracking-[0.22em] font-semibold"
+              style={{ color: "oklch(0.35 0.06 125)" }}
+            >
+              <CheckCircle2 className="h-3.5 w-3.5" strokeWidth={2.5} />
+              Diagnóstico de {primeiroNome}
+            </span>
+            <span
+              className="text-[10px] uppercase tracking-[0.2em] font-bold rounded px-2 py-1"
+              style={{
+                backgroundColor: "oklch(0.14 0.02 122)",
+                color: "oklch(0.97 0.012 110)",
+              }}
+            >
+              Projeção · 12 meses
+            </span>
+          </div>
+
+          <p
+            className="mt-5 text-[11.5px] uppercase tracking-[0.2em] font-semibold"
+            style={{ color: "oklch(0.32 0.04 125)" }}
           >
-            <CheckCircle2 className="h-3.5 w-3.5" strokeWidth={2.5} />
-            Diagnóstico de {primeiroNome}
-          </span>
-          <p className="mt-3 text-[12.5px] uppercase tracking-[0.18em] font-semibold text-muted-foreground">
-            Seu escritório recupera em 12 meses
+            Economia anual recuperável
           </p>
           <p
-            className="num-display mt-3 text-[40px] sm:text-[52px] lg:text-[68px] leading-[0.95]"
+            className="num-display mt-2 text-[44px] sm:text-[58px] lg:text-[76px] leading-[0.95]"
             style={{
-              color: "var(--color-primary)",
-              letterSpacing: "-0.02em",
-              textShadow: "0 0 40px oklch(0.75 0.2 122 / 0.4)",
+              color: "oklch(0.14 0.02 122)",
+              letterSpacing: "-0.025em",
             }}
           >
             {formatR$(resultado.economiaAnual)}
           </p>
-          <p className="mt-4 text-[14px] lg:text-[16px] text-foreground/90 leading-[1.55] max-w-[480px] mx-auto">
-            <span className="font-bold text-foreground">
-              {resultado.totalHorasLiberadas} horas/mês
-            </span>{" "}
-            de trabalho que sua equipe deixa de gastar em tarefas operacionais. Equivale a{" "}
-            <span className="font-bold text-foreground">{resultado.fteEquivalente} funcionário</span>
-            {" "}em tempo integral.
-          </p>
+
+          {/* Linha divisória + 2 mini-KPIs lado a lado */}
+          <div
+            className="mt-6 pt-5 grid grid-cols-2 gap-5"
+            style={{ borderTop: "1px solid oklch(0.85 0.02 110)" }}
+          >
+            <div>
+              <p
+                className="text-[10.5px] uppercase tracking-[0.18em] font-semibold"
+                style={{ color: "oklch(0.42 0.04 125)" }}
+              >
+                Horas liberadas
+              </p>
+              <p
+                className="num-display mt-1 text-[22px] lg:text-[28px] leading-none"
+                style={{ color: "oklch(0.18 0.03 122)" }}
+              >
+                {resultado.totalHorasLiberadas}
+                <span
+                  className="ml-1 text-[12px] font-semibold align-middle"
+                  style={{ color: "oklch(0.42 0.04 125)" }}
+                >
+                  h/mês
+                </span>
+              </p>
+            </div>
+            <div>
+              <p
+                className="text-[10.5px] uppercase tracking-[0.18em] font-semibold"
+                style={{ color: "oklch(0.42 0.04 125)" }}
+              >
+                Equivale a
+              </p>
+              <p
+                className="num-display mt-1 text-[22px] lg:text-[28px] leading-none"
+                style={{ color: "oklch(0.18 0.03 122)" }}
+              >
+                {resultado.fteEquivalente}
+                <span
+                  className="ml-1 text-[12px] font-semibold align-middle"
+                  style={{ color: "oklch(0.42 0.04 125)" }}
+                >
+                  FTE
+                </span>
+              </p>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -1282,23 +1332,26 @@ function ResultadoStep({
         </p>
       </div>
 
-      {/* Recomendações — agora mais ricas (tag + título + texto + impacto) */}
+      {/* Recomendações — cards dark com mini-mockup CLARO flutuando.
+          Inspiração visual FINANCIA SaaS dashboard: mini KPI tile +
+          micro bar chart sobrepostos no canto superior direito do card
+          criam contraste claro/escuro e cara de produto real. */}
       <div className="mt-8">
         <p className="text-[12px] uppercase tracking-[0.18em] font-semibold text-muted-foreground flex items-center gap-2">
           <Sparkles className="h-3.5 w-3.5" strokeWidth={2} style={{ color: "var(--color-primary)" }} />
           Por onde começar · o que a IAplicada constrói pro seu gargalo
         </p>
-        <div className="mt-4 space-y-3">
+        <div className="mt-4 lg:mt-5 space-y-4 lg:space-y-5">
           {recs.map((r, i) => (
             <div
               key={r.title}
-              className="rounded-2xl p-4 lg:p-5 relative overflow-hidden"
+              className="rounded-2xl p-5 lg:p-6 relative overflow-visible"
               style={{
                 backgroundColor: "oklch(0.18 0.025 122 / 0.55)",
                 border: "1px solid oklch(0.55 0.06 122 / 0.35)",
               }}
             >
-              <div className="flex items-start gap-3.5">
+              <div className="flex items-start gap-3.5 lg:pr-[180px]">
                 <span
                   className="num-display shrink-0 inline-flex h-8 w-8 items-center justify-center rounded-full text-[13.5px]"
                   style={{
@@ -1336,6 +1389,11 @@ function ResultadoStep({
                   </div>
                 </div>
               </div>
+
+              {/* MOCKUP CLARO — desktop only, posicionado top-right
+                  sobrepondo levemente a borda do card. Mobile esconde
+                  pra não sobrecarregar. */}
+              <RecMockup index={i} impact={r.impact} tag={r.tag} />
             </div>
           ))}
         </div>
@@ -1757,6 +1815,222 @@ function Stepper({
       >
         <Plus className="h-4 w-4" strokeWidth={2.5} />
       </button>
+    </div>
+  );
+}
+
+/**
+ * Mini-mockup claro (estilo FINANCIA SaaS dashboard) que flutua no canto
+ * superior direito dos cards de recomendação. Cria contraste alto contra
+ * o fundo escuro da calculadora e dá cara de produto real.
+ *
+ * Variante por index: 0 = mini bar chart, 1 = mini line trend,
+ * 2 = mini KPI stack. Rotaciona pra não ficar repetitivo entre as 3
+ * recomendações exibidas por gargalo.
+ */
+function RecMockup({
+  index,
+  impact,
+  tag,
+}: {
+  index: number;
+  impact: string;
+  tag: string;
+}) {
+  const pctMatch = impact.match(/(\d{2,3})\s?%/);
+  const pct = pctMatch ? pctMatch[1] : "75";
+
+  const CREAM = "oklch(0.97 0.012 110)";
+  const INK = "oklch(0.14 0.02 122)";
+  const MUTED = "oklch(0.55 0.05 125)";
+  const OLIVE = "oklch(0.55 0.18 122)";
+  const RULE = "oklch(0.88 0.02 110)";
+
+  const variant = index % 3;
+
+  return (
+    <div
+      aria-hidden
+      className="hidden lg:block absolute z-10 rounded-[10px] overflow-hidden"
+      style={{
+        top: -14,
+        right: -10,
+        width: 168,
+        backgroundColor: CREAM,
+        border: `1px solid ${RULE}`,
+        boxShadow:
+          "0 18px 36px -14px oklch(0 0 0 / 0.55), 0 4px 10px -4px oklch(0 0 0 / 0.4)",
+      }}
+    >
+      {/* Header tipo browser bar minimalista */}
+      <div
+        className="flex items-center gap-1.5 px-2.5 py-1.5"
+        style={{ borderBottom: `1px solid ${RULE}` }}
+      >
+        <span className="flex gap-[3px]">
+          <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: "oklch(0.78 0.12 25)" }} />
+          <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: "oklch(0.85 0.12 85)" }} />
+          <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: "oklch(0.78 0.12 135)" }} />
+        </span>
+        <span
+          className="ml-auto text-[7.5px] uppercase tracking-[0.14em] font-bold"
+          style={{ color: MUTED }}
+        >
+          IAplicada
+        </span>
+      </div>
+
+      <div className="px-3 pt-2.5 pb-3">
+        <p
+          className="text-[7.5px] uppercase tracking-[0.16em] font-semibold truncate"
+          style={{ color: MUTED }}
+        >
+          {tag}
+        </p>
+
+        {variant === 0 && (
+          // KPI principal + delta verde
+          <>
+            <div className="mt-1 flex items-end gap-1">
+              <span
+                className="num-display text-[22px] leading-none"
+                style={{ color: INK, letterSpacing: "-0.02em" }}
+              >
+                −{pct}%
+              </span>
+            </div>
+            {/* Mini barras decrescentes */}
+            <div className="mt-2.5 flex items-end gap-[3px] h-[26px]">
+              {[18, 16, 13, 10, 7, 5, 4].map((h, k) => (
+                <span
+                  key={k}
+                  className="flex-1 rounded-[1.5px]"
+                  style={{
+                    height: h,
+                    backgroundColor: k > 3 ? OLIVE : "oklch(0.78 0.04 120)",
+                  }}
+                />
+              ))}
+            </div>
+            <div
+              className="mt-2 pt-1.5 flex items-center justify-between"
+              style={{ borderTop: `1px solid ${RULE}` }}
+            >
+              <span className="text-[7.5px] font-semibold" style={{ color: MUTED }}>
+                Mês
+              </span>
+              <span className="text-[7.5px] font-bold" style={{ color: OLIVE }}>
+                ↓ esforço
+              </span>
+            </div>
+          </>
+        )}
+
+        {variant === 1 && (
+          // Trend line + 2 KPIs empilhados
+          <>
+            <div className="mt-1">
+              <span
+                className="num-display text-[20px] leading-none"
+                style={{ color: INK, letterSpacing: "-0.02em" }}
+              >
+                {pct}%
+              </span>
+              <span
+                className="ml-1 text-[8px] font-semibold uppercase tracking-[0.1em]"
+                style={{ color: MUTED }}
+              >
+                auto
+              </span>
+            </div>
+            <svg
+              viewBox="0 0 140 36"
+              className="mt-2 w-full"
+              preserveAspectRatio="none"
+              style={{ height: 36 }}
+            >
+              <polyline
+                points="2,28 22,24 42,26 62,18 82,14 102,9 122,6 138,3"
+                fill="none"
+                stroke={OLIVE}
+                strokeWidth="1.6"
+                strokeLinecap="round"
+              />
+              <polyline
+                points="2,28 22,24 42,26 62,18 82,14 102,9 122,6 138,3 138,36 2,36"
+                fill={OLIVE}
+                fillOpacity="0.12"
+                stroke="none"
+              />
+            </svg>
+            <div
+              className="mt-2 pt-1.5 grid grid-cols-2 gap-1"
+              style={{ borderTop: `1px solid ${RULE}` }}
+            >
+              <div>
+                <p className="text-[7px] font-semibold uppercase" style={{ color: MUTED }}>
+                  Atual
+                </p>
+                <p className="num-display text-[10px]" style={{ color: INK }}>
+                  100%
+                </p>
+              </div>
+              <div>
+                <p className="text-[7px] font-semibold uppercase" style={{ color: MUTED }}>
+                  Meta
+                </p>
+                <p className="num-display text-[10px]" style={{ color: OLIVE }}>
+                  {100 - Number(pct)}%
+                </p>
+              </div>
+            </div>
+          </>
+        )}
+
+        {variant === 2 && (
+          // 3 linhas de "checklist" + percentual final
+          <>
+            <div className="mt-1.5 space-y-1.5">
+              {[
+                { label: "Cliente A", w: 92 },
+                { label: "Cliente B", w: 76 },
+                { label: "Cliente C", w: 58 },
+              ].map((row) => (
+                <div key={row.label}>
+                  <div className="flex items-center justify-between">
+                    <span className="text-[8px] font-semibold" style={{ color: INK }}>
+                      {row.label}
+                    </span>
+                    <span className="text-[7.5px]" style={{ color: MUTED }}>
+                      {row.w}%
+                    </span>
+                  </div>
+                  <div
+                    className="mt-0.5 h-[3px] rounded-full overflow-hidden"
+                    style={{ backgroundColor: "oklch(0.92 0.02 110)" }}
+                  >
+                    <span
+                      className="block h-full"
+                      style={{ width: `${row.w}%`, backgroundColor: OLIVE }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div
+              className="mt-2.5 pt-1.5 flex items-center justify-between"
+              style={{ borderTop: `1px solid ${RULE}` }}
+            >
+              <span className="text-[7.5px] font-semibold uppercase" style={{ color: MUTED }}>
+                Cobertura
+              </span>
+              <span className="num-display text-[12px]" style={{ color: INK }}>
+                {pct}%
+              </span>
+            </div>
+          </>
+        )}
+      </div>
     </div>
   );
 }

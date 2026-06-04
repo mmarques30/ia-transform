@@ -10,6 +10,8 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ThankYouBusinessRouteImport } from './routes/thank-you-business'
+import { Route as ContabilcalculoRouteImport } from './routes/contabilcalculo'
+import { Route as Contabil02RouteImport } from './routes/contabil02'
 import { Route as ContabilThankYouRouteImport } from './routes/contabil-thank-you'
 import { Route as ContabilRouteImport } from './routes/contabil'
 import { Route as IndexRouteImport } from './routes/index'
@@ -17,6 +19,16 @@ import { Route as IndexRouteImport } from './routes/index'
 const ThankYouBusinessRoute = ThankYouBusinessRouteImport.update({
   id: '/thank-you-business',
   path: '/thank-you-business',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContabilcalculoRoute = ContabilcalculoRouteImport.update({
+  id: '/contabilcalculo',
+  path: '/contabilcalculo',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Contabil02Route = Contabil02RouteImport.update({
+  id: '/contabil02',
+  path: '/contabil02',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContabilThankYouRoute = ContabilThankYouRouteImport.update({
@@ -39,12 +51,16 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/contabil': typeof ContabilRoute
   '/contabil-thank-you': typeof ContabilThankYouRoute
+  '/contabil02': typeof Contabil02Route
+  '/contabilcalculo': typeof ContabilcalculoRoute
   '/thank-you-business': typeof ThankYouBusinessRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/contabil': typeof ContabilRoute
   '/contabil-thank-you': typeof ContabilThankYouRoute
+  '/contabil02': typeof Contabil02Route
+  '/contabilcalculo': typeof ContabilcalculoRoute
   '/thank-you-business': typeof ThankYouBusinessRoute
 }
 export interface FileRoutesById {
@@ -52,18 +68,34 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/contabil': typeof ContabilRoute
   '/contabil-thank-you': typeof ContabilThankYouRoute
+  '/contabil02': typeof Contabil02Route
+  '/contabilcalculo': typeof ContabilcalculoRoute
   '/thank-you-business': typeof ThankYouBusinessRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/contabil' | '/contabil-thank-you' | '/thank-you-business'
+  fullPaths:
+    | '/'
+    | '/contabil'
+    | '/contabil-thank-you'
+    | '/contabil02'
+    | '/contabilcalculo'
+    | '/thank-you-business'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/contabil' | '/contabil-thank-you' | '/thank-you-business'
+  to:
+    | '/'
+    | '/contabil'
+    | '/contabil-thank-you'
+    | '/contabil02'
+    | '/contabilcalculo'
+    | '/thank-you-business'
   id:
     | '__root__'
     | '/'
     | '/contabil'
     | '/contabil-thank-you'
+    | '/contabil02'
+    | '/contabilcalculo'
     | '/thank-you-business'
   fileRoutesById: FileRoutesById
 }
@@ -71,6 +103,8 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ContabilRoute: typeof ContabilRoute
   ContabilThankYouRoute: typeof ContabilThankYouRoute
+  Contabil02Route: typeof Contabil02Route
+  ContabilcalculoRoute: typeof ContabilcalculoRoute
   ThankYouBusinessRoute: typeof ThankYouBusinessRoute
 }
 
@@ -81,6 +115,20 @@ declare module '@tanstack/react-router' {
       path: '/thank-you-business'
       fullPath: '/thank-you-business'
       preLoaderRoute: typeof ThankYouBusinessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contabilcalculo': {
+      id: '/contabilcalculo'
+      path: '/contabilcalculo'
+      fullPath: '/contabilcalculo'
+      preLoaderRoute: typeof ContabilcalculoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contabil02': {
+      id: '/contabil02'
+      path: '/contabil02'
+      fullPath: '/contabil02'
+      preLoaderRoute: typeof Contabil02RouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contabil-thank-you': {
@@ -111,6 +159,8 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ContabilRoute: ContabilRoute,
   ContabilThankYouRoute: ContabilThankYouRoute,
+  Contabil02Route: Contabil02Route,
+  ContabilcalculoRoute: ContabilcalculoRoute,
   ThankYouBusinessRoute: ThankYouBusinessRoute,
 }
 export const routeTree = rootRouteImport
