@@ -27,8 +27,9 @@ export function Hero() {
 
       <div className="relative pt-[40px] lg:pt-[80px] pb-[80px] lg:pb-[140px]">
         <div className="container-page relative">
-          {/* Grid asymmetric — copy ocupa coluna maior; mockup respira */}
-          <div className="grid lg:grid-cols-[1.1fr_1fr] gap-12 lg:gap-20 items-center">
+          {/* Grid asymmetric — mockup ganha um pouco mais de espaço (1fr/1.1fr)
+              pra harmonizar com o título reduzido. */}
+          <div className="grid lg:grid-cols-[1fr_1.1fr] gap-12 lg:gap-16 items-center">
             <div>
               <Reveal>
                 <span
@@ -47,8 +48,8 @@ export function Hero() {
               {/* Display type — escala oversized inspirada no nextsense */}
               <Reveal delay={0.05}>
                 <h1
-                  className="h-mix mt-7 lg:mt-9 text-[42px] sm:text-[60px] lg:text-[88px] leading-[0.95] text-foreground"
-                  style={{ letterSpacing: "-0.035em" }}
+                  className="h-mix mt-7 lg:mt-9 text-[38px] sm:text-[52px] lg:text-[74px] leading-[0.98] text-foreground"
+                  style={{ letterSpacing: "-0.032em" }}
                 >
                   Em <em>3 minutos</em>,
                   <br />
@@ -66,7 +67,7 @@ export function Hero() {
               </Reveal>
 
               <Reveal delay={0.18}>
-                <div className="mt-9 lg:mt-12 flex flex-wrap items-center gap-6">
+                <div className="mt-9 lg:mt-12">
                   <button
                     type="button"
                     onClick={open}
@@ -75,9 +76,6 @@ export function Hero() {
                     Fazer meu diagnóstico
                     <ArrowRight className="h-3.5 w-3.5" strokeWidth={2.5} />
                   </button>
-                  <span className="text-[12.5px] uppercase tracking-[0.18em] font-semibold text-muted-foreground">
-                    3 min · sem cartão
-                  </span>
                 </div>
               </Reveal>
             </div>
