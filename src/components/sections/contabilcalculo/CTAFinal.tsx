@@ -1,5 +1,6 @@
 import { Reveal } from "@/components/Reveal";
 import { ArrowRight } from "lucide-react";
+import { useDiagnostico } from "./DiagnosticoContext";
 
 /**
  * CTAFinal — fechamento com display type ainda mais oversized que o
@@ -7,6 +8,7 @@ import { ArrowRight } from "lucide-react";
  * a tela toda. Glow olive sutil. CTA único.
  */
 export function CTAFinal() {
+  const { open } = useDiagnostico();
   return (
     <section
       id="cta-final"
@@ -50,12 +52,12 @@ export function CTAFinal() {
           </Reveal>
           <Reveal delay={0.22}>
             <div className="mt-12 lg:mt-16">
-              <a href="#calculadora" className="cta-primary">
+              <button type="button" onClick={open} className="cta-primary">
                 Fazer meu diagnóstico
                 <span className="arrow">
                   <ArrowRight className="h-3.5 w-3.5" strokeWidth={2.5} />
                 </span>
-              </a>
+              </button>
             </div>
           </Reveal>
         </div>

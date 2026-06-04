@@ -1,5 +1,6 @@
 import { Reveal } from "@/components/Reveal";
 import { ArrowRight } from "lucide-react";
+import { useDiagnostico } from "./DiagnosticoContext";
 
 /**
  * Hero — padrão nextsense.io adaptado IAplicada:
@@ -9,6 +10,7 @@ import { ArrowRight } from "lucide-react";
  */
 
 export function Hero() {
+  const { open } = useDiagnostico();
   return (
     <section id="top" className="relative overflow-hidden">
       <div className="h-[72px]" aria-hidden />
@@ -65,13 +67,14 @@ export function Hero() {
 
               <Reveal delay={0.18}>
                 <div className="mt-9 lg:mt-12 flex flex-wrap items-center gap-6">
-                  <a
-                    href="#calculadora"
+                  <button
+                    type="button"
+                    onClick={open}
                     className="inline-flex items-center gap-2 rounded-md bg-primary text-primary-foreground font-semibold text-[15px] px-6 py-3.5 hover:bg-primary/90 transition-colors"
                   >
                     Fazer meu diagnóstico
                     <ArrowRight className="h-3.5 w-3.5" strokeWidth={2.5} />
-                  </a>
+                  </button>
                   <span className="text-[12.5px] uppercase tracking-[0.18em] font-semibold text-muted-foreground">
                     3 min · sem cartão
                   </span>

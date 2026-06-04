@@ -1,4 +1,5 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import {
   Calculator,
   ArrowRight,
@@ -21,10 +22,12 @@ import {
   ZapOff,
   Zap,
   CheckCircle,
+  X,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 import { FORM_ENDPOINT, FORM_HEADERS, captureTrafficContext } from "@/lib/formSubmit";
+import { useDiagnostico } from "./DiagnosticoContext";
 
 /* ─────────────────────────────────────────────────────────────
  * CONSTANTES
@@ -505,8 +508,8 @@ function NavButtons({
  * ────────────────────────────────────────────────────────── */
 
 export function Calculadora() {
+  const { isOpen, open, close } = useDiagnostico();
   const [etapa, setEtapa] = useState<number>(0);
-  const [iniciada, setIniciada] = useState(false);
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState(false);
 
@@ -622,10 +625,6 @@ export function Calculadora() {
       className="relative py-[100px] lg:py-[160px] overflow-hidden scroll-mt-24"
     >
       <div className="container-page relative">
-        {/* Header da seção — só no estado inicial. Padrão nextsense:
-            eyebrow uppercase olive + display type oversized + sub. */}
-        {!iniciada && (
-          <>
             <div className="text-center max-w-[1000px] mx-auto">
               <Reveal>
                 <p
@@ -749,7 +748,7 @@ export function Calculadora() {
               <div className="mt-12 lg:mt-16 flex justify-center">
                 <button
                   type="button"
-                  onClick={() => setIniciada(true)}
+                  onClick={open}
                   className="inline-flex items-center gap-2 justify-center rounded-md bg-primary text-primary-foreground font-semibold text-[14.5px] px-5 py-3 hover:bg-primary/90 transition-colors"
                 >
                   Começar diagnóstico
@@ -757,78 +756,146 @@ export function Calculadora() {
                 </button>
               </div>
             </Reveal>
-          </>
-        )}
-
-        {/* Wizard — aparece quando iniciada. Steps 0-3: wrapper sutil
-            (não modal pesado). Step 4 (resultado): full-width editorial
-            sem card — vira a página inteira. */}
-        {iniciada && etapa < 4 && (
-          <Reveal>
-            <div className="max-w-[720px] mx-auto">
-              {/* Header minimalista — progress + label de step */}
-              <ProgressBar etapa={etapa} />
-
-              <div className="mt-9 lg:mt-12">
-                {etapa === 0 && <LeadGateStep lead={lead} setLead={setLead} />}
-                {etapa === 1 && (
-                  <EscritorioStep escritorio={escritorio} setEscritorio={setEscritorio} />
-                )}
-                {etapa === 2 && <HorasStep horas={horas} setHoras={setHoras} />}
-                {etapa === 3 && (
-                  <GargaloStep
-                    gargalo={gargalo}
-                    setGargalo={setGargalo}
-                    maturidade={maturidade}
-                    setMaturidade={setMaturidade}
-                  />
-                )}
-              </div>
-
-              {error && (
-                <div
-                  role="alert"
-                  className="mt-5 flex items-start gap-2 rounded-md px-3 py-2.5 text-[13px]"
-                  style={{
-                    backgroundColor: "oklch(0.96 0.05 25 / 0.18)",
-                    border: "1px solid oklch(0.65 0.16 25 / 0.5)",
-                    color: "oklch(0.82 0.18 25)",
-                  }}
-                >
-                  <AlertCircle className="h-4 w-4 mt-0.5 shrink-0" strokeWidth={2} />
-                  <span>{error}</span>
-                </div>
-              )}
-
-              <NavButtons
-                onBack={etapa > 0 ? handleBack : undefined}
-                onNext={handleNext}
-                nextLabel={etapa === 3 ? "Ver meu diagnóstico" : "Próximo"}
-                nextDisabled={
-                  (etapa === 0 && !canAdvanceFromGate) ||
-                  (etapa === 1 && !canAdvanceFromEscritorio)
-                }
-                loading={loading && etapa === 3}
-                showBack={etapa > 0}
-              />
-            </div>
-          </Reveal>
-        )}
-
-        {/* Resultado — full editorial sem card */}
-        {iniciada && etapa === 4 && (
-          <Reveal>
-            <ResultadoStep
-              lead={lead}
-              resultado={resultado}
-              score={score}
-              gargalo={gargalo}
-            />
-          </Reveal>
-        )}
-
       </div>
+
+      {/* Modal — abre quando qualquer CTA da página chama open().
+          Renderiza wizard (etapa < 4) ou resultado (etapa === 4)
+          via portal pra escapar do stacking context da section. */}
+      <DiagnosticoModal isOpen={isOpen} onClose={close}>
+        {etapa < 4 && (
+          <div>
+            <ProgressBar etapa={etapa} />
+
+            <div className="mt-9 lg:mt-12">
+              {etapa === 0 && <LeadGateStep lead={lead} setLead={setLead} />}
+              {etapa === 1 && (
+                <EscritorioStep escritorio={escritorio} setEscritorio={setEscritorio} />
+              )}
+              {etapa === 2 && <HorasStep horas={horas} setHoras={setHoras} />}
+              {etapa === 3 && (
+                <GargaloStep
+                  gargalo={gargalo}
+                  setGargalo={setGargalo}
+                  maturidade={maturidade}
+                  setMaturidade={setMaturidade}
+                />
+              )}
+            </div>
+
+            {error && (
+              <div
+                role="alert"
+                className="mt-5 flex items-start gap-2 rounded-md px-3 py-2.5 text-[13px]"
+                style={{
+                  backgroundColor: "oklch(0.96 0.05 25 / 0.18)",
+                  border: "1px solid oklch(0.65 0.16 25 / 0.5)",
+                  color: "oklch(0.82 0.18 25)",
+                }}
+              >
+                <AlertCircle className="h-4 w-4 mt-0.5 shrink-0" strokeWidth={2} />
+                <span>{error}</span>
+              </div>
+            )}
+
+            <NavButtons
+              onBack={etapa > 0 ? handleBack : undefined}
+              onNext={handleNext}
+              nextLabel={etapa === 3 ? "Ver meu diagnóstico" : "Próximo"}
+              nextDisabled={
+                (etapa === 0 && !canAdvanceFromGate) ||
+                (etapa === 1 && !canAdvanceFromEscritorio)
+              }
+              loading={loading && etapa === 3}
+              showBack={etapa > 0}
+            />
+          </div>
+        )}
+
+        {etapa === 4 && (
+          <ResultadoStep
+            lead={lead}
+            resultado={resultado}
+            score={score}
+            gargalo={gargalo}
+            onRestart={() => setEtapa(0)}
+          />
+        )}
+      </DiagnosticoModal>
     </section>
+  );
+}
+
+/**
+ * Modal full-screen com backdrop blur. Renderiza via portal pra escapar
+ * do stacking context da section. Fecha ao clicar fora ou no X. Bloqueia
+ * scroll do body enquanto aberto.
+ */
+function DiagnosticoModal({
+  isOpen,
+  onClose,
+  children,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+  children: React.ReactNode;
+}) {
+  useEffect(() => {
+    if (!isOpen) return;
+    const original = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = original;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [isOpen, onClose]);
+
+  if (!isOpen || typeof document === "undefined") return null;
+
+  return createPortal(
+    <div
+      role="dialog"
+      aria-modal="true"
+      className="fixed inset-0 z-[200] overflow-y-auto"
+      style={{
+        backgroundColor: "oklch(0.06 0 0 / 0.82)",
+        backdropFilter: "blur(8px)",
+        WebkitBackdropFilter: "blur(8px)",
+      }}
+      onClick={onClose}
+    >
+      <div className="min-h-full flex items-start sm:items-center justify-center p-4 sm:p-8">
+        <div
+          onClick={(e) => e.stopPropagation()}
+          className="relative w-full max-w-[960px] rounded-2xl my-4 sm:my-8"
+          style={{
+            backgroundColor: "oklch(0.14 0.018 122)",
+            border: "1px solid oklch(0.55 0.06 122 / 0.35)",
+            boxShadow: "0 40px 80px -20px oklch(0 0 0 / 0.7)",
+          }}
+        >
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Fechar diagnóstico"
+            className="absolute top-4 right-4 z-10 inline-flex h-9 w-9 items-center justify-center rounded-full transition-colors"
+            style={{
+              backgroundColor: "oklch(0.20 0.025 122)",
+              border: "1px solid oklch(0.55 0.06 122 / 0.4)",
+              color: "oklch(0.85 0.02 110)",
+            }}
+          >
+            <X className="h-4 w-4" strokeWidth={2.5} />
+          </button>
+
+          <div className="p-6 sm:p-8 lg:p-10">{children}</div>
+        </div>
+      </div>
+    </div>,
+    document.body,
   );
 }
 
@@ -1137,11 +1204,13 @@ function ResultadoStep({
   resultado,
   score,
   gargalo,
+  onRestart,
 }: {
   lead: LeadData;
   resultado: CalculoResultado;
   score: Score;
   gargalo: GargaloKey;
+  onRestart?: () => void;
 }) {
   const recs = RECOMENDACOES[gargalo];
   const primeiroNome = lead.nome.trim().split(/\s+/)[0] || "você";
@@ -1150,122 +1219,16 @@ function ResultadoStep({
   );
   return (
     <div>
-      {/* HERO BANNER — painel CLARO sobre fundo escuro pra contraste alto.
-          Sem glow, sem text-shadow, sem gradient — tudo limpo e definido.
-          Stripe olive vertical à esquerda funciona como acento gráfico. */}
-      <div
-        className="relative rounded-2xl overflow-hidden"
-        style={{
-          backgroundColor: "oklch(0.97 0.012 110)",
-          border: "1px solid oklch(0.75 0.20 122 / 0.4)",
-        }}
-      >
-        {/* Stripe olive vertical no canto esquerdo */}
-        <span
-          aria-hidden
-          className="absolute top-0 bottom-0 left-0 w-[5px]"
-          style={{ backgroundColor: "var(--color-primary)" }}
-        />
-        <div className="relative p-6 lg:p-9 pl-8 lg:pl-11">
-          <div className="flex items-center justify-between gap-4 flex-wrap">
-            <span
-              className="inline-flex items-center gap-2 text-[10.5px] uppercase tracking-[0.22em] font-semibold"
-              style={{ color: "oklch(0.35 0.06 125)" }}
-            >
-              <CheckCircle2 className="h-3.5 w-3.5" strokeWidth={2.5} />
-              Diagnóstico de {primeiroNome}
-            </span>
-            <span
-              className="text-[10px] uppercase tracking-[0.2em] font-bold rounded px-2 py-1"
-              style={{
-                backgroundColor: "oklch(0.14 0.02 122)",
-                color: "oklch(0.97 0.012 110)",
-              }}
-            >
-              Projeção · 12 meses
-            </span>
-          </div>
-
-          <p
-            className="mt-5 text-[11.5px] uppercase tracking-[0.2em] font-semibold"
-            style={{ color: "oklch(0.32 0.04 125)" }}
-          >
-            Economia anual recuperável
-          </p>
-          <p
-            className="num-display mt-2 text-[44px] sm:text-[58px] lg:text-[76px] leading-[0.95]"
-            style={{
-              color: "oklch(0.14 0.02 122)",
-              letterSpacing: "-0.025em",
-            }}
-          >
-            {formatR$(resultado.economiaAnual)}
-          </p>
-
-          {/* Linha divisória + 2 mini-KPIs lado a lado */}
-          <div
-            className="mt-6 pt-5 grid grid-cols-2 gap-5"
-            style={{ borderTop: "1px solid oklch(0.85 0.02 110)" }}
-          >
-            <div>
-              <p
-                className="text-[10.5px] uppercase tracking-[0.18em] font-semibold"
-                style={{ color: "oklch(0.42 0.04 125)" }}
-              >
-                Horas liberadas
-              </p>
-              <p
-                className="num-display mt-1 text-[22px] lg:text-[28px] leading-none"
-                style={{ color: "oklch(0.18 0.03 122)" }}
-              >
-                {resultado.totalHorasLiberadas}
-                <span
-                  className="ml-1 text-[12px] font-semibold align-middle"
-                  style={{ color: "oklch(0.42 0.04 125)" }}
-                >
-                  h/mês
-                </span>
-              </p>
-            </div>
-            <div>
-              <p
-                className="text-[10.5px] uppercase tracking-[0.18em] font-semibold"
-                style={{ color: "oklch(0.42 0.04 125)" }}
-              >
-                Equivale a
-              </p>
-              <p
-                className="num-display mt-1 text-[22px] lg:text-[28px] leading-none"
-                style={{ color: "oklch(0.18 0.03 122)" }}
-              >
-                {resultado.fteEquivalente}
-                <span
-                  className="ml-1 text-[12px] font-semibold align-middle"
-                  style={{ color: "oklch(0.42 0.04 125)" }}
-                >
-                  FTE
-                </span>
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Comparison row — Hoje vs Com IA */}
-      <div className="mt-5 grid grid-cols-2 gap-3">
-        <ComparisonCard
-          label="Hoje"
-          value={`${resultado.totalHorasAtuais}h/mês`}
-          subValue={formatR$(resultado.totalHorasAtuais * (resultado.economiaMensal / resultado.totalHorasLiberadas || 60))}
-          tone="dim"
-        />
-        <ComparisonCard
-          label="Com IA"
-          value={`${resultado.totalHorasAtuais - resultado.totalHorasLiberadas}h/mês`}
-          subValue={`−${reducaoPct}% do tempo operacional`}
-          tone="primary"
-        />
-      </div>
+      {/* RESULT DASHBOARD — widget integrado tipo scorecard.
+          Esquerda: número principal + KPIs secundários.
+          Direita: ring chart de redução + comparação Hoje/Com IA
+          numa barra horizontal visual.
+          Substitui o banner cream "comum" + comparison row separados. */}
+      <ResultDashboard
+        primeiroNome={primeiroNome}
+        resultado={resultado}
+        reducaoPct={reducaoPct}
+      />
 
       {/* Tabela tarefa por tarefa com barras de progresso */}
       <div className="mt-7">
@@ -1568,10 +1531,280 @@ function ResultadoStep({
         </div>
       </div>
 
+      {/* Refazer diagnóstico — reset opcional */}
+      {onRestart && (
+        <div className="mt-10 text-center">
+          <button
+            type="button"
+            onClick={onRestart}
+            className="text-[11.5px] uppercase tracking-[0.18em] font-semibold text-muted-foreground hover:text-foreground transition-colors"
+          >
+            Refazer diagnóstico
+          </button>
+        </div>
+      )}
+
       {/* Score interno — comentado, vai pro CRM mas não pra tela */}
       <p className="sr-only" aria-hidden>
         Internal score: {score.total}/100 ({score.tier})
       </p>
+    </div>
+  );
+}
+
+/**
+ * Dashboard widget visual do resultado — substitui o banner cream simples
+ * que parecia "comum". Composição:
+ * - Left col: número anual gigante + KPIs secundários (horas, FTE, R$/mês)
+ * - Right col: donut/ring chart com % de redução central + barra
+ *   horizontal "Hoje" vs "Com IA"
+ * Tudo num único card cream com stripe olive lateral.
+ */
+function ResultDashboard({
+  primeiroNome,
+  resultado,
+  reducaoPct,
+}: {
+  primeiroNome: string;
+  resultado: CalculoResultado;
+  reducaoPct: number;
+}) {
+  const INK = "oklch(0.14 0.02 122)";
+  const MUTED = "oklch(0.42 0.04 125)";
+  const SUBTLE = "oklch(0.32 0.04 125)";
+  const RULE = "oklch(0.85 0.02 110)";
+  const OLIVE = "oklch(0.55 0.18 122)";
+  const OLIVE_SOFT = "oklch(0.75 0.20 122 / 0.18)";
+
+  // Donut chart: stroke-dasharray pra % de redução
+  const RADIUS = 62;
+  const CIRC = 2 * Math.PI * RADIUS;
+  const dashLen = (reducaoPct / 100) * CIRC;
+
+  const horasComIA = resultado.totalHorasAtuais - resultado.totalHorasLiberadas;
+
+  return (
+    <div
+      className="relative rounded-2xl overflow-hidden"
+      style={{
+        backgroundColor: "oklch(0.97 0.012 110)",
+        border: "1px solid oklch(0.75 0.20 122 / 0.4)",
+      }}
+    >
+      <span
+        aria-hidden
+        className="absolute top-0 bottom-0 left-0 w-[5px]"
+        style={{ backgroundColor: "var(--color-primary)" }}
+      />
+
+      <div className="relative p-6 lg:p-9 pl-8 lg:pl-11">
+        {/* Header bar */}
+        <div className="flex items-center justify-between gap-4 flex-wrap">
+          <span
+            className="inline-flex items-center gap-2 text-[10.5px] uppercase tracking-[0.22em] font-semibold"
+            style={{ color: SUBTLE }}
+          >
+            <CheckCircle2 className="h-3.5 w-3.5" strokeWidth={2.5} />
+            Diagnóstico de {primeiroNome}
+          </span>
+          <span
+            className="text-[10px] uppercase tracking-[0.2em] font-bold rounded px-2 py-1"
+            style={{ backgroundColor: INK, color: "oklch(0.97 0.012 110)" }}
+          >
+            Projeção · 12 meses
+          </span>
+        </div>
+
+        {/* Grid principal: stat hero esquerda + viz direita */}
+        <div className="mt-6 lg:mt-8 grid lg:grid-cols-[1.15fr_1fr] gap-8 lg:gap-12 items-start">
+          {/* COL 1: número hero + KPIs */}
+          <div>
+            <p
+              className="text-[11.5px] uppercase tracking-[0.2em] font-semibold"
+              style={{ color: SUBTLE }}
+            >
+              Economia anual recuperável
+            </p>
+            <p
+              className="num-display mt-2 text-[44px] sm:text-[58px] lg:text-[78px] leading-[0.92]"
+              style={{ color: INK, letterSpacing: "-0.03em" }}
+            >
+              {formatR$(resultado.economiaAnual)}
+            </p>
+            <p
+              className="mt-2 text-[12.5px] font-semibold"
+              style={{ color: MUTED }}
+            >
+              ≈ {formatR$(resultado.economiaMensal)} por mês
+            </p>
+
+            {/* KPIs row */}
+            <div
+              className="mt-7 pt-5 grid grid-cols-2 gap-5"
+              style={{ borderTop: `1px solid ${RULE}` }}
+            >
+              <div>
+                <p
+                  className="text-[10.5px] uppercase tracking-[0.18em] font-semibold"
+                  style={{ color: MUTED }}
+                >
+                  Horas liberadas
+                </p>
+                <p
+                  className="num-display mt-1 text-[22px] lg:text-[28px] leading-none"
+                  style={{ color: INK }}
+                >
+                  {resultado.totalHorasLiberadas}
+                  <span
+                    className="ml-1 text-[12px] font-semibold align-middle"
+                    style={{ color: MUTED }}
+                  >
+                    h/mês
+                  </span>
+                </p>
+              </div>
+              <div>
+                <p
+                  className="text-[10.5px] uppercase tracking-[0.18em] font-semibold"
+                  style={{ color: MUTED }}
+                >
+                  Equivale a
+                </p>
+                <p
+                  className="num-display mt-1 text-[22px] lg:text-[28px] leading-none"
+                  style={{ color: INK }}
+                >
+                  {resultado.fteEquivalente}
+                  <span
+                    className="ml-1 text-[12px] font-semibold align-middle"
+                    style={{ color: MUTED }}
+                  >
+                    FTE
+                  </span>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* COL 2: ring chart + barra comparison */}
+          <div>
+            {/* Donut chart com label central */}
+            <div className="flex items-center gap-5 lg:gap-6">
+              <div className="relative shrink-0" style={{ width: 144, height: 144 }}>
+                <svg
+                  width="144"
+                  height="144"
+                  viewBox="0 0 144 144"
+                  style={{ transform: "rotate(-90deg)" }}
+                >
+                  <circle
+                    cx="72"
+                    cy="72"
+                    r={RADIUS}
+                    fill="none"
+                    stroke={RULE}
+                    strokeWidth="12"
+                  />
+                  <circle
+                    cx="72"
+                    cy="72"
+                    r={RADIUS}
+                    fill="none"
+                    stroke={OLIVE}
+                    strokeWidth="12"
+                    strokeLinecap="round"
+                    strokeDasharray={`${dashLen} ${CIRC}`}
+                  />
+                </svg>
+                <div
+                  className="absolute inset-0 flex flex-col items-center justify-center"
+                  style={{ transform: "rotate(0deg)" }}
+                >
+                  <p
+                    className="num-display text-[30px] lg:text-[36px] leading-none"
+                    style={{ color: INK, letterSpacing: "-0.02em" }}
+                  >
+                    −{reducaoPct}%
+                  </p>
+                  <p
+                    className="mt-1 text-[8.5px] uppercase tracking-[0.18em] font-bold"
+                    style={{ color: MUTED }}
+                  >
+                    do tempo
+                  </p>
+                </div>
+              </div>
+
+              <div className="min-w-0 flex-1">
+                <p
+                  className="text-[10.5px] uppercase tracking-[0.18em] font-semibold"
+                  style={{ color: MUTED }}
+                >
+                  Redução do tempo operacional
+                </p>
+                <p
+                  className="mt-1.5 text-[13px] leading-[1.45]"
+                  style={{ color: SUBTLE }}
+                >
+                  Sua equipe deixa de gastar tempo em tarefas repetitivas — esse tempo volta
+                  pra consultoria e relação com cliente.
+                </p>
+              </div>
+            </div>
+
+            {/* Comparison bar — Hoje vs Com IA integrados */}
+            <div
+              className="mt-6 pt-5"
+              style={{ borderTop: `1px solid ${RULE}` }}
+            >
+              <div className="flex items-center justify-between text-[10.5px] uppercase tracking-[0.16em] font-bold">
+                <span style={{ color: MUTED }}>Hoje</span>
+                <span style={{ color: OLIVE }}>Com IA</span>
+              </div>
+
+              <div
+                className="mt-2 relative h-[14px] rounded-full overflow-hidden"
+                style={{ backgroundColor: "oklch(0.90 0.015 110)" }}
+              >
+                <div
+                  className="absolute inset-y-0 right-0 h-full"
+                  style={{
+                    width: `${100 - reducaoPct}%`,
+                    background: `linear-gradient(90deg, ${OLIVE_SOFT}, ${OLIVE})`,
+                  }}
+                />
+              </div>
+
+              <div className="mt-2.5 flex items-center justify-between text-[12.5px]">
+                <span
+                  className="num-display"
+                  style={{ color: INK }}
+                >
+                  {resultado.totalHorasAtuais}h
+                  <span
+                    className="ml-1 text-[10.5px] font-semibold"
+                    style={{ color: MUTED }}
+                  >
+                    /mês
+                  </span>
+                </span>
+                <span
+                  className="num-display"
+                  style={{ color: OLIVE }}
+                >
+                  {horasComIA}h
+                  <span
+                    className="ml-1 text-[10.5px] font-semibold"
+                    style={{ color: MUTED }}
+                  >
+                    /mês
+                  </span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
