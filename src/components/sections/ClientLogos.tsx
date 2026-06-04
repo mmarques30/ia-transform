@@ -19,13 +19,16 @@ interface Client {
 }
 
 const CLIENTS: Client[] = [
-  { name: "Mercado Livre", logo: "/clients/logos/mercado-livre.png" },
-  { name: "iFood", logo: "/clients/logos/ifood.svg" },
-  { name: "Cimed", logo: "/clients/logos/cimed.svg" },
-  { name: "PSA Consultores", logo: "/clients/logos/psa.png" },
-  { name: "LCR Contadores", logo: "/clients/logos/lcr.jpg" },
-  { name: "Borges & Zembruski", logo: "/clients/logos/borges-zembruski.png" },
-  { name: "Recon", logo: "/clients/logos/recon.png" },
+  {
+    name: "Mercado Livre",
+    logo: "/clients/mercado_livre logo@2x.01bba0453ca88bc380e9e520015529893587af2e.png",
+  },
+  { name: "iFood", logo: "/clients/IFood_logo.svg.png" },
+  { name: "Cimed", logo: "/clients/cimed-logo.svg" },
+  { name: "PSA Consultores", logo: "/clients/psa-logo-quem-somos.png" },
+  { name: "LCR Contadores", logo: "/clients/lcr_contadores_logo.jpeg" },
+  { name: "Borges & Zembruski", logo: "/clients/BZ-Logotipo-Versões-06.png" },
+  { name: "Recon", logo: "/clients/recon-logo-proposal.png" },
   { name: "Focus FinTax" },
   { name: "Turystar" },
   { name: "Uiara Intimates" },
