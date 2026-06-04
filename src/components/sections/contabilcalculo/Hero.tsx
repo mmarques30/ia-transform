@@ -30,34 +30,28 @@ export function Hero() {
             {/* COPY — esquerda */}
             <div>
               <Reveal>
-                <h1 className="h-mix text-[40px] sm:text-[54px] lg:text-[72px] leading-[0.96] tracking-[-0.025em] text-foreground">
-                  Em <em>3 minutos</em>, quantas horas{" "}
-                  <span className="text-muted-foreground/85">(e quantos R$)</span> seu
-                  escritório recupera com IA.
+                <h1 className="h-mix text-[34px] sm:text-[46px] lg:text-[60px] leading-[1.02] tracking-[-0.025em] text-foreground">
+                  Em <em>3 minutos</em>, quantos R$ seu escritório{" "}
+                  <em>perde sem IA.</em>
                 </h1>
               </Reveal>
 
               <Reveal delay={0.1}>
                 <p className="mt-7 lg:mt-9 text-[16px] lg:text-[18px] text-sage leading-[1.55] max-w-[520px]">
-                  Diagnóstico gratuito. Conta aberta na tela. Sem cartão, sem cadastro.
+                  Diagnóstico gratuito com a conta aberta tarefa por tarefa. Resultado na hora.
                 </p>
               </Reveal>
 
               <Reveal delay={0.18}>
                 <div className="mt-9 lg:mt-11">
-                  <a href="#calculadora" className="cta-primary">
+                  <a
+                    href="#calculadora"
+                    className="inline-flex items-center gap-2 justify-center rounded-md bg-primary text-primary-foreground font-semibold text-[14.5px] px-5 py-3 hover:bg-primary/90 transition-colors"
+                  >
                     Fazer meu diagnóstico
-                    <span className="arrow">
-                      <ArrowRight className="h-3.5 w-3.5" strokeWidth={2.5} />
-                    </span>
+                    <ArrowRight className="h-3.5 w-3.5" strokeWidth={2.5} />
                   </a>
                 </div>
-              </Reveal>
-
-              <Reveal delay={0.24}>
-                <p className="mt-5 text-[10.5px] uppercase tracking-[0.2em] font-semibold text-muted-foreground">
-                  100% grátis · 3 minutos · Sem cartão
-                </p>
               </Reveal>
             </div>
 
