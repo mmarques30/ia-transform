@@ -627,16 +627,8 @@ export function Calculadora() {
       <div className="container-page relative">
             <div className="text-center max-w-[1000px] mx-auto">
               <Reveal>
-                <p
-                  className="text-[11px] uppercase tracking-[0.28em] font-bold"
-                  style={{ color: "var(--color-primary)" }}
-                >
-                  O diagnóstico
-                </p>
-              </Reveal>
-              <Reveal delay={0.05}>
                 <h2
-                  className="h-mix mt-7 text-[40px] sm:text-[54px] lg:text-[80px] leading-[0.96] text-foreground"
+                  className="h-mix text-[40px] sm:text-[54px] lg:text-[80px] leading-[0.96] text-foreground"
                   style={{ letterSpacing: "-0.035em" }}
                 >
                   Quanto a IA pode
@@ -859,38 +851,45 @@ function DiagnosticoModal({
     <div
       role="dialog"
       aria-modal="true"
-      className="fixed inset-0 z-[200] overflow-y-auto"
+      className="fixed inset-0 z-[200] overflow-y-auto overscroll-contain"
       style={{
         backgroundColor: "oklch(0.06 0 0 / 0.82)",
         backdropFilter: "blur(8px)",
         WebkitBackdropFilter: "blur(8px)",
+        WebkitOverflowScrolling: "touch",
       }}
       onClick={onClose}
     >
-      <div className="min-h-full flex items-start sm:items-center justify-center p-4 sm:p-8">
+      {/* X close button — fixed na viewport pra ficar acessível mesmo
+          quando o conteúdo do modal rola. NÃO fica dentro do card. */}
+      <button
+        type="button"
+        onClick={onClose}
+        aria-label="Fechar diagnóstico"
+        className="fixed top-4 right-4 lg:top-6 lg:right-6 z-[210] inline-flex h-10 w-10 items-center justify-center rounded-full transition-colors hover:opacity-90"
+        style={{
+          backgroundColor: "oklch(0.20 0.025 122)",
+          border: "1px solid oklch(0.55 0.06 122 / 0.5)",
+          color: "oklch(0.95 0.012 110)",
+        }}
+      >
+        <X className="h-4 w-4" strokeWidth={2.5} />
+      </button>
+
+      {/* Container scrollável — items-start sempre (nunca center),
+          pra evitar o bug clássico de flex+overflow onde o topo do
+          conteúdo fica clipado. Padding generoso pra simular
+          centralização visual quando o conteúdo cabe na viewport. */}
+      <div className="min-h-full flex items-start justify-center p-4 sm:p-6 lg:p-8 pb-16 lg:pb-20">
         <div
           onClick={(e) => e.stopPropagation()}
-          className="relative w-full max-w-[960px] rounded-2xl my-4 sm:my-8"
+          className="relative w-full max-w-[960px] rounded-2xl"
           style={{
             backgroundColor: "oklch(0.14 0.018 122)",
             border: "1px solid oklch(0.55 0.06 122 / 0.35)",
             boxShadow: "0 40px 80px -20px oklch(0 0 0 / 0.7)",
           }}
         >
-          <button
-            type="button"
-            onClick={onClose}
-            aria-label="Fechar diagnóstico"
-            className="absolute top-4 right-4 z-10 inline-flex h-9 w-9 items-center justify-center rounded-full transition-colors"
-            style={{
-              backgroundColor: "oklch(0.20 0.025 122)",
-              border: "1px solid oklch(0.55 0.06 122 / 0.4)",
-              color: "oklch(0.85 0.02 110)",
-            }}
-          >
-            <X className="h-4 w-4" strokeWidth={2.5} />
-          </button>
-
           <div className="p-6 sm:p-8 lg:p-10">{children}</div>
         </div>
       </div>
@@ -1475,14 +1474,8 @@ function ResultadoStep({
           }}
         />
         <div className="relative p-7 lg:p-12">
-          <p
-            className="text-[10.5px] uppercase tracking-[0.22em] font-semibold"
-            style={{ color: "var(--color-primary)" }}
-          >
-            O próximo passo
-          </p>
           <h3
-            className="mt-4 text-[28px] sm:text-[36px] lg:text-[46px] leading-[1.02] tracking-[-0.02em] text-foreground"
+            className="text-[28px] sm:text-[36px] lg:text-[46px] leading-[1.02] tracking-[-0.02em] text-foreground"
             style={{ fontFamily: '"Instrument Serif", serif' }}
           >
             Quero ver isso{" "}
@@ -1574,10 +1567,9 @@ function ResultDashboard({
   const SUBTLE = "oklch(0.32 0.04 125)";
   const RULE = "oklch(0.85 0.02 110)";
   const OLIVE = "oklch(0.55 0.18 122)";
-  const OLIVE_SOFT = "oklch(0.75 0.20 122 / 0.18)";
 
-  // Donut chart: stroke-dasharray pra % de redução
-  const RADIUS = 62;
+  // Donut: stroke-dasharray pra % de redução
+  const RADIUS = 70;
   const CIRC = 2 * Math.PI * RADIUS;
   const dashLen = (reducaoPct / 100) * CIRC;
 
@@ -1597,7 +1589,7 @@ function ResultDashboard({
         style={{ backgroundColor: "var(--color-primary)" }}
       />
 
-      <div className="relative p-6 lg:p-9 pl-8 lg:pl-11">
+      <div className="relative p-7 lg:p-10 pl-8 lg:pl-12">
         {/* Header bar */}
         <div className="flex items-center justify-between gap-4 flex-wrap">
           <span
@@ -1615,9 +1607,8 @@ function ResultDashboard({
           </span>
         </div>
 
-        {/* Grid principal: stat hero esquerda + viz direita */}
-        <div className="mt-6 lg:mt-8 grid lg:grid-cols-[1.15fr_1fr] gap-8 lg:gap-12 items-start">
-          {/* COL 1: número hero + KPIs */}
+        {/* HERO STAT — número anual gigante esquerda + donut direita */}
+        <div className="mt-8 lg:mt-10 grid lg:grid-cols-[1.3fr_1fr] gap-6 lg:gap-10 items-center">
           <div>
             <p
               className="text-[11.5px] uppercase tracking-[0.2em] font-semibold"
@@ -1626,185 +1617,120 @@ function ResultDashboard({
               Economia anual recuperável
             </p>
             <p
-              className="num-display mt-2 text-[44px] sm:text-[58px] lg:text-[78px] leading-[0.92]"
-              style={{ color: INK, letterSpacing: "-0.03em" }}
+              className="num-display mt-3 text-[52px] sm:text-[68px] lg:text-[88px] leading-[0.9]"
+              style={{ color: INK, letterSpacing: "-0.035em" }}
             >
               {formatR$(resultado.economiaAnual)}
             </p>
-            <p
-              className="mt-2 text-[12.5px] font-semibold"
-              style={{ color: MUTED }}
-            >
-              ≈ {formatR$(resultado.economiaMensal)} por mês
-            </p>
-
-            {/* KPIs row */}
-            <div
-              className="mt-7 pt-5 grid grid-cols-2 gap-5"
-              style={{ borderTop: `1px solid ${RULE}` }}
-            >
-              <div>
-                <p
-                  className="text-[10.5px] uppercase tracking-[0.18em] font-semibold"
-                  style={{ color: MUTED }}
-                >
-                  Horas liberadas
-                </p>
-                <p
-                  className="num-display mt-1 text-[22px] lg:text-[28px] leading-none"
-                  style={{ color: INK }}
-                >
-                  {resultado.totalHorasLiberadas}
-                  <span
-                    className="ml-1 text-[12px] font-semibold align-middle"
-                    style={{ color: MUTED }}
-                  >
-                    h/mês
-                  </span>
-                </p>
-              </div>
-              <div>
-                <p
-                  className="text-[10.5px] uppercase tracking-[0.18em] font-semibold"
-                  style={{ color: MUTED }}
-                >
-                  Equivale a
-                </p>
-                <p
-                  className="num-display mt-1 text-[22px] lg:text-[28px] leading-none"
-                  style={{ color: INK }}
-                >
-                  {resultado.fteEquivalente}
-                  <span
-                    className="ml-1 text-[12px] font-semibold align-middle"
-                    style={{ color: MUTED }}
-                  >
-                    FTE
-                  </span>
-                </p>
-              </div>
-            </div>
           </div>
 
-          {/* COL 2: ring chart + barra comparison */}
-          <div>
-            {/* Donut chart com label central */}
-            <div className="flex items-center gap-5 lg:gap-6">
-              <div className="relative shrink-0" style={{ width: 144, height: 144 }}>
-                <svg
-                  width="144"
-                  height="144"
-                  viewBox="0 0 144 144"
-                  style={{ transform: "rotate(-90deg)" }}
-                >
-                  <circle
-                    cx="72"
-                    cy="72"
-                    r={RADIUS}
-                    fill="none"
-                    stroke={RULE}
-                    strokeWidth="12"
-                  />
-                  <circle
-                    cx="72"
-                    cy="72"
-                    r={RADIUS}
-                    fill="none"
-                    stroke={OLIVE}
-                    strokeWidth="12"
-                    strokeLinecap="round"
-                    strokeDasharray={`${dashLen} ${CIRC}`}
-                  />
-                </svg>
-                <div
-                  className="absolute inset-0 flex flex-col items-center justify-center"
-                  style={{ transform: "rotate(0deg)" }}
-                >
-                  <p
-                    className="num-display text-[30px] lg:text-[36px] leading-none"
-                    style={{ color: INK, letterSpacing: "-0.02em" }}
-                  >
-                    −{reducaoPct}%
-                  </p>
-                  <p
-                    className="mt-1 text-[8.5px] uppercase tracking-[0.18em] font-bold"
-                    style={{ color: MUTED }}
-                  >
-                    do tempo
-                  </p>
-                </div>
-              </div>
-
-              <div className="min-w-0 flex-1">
+          {/* Donut grande centralizado na coluna direita */}
+          <div className="flex justify-center lg:justify-end">
+            <div className="relative" style={{ width: 160, height: 160 }}>
+              <svg
+                width="160"
+                height="160"
+                viewBox="0 0 160 160"
+                style={{ transform: "rotate(-90deg)" }}
+              >
+                <circle
+                  cx="80"
+                  cy="80"
+                  r={RADIUS}
+                  fill="none"
+                  stroke={RULE}
+                  strokeWidth="13"
+                />
+                <circle
+                  cx="80"
+                  cy="80"
+                  r={RADIUS}
+                  fill="none"
+                  stroke={OLIVE}
+                  strokeWidth="13"
+                  strokeLinecap="round"
+                  strokeDasharray={`${dashLen} ${CIRC}`}
+                />
+              </svg>
+              <div className="absolute inset-0 flex flex-col items-center justify-center">
                 <p
-                  className="text-[10.5px] uppercase tracking-[0.18em] font-semibold"
+                  className="num-display text-[36px] lg:text-[42px] leading-none"
+                  style={{ color: INK, letterSpacing: "-0.025em" }}
+                >
+                  −{reducaoPct}%
+                </p>
+                <p
+                  className="mt-1.5 text-[8.5px] uppercase tracking-[0.2em] font-bold"
                   style={{ color: MUTED }}
                 >
-                  Redução do tempo operacional
+                  do tempo
                 </p>
-                <p
-                  className="mt-1.5 text-[13px] leading-[1.45]"
-                  style={{ color: SUBTLE }}
-                >
-                  Sua equipe deixa de gastar tempo em tarefas repetitivas — esse tempo volta
-                  pra consultoria e relação com cliente.
-                </p>
-              </div>
-            </div>
-
-            {/* Comparison bar — Hoje vs Com IA integrados */}
-            <div
-              className="mt-6 pt-5"
-              style={{ borderTop: `1px solid ${RULE}` }}
-            >
-              <div className="flex items-center justify-between text-[10.5px] uppercase tracking-[0.16em] font-bold">
-                <span style={{ color: MUTED }}>Hoje</span>
-                <span style={{ color: OLIVE }}>Com IA</span>
-              </div>
-
-              <div
-                className="mt-2 relative h-[14px] rounded-full overflow-hidden"
-                style={{ backgroundColor: "oklch(0.90 0.015 110)" }}
-              >
-                <div
-                  className="absolute inset-y-0 right-0 h-full"
-                  style={{
-                    width: `${100 - reducaoPct}%`,
-                    background: `linear-gradient(90deg, ${OLIVE_SOFT}, ${OLIVE})`,
-                  }}
-                />
-              </div>
-
-              <div className="mt-2.5 flex items-center justify-between text-[12.5px]">
-                <span
-                  className="num-display"
-                  style={{ color: INK }}
-                >
-                  {resultado.totalHorasAtuais}h
-                  <span
-                    className="ml-1 text-[10.5px] font-semibold"
-                    style={{ color: MUTED }}
-                  >
-                    /mês
-                  </span>
-                </span>
-                <span
-                  className="num-display"
-                  style={{ color: OLIVE }}
-                >
-                  {horasComIA}h
-                  <span
-                    className="ml-1 text-[10.5px] font-semibold"
-                    style={{ color: MUTED }}
-                  >
-                    /mês
-                  </span>
-                </span>
               </div>
             </div>
           </div>
         </div>
+
+        {/* KPI STRIP — 3 colunas simples embaixo */}
+        <div
+          className="mt-8 lg:mt-10 pt-6 grid grid-cols-3 gap-4 lg:gap-8"
+          style={{ borderTop: `1px solid ${RULE}` }}
+        >
+          <KpiBlock label="Horas liberadas" value={resultado.totalHorasLiberadas} suffix="h/mês" inkColor={INK} mutedColor={MUTED} />
+          <KpiBlock label="Equivale a" value={resultado.fteEquivalente} suffix="FTE" inkColor={INK} mutedColor={MUTED} />
+          <div>
+            <p
+              className="text-[10.5px] uppercase tracking-[0.18em] font-semibold"
+              style={{ color: MUTED }}
+            >
+              Hoje → Com IA
+            </p>
+            <p
+              className="num-display mt-1 text-[20px] lg:text-[26px] leading-none whitespace-nowrap"
+              style={{ color: INK }}
+            >
+              {resultado.totalHorasAtuais}h
+              <span className="mx-1.5 text-[14px]" style={{ color: MUTED }}>
+                →
+              </span>
+              <span style={{ color: OLIVE }}>{horasComIA}h</span>
+            </p>
+          </div>
+        </div>
       </div>
+    </div>
+  );
+}
+
+function KpiBlock({
+  label,
+  value,
+  suffix,
+  inkColor,
+  mutedColor,
+}: {
+  label: string;
+  value: number | string;
+  suffix: string;
+  inkColor: string;
+  mutedColor: string;
+}) {
+  return (
+    <div>
+      <p
+        className="text-[10.5px] uppercase tracking-[0.18em] font-semibold"
+        style={{ color: mutedColor }}
+      >
+        {label}
+      </p>
+      <p
+        className="num-display mt-1 text-[20px] lg:text-[26px] leading-none"
+        style={{ color: inkColor }}
+      >
+        {value}
+        <span className="ml-1 text-[11px] font-semibold align-middle" style={{ color: mutedColor }}>
+          {suffix}
+        </span>
+      </p>
     </div>
   );
 }

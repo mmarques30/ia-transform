@@ -45,16 +45,8 @@ export function Metrics() {
     >
       <div className="container-page relative">
         <Reveal>
-          <p
-            className="text-center text-[11px] uppercase tracking-[0.28em] font-bold"
-            style={{ color: "var(--color-primary)" }}
-          >
-            Os benchmarks
-          </p>
-        </Reveal>
-        <Reveal delay={0.05}>
           <h2
-            className="h-mix mt-5 text-center text-[26px] sm:text-[34px] lg:text-[44px] leading-[1.05] text-foreground max-w-[820px] mx-auto"
+            className="h-mix text-center text-[26px] sm:text-[34px] lg:text-[44px] leading-[1.05] text-foreground max-w-[820px] mx-auto"
             style={{ letterSpacing: "-0.02em" }}
           >
             O número não é palpite.
