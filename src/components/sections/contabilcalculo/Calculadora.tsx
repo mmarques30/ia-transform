@@ -619,39 +619,47 @@ export function Calculadora() {
   return (
     <section
       id="calculadora"
-      className="relative py-[80px] lg:py-[140px] overflow-hidden scroll-mt-24"
+      className="relative py-[100px] lg:py-[160px] overflow-hidden scroll-mt-24"
     >
       <div className="container-page relative">
-        {/* Header da seção — só no estado inicial. Padrão visual /contabil:
-            label-chip + h-mix centralizado + sub + tech-cards. */}
+        {/* Header da seção — só no estado inicial. Padrão nextsense:
+            eyebrow uppercase olive + display type oversized + sub. */}
         {!iniciada && (
           <>
-            <div className="text-center max-w-[820px] mx-auto">
+            <div className="text-center max-w-[1000px] mx-auto">
               <Reveal>
-                <span className="label-chip">
-                  <span className="dot" />O diagnóstico
-                </span>
+                <p
+                  className="text-[11px] uppercase tracking-[0.28em] font-bold"
+                  style={{ color: "var(--color-primary)" }}
+                >
+                  O diagnóstico
+                </p>
               </Reveal>
               <Reveal delay={0.05}>
-                <h2 className="h-mix mt-6 text-[32px] sm:text-[42px] lg:text-[54px] leading-[1.05] text-foreground">
-                  Quanto a IA pode <em>devolver</em> pro seu escritório.
+                <h2
+                  className="h-mix mt-7 text-[40px] sm:text-[54px] lg:text-[80px] leading-[0.96] text-foreground"
+                  style={{ letterSpacing: "-0.035em" }}
+                >
+                  Quanto a IA pode
+                  <br />
+                  <em>devolver</em> pro seu escritório.
                 </h2>
               </Reveal>
               <Reveal delay={0.1}>
-                <p className="mt-6 text-[16px] lg:text-[17px] text-sage leading-[1.6] max-w-[620px] mx-auto">
-                  Diagnóstico gratuito que abre a conta tarefa por tarefa. Você ajusta com a sua
-                  realidade e vê o resultado completo na tela em 3 minutos.
+                <p className="mt-8 lg:mt-10 text-[16px] lg:text-[19px] text-sage leading-[1.55] max-w-[620px] mx-auto">
+                  Conta aberta tarefa por tarefa. Você ajusta com a sua realidade e vê o
+                  resultado completo na tela em 3 minutos.
                 </p>
               </Reveal>
             </div>
 
-            {/* 6 frentes em tech-cards centralizados */}
+            {/* 6 frentes — tech-cards centralizados */}
             <Reveal delay={0.14}>
-              <div className="mt-12 lg:mt-16 max-w-[1100px] mx-auto">
-                <p className="text-center text-[11.5px] uppercase tracking-[0.22em] font-semibold text-muted-foreground">
+              <div className="mt-16 lg:mt-24 max-w-[1100px] mx-auto">
+                <p className="text-center text-[11px] uppercase tracking-[0.22em] font-bold text-muted-foreground">
                   6 frentes que a calculadora avalia
                 </p>
-                <div className="mt-7 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 lg:gap-4">
+                <div className="mt-8 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 lg:gap-4">
                   {[
                     { Icon: FileSpreadsheet, label: "Conciliação" },
                     { Icon: MessageSquare, label: "Atendimento" },

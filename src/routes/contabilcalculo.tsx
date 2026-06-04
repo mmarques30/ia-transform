@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Header } from "@/components/sections/Header";
 import { Hero } from "@/components/sections/contabilcalculo/Hero";
+import { Metrics } from "@/components/sections/contabilcalculo/Metrics";
+import { ClientLogos } from "@/components/sections/ClientLogos";
 import { DorResposta } from "@/components/sections/contabilcalculo/DorResposta";
 import { Calculadora } from "@/components/sections/contabilcalculo/Calculadora";
 import { FAQ } from "@/components/sections/contabilcalculo/FAQ";
@@ -10,15 +12,16 @@ import { Footer } from "@/components/sections/Footer";
 /**
  * /contabilcalculo — LP focada 100% no diagnóstico.
  *
- * Estrutura enxuta, sem Authority/Quem entrega — essa LP é pra captar
- * lead via calculadora, não pra apresentar a IAplicada. Authority vive
- * nas LPs principais (/, /contabil, /contabil02).
+ * Estrutura redesenhada inspirada em nextsense.io adaptada à marca
+ * IAplicada (cores, fontes, menu preservados):
  *
- *   1. Hero — proposta + mockup lateral
- *   2. DorResposta — dor narrativa + virada
- *   3. Calculadora — heart interativo + 6 frentes visuais
- *   4. FAQ — accordion focado no resultado/benefício
- *   5. CTAFinal — fechamento
+ *   1. Hero — display oversized + mockup com whitespace
+ *   2. ClientLogos — credibilidade imediata pós-hero
+ *   3. Metrics — 4 números oversized (75% / 7d / 8sem / +80)
+ *   4. DorResposta — 3 cards full-bleed + bloco "A virada"
+ *   5. Calculadora — heart interativo
+ *   6. FAQ — 3 grupos com ícones de categoria
+ *   7. CTAFinal — display type ascending oversized
  *
  * Form submission: calculadora posta no form-submit (slug
  * business-contabil) com fields da calc + scores no raw_data.
@@ -64,6 +67,8 @@ function ContabilCalculoLanding() {
     >
       <Header homePath="/contabilcalculo" />
       <Hero />
+      <ClientLogos />
+      <Metrics />
       <DorResposta />
       <Calculadora />
       <FAQ />
