@@ -890,7 +890,12 @@ function DiagnosticoModal({
             boxShadow: "0 40px 80px -20px oklch(0 0 0 / 0.7)",
           }}
         >
-          <div className="p-6 sm:p-8 lg:p-10">{children}</div>
+          {/* Padding top maior pra deixar espaço pro X fixo (top-4 lg:top-6
+              + h-10 = ~56-64px de zona reservada) sem sobrepor o conteúdo,
+              em especial a label "Etapa X de Y" da ProgressBar. */}
+          <div className="px-6 sm:px-8 lg:px-10 pb-6 sm:pb-8 lg:pb-10 pt-16 lg:pt-20">
+            {children}
+          </div>
         </div>
       </div>
     </div>,
