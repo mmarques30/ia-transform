@@ -83,7 +83,7 @@ function ContabilCalculoLanding() {
         style={{ backgroundColor: PAGE_BG }}
       >
         <Header
-          homePath="/"
+          homePath="/contabilcalculo"
           hideCta
           nav={CONTABILCALCULO_NAV}
           badgeLabel="Contábil"
