@@ -849,17 +849,15 @@ function DiagnosticoModal({
     <div
       role="dialog"
       aria-modal="true"
-      className="fixed inset-0 z-[200] overflow-y-auto overscroll-contain"
+      className="fixed inset-0 z-[200] flex items-start sm:items-center justify-center p-3 sm:p-6 lg:p-8"
       style={{
         backgroundColor: "oklch(0.06 0 0 / 0.82)",
         backdropFilter: "blur(8px)",
         WebkitBackdropFilter: "blur(8px)",
-        WebkitOverflowScrolling: "touch",
       }}
       onClick={onClose}
     >
-      {/* X close button — fixed na viewport pra ficar acessível mesmo
-          quando o conteúdo do modal rola. NÃO fica dentro do card. */}
+      {/* X close button — fixed na viewport, sempre acessível. */}
       <button
         type="button"
         onClick={onClose}
@@ -874,26 +872,27 @@ function DiagnosticoModal({
         <X className="h-4 w-4" strokeWidth={2.5} />
       </button>
 
-      {/* Container scrollável — items-start sempre (nunca center),
-          pra evitar o bug clássico de flex+overflow onde o topo do
-          conteúdo fica clipado. Padding generoso pra simular
-          centralização visual quando o conteúdo cabe na viewport. */}
-      <div className="min-h-full flex items-start justify-center p-4 sm:p-6 lg:p-8 pb-16 lg:pb-20">
+      {/* Card com max-height limitada à viewport — overflow-y-auto
+          DENTRO do card. Esse é o pattern bulletproof: o card vira
+          o scroll context, não o overlay. Evita o conflito de scroll
+          entre body, overlay e card. */}
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="relative w-full max-w-[960px] rounded-2xl flex flex-col"
+        style={{
+          backgroundColor: "oklch(0.14 0.018 122)",
+          border: "1px solid oklch(0.55 0.06 122 / 0.35)",
+          boxShadow: "0 40px 80px -20px oklch(0 0 0 / 0.7)",
+          maxHeight: "calc(100vh - 24px)",
+        }}
+      >
         <div
-          onClick={(e) => e.stopPropagation()}
-          className="relative w-full max-w-[960px] rounded-2xl"
+          className="overflow-y-auto overscroll-contain px-6 sm:px-8 lg:px-10 pb-6 sm:pb-8 lg:pb-10 pt-16 lg:pt-20 rounded-2xl"
           style={{
-            backgroundColor: "oklch(0.14 0.018 122)",
-            border: "1px solid oklch(0.55 0.06 122 / 0.35)",
-            boxShadow: "0 40px 80px -20px oklch(0 0 0 / 0.7)",
+            WebkitOverflowScrolling: "touch",
           }}
         >
-          {/* Padding top maior pra deixar espaço pro X fixo (top-4 lg:top-6
-              + h-10 = ~56-64px de zona reservada) sem sobrepor o conteúdo,
-              em especial a label "Etapa X de Y" da ProgressBar. */}
-          <div className="px-6 sm:px-8 lg:px-10 pb-6 sm:pb-8 lg:pb-10 pt-16 lg:pt-20">
-            {children}
-          </div>
+          {children}
         </div>
       </div>
     </div>,
