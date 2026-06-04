@@ -900,11 +900,16 @@ function DiagnosticoModal({
 
       {/* Card com max-height limitada à viewport — overflow-y-auto
           DENTRO do card. Esse é o pattern bulletproof: o card vira
-          o scroll context, não o overlay. Evita o conflito de scroll
-          entre body, overlay e card. */}
+          o scroll context, não o overlay.
+          IMPORTANTE: o filho precisa de flex-1 min-h-0 pra ser de
+          fato constrained pelo max-h do parent (default min-height:auto
+          em flex permitiria o filho crescer além da viewport). Sem
+          isso, o overflow-y-auto não dispara — o conteúdo "vaza"
+          pra fora do card e o que parece scroll da página é o card
+          extrapolando a viewport. */}
       <div
         onClick={(e) => e.stopPropagation()}
-        className="relative w-full max-w-[960px] rounded-2xl flex flex-col"
+        className="relative w-full max-w-[960px] rounded-2xl flex flex-col overflow-hidden"
         style={{
           backgroundColor: "oklch(0.14 0.018 122)",
           border: "1px solid oklch(0.55 0.06 122 / 0.35)",
@@ -913,7 +918,7 @@ function DiagnosticoModal({
         }}
       >
         <div
-          className="diagnostico-modal-scroll overflow-y-auto overscroll-contain px-6 sm:px-8 lg:px-10 pb-6 sm:pb-8 lg:pb-10 pt-16 lg:pt-20 rounded-2xl"
+          className="diagnostico-modal-scroll flex-1 min-h-0 overflow-y-auto overscroll-contain px-6 sm:px-8 lg:px-10 pb-6 sm:pb-8 lg:pb-10 pt-16 lg:pt-20"
           style={{
             WebkitOverflowScrolling: "touch",
           }}
