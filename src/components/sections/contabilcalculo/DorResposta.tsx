@@ -1,5 +1,4 @@
 import { Reveal } from "@/components/Reveal";
-import { useDiagnostico } from "./DiagnosticoContext";
 
 /**
  * DorResposta — adota o padrão visual dos cards da /contabil/Process:
@@ -41,7 +40,6 @@ const FEATURES: Feature[] = [
 ];
 
 export function DorResposta() {
-  const { open } = useDiagnostico();
   return (
     <section className="relative py-[100px] lg:py-[160px] overflow-hidden">
       <div className="container-page relative">
@@ -115,40 +113,6 @@ export function DorResposta() {
           ))}
         </div>
 
-        {/* Bloco "A virada" — centralizado, separado por divider hairline */}
-        <Reveal delay={0.32}>
-          <div className="mt-24 lg:mt-32 max-w-[820px] mx-auto text-center">
-            <div
-              aria-hidden
-              className="mx-auto mb-12 h-px w-24"
-              style={{ backgroundColor: "var(--color-primary)" }}
-            />
-            <p
-              className="text-[22px] lg:text-[30px] leading-[1.35] text-foreground"
-              style={{ letterSpacing: "-0.012em" }}
-            >
-              A IA <em className="text-primary">não substitui</em> contador. Assume o pedaço
-              operacional para você voltar ao que paga melhor:{" "}
-              <span className="font-semibold">consultoria, planejamento</span> e{" "}
-              <span className="font-semibold">relação com cliente</span>.
-            </p>
-            <p className="mt-7 text-[15px] lg:text-[16.5px] text-sage leading-[1.6]">
-              Em <span className="font-bold text-foreground">7 dias</span>, primeira rotina
-              automatizada em produção. Em{" "}
-              <span className="font-bold text-foreground">8 semanas</span>, time autônomo.
-            </p>
-
-            <button
-              type="button"
-              onClick={open}
-              className="mt-12 inline-flex items-center gap-2 text-[12px] uppercase tracking-[0.22em] font-bold hover:opacity-80 transition-opacity"
-              style={{ color: "var(--color-primary)" }}
-            >
-              Quanto isso vale pra você
-              <span aria-hidden>→</span>
-            </button>
-          </div>
-        </Reveal>
       </div>
     </section>
   );
