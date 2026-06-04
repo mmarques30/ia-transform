@@ -36,7 +36,8 @@ const METRICS = [
 export function Metrics() {
   return (
     <section
-      className="relative py-[80px] lg:py-[120px]"
+      id="benchmarks"
+      className="relative py-[80px] lg:py-[120px] scroll-mt-24"
       style={{
         backgroundColor: "oklch(0.13 0.018 122)",
         borderTop: "1px solid oklch(0.55 0.06 122 / 0.2)",

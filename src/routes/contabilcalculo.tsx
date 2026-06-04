@@ -65,6 +65,16 @@ export const Route = createFileRoute("/contabilcalculo")({
   component: ContabilCalculoLanding,
 });
 
+/** Itens de menu específicos da /contabilcalculo — apontam só pras
+ *  seções que existem nessa LP (a default nav tinha Sistemas/Abordagem/
+ *  Time que não existem aqui e quebravam quando clicadas). */
+const CONTABILCALCULO_NAV = [
+  { href: "#cenario", label: "Cenário" },
+  { href: "#benchmarks", label: "Benchmarks" },
+  { href: "#calculadora", label: "Diagnóstico" },
+  { href: "#faq", label: "FAQ" },
+];
+
 function ContabilCalculoLanding() {
   return (
     <DiagnosticoProvider>
@@ -72,7 +82,12 @@ function ContabilCalculoLanding() {
         className="min-h-screen text-foreground"
         style={{ backgroundColor: PAGE_BG }}
       >
-        <Header homePath="/contabilcalculo" hideCta />
+        <Header
+          homePath="/"
+          hideCta
+          nav={CONTABILCALCULO_NAV}
+          badgeLabel="Contábil"
+        />
         <Hero />
         <ClientLogos />
         <Metrics />

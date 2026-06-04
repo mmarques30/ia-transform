@@ -3,12 +3,17 @@ import { ArrowRight } from "lucide-react";
 import { Link, useLocation } from "@tanstack/react-router";
 import { Logo } from "@/components/Logo";
 
-const NAV = [
+const DEFAULT_NAV = [
   { href: "#sistemas", label: "Sistemas" },
   { href: "#abordagem", label: "Abordagem" },
   { href: "#time", label: "Time" },
   { href: "#faq", label: "FAQ" },
 ];
+
+interface NavItem {
+  href: string;
+  label: string;
+}
 
 interface HeaderProps {
   /**
@@ -26,9 +31,27 @@ interface HeaderProps {
    * Quando true, a nav fica alinhada à direita via justify-between.
    */
   hideCta?: boolean;
+  /**
+   * Lista customizada de itens da nav. Default = NAV principal (Sistemas /
+   * Abordagem / Time / FAQ). LPs como /contabilcalculo passam um set
+   * próprio com âncoras que de fato existem na página.
+   */
+  nav?: NavItem[];
+  /**
+   * Label da pílula de contexto ao lado do logo. Default detecta pela
+   * homePath ("/contabil*" → "Contábil", outros → "Business"). LPs podem
+   * sobrescrever quando o logo aponta pra uma rota diferente da vertical
+   * (ex: /contabilcalculo com homePath="/" mas badge "Contábil").
+   */
+  badgeLabel?: string;
 }
 
-export function Header({ homePath = "/", hideCta = false }: HeaderProps) {
+export function Header({
+  homePath = "/",
+  hideCta = false,
+  nav = DEFAULT_NAV,
+  badgeLabel,
+}: HeaderProps) {
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
 
@@ -131,12 +154,12 @@ export function Header({ homePath = "/", hideCta = false }: HeaderProps) {
             className="hidden sm:inline text-muted-foreground text-[13px] font-normal border-l border-border pl-3 ml-1"
             style={{ letterSpacing: "0.02em" }}
           >
-            {homePath.startsWith("/contabil") ? "Contábil" : "Business"}
+            {badgeLabel ?? (homePath.startsWith("/contabil") ? "Contábil" : "Business")}
           </span>
         </Link>
 
         <nav className="hidden lg:flex items-center gap-8">
-          {NAV.map((item) => (
+          {nav.map((item) => (
             <a
               key={item.href}
               href={item.href}
