@@ -27,16 +27,8 @@ export function CTAFinal() {
       <div className="container-page relative">
         <div className="max-w-[860px] mx-auto text-center">
           <Reveal>
-            <p
-              className="text-[11px] uppercase tracking-[0.28em] font-bold"
-              style={{ color: "var(--color-primary)" }}
-            >
-              O próximo passo
-            </p>
-          </Reveal>
-          <Reveal delay={0.05}>
             <h2
-              className="h-mix mt-7 lg:mt-9 text-[36px] sm:text-[48px] lg:text-[68px] leading-[1.0] text-foreground"
+              className="h-mix text-[36px] sm:text-[48px] lg:text-[68px] leading-[1.0] text-foreground"
               style={{ letterSpacing: "-0.032em" }}
             >
               Você não precisa decidir nada agora.
