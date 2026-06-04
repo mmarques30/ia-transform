@@ -4,9 +4,10 @@ import { ArrowRight } from "lucide-react";
 /**
  * Hero da /contabilcalculo.
  *
- * Sem top meta + sem numeração — entra direto na proposta.
- * Layout 2-col equilibrado: copy à esquerda + mockup laptop+tablet
- * lateral à direita como complemento (não dominante).
+ * Dimensionamento de título copiado do hero da /contabil pra padrão
+ * uniforme entre LPs do segmento: 32/44/58, leading 1.05.
+ * Eyebrow label-chip + dot deixa a abertura mais profissional.
+ * Coluna do mockup proporcionalmente menor pra não desbalancear.
  */
 
 export function Hero() {
@@ -23,27 +24,34 @@ export function Hero() {
         }}
       />
 
-      <div className="relative pt-[48px] lg:pt-[80px] pb-[80px] lg:pb-[120px]">
+      <div className="relative pt-[48px] lg:pt-[72px] pb-[80px] lg:pb-[120px]">
         <div className="container-page relative">
-          {/* GRID 2-col equilibrado: copy esquerda, mockup direita */}
-          <div className="grid lg:grid-cols-[1.2fr_1fr] gap-10 lg:gap-14 items-center">
+          {/* GRID 2-col — proporção do hero /contabil (1.05fr_1fr) */}
+          <div className="grid lg:grid-cols-[1.05fr_1fr] gap-8 lg:gap-16 items-center">
             {/* COPY — esquerda */}
             <div>
               <Reveal>
-                <h1 className="h-mix text-[34px] sm:text-[46px] lg:text-[60px] leading-[1.02] tracking-[-0.025em] text-foreground">
+                <span className="label-chip">
+                  <span className="dot" />
+                  IAplicada · Diagnóstico
+                </span>
+              </Reveal>
+
+              <Reveal delay={0.05}>
+                <h1 className="h-mix mt-6 lg:mt-7 text-[32px] sm:text-[44px] lg:text-[58px] leading-[1.05] text-foreground">
                   Em <em>3 minutos</em>, quantos R$ seu escritório{" "}
                   <em>perde sem IA.</em>
                 </h1>
               </Reveal>
 
               <Reveal delay={0.1}>
-                <p className="mt-7 lg:mt-9 text-[16px] lg:text-[18px] text-sage leading-[1.55] max-w-[520px]">
-                  Diagnóstico gratuito com a conta aberta tarefa por tarefa. Resultado na hora.
+                <p className="mt-5 lg:mt-7 text-[16px] lg:text-[19px] text-foreground font-semibold leading-[1.5]">
+                  Diagnóstico gratuito tarefa por tarefa. Resultado na hora.
                 </p>
               </Reveal>
 
               <Reveal delay={0.18}>
-                <div className="mt-9 lg:mt-11">
+                <div className="mt-8 lg:mt-9">
                   <a
                     href="#calculadora"
                     className="inline-flex items-center gap-2 justify-center rounded-md bg-primary text-primary-foreground font-semibold text-[14.5px] px-5 py-3 hover:bg-primary/90 transition-colors"
@@ -57,7 +65,9 @@ export function Hero() {
 
             {/* MOCKUP — direita, complementar (não dominante) */}
             <Reveal delay={0.18}>
-              <LaptopWithTablet />
+              <div className="lg:max-w-[460px] lg:ml-auto">
+                <LaptopWithTablet />
+              </div>
             </Reveal>
           </div>
         </div>
