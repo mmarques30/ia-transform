@@ -738,13 +738,11 @@ export function Calculadora() {
 
             <Reveal delay={0.28}>
               <div className="mt-12 lg:mt-16 flex justify-center">
-                <button
-                  type="button"
-                  onClick={open}
-                  className="inline-flex items-center gap-2 justify-center rounded-md bg-primary text-primary-foreground font-semibold text-[14.5px] px-5 py-3 hover:bg-primary/90 transition-colors"
-                >
+                <button type="button" onClick={open} className="cta-primary">
                   Começar diagnóstico
-                  <ArrowRight className="h-3.5 w-3.5" strokeWidth={2.5} />
+                  <span className="arrow">
+                    <ArrowRight className="h-3.5 w-3.5" strokeWidth={2.5} />
+                  </span>
                 </button>
               </div>
             </Reveal>

@@ -21,7 +21,7 @@ interface Client {
 const CLIENTS: Client[] = [
   {
     name: "Mercado Livre",
-    logo: "/clients/mercado_livre logo@2x.01bba0453ca88bc380e9e520015529893587af2e.png",
+    logo: "/clients/mercado-livre-logo.png",
   },
   { name: "iFood", logo: "/clients/IFood_logo.svg.png" },
   { name: "Cimed", logo: "/clients/cimed-logo.svg" },
@@ -31,7 +31,7 @@ const CLIENTS: Client[] = [
   // ela aparecendo como retângulo branco invisível. Pra trazer de volta,
   // precisa de PNG/SVG com fundo transparente.
   // { name: "LCR Contadores", logo: "/clients/lcr_contadores_logo.jpeg" },
-  { name: "Borges & Zembruski", logo: "/clients/BZ-Logotipo-Versões-06.png" },
+  { name: "Borges & Zembruski", logo: "/clients/borges-zembruski-logo.png" },
   { name: "Recon", logo: "/clients/recon-logo-proposal.png" },
   { name: "Focus FinTax" },
   { name: "Turystar" },
