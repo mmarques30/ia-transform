@@ -132,25 +132,18 @@ export function DorResposta() {
               style={{ backgroundColor: "var(--color-primary)" }}
             />
             <p
-              className="text-[11px] uppercase tracking-[0.28em] font-bold"
-              style={{ color: "var(--color-primary)" }}
-            >
-              A virada
-            </p>
-            <p
-              className="mt-7 text-[22px] lg:text-[30px] leading-[1.35] text-foreground"
+              className="text-[22px] lg:text-[30px] leading-[1.35] text-foreground"
               style={{ letterSpacing: "-0.012em" }}
             >
-              A IA <em className="text-primary">não substitui</em> contador. Assume o pedaço operacional que tomava o tempo da
-              equipe pra ela voltar ao que paga melhor:{" "}
+              A IA <em className="text-primary">não substitui</em> contador. Assume o pedaço
+              operacional para você voltar ao que paga melhor:{" "}
               <span className="font-semibold">consultoria, planejamento</span> e{" "}
               <span className="font-semibold">relação com cliente</span>.
             </p>
             <p className="mt-7 text-[15px] lg:text-[16.5px] text-sage leading-[1.6]">
               Em <span className="font-bold text-foreground">7 dias</span>, primeira rotina
               automatizada em produção. Em{" "}
-              <span className="font-bold text-foreground">8 semanas</span>, time autônomo. Sem
-              trocar de sistema, sem depender de TI.
+              <span className="font-bold text-foreground">8 semanas</span>, time autônomo.
             </p>
 
             <button
