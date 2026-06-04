@@ -831,14 +831,40 @@ function DiagnosticoModal({
 }) {
   useEffect(() => {
     if (!isOpen) return;
-    const original = document.body.style.overflow;
+    // Pattern bulletproof de body scroll lock: position:fixed em
+    // body + top:-scrollY trava 100% das vezes (incluindo iOS Safari
+    // e quando o mouse wheel passa sobre o backdrop do modal).
+    // O overflow:hidden sozinho não basta — eventos wheel chegam no
+    // html mesmo com body overflow:hidden em alguns browsers.
+    const scrollY = window.scrollY;
+    const originalStyle = {
+      position: document.body.style.position,
+      top: document.body.style.top,
+      left: document.body.style.left,
+      right: document.body.style.right,
+      width: document.body.style.width,
+      overflow: document.body.style.overflow,
+    };
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${scrollY}px`;
+    document.body.style.left = "0";
+    document.body.style.right = "0";
+    document.body.style.width = "100%";
     document.body.style.overflow = "hidden";
+
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
     window.addEventListener("keydown", onKey);
+
     return () => {
-      document.body.style.overflow = original;
+      document.body.style.position = originalStyle.position;
+      document.body.style.top = originalStyle.top;
+      document.body.style.left = originalStyle.left;
+      document.body.style.right = originalStyle.right;
+      document.body.style.width = originalStyle.width;
+      document.body.style.overflow = originalStyle.overflow;
+      window.scrollTo(0, scrollY);
       window.removeEventListener("keydown", onKey);
     };
   }, [isOpen, onClose]);
@@ -887,7 +913,7 @@ function DiagnosticoModal({
         }}
       >
         <div
-          className="overflow-y-auto overscroll-contain px-6 sm:px-8 lg:px-10 pb-6 sm:pb-8 lg:pb-10 pt-16 lg:pt-20 rounded-2xl"
+          className="diagnostico-modal-scroll overflow-y-auto overscroll-contain px-6 sm:px-8 lg:px-10 pb-6 sm:pb-8 lg:pb-10 pt-16 lg:pt-20 rounded-2xl"
           style={{
             WebkitOverflowScrolling: "touch",
           }}
