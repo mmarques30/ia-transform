@@ -831,26 +831,30 @@ function DiagnosticoModal({
 }) {
   useEffect(() => {
     if (!isOpen) return;
-    // Pattern bulletproof de body scroll lock: position:fixed em
-    // body + top:-scrollY trava 100% das vezes (incluindo iOS Safari
-    // e quando o mouse wheel passa sobre o backdrop do modal).
-    // O overflow:hidden sozinho não basta — eventos wheel chegam no
-    // html mesmo com body overflow:hidden em alguns browsers.
-    const scrollY = window.scrollY;
-    const originalStyle = {
-      position: document.body.style.position,
-      top: document.body.style.top,
-      left: document.body.style.left,
-      right: document.body.style.right,
-      width: document.body.style.width,
-      overflow: document.body.style.overflow,
+    // Body scroll lock: overflow:hidden em html E body.
+    //
+    // Tentativa anterior com position:fixed no body travava a página
+    // mas quebrava a propagação de eventos wheel/keyboard pro contexto
+    // de scroll do modal (browser confundia o stack de scroll context).
+    // Resultado: usuário só conseguia rolar arrastando a scrollbar.
+    //
+    // Dual overflow:hidden (html + body) bloqueia o scroll da página
+    // sem quebrar eventos wheel — é o pattern usado por Radix/ReachUI.
+    //
+    // padding-right no body compensa o sumiço da scrollbar pra evitar
+    // o "jump" horizontal de ~15px quando o modal abre.
+    const scrollbarWidth =
+      window.innerWidth - document.documentElement.clientWidth;
+    const original = {
+      htmlOverflow: document.documentElement.style.overflow,
+      bodyOverflow: document.body.style.overflow,
+      bodyPaddingRight: document.body.style.paddingRight,
     };
-    document.body.style.position = "fixed";
-    document.body.style.top = `-${scrollY}px`;
-    document.body.style.left = "0";
-    document.body.style.right = "0";
-    document.body.style.width = "100%";
+    document.documentElement.style.overflow = "hidden";
     document.body.style.overflow = "hidden";
+    if (scrollbarWidth > 0) {
+      document.body.style.paddingRight = `${scrollbarWidth}px`;
+    }
 
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -858,13 +862,9 @@ function DiagnosticoModal({
     window.addEventListener("keydown", onKey);
 
     return () => {
-      document.body.style.position = originalStyle.position;
-      document.body.style.top = originalStyle.top;
-      document.body.style.left = originalStyle.left;
-      document.body.style.right = originalStyle.right;
-      document.body.style.width = originalStyle.width;
-      document.body.style.overflow = originalStyle.overflow;
-      window.scrollTo(0, scrollY);
+      document.documentElement.style.overflow = original.htmlOverflow;
+      document.body.style.overflow = original.bodyOverflow;
+      document.body.style.paddingRight = original.bodyPaddingRight;
       window.removeEventListener("keydown", onKey);
     };
   }, [isOpen, onClose]);
