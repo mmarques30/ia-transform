@@ -26,7 +26,11 @@ const CLIENTS: Client[] = [
   { name: "iFood", logo: "/clients/IFood_logo.svg.png" },
   { name: "Cimed", logo: "/clients/cimed-logo.svg" },
   { name: "PSA Consultores", logo: "/clients/psa-logo-quem-somos.png" },
-  { name: "LCR Contadores", logo: "/clients/lcr_contadores_logo.jpeg" },
+  // LCR removida do carrossel — arquivo JPEG (lcr_contadores_logo.jpeg)
+  // não tem alpha channel, então o filter brightness(0) invert(1) deixa
+  // ela aparecendo como retângulo branco invisível. Pra trazer de volta,
+  // precisa de PNG/SVG com fundo transparente.
+  // { name: "LCR Contadores", logo: "/clients/lcr_contadores_logo.jpeg" },
   { name: "Borges & Zembruski", logo: "/clients/BZ-Logotipo-Versões-06.png" },
   { name: "Recon", logo: "/clients/recon-logo-proposal.png" },
   { name: "Focus FinTax" },
