@@ -19,9 +19,16 @@ interface HeaderProps {
    * vertical (/contabil), não pra LP business raiz.
    */
   homePath?: string;
+  /**
+   * Esconde o CTA "Agendar diagnóstico" do header. Usado em LPs onde a
+   * conversão acontece via modal disparado por CTAs internos (ex:
+   * /contabilcalculo), pra evitar concorrência com o fluxo principal.
+   * Quando true, a nav fica alinhada à direita via justify-between.
+   */
+  hideCta?: boolean;
 }
 
-export function Header({ homePath = "/" }: HeaderProps) {
+export function Header({ homePath = "/", hideCta = false }: HeaderProps) {
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
 
@@ -140,13 +147,15 @@ export function Header({ homePath = "/" }: HeaderProps) {
           ))}
         </nav>
 
-        <a
-          href="#diagnostico-form"
-          className="inline-flex items-center gap-1.5 justify-center rounded-md bg-primary text-primary-foreground font-semibold text-[13px] px-4 py-2.5 hover:bg-primary/90 transition-colors"
-        >
-          Agendar diagnóstico
-          <ArrowRight className="h-3.5 w-3.5" />
-        </a>
+        {!hideCta && (
+          <a
+            href="#diagnostico-form"
+            className="inline-flex items-center gap-1.5 justify-center rounded-md bg-primary text-primary-foreground font-semibold text-[13px] px-4 py-2.5 hover:bg-primary/90 transition-colors"
+          >
+            Agendar diagnóstico
+            <ArrowRight className="h-3.5 w-3.5" />
+          </a>
+        )}
       </div>
     </header>
   );
