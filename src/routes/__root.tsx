@@ -6,10 +6,18 @@ import { initLenis, destroyLenis } from "../lib/motion";
 import { BrandBackground } from "../components/BrandBackground";
 import { isInAppBrowser } from "../lib/useEnv";
 
-const CLARITY_PROJECT_ID = "wpgxq27fhi";
-// Vertical contábil (/contabil e /contabil-thank-you) usa um projeto Clarity
-// próprio pra isolar as métricas dessa LP das da LP geral.
-const CLARITY_PROJECT_ID_CONTABIL = "wxsk6a8ej4";
+// IDs do Microsoft Clarity por LP. Cada projeto tem seu próprio dashboard
+// com heatmaps/replays isolados pra não misturar funis. Default é o
+// projeto da LP business — usado também por rotas que não casam com
+// nenhum dos prefixos específicos abaixo.
+//
+// As rotas /contabil02 e /contabilcalculo são prefixadas por "/contabil",
+// então o matching precisa ser feito do MAIS específico pro menos
+// específico (ver runtime selector no script abaixo).
+const CLARITY_PROJECT_ID_BUSINESS = "wpgxq27fhi"; // /
+const CLARITY_PROJECT_ID_CONTABIL = "wxsk6a8ej4"; // /contabil (+ /contabil-thank-you)
+const CLARITY_PROJECT_ID_CONTABIL02 = "x291ty5740"; // /contabil02
+const CLARITY_PROJECT_ID_CONTABILCALCULO = "x291zkjjfi"; // /contabilcalculo
 const META_PIXEL_ID = "619312151238896";
 
 function NotFoundComponent() {
@@ -113,12 +121,13 @@ export const Route = createRootRoute({
       // environment=production só quando o hostname for o domínio real,
       // permitindo filtrar via segmento no dashboard do Clarity.
       //
-      // O projeto Clarity é escolhido em runtime pelo pathname: rotas da
-      // vertical contábil (/contabil*) sobem pro projeto próprio; o resto
-      // pro projeto geral. Carrega um único tag por página (sem dupla
+      // Projeto Clarity escolhido em runtime pelo pathname. Matching
+      // ordenado do MAIS específico → MENOS específico pra evitar
+      // colisão de prefixos (/contabilcalculo e /contabil02 começam
+      // com "/contabil"). Carrega um único tag por página (sem dupla
       // contagem).
       {
-        children: `(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script",(window.location&&window.location.pathname&&window.location.pathname.indexOf("/contabil")===0)?"${CLARITY_PROJECT_ID_CONTABIL}":"${CLARITY_PROJECT_ID}");try{if(window.location&&window.location.hostname==="iaplicada.com"){window.clarity("set","environment","production");}else{window.clarity("set","environment","preview");}}catch(e){}`,
+        children: `(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script",(function(){var p=(window.location&&window.location.pathname)||"";if(p.indexOf("/contabilcalculo")===0)return "${CLARITY_PROJECT_ID_CONTABILCALCULO}";if(p.indexOf("/contabil02")===0)return "${CLARITY_PROJECT_ID_CONTABIL02}";if(p.indexOf("/contabil")===0)return "${CLARITY_PROJECT_ID_CONTABIL}";return "${CLARITY_PROJECT_ID_BUSINESS}";})());try{if(window.location&&window.location.hostname==="iaplicada.com"){window.clarity("set","environment","production");}else{window.clarity("set","environment","preview");}}catch(e){}`,
       },
       // Meta Pixel — conversões / remarketing Facebook/Instagram Ads.
       // Define a função fbq() imediatamente (com fila) e dispara
