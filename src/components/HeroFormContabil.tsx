@@ -70,6 +70,10 @@ export function HeroForm({
   const [loading, setLoading] = useState(false);
   const [loadingMsg, setLoadingMsg] = useState("");
   const [error, setError] = useState<string | null>(null);
+  /** Erros inline por field (populados em onBlur + onSubmit). */
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+  /** Controla o disabled do botão em tempo real. */
+  const [allRequiredFilled, setAllRequiredFilled] = useState(false);
   const loadingTimers = useRef<number[]>([]);
 
   function clearLoadingStages() {
@@ -165,10 +169,87 @@ export function HeroForm({
     trackClarity("event", `form_field_complete_${target.name}`);
   }
 
+  /**
+   * Required pra qualificação MQL no CRM contábil:
+   *   - colaboradores ≥ 10 = MQL (numero_de_colaboradores precisa estar setado)
+   *   - company necessário pra deal/account creation
+   */
+  const REQUIRED_FIELDS = [
+    "firstname",
+    "email",
+    "phone",
+    "company",
+    "numero_de_colaboradores",
+  ] as const;
+
+  function validateField(name: string, value: string): string {
+    const trimmed = value.trim();
+    const isRequired = (REQUIRED_FIELDS as readonly string[]).includes(name);
+    if (isRequired && !trimmed) return "Campo obrigatório";
+    if (name === "email" && trimmed && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) {
+      return "E-mail inválido";
+    }
+    if (name === "phone" && trimmed && trimmed.replace(/\D/g, "").length < 10) {
+      return "Inclua DDD (mín. 10 dígitos)";
+    }
+    return "";
+  }
+
+  function allRequiredHaveValue(form: HTMLFormElement): boolean {
+    const fd = new FormData(form);
+    for (const name of REQUIRED_FIELDS) {
+      if (!String(fd.get(name) ?? "").trim()) return false;
+    }
+    return true;
+  }
+
+  function handleFormInput(e: React.FormEvent<HTMLFormElement>) {
+    const target = e.target as HTMLInputElement | HTMLSelectElement | null;
+    if (target && target.name && fieldErrors[target.name]) {
+      setFieldErrors((prev) => {
+        const next = { ...prev };
+        delete next[target.name];
+        return next;
+      });
+    }
+    setAllRequiredFilled(allRequiredHaveValue(e.currentTarget));
+  }
+
+  function handleFieldBlur(e: FocusEvent<HTMLFormElement>) {
+    const target = e.target as HTMLInputElement | HTMLSelectElement | null;
+    if (!target || !target.name) return;
+    const err = validateField(target.name, target.value);
+    setFieldErrors((prev) => {
+      const next = { ...prev };
+      if (err) next[target.name] = err;
+      else delete next[target.name];
+      return next;
+    });
+  }
+
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (loading) return;
     setError(null);
+
+    const form = e.currentTarget;
+    const fdValidate = new FormData(form);
+    const newErrors: Record<string, string> = {};
+    for (const name of REQUIRED_FIELDS) {
+      const value = String(fdValidate.get(name) ?? "");
+      const err = validateField(name, value);
+      if (err) newErrors[name] = err;
+    }
+    setFieldErrors(newErrors);
+    if (Object.keys(newErrors).length > 0) {
+      const firstErrName = REQUIRED_FIELDS.find((f) => newErrors[f]);
+      if (firstErrName) {
+        const el = form.elements.namedItem(firstErrName) as HTMLElement | null;
+        el?.focus();
+      }
+      return;
+    }
+
     setLoading(true);
     startLoadingStages();
 
@@ -400,11 +481,16 @@ Conte sobre o seu escritório
         <form
           onSubmit={handleSubmit}
           onFocusCapture={handleFocusCapture}
-          onBlurCapture={handleBlurCapture}
+          onBlurCapture={(e) => {
+            handleBlurCapture(e);
+            handleFieldBlur(e);
+          }}
+          onInput={handleFormInput}
+          onChange={handleFormInput}
           className="space-y-2"
           noValidate
         >
-          <Field id="firstname" label="Nome Completo" required>
+          <Field id="firstname" label="Nome Completo" required error={fieldErrors.firstname}>
             <input
               id="firstname"
               name="firstname"
@@ -412,11 +498,12 @@ Conte sobre o seu escritório
               required
               autoComplete="name"
               placeholder="Seu nome completo"
+              aria-invalid={!!fieldErrors.firstname}
               className="form-input"
             />
           </Field>
 
-          <Field id="email" label="E-mail" required>
+          <Field id="email" label="E-mail" required error={fieldErrors.email}>
             <input
               id="email"
               name="email"
@@ -424,11 +511,12 @@ Conte sobre o seu escritório
               required
               autoComplete="email"
               placeholder="seu@email.com"
+              aria-invalid={!!fieldErrors.email}
               className="form-input"
             />
           </Field>
 
-          <Field id="phone" label="Telefone com DDD" required>
+          <Field id="phone" label="Telefone com DDD" required error={fieldErrors.phone}>
             <input
               id="phone"
               name="phone"
@@ -436,11 +524,12 @@ Conte sobre o seu escritório
               required
               autoComplete="tel"
               placeholder="(11) 99999-9999"
+              aria-invalid={!!fieldErrors.phone}
               className="form-input"
             />
           </Field>
 
-          <Field id="company" label="Empresa" required>
+          <Field id="company" label="Empresa" required error={fieldErrors.company}>
             <input
               id="company"
               name="company"
@@ -448,16 +537,23 @@ Conte sobre o seu escritório
               required
               autoComplete="organization"
               placeholder="Nome da empresa"
+              aria-invalid={!!fieldErrors.company}
               className="form-input"
             />
           </Field>
 
-          <Field id="numero_de_colaboradores" label="Número de colaboradores" required>
+          <Field
+            id="numero_de_colaboradores"
+            label="Número de colaboradores"
+            required
+            error={fieldErrors.numero_de_colaboradores}
+          >
             <select
               id="numero_de_colaboradores"
               name="numero_de_colaboradores"
               required
               defaultValue=""
+              aria-invalid={!!fieldErrors.numero_de_colaboradores}
               className="form-input"
             >
               <option value="" disabled>
@@ -488,7 +584,7 @@ Conte sobre o seu escritório
 
           <button
             type="submit"
-            disabled={loading}
+            disabled={loading || !allRequiredFilled}
             className="mt-1 w-full inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-[14px] font-bold transition-[transform,opacity,box-shadow] disabled:opacity-60 disabled:cursor-not-allowed hover:-translate-y-0.5"
             style={{
               backgroundColor: "oklch(0.18 0.02 122)",
@@ -517,11 +613,13 @@ function Field({
   id,
   label,
   required,
+  error,
   children,
 }: {
   id: string;
   label: string;
   required?: boolean;
+  error?: string;
   children: React.ReactNode;
 }) {
   return (
@@ -539,6 +637,16 @@ function Field({
         )}
       </label>
       {children}
+      {error && (
+        <p
+          id={`${id}-error`}
+          role="alert"
+          className="mt-1 text-[11.5px] font-medium leading-tight"
+          style={{ color: "oklch(0.5 0.18 25)" }}
+        >
+          {error}
+        </p>
+      )}
     </div>
   );
 }
