@@ -107,6 +107,12 @@ export const Route = createRootRoute({
         href: "/brand/iaplicada-logo-dark.png",
         fetchpriority: "high",
       },
+      // Preconnect/dns-prefetch pro Clarity — reduz latência da carga
+      // do tag async (~80-150ms a menos em conexões médias). Importante
+      // pra capturar sessões curtas onde o usuário sai antes do tag
+      // terminar de carregar.
+      { rel: "preconnect", href: "https://www.clarity.ms" },
+      { rel: "dns-prefetch", href: "https://www.clarity.ms" },
       {
         rel: "stylesheet",
         href: appCss,
