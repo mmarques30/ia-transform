@@ -43,6 +43,7 @@ const CARGOS = [
   "Gerente",
   "Coordenador / Supervisor",
   "Analista",
+  "Outro",
 ];
 
 const FAIXAS = [
