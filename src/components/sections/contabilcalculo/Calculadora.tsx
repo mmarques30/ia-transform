@@ -942,6 +942,29 @@ function LeadGateStep({
   lead: LeadData;
   setLead: (l: LeadData) => void;
 }) {
+  /** Quais fields o usuário já interagiu (focou + saiu). Erros só aparecem
+   *  após touched=true pra não cobrar enquanto digita. */
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
+
+  function validate(name: "nome" | "email" | "whatsapp", value: string): string {
+    const v = value.trim();
+    if (!v) return "Campo obrigatório";
+    if (name === "nome" && v.length < 2) return "Nome muito curto";
+    if (name === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) {
+      return "E-mail inválido";
+    }
+    if (name === "whatsapp" && v.replace(/\D/g, "").length < 8) {
+      return "Inclua DDD (mín. 10 dígitos)";
+    }
+    return "";
+  }
+
+  const errors = {
+    nome: touched.nome ? validate("nome", lead.nome) : "",
+    email: touched.email ? validate("email", lead.email) : "",
+    whatsapp: touched.whatsapp ? validate("whatsapp", lead.whatsapp) : "",
+  };
+
   return (
     <div>
       <p className="text-[16px] lg:text-[18px] font-semibold text-foreground">
@@ -958,6 +981,8 @@ function LeadGateStep({
           required
           value={lead.nome}
           onChange={(v) => setLead({ ...lead, nome: v })}
+          onBlur={() => setTouched((p) => ({ ...p, nome: true }))}
+          error={errors.nome}
           placeholder="Seu nome"
           autoComplete="name"
         />
@@ -968,6 +993,8 @@ function LeadGateStep({
           required
           value={lead.email}
           onChange={(v) => setLead({ ...lead, email: v })}
+          onBlur={() => setTouched((p) => ({ ...p, email: true }))}
+          error={errors.email}
           placeholder="seu@email.com"
           autoComplete="email"
         />
@@ -978,6 +1005,8 @@ function LeadGateStep({
           required
           value={lead.whatsapp}
           onChange={(v) => setLead({ ...lead, whatsapp: v })}
+          onBlur={() => setTouched((p) => ({ ...p, whatsapp: true }))}
+          error={errors.whatsapp}
           placeholder="(11) 99999-9999"
           autoComplete="tel"
         />
@@ -1863,20 +1892,25 @@ interface FieldTextProps {
   label: string;
   value: string;
   onChange: (v: string) => void;
+  onBlur?: () => void;
   type?: string;
   required?: boolean;
   placeholder?: string;
   autoComplete?: string;
+  /** Mensagem de erro inline mostrada abaixo do input. Vazia = sem erro. */
+  error?: string;
 }
 function FieldText({
   id,
   label,
   value,
   onChange,
+  onBlur,
   type = "text",
   required,
   placeholder,
   autoComplete,
+  error,
 }: FieldTextProps) {
   return (
     <div>
@@ -1892,15 +1926,30 @@ function FieldText({
         type={type}
         value={value}
         onChange={(e) => onChange(e.target.value)}
+        onBlur={onBlur}
         required={required}
         placeholder={placeholder}
         autoComplete={autoComplete}
+        aria-invalid={!!error}
+        aria-describedby={error ? `${id}-error` : undefined}
         className="mt-1.5 w-full rounded-lg px-4 py-2.5 text-[15px] text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/40"
         style={{
           backgroundColor: "oklch(0.12 0.012 122 / 0.6)",
-          border: "1px solid oklch(0.55 0.06 122 / 0.4)",
+          border: error
+            ? "1px solid oklch(0.6 0.18 25 / 0.7)"
+            : "1px solid oklch(0.55 0.06 122 / 0.4)",
         }}
       />
+      {error && (
+        <p
+          id={`${id}-error`}
+          role="alert"
+          className="mt-1.5 text-[11.5px] font-medium leading-tight"
+          style={{ color: "oklch(0.72 0.18 25)" }}
+        >
+          {error}
+        </p>
+      )}
     </div>
   );
 }

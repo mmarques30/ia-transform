@@ -94,6 +94,14 @@ export function HeroForm({
   const [loading, setLoading] = useState(false);
   const [loadingMsg, setLoadingMsg] = useState("");
   const [error, setError] = useState<string | null>(null);
+  /** Erros inline por field — populados onBlur (após o usuário sair do campo)
+   *  e onSubmit (validação completa antes do envio). Cleared on focus/typing
+   *  pra não distrair enquanto o usuário corrige. */
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+  /** Boolean derivado dos required-com-valor pra controlar o disabled do
+   *  botão de submit em tempo real. Recalculado em todo onInput/onChange
+   *  do form. */
+  const [allRequiredFilled, setAllRequiredFilled] = useState(false);
   const loadingTimers = useRef<number[]>([]);
 
   function clearLoadingStages() {
@@ -189,10 +197,101 @@ export function HeroForm({
     trackClarity("event", `form_field_complete_${target.name}`);
   }
 
+  /**
+   * Lista de campos obrigatórios pra qualificação MQL no CRM.
+   * Sem todos preenchidos a Edge Function devolve missing[] e o lead
+   * fica desqualificado. Bloqueamos no client antes pra evitar o roundtrip.
+   *
+   * setor_do_mercado é opcional por design — o CRM aceita lead sem ele.
+   */
+  const REQUIRED_FIELDS = [
+    "firstname",
+    "email",
+    "phone",
+    "company",
+    "cargo",
+    "faixa_de_faturamento",
+  ] as const;
+
+  /** Valida um único field. Retorna mensagem de erro ou "" se OK. */
+  function validateField(name: string, value: string): string {
+    const trimmed = value.trim();
+    const isRequired = (REQUIRED_FIELDS as readonly string[]).includes(name);
+    if (isRequired && !trimmed) return "Campo obrigatório";
+    if (name === "email" && trimmed && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) {
+      return "E-mail inválido";
+    }
+    if (name === "phone" && trimmed && trimmed.replace(/\D/g, "").length < 10) {
+      return "Inclua DDD (mín. 10 dígitos)";
+    }
+    return "";
+  }
+
+  /** Confere se todos os required têm valor (sem checar formato). Usado
+   *  só pra controlar o disabled do botão. Formato é checado em validateField. */
+  function allRequiredHaveValue(form: HTMLFormElement): boolean {
+    const fd = new FormData(form);
+    for (const name of REQUIRED_FIELDS) {
+      if (!String(fd.get(name) ?? "").trim()) return false;
+    }
+    return true;
+  }
+
+  /** Cleared error do field assim que o usuário começa a digitar/selecionar.
+   *  Também recalcula allRequiredFilled. */
+  function handleFormInput(e: React.FormEvent<HTMLFormElement>) {
+    const target = e.target as HTMLInputElement | HTMLSelectElement | null;
+    if (target && target.name && fieldErrors[target.name]) {
+      setFieldErrors((prev) => {
+        const next = { ...prev };
+        delete next[target.name];
+        return next;
+      });
+    }
+    setAllRequiredFilled(allRequiredHaveValue(e.currentTarget));
+  }
+
+  /** Valida o field ao perder foco (pattern leve — não cobrar erro durante
+   *  digitação). */
+  function handleFieldBlur(e: FocusEvent<HTMLFormElement>) {
+    const target = e.target as HTMLInputElement | HTMLSelectElement | null;
+    if (!target || !target.name) return;
+    const err = validateField(target.name, target.value);
+    setFieldErrors((prev) => {
+      const next = { ...prev };
+      if (err) next[target.name] = err;
+      else delete next[target.name];
+      return next;
+    });
+  }
+
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (loading) return;
     setError(null);
+
+    // Validação completa antes de qualquer chamada de rede. Mostra todos os
+    // erros inline e foca no primeiro campo com problema.
+    const form = e.currentTarget;
+    const fdValidate = new FormData(form);
+    const newErrors: Record<string, string> = {};
+    for (const name of REQUIRED_FIELDS) {
+      const value = String(fdValidate.get(name) ?? "");
+      const err = validateField(name, value);
+      if (err) newErrors[name] = err;
+    }
+    // E-mail/phone também podem ter formato errado mesmo com valor — re-valida
+    // (REQUIRED_FIELDS loop já cobre, mas duplica pra clareza).
+    setFieldErrors(newErrors);
+    if (Object.keys(newErrors).length > 0) {
+      const firstErrName = REQUIRED_FIELDS.find((f) => newErrors[f]);
+      if (firstErrName) {
+        const el = form.elements.namedItem(firstErrName) as HTMLElement | null;
+        el?.focus();
+      }
+      return;
+    }
+
     setLoading(true);
     startLoadingStages();
 
@@ -413,11 +512,16 @@ export function HeroForm({
         <form
           onSubmit={handleSubmit}
           onFocusCapture={handleFocusCapture}
-          onBlurCapture={handleBlurCapture}
+          onBlurCapture={(e) => {
+            handleBlurCapture(e);
+            handleFieldBlur(e);
+          }}
+          onInput={handleFormInput}
+          onChange={handleFormInput}
           className="space-y-2"
           noValidate
         >
-          <Field id="firstname" label="Nome Completo" required>
+          <Field id="firstname" label="Nome Completo" required error={fieldErrors.firstname}>
             <input
               id="firstname"
               name="firstname"
@@ -425,11 +529,12 @@ export function HeroForm({
               required
               autoComplete="name"
               placeholder="João da Silva"
+              aria-invalid={!!fieldErrors.firstname}
               className="form-input"
             />
           </Field>
 
-          <Field id="email" label="E-mail" required>
+          <Field id="email" label="E-mail" required error={fieldErrors.email}>
             <input
               id="email"
               name="email"
@@ -437,11 +542,12 @@ export function HeroForm({
               required
               autoComplete="email"
               placeholder="voce@email.com"
+              aria-invalid={!!fieldErrors.email}
               className="form-input"
             />
           </Field>
 
-          <Field id="phone" label="WhatsApp com DDD" required>
+          <Field id="phone" label="WhatsApp com DDD" required error={fieldErrors.phone}>
             <input
               id="phone"
               name="phone"
@@ -449,11 +555,12 @@ export function HeroForm({
               required
               autoComplete="tel"
               placeholder="(11) 99999-9999"
+              aria-invalid={!!fieldErrors.phone}
               className="form-input"
             />
           </Field>
 
-          <Field id="company" label="Empresa" required>
+          <Field id="company" label="Empresa" required error={fieldErrors.company}>
             <input
               id="company"
               name="company"
@@ -461,16 +568,18 @@ export function HeroForm({
               required
               autoComplete="organization"
               placeholder="Ex: Construtora Souza"
+              aria-invalid={!!fieldErrors.company}
               className="form-input"
             />
           </Field>
 
-          <Field id="cargo" label="Seu cargo" required>
+          <Field id="cargo" label="Seu cargo" required error={fieldErrors.cargo}>
             <select
               id="cargo"
               name="cargo"
               required
               defaultValue=""
+              aria-invalid={!!fieldErrors.cargo}
               className="form-input"
             >
               <option value="" disabled>
@@ -484,12 +593,18 @@ export function HeroForm({
             </select>
           </Field>
 
-          <Field id="faixa_de_faturamento" label="Faturamento anual da empresa" required>
+          <Field
+            id="faixa_de_faturamento"
+            label="Faturamento anual da empresa"
+            required
+            error={fieldErrors.faixa_de_faturamento}
+          >
             <select
               id="faixa_de_faturamento"
               name="faixa_de_faturamento"
               required
               defaultValue=""
+              aria-invalid={!!fieldErrors.faixa_de_faturamento}
               className="form-input"
             >
               <option value="" disabled>
@@ -538,7 +653,7 @@ export function HeroForm({
 
           <button
             type="submit"
-            disabled={loading}
+            disabled={loading || !allRequiredFilled}
             className="mt-1 w-full inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-[14px] font-bold transition-[transform,opacity,box-shadow] disabled:opacity-60 disabled:cursor-not-allowed hover:-translate-y-0.5"
             style={{
               backgroundColor: "oklch(0.18 0.02 122)",
@@ -583,11 +698,13 @@ function Field({
   id,
   label,
   required,
+  error,
   children,
 }: {
   id: string;
   label: string;
   required?: boolean;
+  error?: string;
   children: React.ReactNode;
 }) {
   return (
@@ -605,6 +722,16 @@ function Field({
         )}
       </label>
       {children}
+      {error && (
+        <p
+          id={`${id}-error`}
+          role="alert"
+          className="mt-1 text-[11.5px] font-medium leading-tight"
+          style={{ color: "oklch(0.5 0.18 25)" }}
+        >
+          {error}
+        </p>
+      )}
     </div>
   );
 }
