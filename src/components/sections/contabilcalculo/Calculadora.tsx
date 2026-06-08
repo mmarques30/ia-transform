@@ -29,6 +29,25 @@ import { Reveal } from "@/components/Reveal";
 import { FORM_ENDPOINT, FORM_HEADERS, captureTrafficContext } from "@/lib/formSubmit";
 import { useDiagnostico } from "./DiagnosticoContext";
 
+/**
+ * Wrapper safe pro Clarity. window.clarity é injetado pelo snippet no
+ * __root.tsx; pode não estar pronto se o usuário interagir muito cedo,
+ * ou pode estar bloqueado por adblocker. Falha silenciosa nesses casos.
+ * Mesmo helper usado em HeroForm.tsx e HeroFormContabil.tsx pra unificar
+ * o pattern de tracking entre os 3 forms da plataforma.
+ */
+type ClarityFn = (action: string, ...args: unknown[]) => void;
+function trackClarity(action: string, ...args: unknown[]): void {
+  if (typeof window === "undefined") return;
+  const fn = (window as unknown as { clarity?: ClarityFn }).clarity;
+  if (typeof fn !== "function") return;
+  try {
+    fn(action, ...args);
+  } catch (err) {
+    console.warn("[clarity] tracking failed", err);
+  }
+}
+
 /* ─────────────────────────────────────────────────────────────
  * CONSTANTES
  * ────────────────────────────────────────────────────────── */
@@ -542,10 +561,12 @@ export function Calculadora() {
         email: lead.email,
         phone: lead.whatsapp,
       });
+      trackClarity("event", "calc_lead_gate_submit");
     } catch (err) {
       // Não bloqueia o avanço — gate é capture-best-effort. O usuário
       // segue pra calculadora e a submissão final terá outra chance.
       console.warn("[calculadora] lead gate submit failed", err);
+      trackClarity("event", "calc_lead_gate_error");
     }
   }, [lead]);
 
@@ -581,10 +602,18 @@ export function Calculadora() {
         readiness_score: String(score.readiness),
         tier: score.tier,
       });
+      // Eventos pro Clarity: paridade com HeroForm/HeroFormContabil.
+      // tier e gargalo viram custom tags pra segmentar replays no
+      // dashboard.
+      trackClarity("event", "calc_submit_success");
+      trackClarity("set", "lead_tier", score.tier);
+      trackClarity("set", "lead_score", String(score.total));
+      trackClarity("set", "gargalo_principal", gargalo);
       setEtapa(4);
     } catch (err) {
       const msg = err instanceof Error ? err.message : "Tente novamente em instantes.";
       setError(msg);
+      trackClarity("event", "calc_submit_error");
     } finally {
       setLoading(false);
     }
