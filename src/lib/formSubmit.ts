@@ -81,3 +81,21 @@ export function captureTrafficContext(): TrafficContext {
     },
   };
 }
+
+/**
+ * Captura ?deal_id da URL atual. Retorna null se ausente ou vazio.
+ *
+ * O CRM (bot Mari da cadência Leva 2) envia links de WhatsApp com
+ *   iaplicada.com/contabilcalculo?deal_id=<uuid>
+ * Quando o lead abre, lemos esse id e injetamos no payload do form-submit
+ * pra Edge Function fazer merge no deal existente em vez de criar um
+ * novo lead anônimo.
+ *
+ * Quando o lead acessa a calculadora direto (sem deal_id), retorna null
+ * e o fluxo continua anônimo como hoje — zero impacto.
+ */
+export function captureDealId(): string | null {
+  if (typeof window === "undefined") return null;
+  const id = new URLSearchParams(window.location.search).get("deal_id");
+  return id && id.trim() ? id.trim() : null;
+}

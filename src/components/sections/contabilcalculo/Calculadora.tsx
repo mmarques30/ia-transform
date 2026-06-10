@@ -26,7 +26,7 @@ import {
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
-import { FORM_ENDPOINT, FORM_HEADERS, captureTrafficContext } from "@/lib/formSubmit";
+import { FORM_ENDPOINT, FORM_HEADERS, captureDealId, captureTrafficContext } from "@/lib/formSubmit";
 import { useDiagnostico } from "./DiagnosticoContext";
 
 /**
@@ -399,9 +399,26 @@ interface SubmitPayloadFields {
   pain_score?: string;
   readiness_score?: string;
   tier?: string;
+  // ─── Fields esperados pelo CRM no flow com ?deal_id ───
+  // Mandados no submit final pra enriquecer o deal existente. Sem
+  // deal_id na URL eles ainda vão no payload (form-submit aceita
+  // chaves extras silenciosamente), mas só geram impacto no CRM
+  // quando há deal pra mergear.
+  /** R$ economizado em 12 meses — proxy direto de ROI estimado. */
+  roi_estimado?: string;
+  /** Horas/mês liberadas (= horas_liberadas_mes, mas com o nome
+   *  que o CRM espera nessa flow). */
+  economia_horas_mes?: string;
+  /** R$/mês economizado (= economia_mensal arredondado). */
+  economia_reais_mes?: string;
+  /** Flag "true" pro CRM marcar calculadora_preenchida_at via Edge Function. */
+  calculadora_preenchida?: string;
 }
 
-async function postToForm(fields: SubmitPayloadFields): Promise<void> {
+async function postToForm(
+  fields: SubmitPayloadFields,
+  dealId?: string | null,
+): Promise<void> {
   const ctx = captureTrafficContext();
   const payload = {
     form_slug: FORM_SLUG,
@@ -409,6 +426,11 @@ async function postToForm(fields: SubmitPayloadFields): Promise<void> {
     utm: ctx.utm,
     attribution: ctx.attribution,
     meta: ctx.meta,
+    // deal_id no top-level do payload — a Edge Function form-submit
+    // detecta presença e faz UPDATE no deal existente em vez de criar
+    // lead novo. Quando ausente (acesso anônimo), comportamento
+    // permanece idêntico ao atual.
+    ...(dealId ? { deal_id: dealId } : {}),
     // Backwards-compat top-level
     utm_source: ctx.utm.source,
     utm_medium: ctx.utm.medium,
@@ -531,6 +553,14 @@ export function Calculadora() {
   const [etapa, setEtapa] = useState<number>(0);
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState(false);
+  /** deal_id capturado da URL no mount. Quando preenchido, os submits
+   *  ganham essa chave no payload → Edge Function atualiza o deal
+   *  existente no CRM ao invés de criar lead novo. Acesso anônimo
+   *  (sem ?deal_id na URL) deixa isso null e mantém o fluxo atual. */
+  const [dealId, setDealId] = useState<string | null>(null);
+  useEffect(() => {
+    setDealId(captureDealId());
+  }, []);
 
   const [lead, setLead] = useState<LeadData>({ nome: "", email: "", whatsapp: "" });
   const [escritorio, setEscritorio] = useState<Escritorio>({
@@ -556,11 +586,14 @@ export function Calculadora() {
        se lead abandonar a calculadora. */
   const submitLeadCapture = useCallback(async () => {
     try {
-      await postToForm({
-        firstname: lead.nome,
-        email: lead.email,
-        phone: lead.whatsapp,
-      });
+      await postToForm(
+        {
+          firstname: lead.nome,
+          email: lead.email,
+          phone: lead.whatsapp,
+        },
+        dealId,
+      );
       trackClarity("event", "calc_lead_gate_submit");
     } catch (err) {
       // Não bloqueia o avanço — gate é capture-best-effort. O usuário
@@ -568,7 +601,7 @@ export function Calculadora() {
       console.warn("[calculadora] lead gate submit failed", err);
       trackClarity("event", "calc_lead_gate_error");
     }
-  }, [lead]);
+  }, [lead, dealId]);
 
   /* — Submissão #2: ao terminar etapa 3 (antes de revelar o resultado).
        Envia tudo: lead + calc inputs + scores. Edge Function faz upsert
@@ -577,31 +610,44 @@ export function Calculadora() {
     setError("");
     setLoading(true);
     try {
-      await postToForm({
-        firstname: lead.nome,
-        email: lead.email,
-        phone: lead.whatsapp,
-        colaboradores: String(escritorio.colaboradores),
-        clientes_ativos: String(escritorio.clientes),
-        custo_hora: String(escritorio.custoHora),
-        horas_conciliacao: String(horas.conciliacao),
-        horas_atendimento: String(horas.atendimento),
-        horas_apuracao: String(horas.apuracao),
-        horas_guias: String(horas.guias),
-        horas_onboarding: String(horas.onboarding),
-        horas_relatorios: String(horas.relatorios),
-        gargalo_principal: gargalo,
-        maturidade_ia: maturidade,
-        horas_liberadas_mes: String(resultado.totalHorasLiberadas),
-        economia_mensal: String(Math.round(resultado.economiaMensal)),
-        economia_anual: String(Math.round(resultado.economiaAnual)),
-        fte_equivalente: String(resultado.fteEquivalente),
-        lead_score: String(score.total),
-        fit_score: String(score.fit),
-        pain_score: String(score.pain),
-        readiness_score: String(score.readiness),
-        tier: score.tier,
-      });
+      await postToForm(
+        {
+          firstname: lead.nome,
+          email: lead.email,
+          phone: lead.whatsapp,
+          colaboradores: String(escritorio.colaboradores),
+          clientes_ativos: String(escritorio.clientes),
+          custo_hora: String(escritorio.custoHora),
+          horas_conciliacao: String(horas.conciliacao),
+          horas_atendimento: String(horas.atendimento),
+          horas_apuracao: String(horas.apuracao),
+          horas_guias: String(horas.guias),
+          horas_onboarding: String(horas.onboarding),
+          horas_relatorios: String(horas.relatorios),
+          gargalo_principal: gargalo,
+          maturidade_ia: maturidade,
+          horas_liberadas_mes: String(resultado.totalHorasLiberadas),
+          economia_mensal: String(Math.round(resultado.economiaMensal)),
+          economia_anual: String(Math.round(resultado.economiaAnual)),
+          fte_equivalente: String(resultado.fteEquivalente),
+          lead_score: String(score.total),
+          fit_score: String(score.fit),
+          pain_score: String(score.pain),
+          readiness_score: String(score.readiness),
+          tier: score.tier,
+          // ─── Fields novos pro CRM enriquecer o deal ───
+          // Quando dealId existe, Edge Function mergeia esses valores
+          // no deal vivo (colunas roi_estimado, economia_horas_mes,
+          // economia_reais_mes, calculadora_preenchida_at criadas no
+          // PR do crm-iaplicada-hub). Sem deal_id, são chaves extras
+          // que a Edge Function ignora silenciosamente.
+          roi_estimado: String(Math.round(resultado.economiaAnual)),
+          economia_horas_mes: String(resultado.totalHorasLiberadas),
+          economia_reais_mes: String(Math.round(resultado.economiaMensal)),
+          calculadora_preenchida: "true",
+        },
+        dealId,
+      );
       // Eventos pro Clarity: paridade com HeroForm/HeroFormContabil.
       // tier e gargalo viram custom tags pra segmentar replays no
       // dashboard.
@@ -617,7 +663,7 @@ export function Calculadora() {
     } finally {
       setLoading(false);
     }
-  }, [lead, escritorio, horas, gargalo, maturidade, resultado, score]);
+  }, [lead, escritorio, horas, gargalo, maturidade, resultado, score, dealId]);
 
   /* — Validações por etapa */
   const canAdvanceFromGate = lead.nome.trim().length >= 2 && lead.email.includes("@") && lead.whatsapp.trim().length >= 8;
