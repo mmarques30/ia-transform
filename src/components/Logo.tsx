@@ -14,10 +14,14 @@ interface LogoMarkProps {
   className?: string;
 }
 
-/** Marca completa oficial — versão pra fundo escuro (default na LP dark). */
-const LOGO_DARK_SRC = "/brand/iaplicada-logo-dark.png";
+/** Marca completa oficial — versão pra fundo escuro (default na LP dark).
+ *  WebP é o primário (~19 kB, 50% menor que PNG). PNG fica como fallback
+ *  via <picture> pra browsers muito antigos (sem suporte WebP). */
+const LOGO_DARK_WEBP = "/brand/iaplicada-logo-dark.webp";
+const LOGO_DARK_PNG = "/brand/iaplicada-logo-dark.png";
 /** Marca completa oficial — versão pra fundo claro. */
-const LOGO_LIGHT_SRC = "/brand/iaplicada-logo-light.png";
+const LOGO_LIGHT_WEBP = "/brand/iaplicada-logo-light.webp";
+const LOGO_LIGHT_PNG = "/brand/iaplicada-logo-light.png";
 /** Aspect ratio do PNG oficial (2108x500). */
 const LOGO_FULL_RATIO = 2108 / 500;
 
@@ -28,25 +32,32 @@ const LOGO_MARK_SRC = "/brand/capa_biz_sistemas.jpg";
  * Logo IAplicada — símbolo oficial + wordmark. `variant="dark"` (default)
  * usa a versão pensada pra fundos escuros; `variant="light"` é o asset
  * antigo pra fundos creme.
+ *
+ * Renderiza via <picture> com WebP primário + PNG fallback. WebP economiza
+ * ~20 kB de download (39 kB PNG → 19 kB WebP, mesma qualidade visual).
  */
 export function Logo({ size = 22, className, style, variant = "dark" }: LogoProps) {
   const width = Math.round(size * LOGO_FULL_RATIO);
-  const src = variant === "light" ? LOGO_LIGHT_SRC : LOGO_DARK_SRC;
+  const webpSrc = variant === "light" ? LOGO_LIGHT_WEBP : LOGO_DARK_WEBP;
+  const pngSrc = variant === "light" ? LOGO_LIGHT_PNG : LOGO_DARK_PNG;
   return (
-    <img
-      src={src}
-      alt="IAplicada"
-      width={width}
-      height={size}
-      decoding="async"
-      className={className}
-      style={{
-        display: "block",
-        height: size,
-        width: "auto",
-        ...style,
-      }}
-    />
+    <picture>
+      <source srcSet={webpSrc} type="image/webp" />
+      <img
+        src={pngSrc}
+        alt="IAplicada"
+        width={width}
+        height={size}
+        decoding="async"
+        className={className}
+        style={{
+          display: "block",
+          height: size,
+          width: "auto",
+          ...style,
+        }}
+      />
+    </picture>
   );
 }
 

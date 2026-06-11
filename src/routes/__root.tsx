@@ -110,11 +110,15 @@ export const Route = createRootRoute({
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap",
       },
-      // Preload da logo (LCP candidate na maioria dos viewports)
+      // Preload da logo (LCP candidate na maioria dos viewports).
+      // WebP em vez do PNG: 19 kB vs 39 kB (-51% no download crítico).
+      // Browsers sem suporte a WebP (raríssimos hoje) ignoram o preload
+      // e baixam o PNG via fallback do <picture> no Logo component.
       {
         rel: "preload",
         as: "image",
-        href: "/brand/iaplicada-logo-dark.png",
+        href: "/brand/iaplicada-logo-dark.webp",
+        type: "image/webp",
         fetchpriority: "high",
       },
       // (Removidos preconnect/dns-prefetch pra clarity.ms — o tag agora
