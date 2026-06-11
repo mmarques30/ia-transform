@@ -4,6 +4,59 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* ────────────────────────────────────────────────────────────────
+ * FONTS — Self-hosted WOFF2 (latin range)
+ * ────────────────────────────────────────────────────────────────
+ * Antes a app carregava de fonts.googleapis.com (CSS + reqs gstatic),
+ * o que custava 2 round-trips TLS + 1 stylesheet bloqueando render.
+ * Agora servidas do nosso próprio domínio em /fonts/:
+ *
+ *   inter-latin.woff2                   48 kB  (variable, weights 100-900)
+ *   instrument-serif-latin.woff2        22 kB  (normal)
+ *   instrument-serif-italic-latin.woff2 21 kB  (italic)
+ *
+ * Unicode-range mantida igual ao Google Fonts pra cobertura
+ * idêntica do latin block (U+0000-00FF + acentos + símbolos
+ * monetários). PT-BR usa latin-1 supplement (ã, õ, ç, é etc),
+ * todos dentro do range.
+ *
+ * font-display: swap mantido — texto aparece com fallback do
+ * system-ui imediatamente e troca pra fonte custom quando
+ * o WOFF2 carrega. Zero FOIT (flash of invisible text).
+ */
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/fonts/inter-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC,
+    U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F,
+    U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Instrument Serif";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/instrument-serif-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC,
+    U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F,
+    U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Instrument Serif";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/instrument-serif-italic-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC,
+    U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F,
+    U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 @theme {
   --radius-sm: 6px;
   --radius-md: 8px;
