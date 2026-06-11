@@ -1,10 +1,20 @@
 import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
-import { useEffect } from "react";
+import { lazy, useEffect, useState } from "react";
 
 import appCss from "../styles.css?url";
-import { initLenis, destroyLenis } from "../lib/motion";
-import { BrandBackground } from "../components/BrandBackground";
 import { isInAppBrowser } from "../lib/useEnv";
+
+/**
+ * BrandBackground (WebGL via OGL) é lazy pra não pesar o entry chunk
+ * com a lib de WebGL (~25 kB gzip) e o shader code. Renderiza após o
+ * first paint — visualmente um piscar de ~50ms antes do BG entrar, mas
+ * o LCP da página é a Hero (que NÃO depende do BG).
+ */
+const BrandBackground = lazy(() =>
+  import("../components/BrandBackground").then((m) => ({
+    default: m.BrandBackground,
+  })),
+);
 
 // IDs do Microsoft Clarity por LP. Cada projeto tem seu próprio dashboard
 // com heatmaps/replays isolados pra não misturar funis. Default é o
@@ -180,17 +190,44 @@ function RootShell({ children }: { children: React.ReactNode }) {
 }
 
 function RootComponent() {
+  /** Mostra o BrandBackground só APÓS o first paint, pra não bloquear
+   *  o critical path. Visualmente o BG entra ~50ms depois — usuário
+   *  raramente percebe e o LCP da Hero não depende dele. */
+  const [showBg, setShowBg] = useState(false);
+
   useEffect(() => {
     // Lenis adiciona inércia ao scroll. Bom no desktop, mas no WebView
     // do IG/FB ele briga com o gesto nativo de swipe-back e deixa o
     // scroll "borrachudo". Pulamos init nesse contexto.
+    //
+    // motion.ts traz GSAP + ScrollTrigger + SplitText + Lenis (~70 kB
+    // gzip total). Dynamic import dentro do useEffect tira esses
+    // bytes do entry chunk — eles entram em chunk separado que carrega
+    // em paralelo com o resto, sem bloquear LCP.
     if (isInAppBrowser()) return;
-    initLenis();
-    return () => destroyLenis();
+    let cleanup: (() => void) | undefined;
+    import("../lib/motion")
+      .then(({ initLenis, destroyLenis }) => {
+        initLenis();
+        cleanup = destroyLenis;
+      })
+      .catch((err) => {
+        console.warn("[motion] failed to load Lenis/GSAP", err);
+      });
+
+    // BrandBackground entra após o primeiro frame (rAF garante que o
+    // browser já pintou o HTML inicial). Reduzido o trabalho no main
+    // thread durante a hidratação inicial.
+    const raf = requestAnimationFrame(() => setShowBg(true));
+
+    return () => {
+      cancelAnimationFrame(raf);
+      cleanup?.();
+    };
   }, []);
   return (
     <>
-      <BrandBackground />
+      {showBg && <BrandBackground />}
       <Outlet />
     </>
   );
