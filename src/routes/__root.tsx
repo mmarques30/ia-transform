@@ -89,26 +89,18 @@ export const Route = createRootRoute({
       { name: "twitter:image", content: "https://iaplicada.com/brand/capa_biz_sistemas.jpg" },
     ],
     links: [
-      {
-        rel: "preconnect",
-        href: "https://fonts.googleapis.com",
-      },
-      {
-        rel: "preconnect",
-        href: "https://fonts.gstatic.com",
-        crossOrigin: "anonymous",
-      },
-      // Preload da folha de estilo do Google Fonts pra o browser baixar
-      // mais cedo (paralelo com o resto do HTML). Reduz LCP em ~200-400ms
-      // em conexões médias.
+      // Fonts agora são self-hosted em /fonts/ (ver @font-face no
+      // styles.css). Preload só da Inter (a fonte mais usada — body,
+      // headings sans), que é a única requerida no first paint.
+      // Os 2 Instrument Serif (h-mix com <em>) carregam normal sem
+      // preload — bloqueariam o critical path por bytes que só
+      // aparecem em poucos elementos italicizados.
       {
         rel: "preload",
-        as: "style",
-        href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap",
-      },
-      {
-        rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap",
+        as: "font",
+        href: "/fonts/inter-latin.woff2",
+        type: "font/woff2",
+        crossOrigin: "anonymous",
       },
       // Preload da logo (LCP candidate na maioria dos viewports).
       // WebP em vez do PNG: 19 kB vs 39 kB (-51% no download crítico).
