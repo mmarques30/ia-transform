@@ -107,12 +107,11 @@ export const Route = createRootRoute({
         href: "/brand/iaplicada-logo-dark.png",
         fetchpriority: "high",
       },
-      // Preconnect/dns-prefetch pro Clarity — reduz latência da carga
-      // do tag async (~80-150ms a menos em conexões médias). Importante
-      // pra capturar sessões curtas onde o usuário sai antes do tag
-      // terminar de carregar.
-      { rel: "preconnect", href: "https://www.clarity.ms" },
-      { rel: "dns-prefetch", href: "https://www.clarity.ms" },
+      // (Removidos preconnect/dns-prefetch pra clarity.ms — o tag agora
+      //  carrega via /c/tag/<id> do nosso próprio domínio, então a
+      //  conexão pra clarity.ms é feita server-side pelo Worker.
+      //  Manter os hints faria o browser abrir conexão TLS pra fora
+      //  desnecessariamente.)
       {
         rel: "stylesheet",
         href: appCss,
@@ -132,8 +131,14 @@ export const Route = createRootRoute({
       // colisão de prefixos (/contabilcalculo e /contabil02 começam
       // com "/contabil"). Carrega um único tag por página (sem dupla
       // contagem).
+      //
+      // Tag carregado via /c/tag/<id> (proxy do nosso próprio domínio
+      // implementado em src/server-entry.ts). Bypass de adblockers
+      // que bloqueiam *.clarity.ms na lista padrão (uBlock, Brave,
+      // AdBlock Plus). O Worker proxia pra clarity.ms e reescreve as
+      // URLs internas do SDK pra rotear tudo via /c/*.
       {
-        children: `(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script",(function(){var p=(window.location&&window.location.pathname)||"";if(p.indexOf("/contabilcalculo")===0)return "${CLARITY_PROJECT_ID_CONTABILCALCULO}";if(p.indexOf("/contabil02")===0)return "${CLARITY_PROJECT_ID_CONTABIL02}";if(p.indexOf("/contabil")===0)return "${CLARITY_PROJECT_ID_CONTABIL}";return "${CLARITY_PROJECT_ID_BUSINESS}";})());try{if(window.location&&window.location.hostname==="iaplicada.com"){window.clarity("set","environment","production");}else{window.clarity("set","environment","preview");}}catch(e){}`,
+        children: `(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="/c/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script",(function(){var p=(window.location&&window.location.pathname)||"";if(p.indexOf("/contabilcalculo")===0)return "${CLARITY_PROJECT_ID_CONTABILCALCULO}";if(p.indexOf("/contabil02")===0)return "${CLARITY_PROJECT_ID_CONTABIL02}";if(p.indexOf("/contabil")===0)return "${CLARITY_PROJECT_ID_CONTABIL}";return "${CLARITY_PROJECT_ID_BUSINESS}";})());try{if(window.location&&window.location.hostname==="iaplicada.com"){window.clarity("set","environment","production");}else{window.clarity("set","environment","preview");}}catch(e){}`,
       },
       // Meta Pixel — conversões / remarketing Facebook/Instagram Ads.
       // Define a função fbq() imediatamente (com fila) e dispara
