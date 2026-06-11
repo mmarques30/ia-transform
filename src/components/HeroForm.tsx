@@ -467,7 +467,7 @@ export function HeroForm({
         style={{ boxShadow: "inset 0 1px 0 oklch(1 0 0 / 0.9)" }}
       />
 
-      <div className="px-6 pt-5 lg:px-7 lg:pt-6 relative">
+      <div className="px-6 pt-4 lg:px-7 lg:pt-5 relative">
         <div className="flex items-start justify-between gap-3">
           <div>
             <p
@@ -481,12 +481,6 @@ export function HeroForm({
               style={{ color: "oklch(0.18 0.02 122)" }}
             >
               Conte sobre sua operação
-            </p>
-            <p
-              className="mt-1 text-[12.5px] leading-relaxed"
-              style={{ color: "oklch(0.45 0.015 115)" }}
-            >
-              Nossa equipe comercial retorna em até 24h.
             </p>
           </div>
           <span
@@ -508,7 +502,7 @@ export function HeroForm({
         </div>
       </div>
 
-      <div className="px-6 pb-5 pt-4 lg:px-7 lg:pb-6 lg:pt-4 relative">
+      <div className="px-6 pb-4 pt-3 lg:px-7 lg:pb-5 lg:pt-3 relative">
         <form
           onSubmit={handleSubmit}
           onFocusCapture={handleFocusCapture}
@@ -667,23 +661,7 @@ export function HeroForm({
           </button>
 
           <p
-            className="pt-2 text-[12.5px] text-center leading-relaxed"
-            style={{ color: "oklch(0.45 0.015 115)" }}
-          >
-            Empresa menor?{" "}
-            <a
-              href="https://academy.iaplicada.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-semibold underline underline-offset-2 hover:no-underline"
-              style={{ color: "var(--color-primary)" }}
-            >
-              Conheça a Mentoria 1:1 IAplicada
-            </a>
-          </p>
-
-          <p
-            className="pt-1 text-[11.5px] text-center leading-relaxed"
+            className="pt-2 text-[11.5px] text-center leading-relaxed"
             style={{ color: "oklch(0.55 0.015 115)" }}
           >
             Ao enviar, você autoriza contato por WhatsApp e email.
