@@ -3,5 +3,8 @@
   "name": "tanstack-start-app",
   "compatibility_date": "2025-09-24",
   "compatibility_flags": ["nodejs_compat"],
-  "main": "@tanstack/react-start/server-entry",
+  // Custom server entry — wrappa o handler default do TanStack Start
+  // com proxy /c/* pra Clarity (bypass de adblockers que bloqueiam
+  // *.clarity.ms). Tudo fora de /c/* cai no handler padrão.
+  "main": "./src/server-entry.ts",
 }
