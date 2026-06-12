@@ -862,6 +862,18 @@ export function Calculadora() {
               </div>
             )}
 
+            {/* Sticky bottom: garante que os botões Voltar/Próximo fiquem
+                SEMPRE visíveis mesmo em steps longos (HorasStep tem 6
+                inputs + footer "Total atual" que somam ~700px no mobile).
+                Background sólido + sombra suave pra separar visualmente
+                do conteúdo que rola atrás. */}
+            <div
+              className="sticky bottom-0 -mx-6 sm:-mx-8 lg:-mx-10 -mb-6 sm:-mb-8 lg:-mb-10 px-6 sm:px-8 lg:px-10 pb-6 sm:pb-8 lg:pb-10 pt-4"
+              style={{
+                background:
+                  "linear-gradient(to top, oklch(0.14 0.018 122) 60%, oklch(0.14 0.018 122 / 0))",
+              }}
+            >
             <NavButtons
               onBack={etapa > 0 ? handleBack : undefined}
               onNext={handleNext}
@@ -873,6 +885,7 @@ export function Calculadora() {
               loading={loading && etapa === 3}
               showBack={etapa > 0}
             />
+            </div>
           </div>
         )}
 
@@ -989,7 +1002,11 @@ function DiagnosticoModal({
           backgroundColor: "oklch(0.14 0.018 122)",
           border: "1px solid oklch(0.55 0.06 122 / 0.35)",
           boxShadow: "0 40px 80px -20px oklch(0 0 0 / 0.7)",
-          maxHeight: "calc(100vh - 24px)",
+          // 100dvh respeita o viewport dinâmico do iOS Safari (descontando
+          // a address bar quando ela aparece/some). Com 100vh antigo, em
+          // steps grandes como HorasStep (6 inputs + footer + nav) o nav
+          // ficava cortado abaixo da viewport, impedindo confirmar.
+          maxHeight: "calc(100dvh - 16px)",
         }}
       >
         <div
