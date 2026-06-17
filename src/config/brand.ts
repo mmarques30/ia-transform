@@ -53,7 +53,7 @@ export const FOUNDER = {
       Reflete a passagem por operações enterprise (Mercado Livre, Suzano,
       AngloGold) onde a Mariana aprendeu o padrão que trouxe pra IAplicada. */
   manifesto: "Aprendi em ambientes onde caos não é opção.",
-  bio: "Antes da IAplicada, passei por Mercado Livre, Suzano e AngloGold. Trouxe pra cá o padrão de operação que não pode parar. Hoje implementamos IA dentro da operação real de mais de 100 empresas, com vertical contábil ativa entregando atendimento, conciliação e fechamento.",
+  bio: "Antes da IAplicada, passei por Mercado Livre, Suzano e AngloGold. Trouxe pra cá o padrão de operação que não pode parar. Hoje implementamos IA dentro da operação real de mais de 100 empresas, de arquitetura a turismo, tirando o negócio da planilha e da dependência do dono.",
   socials: {
     linkedin: "https://www.linkedin.com/in/marianaqmarques/",
     instagram: "https://www.instagram.com/marimarquescb/",

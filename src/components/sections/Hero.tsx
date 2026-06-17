@@ -67,16 +67,16 @@ export function Hero({ formSlug, thankYouPath }: HeroProps = {}) {
               <h1 className="h-mix mt-7 text-[42px] sm:text-[54px] lg:text-[64px] text-foreground">
                 Sua empresa
                 <br />
-                saindo da
+                inteira em
                 <br />
-                <em>planilha</em> em até
+                <em>um lugar só</em>,
                 <br />
-                30 dias.
+                em até 8 semanas.
               </h1>
 
               <Reveal delay={0.1}>
                 <p className="mt-7 text-[18px] lg:text-[20px] text-foreground font-semibold leading-[1.4]">
-                  Sem DEV interno. Você acompanha, seu time opera.
+                  Sem refém da planilha. Você acompanha, seu time opera.
                 </p>
               </Reveal>
 
@@ -85,7 +85,8 @@ export function Hero({ formSlug, thankYouPath }: HeroProps = {}) {
                   visível como contexto adicional. */}
               <Reveal delay={0.15}>
                 <p className="hidden lg:block mt-4 text-[16px] text-sage leading-[1.6] max-w-[520px]">
-                  A gente implementa os fluxos automáticos da sua operação com IA aplicada.
+                  A gente integra os fluxos da sua operação com IA aplicada. É o fim das
+                  ferramentas soltas.
                 </p>
               </Reveal>
 
@@ -216,7 +217,7 @@ function ClientsProof() {
         ))}
       </div>
       <p className="text-[14px] text-foreground font-semibold leading-tight">
-        +30 empresas implementando IA no operacional.
+        +80 empresas saindo da operação manual.
       </p>
     </div>
   );

@@ -12,51 +12,43 @@ interface SystemCase {
 const SYSTEMS: SystemCase[] = [
   {
     tag: "Arquitetura",
-    title: "Tarefas por obra em um lugar só",
+    title: "Da proposta à obra num lugar só",
     text:
-      "Cronograma, KPIs em tempo real e IA que responde sobre status, financeiro e atrasos sem abrir planilha.",
+      "Propostas, contratos, CRM, financeiro e gestão de obra integrados. ROI de +225% de valor entregue sobre o contrato e ~90h/mês liberadas.",
     img: "/clients/quadra-arquitetura.webp",
-    alt: "Painel de Tarefas por Obra da Quadra Arquitetura",
+    alt: "Painel integrado de proposta, contrato e obra — Quadra Arquitetura",
   },
   {
-    tag: "Tributário",
-    title: "Resumo financeiro de recuperação",
+    tag: "Saúde",
+    title: "Cresceu 3x sem inchar o administrativo",
     text:
-      "5 KPIs vivos, progresso de compensação e exportação direta pra Excel e PDF. Fim do retrabalho mensal.",
-    img: "/clients/focus-tax.webp",
-    alt: "Dashboard de resumo financeiro da Focus Tax",
+      "Prontuário, agenda, cobrança e nota fiscal ligados. Clínica saiu de 30 para 100+ pacientes (+233%) sem contratar mais gente no admin.",
+    img: "/clients/recuperacao-tributaria-varejo.webp",
+    alt: "Dashboard de gestão de clínica com agenda e cobrança integradas",
   },
   {
-    tag: "Fiscal",
-    title: "Catálogo único de ferramentas",
+    tag: "Jurídico",
+    title: "Qualificação de lead no automático",
     text:
-      "15+ ferramentas categorizadas por área fiscal, com manual integrado. Zero troca de contexto.",
+      "CRM com lead qualificado e entregue pro advogado, follow-up sozinho no WhatsApp. Economia de ~R$60k/ano e ~160h/mês liberadas.",
     img: "/clients/catalogo-ferramentas-fiscais.webp",
-    alt: "Catálogo de ferramentas fiscais",
+    alt: "CRM jurídico com qualificação automática de leads",
   },
   {
-    tag: "Operação",
-    title: "Painel estratégico multi-cliente",
+    tag: "Indústria de Transportes",
+    title: "Proposta em 15 minutos, não em 1 dia",
     text:
-      "Filtros por urgência, KPIs vivos e alerta priorizado das tarefas atrasadas. Reunião de status virou gestão por exceção.",
-    img: "/clients/psa-tax.webp",
-    alt: "Painel estratégico de operação tributária da PSA TAX",
-  },
-  {
-    tag: "Comunidade",
-    title: "Plataforma editorial + mentora IA",
-    text:
-      "Fórum categorizado, rituais da semana, diretório de membras e a Uiara, IA que responde dúvidas 24/7.",
-    img: "/clients/uiara-comunidade.webp",
-    alt: "Plataforma de comunidade Uiara",
-  },
-  {
-    tag: "Indústria",
-    title: "Dashboard executivo de margem",
-    text:
-      "Receita faturada, margem real por pedido, saldo a receber e tendência mensal. Tudo numa tela.",
+      "Gerador de propostas, câmbio atualizado sozinho e documentação centralizada. Capacidade triplicada e ~75h/mês economizadas.",
     img: "/clients/industria-moveis-dashboard.webp",
-    alt: "Dashboard executivo de uma indústria de móveis",
+    alt: "Sistema de propostas com câmbio automatizado",
+  },
+  {
+    tag: "Turismo",
+    title: "Operadora inteira em um sistema",
+    text:
+      "ERP, transfer, financeiro e comercial rodando com volume real. 17.886 vendas e 20.958 passageiros sob gestão, ~200h/mês automatizadas.",
+    img: "/clients/uiara-comunidade.webp",
+    alt: "ERP integrado de operadora de turismo com transfer e comercial",
   },
 ];
 
@@ -84,9 +76,9 @@ export function Systems() {
             </Reveal>
           </div>
           <Reveal delay={0.1}>
-            <p className="text-[16px] text-sage leading-[1.55] max-w-[360px]">
-              Seis sistemas reais já rodando, de arquitetura a indústria. Cada um construído em 4
-              a 12 semanas.
+            <p className="text-[16px] text-sage leading-[1.55] max-w-[380px]">
+              Sistemas reais já rodando, em diversos segmentos. Cada um construído em 4 a 12
+              semanas. Conheça algumas das nossas entregas personalizadas.
             </p>
           </Reveal>
         </div>
@@ -103,7 +95,7 @@ export function Systems() {
               href="#diagnostico-form"
               className="inline-flex items-center gap-2 text-foreground font-semibold text-[15px] hover:text-primary transition-colors"
             >
-              Quero um sistema assim pra minha operação
+              Quero um sistema personalizado pra minha operação
               <ArrowRight className="h-4 w-4" />
             </a>
           </div>
