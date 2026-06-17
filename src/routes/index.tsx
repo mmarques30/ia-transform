@@ -44,8 +44,8 @@ export const Route = createFileRoute("/")({
 
 function BusinessLanding() {
   return (
-    <main className="min-h-screen text-foreground">
-      <Header />
+    <main className="academy-theme min-h-screen">
+      <Header theme="light" />
       <Hero />
       <Problem />
       <Solution />
