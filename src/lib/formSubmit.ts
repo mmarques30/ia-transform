@@ -58,7 +58,9 @@ export function captureTrafficContext(): TrafficContext {
       ? "contabil-calculo"
       : pathname.startsWith("/contabil")
         ? "contabil-v1"
-        : "";
+        : pathname.startsWith("/indicacaobusiness")
+          ? "indicacao-business"
+          : "";
   const urlUtmTerm = params.get("utm_term");
   const utmTerm = urlUtmTerm && urlUtmTerm.trim() ? urlUtmTerm : defaultUtmTerm;
 
