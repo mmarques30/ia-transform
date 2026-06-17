@@ -131,6 +131,20 @@
   color: var(--academy-cocoa);
 }
 
+/* .section-veil é translúcido (semi-transparent) e foi pensado pra
+ * funcionar EM CIMA do bg dark global. Quando o wrapper é
+ * .academy-theme (cream), a translucência mistura cream + dark =
+ * muddy gray que prejudica a leitura.
+ *
+ * Override: dentro de .academy-theme, sections com .section-veil
+ * ganham um bg SÓLIDO cocoa-soft (#2F302B), virando dark islands
+ * legíveis dentro do main cream.
+ */
+.academy-theme .section-veil {
+  background-color: var(--academy-cocoa-soft);
+  color: var(--academy-cream);
+}
+
 @layer utilities {
   .bg-hero-canvas {
     background:

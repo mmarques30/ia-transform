@@ -6,7 +6,6 @@ import { Solution } from "@/components/sections/Solution";
 import { Systems } from "@/components/sections/Systems";
 import { OliveWave } from "@/components/sections/OliveWave";
 import { ClientLogos } from "@/components/sections/ClientLogos";
-import { Process } from "@/components/sections/Process";
 import { Impact } from "@/components/sections/Impact";
 import { Comparison } from "@/components/sections/Comparison";
 import { Authority } from "@/components/sections/Authority";
@@ -52,7 +51,6 @@ function BusinessLanding() {
       <Systems />
       <OliveWave />
       <ClientLogos />
-      <Process />
       <Impact />
       <Authority />
       <Comparison />
