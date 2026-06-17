@@ -38,9 +38,11 @@ export function Hero() {
                   letterSpacing: "-0.025em",
                 }}
               >
-                Indique quem merece
+                Indique quem
                 <br />
-                conhecer a{" "}
+                merece conhecer
+                <br />
+                a{" "}
                 <em
                   style={{
                     fontStyle: "italic",
