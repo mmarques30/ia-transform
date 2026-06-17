@@ -57,6 +57,306 @@
     U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
+/* ────────────────────────────────────────────────────────────────
+ * ACADEMY THEME — escopado pra LP / (raiz)
+ * ────────────────────────────────────────────────────────────────
+ * Fontes + tokens + utilities derivados de academy.iaplicada.com.
+ * NÃO substituem as variáveis globais (dark mode) — adicionam um
+ * conjunto paralelo `--academy-*` e classes utilitárias que só
+ * são aplicadas dentro de wrappers com `.academy-theme`.
+ *
+ * Outras LPs (/contabil, /contabil02, /contabilcalculo,
+ * /indicacaobusiness) seguem 100% dark intactas.
+ */
+
+@font-face {
+  font-family: "Fraunces";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/fonts/fraunces-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC,
+    U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F,
+    U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Inter Tight";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/fonts/inter-tight-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC,
+    U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F,
+    U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/fonts/jetbrains-mono-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC,
+    U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F,
+    U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  /* Paleta academy — referência apenas. Usadas via classes academy-*. */
+  --academy-brand: #afc040;
+  --academy-brand-bright: #bcc95d;
+  --academy-brand-dark: #738925;
+  --academy-cocoa: #0d0d0d;
+  --academy-cocoa-soft: #2f302b;
+  --academy-cream: #fffff6;
+  --academy-cream-dark: #f2f2f2;
+  --academy-offwhite: #ffffff;
+  --academy-border: #e5e5e5;
+  --academy-alert: #db2b42;
+}
+
+/* Wrapper raiz — quando aplicado, ativa o tema academy nesse sub-tree.
+   Sobrescreve background do body herdado pelo dark global. */
+.academy-theme {
+  background-color: var(--academy-cream);
+  color: var(--academy-cocoa);
+  font-family: "Inter Tight", "Inter", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.academy-theme ::selection {
+  background: var(--academy-brand);
+  color: var(--academy-cocoa);
+}
+
+@layer utilities {
+  .bg-hero-canvas {
+    background:
+      radial-gradient(
+        60% 50% at 80% 0%,
+        color-mix(in oklab, var(--academy-brand) 18%, transparent) 0%,
+        transparent 60%
+      ),
+      radial-gradient(
+        50% 40% at 10% 100%,
+        color-mix(in oklab, var(--academy-brand) 10%, transparent) 0%,
+        transparent 60%
+      ),
+      var(--academy-cream);
+  }
+  .bg-section-alt-academy {
+    background: var(--academy-cream-dark);
+  }
+  .bg-paper {
+    background-color: var(--academy-offwhite);
+    background-image: radial-gradient(
+      ellipse at top,
+      color-mix(in oklab, var(--academy-brand) 5%, transparent) 0%,
+      transparent 50%
+    );
+  }
+
+  .h-display {
+    font-family: "Fraunces", Georgia, serif;
+    font-size: clamp(3rem, 8vw + 0.5rem, 7.5rem);
+    line-height: 0.96;
+    letter-spacing: -0.035em;
+    font-weight: 400;
+    font-variation-settings: "opsz" 144, "SOFT" 30;
+    color: var(--academy-cocoa);
+  }
+  .h-hero {
+    font-family: "Fraunces", Georgia, serif;
+    font-size: clamp(2.5rem, 6vw + 0.5rem, 5.25rem);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    font-weight: 400;
+    font-variation-settings: "opsz" 144;
+    color: var(--academy-cocoa);
+  }
+  .h-section {
+    font-family: "Fraunces", Georgia, serif;
+    font-size: clamp(2rem, 4vw + 0.5rem, 3.5rem);
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+    font-weight: 500;
+    font-variation-settings: "opsz" 80;
+    color: var(--academy-cocoa);
+  }
+  .h-subsection {
+    font-family: "Fraunces", Georgia, serif;
+    font-size: clamp(1.5rem, 2.5vw + 0.5rem, 2.25rem);
+    line-height: 1.08;
+    font-weight: 500;
+    color: var(--academy-cocoa);
+  }
+  .serif-italic {
+    font-family: "Fraunces", Georgia, serif;
+    font-style: italic;
+    font-variation-settings: "opsz" 144, "SOFT" 100;
+  }
+  .lede {
+    font-size: clamp(1.05rem, 0.5vw + 0.95rem, 1.25rem);
+    line-height: 1.55;
+    color: var(--academy-cocoa-soft);
+    max-width: 46ch;
+  }
+  .mono-label {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--academy-cocoa-soft);
+  }
+  .eyebrow::before {
+    content: "";
+    display: inline-block;
+    width: 24px;
+    height: 1px;
+    background: var(--academy-cocoa);
+    opacity: 0.4;
+  }
+
+  .btn-primary-academy {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 9999px;
+    background-color: var(--academy-brand-dark);
+    padding: 0.875rem 1.75rem;
+    font-size: 15px;
+    font-weight: 500;
+    color: #ffffff;
+    transition: all 0.3s;
+  }
+  .btn-primary-academy:hover {
+    background-color: #5c6f1d;
+  }
+  .btn-primary-academy-xl {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.625rem;
+    border-radius: 9999px;
+    background-color: var(--academy-brand-dark);
+    padding: 1rem 2rem;
+    font-size: 15px;
+    font-weight: 500;
+    color: #ffffff;
+    box-shadow: 0 20px 50px -20px rgba(115, 137, 37, 0.45);
+    transition: all 0.3s;
+  }
+  .btn-primary-academy-xl:hover {
+    background-color: #5c6f1d;
+    box-shadow: 0 25px 60px -20px rgba(115, 137, 37, 0.55);
+  }
+  .btn-ghost-academy {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 9999px;
+    border: 1px solid color-mix(in oklab, var(--academy-cocoa) 15%, transparent);
+    padding: 0.625rem 1.25rem;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--academy-cocoa);
+    transition: all 0.3s;
+  }
+  .btn-ghost-academy:hover {
+    border-color: var(--academy-cocoa);
+    background: var(--academy-cocoa);
+    color: #ffffff;
+  }
+
+  .chip-academy {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 9999px;
+    border: 1px solid color-mix(in oklab, var(--academy-cocoa) 15%, transparent);
+    background: var(--academy-offwhite);
+    padding: 0.375rem 0.875rem;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--academy-cocoa);
+  }
+
+  .text-accent-mark {
+    position: relative;
+    display: inline-block;
+  }
+  .text-accent-mark::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0.08em;
+    height: 0.38em;
+    background: var(--academy-brand);
+    opacity: 0.55;
+    z-index: -1;
+    border-radius: 2px;
+  }
+
+  .rule-academy {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in oklab, var(--academy-cocoa) 15%, transparent),
+      transparent
+    );
+  }
+
+  .section-pad-academy {
+    padding: 6rem 1.5rem;
+  }
+  @media (min-width: 768px) {
+    .section-pad-academy {
+      padding: 8rem 1.5rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .section-pad-academy {
+      padding: 10rem 1.5rem;
+    }
+  }
+
+  .container-wide-academy {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    max-width: 80rem;
+  }
+  .container-narrow-academy {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    max-width: 72rem;
+  }
+  .container-tight-academy {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    max-width: 56rem;
+  }
+}
+
 @theme {
   --radius-sm: 6px;
   --radius-md: 8px;

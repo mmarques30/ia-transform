@@ -44,6 +44,12 @@ interface HeaderProps {
    * (ex: /contabilcalculo com homePath="/" mas badge "Contábil").
    */
   badgeLabel?: string;
+  /**
+   * Tema visual do header. Default "dark" mantém o look atual (charcoal
+   * com nav muted/sage). "light" usa paleta academy (cream/cocoa) — apenas
+   * a LP / passa light. Demais LPs seguem dark intactas.
+   */
+  theme?: "dark" | "light";
 }
 
 export function Header({
@@ -51,9 +57,11 @@ export function Header({
   hideCta = false,
   nav = DEFAULT_NAV,
   badgeLabel,
+  theme = "dark",
 }: HeaderProps) {
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const isLight = theme === "light";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -66,12 +74,22 @@ export function Header({
     <header
       className={`fixed top-0 inset-x-0 z-50 h-[72px] flex items-center transition-all duration-300 ${
         scrolled
-          ? "bg-background/80 backdrop-blur-lg border-b border-border/60"
+          ? isLight
+            ? "backdrop-blur-lg border-b"
+            : "bg-background/80 backdrop-blur-lg border-b border-border/60"
           : "bg-transparent border-b border-transparent"
       }`}
+      style={
+        isLight && scrolled
+          ? {
+              backgroundColor: "rgba(255, 255, 246, 0.85)",
+              borderBottomColor: "rgba(13, 13, 13, 0.08)",
+            }
+          : undefined
+      }
     >
-      {/* Ornamento geométrico scroll-aware atrás de tudo */}
-      <div
+      {/* Ornamento geométrico (só na variante dark — light é minimal) */}
+      {!isLight && <div
         aria-hidden
         className={`pointer-events-none absolute inset-0 overflow-hidden transition-opacity duration-500 ${
           scrolled ? "opacity-100" : "opacity-60"
@@ -134,7 +152,7 @@ export function Header({
           }}
         />
 
-      </div>
+      </div>}
 
       <div className="container-page flex items-center justify-between w-full relative z-10">
         <Link
@@ -149,12 +167,20 @@ export function Header({
             }
           }}
         >
-          <Logo size={26} />
+          <Logo size={26} variant={isLight ? "light" : "dark"} />
           <span
-            className="hidden sm:inline text-muted-foreground text-[13px] font-normal border-l border-border pl-3 ml-1"
-            style={{ letterSpacing: "0.02em" }}
+            className="hidden sm:inline text-[13px] font-normal pl-3 ml-1"
+            style={{
+              letterSpacing: "0.02em",
+              color: isLight ? "var(--academy-cocoa-soft)" : undefined,
+              borderLeft: isLight
+                ? "1px solid rgba(13, 13, 13, 0.12)"
+                : "1px solid var(--color-border)",
+            }}
           >
-            {badgeLabel ?? (homePath.startsWith("/contabil") ? "Contábil" : "Business")}
+            <span className={isLight ? "" : "text-muted-foreground"}>
+              {badgeLabel ?? (homePath.startsWith("/contabil") ? "Contábil" : "Business")}
+            </span>
           </span>
         </Link>
 
@@ -163,22 +189,45 @@ export function Header({
             <a
               key={item.href}
               href={item.href}
-              className="text-[13.5px] text-muted-foreground hover:text-foreground transition-colors font-medium"
+              className={`text-[13.5px] transition-colors font-medium ${
+                isLight ? "" : "text-muted-foreground hover:text-foreground"
+              }`}
+              style={
+                isLight
+                  ? { color: "var(--academy-cocoa-soft)" }
+                  : undefined
+              }
+              onMouseEnter={
+                isLight
+                  ? (e) => (e.currentTarget.style.color = "var(--academy-cocoa)")
+                  : undefined
+              }
+              onMouseLeave={
+                isLight
+                  ? (e) => (e.currentTarget.style.color = "var(--academy-cocoa-soft)")
+                  : undefined
+              }
             >
               {item.label}
             </a>
           ))}
         </nav>
 
-        {!hideCta && (
-          <a
-            href="#diagnostico-form"
-            className="inline-flex items-center gap-1.5 justify-center rounded-md bg-primary text-primary-foreground font-semibold text-[13px] px-4 py-2.5 hover:bg-primary/90 transition-colors"
-          >
-            Agendar diagnóstico
-            <ArrowRight className="h-3.5 w-3.5" />
-          </a>
-        )}
+        {!hideCta &&
+          (isLight ? (
+            <a href="#diagnostico-form" className="btn-primary-academy text-[13px]">
+              Agendar diagnóstico
+              <ArrowRight className="h-3.5 w-3.5" />
+            </a>
+          ) : (
+            <a
+              href="#diagnostico-form"
+              className="inline-flex items-center gap-1.5 justify-center rounded-md bg-primary text-primary-foreground font-semibold text-[13px] px-4 py-2.5 hover:bg-primary/90 transition-colors"
+            >
+              Agendar diagnóstico
+              <ArrowRight className="h-3.5 w-3.5" />
+            </a>
+          ))}
       </div>
     </header>
   );
