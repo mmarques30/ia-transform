@@ -1,4 +1,3 @@
-import { Sparkles } from "lucide-react";
 import { ReferralForm } from "./ReferralForm";
 
 /**
@@ -29,25 +28,8 @@ export function Hero() {
           <div className="grid lg:grid-cols-[1.05fr_1fr] gap-10 lg:gap-16 items-start">
             {/* COL 1: pitch da indicação */}
             <div>
-              {/* Eyebrow pill */}
-              <span
-                className="inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-[12.5px] font-semibold"
-                style={{
-                  border: "1px solid oklch(0.55 0.06 122 / 0.5)",
-                  backgroundColor: "oklch(0.16 0.02 122 / 0.5)",
-                  color: "var(--color-foreground)",
-                }}
-              >
-                <Sparkles
-                  className="h-3.5 w-3.5"
-                  strokeWidth={2.5}
-                  style={{ color: "var(--color-primary)" }}
-                />
-                Indique e ganhe mentoria
-              </span>
-
               <h1
-                className="h-mix mt-7 lg:mt-9 text-[40px] sm:text-[52px] lg:text-[64px] leading-[1.02] text-foreground"
+                className="h-mix text-[40px] sm:text-[52px] lg:text-[64px] leading-[1.02] text-foreground"
                 style={{ letterSpacing: "-0.02em" }}
               >
                 Indique quem merece
@@ -88,21 +70,19 @@ export function Hero() {
                   O que você ganha
                 </p>
                 <h3 className="mt-2 text-[19px] lg:text-[21px] font-bold text-foreground tracking-tight">
-                  Mentoria de IA exclusiva para quem indica
+                  Módulo ou automação extra no seu sistema
                 </h3>
 
                 <div className="mt-6 grid grid-cols-2 gap-3">
                   <RewardTile
                     label="1 indicado"
                     sub="fechar projeto Business"
-                    value="30"
-                    unit="min"
+                    prize="1 automação"
                   />
                   <RewardTile
                     label="3 ou mais indicados"
                     sub="fechamentos Business"
-                    value="1,5"
-                    unit="h"
+                    prize="1 módulo completo"
                   />
                 </div>
 
@@ -119,7 +99,7 @@ export function Hero() {
                       className="mt-1.5 h-1.5 w-1.5 rounded-full shrink-0"
                       style={{ backgroundColor: "var(--color-primary)" }}
                     />
-                    A mentoria deve ser consumida em até 60 dias após o fechamento do indicado.
+                    Entrega do módulo/automação em até 60 dias após o fechamento do indicado.
                   </li>
                 </ul>
               </div>
@@ -139,11 +119,10 @@ export function Hero() {
 interface RewardTileProps {
   label: string;
   sub: string;
-  value: string;
-  unit: string;
+  prize: string;
 }
 
-function RewardTile({ label, sub, value, unit }: RewardTileProps) {
+function RewardTile({ label, sub, prize }: RewardTileProps) {
   return (
     <div
       className="rounded-xl p-4 lg:p-5"
@@ -154,17 +133,28 @@ function RewardTile({ label, sub, value, unit }: RewardTileProps) {
     >
       <p className="text-[12.5px] font-bold text-foreground leading-tight">{label}</p>
       <p className="mt-1 text-[11px] text-muted-foreground leading-tight">{sub}</p>
-      <p className="mt-5 flex items-baseline gap-1">
+      <div
+        className="mt-5 inline-flex items-center gap-1.5 rounded-full px-3 py-1.5"
+        style={{
+          backgroundColor: "oklch(0.75 0.20 122 / 0.12)",
+          border: "1px solid oklch(0.75 0.20 122 / 0.45)",
+        }}
+      >
         <span
-          className="num-display text-[36px] lg:text-[42px] leading-none"
-          style={{ color: "var(--color-primary)", letterSpacing: "-0.02em" }}
+          className="text-[10px] uppercase tracking-[0.14em] font-bold"
+          style={{ color: "var(--color-primary)" }}
         >
-          {value}
+          Ganha
         </span>
-        <span className="text-[12px] font-semibold text-muted-foreground">{unit}</span>
-      </p>
-      <p className="mt-2 text-[10px] uppercase tracking-[0.16em] font-bold text-muted-foreground">
-        De mentoria
+        <span
+          className="text-[13px] font-bold tracking-tight"
+          style={{ color: "var(--color-primary)" }}
+        >
+          {prize}
+        </span>
+      </div>
+      <p className="mt-3 text-[10px] uppercase tracking-[0.16em] font-bold text-muted-foreground">
+        No seu sistema
       </p>
     </div>
   );
