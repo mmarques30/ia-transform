@@ -29,11 +29,13 @@ export function Hero() {
             {/* COL 1: pitch da indicação */}
             <div>
               <h1
-                className="text-[36px] sm:text-[46px] lg:text-[56px] leading-[1.05] text-foreground"
+                className="text-foreground"
                 style={{
                   fontFamily: '"Instrument Serif", "Times New Roman", Georgia, serif',
                   fontWeight: 400,
-                  letterSpacing: "-0.005em",
+                  fontSize: "clamp(2.75rem, 6.5vw + 0.5rem, 5.5rem)",
+                  lineHeight: 1,
+                  letterSpacing: "-0.025em",
                 }}
               >
                 Indique quem merece
