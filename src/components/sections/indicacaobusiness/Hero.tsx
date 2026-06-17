@@ -29,12 +29,24 @@ export function Hero() {
             {/* COL 1: pitch da indicação */}
             <div>
               <h1
-                className="h-mix text-[40px] sm:text-[52px] lg:text-[64px] leading-[1.02] text-foreground"
-                style={{ letterSpacing: "-0.02em" }}
+                className="text-[36px] sm:text-[46px] lg:text-[56px] leading-[1.05] text-foreground"
+                style={{
+                  fontFamily: '"Instrument Serif", "Times New Roman", Georgia, serif',
+                  fontWeight: 400,
+                  letterSpacing: "-0.005em",
+                }}
               >
                 Indique quem merece
                 <br />
-                conhecer a <em>IAplicada</em>
+                conhecer a{" "}
+                <em
+                  style={{
+                    fontStyle: "italic",
+                    color: "var(--color-primary)",
+                  }}
+                >
+                  IAplicada
+                </em>
               </h1>
 
               <p className="mt-7 lg:mt-9 text-[16px] lg:text-[18px] text-sage leading-[1.6] max-w-[480px]">
