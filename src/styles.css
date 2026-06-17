@@ -137,13 +137,15 @@
  * muddy gray que prejudica a leitura.
  *
  * Override: dentro de .academy-theme, sections com .section-veil
- * ganham um bg SÓLIDO cream-dark (#F2F2F2), alinhado à paleta clara
- * da marca. Texto e cards internos também precisam ser reescritos
- * porque o markup foi construído pro tema dark (text-foreground,
- * text-sage, tech-card, label-chip).
+ * ganham um bg SÓLIDO verde-claro-creme (mix sutil da brand sobre
+ * cream), 2 passos mais escuro que a dobra 1 mas ainda muito leve
+ * e com tint verde alinhado à paleta. Texto, cards e pills internos
+ * também precisam ser reescritos porque o markup foi construído pro
+ * tema dark (text-foreground, text-sage, tech-card, label-chip,
+ * bg-card, border-border).
  */
 .academy-theme .section-veil {
-  background-color: var(--academy-cream-dark);
+  background-color: color-mix(in oklab, var(--academy-brand) 9%, var(--academy-cream));
   color: var(--academy-cocoa);
 }
 .academy-theme .section-veil .text-foreground,
@@ -154,10 +156,17 @@
 .academy-theme .section-veil .text-muted-foreground {
   color: var(--academy-cocoa-soft);
 }
-.academy-theme .section-veil .tech-card {
+.academy-theme .section-veil .tech-card,
+.academy-theme .section-veil .bg-card {
   background-color: var(--academy-offwhite);
   color: var(--academy-cocoa);
   border-color: var(--academy-border);
+}
+.academy-theme .section-veil .border-border {
+  border-color: var(--academy-border);
+}
+.academy-theme .section-veil .bg-border {
+  background-color: var(--academy-border);
 }
 .academy-theme .section-veil .tech-card::before {
   background-image: radial-gradient(rgba(13, 13, 13, 0.06) 0.8px, transparent 1px);
