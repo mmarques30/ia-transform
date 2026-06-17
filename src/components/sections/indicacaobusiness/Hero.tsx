@@ -1,104 +1,134 @@
-import { Reveal } from "@/components/Reveal";
-import { HeroForm } from "@/components/HeroFormContabil";
+import { Sparkles } from "lucide-react";
+import { ReferralForm } from "./ReferralForm";
 
+/**
+ * Hero da LP /indicacaobusiness — única dobra da página.
+ *
+ * Layout 2-col:
+ *   Esquerda: pitch da indicação (eyebrow + headline + sub + quote +
+ *             card "O QUE VOCÊ GANHA" com benefícios)
+ *   Direita:  form de indicação (ReferralForm).
+ *
+ * Não tem Problem/Solution/Process/Authority — o user pediu versão
+ * mais objetiva. Tudo o que importa cabe na primeira tela.
+ */
 export function Hero() {
   return (
     <section
       id="top"
-      className="relative pb-[80px] lg:pb-[120px] overflow-hidden"
+      className="relative overflow-hidden"
       style={{
         background:
           "radial-gradient(ellipse 80% 55% at 50% 0%, oklch(0.22 0.03 122 / 0.5) 0%, transparent 75%)",
       }}
     >
       <div className="h-[72px]" aria-hidden />
-      <MarqueeStrip />
 
-      <div className="relative pt-[48px] lg:pt-[72px]">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute hidden lg:block"
-          style={{
-            top: "8%",
-            right: "-5%",
-            width: "55%",
-            height: "70%",
-            background:
-              "radial-gradient(ellipse at center, oklch(0.75 0.20 122 / 0.28) 0%, transparent 60%)",
-            filter: "blur(80px)",
-          }}
-        />
-        <div
-          aria-hidden
-          className="pointer-events-none absolute hidden lg:block"
-          style={{
-            top: "20%",
-            left: "-10%",
-            width: "40%",
-            height: "50%",
-            background:
-              "radial-gradient(ellipse at center, oklch(0.35 0.05 125 / 0.5) 0%, transparent 70%)",
-            filter: "blur(70px)",
-          }}
-        />
-
+      <div className="relative pt-[48px] lg:pt-[72px] pb-[80px] lg:pb-[120px]">
         <div className="container-page relative">
-          <div className="grid lg:grid-cols-[1.05fr_1fr] gap-8 lg:gap-16 items-center">
+          <div className="grid lg:grid-cols-[1.05fr_1fr] gap-10 lg:gap-16 items-start">
+            {/* COL 1: pitch da indicação */}
             <div>
-              <Reveal>
-                <span className="label-chip">
-                  <span className="dot" />
-                  IAplicada · Contábil
-                </span>
-              </Reveal>
+              {/* Eyebrow pill */}
+              <span
+                className="inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-[12.5px] font-semibold"
+                style={{
+                  border: "1px solid oklch(0.55 0.06 122 / 0.5)",
+                  backgroundColor: "oklch(0.16 0.02 122 / 0.5)",
+                  color: "var(--color-foreground)",
+                }}
+              >
+                <Sparkles
+                  className="h-3.5 w-3.5"
+                  strokeWidth={2.5}
+                  style={{ color: "var(--color-primary)" }}
+                />
+                Indique e ganhe mentoria
+              </span>
 
-              {/*
-                h1 mobile reduzido pra que o form fique visível na primeira
-                dobra do WebView (95% do tráfego). De 40px → 32px no mobile;
-                desktop mantido em 58px.
-              */}
-              <h1 className="h-mix mt-6 lg:mt-7 text-[32px] sm:text-[44px] lg:text-[58px] leading-[1.05] text-foreground">
-                Contratar mais um <em>júnior</em> não vai salvar o seu fechamento.
+              <h1
+                className="h-mix mt-7 lg:mt-9 text-[40px] sm:text-[52px] lg:text-[64px] leading-[1.02] text-foreground"
+                style={{ letterSpacing: "-0.02em" }}
+              >
+                Indique quem merece
+                <br />
+                conhecer a <em>IAplicada</em>
               </h1>
 
-              <Reveal delay={0.1}>
-                <p className="mt-5 lg:mt-7 text-[16px] lg:text-[19px] text-foreground font-semibold leading-[1.5]">
-                  A IAplicada coloca o seu escritório contábil rodando com IA em 2 meses.
-                </p>
-              </Reveal>
+              <p className="mt-7 lg:mt-9 text-[16px] lg:text-[18px] text-sage leading-[1.6] max-w-[480px]">
+                Conhece um empresário que se beneficiaria de IA no negócio? Conta pra gente. A
+                gente cuida do resto — e ainda te recompensa por isso.
+              </p>
 
-              {/* Subhead secundário — escondido no mobile pra aliviar o
-                  excesso de texto na primeira dobra. No desktop continua
-                  visível como contexto adicional. */}
-              <Reveal delay={0.15}>
-                <p className="hidden lg:block mt-3 lg:mt-4 text-[14.5px] lg:text-[16px] text-sage leading-[1.6] max-w-[540px]">
-                  Primeira rotina em produção em 7 dias. Time autônomo no fim. Sem promessa de
-                  mágica, só método.
+              {/* Quote */}
+              <blockquote
+                className="mt-9 pl-5 italic"
+                style={{ borderLeft: "3px solid var(--color-primary)" }}
+              >
+                <p
+                  className="text-[16px] lg:text-[17px] text-foreground leading-[1.5]"
+                  style={{ fontFamily: '"Instrument Serif", serif' }}
+                >
+                  Mostre-me seus amigos e eu te mostrarei seu futuro.
                 </p>
-              </Reveal>
+                <footer className="mt-2 text-[12px] uppercase tracking-[0.16em] font-semibold text-muted-foreground not-italic">
+                  — John Wooden
+                </footer>
+              </blockquote>
 
-              {/* ClientsProof — visível apenas no desktop dentro da coluna esquerda. */}
-              <Reveal delay={0.18}>
-                <div className="hidden lg:block">
-                  <ClientsProof />
+              {/* Card de recompensas */}
+              <div
+                className="mt-10 rounded-2xl p-6 lg:p-7"
+                style={{
+                  backgroundColor: "oklch(0.16 0.02 122 / 0.7)",
+                  border: "1px solid oklch(0.55 0.06 122 / 0.35)",
+                }}
+              >
+                <p className="text-[10.5px] uppercase tracking-[0.2em] font-bold text-muted-foreground">
+                  O que você ganha
+                </p>
+                <h3 className="mt-2 text-[19px] lg:text-[21px] font-bold text-foreground tracking-tight">
+                  Mentoria de IA exclusiva para quem indica
+                </h3>
+
+                <div className="mt-6 grid grid-cols-2 gap-3">
+                  <RewardTile
+                    label="1 indicado"
+                    sub="fechar projeto Business"
+                    value="30"
+                    unit="min"
+                  />
+                  <RewardTile
+                    label="3 ou mais indicados"
+                    sub="fechamentos Business"
+                    value="1,5"
+                    unit="h"
+                  />
                 </div>
-              </Reveal>
+
+                <ul className="mt-6 space-y-2.5 text-[13px] text-sage leading-[1.55]">
+                  <li className="flex items-start gap-2.5">
+                    <span
+                      className="mt-1.5 h-1.5 w-1.5 rounded-full shrink-0"
+                      style={{ backgroundColor: "var(--color-primary)" }}
+                    />
+                    Válido exclusivamente para fechamentos de projetos Business.
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <span
+                      className="mt-1.5 h-1.5 w-1.5 rounded-full shrink-0"
+                      style={{ backgroundColor: "var(--color-primary)" }}
+                    />
+                    A mentoria deve ser consumida em até 60 dias após o fechamento do indicado.
+                  </li>
+                </ul>
+              </div>
             </div>
 
-            <Reveal delay={0.1}>
-              <div id="diagnostico-form" className="mt-6 lg:mt-0 lg:sticky lg:top-24 scroll-mt-24">
-                <HeroForm />
-              </div>
-            </Reveal>
-
-            {/* ClientsProof — versão mobile vem DEPOIS do form, fora da
-                primeira dobra. No desktop, esta versão fica oculta porque
-                já aparece na coluna esquerda. */}
-            <Reveal delay={0.18}>
-              <div className="lg:hidden">
-                <ClientsProof />
-              </div>
-            </Reveal>
+            {/* COL 2: form */}
+            <div className="lg:sticky lg:top-24">
+              <ReferralForm />
+            </div>
           </div>
         </div>
       </div>
@@ -106,99 +136,35 @@ export function Hero() {
   );
 }
 
-/* Marquee — stats da vertical contábil */
-const MARQUEE_ITEMS = [
-  "2 meses pra autonomia",
-  "Primeira rotina em 7 dias",
-  "10 a 100 colaboradores",
-  "+41% crescimento do setor",
-  "+1800% de ROI em automação",
-];
-
-function MarqueeStrip() {
-  const seq = [...MARQUEE_ITEMS, ...MARQUEE_ITEMS];
-  const FADE = "oklch(0.10 0.012 122)";
-  return (
-    <div
-      className="relative overflow-hidden"
-      style={{
-        backgroundColor: FADE,
-        borderTop: "1px solid oklch(0.28 0.04 122)",
-        borderBottom: "1px solid oklch(0.28 0.04 122)",
-      }}
-    >
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-y-0 left-0 z-10 w-20"
-        style={{ background: `linear-gradient(90deg, ${FADE} 0%, transparent 100%)` }}
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-y-0 right-0 z-10 w-20"
-        style={{ background: `linear-gradient(270deg, ${FADE} 0%, transparent 100%)` }}
-      />
-      <div
-        className="ticker-track py-3.5 select-none"
-        style={{ cursor: "default", pointerEvents: "none" }}
-        aria-hidden
-      >
-        {seq.map((item, i) => (
-          <span key={i} className="inline-flex items-center gap-8">
-            <span
-              className="text-[11.5px] uppercase tracking-[0.16em] font-semibold whitespace-nowrap"
-              style={{ color: "oklch(0.96 0.012 110)" }}
-            >
-              {item}
-            </span>
-            <span
-              className="inline-block"
-              style={{ color: "var(--color-primary)", fontSize: 9, lineHeight: 1 }}
-            >
-              ◆
-            </span>
-          </span>
-        ))}
-      </div>
-    </div>
-  );
+interface RewardTileProps {
+  label: string;
+  sub: string;
+  value: string;
+  unit: string;
 }
 
-const PROOF_THUMBS = [
-  { src: "/clients/people/person-1.webp", alt: "" },
-  { src: "/clients/people/person-5.webp", alt: "" },
-  { src: "/clients/people/person-2.webp", alt: "" },
-  { src: "/clients/people/person-3.webp", alt: "" },
-  { src: "/clients/people/person-4.webp", alt: "" },
-];
-
-function ClientsProof() {
-  const SIZE = 40;
+function RewardTile({ label, sub, value, unit }: RewardTileProps) {
   return (
-    <div className="mt-8 flex items-center gap-4">
-      <div className="flex" aria-hidden>
-        {PROOF_THUMBS.map((t, i) => (
-          <img
-            key={t.src}
-            src={t.src}
-            alt={t.alt}
-            width={SIZE}
-            height={SIZE}
-            loading="lazy"
-            decoding="async"
-            className="rounded-full object-cover"
-            style={{
-              width: SIZE,
-              height: SIZE,
-              marginLeft: i === 0 ? 0 : -12,
-              border: "2px solid var(--color-background)",
-              boxShadow: "0 2px 6px -2px oklch(0 0 0 / 0.5)",
-              zIndex: PROOF_THUMBS.length - i,
-            }}
-          />
-        ))}
-      </div>
-      <p className="text-[14px] text-foreground font-semibold leading-tight">
-        +700 profissionais usando a IAplicada dentro das empresas.
+    <div
+      className="rounded-xl p-4 lg:p-5"
+      style={{
+        backgroundColor: "oklch(0.12 0.012 122 / 0.55)",
+        border: "1px solid oklch(0.55 0.06 122 / 0.3)",
+      }}
+    >
+      <p className="text-[12.5px] font-bold text-foreground leading-tight">{label}</p>
+      <p className="mt-1 text-[11px] text-muted-foreground leading-tight">{sub}</p>
+      <p className="mt-5 flex items-baseline gap-1">
+        <span
+          className="num-display text-[36px] lg:text-[42px] leading-none"
+          style={{ color: "var(--color-primary)", letterSpacing: "-0.02em" }}
+        >
+          {value}
+        </span>
+        <span className="text-[12px] font-semibold text-muted-foreground">{unit}</span>
+      </p>
+      <p className="mt-2 text-[10px] uppercase tracking-[0.16em] font-bold text-muted-foreground">
+        De mentoria
       </p>
     </div>
   );
