@@ -5,23 +5,23 @@ import { TiltCard } from "@/components/TiltCard";
 const PROBLEMS = [
   {
     n: "01",
-    title: "Softwares prontos que obrigam sua empresa a se adaptar",
-    text: "Você molda a operação ao software, e não o contrário. Resultado: workflow torto e time frustrado.",
+    title: "Planilha, Word e dez ferramentas que não conversam",
+    text: "CRM de um lado, financeiro de outro, conteúdo num terceiro. Ninguém tem visão única do negócio.",
   },
   {
     n: "02",
-    title: "ERPs caros que prometem controle e entregam complexidade",
-    text: "Módulos genéricos, consultoria cara, 18 meses de implementação, e ninguém usa metade.",
+    title: "Cada cliente novo vira mais hora, não mais margem",
+    text: "Você é refém da própria operação. Crescer significa contratar gente, não ganhar lucro. Sempre o mesmo teto.",
   },
   {
     n: "03",
-    title: "Automações soltas que só aceleram processos ruins",
-    text: "Acelerar o errado não resolve. Automação sem estrutura é só caos mais rápido.",
+    title: "Comercial que depende da iniciativa de uma pessoa",
+    text: "Funil em planilha, fechamento sem rastro, SDR caro que não escala. O lead vaza quando ninguém puxa.",
   },
   {
     n: "04",
-    title: "Consultorias que entregam relatórios, mas não deixam execução",
-    text: "Slide bonito, deliverable teórico, zero sistema em produção. Na semana seguinte, nada mudou.",
+    title: "O negócio inteiro preso na cabeça do dono",
+    text: "Método, proposta, diagnóstico: tudo depende da memória e da agenda de uma pessoa. Se ela para, o negócio para.",
   },
 ];
 
@@ -162,15 +162,16 @@ export function Problem() {
               className="h-mix mt-6 text-[36px] sm:text-[44px] lg:text-[58px] text-foreground"
               style={{ perspective: "800px" }}
             >
-              Por que quase <em>ninguém resolve</em>
+              Por que crescer <em>dói</em>
               <br />
-              esse problema do jeito certo?
+              em vez de dar lucro?
             </h2>
             <p
               ref={subtitleRef}
               className="mt-6 text-[17px] text-sage leading-[1.6] max-w-[620px] mx-auto"
             >
-              Porque a maioria tenta resolver estrutura com atalhos.
+              Porque a maioria empilha ferramenta sobre operação manual e o caos só fica mais
+              rápido.
             </p>
           </div>
 
@@ -213,8 +214,8 @@ export function Problem() {
             className="hidden lg:block mt-8 text-center text-[13.5px] text-sage leading-[1.6] max-w-[760px] mx-auto"
           >
             <span className="font-semibold text-foreground">Sintomas comuns:</span>{" "}
-            financeiro descentralizado, relatórios manuais, dados espalhados, decisões lentas,
-            risco de erro.
+            dados espalhados, retrabalho entre etapas, decisões lentas, fechamento sem
+            rastreabilidade, risco de erro.
           </p>
         </div>
       </div>

@@ -28,7 +28,7 @@ const STEPS: Step[] = [
   {
     n: "3",
     title: "Análise durante a semana",
-    text: "Mapeamento completo + plano.",
+    text: "Mapeamento completo + plano com fluxos de ROI imediato.",
     Icon: Sparkles,
     Mockup: AnaliseMockup,
   },
@@ -141,7 +141,7 @@ export function Process() {
         <Reveal delay={0.3}>
           <div className="mt-14 text-center">
             <a href="#diagnostico-form" className="cta-primary">
-              Quero um mapa estratégico
+              Quero um diagnóstico estratégico agora
               <span className="arrow">
                 <svg
                   width="14"

@@ -98,7 +98,7 @@ export function OliveWave() {
           {/* Punchline */}
           <Reveal delay={0.2}>
             <p
-              className="mt-14 text-[28px] sm:text-[36px] lg:text-[44px] font-bold leading-[1.15] tracking-tight"
+              className="mt-14 text-[20px] sm:text-[24px] lg:text-[28px] font-semibold leading-[1.35] tracking-tight max-w-[820px] mx-auto"
               style={{ color: "oklch(0.97 0.012 110)" }}
             >
               Mas tudo ainda{" "}
@@ -112,7 +112,8 @@ export function OliveWave() {
               >
                 depende demais
               </em>{" "}
-              de você.
+              de você ou perguntam para você: vende aqui, redigita ali, comunica por mensagem
+              solta, é um ponto de falha.
             </p>
           </Reveal>
 

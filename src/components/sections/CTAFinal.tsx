@@ -8,9 +8,10 @@ export function CTAFinal() {
         <div className="max-w-[820px] mx-auto text-center">
           <Reveal>
             <h2 className="h-mix text-[40px] sm:text-[48px] lg:text-[60px] text-foreground">
-              Pronto pra <em>organizar</em>
+              Pronto pra tirar sua empresa da{" "}
+              <em>planilha</em>
               <br />
-              sua empresa em 30 dias?
+              em 30 dias?
             </h2>
           </Reveal>
           <Reveal delay={0.05}>
