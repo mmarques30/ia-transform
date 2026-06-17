@@ -137,12 +137,41 @@
  * muddy gray que prejudica a leitura.
  *
  * Override: dentro de .academy-theme, sections com .section-veil
- * ganham um bg SÓLIDO cocoa-soft (#2F302B), virando dark islands
- * legíveis dentro do main cream.
+ * ganham um bg SÓLIDO cream-dark (#F2F2F2), alinhado à paleta clara
+ * da marca. Texto e cards internos também precisam ser reescritos
+ * porque o markup foi construído pro tema dark (text-foreground,
+ * text-sage, tech-card, label-chip).
  */
 .academy-theme .section-veil {
-  background-color: var(--academy-cocoa-soft);
-  color: var(--academy-cream);
+  background-color: var(--academy-cream-dark);
+  color: var(--academy-cocoa);
+}
+.academy-theme .section-veil .text-foreground,
+.academy-theme .section-veil .num-display {
+  color: var(--academy-cocoa);
+}
+.academy-theme .section-veil .text-sage,
+.academy-theme .section-veil .text-muted-foreground {
+  color: var(--academy-cocoa-soft);
+}
+.academy-theme .section-veil .tech-card {
+  background-color: var(--academy-offwhite);
+  color: var(--academy-cocoa);
+  border-color: var(--academy-border);
+}
+.academy-theme .section-veil .tech-card::before {
+  background-image: radial-gradient(rgba(13, 13, 13, 0.06) 0.8px, transparent 1px);
+}
+.academy-theme .section-veil .tech-card:hover {
+  border-color: var(--academy-brand-dark);
+  box-shadow:
+    0 20px 40px -16px rgba(13, 13, 13, 0.12),
+    0 0 0 1px var(--academy-brand-dark);
+}
+.academy-theme .section-veil .label-chip {
+  background-color: var(--academy-offwhite);
+  color: var(--academy-cocoa-soft);
+  border-color: var(--academy-border);
 }
 
 @layer utilities {

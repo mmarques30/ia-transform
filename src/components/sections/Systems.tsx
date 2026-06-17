@@ -97,8 +97,8 @@ export function Systems() {
         <div className="relative mx-auto mt-14 lg:mt-20 w-full max-w-[1200px] px-4 lg:px-8">
           <CardStack
             items={SYSTEMS}
-            cardWidth={460}
-            cardHeight={320}
+            cardWidth={580}
+            cardHeight={400}
             overlap={0.5}
             spreadDeg={42}
             activeScale={1.04}
