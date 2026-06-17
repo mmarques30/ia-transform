@@ -39,24 +39,8 @@ export function Hero() {
 
               <p className="mt-7 lg:mt-9 text-[16px] lg:text-[18px] text-sage leading-[1.6] max-w-[480px]">
                 Conhece um empresário que se beneficiaria de IA no negócio? Conta pra gente. A
-                gente cuida do resto — e ainda te recompensa por isso.
+                gente cuida do resto e ainda te recompensa por isso.
               </p>
-
-              {/* Quote */}
-              <blockquote
-                className="mt-9 pl-5 italic"
-                style={{ borderLeft: "3px solid var(--color-primary)" }}
-              >
-                <p
-                  className="text-[16px] lg:text-[17px] text-foreground leading-[1.5]"
-                  style={{ fontFamily: '"Instrument Serif", serif' }}
-                >
-                  Mostre-me seus amigos e eu te mostrarei seu futuro.
-                </p>
-                <footer className="mt-2 text-[12px] uppercase tracking-[0.16em] font-semibold text-muted-foreground not-italic">
-                  — John Wooden
-                </footer>
-              </blockquote>
 
               {/* Card de recompensas */}
               <div
