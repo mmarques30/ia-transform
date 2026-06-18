@@ -332,42 +332,50 @@ export function CardStack<T extends CardStackItem>({
 
 function DefaultFanCard({ item }: { item: CardStackItem; active: boolean }) {
   return (
-    <div className="relative h-full w-full">
-      <div className="absolute inset-0">
+    <div
+      className="relative flex h-full w-full flex-col"
+      style={{ backgroundColor: "var(--academy-offwhite)" }}
+    >
+      <div
+        className="relative flex-1 overflow-hidden"
+        style={{ backgroundColor: "var(--academy-cream-dark)" }}
+      >
         {item.imageSrc ? (
           <img
             src={item.imageSrc}
             alt={item.title}
-            className="h-full w-full object-cover"
+            className="h-full w-full object-contain"
             draggable={false}
             loading="eager"
           />
         ) : (
           <div
             className="flex h-full w-full items-center justify-center text-sm"
-            style={{
-              background: "var(--academy-cream-dark)",
-              color: "rgba(13, 13, 13, 0.55)",
-            }}
+            style={{ color: "rgba(13, 13, 13, 0.55)" }}
           >
             No image
           </div>
         )}
       </div>
 
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
-
-      <div className="relative z-10 flex h-full flex-col justify-end p-5">
+      <div
+        className="shrink-0 p-4"
+        style={{
+          backgroundColor: "var(--academy-cocoa)",
+          color: "var(--academy-cream)",
+        }}
+      >
         {item.tag ? (
-          <div className="text-[10px] uppercase tracking-[0.22em] font-medium text-white/80">
+          <div
+            className="text-[10px] uppercase tracking-[0.22em] font-medium"
+            style={{ color: "var(--academy-brand)" }}
+          >
             {item.tag}
           </div>
         ) : null}
-        <div className="mt-1 truncate text-lg font-semibold text-white">
-          {item.title}
-        </div>
+        <div className="mt-1 truncate text-base font-semibold">{item.title}</div>
         {item.description ? (
-          <div className="mt-1 line-clamp-2 text-sm text-white/80">
+          <div className="mt-1 line-clamp-2 text-[12.5px] leading-snug opacity-80">
             {item.description}
           </div>
         ) : null}
