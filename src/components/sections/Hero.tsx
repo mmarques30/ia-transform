@@ -104,16 +104,14 @@ function HeroDecoration() {
         }}
       />
       <img
-        src="/brand/capa_biz_sistemas.jpg"
+        src="/brand/logo-mark.svg"
         alt=""
         className="hero-decor-mark absolute"
         style={{
-          right: "6%",
-          top: "18%",
-          width: "min(380px, 34vw)",
-          aspectRatio: "1 / 1",
-          borderRadius: "21%",
-          objectFit: "cover",
+          right: "4%",
+          top: "32%",
+          width: "min(460px, 40vw)",
+          height: "auto",
         }}
       />
     </div>

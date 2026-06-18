@@ -96,7 +96,7 @@ export function Comparison() {
             {/* Desktop */}
             <div className="hidden lg:block">
               <div className="grid grid-cols-[1.4fr_1fr_1fr_1fr_1.1fr] border-b border-border">
-                <HeaderCell title="" />
+                <HeaderCell title="Entregas" />
                 <HeaderCell title="ERP" />
                 <HeaderCell title="Fábrica de software" />
                 <HeaderCell title="Squads internos" />

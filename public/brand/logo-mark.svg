@@ -1,0 +1,19 @@
+<svg
+  width="128"
+  height="128"
+  viewBox="0 0 128 128"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+  aria-label="IAplicada"
+>
+  <defs>
+    <mask id="ia-petals-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="128" height="128">
+      <rect width="128" height="128" fill="black" />
+      <circle cx="64" cy="64" r="48" fill="white" />
+      <rect x="60" y="10" width="8" height="108" rx="4" fill="black" />
+      <rect x="10" y="60" width="108" height="8" rx="4" fill="black" />
+      <polygon points="64,57 71,64 64,71 57,64" fill="white" />
+    </mask>
+  </defs>
+  <rect width="128" height="128" fill="#738925" mask="url(#ia-petals-mask)" />
+</svg>
