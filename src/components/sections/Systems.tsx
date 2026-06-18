@@ -27,35 +27,35 @@ const SYSTEMS: SystemItem[] = [
     imageSrc: "/clients/quadra-arquitetura.webp",
   },
   {
-    id: "saude",
-    tag: "Saúde",
-    title: "Cresceu 3x sem inchar o administrativo",
+    id: "varejo-tributario",
+    tag: "Varejo",
+    title: "Recuperação tributária no automático",
     description:
-      "Prontuário, agenda, cobrança e nota fiscal ligados. Clínica saiu de 30 para 100+ pacientes (+233%) sem contratar mais gente no admin.",
+      "Diagnóstico tributário identifica créditos e impostos pagos a mais. Time fiscal opera com dashboard em vez de planilha e recupera milhões em impostos esquecidos.",
     imageSrc: "/clients/recuperacao-tributaria-varejo.webp",
   },
   {
-    id: "juridico",
-    tag: "Jurídico",
-    title: "Qualificação de lead no automático",
+    id: "contabil-fiscal",
+    tag: "Contábil",
+    title: "Catálogo de ferramentas fiscais consolidado",
     description:
-      "CRM com lead qualificado e entregue pro advogado, follow-up sozinho no WhatsApp. Economia de ~R$60k/ano e ~160h/mês liberadas.",
+      "Biblioteca única de regras, calculadoras e templates fiscais. Operação contábil para de garimpar legislação espalhada e ganha referência centralizada.",
     imageSrc: "/clients/catalogo-ferramentas-fiscais.webp",
   },
   {
-    id: "industria-transportes",
-    tag: "Indústria de Transportes",
+    id: "industria-moveis",
+    tag: "Indústria moveleira",
     title: "Proposta em 15 minutos, não em 1 dia",
     description:
       "Gerador de propostas, câmbio atualizado sozinho e documentação centralizada. Capacidade triplicada e ~75h/mês economizadas.",
     imageSrc: "/clients/industria-moveis-dashboard.webp",
   },
   {
-    id: "turismo",
-    tag: "Turismo",
-    title: "Operadora inteira em um sistema",
+    id: "comunidade-d2c",
+    tag: "Comunidade D2C",
+    title: "Comunidade engajada acoplada ao comercial",
     description:
-      "ERP, transfer, financeiro e comercial rodando com volume real. 17.886 vendas e 20.958 passageiros sob gestão, ~200h/mês automatizadas.",
+      "Plataforma de comunidade integrada ao CRM. Conversas viram lead qualificado, indicação vira venda — tudo rastreado num dashboard único.",
     imageSrc: "/clients/uiara-comunidade.webp",
   },
 ];
