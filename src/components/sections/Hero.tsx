@@ -103,15 +103,22 @@ function HeroDecoration() {
           mixBlendMode: "multiply",
         }}
       />
-      <img
-        src="/brand/logo-mark.svg"
-        alt=""
+      {/* Pétalas reais — usa o wordmark oficial light cropado pelo
+          background-image. A imagem tem ratio 2108x500 (4.2:1); com
+          background-size auto 100% e position left, a parte visível
+          dentro do container quadrado é só a porção do ícone à
+          esquerda do wordmark. Evita criar SVG sintético. */}
+      <div
         className="hero-decor-mark absolute"
         style={{
           right: "4%",
           top: "32%",
           width: "min(460px, 40vw)",
-          height: "auto",
+          aspectRatio: "1 / 1",
+          backgroundImage: "url(/brand/iaplicada-logo-light.webp)",
+          backgroundSize: "auto 100%",
+          backgroundPosition: "left center",
+          backgroundRepeat: "no-repeat",
         }}
       />
     </div>
