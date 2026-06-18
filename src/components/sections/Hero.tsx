@@ -19,9 +19,11 @@ interface HeroProps {
 export function Hero({ formSlug, thankYouPath }: HeroProps = {}) {
   return (
     <section id="top" className="bg-hero-canvas relative overflow-hidden">
+      <HeroDecoration />
+
       <div className="h-[72px]" aria-hidden />
 
-      <div className="relative section-pad-academy">
+      <div className="relative z-10 pt-[16px] lg:pt-[40px] pb-[96px] lg:pb-[140px] px-6">
         <div className="container-wide-academy">
           <div className="grid lg:grid-cols-[1.05fr_1fr] gap-12 lg:gap-20 items-start">
             <div>
@@ -74,6 +76,45 @@ export function Hero({ formSlug, thankYouPath }: HeroProps = {}) {
         </div>
       </div>
     </section>
+  );
+}
+
+/**
+ * Decoração de entrada do Hero — glow radial na cor da brand (verde)
+ * + logo icon-only opaca, ambos posicionados à direita, atrás do
+ * conteúdo. Animação CSS (fade + scale/slide) entra no mount,
+ * referência: minimalist-hero do 21st.dev mas com cor da marca.
+ *
+ * Sem framer-motion no entry chunk — animação pura CSS pra não
+ * regredir o INP.
+ */
+function HeroDecoration() {
+  return (
+    <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
+      <div
+        className="hero-decor-glow absolute"
+        style={{
+          right: "-12%",
+          top: "4%",
+          width: "min(900px, 70vw)",
+          aspectRatio: "1 / 1",
+          backgroundImage:
+            "radial-gradient(circle at center, var(--academy-brand) 0%, transparent 70%)",
+          mixBlendMode: "multiply",
+        }}
+      />
+      <img
+        src="/brand/logo.svg"
+        alt=""
+        className="hero-decor-mark absolute"
+        style={{
+          right: "6%",
+          top: "18%",
+          width: "min(420px, 38vw)",
+          height: "auto",
+        }}
+      />
+    </div>
   );
 }
 
