@@ -183,6 +183,51 @@
   border-color: var(--academy-border);
 }
 
+/* Animação de entrada do HeroDecoration (LP /).
+ *   - glow: scale 0.7→1 + opacity 0→0.4 (cor brand)
+ *   - mark: opacity 0→0.18 + translateY 24px→0 (logo icon)
+ * Animação CSS pura pra não puxar framer-motion no entry chunk.
+ * prefers-reduced-motion desliga e mantém o estado final. */
+@keyframes hero-decor-glow-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  100% {
+    opacity: 0.42;
+    transform: scale(1);
+  }
+}
+@keyframes hero-decor-mark-in {
+  0% {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  100% {
+    opacity: 0.18;
+    transform: translateY(0);
+  }
+}
+.hero-decor-glow {
+  opacity: 0;
+  transform-origin: center;
+  animation: hero-decor-glow-in 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.15s forwards;
+}
+.hero-decor-mark {
+  opacity: 0;
+  animation: hero-decor-mark-in 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.5s forwards;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-decor-glow {
+    animation: none;
+    opacity: 0.42;
+  }
+  .hero-decor-mark {
+    animation: none;
+    opacity: 0.18;
+  }
+}
+
 @layer utilities {
   .bg-hero-canvas {
     background:
