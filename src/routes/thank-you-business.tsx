@@ -10,7 +10,6 @@ import {
 import { Header } from "@/components/sections/Header";
 import { Footer } from "@/components/sections/Footer";
 import { Reveal } from "@/components/Reveal";
-import { BrandBackground } from "@/components/BrandBackground";
 
 interface ThankYouSearch {
   /** Event ID recebido do HeroForm pra deduplicação do evento Lead no Meta. */
@@ -95,52 +94,45 @@ function ThankYouBusinessPage() {
   useFireLeadBackup(eid);
 
   return (
-    <main className="min-h-screen text-foreground">
-      <BrandBackground />
-      <Header />
+    <main className="academy-theme min-h-screen">
+      <Header theme="light" />
 
-      {/* HERO confirmação */}
+      {/* HERO confirmação — academy theme (cream + Fraunces) */}
       <section
         id="top"
-        className="relative pt-[140px] pb-[60px] lg:pt-[180px] lg:pb-[70px] overflow-hidden"
-        style={{
-          background:
-            "radial-gradient(ellipse 80% 55% at 50% 0%, oklch(0.22 0.03 122 / 0.5) 0%, transparent 75%)",
-        }}
+        className="bg-hero-canvas relative overflow-hidden pt-[120px] pb-[60px] lg:pt-[160px] lg:pb-[80px]"
       >
-        <div className="container-page relative">
+        <div className="container-wide-academy">
           <div className="text-center max-w-[720px] mx-auto">
             <Reveal>
               <span
                 className="inline-flex h-16 w-16 items-center justify-center rounded-full"
                 style={{
-                  backgroundColor: "oklch(0.75 0.20 122 / 0.12)",
-                  border: "1px solid oklch(0.75 0.20 122 / 0.35)",
+                  backgroundColor: "color-mix(in oklab, var(--academy-brand) 18%, transparent)",
+                  border: "1px solid color-mix(in oklab, var(--academy-brand-dark) 45%, transparent)",
                 }}
               >
                 <CheckCircle2
                   className="h-9 w-9"
                   strokeWidth={2}
-                  style={{ color: "var(--color-primary)" }}
+                  style={{ color: "var(--academy-brand-dark)" }}
                 />
               </span>
             </Reveal>
 
             <Reveal delay={0.05}>
-              <span className="mt-7 label-chip">
-                <span className="dot" />
-                Inscrição confirmada
-              </span>
+              <span className="eyebrow mt-7">Inscrição confirmada</span>
             </Reveal>
 
             <Reveal delay={0.1}>
-              <h1 className="h-mix mt-6 text-[36px] sm:text-[46px] lg:text-[56px] text-foreground">
-                Recebemos suas <em>informações</em>.
+              <h1 className="h-hero mt-6">
+                Recebemos suas{" "}
+                <span className="serif-italic text-accent-mark">informações</span>.
               </h1>
             </Reveal>
 
             <Reveal delay={0.15}>
-              <p className="mt-5 text-[17px] lg:text-[19px] text-foreground font-medium leading-[1.55] max-w-[560px] mx-auto">
+              <p className="lede mt-7 mx-auto" style={{ fontWeight: 500 }}>
                 Em breve você será contatado pra dar continuidade ao seu diagnóstico.
               </p>
             </Reveal>
@@ -154,17 +146,18 @@ function ThankYouBusinessPage() {
           <div className="max-w-[1080px] mx-auto">
             <div className="text-center max-w-[640px] mx-auto">
               <Reveal>
-                <p className="text-[11px] uppercase tracking-[0.18em] font-semibold text-muted-foreground">
-                  Próximos passos
-                </p>
+                <span className="eyebrow">Próximos passos</span>
               </Reveal>
               <Reveal delay={0.05}>
-                <h2 className="h-mix mt-3 text-[28px] sm:text-[34px] lg:text-[40px] text-foreground">
-                  O que <em>vem a seguir</em>.
+                <h2 className="h-section mt-6">
+                  O que <span className="serif-italic">vem a seguir</span>.
                 </h2>
               </Reveal>
               <Reveal delay={0.1}>
-                <p className="mt-4 text-[15px] text-sage leading-[1.6]">
+                <p
+                  className="mt-5 text-[15px] leading-[1.6]"
+                  style={{ color: "var(--academy-cocoa-soft)" }}
+                >
                   Em até 1 dia útil você vai receber duas coisas — fique de olho no seu e-mail e
                   WhatsApp.
                 </p>
@@ -178,14 +171,16 @@ function ThankYouBusinessPage() {
                     <span
                       className="inline-flex h-10 w-10 items-center justify-center rounded-xl"
                       style={{
-                        backgroundColor: "oklch(0.75 0.20 122 / 0.12)",
-                        border: "1px solid oklch(0.75 0.20 122 / 0.35)",
+                        backgroundColor:
+                          "color-mix(in oklab, var(--academy-brand) 18%, transparent)",
+                        border:
+                          "1px solid color-mix(in oklab, var(--academy-brand-dark) 45%, transparent)",
                       }}
                     >
                       <step.Icon
                         className="h-5 w-5"
                         strokeWidth={2}
-                        style={{ color: "var(--color-primary)" }}
+                        style={{ color: "var(--academy-brand-dark)" }}
                       />
                     </span>
                     <p className="mt-5 text-[16px] font-bold tracking-tight text-foreground leading-snug">
@@ -206,17 +201,19 @@ function ThankYouBusinessPage() {
           <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-center max-w-[1100px] mx-auto">
             <div className="lg:order-1 order-2">
               <Reveal>
-                <p className="text-[11px] uppercase tracking-[0.18em] font-semibold text-muted-foreground">
-                  Operação que enxerga
-                </p>
+                <span className="eyebrow">Operação que enxerga</span>
               </Reveal>
               <Reveal delay={0.05}>
-                <h2 className="h-mix mt-3 text-[26px] sm:text-[32px] lg:text-[36px] text-foreground">
-                  A sua empresa em <em>todas as telas</em>.
+                <h2 className="h-section mt-6">
+                  A sua empresa em{" "}
+                  <span className="serif-italic">todas as telas</span>.
                 </h2>
               </Reveal>
               <Reveal delay={0.1}>
-                <p className="mt-4 text-[15px] text-sage leading-[1.65]">
+                <p
+                  className="mt-5 text-[15px] leading-[1.65]"
+                  style={{ color: "var(--academy-cocoa-soft)" }}
+                >
                   Depois do diagnóstico, é isso que a gente constrói com você — um sistema próprio
                   que mostra a operação em tempo real, no desktop, tablet e celular.
                 </p>
@@ -234,7 +231,7 @@ function ThankYouBusinessPage() {
                     >
                       <span
                         className="mt-1.5 h-1.5 w-1.5 rounded-full shrink-0"
-                        style={{ backgroundColor: "var(--color-primary)" }}
+                        style={{ backgroundColor: "var(--academy-brand-dark)" }}
                       />
                       {line}
                     </li>
@@ -260,11 +257,9 @@ function ThankYouBusinessPage() {
         <div className="container-page">
           <Reveal>
             <div className="text-center">
-              <Link to="/" className="cta-primary">
+              <Link to="/" className="btn-primary-academy">
                 Voltar pro site
-                <span className="arrow">
-                  <ArrowRight className="h-3.5 w-3.5" />
-                </span>
+                <ArrowRight className="h-3.5 w-3.5" />
               </Link>
             </div>
           </Reveal>
