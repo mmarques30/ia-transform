@@ -162,13 +162,17 @@
     0 0 0 1px var(--academy-brand-dark);
 }
 /* ClientLogos: as imagens vêm com filter `brightness(0) invert(1)`
- * pra serem brancas no dark. Aqui invertemos: ficam cocoa.
- * Wordmark fallback usa cor hardcoded em creme — força cocoa. */
+ * + opacity 0.6 pra serem brancas no dark. Aqui invertemos:
+ * brightness(0) sozinho + opacity 1 — todos os logos ficam no
+ * mesmo tom cocoa sólido, sem variação de transparência entre
+ * imagens e wordmarks. */
 .academy-theme .section-veil .ticker-track img {
   filter: brightness(0) !important;
+  opacity: 1 !important;
 }
 .academy-theme .section-veil .ticker-track .font-bold {
   color: var(--academy-cocoa) !important;
+  opacity: 1 !important;
 }
 
 /* Animação de entrada do HeroDecoration (LP /).
