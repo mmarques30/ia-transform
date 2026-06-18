@@ -3,7 +3,7 @@ import { Header } from "@/components/sections/Header";
 import { Hero } from "@/components/sections/Hero";
 import { Problem } from "@/components/sections/Problem";
 import { Solution } from "@/components/sections/Solution";
-import { Systems } from "@/components/sections/Systems";
+import { SystemsV2 } from "@/components/sections/SystemsV2";
 import { OliveWave } from "@/components/sections/OliveWave";
 import { ClientLogos } from "@/components/sections/ClientLogos";
 import { Impact } from "@/components/sections/Impact";
@@ -45,7 +45,7 @@ function BusinessV2Landing() {
       <Hero />
       <Problem />
       <Solution />
-      <Systems />
+      <SystemsV2 />
       <OliveWave />
       <ClientLogos />
       <Impact />
