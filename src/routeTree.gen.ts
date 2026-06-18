@@ -15,6 +15,7 @@ import { Route as ContabilcalculoRouteImport } from './routes/contabilcalculo'
 import { Route as Contabil02RouteImport } from './routes/contabil02'
 import { Route as ContabilThankYouRouteImport } from './routes/contabil-thank-you'
 import { Route as ContabilRouteImport } from './routes/contabil'
+import { Route as Businessv2RouteImport } from './routes/businessv2'
 import { Route as IndexRouteImport } from './routes/index'
 
 const ThankYouBusinessRoute = ThankYouBusinessRouteImport.update({
@@ -47,6 +48,11 @@ const ContabilRoute = ContabilRouteImport.update({
   path: '/contabil',
   getParentRoute: () => rootRouteImport,
 } as any)
+const Businessv2Route = Businessv2RouteImport.update({
+  id: '/businessv2',
+  path: '/businessv2',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -55,6 +61,7 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/businessv2': typeof Businessv2Route
   '/contabil': typeof ContabilRoute
   '/contabil-thank-you': typeof ContabilThankYouRoute
   '/contabil02': typeof Contabil02Route
@@ -64,6 +71,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/businessv2': typeof Businessv2Route
   '/contabil': typeof ContabilRoute
   '/contabil-thank-you': typeof ContabilThankYouRoute
   '/contabil02': typeof Contabil02Route
@@ -74,6 +82,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/businessv2': typeof Businessv2Route
   '/contabil': typeof ContabilRoute
   '/contabil-thank-you': typeof ContabilThankYouRoute
   '/contabil02': typeof Contabil02Route
@@ -85,6 +94,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/businessv2'
     | '/contabil'
     | '/contabil-thank-you'
     | '/contabil02'
@@ -94,6 +104,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/businessv2'
     | '/contabil'
     | '/contabil-thank-you'
     | '/contabil02'
@@ -103,6 +114,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/businessv2'
     | '/contabil'
     | '/contabil-thank-you'
     | '/contabil02'
@@ -113,6 +125,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  Businessv2Route: typeof Businessv2Route
   ContabilRoute: typeof ContabilRoute
   ContabilThankYouRoute: typeof ContabilThankYouRoute
   Contabil02Route: typeof Contabil02Route
@@ -165,6 +178,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContabilRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/businessv2': {
+      id: '/businessv2'
+      path: '/businessv2'
+      fullPath: '/businessv2'
+      preLoaderRoute: typeof Businessv2RouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -177,6 +197,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  Businessv2Route: Businessv2Route,
   ContabilRoute: ContabilRoute,
   ContabilThankYouRoute: ContabilThankYouRoute,
   Contabil02Route: Contabil02Route,
