@@ -99,7 +99,7 @@ function HeroDecoration() {
           width: "min(900px, 70vw)",
           aspectRatio: "1 / 1",
           backgroundImage:
-            "radial-gradient(circle at center, var(--academy-cocoa) 0%, transparent 70%)",
+            "radial-gradient(circle at center, var(--academy-brand) 0%, transparent 70%)",
           mixBlendMode: "multiply",
         }}
       />

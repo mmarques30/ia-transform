@@ -186,7 +186,7 @@
     transform: scale(0.7);
   }
   100% {
-    opacity: 0.18;
+    opacity: 0.42;
     transform: scale(1);
   }
 }
@@ -212,7 +212,7 @@
 @media (prefers-reduced-motion: reduce) {
   .hero-decor-glow {
     animation: none;
-    opacity: 0.18;
+    opacity: 0.42;
   }
   .hero-decor-mark {
     animation: none;
