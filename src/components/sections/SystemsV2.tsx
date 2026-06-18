@@ -67,7 +67,7 @@ const SYSTEMS: SystemCard[] = [
     title: "A equipe de IA que roda a operação",
     description:
       "Cada agente tem um nome e uma função. Um faz, outro confere, outro vigia — quase ninguém constrói o que vigia.",
-    gifSrc: "/systems-v2/post_seg_equipe_ia.gif",
+    gifSrc: "/systems-v2/conciliacao_sistema.gif",
   },
 ];
 
