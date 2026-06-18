@@ -23,7 +23,7 @@ export function Hero({ formSlug, thankYouPath }: HeroProps = {}) {
 
       <div className="h-[72px]" aria-hidden />
 
-      <div className="relative z-10 pt-[16px] lg:pt-[40px] pb-[96px] lg:pb-[140px] px-6">
+      <div className="relative z-10 pt-[48px] lg:pt-[88px] pb-[96px] lg:pb-[140px] px-6">
         <div className="container-wide-academy">
           <div className="grid lg:grid-cols-[1.05fr_1fr] gap-12 lg:gap-20 items-start">
             <div>
@@ -104,14 +104,16 @@ function HeroDecoration() {
         }}
       />
       <img
-        src="/brand/logo.svg"
+        src="/brand/capa_biz_sistemas.jpg"
         alt=""
         className="hero-decor-mark absolute"
         style={{
           right: "6%",
           top: "18%",
-          width: "min(420px, 38vw)",
-          height: "auto",
+          width: "min(380px, 34vw)",
+          aspectRatio: "1 / 1",
+          borderRadius: "21%",
+          objectFit: "cover",
         }}
       />
     </div>
