@@ -8,7 +8,6 @@ const PRODUCTS = [
 const SOCIAL = [
   { label: "LinkedIn", href: "https://www.linkedin.com/in/marianamarquescabral/" },
   { label: "Instagram", href: "https://www.instagram.com/marimarquescb/" },
-  { label: "YouTube", href: "https://www.youtube.com/@iaplicadaa" },
 ];
 
 /**

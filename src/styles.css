@@ -131,42 +131,26 @@
   color: var(--academy-cocoa);
 }
 
-/* .section-veil é translúcido (semi-transparent) e foi pensado pra
- * funcionar EM CIMA do bg dark global. Quando o wrapper é
- * .academy-theme (cream), a translucência mistura cream + dark =
- * muddy gray que prejudica a leitura.
+/* .section-veil foi pensado pra funcionar em cima do bg dark global.
+ * Quando o wrapper é .academy-theme (cream), o conteúdo interno
+ * (markup construído pro dark) fica ilegível.
  *
- * Override: dentro de .academy-theme, sections com .section-veil
- * ganham um bg SÓLIDO verde-claro-creme (mix sutil da brand sobre
- * cream), 2 passos mais escuro que a dobra 1 mas ainda muito leve
- * e com tint verde alinhado à paleta. Texto, cards e pills internos
- * também precisam ser reescritos porque o markup foi construído pro
- * tema dark (text-foreground, text-sage, tech-card, label-chip,
- * bg-card, border-border).
+ * Estratégia: redefine os tokens --color-* aqui mesmo. Como o tema
+ * base usa esses tokens tanto em utilitárias do Tailwind quanto em
+ * inline `var(--color-*)` em components compartilhados (Comparison,
+ * ClientLogos, etc.), uma única redefinição cascateia em tudo —
+ * bg de cards, cor de texto, borders, fade gradients da marquee —
+ * sem precisar tocar nos arquivos compartilhados.
  */
 .academy-theme .section-veil {
   background-color: color-mix(in oklab, var(--academy-brand) 9%, var(--academy-cream));
   color: var(--academy-cocoa);
-}
-.academy-theme .section-veil .text-foreground,
-.academy-theme .section-veil .num-display {
-  color: var(--academy-cocoa);
-}
-.academy-theme .section-veil .text-sage,
-.academy-theme .section-veil .text-muted-foreground {
-  color: var(--academy-cocoa-soft);
-}
-.academy-theme .section-veil .tech-card,
-.academy-theme .section-veil .bg-card {
-  background-color: var(--academy-offwhite);
-  color: var(--academy-cocoa);
-  border-color: var(--academy-border);
-}
-.academy-theme .section-veil .border-border {
-  border-color: var(--academy-border);
-}
-.academy-theme .section-veil .bg-border {
-  background-color: var(--academy-border);
+  --color-background: color-mix(in oklab, var(--academy-brand) 9%, var(--academy-cream));
+  --color-card: var(--academy-offwhite);
+  --color-foreground: var(--academy-cocoa);
+  --color-muted-foreground: var(--academy-cocoa-soft);
+  --color-sage: var(--academy-cocoa-soft);
+  --color-border: var(--academy-border);
 }
 .academy-theme .section-veil .tech-card::before {
   background-image: radial-gradient(rgba(13, 13, 13, 0.06) 0.8px, transparent 1px);
@@ -177,10 +161,14 @@
     0 20px 40px -16px rgba(13, 13, 13, 0.12),
     0 0 0 1px var(--academy-brand-dark);
 }
-.academy-theme .section-veil .label-chip {
-  background-color: var(--academy-offwhite);
-  color: var(--academy-cocoa-soft);
-  border-color: var(--academy-border);
+/* ClientLogos: as imagens vêm com filter `brightness(0) invert(1)`
+ * pra serem brancas no dark. Aqui invertemos: ficam cocoa.
+ * Wordmark fallback usa cor hardcoded em creme — força cocoa. */
+.academy-theme .section-veil .ticker-track img {
+  filter: brightness(0) !important;
+}
+.academy-theme .section-veil .ticker-track .font-bold {
+  color: var(--academy-cocoa) !important;
 }
 
 /* Animação de entrada do HeroDecoration (LP /).

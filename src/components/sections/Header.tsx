@@ -168,20 +168,19 @@ export function Header({
           }}
         >
           <Logo size={26} variant={isLight ? "light" : "dark"} />
-          <span
-            className="hidden sm:inline text-[13px] font-normal pl-3 ml-1"
-            style={{
-              letterSpacing: "0.02em",
-              color: isLight ? "var(--academy-cocoa-soft)" : undefined,
-              borderLeft: isLight
-                ? "1px solid rgba(13, 13, 13, 0.12)"
-                : "1px solid var(--color-border)",
-            }}
-          >
-            <span className={isLight ? "" : "text-muted-foreground"}>
-              {badgeLabel ?? (homePath.startsWith("/contabil") ? "Contábil" : "Business")}
+          {!isLight && (
+            <span
+              className="hidden sm:inline text-[13px] font-normal pl-3 ml-1"
+              style={{
+                letterSpacing: "0.02em",
+                borderLeft: "1px solid var(--color-border)",
+              }}
+            >
+              <span className="text-muted-foreground">
+                {badgeLabel ?? (homePath.startsWith("/contabil") ? "Contábil" : "Business")}
+              </span>
             </span>
-          </span>
+          )}
         </Link>
 
         <nav className="hidden lg:flex items-center gap-8">
