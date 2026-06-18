@@ -1,22 +1,23 @@
-import { useCallback, useEffect, useState } from "react";
-import { ArrowLeft, ArrowRight } from "lucide-react";
-import useEmblaCarousel from "embla-carousel-react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, EffectCoverflow, Pagination, Navigation } from "swiper/modules";
+import { ArrowRight } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 
+import "swiper/css";
+import "swiper/css/effect-coverflow";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+
 /**
- * SystemsV2 — variante da seção "Sistemas que construímos" pra LP
- * /businessv2.
+ * SystemsV2 — seção "Sistemas que construímos" da LP /businessv2.
  *
- * Substitui o CardStack 3D por um carrossel horizontal limpo
- * (embla-carousel) com snap. Inspirado em
- * https://21st.dev/community/components/reuno-ui/card-carousel/default
- * mas adaptado à paleta cream/cocoa da brand, com tipografia
- * Fraunces nos títulos e tag/descrição cocoa-soft.
+ * Carrossel Swiper com efeito coverflow (depth 3D) + autoplay,
+ * adaptado da referência reuno-ui/card-carousel pra paleta cream
+ * da marca. Cada card mostra um GIF da operação rodando + tag,
+ * título Fraunces e descrição cocoa-soft.
  *
- * Cada card tem um visual no topo (GIF mostrando o produto em ação)
- * e bloco de texto embaixo (tag + título serif + descrição). Os
- * GIFs ficam em /public/systems-v2/ — precisam ser uploadados nesse
- * caminho. Enquanto não existem, cai num placeholder cream-dark.
+ * GIFs em /public/systems-v2/. Estilos do Swiper são sobrescritos
+ * inline (cor dos dots, posição das setas) pra casar com a brand.
  */
 
 interface SystemCard {
@@ -24,7 +25,6 @@ interface SystemCard {
   tag: string;
   title: string;
   description: string;
-  /** Path absoluto em /public — formato .gif esperado */
   gifSrc: string;
 }
 
@@ -35,7 +35,7 @@ const SYSTEMS: SystemCard[] = [
     title: "Portfólio que enxerga gargalos",
     description:
       "Funil comercial, distribuição de setores e indicadores do negócio num painel só. O gargalo aparece sozinho.",
-    gifSrc: "/systems-v2/01-painel.gif",
+    gifSrc: "/systems-v2/post_sex_painel.gif",
   },
   {
     id: "triagem",
@@ -43,7 +43,7 @@ const SYSTEMS: SystemCard[] = [
     title: "Lead qualificado no automático",
     description:
       "Agente conversa no tom da sua marca, qualifica e organiza antes de você entrar. Não envia sozinho — espera seu OK.",
-    gifSrc: "/systems-v2/02-triagem-lead.gif",
+    gifSrc: "/systems-v2/post_qua_whatsapp.gif",
   },
   {
     id: "pipeline",
@@ -51,7 +51,7 @@ const SYSTEMS: SystemCard[] = [
     title: "Pipeline que move sozinho",
     description:
       "Lead entra via formulário, proposta sai em PDF, alerta de lead frio dispara automático. Você só fecha.",
-    gifSrc: "/systems-v2/03-pipeline-comercial.gif",
+    gifSrc: "/systems-v2/post_seg_crm.gif",
   },
   {
     id: "conciliacao",
@@ -59,7 +59,7 @@ const SYSTEMS: SystemCard[] = [
     title: "Conciliação processada com IA",
     description:
       "Sobe o extrato, IA classifica receita, despesa e categoria. Relatórios prontos sem digitar nada.",
-    gifSrc: "/systems-v2/04-conciliacao.gif",
+    gifSrc: "/systems-v2/conciliacao_ia.gif",
   },
   {
     id: "equipe-ia",
@@ -67,50 +67,65 @@ const SYSTEMS: SystemCard[] = [
     title: "A equipe de IA que roda a operação",
     description:
       "Cada agente tem um nome e uma função. Um faz, outro confere, outro vigia — quase ninguém constrói o que vigia.",
-    gifSrc: "/systems-v2/05-equipe-ia.gif",
+    gifSrc: "/systems-v2/post_seg_equipe_ia.gif",
   },
 ];
 
+const swiperBrandCss = `
+  .systems-v2-swiper {
+    padding: 24px 0 64px;
+    overflow: visible;
+  }
+  .systems-v2-swiper .swiper-slide {
+    width: min(520px, 88vw);
+    height: auto;
+  }
+  .systems-v2-swiper .swiper-pagination {
+    bottom: 0 !important;
+  }
+  .systems-v2-swiper .swiper-pagination-bullet {
+    background-color: var(--academy-border);
+    opacity: 1;
+    width: 8px;
+    height: 8px;
+    transition: all 0.25s ease;
+  }
+  .systems-v2-swiper .swiper-pagination-bullet-active {
+    background-color: var(--academy-cocoa);
+    width: 22px;
+    border-radius: 999px;
+  }
+  .systems-v2-swiper .swiper-button-prev,
+  .systems-v2-swiper .swiper-button-next {
+    color: var(--academy-cocoa);
+    width: 40px;
+    height: 40px;
+    margin-top: -28px;
+    background-color: var(--academy-offwhite);
+    border: 1px solid var(--academy-border);
+    border-radius: 999px;
+    box-shadow: 0 6px 16px -6px rgba(13, 13, 13, 0.18);
+  }
+  .systems-v2-swiper .swiper-button-prev::after,
+  .systems-v2-swiper .swiper-button-next::after {
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .systems-v2-swiper .swiper-3d .swiper-slide-shadow-left,
+  .systems-v2-swiper .swiper-3d .swiper-slide-shadow-right {
+    background-image: none;
+  }
+`;
+
 export function SystemsV2() {
-  const [emblaRef, emblaApi] = useEmblaCarousel({
-    align: "center",
-    loop: true,
-    skipSnaps: false,
-    containScroll: "trimSnaps",
-  });
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
-
-  const onSelect = useCallback((api: typeof emblaApi) => {
-    if (!api) return;
-    setSelectedIndex(api.selectedScrollSnap());
-  }, []);
-
-  useEffect(() => {
-    if (!emblaApi) return;
-    setScrollSnaps(emblaApi.scrollSnapList());
-    onSelect(emblaApi);
-    emblaApi.on("select", onSelect);
-    emblaApi.on("reInit", onSelect);
-    return () => {
-      emblaApi.off("select", onSelect);
-      emblaApi.off("reInit", onSelect);
-    };
-  }, [emblaApi, onSelect]);
-
-  const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
-  const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
-  const scrollTo = useCallback(
-    (i: number) => emblaApi?.scrollTo(i),
-    [emblaApi],
-  );
-
   return (
     <section
       id="sistemas"
       className="relative overflow-hidden section-pad-academy"
       style={{ backgroundColor: "var(--academy-cream)" }}
     >
+      <style>{swiperBrandCss}</style>
+
       <div className="container-wide-academy">
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 max-w-[1100px]">
           <div className="max-w-[620px]">
@@ -139,71 +154,41 @@ export function SystemsV2() {
 
       <Reveal delay={0.15}>
         <div className="relative mx-auto mt-14 lg:mt-20 w-full">
-          <div className="overflow-hidden" ref={emblaRef}>
-            <div className="flex gap-5 lg:gap-7 px-4 lg:px-[max(2rem,calc((100vw-1100px)/2))]">
-              {SYSTEMS.map((item) => (
-                <CarouselCard key={item.id} item={item} />
-              ))}
-            </div>
-          </div>
-
-          <div className="container-wide-academy">
-            <div className="mt-8 flex items-center justify-center gap-6">
-              <button
-                type="button"
-                onClick={scrollPrev}
-                aria-label="Anterior"
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full transition-colors"
-                style={{
-                  backgroundColor: "var(--academy-offwhite)",
-                  border: "1px solid var(--academy-border)",
-                  color: "var(--academy-cocoa)",
-                }}
-              >
-                <ArrowLeft className="h-4 w-4" />
-              </button>
-
-              <div className="flex items-center gap-2">
-                {scrollSnaps.map((_, i) => {
-                  const on = i === selectedIndex;
-                  return (
-                    <button
-                      key={i}
-                      type="button"
-                      onClick={() => scrollTo(i)}
-                      aria-label={`Ir pro card ${i + 1}`}
-                      className="h-2 rounded-full transition-all"
-                      style={{
-                        width: on ? 22 : 8,
-                        backgroundColor: on
-                          ? "var(--academy-cocoa)"
-                          : "var(--academy-border)",
-                      }}
-                    />
-                  );
-                })}
-              </div>
-
-              <button
-                type="button"
-                onClick={scrollNext}
-                aria-label="Próximo"
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full transition-colors"
-                style={{
-                  backgroundColor: "var(--academy-offwhite)",
-                  border: "1px solid var(--academy-border)",
-                  color: "var(--academy-cocoa)",
-                }}
-              >
-                <ArrowRight className="h-4 w-4" />
-              </button>
-            </div>
-          </div>
+          <Swiper
+            className="systems-v2-swiper"
+            spaceBetween={30}
+            effect="coverflow"
+            grabCursor
+            centeredSlides
+            loop
+            slidesPerView="auto"
+            coverflowEffect={{
+              rotate: 0,
+              stretch: 0,
+              depth: 100,
+              modifier: 2.2,
+              slideShadows: false,
+            }}
+            autoplay={{
+              delay: 3500,
+              disableOnInteraction: false,
+              pauseOnMouseEnter: true,
+            }}
+            pagination={{ clickable: true }}
+            navigation
+            modules={[EffectCoverflow, Autoplay, Pagination, Navigation]}
+          >
+            {SYSTEMS.map((item) => (
+              <SwiperSlide key={item.id}>
+                <CarouselCard item={item} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
         </div>
       </Reveal>
 
       <Reveal delay={0.2}>
-        <div className="mt-14 text-center">
+        <div className="mt-10 text-center">
           <a
             href="#diagnostico-form"
             className="inline-flex items-center gap-2 font-semibold text-[15px] transition-colors"
@@ -221,12 +206,11 @@ export function SystemsV2() {
 function CarouselCard({ item }: { item: SystemCard }) {
   return (
     <article
-      className="shrink-0 rounded-2xl overflow-hidden flex flex-col"
+      className="rounded-2xl overflow-hidden flex flex-col h-full"
       style={{
-        width: "min(520px, 88vw)",
         backgroundColor: "var(--academy-offwhite)",
         border: "1px solid var(--academy-border)",
-        boxShadow: "0 24px 60px -28px rgba(13, 13, 13, 0.18)",
+        boxShadow: "0 24px 60px -28px rgba(13, 13, 13, 0.22)",
       }}
     >
       <div
@@ -243,8 +227,6 @@ function CarouselCard({ item }: { item: SystemCard }) {
           decoding="async"
           className="absolute inset-0 h-full w-full object-cover"
           onError={(e) => {
-            // Esconde o img quando o GIF ainda não foi uploadado;
-            // o bg cream-dark do wrapper aparece como placeholder.
             (e.target as HTMLImageElement).style.visibility = "hidden";
           }}
         />
