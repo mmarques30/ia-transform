@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Header } from "@/components/sections/Header";
+import { usePageViewBeacon } from "@/hooks/usePageViewBeacon";
 import { Hero } from "@/components/sections/indicacaobusiness/Hero";
 import { Footer } from "@/components/sections/Footer";
 import { Toaster } from "@/components/ui/sonner";
@@ -44,6 +45,7 @@ export const Route = createFileRoute("/indicacaobusiness")({
 });
 
 function IndicacaoBusinessLanding() {
+  usePageViewBeacon();
   return (
     <main className="min-h-screen text-foreground">
       <Header homePath="/indicacaobusiness" hideCta nav={[]} badgeLabel="Business" />
