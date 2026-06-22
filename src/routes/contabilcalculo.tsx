@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Header } from "@/components/sections/Header";
-import { usePageViewBeacon } from "@/hooks/usePageViewBeacon";
 import { Hero } from "@/components/sections/contabilcalculo/Hero";
 import { Metrics } from "@/components/sections/contabilcalculo/Metrics";
 import { ClientLogos } from "@/components/sections/ClientLogos";
@@ -77,7 +76,6 @@ const CONTABILCALCULO_NAV = [
 ];
 
 function ContabilCalculoLanding() {
-  usePageViewBeacon();
   return (
     <DiagnosticoProvider>
       <main

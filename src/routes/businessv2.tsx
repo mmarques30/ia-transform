@@ -12,7 +12,6 @@ import { Authority } from "@/components/sections/Authority";
 import { FAQ } from "@/components/sections/FAQ";
 import { CTAFinal } from "@/components/sections/CTAFinal";
 import { Footer } from "@/components/sections/Footer";
-import { usePageViewBeacon } from "@/hooks/usePageViewBeacon";
 
 /**
  * /businessv2 — duplicata da LP / (academy theme).
@@ -40,7 +39,6 @@ export const Route = createFileRoute("/businessv2")({
 });
 
 function BusinessV2Landing() {
-  usePageViewBeacon();
   return (
     <main className="academy-theme min-h-screen">
       <Header theme="light" />

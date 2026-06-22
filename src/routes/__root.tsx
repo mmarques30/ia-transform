@@ -3,6 +3,7 @@ import { lazy, useEffect, useState } from "react";
 
 import appCss from "../styles.css?url";
 import { isInAppBrowser } from "../lib/useEnv";
+import { usePageViewBeacon } from "../hooks/usePageViewBeacon";
 
 /**
  * BrandBackground (WebGL via OGL) é lazy pra não pesar o entry chunk
@@ -190,6 +191,12 @@ function RootComponent() {
    *  o critical path. Visualmente o BG entra ~50ms depois — usuário
    *  raramente percebe e o LCP da Hero não depende dele. */
   const [showBg, setShowBg] = useState(false);
+
+  /** Pageview tracker server-side. Disparado uma vez por mount + a
+   *  cada navegação SPA (dep no pathname dentro do hook). Cobre todas
+   *  as LPs públicas; thank-you e admin são pulados pelo próprio
+   *  hook. Substitui as chamadas individuais por página. */
+  usePageViewBeacon();
 
   useEffect(() => {
     // Lenis adiciona inércia ao scroll. Bom no desktop, mas no WebView

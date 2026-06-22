@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Header } from "@/components/sections/Header";
-import { usePageViewBeacon } from "@/hooks/usePageViewBeacon";
 import { Hero } from "@/components/sections/contabil/Hero";
 import { Problem } from "@/components/sections/contabil/Problem";
 import { Solution } from "@/components/sections/contabil/Solution";
@@ -44,7 +43,6 @@ export const Route = createFileRoute("/contabil")({
 });
 
 function ContabilLanding() {
-  usePageViewBeacon();
   return (
     <main className="min-h-screen text-foreground">
       <Header homePath="/contabil" />
