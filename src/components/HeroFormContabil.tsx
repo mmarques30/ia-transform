@@ -36,7 +36,16 @@ interface HeroFormProps {
   thankYouPath?: string;
 }
 
-/** Faixa de colaboradores do escritório — filtro qualificador (ICP contábil). */
+/** Faixa de faturamento anual da empresa — qualificador novo (ICP contábil). */
+const FAIXAS_FATURAMENTO = [
+  "Menos de R$ 1 milhão",
+  "Entre 1MM e 5MM",
+  "Entre 5MM e 10MM",
+  "Entre 10MM e 50MM",
+  "Acima de 50MM",
+];
+
+/** Faixa de colaboradores do escritório — opcional, secundário ao faturamento. */
 const COLABORADORES = [
   "até 10",
   "11 a 30",
@@ -171,15 +180,16 @@ export function HeroForm({
 
   /**
    * Required pra qualificação MQL no CRM contábil:
-   *   - colaboradores ≥ 10 = MQL (numero_de_colaboradores precisa estar setado)
+   *   - faixa_de_faturamento é o qualificador principal de tier de deal
    *   - company necessário pra deal/account creation
+   *   - numero_de_colaboradores virou opcional (sinal secundário)
    */
   const REQUIRED_FIELDS = [
     "firstname",
     "email",
     "phone",
     "company",
-    "numero_de_colaboradores",
+    "faixa_de_faturamento",
   ] as const;
 
   function validateField(name: string, value: string): string {
@@ -275,6 +285,7 @@ export function HeroForm({
         email: String(fd.get("email") ?? "").trim(),
         phone: String(fd.get("phone") ?? "").trim(),
         company: String(fd.get("company") ?? "").trim(),
+        faixa_de_faturamento: String(fd.get("faixa_de_faturamento") ?? "").trim(),
         numero_de_colaboradores: String(fd.get("numero_de_colaboradores") ?? "").trim(),
       };
 
@@ -288,11 +299,9 @@ export function HeroForm({
       const pathname = typeof window !== "undefined" ? window.location.pathname : "";
       const defaultUtmTerm = pathname.startsWith("/contabil02")
         ? "contabil-v2"
-        : pathname.startsWith("/contabilcalculo")
-          ? "contabil-calculo"
-          : pathname.startsWith("/contabil")
-            ? "contabil-v1"
-            : "";
+        : pathname.startsWith("/contabil")
+          ? "contabil-v1"
+          : "";
       const urlUtmTerm = params.get("utm_term");
       const utmTerm = urlUtmTerm && urlUtmTerm.trim() ? urlUtmTerm : defaultUtmTerm;
       const utmContent = params.get("utm_content") ?? "";
@@ -543,22 +552,43 @@ Conte sobre o seu escritório
           </Field>
 
           <Field
-            id="numero_de_colaboradores"
-            label="Número de colaboradores"
+            id="faixa_de_faturamento"
+            label="Faturamento anual da empresa"
             required
+            error={fieldErrors.faixa_de_faturamento}
+          >
+            <select
+              id="faixa_de_faturamento"
+              name="faixa_de_faturamento"
+              required
+              defaultValue=""
+              aria-invalid={!!fieldErrors.faixa_de_faturamento}
+              className="form-input"
+            >
+              <option value="" disabled>
+                Selecione a faixa de faturamento
+              </option>
+              {FAIXAS_FATURAMENTO.map((f) => (
+                <option key={f} value={f}>
+                  {f}
+                </option>
+              ))}
+            </select>
+          </Field>
+
+          <Field
+            id="numero_de_colaboradores"
+            label="Número de colaboradores (opcional)"
             error={fieldErrors.numero_de_colaboradores}
           >
             <select
               id="numero_de_colaboradores"
               name="numero_de_colaboradores"
-              required
               defaultValue=""
               aria-invalid={!!fieldErrors.numero_de_colaboradores}
               className="form-input"
             >
-              <option value="" disabled>
-                Número de empregados ativos
-              </option>
+              <option value="">Selecione (opcional)</option>
               {COLABORADORES.map((c) => (
                 <option key={c} value={c}>
                   {c}

@@ -1,7 +1,7 @@
 /**
  * Helpers compartilhados pra submissão de formulários pra a Edge Function
- * form-submit do Supabase. Usado por HeroFormContabil e pela calculadora
- * da /contabilcalculo.
+ * form-submit do Supabase. Usado por HeroFormContabil (e poderia ser usado
+ * por outros forms).
  *
  * Endpoint e chave anon estão hardcoded ao lado um do outro. A anon key
  * é pública por design (mesma que o @supabase/supabase-js expõe em qualquer
@@ -54,13 +54,11 @@ export function captureTrafficContext(): TrafficContext {
 
   const defaultUtmTerm = pathname.startsWith("/contabil02")
     ? "contabil-v2"
-    : pathname.startsWith("/contabilcalculo")
-      ? "contabil-calculo"
-      : pathname.startsWith("/contabil")
-        ? "contabil-v1"
-        : pathname.startsWith("/indicacaobusiness")
-          ? "indicacao-business"
-          : "";
+    : pathname.startsWith("/contabil")
+      ? "contabil-v1"
+      : pathname.startsWith("/indicacaobusiness")
+        ? "indicacao-business"
+        : "";
   const urlUtmTerm = params.get("utm_term");
   const utmTerm = urlUtmTerm && urlUtmTerm.trim() ? urlUtmTerm : defaultUtmTerm;
 
@@ -87,14 +85,12 @@ export function captureTrafficContext(): TrafficContext {
 /**
  * Captura ?deal_id da URL atual. Retorna null se ausente ou vazio.
  *
- * O CRM (bot Mari da cadência Leva 2) envia links de WhatsApp com
- *   iaplicada.com/contabilcalculo?deal_id=<uuid>
- * Quando o lead abre, lemos esse id e injetamos no payload do form-submit
- * pra Edge Function fazer merge no deal existente em vez de criar um
- * novo lead anônimo.
+ * O CRM pode enviar links com ?deal_id=<uuid>. Quando o lead abre, lemos
+ * esse id e injetamos no payload do form-submit pra Edge Function fazer
+ * merge no deal existente em vez de criar um novo lead anônimo.
  *
- * Quando o lead acessa a calculadora direto (sem deal_id), retorna null
- * e o fluxo continua anônimo como hoje — zero impacto.
+ * Quando o lead acessa a LP direto (sem deal_id), retorna null e o fluxo
+ * continua anônimo como hoje — zero impacto.
  */
 export function captureDealId(): string | null {
   if (typeof window === "undefined") return null;
