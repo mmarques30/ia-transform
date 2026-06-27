@@ -8,6 +8,8 @@
  * integração client). NÃO confundir com SERVICE_ROLE_KEY.
  */
 
+import { getMetaPixelCookies, getFbclidFromUrl } from "./metaCookies";
+
 export const FORM_ENDPOINT =
   "https://ciwdlceyjsnlnunktqzx.supabase.co/functions/v1/form-submit";
 
@@ -28,7 +30,12 @@ interface TrafficContext {
     term: string;
     content: string;
   };
-  attribution: { fbclid: string; gclid: string };
+  attribution: {
+    fbclid: string;
+    gclid: string;
+    fbp?: string;
+    fbc?: string;
+  };
   meta: { page_url: string; referrer: string; user_agent: string };
 }
 
@@ -62,6 +69,10 @@ export function captureTrafficContext(): TrafficContext {
   const urlUtmTerm = params.get("utm_term");
   const utmTerm = urlUtmTerm && urlUtmTerm.trim() ? urlUtmTerm : defaultUtmTerm;
 
+  // Cookies do pixel Meta — alimentam Match Quality da CAPI server-side.
+  const { fbp, fbc } = getMetaPixelCookies();
+  const fbclid = getFbclidFromUrl() ?? params.get("fbclid") ?? "";
+
   return {
     utm: {
       source: params.get("utm_source") ?? "",
@@ -71,8 +82,10 @@ export function captureTrafficContext(): TrafficContext {
       content: params.get("utm_content") ?? "",
     },
     attribution: {
-      fbclid: params.get("fbclid") ?? "",
+      fbclid,
       gclid: params.get("gclid") ?? "",
+      fbp,
+      fbc,
     },
     meta: {
       page_url: window.location.href,
