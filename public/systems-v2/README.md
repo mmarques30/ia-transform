@@ -9,7 +9,7 @@ Os GIFs uploadados aqui são referenciados pelo
 | `post_qua_whatsapp.gif`     | Triagem com IA · WhatsApp             |
 | `post_seg_crm.gif`          | CRM · Pipeline                        |
 | `conciliacao_ia.gif`        | Contábil · Conciliação                |
-| `post_seg_equipe_ia.gif`    | Time de agentes                       |
+| `conciliacao_sistema.gif`   | Time de agentes                       |
 
 Recomendado: 1:1 (quadrado), ~800x800, ≤2MB cada. O wrapper já é
 aspect-ratio 1/1 com object-cover, então qualquer recorte vira
