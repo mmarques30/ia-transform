@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type FocusEvent, type FormEvent } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { ArrowRight, AlertCircle } from "lucide-react";
+import { getMetaPixelCookies, getFbclidFromUrl } from "@/lib/metaCookies";
 
 /**
  * Wrapper safe pro Clarity. window.clarity é injetado pelo snippet no
@@ -327,8 +328,14 @@ export function HeroForm({
       const utmCampaign = params.get("utm_campaign") ?? "";
       const utmTerm = params.get("utm_term") ?? "";
       const utmContent = params.get("utm_content") ?? "";
-      const fbclid = params.get("fbclid") ?? "";
+      const fbclid = getFbclidFromUrl() ?? params.get("fbclid") ?? "";
       const gclid = params.get("gclid") ?? "";
+      // Cookies do pixel Meta — alimentam o Match Quality da CAPI
+      // server-side. Pixel é injetado no __root.tsx; quando o user
+      // chega aqui via submit (alguns segundos depois), _fbp/_fbc
+      // já estão criados em document.cookie. NUNCA criar/sobrescrever
+      // — só ler o que o pixel setou.
+      const { fbp, fbc } = getMetaPixelCookies();
 
       const payload = {
         form_slug: formSlug,
@@ -345,7 +352,7 @@ export function HeroForm({
           term: utmTerm,
           content: utmContent,
         },
-        attribution: { fbclid, gclid },
+        attribution: { fbclid, gclid, fbp, fbc },
         meta: {
           page_url: typeof window !== "undefined" ? window.location.href : "",
           referrer: typeof document !== "undefined" ? document.referrer : "",
