@@ -22,11 +22,25 @@ interface RevealProps {
  */
 export function Reveal({ children, delay = 0, className = "" }: RevealProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
+  // Default true no SSR + primeiro paint pra evitar que tudo fique
+  // opacity:0 antes do observer disparar (percebido como "página
+  // carregando"). Content acima da dobra segue visível sem flicker.
+  // Content abaixo da dobra é invisibilizado pelo observer no mount
+  // (assíncrono, fora do viewport — usuário não vê o flicker) e reaparece
+  // via fade quando entra na viewport.
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+
+    // Snapshot inicial: se o elemento já está fora do viewport no
+    // mount, esconde pra que a entrada seja animada quando o user
+    // rolar até ele. Se está dentro, mantém visível (default true).
+    const rect = el.getBoundingClientRect();
+    const inViewportOnMount =
+      rect.bottom > 0 && rect.top < window.innerHeight;
+    if (!inViewportOnMount) setVisible(false);
 
     const observer = new IntersectionObserver(
       ([entry]) => {

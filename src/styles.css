@@ -1427,29 +1427,29 @@
 }
 
 /* sistema fantasma (só ALTA) — silhueta de janela + barras.
- * Posicionado na metade direita (atrás do form no hero) — a máscara
- * concentra a visibilidade em ~78% x, deixando o lado esquerdo (título
- * + subtítulo + CTA) livre do ruído. */
+ * Posicionado na metade esquerda (atrás do texto do hero) — a máscara
+ * concentra a visibilidade em ~24% x, deixando o lado direito (o form)
+ * limpo. */
 .ia-bg__ghost {
   position: absolute;
   inset: 0;
-  opacity: 0.62;
+  opacity: 0.55;
   -webkit-mask-image: radial-gradient(
-    55% 55% at 78% 40%,
+    55% 55% at 24% 45%,
     #000 32%,
     transparent 78%
   );
-  mask-image: radial-gradient(55% 55% at 78% 40%, #000 32%, transparent 78%);
+  mask-image: radial-gradient(55% 55% at 24% 45%, #000 32%, transparent 78%);
 }
 .ia-bg__ghost-win {
   position: absolute;
-  right: -80px;
-  top: 90px;
-  width: 720px;
-  height: 480px;
+  left: -80px;
+  top: 120px;
+  width: 640px;
+  height: 440px;
   border-radius: 22px;
   border: 1.5px solid rgba(158, 176, 56, 0.22);
-  transform: rotate(-4deg);
+  transform: rotate(-3deg);
   animation: ia-bg-ghost-float 16s ease-in-out infinite alternate;
 }
 .ia-bg__ghost-win::before {

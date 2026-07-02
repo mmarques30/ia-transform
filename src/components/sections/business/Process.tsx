@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { Reveal } from "@/components/Reveal";
 import { ChevronRight, CalendarDays, Search, Sparkles, LayoutDashboard } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
@@ -41,107 +42,129 @@ const STEPS: Step[] = [
   },
 ];
 
-export function Process() {
+interface ProcessProps {
+  /** Substitui o heading padrão. Aceita ReactNode pra <em>/<br/> arbitrários. */
+  title?: ReactNode;
+  /** Esconde a linha de chevrons abaixo do heading. */
+  hideChevrons?: boolean;
+  /** Esconde o heading "A jornada, semana a semana:" + os 4 step cards. */
+  hideJourney?: boolean;
+}
+
+export function Process({ title, hideChevrons = false, hideJourney = false }: ProcessProps = {}) {
   return (
     <section id="abordagem" className="section-veil relative overflow-hidden">
       <div className="container-page py-[100px] lg:py-[140px] relative">
         <div className="text-center max-w-[820px] mx-auto">
           <Reveal>
             <h2 className="h-mix text-[26px] sm:text-[32px] lg:text-[36px] text-foreground">
-              Em apenas 8 semanas,
-              <br />
-              a operação <em>roda sozinha</em>.
+              {title ?? (
+                <>
+                  Em apenas 8 semanas,
+                  <br />
+                  a operação <em>roda sozinha</em>.
+                </>
+              )}
             </h2>
           </Reveal>
 
-          <Reveal delay={0.1}>
-            <div className="mt-8 flex flex-wrap justify-center gap-x-10 gap-y-3 text-[15px] text-foreground font-semibold">
-              {["Você escolhe as rotinas", "Sem trocar de sistema", "Time operando sozinho"].map((s) => (
-                <span key={s} className="inline-flex items-center gap-2">
-                  <ChevronRight
-                    className="h-4 w-4"
-                    style={{ color: "var(--color-primary)" }}
-                    strokeWidth={2.5}
-                  />
-                  {s}
-                </span>
-              ))}
-            </div>
-          </Reveal>
+          {!hideChevrons && (
+            <Reveal delay={0.1}>
+              <div className="mt-8 flex flex-wrap justify-center gap-x-10 gap-y-3 text-[15px] text-foreground font-semibold">
+                {["Você escolhe as rotinas", "Sem trocar de sistema", "Time operando sozinho"].map(
+                  (s) => (
+                    <span key={s} className="inline-flex items-center gap-2">
+                      <ChevronRight
+                        className="h-4 w-4"
+                        style={{ color: "var(--color-primary)" }}
+                        strokeWidth={2.5}
+                      />
+                      {s}
+                    </span>
+                  ),
+                )}
+              </div>
+            </Reveal>
+          )}
         </div>
 
-        <Reveal delay={0.15}>
-          <h3
-            className="mt-16 text-center text-[22px] lg:text-[26px] font-semibold"
-            style={{ color: "var(--color-primary)" }}
-          >
-A jornada, semana a semana:
-          </h3>
-        </Reveal>
+        {!hideJourney && (
+          <>
+            <Reveal delay={0.15}>
+              <h3
+                className="mt-16 text-center text-[22px] lg:text-[26px] font-semibold"
+                style={{ color: "var(--color-primary)" }}
+              >
+                A jornada, semana a semana:
+              </h3>
+            </Reveal>
 
-        {/* Connected timeline com mini-mockups */}
-        <div className="mt-14 relative">
-          {/* Connector line — passa por trás dos cards */}
-          <div
-            aria-hidden
-            className="hidden md:block absolute top-[80px] left-[10%] right-[10%]"
-            style={{
-              height: "2px",
-              background:
-                "linear-gradient(90deg, transparent 0%, var(--color-primary) 10%, var(--color-primary) 90%, transparent 100%)",
-              opacity: 0.3,
-            }}
-          />
+            {/* Connected timeline com mini-mockups */}
+            <div className="mt-14 relative">
+              {/* Connector line — passa por trás dos cards */}
+              <div
+                aria-hidden
+                className="hidden md:block absolute top-[80px] left-[10%] right-[10%]"
+                style={{
+                  height: "2px",
+                  background:
+                    "linear-gradient(90deg, transparent 0%, var(--color-primary) 10%, var(--color-primary) 90%, transparent 100%)",
+                  opacity: 0.3,
+                }}
+              />
 
-          <div className="grid md:grid-cols-4 gap-5 lg:gap-6 relative">
-            {STEPS.map((s, i) => (
-              <Reveal key={s.n} delay={i * 0.08}>
-                <div className="tech-card overflow-hidden h-full flex flex-col">
-                  {/* Mini mockup at top */}
-                  <div
-                    className="aspect-[16/10] relative overflow-hidden"
-                    style={{
-                      backgroundColor: "oklch(0.97 0.004 110)",
-                      borderBottom: "1px solid var(--color-border)",
-                    }}
-                  >
-                    <s.Mockup />
-                  </div>
-
-                  {/* Content below */}
-                  <div className="p-5 lg:p-6 flex flex-col flex-1 relative">
-                    <div className="flex items-center gap-2.5">
-                      <span
-                        className="h-7 w-7 rounded-full flex items-center justify-center text-[12px] font-bold"
+              <div className="grid md:grid-cols-4 gap-5 lg:gap-6 relative">
+                {STEPS.map((s, i) => (
+                  <Reveal key={s.n} delay={i * 0.08}>
+                    <div className="tech-card overflow-hidden h-full flex flex-col">
+                      {/* Mini mockup at top */}
+                      <div
+                        className="aspect-[16/10] relative overflow-hidden"
                         style={{
-                          backgroundColor: "var(--color-primary)",
-                          color: "oklch(1 0 0)",
+                          backgroundColor: "oklch(0.97 0.004 110)",
+                          borderBottom: "1px solid var(--color-border)",
                         }}
                       >
-                        {s.n}
-                      </span>
-                      <span
-                        className="h-[1px] flex-1"
-                        style={{
-                          background: "linear-gradient(90deg, var(--color-primary), transparent)",
-                        }}
-                      />
-                    </div>
-                    <h4 className="mt-4 text-[15px] font-bold tracking-tight text-foreground leading-snug">
-                      {s.title}
-                    </h4>
-                    <p className="mt-1.5 text-[13px] text-sage leading-[1.5]">{s.text}</p>
-                  </div>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
+                        <s.Mockup />
+                      </div>
 
-        <Reveal delay={0.3}>
+                      {/* Content below */}
+                      <div className="p-5 lg:p-6 flex flex-col flex-1 relative">
+                        <div className="flex items-center gap-2.5">
+                          <span
+                            className="h-7 w-7 rounded-full flex items-center justify-center text-[12px] font-bold"
+                            style={{
+                              backgroundColor: "var(--color-primary)",
+                              color: "oklch(1 0 0)",
+                            }}
+                          >
+                            {s.n}
+                          </span>
+                          <span
+                            className="h-[1px] flex-1"
+                            style={{
+                              background:
+                                "linear-gradient(90deg, var(--color-primary), transparent)",
+                            }}
+                          />
+                        </div>
+                        <h4 className="mt-4 text-[15px] font-bold tracking-tight text-foreground leading-snug">
+                          {s.title}
+                        </h4>
+                        <p className="mt-1.5 text-[13px] text-sage leading-[1.5]">{s.text}</p>
+                      </div>
+                    </div>
+                  </Reveal>
+                ))}
+              </div>
+            </div>
+          </>
+        )}
+
+        <Reveal delay={hideJourney ? 0.15 : 0.3}>
           <div className="mt-14 text-center">
             <a href="#diagnostico-form" className="cta-primary">
-Quero o diagnóstico do meu negócio
+              Quero o diagnóstico do meu negócio
               <span className="arrow">
                 <svg
                   width="14"
