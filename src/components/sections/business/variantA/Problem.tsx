@@ -11,7 +11,7 @@ const PROBLEMS = [
   {
     n: "02",
     title: "Fechamento mensal que consome a sua melhor analista",
-    text: "5 dias. Todo mês. A pessoa que mais entende da operação passa a semana em planilha — e ninguém questiona porque é assim que sempre foi.",
+    text: "5 dias. Todo mês. A pessoa que mais entende da operação passa a semana em planilha. E ninguém questiona porque é assim que sempre foi.",
   },
   {
     n: "03",
@@ -20,7 +20,7 @@ const PROBLEMS = [
   },
   {
     n: "04",
-    title: "Relatório que chega tarde — e ainda pode ter erro",
+    title: "Relatório que chega tarde. E ainda pode ter erro",
     text: "A diretoria quer decisão rápida. Os dados chegam na quinta. E podem estar errados porque foram consolidados na mão.",
   },
 ];

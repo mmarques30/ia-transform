@@ -35,7 +35,7 @@ export function Systems() {
           <Reveal delay={0.1}>
             <p className="mt-6 text-[16px] text-sage leading-[1.6] max-w-[520px] mx-auto">
               Painel construído com o nome da sua empresa, para o seu time, resolvendo os seus
-              problemas específicos — não um software genérico que o time precisa aprender.
+              problemas específicos. Não um software genérico que o time precisa aprender.
             </p>
           </Reveal>
         </div>

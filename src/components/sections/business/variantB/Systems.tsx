@@ -35,7 +35,7 @@ export function Systems() {
           <Reveal delay={0.1}>
             <p className="mt-6 text-[16px] text-sage leading-[1.6] max-w-[520px] mx-auto">
               O antes é o Excel da maioria das empresas de serviço. O depois é o sistema que a
-              IAplicada constrói — com o nome e branding da sua empresa, não de um SaaS que você
+              IAplicada constrói, com o nome e branding da sua empresa, não de um SaaS que você
               assina.
             </p>
           </Reveal>

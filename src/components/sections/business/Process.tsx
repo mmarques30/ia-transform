@@ -28,7 +28,7 @@ const STEPS: Step[] = [
   {
     n: "5-7",
     title: "Sem 5 a 7 · Padronização",
-    text: "Documentação dos processos novos. Vídeo curto, passo a passo. O conhecimento fica registrado — não na cabeça de ninguém.",
+    text: "Documentação dos processos novos. Vídeo curto, passo a passo. O conhecimento fica registrado. Não na cabeça de ninguém.",
     Icon: Sparkles,
     Mockup: AnaliseMockup,
   },

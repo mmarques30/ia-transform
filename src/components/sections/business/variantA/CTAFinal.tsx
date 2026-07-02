@@ -15,7 +15,7 @@ export function CTAFinal() {
           <Reveal delay={0.05}>
             <p className="mt-6 text-[16px] text-sage leading-[1.65] max-w-[520px] mx-auto">
               O diagnóstico é sem custo, sem follow-up insistente. Você sai com um mapa de onde a
-              empresa perde hora — mesmo se a gente não fechar.
+              empresa perde hora, mesmo se a gente não fechar.
             </p>
           </Reveal>
           <Reveal delay={0.1}>

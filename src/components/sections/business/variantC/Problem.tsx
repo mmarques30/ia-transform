@@ -6,7 +6,7 @@ const PROBLEMS = [
   {
     n: "01",
     title: "A Focus Fintax tinha 90h/mês em processos manuais",
-    text: "Conciliação, fechamento, follow-up. Tudo na mão, todo mês. O time virava a noite no dia 25 — e repetia no mês seguinte.",
+    text: "Conciliação, fechamento, follow-up. Tudo na mão, todo mês. O time virava a noite no dia 25 e repetia no mês seguinte.",
   },
   {
     n: "02",
@@ -16,7 +16,7 @@ const PROBLEMS = [
   {
     n: "03",
     title: "A CB Move não conseguia escalar o atendimento",
-    text: "Cada lead novo precisava de ação humana em cada etapa. O time não tinha como atender mais sem contratar — e não queria contratar.",
+    text: "Cada lead novo precisava de ação humana em cada etapa. O time não tinha como atender mais sem contratar. E não queria contratar.",
   },
   {
     n: "04",

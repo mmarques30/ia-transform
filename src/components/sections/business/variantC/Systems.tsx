@@ -35,7 +35,7 @@ export function Systems() {
           <Reveal delay={0.1}>
             <p className="mt-6 text-[16px] text-sage leading-[1.6] max-w-[520px] mx-auto">
               Cada sistema abaixo tem a URL e o branding do cliente que o usa. A IAplicada
-              construiu — e o time opera sozinho desde então.
+              construiu. E o time opera sozinho desde então.
             </p>
           </Reveal>
         </div>
