@@ -1,75 +1,76 @@
 import { Reveal } from "@/components/Reveal";
-import { ArrowRight, ArrowUp, LayoutDashboard, UserPlus, Bell, FileText, Settings, Shield } from "lucide-react";
+import {
+  ArrowRight,
+  ArrowUp,
+  LayoutDashboard,
+  UserPlus,
+  Bell,
+  FileText,
+  Settings,
+  Shield,
+} from "lucide-react";
 
 /**
- * Systems (LP-A) — mockup coded realista do sistema Focus Fintax
- * (visão operacional), inspirado no dashboard real do cliente.
- * Substitui a versão anterior (que não refletia o sistema deles).
- *
- * Estrutura fiel: sidebar F + greeting "Boa noite, Mariana" +
- * tabs Comercial/Operacional + 5 KPIs coloridos + alert de
- * intimações + banner azul de projeções + chart de evolução
- * mensal + prioridade máxima. Escala reduzida pra caber na LP.
+ * Systems (LP-A) — mockup coded no visual de painel de controle
+ * tributário, com dados fictícios e a mesma camada de animação
+ * usada nos mockups da PSA (LP-C): pulse "IA em execução", barras
+ * crescendo com stagger, ticker cíclico e step-glow no alerta
+ * ativo. Sem nomes/valores reais — o objetivo é sinalizar fluxo
+ * de sistema e IA rodando ao vivo, não replicar dashboard de
+ * cliente específico.
  */
 
 const KPIS = [
   {
-    label: "Clientes compensando",
-    value: "26",
-    hint: "de 81 ativos",
+    label: "Clientes ativos",
+    value: "42",
+    hint: "de 60 mapeados",
     tone: "neutral" as const,
   },
   {
-    label: "Total compensado",
-    value: "R$ 15,8 mi",
-    hint: "Fev/25 — Abr/26",
-    delta: "+391%",
+    label: "Volume processado",
+    value: "R$ 8,3 mi",
+    hint: "últimos 12 meses",
+    delta: "+38%",
     tone: "positive" as const,
   },
   {
-    label: "Honorários gerados",
-    value: "R$ 2,4 mi",
-    hint: "taxa média 15.0%",
+    label: "Créditos identificados",
+    value: "R$ 2,1 mi",
+    hint: "IA · média 12%",
     tone: "blue" as const,
   },
   {
-    label: "Economia líquida clientes",
-    value: "R$ 13,4 mi",
-    hint: "líquido de honorários",
+    label: "Assertividade IA",
+    value: "96%",
+    hint: "vs 78% baseline manual",
     tone: "positive" as const,
-  },
-  {
-    label: "Saldo de créditos",
-    value: "R$ 770,6 mi",
-    hint: "disponível para compensar",
-    tone: "danger" as const,
   },
 ];
 
 const PROJECTIONS = [
-  { label: "Projeção anual", value: "R$ 31,6 mi", tone: "red" },
-  { label: "Honorários projetados / ano", value: "R$ 4,8 mi", tone: "yellow" },
-  { label: "Prazo do saldo atual", value: "292.5 meses", tone: "yellow" },
-  { label: "Honorários futuros no saldo", value: "R$ 115,9 mi", tone: "green" },
-  { label: "Média mensal realizada", value: "R$ 2,6 mi", tone: "green" },
+  { label: "Projeção anual", value: "R$ 12,4 mi", tone: "red" },
+  { label: "Honorários projetados", value: "R$ 1,8 mi", tone: "yellow" },
+  { label: "Prazo estimado", value: "18 meses", tone: "yellow" },
+  { label: "Potencial no saldo", value: "R$ 4,7 mi", tone: "green" },
+  { label: "Média mensal", value: "R$ 620 k", tone: "green" },
 ];
 
 const CHART_MONTHS = [
-  { m: "Fev/25", comp: 62, hon: 8 },
-  { m: "Dez/25", comp: 62, hon: 8 },
-  { m: "Jan/26", comp: 92, hon: 10 },
-  { m: "Fev/26", comp: 62, hon: 8 },
-  { m: "Mar/26", comp: 22, hon: 4 },
-  { m: "Abr/26", comp: 50, hon: 6 },
-  { m: "Mai/26", comp: 78, hon: 10 },
+  { m: "M-6", comp: 42, hon: 6 },
+  { m: "M-5", comp: 55, hon: 8 },
+  { m: "M-4", comp: 48, hon: 7 },
+  { m: "M-3", comp: 72, hon: 10 },
+  { m: "M-2", comp: 38, hon: 5 },
+  { m: "M-1", comp: 62, hon: 9 },
+  { m: "Atual", comp: 84, hon: 12 },
 ];
 
-const PRIORIDADE = [
-  { name: "Princesa Auto Servico de ...", value: "R$ 187,2 mi", hon: "hon. potencial R$ 28,1 mi" },
-  { name: "Supermercados Feira Nov...", value: "R$ 76,4 mi", hon: "hon. potencial R$ 11,5 mi" },
-  { name: "Mercado São Fernando 10 ...", value: "R$ 31,6 mi", hon: "hon. potencial R$ 4,7 mi" },
-  { name: "Maravista Comercio de Al...", value: "R$ 20,8 mi", hon: "hon. potencial R$ 3,1 mi" },
-  { name: "Emporio Petropolis Come...", value: "R$ 20,6 mi", hon: "hon. potencial R$ 3,1 mi" },
+const DISTRIB = [
+  { label: "Acima de R$1M", w: 78, count: "6", color: "#dc2626" },
+  { label: "R$500k – R$1M", w: 52, count: "9", color: "#f97316" },
+  { label: "Até R$500k", w: 34, count: "17", color: "#eab308" },
+  { label: "Saldo zerado", w: 18, count: "10", color: "#a3a3a3" },
 ];
 
 export function Systems() {
@@ -94,15 +95,15 @@ export function Systems() {
           </Reveal>
           <Reveal delay={0.1}>
             <p className="mt-6 text-[16px] text-sage leading-[1.6] max-w-[560px] mx-auto">
-              Assim é a visão operacional da Focus Fintax — R$ 15,8 mi compensado, R$ 13,4 mi de
-              economia líquida entregue aos 81 clientes, projeções e prioridade máxima consolidados
-              num painel só.
+              Painel de controle tributário com a camada de IA identificando créditos, priorizando
+              intimações e projetando cenário mensal em tempo real. Layout de referência com dados
+              demonstrativos.
             </p>
           </Reveal>
         </div>
 
         <Reveal delay={0.15}>
-          <FocusFintaxMockup />
+          <ControleMockup />
         </Reveal>
 
         <Reveal delay={0.2}>
@@ -121,14 +122,15 @@ export function Systems() {
   );
 }
 
-function FocusFintaxMockup() {
+function ControleMockup() {
   return (
     <div className="relative mx-auto mt-14 lg:mt-20 max-w-[1080px]">
       <div
         aria-hidden
         className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[70%] rounded-full"
         style={{
-          background: "radial-gradient(ellipse at center, oklch(0.75 0.20 122 / 0.14) 0%, transparent 70%)",
+          background:
+            "radial-gradient(ellipse at center, oklch(0.75 0.20 122 / 0.14) 0%, transparent 70%)",
           filter: "blur(70px)",
         }}
       />
@@ -141,7 +143,10 @@ function FocusFintaxMockup() {
         }}
       >
         {/* Browser bar */}
-        <div className="flex items-center gap-2 px-4 py-2.5" style={{ backgroundColor: "#e2e1da" }}>
+        <div
+          className="flex items-center gap-2 px-4 py-2.5"
+          style={{ backgroundColor: "#e2e1da" }}
+        >
           <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: "#ff5f57" }} />
           <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: "#febc2e" }} />
           <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: "#28c840" }} />
@@ -149,11 +154,11 @@ function FocusFintaxMockup() {
             className="ml-2 flex-1 rounded px-3 py-1 text-[11px] text-center truncate"
             style={{ backgroundColor: "#cdccc5", color: "#555" }}
           >
-            painel.focusfintax.com.br
+            controle.iaplicada.com.br
           </div>
         </div>
 
-        {/* System body — Focus Fintax layout */}
+        {/* System body */}
         <div className="flex" style={{ backgroundColor: "#f2f4f7" }}>
           {/* Sidebar */}
           <div
@@ -161,10 +166,10 @@ function FocusFintaxMockup() {
             style={{ width: 44, backgroundColor: "#08306b", color: "#ffffff" }}
           >
             <div
-              className="h-7 w-7 rounded-full flex items-center justify-center text-[13px] font-bold"
+              className="h-7 w-7 rounded-md flex items-center justify-center text-[12px] font-bold"
               style={{ backgroundColor: "#0b3a80", color: "#e5edf6" }}
             >
-              F
+              IA
             </div>
             {[LayoutDashboard, UserPlus, Bell, FileText, Settings, Shield].map((Icon, i) => (
               <Icon
@@ -182,21 +187,31 @@ function FocusFintaxMockup() {
             <div className="flex items-center justify-between mb-3">
               <div>
                 <p className="text-[11.5px] font-bold" style={{ color: "#0a1a2f" }}>
-                  Boa noite, Mariana{" "}
+                  Boa noite, equipe.{" "}
                   <span className="font-normal" style={{ color: "#6b7280" }}>
-                    quinta-feira, 2 de julho
+                    terça-feira, 12 de junho
                   </span>
                 </p>
               </div>
               <div className="flex items-center gap-2">
                 <span
+                  className="text-[8px] font-bold uppercase tracking-[0.1em] inline-flex items-center gap-1 px-2 py-0.5 rounded-full"
+                  style={{
+                    backgroundColor: "#dcfce7",
+                    color: "#166534",
+                  }}
+                >
+                  <span
+                    className="psa-pulse h-1.5 w-1.5 rounded-full"
+                    style={{ backgroundColor: "#16a34a" }}
+                  />
+                  IA em execução
+                </span>
+                <span
                   className="text-[8.5px] font-bold uppercase tracking-[0.08em] px-2 py-0.5 rounded-full border"
                   style={{ borderColor: "#c4d1e0", color: "#334155" }}
                 >
                   Admin
-                </span>
-                <span className="text-[9px] tabular-nums" style={{ color: "#6b7280" }}>
-                  20:14
                 </span>
               </div>
             </div>
@@ -215,33 +230,40 @@ function FocusFintaxMockup() {
             </div>
 
             {/* KPIs */}
-            <div className="grid grid-cols-2 sm:grid-cols-5 gap-1.5 mb-3">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 mb-3">
               {KPIS.map((k) => {
                 const valueColor =
                   k.tone === "positive"
                     ? "#16a34a"
                     : k.tone === "blue"
-                    ? "#1d4ed8"
-                    : k.tone === "danger"
-                    ? "#dc2626"
-                    : "#0a1a2f";
+                      ? "#1d4ed8"
+                      : "#0a1a2f";
                 return (
                   <div
                     key={k.label}
-                    className="rounded-md p-1.5 sm:p-2"
+                    className="rounded-md p-2 relative overflow-hidden"
                     style={{
                       backgroundColor: "#ffffff",
                       border: "1px solid #e5e7eb",
                     }}
                   >
+                    <div
+                      aria-hidden
+                      className="psa-bar-fill absolute inset-x-0 top-0 h-[2px]"
+                      style={{
+                        transformOrigin: "left center",
+                        background: valueColor,
+                        opacity: 0.85,
+                      }}
+                    />
                     <p
-                      className="text-[7.5px] uppercase tracking-[0.06em] font-semibold truncate"
+                      className="text-[7.5px] uppercase tracking-[0.06em] font-semibold truncate mt-1"
                       style={{ color: "#6b7280" }}
                     >
                       {k.label}
                     </p>
                     <p
-                      className="mt-1 text-[13px] sm:text-[15px] font-bold tracking-tight leading-none flex items-baseline gap-1"
+                      className="mt-1 text-[15px] font-bold tracking-tight leading-none flex items-baseline gap-1"
                       style={{ color: valueColor }}
                     >
                       {k.value}
@@ -266,25 +288,25 @@ function FocusFintaxMockup() {
               })}
             </div>
 
-            {/* Alert */}
+            {/* Alert com step-glow — IA acabou de priorizar */}
             <div
-              className="rounded-md px-2 py-1.5 mb-3 flex items-center justify-between gap-2"
-              style={{ backgroundColor: "#fef2f2", border: "1px solid #fecaca" }}
+              className="psa-step-active rounded-md px-2 py-1.5 mb-3 flex items-center justify-between gap-2"
+              style={{
+                backgroundColor: "#fef2f2",
+                border: "1px solid #fecaca",
+              }}
             >
               <div className="flex items-center gap-2 min-w-0">
                 <span
-                  className="h-1.5 w-1.5 rounded-full shrink-0"
+                  className="psa-pulse h-1.5 w-1.5 rounded-full shrink-0"
                   style={{ backgroundColor: "#dc2626" }}
                 />
-                <p className="text-[9px] font-semibold truncate" style={{ color: "#7f1d1d" }}>
-                  12 intimações fiscais pendentes
-                </p>
-                <span
-                  className="text-[7px] font-bold uppercase tracking-[0.06em] px-1 py-px rounded shrink-0"
-                  style={{ backgroundColor: "#fecaca", color: "#7f1d1d" }}
+                <p
+                  className="text-[9px] font-semibold truncate"
+                  style={{ color: "#7f1d1d" }}
                 >
-                  11 vencem em 15 dias
-                </span>
+                  IA priorizou 7 intimações · 4 vencem em 5 dias
+                </p>
               </div>
               <span
                 className="text-[8px] font-semibold shrink-0 hidden sm:inline"
@@ -294,7 +316,7 @@ function FocusFintaxMockup() {
               </span>
             </div>
 
-            {/* Blue banner projections */}
+            {/* Projections banner */}
             <div
               className="rounded-md px-2 py-2 mb-3 grid grid-cols-2 sm:grid-cols-5 gap-1.5"
               style={{
@@ -317,8 +339,8 @@ function FocusFintaxMockup() {
                         p.tone === "red"
                           ? "#fca5a5"
                           : p.tone === "yellow"
-                          ? "#fde68a"
-                          : "#86efac",
+                            ? "#fde68a"
+                            : "#86efac",
                     }}
                   >
                     {p.value}
@@ -328,8 +350,8 @@ function FocusFintaxMockup() {
             </div>
 
             {/* Chart + Distribution */}
-            <div className="grid grid-cols-1 sm:grid-cols-[1.6fr_1fr] gap-2 mb-3">
-              {/* Chart */}
+            <div className="grid grid-cols-1 sm:grid-cols-[1.4fr_1fr] gap-2 mb-3">
+              {/* Chart evolução */}
               <div
                 className="rounded-md p-2 sm:p-3"
                 style={{ backgroundColor: "#ffffff", border: "1px solid #e5e7eb" }}
@@ -339,18 +361,21 @@ function FocusFintaxMockup() {
                     className="text-[8px] uppercase tracking-[0.06em] font-semibold"
                     style={{ color: "#374151" }}
                   >
-                    Evolução mensal — compensações
+                    Evolução mensal — créditos identificados
                   </p>
                   <span
                     className="text-[7px] px-1.5 py-px rounded"
                     style={{ backgroundColor: "#fef9c3", color: "#854d0e" }}
                   >
-                    Fev/25 — Abr/26
+                    últimos 7m
                   </span>
                 </div>
                 <div className="flex items-end gap-1 h-[60px] pt-2">
                   {CHART_MONTHS.map((c) => (
-                    <div key={c.m} className="flex-1 flex flex-col items-center justify-end gap-0.5">
+                    <div
+                      key={c.m}
+                      className="flex-1 flex flex-col items-center justify-end gap-0.5"
+                    >
                       <div className="flex items-end gap-0.5 w-full justify-center h-full">
                         <div
                           className="rounded-t-sm"
@@ -376,14 +401,20 @@ function FocusFintaxMockup() {
                   ))}
                 </div>
                 <div className="flex items-center gap-2 mt-1">
-                  <span className="text-[6.5px] inline-flex items-center gap-1" style={{ color: "#6b7280" }}>
+                  <span
+                    className="text-[6.5px] inline-flex items-center gap-1"
+                    style={{ color: "#6b7280" }}
+                  >
                     <span
                       className="h-1.5 w-1.5 rounded-full"
                       style={{ backgroundColor: "#1d4ed8" }}
                     />
-                    Compensado
+                    Volume
                   </span>
-                  <span className="text-[6.5px] inline-flex items-center gap-1" style={{ color: "#6b7280" }}>
+                  <span
+                    className="text-[6.5px] inline-flex items-center gap-1"
+                    style={{ color: "#6b7280" }}
+                  >
                     <span
                       className="h-1.5 w-1.5 rounded-full"
                       style={{ backgroundColor: "#f87171" }}
@@ -393,7 +424,7 @@ function FocusFintaxMockup() {
                 </div>
               </div>
 
-              {/* Distribution */}
+              {/* Distribution — barras com psa-bar-fill em stagger */}
               <div
                 className="rounded-md p-2 sm:p-3"
                 style={{ backgroundColor: "#ffffff", border: "1px solid #e5e7eb" }}
@@ -404,12 +435,7 @@ function FocusFintaxMockup() {
                 >
                   Distribuição do saldo
                 </p>
-                {[
-                  { label: "Acima de R$1M", w: "88%", count: "11", value: "R$ 433,4 mi", color: "#dc2626" },
-                  { label: "R$500k – R$1M", w: "10%", count: "0", value: "—", color: "#f97316" },
-                  { label: "Até R$500k", w: "6%", count: "0", value: "—", color: "#a3a3a3" },
-                  { label: "Saldo zerado", w: "20%", count: "1", value: "—", color: "#a3a3a3" },
-                ].map((d) => (
+                {DISTRIB.map((d) => (
                   <div key={d.label} className="flex items-center gap-1.5 mb-1">
                     <p
                       className="text-[7.5px] w-[70px] shrink-0 truncate"
@@ -417,61 +443,79 @@ function FocusFintaxMockup() {
                     >
                       {d.label}
                     </p>
-                    <div className="flex-1 h-1.5 rounded-full overflow-hidden" style={{ backgroundColor: "#e5e7eb" }}>
-                      <div className="h-full rounded-full" style={{ width: d.w, backgroundColor: d.color }} />
+                    <div
+                      className="flex-1 h-1.5 rounded-full overflow-hidden"
+                      style={{ backgroundColor: "#e5e7eb" }}
+                    >
+                      <div
+                        className="psa-bar-fill h-full rounded-full"
+                        style={{
+                          width: `${d.w}%`,
+                          backgroundColor: d.color,
+                          transformOrigin: "left center",
+                        }}
+                      />
                     </div>
-                    <p className="text-[7.5px] font-semibold shrink-0 tabular-nums" style={{ color: d.color }}>
+                    <p
+                      className="text-[7.5px] font-semibold shrink-0 tabular-nums"
+                      style={{ color: d.color }}
+                    >
                       {d.count}
-                    </p>
-                    <p className="text-[7px] shrink-0 tabular-nums w-[46px] text-right" style={{ color: "#6b7280" }}>
-                      {d.value}
                     </p>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Prioridade máxima */}
+            {/* Ticker live — documentos processados */}
             <div
-              className="rounded-md p-2"
-              style={{ backgroundColor: "#fef2f2", border: "1px solid #fecaca" }}
+              className="rounded-md px-3 py-2 flex items-center justify-between gap-3"
+              style={{ backgroundColor: "#0a1a2f", color: "#ffffff" }}
             >
-              <p
-                className="text-[8px] uppercase tracking-[0.06em] font-bold mb-1.5"
-                style={{ color: "#7f1d1d" }}
-              >
-                ● Prioridade máxima — 5 clientes com saldo acima de R$1M
-              </p>
-              <div className="grid grid-cols-2 sm:grid-cols-5 gap-1">
-                {PRIORIDADE.map((p) => (
-                  <div
-                    key={p.name}
-                    className="rounded p-1.5"
-                    style={{ backgroundColor: "#ffffff", border: "1px solid #fecaca" }}
+              <div className="flex items-center gap-2">
+                <span
+                  className="psa-pulse h-1.5 w-1.5 rounded-full"
+                  style={{ backgroundColor: "#38bdf8" }}
+                />
+                <p
+                  className="text-[7.5px] uppercase tracking-[0.08em] font-semibold"
+                  style={{ color: "#93c5fd" }}
+                >
+                  Documentos processados hoje
+                </p>
+                <div
+                  className="tabular-nums leading-none"
+                  style={{ height: "1em", overflow: "hidden" }}
+                >
+                  <span
+                    className="psa-ticker-track text-[15px] font-bold tracking-tight"
+                    style={{ color: "#ffffff", fontFamily: '"Fraunces", Georgia, serif' }}
                   >
-                    <p
-                      className="text-[7px] uppercase tracking-[0.04em] font-semibold truncate"
-                      style={{ color: "#374151" }}
-                    >
-                      {p.name}
-                    </p>
-                    <p
-                      className="mt-0.5 text-[11px] font-bold tracking-tight leading-none"
-                      style={{ color: "#dc2626" }}
-                    >
-                      {p.value}
-                    </p>
-                    <p className="mt-0.5 text-[6.5px] truncate" style={{ color: "#7f1d1d" }}>
-                      {p.hon}
-                    </p>
-                  </div>
-                ))}
+                    <div>234</div>
+                    <div>246</div>
+                    <div>253</div>
+                  </span>
+                </div>
+              </div>
+              <div className="text-right">
+                <p
+                  className="text-[7.5px] uppercase tracking-[0.08em] font-semibold"
+                  style={{ color: "#93c5fd" }}
+                >
+                  Assertividade IA
+                </p>
+                <p
+                  className="mt-0.5 text-[15px] font-bold tracking-tight leading-none"
+                  style={{ color: "#86efac", fontFamily: '"Fraunces", Georgia, serif' }}
+                >
+                  96%
+                </p>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Auditoria stamp */}
+        {/* Ambiente stamp */}
         <div
           className="px-4 py-2 text-[9.5px] uppercase tracking-[0.08em] font-semibold text-center"
           style={{
@@ -479,7 +523,7 @@ function FocusFintaxMockup() {
             color: "#89b7ec",
           }}
         >
-          Focus Fintax · Painel real em produção · dados auditados jun/2026
+          Ambiente de demonstração · dados fictícios · Portfólio IAplicada
         </div>
       </div>
     </div>

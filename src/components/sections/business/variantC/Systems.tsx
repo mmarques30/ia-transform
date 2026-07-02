@@ -62,7 +62,7 @@ export function Systems() {
         </div>
 
         <Reveal delay={0.15}>
-          <div className="mt-14 lg:mt-20 grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-[1080px] mx-auto">
+          <div className="mt-14 lg:mt-20 grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-[1080px] mx-auto items-stretch">
             <VisaoGeralMockup />
             <ApuracaoMockup />
           </div>
@@ -137,7 +137,7 @@ function VisaoGeralMockup() {
       </div>
 
       {/* Chart horizontal — assertividade por categoria */}
-      <div className="px-4 pb-4" style={{ backgroundColor: "#0a1a0c" }}>
+      <div className="px-4 pb-4 flex-1 flex flex-col" style={{ backgroundColor: "#0a1a0c" }}>
         <p
           className="text-[8px] uppercase tracking-[0.08em] font-semibold mb-2"
           style={{ color: "#4a7044" }}
@@ -208,7 +208,7 @@ function ApuracaoMockup() {
       </div>
 
       {/* Timeline steps */}
-      <div className="px-4 py-4 flex flex-col gap-2" style={{ backgroundColor: "#0a1a0c" }}>
+      <div className="px-4 py-4 flex-1 flex flex-col gap-2" style={{ backgroundColor: "#0a1a0c" }}>
         <TimelineStep
           Icon={CheckCircle2}
           color="#7cc442"
@@ -295,14 +295,14 @@ function MockupFrame({
   children: React.ReactNode;
 }) {
   return (
-    <figure className="flex flex-col gap-2">
+    <figure className="flex flex-col gap-2 h-full">
       <p
         className="text-[11px] uppercase font-semibold tracking-[0.08em] text-center text-sage"
       >
         {label}
       </p>
       <div
-        className="rounded-2xl overflow-hidden"
+        className="rounded-2xl overflow-hidden flex-1 flex flex-col"
         style={{
           border: "1px solid oklch(0.4 0.02 122)",
           boxShadow: "0 30px 60px -25px oklch(0 0 0 / 0.6)",
