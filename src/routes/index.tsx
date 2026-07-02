@@ -109,12 +109,22 @@ function BusinessLanding() {
       <BgDobra intensity="baixa">
         <Systems />
       </BgDobra>
-      <OliveWave />
+      <BgDobra intensity="media">
+        <OliveWave plainBg />
+      </BgDobra>
       <BgDobra intensity="baixa">
         <ClientLogos />
       </BgDobra>
       <BgDobra intensity="media">
-        <Process />
+        <Process
+          title={
+            <>
+              Em 30 dias, sua operação <em>pode rodar sozinha</em>.
+            </>
+          }
+          hideChevrons
+          hideJourney
+        />
       </BgDobra>
       <BgDobra intensity="media">
         <Authority />

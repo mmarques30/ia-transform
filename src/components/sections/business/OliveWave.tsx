@@ -6,37 +6,51 @@ const STATEMENTS = [
   { label: "O fechamento", highlight: "trava tudo" },
 ];
 
+interface OliveWaveProps {
+  /**
+   * Desliga o wash olive local + lime glow que dominam o fundo. Usado
+   * na LP `/`, onde a dobra fica dentro de <BgDobra> e é o ia-bg
+   * (grid/glow/sparks/sweep) que carrega o fundo — os efeitos locais
+   * competiam com ele. LP-B/C mantém o comportamento antigo (default).
+   */
+  plainBg?: boolean;
+}
+
 /**
  * OliveWave — typography-driven, no icon cards. Olive bg + tech grid drift +
  * lime glow. The 3 statements são chips minimalistas inline.
  */
-export function OliveWave() {
+export function OliveWave({ plainBg = false }: OliveWaveProps = {}) {
   return (
     <section className="relative pt-[150px] pb-[170px] lg:pt-[190px] lg:pb-[210px] overflow-hidden">
-      {/* Olive wash com fade vertical longo nas bordas — funde de forma
-          bem gradual com o WebGL das sections vizinhas (sem linha de corte). */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background: "var(--gradient-olive-wave)",
-          maskImage:
-            "linear-gradient(to bottom, transparent 0%, black 34%, black 66%, transparent 100%)",
-          WebkitMaskImage:
-            "linear-gradient(to bottom, transparent 0%, black 34%, black 66%, transparent 100%)",
-        }}
-      />
+      {!plainBg && (
+        <>
+          {/* Olive wash com fade vertical longo nas bordas — funde de forma
+              bem gradual com o WebGL das sections vizinhas (sem linha de corte). */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background: "var(--gradient-olive-wave)",
+              maskImage:
+                "linear-gradient(to bottom, transparent 0%, black 34%, black 66%, transparent 100%)",
+              WebkitMaskImage:
+                "linear-gradient(to bottom, transparent 0%, black 34%, black 66%, transparent 100%)",
+            }}
+          />
 
-      {/* Lime glow at top center */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -top-32 left-1/2 -translate-x-1/2 h-[400px] w-[800px] rounded-full ia-anim-shimmer"
-        style={{
-          background:
-            "radial-gradient(ellipse at center, oklch(0.95 0.22 115 / 0.35) 0%, transparent 65%)",
-          filter: "blur(60px)",
-        }}
-      />
+          {/* Lime glow at top center */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute -top-32 left-1/2 -translate-x-1/2 h-[400px] w-[800px] rounded-full ia-anim-shimmer"
+            style={{
+              background:
+                "radial-gradient(ellipse at center, oklch(0.95 0.22 115 / 0.35) 0%, transparent 65%)",
+              filter: "blur(60px)",
+            }}
+          />
+        </>
+      )}
 
       <div className="container-page relative">
         <div className="text-center max-w-[860px] mx-auto">

@@ -124,7 +124,7 @@ export function Systems() {
 
 function ControleMockup() {
   return (
-    <div className="relative mx-auto mt-14 lg:mt-20 max-w-[1080px]">
+    <div className="relative mx-auto mt-14 lg:mt-20 max-w-[860px]">
       <div
         aria-hidden
         className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[70%] rounded-full"
