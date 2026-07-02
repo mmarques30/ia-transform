@@ -11,8 +11,6 @@ export function Hero() {
           "radial-gradient(ellipse 80% 55% at 50% 0%, oklch(0.22 0.03 122 / 0.5) 0%, transparent 75%)",
       }}
     >
-      <div className="h-[72px]" aria-hidden />
-
       <div className="relative pt-[48px] lg:pt-[72px]">
         <div
           aria-hidden
