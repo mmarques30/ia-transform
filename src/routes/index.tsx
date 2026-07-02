@@ -1,5 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Header } from "@/components/sections/Header";
 import { Hero } from "@/components/sections/business/variantA/Hero";
 import { Ticker } from "@/components/sections/business/variantA/Ticker";
 import { Problem } from "@/components/sections/business/variantA/Problem";
@@ -70,7 +69,6 @@ export const Route = createFileRoute("/")({
 function BusinessLanding() {
   return (
     <main className="min-h-screen text-foreground">
-      <Header hideNav hideCta />
       <Hero />
       <Ticker />
       <Problem />
