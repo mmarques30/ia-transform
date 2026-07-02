@@ -4,7 +4,6 @@ import { Ticker } from "@/components/sections/business/variantB/Ticker";
 import { Problem } from "@/components/sections/business/variantB/Problem";
 import { Solution } from "@/components/sections/business/Solution";
 import { Systems } from "@/components/sections/business/variantB/Systems";
-import { HighlightGif } from "@/components/sections/business/variantB/HighlightGif";
 import { OliveWave } from "@/components/sections/business/OliveWave";
 import { ClientLogos } from "@/components/sections/ClientLogos";
 import { Process } from "@/components/sections/business/Process";
@@ -80,7 +79,6 @@ function BusinessV2Landing() {
       <Problem />
       <Solution />
       <Systems />
-      <HighlightGif />
       <OliveWave />
       <ClientLogos />
       <Process />
