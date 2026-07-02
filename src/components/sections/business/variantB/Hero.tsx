@@ -11,9 +11,6 @@ export function Hero() {
           "radial-gradient(ellipse 80% 55% at 50% 0%, oklch(0.22 0.03 122 / 0.5) 0%, transparent 75%)",
       }}
     >
-      <div className="h-[72px]" aria-hidden />
-      <MarqueeStrip />
-
       <div className="relative pt-[48px] lg:pt-[72px]">
         <div
           aria-hidden
@@ -46,10 +43,13 @@ export function Hero() {
           <div className="grid lg:grid-cols-[1.05fr_1fr] gap-8 lg:gap-16 items-center">
             <div>
               <Reveal>
-                <span className="label-chip">
-                  <span className="dot" />
-                  IAplicada · Business
-                </span>
+                <img
+                  src="/brand/iaplicada-logo-light.png"
+                  alt="IAplicada"
+                  height={28}
+                  className="block"
+                  style={{ height: 28, width: "auto" }}
+                />
               </Reveal>
 
               <h1 className="h-mix mt-6 lg:mt-7 text-[32px] sm:text-[44px] lg:text-[58px] leading-[1.05] text-foreground">
@@ -100,64 +100,6 @@ export function Hero() {
   );
 }
 
-/* Marquee (dobra 2) — LP-B: transformação escala/planilha → sistema */
-const MARQUEE_ITEMS = [
-  "De planilha a sistema em 10 semanas",
-  "87h liberadas por mês",
-  "Fechamento de 5 dias para 4h",
-  "Operação que escala sem contratar",
-  "Payback em 4,6 meses",
-  "Sem trocar de sistema",
-];
-
-function MarqueeStrip() {
-  const seq = [...MARQUEE_ITEMS, ...MARQUEE_ITEMS];
-  const FADE = "oklch(0.10 0.012 122)";
-  return (
-    <div
-      className="relative overflow-hidden"
-      style={{
-        backgroundColor: FADE,
-        borderTop: "1px solid oklch(0.28 0.04 122)",
-        borderBottom: "1px solid oklch(0.28 0.04 122)",
-      }}
-    >
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-y-0 left-0 z-10 w-20"
-        style={{ background: `linear-gradient(90deg, ${FADE} 0%, transparent 100%)` }}
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-y-0 right-0 z-10 w-20"
-        style={{ background: `linear-gradient(270deg, ${FADE} 0%, transparent 100%)` }}
-      />
-      <div
-        className="ticker-track py-3.5 select-none"
-        style={{ cursor: "default", pointerEvents: "none" }}
-        aria-hidden
-      >
-        {seq.map((item, i) => (
-          <span key={i} className="inline-flex items-center gap-8">
-            <span
-              className="text-[11.5px] uppercase tracking-[0.16em] font-semibold whitespace-nowrap"
-              style={{ color: "oklch(0.96 0.012 110)" }}
-            >
-              {item}
-            </span>
-            <span
-              className="inline-block"
-              style={{ color: "var(--color-primary)", fontSize: 9, lineHeight: 1 }}
-            >
-              ◆
-            </span>
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-}
-
 const PROOF_THUMBS = [
   { src: "/clients/people/person-1.webp", alt: "" },
   { src: "/clients/people/person-5.webp", alt: "" },
@@ -193,7 +135,7 @@ function ClientsProof() {
         ))}
       </div>
       <p className="text-[14px] text-foreground font-semibold leading-tight">
-        +700 profissionais usando a IAplicada dentro das empresas.
+        11 sistemas em produção.
       </p>
     </div>
   );
