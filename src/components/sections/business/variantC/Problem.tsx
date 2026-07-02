@@ -5,18 +5,18 @@ import { TiltCard } from "@/components/TiltCard";
 const PROBLEMS = [
   {
     n: "01",
-    title: "A Focus Fintax tinha 90h/mês em processos manuais",
-    text: "Conciliação, fechamento, follow-up. Tudo na mão, todo mês. O time virava a noite no dia 25 e repetia no mês seguinte.",
+    title: "A PSA operava em ferramentas separadas",
+    text: "110+ profissionais em sistemas diferentes. Assertividade tributária em 85%. Reuniões dependiam de alguém montar um relatório toda semana.",
   },
   {
     n: "02",
-    title: "A PSA montava relatório pra diretoria toda semana",
-    text: "4 horas de trabalho pra entregar um dado que já estava velho quando chegava na reunião de segunda.",
+    title: "A CB Move queria crescer de 30 para 100 pacientes",
+    text: "Cada novo paciente precisava de ação manual em todas as etapas. Contratar não era opção.",
   },
   {
     n: "03",
-    title: "A CB Move não conseguia escalar o atendimento",
-    text: "Cada lead novo precisava de ação humana em cada etapa. O time não tinha como atender mais sem contratar. E não queria contratar.",
+    title: "A Borges & Zembruski gastava R$5k/mês com SDR humano",
+    text: "O SDR não escalava. Leads chegavam, follow-up não acontecia na hora certa, receita ficava na mesa.",
   },
   {
     n: "04",
@@ -158,7 +158,7 @@ export function Problem() {
             </span>
             <h2
               ref={headingRef}
-              className="h-mix mt-6 text-[36px] sm:text-[44px] lg:text-[58px] text-foreground"
+              className="h-mix mt-6 text-[26px] sm:text-[32px] lg:text-[36px] text-foreground"
               style={{ perspective: "800px" }}
             >
               Esses resultados não vieram do nada.{" "}

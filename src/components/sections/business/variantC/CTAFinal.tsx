@@ -7,8 +7,9 @@ export function CTAFinal() {
       <div className="container-page">
         <div className="max-w-[820px] mx-auto text-center">
           <Reveal>
-            <h2 className="h-mix text-[40px] sm:text-[48px] lg:text-[60px] text-foreground">
-              A Focus Fintax liberou 90h. <em>Qual é o seu número?</em>
+            <h2 className="h-mix text-[26px] sm:text-[32px] lg:text-[36px] text-foreground">
+              A PSA subiu a assertividade tributária de 85% para 94%.{" "}
+              <em>Qual é o seu número?</em>
             </h2>
           </Reveal>
           <Reveal delay={0.05}>

@@ -2,14 +2,38 @@ import { Reveal } from "@/components/Reveal";
 import { ArrowRight } from "lucide-react";
 
 /**
- * Systems (contábil) — em vez do grid de cards, uma composição moderna
- * de mockups (laptop + tablet) integrados/sobrepostos, mostrando o
- * sistema real do escritório rodando no desktop e no tablet.
- *
- * Imagens reais do sistema contábil (capturas enviadas pela cliente).
+ * Systems (LP-C / dobra 6) — grid de 3 GIFs de casos reais, um por
+ * cliente com URL do painel identificando dono. Substitui o antigo
+ * device showcase (laptop+tablet contabil).
  */
-const DESKTOP_IMG = "/clients/contabil-desktop.webp";
-const TABLET_IMG = "/clients/contabil-tablet.webp";
+
+interface CaseGif {
+  gifSrc: string;
+  label: string;
+  url: string;
+  alt: string;
+}
+
+const CASES: CaseGif[] = [
+  {
+    gifSrc: "/systems-v2/post_sex_painel.gif",
+    label: "PSA Consultores · BI Tributário",
+    url: "psa.iaplicada.com.br",
+    alt: "BI Tributário PSA Consultores em ação",
+  },
+  {
+    gifSrc: "/systems-v2/post_qua_whatsapp.gif",
+    label: "Borges & Zembruski · SDR Autônomo",
+    url: "bz.iaplicada.com.br",
+    alt: "SDR autônomo Borges & Zembruski em ação",
+  },
+  {
+    gifSrc: "/systems-v2/conciliacao_ia.gif",
+    label: "CB Move Neuroscience · ERP Clínico",
+    url: "cbmove.iaplicada.com.br",
+    alt: "ERP clínico CB Move Neuroscience em ação",
+  },
+];
 
 export function Systems() {
   return (
@@ -18,7 +42,7 @@ export function Systems() {
       className="section-veil py-[100px] lg:py-[140px] overflow-hidden relative"
     >
       <div className="container-page relative">
-        <div className="max-w-[680px] mx-auto text-center">
+        <div className="max-w-[760px] mx-auto text-center">
           <Reveal>
             <span className="label-chip">
               <span className="dot" />
@@ -26,22 +50,19 @@ export function Systems() {
             </span>
           </Reveal>
           <Reveal delay={0.05}>
-            <h2 className="h-mix mt-6 text-[36px] sm:text-[44px] lg:text-[52px] text-foreground">
-              Não vendemos slides.
-              <br />
-              <em>Entregamos o sistema rodando.</em>
+            <h2 className="h-mix mt-6 text-[26px] sm:text-[32px] lg:text-[36px] text-foreground">
+              Três empresas. Três sistemas.{" "}
+              <em>Cada um com a URL e o nome do cliente.</em>
             </h2>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <p className="mt-6 text-[16px] text-sage leading-[1.6] max-w-[520px] mx-auto">
-              Cada sistema abaixo tem a URL e o branding do cliente que o usa. A IAplicada
-              construiu. E o time opera sozinho desde então.
-            </p>
           </Reveal>
         </div>
 
         <Reveal delay={0.15}>
-          <DeviceShowcase />
+          <div className="mt-14 lg:mt-20 grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-[1200px] mx-auto">
+            {CASES.map((c) => (
+              <CaseGifCard key={c.gifSrc} caseItem={c} />
+            ))}
+          </div>
         </Reveal>
 
         <Reveal delay={0.2}>
@@ -60,88 +81,36 @@ export function Systems() {
   );
 }
 
-/**
- * Composição laptop + tablet sobrepostos. O tablet "encosta" no laptop
- * (offset + z-index) pra dar profundidade, sem ficarem separados.
- */
-function DeviceShowcase() {
+function CaseGifCard({ caseItem }: { caseItem: CaseGif }) {
   return (
-    <div className="relative mx-auto mt-14 lg:mt-20 max-w-[980px]">
-      {/* Glow lime atrás da composição */}
+    <figure className="flex flex-col gap-3">
+      <p
+        className="text-[12px] uppercase font-semibold tracking-[0.08em] text-center text-sage"
+      >
+        {caseItem.label}
+      </p>
       <div
-        aria-hidden
-        className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[70%] rounded-full"
+        className="rounded-2xl overflow-hidden border"
         style={{
-          background:
-            "radial-gradient(ellipse at center, oklch(0.75 0.20 122 / 0.18) 0%, transparent 70%)",
-          filter: "blur(70px)",
+          borderColor: "oklch(0.32 0.02 122)",
+          backgroundColor: "oklch(0.16 0.018 122)",
+          boxShadow: "0 30px 60px -25px oklch(0 0 0 / 0.55)",
         }}
-      />
-
-      {/* LAPTOP */}
-      <div className="relative w-full lg:w-[82%] z-10">
-        <div
-          className="rounded-t-[14px] overflow-hidden border"
-          style={{
-            borderColor: "oklch(0.32 0.02 122)",
-            backgroundColor: "oklch(0.16 0.018 122)",
-            boxShadow: "0 40px 80px -30px oklch(0 0 0 / 0.7)",
-          }}
-        >
-          {/* barra superior */}
-          <div
-            className="flex items-center gap-1.5 px-4 py-2.5 border-b"
-            style={{ borderColor: "oklch(0.28 0.02 122)" }}
-          >
-            <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: "oklch(0.6 0.18 25)" }} />
-            <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: "oklch(0.78 0.16 85)" }} />
-            <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: "oklch(0.7 0.18 145)" }} />
-          </div>
-          <img
-            src={DESKTOP_IMG}
-            alt="Sistema do escritório no desktop"
-            width={1800}
-            height={1011}
-            loading="lazy"
-            decoding="async"
-            className="block w-full"
-          />
-        </div>
-        {/* base do laptop */}
-        <div
-          className="mx-auto h-3 rounded-b-[10px]"
-          style={{
-            width: "108%",
-            marginLeft: "-4%",
-            background: "linear-gradient(180deg, oklch(0.26 0.02 122), oklch(0.18 0.018 122))",
-            boxShadow: "0 18px 30px -12px oklch(0 0 0 / 0.6)",
-          }}
+      >
+        <img
+          src={caseItem.gifSrc}
+          alt={caseItem.alt}
+          loading="lazy"
+          decoding="async"
+          className="block w-full h-auto"
         />
       </div>
-
-      {/* TABLET — sobreposto no canto inferior direito */}
-      <div
-        className="absolute z-20 w-[40%] sm:w-[34%] lg:w-[30%] right-0 -bottom-6 lg:-bottom-10"
+      <p
+        className="text-[13px] font-mono text-center"
+        style={{ color: "var(--color-primary)", opacity: 0.85 }}
       >
-        <div
-          className="rounded-[16px] overflow-hidden border p-1.5"
-          style={{
-            borderColor: "oklch(0.34 0.02 122)",
-            backgroundColor: "oklch(0.14 0.018 122)",
-            boxShadow: "0 30px 60px -20px oklch(0 0 0 / 0.75)",
-          }}
-        >
-          <img
-            src={TABLET_IMG}
-            alt="Sistema do escritório no tablet"
-            width={1800}
-            height={872}
-            loading="lazy"
-            decoding="async"
-            className="block w-full rounded-[10px]"
-          />
-        </div>
-      </div>
-    </div>
+        {caseItem.url}
+      </p>
+    </figure>
   );
 }

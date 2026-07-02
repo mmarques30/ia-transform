@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Header } from "@/components/sections/Header";
 import { Hero } from "@/components/sections/business/variantC/Hero";
+import { Ticker } from "@/components/sections/business/variantC/Ticker";
 import { Problem } from "@/components/sections/business/variantC/Problem";
 import { Solution } from "@/components/sections/business/Solution";
 import { Systems } from "@/components/sections/business/variantC/Systems";
@@ -14,20 +14,48 @@ import { FAQ } from "@/components/sections/FAQ";
 import { CTAFinal } from "@/components/sections/business/variantC/CTAFinal";
 import { Footer } from "@/components/sections/Footer";
 
+/** FAQ reduzida da `/businessv3` — 5 perguntas conforme spec. */
+const FAQ_ITEMS_LP_C = [
+  {
+    q: "Quanto dura um projeto?",
+    a: "De 1 a 6 meses, conforme o escopo. A mentoria é um programa à parte e deve ser consultada direto com o time da IAplicada. A Mari abre vagas esporadicamente.",
+  },
+  {
+    q: "Qual o investimento?",
+    a: "A partir de R$ 9.997, dependendo do escopo e porte da operação. Valor fechado depois do diagnóstico.",
+  },
+  {
+    q: "Substitui consultoria, agência ou fábrica de software?",
+    a: "Depende do escopo contratado. Em muitos casos, sim: a IAplicada assume frentes que antes ficavam com consultoria, agência ou fábrica. Em outros, integramos com sistemas já implementados e trabalhamos lado a lado com times internos e fornecedores existentes.",
+  },
+  {
+    q: "O time precisa ter base técnica?",
+    a: "Não. Trabalhamos com líderes e operacionais. Parte técnica fica com a gente.",
+  },
+  {
+    q: "O sistema fica com o nome da IAplicada ou da minha empresa?",
+    a: "Com o nome da sua empresa. A URL, o branding e o painel são seus. A IAplicada constrói e depois o sistema é inteiramente seu, sem dependência de licença ou assinatura da gente.",
+  },
+];
+
 /**
- * /businessv3 — variante C do refactor Business (phase 4 de 5).
+ * /businessv3 — variante C (phase 4 + 7 ajustes de prova social).
  *
- * Ângulo LP-C: prova social pura — "90h liberadas. 5 sistemas.
- * Operação rodando." ICP: lead cético que precisa de caso real
- * pra acreditar.
- *
- * Mesma estrutura da /contabil (dark charcoal, h-mix), com
- * sections variant-specific em business/variantC/ (Hero, Problem,
- * Systems, Impact, CTAFinal) e shared em business/ root
- * (Solution=Método MAPA, Process=Jornada).
- *
- * noindex mantido — LP alternativa pra teste. Retirar quando
- * virar oficial.
+ * Ajustes recentes:
+ * - Header removido inteiro do JSX
+ * - Hero: label-chip → img light logo, texto simplificado
+ *   (1 apoio + linha muted "+40 empresas já operam")
+ * - Ticker (variantC/Ticker) entre Hero e Problem, 5 cases
+ * - Systems reescrita com 3 GIFs (PSA / Borges & Zembruski /
+ *   CB Move) + URLs identificadas
+ * - Problem: 4 cards atualizados com dados reais (PSA operação
+ *   fragmentada, CB Move captação manual, Borges SDR humano)
+ * - Impact reescrita com 3 cases auditados + stamps
+ * - CTAFinal novo copy citando PSA
+ * - H2 sizes reduzidos pra 36/32/26
+ * - FAQ com 5 items
+ * - Método APLICA / Authority counters (11 Sistemas / 110+
+ *   Usuários / 150+ Processos) já em shared
  */
 export const Route = createFileRoute("/businessv3")({
   head: () => ({
@@ -38,7 +66,7 @@ export const Route = createFileRoute("/businessv3")({
       {
         name: "description",
         content:
-          "Não são promessas. São os números da Focus Fintax, PSA Consultores e CB Move Neuroscience. Diagnóstico gratuito de 60 minutos.",
+          "Não são promessas. São os números da PSA, Borges & Zembruski, CB Move e Quadra Arquitetura. Diagnóstico gratuito de 60 minutos.",
       },
       { name: "robots", content: "noindex, nofollow" },
       { name: "theme-color", content: "#0d0d0d" },
@@ -50,8 +78,8 @@ export const Route = createFileRoute("/businessv3")({
 function BusinessV3Landing() {
   return (
     <main className="min-h-screen text-foreground">
-      <Header />
       <Hero />
+      <Ticker />
       <Problem />
       <Solution />
       <Systems />
@@ -61,7 +89,7 @@ function BusinessV3Landing() {
       <Impact />
       <Authority />
       <Comparison />
-      <FAQ />
+      <FAQ items={FAQ_ITEMS_LP_C} />
       <CTAFinal />
       <Footer />
     </main>
