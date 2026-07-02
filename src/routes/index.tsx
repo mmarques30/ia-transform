@@ -7,7 +7,6 @@ import { Systems } from "@/components/sections/business/variantA/Systems";
 import { OliveWave } from "@/components/sections/business/OliveWave";
 import { ClientLogos } from "@/components/sections/ClientLogos";
 import { Process } from "@/components/sections/business/Process";
-import { Impact } from "@/components/sections/business/variantA/Impact";
 import { Comparison } from "@/components/sections/Comparison";
 import { Authority } from "@/components/sections/Authority";
 import { FAQ } from "@/components/sections/FAQ";
@@ -77,7 +76,6 @@ function BusinessLanding() {
       <OliveWave />
       <ClientLogos />
       <Process />
-      <Impact />
       <Authority />
       <Comparison />
       <FAQ items={FAQ_ITEMS_LP_A} />
