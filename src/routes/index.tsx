@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Header } from "@/components/sections/Header";
 import { Hero } from "@/components/sections/business/variantA/Hero";
+import { Ticker } from "@/components/sections/business/variantA/Ticker";
 import { Problem } from "@/components/sections/business/variantA/Problem";
 import { Solution } from "@/components/sections/business/Solution";
 import { Systems } from "@/components/sections/business/variantA/Systems";
@@ -13,6 +14,30 @@ import { Authority } from "@/components/sections/Authority";
 import { FAQ } from "@/components/sections/FAQ";
 import { CTAFinal } from "@/components/sections/business/variantA/CTAFinal";
 import { Footer } from "@/components/sections/Footer";
+
+/** FAQ reduzida da `/` — só 5 perguntas conforme spec de ajuste. */
+const FAQ_ITEMS_LP_A = [
+  {
+    q: "Quanto dura um projeto?",
+    a: "De 1 a 6 meses, conforme o escopo. A mentoria é um programa à parte e deve ser consultada direto com o time da IAplicada. A Mari abre vagas esporadicamente.",
+  },
+  {
+    q: "Qual o investimento?",
+    a: "A partir de R$ 9.997, dependendo do escopo e porte da operação. Valor fechado depois do diagnóstico.",
+  },
+  {
+    q: "Substitui consultoria, agência ou fábrica de software?",
+    a: "Depende do escopo contratado. Em muitos casos, sim: a IAplicada assume frentes que antes ficavam com consultoria, agência ou fábrica. Em outros, integramos com sistemas já implementados e trabalhamos lado a lado com times internos e fornecedores existentes.",
+  },
+  {
+    q: "O time precisa ter base técnica?",
+    a: "Não. Trabalhamos com líderes e operacionais. Parte técnica fica com a gente.",
+  },
+  {
+    q: "O sistema fica com o nome da IAplicada ou da minha empresa?",
+    a: "Com o nome da sua empresa. A URL, o branding e o painel são seus. A IAplicada constrói e depois o sistema é inteiramente seu, sem dependência de licença ou assinatura da gente.",
+  },
+];
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -42,31 +67,12 @@ export const Route = createFileRoute("/")({
   component: BusinessLanding,
 });
 
-/**
- * LP `/` (Business, variante A) — refactor phase 2 do plano de 5 fases.
- *
- * Visual: dark charcoal (paleta base do site) — antes era academy-theme
- * cream. Estrutura de dobras alinhada com `/contabil`:
- *
- *   Hero (dobra 3 + ticker dobra 2 embutido)
- *   Problem (dobra 4)
- *   Solution (dobra 5 — Método MAPA, shared)
- *   Systems (dobra 6 — sistema em ação)
- *   OliveWave · ClientLogos (visuais)
- *   Process (dobra 8 — jornada semana a semana, shared)
- *   Impact (dobra 9 — ROI Focus Fintax)
- *   Comparison (dobra 11, shared) · Authority (dobra 10, shared)
- *   FAQ (dobra 12, shared) · CTAFinal (dobra 13)
- *
- * Copy variante A: "O processo mais caro não aparece no DRE".
- * `/businessv2` (variante B) e `/businessv3` (variante C) virão nas
- * fases 3 e 4.
- */
 function BusinessLanding() {
   return (
     <main className="min-h-screen text-foreground">
-      <Header />
+      <Header hideNav hideCta />
       <Hero />
+      <Ticker />
       <Problem />
       <Solution />
       <Systems />
@@ -76,7 +82,7 @@ function BusinessLanding() {
       <Impact />
       <Authority />
       <Comparison />
-      <FAQ />
+      <FAQ items={FAQ_ITEMS_LP_A} />
       <CTAFinal />
       <Footer />
     </main>

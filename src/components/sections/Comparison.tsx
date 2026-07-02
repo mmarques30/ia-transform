@@ -73,7 +73,7 @@ export function Comparison() {
             </span>
           </Reveal>
           <Reveal delay={0.05}>
-            <h2 className="h-mix mt-6 text-[36px] sm:text-[44px] lg:text-[54px] text-foreground">
+            <h2 className="h-mix mt-6 text-[24px] sm:text-[28px] lg:text-[32px] text-foreground">
               Por que a <em>IAplicada</em> é diferente
             </h2>
           </Reveal>

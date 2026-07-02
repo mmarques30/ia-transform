@@ -32,6 +32,12 @@ interface HeaderProps {
    */
   hideCta?: boolean;
   /**
+   * Esconde os links de navegação. Combinado com `hideCta`, deixa o header
+   * minimal — só o logo à esquerda. Usado na `/` (LP-A), onde o header foi
+   * simplificado pra evitar distração acima da headline.
+   */
+  hideNav?: boolean;
+  /**
    * Lista customizada de itens da nav. Default = NAV principal (Sistemas /
    * Abordagem / Time / FAQ). LPs podem passar um set próprio com âncoras
    * que de fato existem na página.
@@ -54,6 +60,7 @@ interface HeaderProps {
 export function Header({
   homePath = "/",
   hideCta = false,
+  hideNav = false,
   nav = DEFAULT_NAV,
   badgeLabel,
   theme = "dark",
@@ -182,7 +189,7 @@ export function Header({
           )}
         </Link>
 
-        <nav className="hidden lg:flex items-center gap-8">
+        <nav className={`${hideNav ? "hidden" : "hidden lg:flex"} items-center gap-8`}>
           {nav.map((item) => (
             <a
               key={item.href}

@@ -47,7 +47,7 @@ export function Process() {
       <div className="container-page py-[100px] lg:py-[140px] relative">
         <div className="text-center max-w-[820px] mx-auto">
           <Reveal>
-            <h2 className="h-mix text-[36px] sm:text-[44px] lg:text-[54px] text-foreground">
+            <h2 className="h-mix text-[26px] sm:text-[32px] lg:text-[36px] text-foreground">
               Em apenas 8 semanas,
               <br />
               a operação <em>roda sozinha</em>.

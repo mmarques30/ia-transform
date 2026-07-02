@@ -7,7 +7,7 @@ export function CTAFinal() {
       <div className="container-page">
         <div className="max-w-[820px] mx-auto text-center">
           <Reveal>
-            <h2 className="h-mix text-[40px] sm:text-[48px] lg:text-[60px] text-foreground">
+            <h2 className="h-mix text-[26px] sm:text-[32px] lg:text-[36px] text-foreground">
               60 minutos. Você sai com clareza do que está{" "}
               <em>custando sem aparecer.</em>
             </h2>

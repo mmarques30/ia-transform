@@ -9,7 +9,7 @@ site.
 
 ```
 business/
-├── Solution.tsx    (dobra 5 — Método MAPA, shared nas 3 LPs)
+├── Solution.tsx    (dobra 5 — Método APLICA, shared nas 3 LPs)
 ├── Process.tsx     (dobra 8 — Jornada semana a semana, shared)
 ├── OliveWave.tsx   (visual filler shared)
 ├── variantA/       ← LP `/`  (ângulo: custo escondido no processo)
