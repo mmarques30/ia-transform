@@ -1,4 +1,6 @@
+import type { ReactNode } from "react";
 import { createFileRoute } from "@tanstack/react-router";
+import { IABackground, type IABackgroundIntensity } from "@/components/IABackground";
 import { Hero } from "@/components/sections/business/variantA/Hero";
 import { Ticker } from "@/components/sections/business/variantA/Ticker";
 import { Problem } from "@/components/sections/business/variantA/Problem";
@@ -65,21 +67,65 @@ export const Route = createFileRoute("/")({
   component: BusinessLanding,
 });
 
+/**
+ * BgDobra — wrap section com a camada de fundo IABackground atrás
+ * e o conteúdo em z-index positivo. Serve pra dobras que se
+ * beneficiam do fundo escuro técnico da spec.
+ *
+ * Rule: apenas a `/` (LP-A) usa esse sistema; as outras LPs seguem
+ * intactas. Não mexo em components shared — o wrapper resolve tudo
+ * no route.
+ */
+function BgDobra({
+  intensity,
+  children,
+}: {
+  intensity: IABackgroundIntensity;
+  children: ReactNode;
+}) {
+  return (
+    <div className="relative overflow-hidden">
+      <IABackground intensity={intensity} />
+      <div className="relative" style={{ zIndex: 1 }}>
+        {children}
+      </div>
+    </div>
+  );
+}
+
 function BusinessLanding() {
   return (
-    <main className="min-h-screen text-foreground">
-      <Hero />
+    <main className="min-h-screen text-foreground" style={{ backgroundColor: "#0a0c07" }}>
+      <BgDobra intensity="alta">
+        <Hero />
+      </BgDobra>
       <Ticker />
-      <Problem />
-      <Solution />
-      <Systems />
+      <BgDobra intensity="media">
+        <Problem />
+      </BgDobra>
+      <BgDobra intensity="media">
+        <Solution />
+      </BgDobra>
+      <BgDobra intensity="baixa">
+        <Systems />
+      </BgDobra>
       <OliveWave />
-      <ClientLogos />
-      <Process />
-      <Authority />
-      <Comparison />
+      <BgDobra intensity="baixa">
+        <ClientLogos />
+      </BgDobra>
+      <BgDobra intensity="media">
+        <Process />
+      </BgDobra>
+      <BgDobra intensity="media">
+        <Authority />
+      </BgDobra>
+      <BgDobra intensity="media">
+        <Comparison />
+      </BgDobra>
       <FAQ items={FAQ_ITEMS_LP_A} />
-      <CTAFinal />
+      <BgDobra intensity="alta">
+        <CTAFinal />
+      </BgDobra>
       <Footer />
     </main>
   );
