@@ -1,43 +1,80 @@
 import { Reveal } from "@/components/Reveal";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Mic, ChevronRight } from "lucide-react";
 
 /**
- * Systems (LP-B / dobra unificada — antes eram Systems + Impact).
+ * Systems (LP-B) — mockup coded realista do sistema CB Move
+ * Neuroscience, inspirado no prontuário real do cliente.
+ * Substitui o workflow de captação (que era fantasia) pelo
+ * prontuário de paciente + destaque na Documentação por áudio
+ * com IA — feature que dá o ângulo "operação que escala" da LP.
  *
- * Mockup coded do workflow de captação da CB Move Neuroscience,
- * alinhado com o ângulo "operação que escala" da LP-B — mostra
- * o fluxo automatizado que permitiu crescimento de 30 → 100+
- * pacientes sem contratar admin extra. Substitui o antigo
- * mockup "SuaEmpresa" fictício + o painel Impact separado.
- *
- * Estilo alinhado com o template lp_c_prova.html (case CB Move).
+ * Estrutura fiel ao screenshot: sidebar OPERAÇÃO/FINANCEIRO(7)/
+ * EQUIPE/CONFIG + breadcrumb + Susana Vaz #PT2147 + info row +
+ * tabs + card "Documentação por áudio" + últimas evoluções
+ * SUBJETIVO/OBJETIVO/PLANO com badges.
  */
 
-const STEPS = [
+interface Evolucao {
+  data: string;
+  weekday: string;
+  hora: string;
+  profissional: string;
+  status: "assinada" | "rascunho";
+  subj: string;
+  obj: string;
+  plano: string;
+}
+
+const EVOLUCOES: Evolucao[] = [
   {
-    icon: "📋",
-    label: "Lead entra via WhatsApp ou Instagram",
-    sub: "Formulário ou mensagem direta",
-    badge: "entrada",
+    data: "19/06/2026",
+    weekday: "sexta-feira",
+    hora: "09:00",
+    profissional: "Renata Lima",
+    status: "assinada",
+    subj: "Paciente refere melhora no equilíbrio em superfícies irregulares. Manteve adesão aos exercícios em casa durante o feriado.",
+    obj: "Escala de Berg: 48/56 (+3 vs sessão anterior). Marcha funcional sem apoio em 12 m. Reflexos preservados bilateralmente.",
+    plano: "Progredir treino de equilíbrio para superfícies instáveis (espuma). Adicionar marcha lateral nos exercícios em casa.",
   },
   {
-    icon: "🤖",
-    label: "IA qualifica: dor, urgência, perfil",
-    sub: "Categorização automática em <30 segundos",
-    badge: "auto",
-  },
-  {
-    icon: "💬",
-    label: "Follow-up em até 5 minutos · 3 toques",
-    sub: "WhatsApp personalizado por perfil de lead",
-    badge: "auto",
+    data: "17/06/2026",
+    weekday: "quarta-feira",
+    hora: "09:00",
+    profissional: "Renata Lima",
+    status: "assinada",
+    subj: "Refere fadiga moderada após semana de feriado. Sem episódios de queda nos últimos 14 dias.",
+    obj: "Aplicada Avaliação da Face (RQ.GPS.04.012-03): simetria parcial bilateral. Treino proprioceptivo em apoio bipodal.",
+    plano: "Próxima sessão: introduzir kinesiotape para suporte lateral cervical durante exercícios de equilíbrio.",
   },
 ];
 
-const RESULTS = [
-  { value: "30 → 100+", label: "pacientes atendidos" },
-  { value: "+300%", label: "capacidade sem contratar" },
-  { value: "R$0", label: "headcount admin extra" },
+const SIDEBAR = [
+  {
+    section: "Operação",
+    items: [
+      { label: "Dashboard", active: false },
+      { label: "Pacientes", active: true },
+      { label: "Prontuário", active: true, indent: true },
+      { label: "Agenda", active: false },
+      { label: "Frequência", active: false },
+    ],
+  },
+  {
+    section: "Financeiro",
+    badge: "7",
+    items: [
+      { label: "Cobranças", active: false },
+      { label: "Notas Fiscais", active: false },
+      { label: "Relatórios", active: false },
+    ],
+  },
+  {
+    section: "Equipe",
+    items: [
+      { label: "Fisioterapeutas", active: false },
+      { label: "Usuários", active: false },
+    ],
+  },
 ];
 
 export function Systems() {
@@ -62,15 +99,15 @@ export function Systems() {
           </Reveal>
           <Reveal delay={0.1}>
             <p className="mt-6 text-[16px] text-sage leading-[1.6] max-w-[600px] mx-auto">
-              Assim é o workflow de captação da CB Move Neuroscience — do primeiro contato à
-              consulta agendada, sem intervenção humana. Crescimento de 30 pra 100+ pacientes sem
-              contratar admin.
+              Assim é o prontuário do CB Move Neuroscience — sessão gravada por áudio, IA estrutura
+              em Subjetivo · Objetivo · Plano, o fisioterapeuta revisa e assina. 30 → 100+ pacientes
+              sem contratar admin.
             </p>
           </Reveal>
         </div>
 
         <Reveal delay={0.15}>
-          <SystemMockup />
+          <CBMoveMockup />
         </Reveal>
 
         <Reveal delay={0.2}>
@@ -89,15 +126,14 @@ export function Systems() {
   );
 }
 
-function SystemMockup() {
+function CBMoveMockup() {
   return (
-    <div className="relative mx-auto mt-14 lg:mt-20 max-w-[900px]">
+    <div className="relative mx-auto mt-14 lg:mt-20 max-w-[1080px]">
       <div
         aria-hidden
         className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[70%] rounded-full"
         style={{
-          background:
-            "radial-gradient(ellipse at center, oklch(0.75 0.20 122 / 0.18) 0%, transparent 70%)",
+          background: "radial-gradient(ellipse at center, oklch(0.75 0.20 122 / 0.14) 0%, transparent 70%)",
           filter: "blur(70px)",
         }}
       />
@@ -110,10 +146,7 @@ function SystemMockup() {
         }}
       >
         {/* Browser bar */}
-        <div
-          className="flex items-center gap-2 px-4 py-2.5"
-          style={{ backgroundColor: "#e2e1da" }}
-        >
+        <div className="flex items-center gap-2 px-4 py-2.5" style={{ backgroundColor: "#e2e1da" }}>
           <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: "#ff5f57" }} />
           <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: "#febc2e" }} />
           <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: "#28c840" }} />
@@ -121,156 +154,302 @@ function SystemMockup() {
             className="ml-2 flex-1 rounded px-3 py-1 text-[11px] text-center truncate"
             style={{ backgroundColor: "#cdccc5", color: "#555" }}
           >
-            workflow.cbmove.com.br — Captação
+            cbmove.iaplicada.com.br
           </div>
         </div>
 
-        {/* Client body */}
-        <div style={{ backgroundColor: "#0e120d" }}>
-          {/* Header */}
+        {/* System body */}
+        <div className="flex" style={{ backgroundColor: "#f9fafb", minHeight: 460 }}>
+          {/* Sidebar */}
           <div
-            className="flex items-center justify-between px-4 lg:px-5 py-2.5 border-b"
-            style={{ backgroundColor: "#0b1f0e", borderColor: "#1e3021" }}
+            className="hidden sm:flex flex-col shrink-0"
+            style={{ width: 168, backgroundColor: "#ffffff", borderRight: "1px solid #e5e7eb" }}
           >
-            <div
-              className="text-[13px] font-bold tracking-tight"
-              style={{ color: "#e8f5e0" }}
-            >
-              <span style={{ color: "#7cc442", marginRight: 4 }}>▸</span>
-              CB Move Neuroscience · Workflow de Captação
-            </div>
-            <div
-              className="text-[9px] font-semibold uppercase tracking-[0.1em] inline-flex items-center gap-1.5"
-              style={{ color: "#7cc442" }}
-            >
-              <span
-                className="h-1.5 w-1.5 rounded-full"
-                style={{ backgroundColor: "#7cc442" }}
-              />
-              3 leads ativos
-            </div>
-          </div>
-
-          {/* Workflow steps */}
-          <div
-            className="flex flex-col gap-2 px-4 lg:px-6 py-5"
-            style={{ backgroundColor: "#0a1a0c" }}
-          >
-            {STEPS.map((step, i) => (
-              <div key={step.label}>
-                <div
-                  className="rounded-lg px-4 py-3 flex items-center gap-3"
-                  style={{
-                    backgroundColor: "#112514",
-                    border: "1px solid #1f3f22",
-                  }}
-                >
-                  <span
-                    className="text-[16px] shrink-0"
-                    style={{ width: 22, textAlign: "center" }}
-                  >
-                    {step.icon}
-                  </span>
-                  <div className="flex-1 min-w-0">
-                    <p
-                      className="text-[11.5px] font-semibold"
-                      style={{ color: "#a8c8a0" }}
-                    >
-                      {step.label}
-                    </p>
-                    <p
-                      className="mt-0.5 text-[9.5px]"
-                      style={{ color: "#4a7044" }}
-                    >
-                      {step.sub}
-                    </p>
-                  </div>
-                  <span
-                    className="text-[9px] font-bold uppercase tracking-[0.05em] shrink-0"
-                    style={{ color: "#c8e040" }}
-                  >
-                    ● {step.badge}
-                  </span>
-                </div>
-                {i < STEPS.length - 1 && (
-                  <div
-                    className="text-center text-[14px] leading-none py-1"
-                    style={{ color: "#3a5a36" }}
-                  >
-                    ↓
-                  </div>
-                )}
+            {/* Logo */}
+            <div className="px-3 py-3 flex items-center gap-2 border-b" style={{ borderColor: "#e5e7eb" }}>
+              <div
+                className="h-7 w-7 rounded-full flex items-center justify-center text-[11px] font-bold text-white shrink-0"
+                style={{ background: "linear-gradient(135deg, #86efac, #6b7280)" }}
+              >
+                ∞
               </div>
-            ))}
+              <div className="min-w-0">
+                <p className="text-[9.5px] font-bold tracking-tight" style={{ color: "#111827" }}>
+                  CB MOVE
+                </p>
+                <p className="text-[7px] font-semibold" style={{ color: "#6b7280" }}>
+                  NEUROSCIENCE
+                </p>
+              </div>
+            </div>
 
-            {/* Final success row */}
-            <div className="mt-1">
-              <div className="text-center text-[14px] leading-none py-1" style={{ color: "#3a5a36" }}>
-                ↓
+            {/* Admin/Paciente toggle */}
+            <div className="p-2 flex gap-1 border-b" style={{ borderColor: "#e5e7eb" }}>
+              <div
+                className="flex-1 text-[8.5px] font-semibold text-center py-1 rounded"
+                style={{ backgroundColor: "#0d9488", color: "#ffffff" }}
+              >
+                Admin
               </div>
               <div
-                className="rounded-lg px-4 py-3 flex items-center justify-between gap-3"
-                style={{
-                  backgroundColor: "#1a3a1e",
-                  border: "1px solid #3a6a36",
-                }}
+                className="flex-1 text-[8.5px] font-semibold text-center py-1 rounded"
+                style={{ color: "#6b7280" }}
               >
+                Paciente
+              </div>
+            </div>
+
+            {/* Navigation groups */}
+            <div className="flex-1 py-1 overflow-hidden">
+              {SIDEBAR.map((g) => (
+                <div key={g.section} className="px-2 pt-2">
+                  <div className="flex items-center justify-between px-1">
+                    <p
+                      className="text-[7.5px] uppercase tracking-[0.08em] font-bold"
+                      style={{ color: "#9ca3af" }}
+                    >
+                      {g.section}
+                    </p>
+                    {g.badge && (
+                      <span
+                        className="text-[7px] font-bold px-1 py-px rounded-full"
+                        style={{ backgroundColor: "#ec4899", color: "#ffffff" }}
+                      >
+                        {g.badge}
+                      </span>
+                    )}
+                  </div>
+                  <div className="mt-0.5 flex flex-col gap-0.5">
+                    {g.items.map((item) => (
+                      <div
+                        key={item.label}
+                        className="text-[9px] px-2 py-1 rounded"
+                        style={{
+                          backgroundColor: item.active ? "#f0fdfa" : "transparent",
+                          color: item.active ? "#0d9488" : "#374151",
+                          fontWeight: item.active ? 600 : 400,
+                          paddingLeft: item.indent ? 14 : 8,
+                        }}
+                      >
+                        {item.label}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+              <div className="px-2 pt-2">
                 <p
-                  className="text-[12px] font-bold"
-                  style={{ color: "#c8e040" }}
+                  className="text-[7.5px] uppercase tracking-[0.08em] font-bold px-1"
+                  style={{ color: "#9ca3af" }}
                 >
-                  ✓ Consulta agendada — sem intervenção humana
+                  Configurações
                 </p>
-                <span
-                  className="text-[10px] font-semibold shrink-0"
-                  style={{ color: "#7cc442" }}
-                >
-                  Jornada &lt; 4h
-                </span>
+                <div className="mt-0.5 flex flex-col gap-0.5">
+                  {["Convênios", "Instrumentos clínicos", "Templates", "Integrações"].map((l) => (
+                    <div key={l} className="text-[9px] px-2 py-1 rounded" style={{ color: "#374151" }}>
+                      {l}
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Results row */}
-          <div
-            className="grid grid-cols-3 gap-3 px-4 lg:px-5 py-4 border-t"
-            style={{
-              backgroundColor: "#0b1f0e",
-              borderColor: "#1e3021",
-            }}
-          >
-            {RESULTS.map((r) => (
-              <div key={r.label} className="text-center">
-                <p
-                  className="text-[16px] lg:text-[18px] font-bold tracking-tight leading-none"
-                  style={{
-                    color: "#c8e040",
-                    fontFamily: '"Fraunces", Georgia, serif',
-                  }}
-                >
-                  {r.value}
-                </p>
-                <p
-                  className="mt-1 text-[9px] uppercase tracking-[0.06em] font-semibold"
-                  style={{ color: "#6a8c62" }}
-                >
-                  {r.label}
+          {/* Main */}
+          <div className="flex-1 min-w-0 px-3 py-3 sm:px-5 sm:py-4">
+            {/* Breadcrumb */}
+            <div className="flex items-center gap-1 text-[8px] font-semibold uppercase tracking-[0.06em] mb-2" style={{ color: "#6b7280" }}>
+              <span>Operação</span>
+              <ChevronRight className="h-2.5 w-2.5" />
+              <span>Pacientes</span>
+              <ChevronRight className="h-2.5 w-2.5" />
+              <span>Susana Vaz</span>
+              <ChevronRight className="h-2.5 w-2.5" />
+              <span style={{ color: "#0d9488" }}>Prontuário</span>
+            </div>
+
+            {/* Patient header */}
+            <div className="flex items-start justify-between gap-3 mb-3">
+              <div>
+                <p className="text-[19px] font-bold tracking-tight leading-none" style={{ color: "#111827" }}>
+                  Susana Vaz{" "}
+                  <span className="text-[10px] font-normal tabular-nums" style={{ color: "#6b7280" }}>
+                    #PT2147
+                  </span>
                 </p>
               </div>
-            ))}
-          </div>
+              <div className="flex items-center gap-1.5">
+                <button
+                  className="text-[8.5px] font-semibold px-2 py-1 rounded inline-flex items-center gap-1"
+                  style={{ backgroundColor: "#ffffff", border: "1px solid #e5e7eb", color: "#374151" }}
+                >
+                  📤 Exportar prontuário
+                </button>
+                <button
+                  className="text-[8.5px] font-semibold px-2 py-1 rounded inline-flex items-center gap-1"
+                  style={{ backgroundColor: "#0d9488", color: "#ffffff" }}
+                >
+                  ✍ Gravar evolução
+                </button>
+              </div>
+            </div>
 
-          {/* Auditoria stamp */}
-          <div
-            className="px-4 lg:px-5 py-2.5 text-[9.5px] uppercase tracking-[0.08em] font-semibold text-center border-t"
-            style={{
-              backgroundColor: "#0b1f0e",
-              borderColor: "#1e3021",
-              color: "#4a7044",
-            }}
-          >
-            Validado jun/2026 · portfólio IAplicada
+            {/* Info row */}
+            <div
+              className="rounded-md p-2 mb-3 grid grid-cols-2 sm:grid-cols-4 gap-2"
+              style={{ backgroundColor: "#ffffff", border: "1px solid #e5e7eb" }}
+            >
+              {[
+                { label: "Tipo", value: "Judicial · Bradesco", pill: true },
+                { label: "Processo", value: "5004821-12.2024", mono: true },
+                { label: "Fisio responsável", value: "Renata Lima" },
+                { label: "Plano", value: "18 / 24 sessões" },
+              ].map((r) => (
+                <div key={r.label}>
+                  <p
+                    className="text-[7px] uppercase tracking-[0.06em] font-bold"
+                    style={{ color: "#9ca3af" }}
+                  >
+                    {r.label}
+                  </p>
+                  {r.pill ? (
+                    <span
+                      className="mt-0.5 inline-block text-[9px] font-semibold px-1.5 py-px rounded"
+                      style={{ backgroundColor: "#fecaca", color: "#9f1239" }}
+                    >
+                      {r.value}
+                    </span>
+                  ) : (
+                    <p
+                      className="mt-0.5 text-[10px] font-semibold tabular-nums"
+                      style={{
+                        color: "#111827",
+                        fontFamily: r.mono ? '"JetBrains Mono", monospace' : undefined,
+                      }}
+                    >
+                      {r.value}
+                    </p>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            {/* Tabs */}
+            <div className="flex items-center gap-3 border-b mb-3" style={{ borderColor: "#e5e7eb" }}>
+              {[
+                { label: "Evolução diária", active: true },
+                { label: "Avaliações clínicas", active: false },
+                { label: "Documentos", active: false },
+                { label: "Histórico de status", active: false },
+              ].map((t) => (
+                <span
+                  key={t.label}
+                  className="text-[9px] pb-1.5 whitespace-nowrap"
+                  style={{
+                    color: t.active ? "#0d9488" : "#6b7280",
+                    fontWeight: t.active ? 700 : 400,
+                    borderBottom: t.active ? "2px solid #0d9488" : "2px solid transparent",
+                    marginBottom: -1,
+                  }}
+                >
+                  {t.label}
+                </span>
+              ))}
+            </div>
+
+            {/* Documentação por áudio card — feature IA em destaque */}
+            <div
+              className="rounded-md p-3 mb-3 flex items-center justify-between gap-3"
+              style={{
+                background: "linear-gradient(90deg, #ccfbf1, #f0fdfa)",
+                border: "1px solid #99f6e4",
+              }}
+            >
+              <div className="flex items-start gap-2.5 min-w-0">
+                <div
+                  className="h-8 w-8 rounded-full flex items-center justify-center shrink-0"
+                  style={{ backgroundColor: "#0d9488" }}
+                >
+                  <Mic className="h-4 w-4 text-white" strokeWidth={2.5} />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-[11px] font-bold" style={{ color: "#134e4a" }}>
+                    Documentação por áudio
+                  </p>
+                  <p className="mt-0.5 text-[9px]" style={{ color: "#0f766e" }}>
+                    Grave a evolução da sessão. A IA estrutura em Subjetivo · Objetivo · Plano e você
+                    revisa antes de salvar.
+                  </p>
+                </div>
+              </div>
+              <button
+                className="text-[8.5px] font-semibold px-2.5 py-1.5 rounded shrink-0"
+                style={{ backgroundColor: "#0d9488", color: "#ffffff" }}
+              >
+                Iniciar gravação
+              </button>
+            </div>
+
+            {/* Últimas evoluções */}
+            <div className="mb-2 flex items-center justify-between">
+              <p className="text-[10px] font-bold" style={{ color: "#111827" }}>
+                Últimas evoluções
+              </p>
+              <p className="text-[7.5px] uppercase tracking-[0.06em] font-semibold" style={{ color: "#9ca3af" }}>
+                23 entradas em jun/2026
+              </p>
+            </div>
+
+            <div className="flex flex-col gap-2">
+              {EVOLUCOES.map((e) => (
+                <div
+                  key={e.data}
+                  className="rounded-md p-2.5"
+                  style={{ backgroundColor: "#ffffff", border: "1px solid #e5e7eb" }}
+                >
+                  <div className="flex items-start justify-between gap-2 mb-1.5">
+                    <p className="text-[9px] font-bold" style={{ color: "#111827" }}>
+                      {e.data} ·{" "}
+                      <span className="font-normal" style={{ color: "#6b7280" }}>
+                        {e.weekday} · {e.hora} · {e.profissional}
+                      </span>
+                    </p>
+                    <span
+                      className="text-[7px] font-bold uppercase tracking-[0.05em] px-1.5 py-px rounded shrink-0"
+                      style={{
+                        backgroundColor: e.status === "assinada" ? "#d1fae5" : "#fef3c7",
+                        color: e.status === "assinada" ? "#065f46" : "#78350f",
+                      }}
+                    >
+                      {e.status === "assinada" ? "Assinada" : "Rascunho · revisar"}
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-[54px_1fr] gap-x-2 gap-y-0.5 text-[8px]">
+                    <p className="uppercase tracking-[0.06em] font-bold" style={{ color: "#9ca3af" }}>
+                      Subjetivo
+                    </p>
+                    <p style={{ color: "#374151" }}>{e.subj}</p>
+                    <p className="uppercase tracking-[0.06em] font-bold" style={{ color: "#9ca3af" }}>
+                      Objetivo
+                    </p>
+                    <p style={{ color: "#374151" }}>{e.obj}</p>
+                    <p className="uppercase tracking-[0.06em] font-bold" style={{ color: "#9ca3af" }}>
+                      Plano
+                    </p>
+                    <p style={{ color: "#374151" }}>{e.plano}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
+        </div>
+
+        {/* Auditoria stamp */}
+        <div
+          className="px-4 py-2 text-[9.5px] uppercase tracking-[0.08em] font-semibold text-center"
+          style={{ backgroundColor: "#134e4a", color: "#5eead4" }}
+        >
+          CB Move Neuroscience · Prontuário real em produção · validado jun/2026
         </div>
       </div>
     </div>
