@@ -1,6 +1,6 @@
 import { Reveal } from "@/components/Reveal";
 
-const TOOL_BADGES = ["Domínio", "Alterdata", "Omie", "Make"];
+const TOOL_BADGES = ["Make", "n8n", "Zapier", "HubSpot", "Notion", "Google Workspace"];
 
 export function Solution() {
   return (
@@ -11,7 +11,7 @@ export function Solution() {
         <div className="hidden lg:block max-w-[720px] mx-auto text-center">
           <Reveal>
             <p className="text-[12px] uppercase tracking-[0.16em] font-semibold text-muted-foreground mb-3">
-              Roda sobre os sistemas que seu escritório já usa:
+              Roda sobre os sistemas que sua empresa já usa:
             </p>
             <div className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-1.5">
               {TOOL_BADGES.map((t, i) => (
@@ -32,16 +32,15 @@ export function Solution() {
             <h2 className="h-mix mt-6 text-[36px] sm:text-[42px] lg:text-[52px] text-foreground">
               O Método MAPA
               <br />
-              <em>automatiza o seu escritório.</em>
+              <em>automatiza a sua operação.</em>
             </h2>
           </Reveal>
 
           <Reveal delay={0.1}>
             <p className="mt-6 text-[17px] text-sage leading-[1.65] mx-auto">
-              A gente entra na rotina real do escritório e automatiza conciliação, classificação,
-              apuração e obrigações{" "}
+              A gente entra na rotina real da empresa e automatiza os processos que mais custam{" "}
               <span className="text-foreground font-semibold">
-                dentro do fluxo que seu time já conhece
+                dentro do fluxo que o time já conhece
               </span>
               . Primeira rotina rodando em 7 dias, time autônomo em 2 meses. Sem trocar de sistema,
               sem depender de TI.
@@ -50,7 +49,7 @@ export function Solution() {
 
           <Reveal delay={0.15}>
             <a href="#diagnostico-form" className="mt-10 cta-primary">
-              Quero ver onde meu escritório perde hora
+              Quero ver onde meu negócio perde hora
               <span className="arrow">
                 <svg
                   width="14"
@@ -79,7 +78,7 @@ export function Solution() {
         <div className="lg:hidden">
           <Reveal>
             <p className="text-[11px] uppercase tracking-[0.18em] font-semibold text-muted-foreground mb-3 text-center">
-              Roda sobre os sistemas que seu escritório já usa
+              Roda sobre os sistemas que sua empresa já usa
             </p>
             <div className="flex justify-center">
               <div className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3.5 py-1.5">
@@ -100,14 +99,13 @@ export function Solution() {
 
           <Reveal delay={0.05}>
             <h2 className="h-mix mt-7 text-[30px] leading-[1.1] text-foreground text-center">
-              O Método MAPA <em>automatiza o seu escritório.</em>
+              O Método MAPA <em>automatiza a sua operação.</em>
             </h2>
           </Reveal>
 
           <Reveal delay={0.1}>
             <p className="mt-5 text-[15px] text-sage leading-[1.6] text-center">
-              Entramos na rotina real e automatizamos conciliação, classificação, apuração e
-              obrigações.
+              Entramos na rotina real e automatizamos os processos que mais custam.
             </p>
           </Reveal>
 
@@ -154,7 +152,7 @@ export function Solution() {
           <Reveal delay={0.22}>
             <div className="mt-8 flex justify-center">
               <a href="#diagnostico-form" className="cta-primary">
-                Quero ver onde meu escritório perde hora
+                Quero ver onde meu negócio perde hora
                 <span className="arrow">
                   <svg
                     width="14"
