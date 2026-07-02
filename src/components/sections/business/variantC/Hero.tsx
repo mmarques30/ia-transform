@@ -63,11 +63,22 @@ export function Hero() {
               </Reveal>
 
               <Reveal delay={0.15}>
-                <p
-                  className="mt-6 lg:mt-7 text-[14px]"
-                  style={{ color: "var(--color-muted-foreground)", opacity: 0.7 }}
-                >
-                  +40 empresas já operam com a IAplicada.
+                <p className="mt-6 lg:mt-7 inline-flex items-center">
+                  <span
+                    aria-hidden
+                    style={{ color: "#afc040", marginRight: 6 }}
+                  >
+                    ●
+                  </span>
+                  <span
+                    style={{
+                      color: "#ffffff",
+                      fontSize: 15,
+                      fontWeight: 500,
+                    }}
+                  >
+                    +40 empresas já operam com a IAplicada.
+                  </span>
                 </p>
               </Reveal>
             </div>
