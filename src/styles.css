@@ -1556,3 +1556,66 @@
     background-size: 44px 44px;
   }
 }
+
+/* ============================================================
+   LP-C PSA DUO — animações do mockup dividido em 2 telas.
+   ============================================================ */
+
+/* Barras horizontais crescendo (usado no chart de assertividade) */
+@keyframes psa-bar-grow {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+.psa-bar-fill {
+  transform-origin: left center;
+  animation: psa-bar-grow 1.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.psa-bar-fill:nth-child(2) { animation-delay: 0.15s; }
+.psa-bar-fill:nth-child(3) { animation-delay: 0.30s; }
+.psa-bar-fill:nth-child(4) { animation-delay: 0.45s; }
+.psa-bar-fill:nth-child(5) { animation-delay: 0.60s; }
+
+/* Live pulse — bolinha ao vivo pulsando */
+@keyframes psa-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.35; transform: scale(0.85); }
+}
+.psa-pulse {
+  animation: psa-pulse 1.6s ease-in-out infinite;
+}
+
+/* Ticker de contador — número que sobe 3 estados em loop
+   (usado pra simular "divergências detectadas" ao vivo). */
+@keyframes psa-ticker {
+  0%, 25% { transform: translateY(0); }
+  33.33%, 58.33% { transform: translateY(-1em); }
+  66.66%, 91.66% { transform: translateY(-2em); }
+  100% { transform: translateY(0); }
+}
+.psa-ticker-track {
+  display: inline-block;
+  line-height: 1em;
+  animation: psa-ticker 6s steps(1, end) infinite;
+}
+
+/* Timeline step "em execução" — animação de progresso */
+@keyframes psa-step-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(200, 224, 64, 0.4); }
+  50% { box-shadow: 0 0 0 6px rgba(200, 224, 64, 0); }
+}
+.psa-step-active {
+  animation: psa-step-glow 2s ease-in-out infinite;
+}
+
+/* Reduced motion — desliga todas as animações do PSA duo */
+@media (prefers-reduced-motion: reduce) {
+  .psa-bar-fill,
+  .psa-pulse,
+  .psa-ticker-track,
+  .psa-step-active {
+    animation: none !important;
+  }
+  .psa-bar-fill {
+    transform: none;
+  }
+}
