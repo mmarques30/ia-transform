@@ -41,7 +41,7 @@ const FAQS = [
   },
   {
     q: "O sistema fica com o nome da IAplicada ou da minha empresa?",
-    a: "Com o nome da sua empresa. A URL, o branding e o painel são seus. A IAplicada constrói e depois o sistema é inteiramente seu — sem dependência de licença ou assinatura da gente.",
+    a: "Com o nome da sua empresa. A URL, o branding e o painel são seus. A IAplicada constrói e depois o sistema é inteiramente seu, sem dependência de licença ou assinatura da gente.",
   },
   {
     q: "Preciso ter time de TI para manter?",

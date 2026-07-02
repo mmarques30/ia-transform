@@ -40,7 +40,7 @@ export function Impact() {
           <Reveal delay={0.1}>
             <p className="mt-5 text-[16px] text-sage leading-[1.6] max-w-[600px] mx-auto">
               R$6.900 de economia operacional mensal. 90h liberadas. 14 automações rodando. Esse é
-              o número da Focus Fintax — em 10 semanas de projeto.
+              o número da Focus Fintax. Em 10 semanas de projeto.
             </p>
           </Reveal>
         </div>

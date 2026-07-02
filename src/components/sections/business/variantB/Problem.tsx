@@ -6,7 +6,7 @@ const PROBLEMS = [
   {
     n: "01",
     title: "Cada cliente novo vira mais trabalho manual",
-    text: "Crescer deveria ser positivo. Mas sem sistema, cada contrato novo é mais horas do mesmo time fazendo a mesma coisa na mão — e a margem some no meio do caminho.",
+    text: "Crescer deveria ser positivo. Mas sem sistema, cada contrato novo é mais horas do mesmo time fazendo a mesma coisa na mão. E a margem some no meio do caminho.",
   },
   {
     n: "02",

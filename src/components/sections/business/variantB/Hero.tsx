@@ -66,7 +66,7 @@ export function Hero() {
                 <p className="hidden lg:block mt-3 lg:mt-4 text-[14.5px] lg:text-[16px] text-sage leading-[1.6] max-w-[540px]">
                   Empresas de serviço que cresceram sem digitalizar chegam no mesmo ponto: cada
                   contrato novo significa mais trabalho manual, mais dependência de pessoas
-                  específicas e mais risco de erro. A IAplicada transforma isso — do diagnóstico ao
+                  específicas e mais risco de erro. A IAplicada transforma isso. Do diagnóstico ao
                   sistema funcionando.
                 </p>
               </Reveal>

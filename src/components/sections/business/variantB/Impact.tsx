@@ -40,7 +40,7 @@ export function Impact() {
           <Reveal delay={0.1}>
             <p className="mt-5 text-[16px] text-sage leading-[1.6] max-w-[600px] mx-auto">
               Uma empresa com R$2M de faturamento que tem 80h/mês em processos manuais está
-              deixando R$6.400 na mesa todo mês — só em horas. Com automação, isso cai 70%.
+              deixando R$6.400 na mesa todo mês, só em horas. Com automação, isso cai 70%.
             </p>
           </Reveal>
         </div>

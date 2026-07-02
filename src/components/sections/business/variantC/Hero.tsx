@@ -65,7 +65,7 @@ export function Hero() {
               <Reveal delay={0.15}>
                 <p className="hidden lg:block mt-3 lg:mt-4 text-[14.5px] lg:text-[16px] text-sage leading-[1.6] max-w-[540px]">
                   Empresas de serviço que passaram pelo processo da IAplicada saíram com sistemas
-                  funcionando na operação — com o nome deles, para o time deles. Focus Fintax, PSA
+                  funcionando na operação, com o nome deles, para o time deles. Focus Fintax, PSA
                   Consultores, CB Move Neuroscience. Os números abaixo são deles.
                 </p>
               </Reveal>
