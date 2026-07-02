@@ -46,12 +46,13 @@ const FAIXAS_FATURAMENTO = [
   "Acima de 50MM",
 ];
 
-/** Faixa de colaboradores do escritório — opcional, secundário ao faturamento. */
-const COLABORADORES = [
-  "até 10",
-  "11 a 30",
-  "31 a 50",
-  "+ 50",
+/** Cargo do lead — qualifier de decisor no CRM. Obrigatório. */
+const CARGOS = [
+  "CEO / Fundador / Sócio",
+  "Diretor / Head",
+  "Gerente",
+  "Coordenador / Supervisor",
+  "Analista",
 ];
 
 /**
@@ -181,15 +182,16 @@ export function HeroForm({
 
   /**
    * Required pra qualificação MQL no CRM contábil:
+   *   - cargo qualifica se o lead é decisor (backend usa pra priorizar SDR)
    *   - faixa_de_faturamento é o qualificador principal de tier de deal
    *   - company necessário pra deal/account creation
-   *   - numero_de_colaboradores virou opcional (sinal secundário)
    */
   const REQUIRED_FIELDS = [
     "firstname",
     "email",
     "phone",
     "company",
+    "cargo",
     "faixa_de_faturamento",
   ] as const;
 
@@ -286,8 +288,8 @@ export function HeroForm({
         email: String(fd.get("email") ?? "").trim(),
         phone: String(fd.get("phone") ?? "").trim(),
         company: String(fd.get("company") ?? "").trim(),
+        cargo: String(fd.get("cargo") ?? "").trim(),
         faixa_de_faturamento: String(fd.get("faixa_de_faturamento") ?? "").trim(),
-        numero_de_colaboradores: String(fd.get("numero_de_colaboradores") ?? "").trim(),
       };
 
       const utmSource = params.get("utm_source") ?? "";
@@ -558,6 +560,31 @@ Conte sobre o seu escritório
           </Field>
 
           <Field
+            id="cargo"
+            label="Cargo"
+            required
+            error={fieldErrors.cargo}
+          >
+            <select
+              id="cargo"
+              name="cargo"
+              required
+              defaultValue=""
+              aria-invalid={!!fieldErrors.cargo}
+              className="form-input"
+            >
+              <option value="" disabled>
+                Selecione seu cargo
+              </option>
+              {CARGOS.map((c) => (
+                <option key={c} value={c}>
+                  {c}
+                </option>
+              ))}
+            </select>
+          </Field>
+
+          <Field
             id="faixa_de_faturamento"
             label="Faturamento anual da empresa"
             required
@@ -577,27 +604,6 @@ Conte sobre o seu escritório
               {FAIXAS_FATURAMENTO.map((f) => (
                 <option key={f} value={f}>
                   {f}
-                </option>
-              ))}
-            </select>
-          </Field>
-
-          <Field
-            id="numero_de_colaboradores"
-            label="Número de colaboradores (opcional)"
-            error={fieldErrors.numero_de_colaboradores}
-          >
-            <select
-              id="numero_de_colaboradores"
-              name="numero_de_colaboradores"
-              defaultValue=""
-              aria-invalid={!!fieldErrors.numero_de_colaboradores}
-              className="form-input"
-            >
-              <option value="">Selecione (opcional)</option>
-              {COLABORADORES.map((c) => (
-                <option key={c} value={c}>
-                  {c}
                 </option>
               ))}
             </select>
