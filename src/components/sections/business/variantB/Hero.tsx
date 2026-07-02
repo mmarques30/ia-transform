@@ -58,16 +58,27 @@ export function Hero() {
 
               <Reveal delay={0.1}>
                 <p className="mt-5 lg:mt-7 text-[15px] lg:text-[16px] text-sage leading-[1.6] max-w-[540px]">
-                  Cada cliente novo é mais trabalho manual, não mais margem.
+                  Sem refém da planilha. Você acompanha, seu time opera.
                 </p>
               </Reveal>
 
               <Reveal delay={0.15}>
-                <p
-                  className="mt-6 lg:mt-7 text-[14px]"
-                  style={{ color: "var(--color-muted-foreground)", opacity: 0.7 }}
-                >
-                  +40 empresas já operam com a IAplicada.
+                <p className="mt-6 lg:mt-7 inline-flex items-center">
+                  <span
+                    aria-hidden
+                    style={{ color: "#afc040", marginRight: 6 }}
+                  >
+                    ●
+                  </span>
+                  <span
+                    style={{
+                      color: "#ffffff",
+                      fontSize: 15,
+                      fontWeight: 500,
+                    }}
+                  >
+                    +40 empresas já operam com a IAplicada.
+                  </span>
                 </p>
               </Reveal>
             </div>
