@@ -84,7 +84,7 @@ function BgDobra({
   children: ReactNode;
 }) {
   return (
-    <div className="relative overflow-hidden">
+    <div className="relative overflow-hidden ia-dobra">
       <IABackground intensity={intensity} />
       <div className="relative" style={{ zIndex: 1 }}>
         {children}
@@ -122,7 +122,9 @@ function BusinessLanding() {
       <BgDobra intensity="media">
         <Comparison />
       </BgDobra>
-      <FAQ items={FAQ_ITEMS_LP_A} />
+      <BgDobra intensity="media">
+        <FAQ items={FAQ_ITEMS_LP_A} />
+      </BgDobra>
       <BgDobra intensity="alta">
         <CTAFinal />
       </BgDobra>
