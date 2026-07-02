@@ -44,7 +44,7 @@ export function Hero() {
             <div>
               <Reveal>
                 <img
-                  src="/brand/iaplicada-logo-light.png"
+                  src="/brand/iaplicada-logo-dark.png"
                   alt="IAplicada"
                   height={28}
                   className="block"
