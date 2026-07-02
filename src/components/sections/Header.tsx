@@ -26,22 +26,21 @@ interface HeaderProps {
   homePath?: string;
   /**
    * Esconde o CTA "Agendar diagnóstico" do header. Usado em LPs onde a
-   * conversão acontece via modal disparado por CTAs internos (ex:
-   * /contabilcalculo), pra evitar concorrência com o fluxo principal.
-   * Quando true, a nav fica alinhada à direita via justify-between.
+   * conversão acontece via modal disparado por CTAs internos, pra evitar
+   * concorrência com o fluxo principal. Quando true, a nav fica alinhada
+   * à direita via justify-between.
    */
   hideCta?: boolean;
   /**
    * Lista customizada de itens da nav. Default = NAV principal (Sistemas /
-   * Abordagem / Time / FAQ). LPs como /contabilcalculo passam um set
-   * próprio com âncoras que de fato existem na página.
+   * Abordagem / Time / FAQ). LPs podem passar um set próprio com âncoras
+   * que de fato existem na página.
    */
   nav?: NavItem[];
   /**
    * Label da pílula de contexto ao lado do logo. Default detecta pela
    * homePath ("/contabil*" → "Contábil", outros → "Business"). LPs podem
-   * sobrescrever quando o logo aponta pra uma rota diferente da vertical
-   * (ex: /contabilcalculo com homePath="/" mas badge "Contábil").
+   * sobrescrever quando o logo aponta pra uma rota diferente da vertical.
    */
   badgeLabel?: string;
   /**

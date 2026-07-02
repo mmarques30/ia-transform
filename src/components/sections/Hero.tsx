@@ -13,8 +13,8 @@ interface HeroProps {
  * anterior dark — só visual mudou. Form (HeroForm) mantém fields,
  * validação, submit, redirect — só ganha tratamento light no card.
  *
- * As outras LPs (/contabil, /contabil02, /contabilcalculo,
- * /indicacaobusiness) continuam usando seus respectivos Heroes dark.
+ * As outras LPs (/contabil, /contabil02, /indicacaobusiness) continuam
+ * usando seus respectivos Heroes dark.
  */
 export function Hero({ formSlug, thankYouPath }: HeroProps = {}) {
   return (
