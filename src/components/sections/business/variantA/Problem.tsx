@@ -41,29 +41,6 @@ export function Problem() {
   return (
     <section className="relative">
       <div className="section-veil w-full py-[80px] lg:py-[120px]">
-        <svg
-          aria-hidden
-          className="pointer-events-none absolute inset-0 w-full h-full opacity-[0.14]"
-          viewBox="0 0 1440 900"
-          preserveAspectRatio="none"
-        >
-          <defs>
-            <linearGradient id="problem-line" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stopColor="oklch(0.75 0.20 122)" stopOpacity="0" />
-              <stop offset="50%" stopColor="oklch(0.75 0.20 122)" stopOpacity="0.8" />
-              <stop offset="100%" stopColor="oklch(0.75 0.20 122)" stopOpacity="0" />
-            </linearGradient>
-          </defs>
-          <line
-            x1="-100"
-            y1="0"
-            x2="1540"
-            y2="900"
-            stroke="url(#problem-line)"
-            strokeWidth="1"
-          />
-        </svg>
-
         <div className="relative z-10 container-page w-full">
           <div className="text-center max-w-[860px] mx-auto">
             <Reveal>
@@ -84,10 +61,13 @@ export function Problem() {
             </Reveal>
           </div>
 
-          <div className="mt-10 lg:mt-14 grid md:grid-cols-2 gap-4 lg:gap-5 max-w-[980px] mx-auto">
+          <div className="mt-10 lg:mt-14 grid md:grid-cols-2 gap-4 lg:gap-5 max-w-[980px] mx-auto items-stretch">
             {PROBLEMS.map((p, i) => (
-              <Reveal key={p.n} delay={0.18 + i * 0.09}>
-                <TiltCard className="problem-card tech-card p-6 lg:p-7 relative" maxTilt={6}>
+              <Reveal key={p.n} delay={0.18 + i * 0.09} className="h-full">
+                <TiltCard
+                  className="problem-card tech-card p-6 lg:p-7 relative h-full flex flex-col"
+                  maxTilt={6}
+                >
                   <div className="flex items-center gap-3">
                     <span
                       className="num-display text-[13px] tracking-wider"
