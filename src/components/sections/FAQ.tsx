@@ -39,6 +39,14 @@ const FAQS = [
     q: "Como garante continuidade depois?",
     a: "Handover documentado: playbooks, rituais, materiais. Acompanhamento opcional de 4–8h/mês.",
   },
+  {
+    q: "O sistema fica com o nome da IAplicada ou da minha empresa?",
+    a: "Com o nome da sua empresa. A URL, o branding e o painel são seus. A IAplicada constrói e depois o sistema é inteiramente seu — sem dependência de licença ou assinatura da gente.",
+  },
+  {
+    q: "Preciso ter time de TI para manter?",
+    a: "Não. A entrega inclui treinamento do time e documentação. A maioria dos clientes opera de forma autônoma desde a semana 8, sem depender de TI interno ou consultor externo pra manter.",
+  },
 ];
 
 export function FAQ() {
