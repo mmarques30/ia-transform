@@ -158,7 +158,7 @@ export function Problem() {
             </span>
             <h2
               ref={headingRef}
-              className="h-mix mt-6 text-[36px] sm:text-[44px] lg:text-[58px] text-foreground"
+              className="h-mix mt-6 text-[26px] sm:text-[32px] lg:text-[36px] text-foreground"
               style={{ perspective: "800px" }}
             >
               Seu time opera. Mas a operação{" "}

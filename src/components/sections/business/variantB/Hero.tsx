@@ -57,25 +57,18 @@ export function Hero() {
               </h1>
 
               <Reveal delay={0.1}>
-                <p className="mt-5 lg:mt-7 text-[16px] lg:text-[19px] text-foreground font-semibold leading-[1.5]">
+                <p className="mt-5 lg:mt-7 text-[15px] lg:text-[16px] text-sage leading-[1.6] max-w-[540px]">
                   Cada cliente novo é mais trabalho manual, não mais margem.
                 </p>
               </Reveal>
 
               <Reveal delay={0.15}>
-                <p className="hidden lg:block mt-3 lg:mt-4 text-[14.5px] lg:text-[16px] text-sage leading-[1.6] max-w-[540px]">
-                  Empresas de serviço que cresceram sem digitalizar chegam no mesmo ponto: cada
-                  contrato novo significa mais trabalho manual, mais dependência de pessoas
-                  específicas e mais risco de erro. A IAplicada transforma isso. Do diagnóstico ao
-                  sistema funcionando.
+                <p
+                  className="mt-6 lg:mt-7 text-[14px]"
+                  style={{ color: "var(--color-muted-foreground)", opacity: 0.7 }}
+                >
+                  +40 empresas já operam com a IAplicada.
                 </p>
-              </Reveal>
-
-              {/* ClientsProof — visível apenas no desktop dentro da coluna esquerda. */}
-              <Reveal delay={0.18}>
-                <div className="hidden lg:block">
-                  <ClientsProof />
-                </div>
               </Reveal>
             </div>
 
@@ -84,59 +77,9 @@ export function Hero() {
                 <HeroForm />
               </div>
             </Reveal>
-
-            {/* ClientsProof — versão mobile vem DEPOIS do form, fora da
-                primeira dobra. No desktop, esta versão fica oculta porque
-                já aparece na coluna esquerda. */}
-            <Reveal delay={0.18}>
-              <div className="lg:hidden">
-                <ClientsProof />
-              </div>
-            </Reveal>
           </div>
         </div>
       </div>
     </section>
-  );
-}
-
-const PROOF_THUMBS = [
-  { src: "/clients/people/person-1.webp", alt: "" },
-  { src: "/clients/people/person-5.webp", alt: "" },
-  { src: "/clients/people/person-2.webp", alt: "" },
-  { src: "/clients/people/person-3.webp", alt: "" },
-  { src: "/clients/people/person-4.webp", alt: "" },
-];
-
-function ClientsProof() {
-  const SIZE = 40;
-  return (
-    <div className="mt-8 flex items-center gap-4">
-      <div className="flex" aria-hidden>
-        {PROOF_THUMBS.map((t, i) => (
-          <img
-            key={t.src}
-            src={t.src}
-            alt={t.alt}
-            width={SIZE}
-            height={SIZE}
-            loading="lazy"
-            decoding="async"
-            className="rounded-full object-cover"
-            style={{
-              width: SIZE,
-              height: SIZE,
-              marginLeft: i === 0 ? 0 : -12,
-              border: "2px solid var(--color-background)",
-              boxShadow: "0 2px 6px -2px oklch(0 0 0 / 0.5)",
-              zIndex: PROOF_THUMBS.length - i,
-            }}
-          />
-        ))}
-      </div>
-      <p className="text-[14px] text-foreground font-semibold leading-tight">
-        11 sistemas em produção.
-      </p>
-    </div>
   );
 }

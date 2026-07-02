@@ -1,9 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Header } from "@/components/sections/Header";
 import { Hero } from "@/components/sections/business/variantB/Hero";
+import { Ticker } from "@/components/sections/business/variantB/Ticker";
 import { Problem } from "@/components/sections/business/variantB/Problem";
 import { Solution } from "@/components/sections/business/Solution";
 import { Systems } from "@/components/sections/business/variantB/Systems";
+import { HighlightGif } from "@/components/sections/business/variantB/HighlightGif";
 import { OliveWave } from "@/components/sections/business/OliveWave";
 import { ClientLogos } from "@/components/sections/ClientLogos";
 import { Process } from "@/components/sections/business/Process";
@@ -14,20 +15,44 @@ import { FAQ } from "@/components/sections/FAQ";
 import { CTAFinal } from "@/components/sections/business/variantB/CTAFinal";
 import { Footer } from "@/components/sections/Footer";
 
+/** FAQ reduzida da `/businessv2` — só 5 perguntas conforme spec. */
+const FAQ_ITEMS_LP_B = [
+  {
+    q: "Quanto dura um projeto?",
+    a: "De 1 a 6 meses, conforme o escopo. A mentoria é um programa à parte e deve ser consultada direto com o time da IAplicada. A Mari abre vagas esporadicamente.",
+  },
+  {
+    q: "Qual o investimento?",
+    a: "A partir de R$ 9.997, dependendo do escopo e porte da operação. Valor fechado depois do diagnóstico.",
+  },
+  {
+    q: "Substitui consultoria, agência ou fábrica de software?",
+    a: "Depende do escopo contratado. Em muitos casos, sim: a IAplicada assume frentes que antes ficavam com consultoria, agência ou fábrica. Em outros, integramos com sistemas já implementados e trabalhamos lado a lado com times internos e fornecedores existentes.",
+  },
+  {
+    q: "O time precisa ter base técnica?",
+    a: "Não. Trabalhamos com líderes e operacionais. Parte técnica fica com a gente.",
+  },
+  {
+    q: "O sistema fica com o nome da IAplicada ou da minha empresa?",
+    a: "Com o nome da sua empresa. A URL, o branding e o painel são seus. A IAplicada constrói e depois o sistema é inteiramente seu, sem dependência de licença ou assinatura da gente.",
+  },
+];
+
 /**
- * /businessv2 — variante B do refactor Business (phase 3 de 5).
+ * /businessv2 — variante B (phase 3 + 7 ajustes pontuais).
  *
- * Ângulo LP-B: "De operação fragmentada a operação que escala."
- * ICP: empresa em crescimento que percebe que o modelo atual não
- * suporta mais clientes sem dor proporcional.
- *
- * Mesma estrutura de dobras da /contabil (dark charcoal, h-mix),
- * usando o shell business/ com sections variant-specific em
- * business/variantB/ (Hero, Problem, Systems, Impact, CTAFinal)
- * e shared em business/ root (Solution=Método MAPA, Process=Jornada).
- *
- * noindex mantido — LP alternativa pra teste. Retira no dia que
- * virar oficial.
+ * Ajustes recentes (aplica LP-A → LP-B):
+ * - Header removido inteiro do JSX (sem barra superior)
+ * - Ticker novo em variantB/Ticker.tsx (5 cases nomeados)
+ * - HighlightGif entre Problem e ClientLogos
+ * - Impact rewritten com 3 cases auditados (PSA, Quadra,
+ *   Turystar)
+ * - H2 sizes reduzidos pra 36/32/26 em variantB/*
+ * - FAQ passa lista de 5 items via prop `items`
+ * - Método MAPA → APLICA já em Solution shared
+ * - Authority counters ajustados (shared: 11 Sistemas /
+ *   110+ Usuários / 150+ Processos)
  */
 export const Route = createFileRoute("/businessv2")({
   head: () => ({
@@ -50,18 +75,19 @@ export const Route = createFileRoute("/businessv2")({
 function BusinessV2Landing() {
   return (
     <main className="min-h-screen text-foreground">
-      <Header />
       <Hero />
+      <Ticker />
       <Problem />
       <Solution />
       <Systems />
+      <HighlightGif />
       <OliveWave />
       <ClientLogos />
       <Process />
       <Impact />
       <Authority />
       <Comparison />
-      <FAQ />
+      <FAQ items={FAQ_ITEMS_LP_B} />
       <CTAFinal />
       <Footer />
     </main>

@@ -1,29 +1,53 @@
-import { useEffect, useRef } from "react";
 import { Reveal } from "@/components/Reveal";
-import { ArrowDown, ArrowUp, Activity } from "lucide-react";
 
-interface Metric {
+/**
+ * Impact (LP-B / dobra 9) — painel 3 colunas com dados auditados
+ * de 3 cases: PSA Consultores, Quadra Arquitetura, Turystar.
+ * Substitui o antigo monitor de simulação genérico por prova real.
+ */
+
+interface CaseMetric {
   label: string;
-  delta: string;
-  fill: number;
-  trend: "up" | "down";
-  isGoodWhen: "up" | "down";
+  value: string;
 }
 
-const METRICS: Metric[] = [
-  { label: "Horas manuais por mês", delta: "80h", fill: 100, trend: "down", isGoodWhen: "down" },
-  { label: "Custo estimado (R$80/h)", delta: "R$6,4k", fill: 100, trend: "down", isGoodWhen: "down" },
-  { label: "Redução após projeto", delta: "−70%", fill: 30, trend: "down", isGoodWhen: "down" },
-  { label: "Economia mensal", delta: "R$4,5k", fill: 70, trend: "up", isGoodWhen: "up" },
-  { label: "Payback (projeto R$25k)", delta: "5,5m", fill: 55, trend: "down", isGoodWhen: "down" },
-  { label: "Focus Fintax · liberadas", delta: "90h", fill: 90, trend: "up", isGoodWhen: "up" },
+interface CaseCard {
+  client: string;
+  metrics: CaseMetric[];
+}
+
+const CASES: CaseCard[] = [
+  {
+    client: "PSA Consultores",
+    metrics: [
+      { label: "Assertividade tributária", value: "85% → 94%" },
+      { label: "Produtividade", value: "+100%" },
+      { label: "ROI projetado", value: "R$193k/ano" },
+      { label: "Payback médio", value: "12,2 meses" },
+    ],
+  },
+  {
+    client: "Quadra Arquitetura",
+    metrics: [
+      { label: "Valor entregue vs contratado", value: "+225%" },
+      { label: "R$10k contratado", value: "R$32k+ entregue" },
+      { label: "Horas liberadas", value: "~90h/mês" },
+    ],
+  },
+  {
+    client: "Turystar",
+    metrics: [
+      { label: "Vendas no ERP", value: "17.886" },
+      { label: "Passageiros sob gestão", value: "20.958" },
+      { label: "Transfers cruzados", value: "7.886" },
+    ],
+  },
 ];
 
 export function Impact() {
   return (
     <section className="section-veil py-[100px] lg:py-[140px] relative overflow-hidden">
       <div className="container-page relative">
-        {/* ATO 1 — A virada operacional (claim + monitor) */}
         <div className="text-center max-w-[760px] mx-auto">
           <Reveal>
             <span className="label-chip">
@@ -32,216 +56,87 @@ export function Impact() {
             </span>
           </Reveal>
           <Reveal delay={0.05}>
-            <h2 className="h-mix mt-6 text-[36px] sm:text-[44px] lg:text-[54px] text-foreground">
-              O retorno não é promessa.
-              <br className="hidden sm:block" /> <em>É cálculo.</em>
+            <h2 className="h-mix mt-6 text-[26px] sm:text-[32px] lg:text-[36px] text-foreground">
+              Sem improviso, a operação <em>ganha previsibilidade.</em>
             </h2>
           </Reveal>
           <Reveal delay={0.1}>
-            <p className="mt-5 text-[16px] text-sage leading-[1.6] max-w-[600px] mx-auto">
-              Uma empresa com R$2M de faturamento que tem 80h/mês em processos manuais está
-              deixando R$6.400 na mesa todo mês, só em horas. Com automação, isso cai 70%.
+            <p className="mt-5 text-[16px] text-sage leading-[1.6] max-w-[560px] mx-auto">
+              Três referências. Resultados auditados.
             </p>
           </Reveal>
         </div>
 
         <Reveal delay={0.15}>
-          <div className="mt-12 max-w-[1080px] mx-auto">
-            <ImpactMonitor />
+          <div
+            className="mt-12 lg:mt-14 rounded-2xl overflow-hidden max-w-[1080px] mx-auto"
+            style={{
+              backgroundColor: "oklch(1 0 0)",
+              border: "1px solid oklch(0.92 0.005 110)",
+              boxShadow:
+                "0 30px 60px -20px oklch(0.18 0.02 122 / 0.18), 0 8px 20px -8px oklch(0.18 0.02 122 / 0.08)",
+            }}
+          >
+            <div className="grid grid-cols-1 md:grid-cols-3">
+              {CASES.map((c, i) => (
+                <CaseColumn key={c.client} card={c} isFirst={i === 0} />
+              ))}
+            </div>
+            <div
+              className="px-5 lg:px-6 py-3.5 border-t text-[11.5px] uppercase tracking-[0.08em] font-semibold text-center"
+              style={{
+                borderColor: "oklch(0.92 0.005 110)",
+                backgroundColor: "oklch(0.985 0.004 110)",
+                color: "oklch(0.5 0.015 115)",
+              }}
+            >
+              Dados auditados · portfólio IAplicada · jun/2026
+            </div>
           </div>
         </Reveal>
-
       </div>
     </section>
   );
 }
 
-/* ------------------------------------------------------------------ */
-/* Impact monitor — same dashboard live                              */
-/* ------------------------------------------------------------------ */
-
-function ImpactMonitor() {
-  const monitorRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const el = monitorRef.current;
-    if (!el) return;
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    const bars = el.querySelectorAll<HTMLElement>(".impact-bar-fill");
-    const deltas = el.querySelectorAll<HTMLElement>(".impact-delta");
-
-    if (reduced) return; /* inline width = fill já fica correto */
-
-    /* Estado inicial: barras vazias + deltas escondidos */
-    bars.forEach((b) => {
-      b.style.width = "0%";
-    });
-    deltas.forEach((d) => {
-      d.style.opacity = "0";
-      d.style.transform = "translateY(6px)";
-    });
-
-    let played = false;
-    const play = () => {
-      if (played) return;
-      played = true;
-      bars.forEach((b, i) => {
-        b.style.transition = `width 1s cubic-bezier(0.22, 1, 0.36, 1) ${i * 0.08}s`;
-        requestAnimationFrame(() => {
-          b.style.width = (b.dataset.fill || "0") + "%";
-        });
-      });
-      deltas.forEach((d, i) => {
-        const delay = 0.25 + i * 0.08;
-        d.style.transition = `opacity 0.5s ease ${delay}s, transform 0.5s ease ${delay}s`;
-        requestAnimationFrame(() => {
-          d.style.opacity = "1";
-          d.style.transform = "translateY(0)";
-        });
-      });
-    };
-
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            play();
-            io.disconnect();
-          }
-        });
-      },
-      { threshold: 0.25 },
-    );
-    io.observe(el);
-
-    return () => io.disconnect();
-  }, []);
-
+function CaseColumn({ card, isFirst }: { card: CaseCard; isFirst: boolean }) {
   return (
     <div
-      ref={monitorRef}
-      className="rounded-2xl overflow-hidden"
+      className="px-6 lg:px-7 py-7 lg:py-8"
       style={{
-        backgroundColor: "oklch(1 0 0)",
-        border: "1px solid oklch(0.92 0.005 110)",
-        boxShadow:
-          "0 30px 60px -20px oklch(0.18 0.02 122 / 0.18), 0 8px 20px -8px oklch(0.18 0.02 122 / 0.08)",
+        borderTop: !isFirst ? "1px solid oklch(0.94 0.005 110)" : undefined,
       }}
     >
-      <div
-        className="flex items-center justify-between px-5 py-3.5 border-b"
-        style={{
-          borderColor: "oklch(0.92 0.005 110)",
-          backgroundColor: "oklch(0.985 0.004 110)",
-        }}
+      <p
+        className="text-[10.5px] uppercase tracking-[0.16em] font-semibold"
+        style={{ color: "oklch(0.5 0.015 115)" }}
       >
-        <div className="flex items-center gap-2">
-          <span className="h-2 w-2 rounded-full bg-red-400/60" />
-          <span className="h-2 w-2 rounded-full bg-yellow-400/60" />
-          <span className="h-2 w-2 rounded-full bg-green-400/60" />
-          <p className="ml-2 text-[10.5px] font-mono" style={{ color: "oklch(0.5 0.015 115)" }}>
-            iaplicada · monitor operacional
-          </p>
-        </div>
-        <span
-          className="inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider"
-          style={{ color: "oklch(0.55 0.16 145)" }}
-        >
-          <Activity className="h-2.5 w-2.5" strokeWidth={2.5} />
-          ao vivo
-        </span>
-      </div>
-
-      <div className="px-6 lg:px-8 pt-6 pb-4 flex items-end justify-between border-b" style={{ borderColor: "oklch(0.94 0.005 110)" }}>
-        <div>
-          <p
-            className="text-[10.5px] uppercase tracking-[0.16em] font-semibold"
-            style={{ color: "oklch(0.5 0.015 115)" }}
-          >
-            Operação · últimos 90 dias
-          </p>
-          <p
-            className="mt-1.5 text-[20px] font-bold tracking-tight"
-            style={{ color: "oklch(0.18 0.02 122)" }}
-          >
-Antes vs. depois da automação
-          </p>
-        </div>
-        <div className="text-right">
-          <span
-            className="block text-[32px] font-bold tracking-tight leading-none"
-            style={{ color: "oklch(0.55 0.16 125)" }}
-          >
-            +73%
-          </span>
-          <span
-            className="block mt-1 text-[10px] uppercase tracking-[0.14em] font-semibold"
-            style={{ color: "oklch(0.5 0.015 115)" }}
-          >
-            ganho médio
-          </span>
-        </div>
-      </div>
-
-      <div className="px-6 lg:px-8 py-6 grid sm:grid-cols-2 gap-x-8 gap-y-4">
-        {METRICS.map((m) => {
-          const isGood = m.trend === m.isGoodWhen;
-          const TrendIcon = m.trend === "up" ? ArrowUp : ArrowDown;
-          return (
-            <div key={m.label}>
-              <div className="flex items-center justify-between mb-2">
-                <p className="text-[13.5px] font-medium" style={{ color: "oklch(0.22 0.02 122)" }}>
-                  {m.label}
-                </p>
-                <span
-                  className="impact-delta inline-flex items-center gap-1 text-[13px] font-bold tracking-tight"
-                  style={{
-                    color: isGood ? "oklch(0.55 0.16 125)" : "oklch(0.55 0.16 25)",
-                  }}
-                >
-                  <TrendIcon className="h-3 w-3" strokeWidth={2.5} />
-                  {m.delta}
-                </span>
-              </div>
-              <div
-                className="h-1.5 rounded-full overflow-hidden"
-                style={{ backgroundColor: "oklch(0.95 0.005 110)" }}
-              >
-                <div
-                  className="impact-bar-fill h-full rounded-full"
-                  data-fill={m.fill}
-                  style={{
-                    width: `${m.fill}%`,
-                    background: isGood
-                      ? "linear-gradient(90deg, oklch(0.62 0.17 125), oklch(0.82 0.2 115))"
-                      : "linear-gradient(90deg, oklch(0.55 0.16 25), oklch(0.7 0.18 25))",
-                  }}
-                />
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
-      <div
-        className="px-5 lg:px-6 py-3.5 border-t flex items-center justify-between text-[11px]"
-        style={{
-          borderColor: "oklch(0.92 0.005 110)",
-          backgroundColor: "oklch(0.985 0.004 110)",
-        }}
+        Case
+      </p>
+      <p
+        className="mt-1.5 text-[17px] font-bold tracking-tight leading-tight"
+        style={{ color: "oklch(0.18 0.02 122)" }}
       >
-        <span style={{ color: "oklch(0.5 0.015 115)" }}>
-          Simulação · empresa de R$2M/ano com 80h manuais/mês
-        </span>
-        <span
-          className="font-semibold inline-flex items-center gap-1"
-          style={{ color: "oklch(0.55 0.16 125)" }}
-        >
-          tudo no verde
-        </span>
+        {card.client}
+      </p>
+      <div className="mt-6 space-y-4">
+        {card.metrics.map((m) => (
+          <div key={m.label}>
+            <p
+              className="text-[12px] font-medium leading-tight"
+              style={{ color: "oklch(0.4 0.015 115)" }}
+            >
+              {m.label}
+            </p>
+            <p
+              className="mt-1 text-[18px] font-bold tracking-tight leading-tight"
+              style={{ color: "oklch(0.55 0.16 125)" }}
+            >
+              {m.value}
+            </p>
+          </div>
+        ))}
       </div>
     </div>
   );
 }
-
