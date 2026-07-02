@@ -134,9 +134,8 @@ export const Route = createRootRoute({
       //
       // Projeto Clarity escolhido em runtime pelo pathname. Matching
       // ordenado do MAIS específico → MENOS específico pra evitar
-      // colisão de prefixos (/contabilcalculo e /contabil02 começam
-      // com "/contabil"). Carrega um único tag por página (sem dupla
-      // contagem).
+      // colisão de prefixos (/contabil02 começa com "/contabil").
+      // Carrega um único tag por página (sem dupla contagem).
       //
       // Tag carregado via /c/tag/<id> (proxy do nosso próprio domínio
       // implementado em src/server-entry.ts). Bypass de adblockers
