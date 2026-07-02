@@ -12,7 +12,6 @@ export function Hero() {
       }}
     >
       <div className="h-[72px]" aria-hidden />
-      <MarqueeStrip />
 
       <div className="relative pt-[48px] lg:pt-[72px]">
         <div
@@ -46,10 +45,13 @@ export function Hero() {
           <div className="grid lg:grid-cols-[1.05fr_1fr] gap-8 lg:gap-16 items-center">
             <div>
               <Reveal>
-                <span className="label-chip">
-                  <span className="dot" />
-                  IAplicada · Business
-                </span>
+                <img
+                  src="/brand/iaplicada-logo-dark.png"
+                  alt="IAplicada"
+                  height={28}
+                  className="block"
+                  style={{ height: 28, width: "auto" }}
+                />
               </Reveal>
 
               <h1 className="h-mix mt-6 lg:mt-7 text-[32px] sm:text-[44px] lg:text-[58px] leading-[1.05] text-foreground">
@@ -97,64 +99,6 @@ export function Hero() {
         </div>
       </div>
     </section>
-  );
-}
-
-/* Marquee (dobra 2) — LP-A: stats de custo escondido no processo */
-const MARQUEE_ITEMS = [
-  "R$9k/mês invisível no DRE",
-  "87h liberadas por projeto",
-  "Payback em 4,6 meses",
-  "Sem trocar de sistema",
-  "Time autônomo na entrega",
-  "Empresas de serviço de R$1M a R$10M",
-];
-
-function MarqueeStrip() {
-  const seq = [...MARQUEE_ITEMS, ...MARQUEE_ITEMS];
-  const FADE = "oklch(0.10 0.012 122)";
-  return (
-    <div
-      className="relative overflow-hidden"
-      style={{
-        backgroundColor: FADE,
-        borderTop: "1px solid oklch(0.28 0.04 122)",
-        borderBottom: "1px solid oklch(0.28 0.04 122)",
-      }}
-    >
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-y-0 left-0 z-10 w-20"
-        style={{ background: `linear-gradient(90deg, ${FADE} 0%, transparent 100%)` }}
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-y-0 right-0 z-10 w-20"
-        style={{ background: `linear-gradient(270deg, ${FADE} 0%, transparent 100%)` }}
-      />
-      <div
-        className="ticker-track py-3.5 select-none"
-        style={{ cursor: "default", pointerEvents: "none" }}
-        aria-hidden
-      >
-        {seq.map((item, i) => (
-          <span key={i} className="inline-flex items-center gap-8">
-            <span
-              className="text-[11.5px] uppercase tracking-[0.16em] font-semibold whitespace-nowrap"
-              style={{ color: "oklch(0.96 0.012 110)" }}
-            >
-              {item}
-            </span>
-            <span
-              className="inline-block"
-              style={{ color: "var(--color-primary)", fontSize: 9, lineHeight: 1 }}
-            >
-              ◆
-            </span>
-          </span>
-        ))}
-      </div>
-    </div>
   );
 }
 

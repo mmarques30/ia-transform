@@ -49,7 +49,15 @@ const FAQS = [
   },
 ];
 
-export function FAQ() {
+interface FAQProps {
+  /**
+   * Set custom de FAQs a renderizar em vez do default de 10 items.
+   * Usado pela LP `/` que só quer 5 perguntas selecionadas.
+   */
+  items?: { q: string; a: string }[];
+}
+
+export function FAQ({ items = FAQS }: FAQProps = {}) {
   return (
     <section id="faq" className="section-veil py-[90px] lg:py-[120px]">
       <div className="container-page max-w-[820px]">
@@ -60,7 +68,7 @@ export function FAQ() {
           </span>
         </Reveal>
         <Reveal delay={0.05}>
-          <h2 className="h-mix mt-6 text-[36px] sm:text-[44px] lg:text-[52px] text-foreground">
+          <h2 className="h-mix mt-6 text-[26px] sm:text-[32px] lg:text-[36px] text-foreground">
             O que a gente <em>mais ouve</em>.
           </h2>
         </Reveal>
@@ -71,7 +79,7 @@ export function FAQ() {
             defaultValue={[]}
             className="mt-10 w-full"
           >
-            {FAQS.map((item, i) => (
+            {items.map((item, i) => (
               <AccordionItem key={i} value={`item-${i}`} className="border-b border-border">
                 <AccordionTrigger className="text-left text-foreground hover:text-primary text-[16px] font-semibold py-5">
                   {item.q}

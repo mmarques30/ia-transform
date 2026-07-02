@@ -29,8 +29,8 @@ export function Solution() {
           </Reveal>
 
           <Reveal delay={0.05}>
-            <h2 className="h-mix mt-6 text-[36px] sm:text-[42px] lg:text-[52px] text-foreground">
-              O Método MAPA
+            <h2 className="h-mix mt-6 text-[26px] sm:text-[32px] lg:text-[36px] text-foreground">
+              O Método APLICA
               <br />
               <em>automatiza a sua operação.</em>
             </h2>
@@ -98,8 +98,8 @@ export function Solution() {
           </Reveal>
 
           <Reveal delay={0.05}>
-            <h2 className="h-mix mt-7 text-[30px] leading-[1.1] text-foreground text-center">
-              O Método MAPA <em>automatiza a sua operação.</em>
+            <h2 className="h-mix mt-7 text-[26px] leading-[1.1] text-foreground text-center">
+              O Método APLICA <em>automatiza a sua operação.</em>
             </h2>
           </Reveal>
 

@@ -2,14 +2,34 @@ import { Reveal } from "@/components/Reveal";
 import { ArrowRight } from "lucide-react";
 
 /**
- * Systems (contábil) — em vez do grid de cards, uma composição moderna
- * de mockups (laptop + tablet) integrados/sobrepostos, mostrando o
- * sistema real do escritório rodando no desktop e no tablet.
+ * Systems (LP-A / dobra 6) — grid de 2 GIFs lado a lado (empilhados no
+ * mobile) mostrando dois sistemas reais entregues pela IAplicada:
+ * o painel operacional da PSA Consultores e o CRM autônomo da
+ * Borges & Zembruski. Substitui o antigo device showcase estático
+ * (laptop + tablet com screenshot contábil) por movimento real.
  *
- * Imagens reais do sistema contábil (capturas enviadas pela cliente).
+ * GIFs em /public/systems-v2/ (mesmos assets usados no carrossel v2
+ * antigo — sobrescreve com originais se precisar).
  */
-const DESKTOP_IMG = "/clients/contabil-desktop.webp";
-const TABLET_IMG = "/clients/contabil-tablet.webp";
+
+interface SystemCard {
+  gifSrc: string;
+  caption: string;
+  alt: string;
+}
+
+const CARDS: SystemCard[] = [
+  {
+    gifSrc: "/systems-v2/post_sex_painel.gif",
+    caption: "Painel operacional · PSA Consultores",
+    alt: "Painel operacional PSA Consultores em ação",
+  },
+  {
+    gifSrc: "/systems-v2/post_seg_crm.gif",
+    caption: "CRM autônomo · Borges & Zembruski",
+    alt: "CRM autônomo Borges & Zembruski em ação",
+  },
+];
 
 export function Systems() {
   return (
@@ -26,7 +46,7 @@ export function Systems() {
             </span>
           </Reveal>
           <Reveal delay={0.05}>
-            <h2 className="h-mix mt-6 text-[36px] sm:text-[44px] lg:text-[52px] text-foreground">
+            <h2 className="h-mix mt-6 text-[26px] sm:text-[32px] lg:text-[36px] text-foreground">
               Não vendemos slides.
               <br />
               <em>Entregamos o sistema rodando na sua operação.</em>
@@ -41,7 +61,11 @@ export function Systems() {
         </div>
 
         <Reveal delay={0.15}>
-          <DeviceShowcase />
+          <div className="mt-14 lg:mt-20 grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-[1080px] mx-auto">
+            {CARDS.map((card) => (
+              <SystemGifCard key={card.gifSrc} card={card} />
+            ))}
+          </div>
         </Reveal>
 
         <Reveal delay={0.2}>
@@ -60,88 +84,30 @@ export function Systems() {
   );
 }
 
-/**
- * Composição laptop + tablet sobrepostos. O tablet "encosta" no laptop
- * (offset + z-index) pra dar profundidade, sem ficarem separados.
- */
-function DeviceShowcase() {
+function SystemGifCard({ card }: { card: SystemCard }) {
   return (
-    <div className="relative mx-auto mt-14 lg:mt-20 max-w-[980px]">
-      {/* Glow lime atrás da composição */}
+    <figure className="flex flex-col gap-3">
       <div
-        aria-hidden
-        className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[70%] rounded-full"
+        className="rounded-2xl overflow-hidden border"
         style={{
-          background:
-            "radial-gradient(ellipse at center, oklch(0.75 0.20 122 / 0.18) 0%, transparent 70%)",
-          filter: "blur(70px)",
+          borderColor: "oklch(0.32 0.02 122)",
+          backgroundColor: "oklch(0.16 0.018 122)",
+          boxShadow: "0 30px 60px -25px oklch(0 0 0 / 0.55)",
         }}
-      />
-
-      {/* LAPTOP */}
-      <div className="relative w-full lg:w-[82%] z-10">
-        <div
-          className="rounded-t-[14px] overflow-hidden border"
-          style={{
-            borderColor: "oklch(0.32 0.02 122)",
-            backgroundColor: "oklch(0.16 0.018 122)",
-            boxShadow: "0 40px 80px -30px oklch(0 0 0 / 0.7)",
-          }}
-        >
-          {/* barra superior */}
-          <div
-            className="flex items-center gap-1.5 px-4 py-2.5 border-b"
-            style={{ borderColor: "oklch(0.28 0.02 122)" }}
-          >
-            <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: "oklch(0.6 0.18 25)" }} />
-            <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: "oklch(0.78 0.16 85)" }} />
-            <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: "oklch(0.7 0.18 145)" }} />
-          </div>
-          <img
-            src={DESKTOP_IMG}
-            alt="Sistema do escritório no desktop"
-            width={1800}
-            height={1011}
-            loading="lazy"
-            decoding="async"
-            className="block w-full"
-          />
-        </div>
-        {/* base do laptop */}
-        <div
-          className="mx-auto h-3 rounded-b-[10px]"
-          style={{
-            width: "108%",
-            marginLeft: "-4%",
-            background: "linear-gradient(180deg, oklch(0.26 0.02 122), oklch(0.18 0.018 122))",
-            boxShadow: "0 18px 30px -12px oklch(0 0 0 / 0.6)",
-          }}
+      >
+        <img
+          src={card.gifSrc}
+          alt={card.alt}
+          loading="lazy"
+          decoding="async"
+          className="block w-full h-auto"
         />
       </div>
-
-      {/* TABLET — sobreposto no canto inferior direito */}
-      <div
-        className="absolute z-20 w-[40%] sm:w-[34%] lg:w-[30%] right-0 -bottom-6 lg:-bottom-10"
+      <figcaption
+        className="text-[13px] uppercase font-semibold tracking-[0.08em] text-center text-sage"
       >
-        <div
-          className="rounded-[16px] overflow-hidden border p-1.5"
-          style={{
-            borderColor: "oklch(0.34 0.02 122)",
-            backgroundColor: "oklch(0.14 0.018 122)",
-            boxShadow: "0 30px 60px -20px oklch(0 0 0 / 0.75)",
-          }}
-        >
-          <img
-            src={TABLET_IMG}
-            alt="Sistema do escritório no tablet"
-            width={1800}
-            height={872}
-            loading="lazy"
-            decoding="async"
-            className="block w-full rounded-[10px]"
-          />
-        </div>
-      </div>
-    </div>
+        {card.caption}
+      </figcaption>
+    </figure>
   );
 }
