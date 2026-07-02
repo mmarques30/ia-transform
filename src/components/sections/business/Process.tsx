@@ -14,21 +14,21 @@ const STEPS: Step[] = [
   {
     n: "1",
     title: "Semana 1 · Mapeamento",
-    text: "Auditoria das rotinas, ranking dos ladrões de hora e a primeira automação em produção.",
+    text: "Auditoria dos processos, ranking dos ladrões de hora e a primeira automação em produção.",
     Icon: CalendarDays,
     Mockup: AgendaMockup,
   },
   {
     n: "2-4",
-    title: "Sem 2 a 4 · Rotinas prioritárias",
-    text: "Lançamento, conciliação, classificação e obrigações. Uma a uma, no fluxo que seu time já conhece.",
+    title: "Sem 2 a 4 · Processos prioritários",
+    text: "Fechamento, follow-up, relatório e integrações. Um a um, dentro do fluxo que o time já conhece.",
     Icon: Search,
     Mockup: ImersaoMockup,
   },
   {
     n: "5-7",
     title: "Sem 5 a 7 · Padronização",
-    text: "Documentação dos processos novos dentro do sistema do escritório. Vídeo curto, passo a passo.",
+    text: "Documentação dos processos novos. Vídeo curto, passo a passo. O conhecimento fica registrado — não na cabeça de ninguém.",
     Icon: Sparkles,
     Mockup: AnaliseMockup,
   },
@@ -50,7 +50,7 @@ export function Process() {
             <h2 className="h-mix text-[36px] sm:text-[44px] lg:text-[54px] text-foreground">
               Em apenas 8 semanas,
               <br />
-              o escritório <em>opera sozinho</em>.
+              a operação <em>roda sozinha</em>.
             </h2>
           </Reveal>
 
@@ -141,7 +141,7 @@ A jornada, semana a semana:
         <Reveal delay={0.3}>
           <div className="mt-14 text-center">
             <a href="#diagnostico-form" className="cta-primary">
-Quero o diagnóstico do meu escritório
+Quero o diagnóstico do meu negócio
               <span className="arrow">
                 <svg
                   width="14"
