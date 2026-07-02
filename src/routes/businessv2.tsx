@@ -1,38 +1,47 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Header } from "@/components/sections/Header";
-import { Hero } from "@/components/sections/Hero";
-import { Problem } from "@/components/sections/Problem";
-import { Solution } from "@/components/sections/Solution";
-import { SystemsV2 } from "@/components/sections/SystemsV2";
-import { OliveWave } from "@/components/sections/OliveWave";
+import { Hero } from "@/components/sections/business/variantB/Hero";
+import { Problem } from "@/components/sections/business/variantB/Problem";
+import { Solution } from "@/components/sections/business/Solution";
+import { Systems } from "@/components/sections/business/variantB/Systems";
+import { OliveWave } from "@/components/sections/business/OliveWave";
 import { ClientLogos } from "@/components/sections/ClientLogos";
-import { Impact } from "@/components/sections/Impact";
+import { Process } from "@/components/sections/business/Process";
+import { Impact } from "@/components/sections/business/variantB/Impact";
 import { Comparison } from "@/components/sections/Comparison";
 import { Authority } from "@/components/sections/Authority";
 import { FAQ } from "@/components/sections/FAQ";
-import { CTAFinal } from "@/components/sections/CTAFinal";
+import { CTAFinal } from "@/components/sections/business/variantB/CTAFinal";
 import { Footer } from "@/components/sections/Footer";
 
 /**
- * /businessv2 — duplicata da LP / (academy theme).
+ * /businessv2 — variante B do refactor Business (phase 3 de 5).
  *
- * Mesma estrutura e components da home, criada como variante pra
- * teste/iteração visual independente. noindex pra evitar duplicate
- * content no SEO até a variante ser finalizada.
+ * Ângulo LP-B: "De operação fragmentada a operação que escala."
+ * ICP: empresa em crescimento que percebe que o modelo atual não
+ * suporta mais clientes sem dor proporcional.
+ *
+ * Mesma estrutura de dobras da /contabil (dark charcoal, h-mix),
+ * usando o shell business/ com sections variant-specific em
+ * business/variantB/ (Hero, Problem, Systems, Impact, CTAFinal)
+ * e shared em business/ root (Solution=Método MAPA, Process=Jornada).
+ *
+ * noindex mantido — LP alternativa pra teste. Retira no dia que
+ * virar oficial.
  */
 export const Route = createFileRoute("/businessv2")({
   head: () => ({
     meta: [
       {
-        title: "IAplicada Business v2 · Sua empresa organizada em 30 dias",
+        title: "IAplicada Business · Sua operação não escala se depende de gente",
       },
       {
         name: "description",
         content:
-          "Plataforma de gestão e automação com IA aplicada, sob medida para a sua operação. Sem DEV. Sem soluções engessadas.",
+          "Empresas de serviço que cresceram sem digitalizar chegam no mesmo ponto: cada cliente novo é mais trabalho manual. A IAplicada transforma isso — do diagnóstico ao sistema.",
       },
       { name: "robots", content: "noindex, nofollow" },
-      { name: "theme-color", content: "#FAFAF7" },
+      { name: "theme-color", content: "#0d0d0d" },
     ],
   }),
   component: BusinessV2Landing,
@@ -40,14 +49,15 @@ export const Route = createFileRoute("/businessv2")({
 
 function BusinessV2Landing() {
   return (
-    <main className="academy-theme min-h-screen">
-      <Header theme="light" />
+    <main className="min-h-screen text-foreground">
+      <Header />
       <Hero />
       <Problem />
       <Solution />
-      <SystemsV2 />
+      <Systems />
       <OliveWave />
       <ClientLogos />
+      <Process />
       <Impact />
       <Authority />
       <Comparison />
