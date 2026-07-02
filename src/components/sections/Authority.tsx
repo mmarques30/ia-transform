@@ -136,9 +136,9 @@ export function Authority() {
                   Operação rodando
                 </p>
                 <div className="mt-4 grid grid-cols-3 gap-3 lg:gap-6">
-                  <InlineStat value="+40" label="Empresas" />
-                  <InlineStat value="+700" label="Profissionais" />
-                  <InlineStat value="+100" label="Implementações" />
+                  <InlineStat value="11" label="Sistemas" />
+                  <InlineStat value="110+" label="Usuários" />
+                  <InlineStat value="150+" label="Processos" />
                 </div>
               </div>
 

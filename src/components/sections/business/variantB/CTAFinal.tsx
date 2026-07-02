@@ -7,7 +7,7 @@ export function CTAFinal() {
       <div className="container-page">
         <div className="max-w-[820px] mx-auto text-center">
           <Reveal>
-            <h2 className="h-mix text-[40px] sm:text-[48px] lg:text-[60px] text-foreground">
+            <h2 className="h-mix text-[24px] sm:text-[30px] lg:text-[34px] text-foreground">
               60 minutos. Você sai com o mapa da <em>sua operação.</em>
             </h2>
           </Reveal>

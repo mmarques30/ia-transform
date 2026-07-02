@@ -26,7 +26,7 @@ export function Systems() {
             </span>
           </Reveal>
           <Reveal delay={0.05}>
-            <h2 className="h-mix mt-6 text-[36px] sm:text-[44px] lg:text-[52px] text-foreground">
+            <h2 className="h-mix mt-6 text-[26px] sm:text-[32px] lg:text-[36px] text-foreground">
               Do caos das planilhas
               <br />
               <em>a um sistema que funciona sozinho.</em>
