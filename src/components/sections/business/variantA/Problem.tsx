@@ -61,10 +61,13 @@ export function Problem() {
             </Reveal>
           </div>
 
-          <div className="mt-10 lg:mt-14 grid md:grid-cols-2 gap-4 lg:gap-5 max-w-[980px] mx-auto">
+          <div className="mt-10 lg:mt-14 grid md:grid-cols-2 gap-4 lg:gap-5 max-w-[980px] mx-auto items-stretch">
             {PROBLEMS.map((p, i) => (
-              <Reveal key={p.n} delay={0.18 + i * 0.09}>
-                <TiltCard className="problem-card tech-card p-6 lg:p-7 relative" maxTilt={6}>
+              <Reveal key={p.n} delay={0.18 + i * 0.09} className="h-full">
+                <TiltCard
+                  className="problem-card tech-card p-6 lg:p-7 relative h-full flex flex-col"
+                  maxTilt={6}
+                >
                   <div className="flex items-center gap-3">
                     <span
                       className="num-display text-[13px] tracking-wider"
