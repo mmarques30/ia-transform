@@ -1,6 +1,5 @@
-import type { ReactNode } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { IABackground, type IABackgroundIntensity } from "@/components/IABackground";
+import { BgDobra } from "@/components/BgDobra";
 import { Hero } from "@/components/sections/business/variantA/Hero";
 import { Ticker } from "@/components/sections/business/variantA/Ticker";
 import { Problem } from "@/components/sections/business/variantA/Problem";
@@ -68,41 +67,11 @@ export const Route = createFileRoute("/")({
 });
 
 /**
- * BgDobra — wrap section com a camada de fundo IABackground atrás
- * e o conteúdo em z-index positivo. Serve pra dobras que se
- * beneficiam do fundo escuro técnico da spec.
- *
- * Rule: apenas a `/` (LP-A) usa esse sistema; as outras LPs seguem
- * intactas. Não mexo em components shared — o wrapper resolve tudo
- * no route.
- */
-function BgDobra({
-  intensity,
-  children,
-}: {
-  intensity: IABackgroundIntensity;
-  children: ReactNode;
-}) {
-  return (
-    <div className="relative overflow-hidden ia-dobra">
-      <IABackground intensity={intensity} />
-      <div className="relative" style={{ zIndex: 1 }}>
-        {children}
-      </div>
-    </div>
-  );
-}
-
-/**
- * Ritmo intercalado: dobras COM ia-bg (grid/glow/sparks) alternam com
- * dobras NEUTRAS (só palette bg + section-veil, sem camada técnica).
- * Isso quebra o "efeito colagem" (todas as dobras com o mesmo bg) e
- * dá um respiro visual entre os blocos densos.
- *
- * EFFECT ⟷ NEUTRAL cadência:
- *   Hero (alta)      → Ticker  → Problem (neutral)   → Solution (media)
- *   Systems (neutral) → OliveWave (media)  → ClientLogos (neutral) → Process (media)
- *   Authority (neutral) → Comparison (media) → FAQ (neutral) → CTAFinal (alta)
+ * Ritmo intercalado (mesmo sistema em /businessv2 e /businessv3):
+ * dobras COM ia-bg (grid/glow/sparks) alternam com dobras NEUTRAS
+ * (só palette bg + section-veil). LP `/` remove Process do route
+ * porque o copy "Em 30 dias" migrou pro CTAFinal — LP-B/C mantêm
+ * Process porque seus CTAFinals têm copy próprio.
  */
 function BusinessLanding() {
   return (
