@@ -1544,20 +1544,13 @@
 }
 
 /* Dentro das dobras COM ia-bg (LP /, LP-B, LP-C na cadência intercalada):
- * - Afina o véu (0.62 → 0.34 alpha) pra o grid/sweep/sparks vazarem
- * - Substitui background-color por um linear-gradient que fade no topo
- *   e na base do véu. Assim, quando duas dobras `ia-dobra` empilham,
- *   os dois véus se cruzam em soft-fade em vez de bater linha reta,
- *   eliminando o "corte" horizontal que aparecia na junção. */
+ * afina o véu (0.62 → 0.34 alpha) pra o grid/sweep/sparks vazarem, mas
+ * mantém a cor sólida — o gradient que fazia fade nas bordas criava uma
+ * faixa escura visível na junção entre duas dobras adjacentes (o main
+ * #0a0c07 aparecia entre os fades). Com alpha sólido e igual nas dobras
+ * vizinhas, a cor é contínua na junção. */
 .ia-dobra .section-veil {
-  background-color: transparent;
-  background-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    oklch(0.14 0.018 122 / 0.34) 9%,
-    oklch(0.14 0.018 122 / 0.34) 91%,
-    transparent 100%
-  );
+  background-color: oklch(0.14 0.018 122 / 0.34);
 }
 
 /* BAIXA — só grade + grão */
