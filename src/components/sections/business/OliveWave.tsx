@@ -1,10 +1,11 @@
 import type { ReactNode } from "react";
+import { ArrowRight, ChevronDown } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 
 const STATEMENTS = [
-  { label: "O time", highlight: "vira a noite" },
-  { label: "O cliente", highlight: "atrasa doc" },
-  { label: "O fechamento", highlight: "trava tudo" },
+  { n: "01", label: "O time", highlight: "vira a noite" },
+  { n: "02", label: "O cliente", highlight: "atrasa doc" },
+  { n: "03", label: "O fechamento", highlight: "trava tudo" },
 ];
 
 interface OliveWaveProps {
@@ -17,25 +18,26 @@ interface OliveWaveProps {
   plainBg?: boolean;
   /**
    * Bloco adicional renderizado dentro da mesma section, abaixo do
-   * disclaimer. Usado na LP `/` pra empurrar o carrossel de logos
-   * (ClientLogos) pra dentro dessa dobra em vez de deixar ele como
-   * uma dobra própria com só o carrossel — que ficava com sensação
-   * de "background solto".
+   * conteúdo principal. Usado na LP `/` pra empurrar o carrossel de
+   * logos (ClientLogos) pra dentro dessa dobra em vez de deixar ele
+   * como uma dobra própria só com o carrossel.
    */
   children?: ReactNode;
 }
 
 /**
- * OliveWave — typography-driven, no icon cards. Olive bg + tech grid drift +
- * lime glow. The 3 statements são chips minimalistas inline.
+ * OliveWave — dobra de "diagnóstico". Reformulada como fluxo visual:
+ * as 3 disfunções (time / cliente / fechamento) viraram cards com
+ * numeração conectados por setas horizontais, um conector vertical
+ * (linha + chevron) desce do fluxo até a punchline, e o disclaimer é
+ * folded logo abaixo pra fechar o argumento. Aplica em todas as
+ * 3 LPs Business.
  */
 export function OliveWave({ plainBg = false, children }: OliveWaveProps = {}) {
   return (
-    <section className="relative pt-[150px] pb-[170px] lg:pt-[190px] lg:pb-[210px] overflow-hidden">
+    <section className="relative pt-[120px] pb-[140px] lg:pt-[160px] lg:pb-[180px] overflow-hidden">
       {!plainBg && (
         <>
-          {/* Olive wash com fade vertical longo nas bordas — funde de forma
-              bem gradual com o WebGL das sections vizinhas (sem linha de corte). */}
           <div
             aria-hidden
             className="pointer-events-none absolute inset-0"
@@ -47,8 +49,6 @@ export function OliveWave({ plainBg = false, children }: OliveWaveProps = {}) {
                 "linear-gradient(to bottom, transparent 0%, black 34%, black 66%, transparent 100%)",
             }}
           />
-
-          {/* Lime glow at top center */}
           <div
             aria-hidden
             className="pointer-events-none absolute -top-32 left-1/2 -translate-x-1/2 h-[400px] w-[800px] rounded-full ia-anim-shimmer"
@@ -62,7 +62,7 @@ export function OliveWave({ plainBg = false, children }: OliveWaveProps = {}) {
       )}
 
       <div className="container-page relative">
-        <div className="text-center max-w-[860px] mx-auto">
+        <div className="text-center max-w-[900px] mx-auto">
           <Reveal>
             <span
               className="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[10px] uppercase tracking-[0.18em] font-semibold backdrop-blur-sm"
@@ -90,38 +90,92 @@ export function OliveWave({ plainBg = false, children }: OliveWaveProps = {}) {
             </h2>
           </Reveal>
 
-          {/* 3 statements em uma linha — divididos por separadores verticais sutis */}
-          <Reveal delay={0.12}>
-            <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-0 text-center">
-              {STATEMENTS.map((s, i) => (
+          <Reveal delay={0.1}>
+            <p
+              className="mt-6 text-[13px] uppercase tracking-[0.18em] font-semibold"
+              style={{ color: "oklch(0.96 0.012 110 / 0.55)" }}
+            >
+              O ciclo que se repete todo mês
+            </p>
+          </Reveal>
+        </div>
+
+        {/* Fluxo — 3 cards conectados por setas horizontais (desktop) /
+            verticais (mobile). Cada card tem número, label e statement. */}
+        <Reveal delay={0.15}>
+          <div className="mt-10 lg:mt-12 max-w-[1000px] mx-auto flex flex-col lg:flex-row items-stretch justify-center gap-3 lg:gap-2">
+            {STATEMENTS.map((s, i) => (
+              <div key={s.n} className="flex flex-col lg:flex-row items-center lg:flex-1">
                 <div
-                  key={s.label}
-                  className="flex items-center gap-3 sm:px-6 lg:px-8 first:pl-0 last:pr-0"
+                  className="w-full lg:flex-1 rounded-xl p-5 lg:p-6 text-left"
                   style={{
-                    borderLeft: i > 0 ? "1px solid oklch(0.96 0.012 110 / 0.2)" : undefined,
+                    backgroundColor: "oklch(0.96 0.012 110 / 0.04)",
+                    border: "1px solid oklch(0.96 0.012 110 / 0.14)",
+                    backdropFilter: "blur(4px)",
                   }}
                 >
                   <p
-                    className="text-[14px] lg:text-[15px] leading-tight"
-                    style={{ color: "oklch(0.96 0.012 110 / 0.7)" }}
+                    className="text-[11px] uppercase tracking-[0.14em] font-bold"
+                    style={{ color: "oklch(0.88 0.20 118)" }}
+                  >
+                    {s.n}
+                  </p>
+                  <p
+                    className="mt-3 text-[13px] uppercase tracking-[0.08em] font-semibold"
+                    style={{ color: "oklch(0.96 0.012 110 / 0.6)" }}
                   >
                     {s.label}
                   </p>
                   <p
-                    className="text-[18px] lg:text-[22px] font-bold tracking-tight"
+                    className="mt-1 text-[20px] lg:text-[22px] font-bold tracking-tight leading-tight"
                     style={{ color: "oklch(0.97 0.012 110)" }}
                   >
                     {s.highlight}.
                   </p>
                 </div>
-              ))}
-            </div>
-          </Reveal>
 
+                {/* Seta conectando cards — horizontal no desktop,
+                    vertical no mobile, oculta no último */}
+                {i < STATEMENTS.length - 1 && (
+                  <div
+                    aria-hidden
+                    className="flex items-center justify-center shrink-0 py-2 lg:py-0 lg:px-2"
+                    style={{ color: "oklch(0.88 0.20 118 / 0.7)" }}
+                  >
+                    <ArrowRight className="hidden lg:block h-5 w-5" strokeWidth={2.2} />
+                    <ChevronDown className="lg:hidden h-5 w-5" strokeWidth={2.2} />
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </Reveal>
+
+        {/* Conector vertical do fluxo pra punchline — linha sutil + chevron */}
+        <Reveal delay={0.22}>
+          <div className="flex flex-col items-center mt-8 lg:mt-10">
+            <div
+              aria-hidden
+              style={{
+                width: "1px",
+                height: "40px",
+                background:
+                  "linear-gradient(to bottom, oklch(0.96 0.012 110 / 0.35) 0%, oklch(0.88 0.20 118 / 0.55) 100%)",
+              }}
+            />
+            <ChevronDown
+              className="h-4 w-4 -mt-1"
+              strokeWidth={2.4}
+              style={{ color: "oklch(0.88 0.20 118 / 0.8)" }}
+            />
+          </div>
+        </Reveal>
+
+        <div className="text-center max-w-[820px] mx-auto">
           {/* Punchline */}
-          <Reveal delay={0.2}>
+          <Reveal delay={0.28}>
             <p
-              className="mt-14 text-[28px] sm:text-[36px] lg:text-[44px] font-bold leading-[1.15] tracking-tight"
+              className="mt-6 lg:mt-8 text-[24px] sm:text-[30px] lg:text-[38px] font-bold leading-[1.2] tracking-tight"
               style={{ color: "oklch(0.97 0.012 110)" }}
             >
               E o escritório ainda{" "}
@@ -139,10 +193,9 @@ export function OliveWave({ plainBg = false, children }: OliveWaveProps = {}) {
             </p>
           </Reveal>
 
-          {/* Disclaimer in subtle pill */}
-          <Reveal delay={0.26}>
+          <Reveal delay={0.33}>
             <p
-              className="mt-8 text-[14px] leading-[1.6] max-w-[580px] mx-auto"
+              className="mt-5 text-[14px] leading-[1.6] max-w-[560px] mx-auto"
               style={{ color: "oklch(0.96 0.012 110 / 0.7)" }}
             >
               Mais carteira significa mais gente, mais custo e mais retrabalho. Sem automação, a
@@ -152,10 +205,6 @@ export function OliveWave({ plainBg = false, children }: OliveWaveProps = {}) {
         </div>
       </div>
 
-      {/* Children (ex: ClientLogos transparent) — fora do container-page
-          pra rodar edge-to-edge do viewport. O componente children pode
-          conter seu próprio container interno pro título/label se
-          precisar limitar. */}
       {children && <div className="relative mt-40 lg:mt-56">{children}</div>}
     </section>
   );
