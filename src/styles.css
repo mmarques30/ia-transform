@@ -1543,14 +1543,22 @@
   opacity: 0.7;
 }
 
-/* Dentro das dobras COM ia-bg (LP /, LP-B, LP-C na cadência intercalada):
- * afina o véu (0.62 → 0.34 alpha) pra o grid/sweep/sparks vazarem, mas
- * mantém a cor sólida — o gradient que fazia fade nas bordas criava uma
- * faixa escura visível na junção entre duas dobras adjacentes (o main
- * #0a0c07 aparecia entre os fades). Com alpha sólido e igual nas dobras
- * vizinhas, a cor é contínua na junção. */
-.ia-dobra .section-veil {
+/* Véu aplicado no WRAPPER da dobra, não no <section> interno. Antes o
+ * bg vinha só do .section-veil, e como OliveWave não usa essa classe,
+ * a junção OliveWave ⟷ Process mostrava faixa escura (uma dobra sem
+ * veil colando na outra com veil). Movendo pra .ia-dobra, toda dobra
+ * COM ia-bg herda a mesma cor contínua independente do que a section
+ * interna faz.
+ *
+ * O .section-veil DENTRO de .ia-dobra fica transparente pra não somar
+ * cor por cima (dupla saturação). Fora de .ia-dobra (LP-B/C antes do
+ * refactor, contábil, etc), .section-veil ainda usa o alpha 0.62
+ * padrão definido em outro bloco. */
+.ia-dobra {
   background-color: oklch(0.14 0.018 122 / 0.34);
+}
+.ia-dobra .section-veil {
+  background-color: transparent;
 }
 
 /* BAIXA — só grade + grão */
