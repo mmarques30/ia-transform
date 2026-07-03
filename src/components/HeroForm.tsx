@@ -477,38 +477,28 @@ export function HeroForm({
       />
 
       <div className="px-6 pt-4 lg:px-7 lg:pt-5 relative">
-        <div className="flex items-start justify-between gap-3">
-          <div>
-            <p
-              className="text-[10.5px] uppercase tracking-[0.16em] font-semibold"
-              style={{ color: "oklch(0.5 0.015 115)" }}
-            >
-              Diagnóstico
-            </p>
-            <p
-              className="mt-1 text-[16.5px] font-semibold tracking-tight"
-              style={{ color: "oklch(0.18 0.02 122)" }}
-            >
-              Conte sobre sua operação
-            </p>
-          </div>
+        <span
+          className="inline-flex items-center gap-1.5 text-[10px] uppercase tracking-[0.14em] font-semibold rounded-full px-2.5 py-1 select-none"
+          style={{
+            backgroundColor: "oklch(0.96 0.025 125)",
+            color: "var(--color-primary)",
+            border: "1px solid oklch(0.85 0.05 125)",
+            cursor: "default",
+          }}
+          aria-hidden
+        >
           <span
-            className="inline-flex items-center gap-1.5 text-[10px] uppercase tracking-[0.14em] font-semibold rounded-full px-2.5 py-1 shrink-0 select-none"
-            style={{
-              backgroundColor: "oklch(0.96 0.025 125)",
-              color: "var(--color-primary)",
-              border: "1px solid oklch(0.85 0.05 125)",
-              cursor: "default",
-            }}
-            aria-hidden
-          >
-            <span
-              className="h-1.5 w-1.5 rounded-full"
-              style={{ backgroundColor: "var(--color-primary)" }}
-            />
-            Vagas limitadas por ciclo
-          </span>
-        </div>
+            className="h-1.5 w-1.5 rounded-full"
+            style={{ backgroundColor: "var(--color-primary)" }}
+          />
+          Vagas limitadas por ciclo
+        </span>
+        <p
+          className="mt-2 text-[16.5px] font-semibold tracking-tight"
+          style={{ color: "oklch(0.18 0.02 122)" }}
+        >
+          Conte sobre sua operação
+        </p>
       </div>
 
       <div className="px-6 pb-4 pt-3 lg:px-7 lg:pb-5 lg:pt-3 relative">
