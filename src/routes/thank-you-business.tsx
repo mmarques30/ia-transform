@@ -4,8 +4,8 @@ import {
   CheckCircle2,
   ArrowRight,
   MessageSquare,
-  Mail,
-  Inbox,
+  CalendarClock,
+  ClipboardCheck,
 } from "lucide-react";
 import { BgDobra } from "@/components/BgDobra";
 import { Footer } from "@/components/sections/Footer";
@@ -75,20 +75,20 @@ const NEXT_STEPS = [
   {
     n: "01",
     Icon: MessageSquare,
-    title: "Nosso contato pra alinhar o diagnóstico",
-    text: "Um sócio do time vai te chamar pra entender contexto e agendar a conversa.",
+    title: "Nosso time já te chamou no WhatsApp",
+    text: "Pra entender sobre a sua operação antes do diagnóstico.",
   },
   {
     n: "02",
-    Icon: Mail,
-    title: "Um e-mail com orientações sobre o processo",
-    text: "Detalhes do que vamos discutir e o que preparar pra conversa render mais.",
+    Icon: CalendarClock,
+    title: "Agendamos um diagnóstico de 30 min",
+    text: "Onde o nosso time entende o seu gargalo em detalhe.",
   },
   {
     n: "03",
-    Icon: Inbox,
-    title: "Se não encontrar o e-mail",
-    text: "Confira a caixa de spam ou promoções. Em alguns provedores chega por lá.",
+    Icon: ClipboardCheck,
+    title: "Você recebe o diagnóstico detalhado",
+    text: "Com as melhorias mapeadas pro seu processo, ao final da conversa.",
   },
 ];
 
@@ -189,8 +189,7 @@ function ThankYouBusinessPage() {
               </Reveal>
               <Reveal delay={0.1}>
                 <p className="mt-6 text-[17px] sm:text-[18px] text-sage leading-[1.6] max-w-[640px] mx-auto">
-                  Em até 1 dia útil você vai receber duas coisas — fique de olho no seu e-mail e
-                  WhatsApp.
+                  Como funciona o processo do seu diagnóstico.
                 </p>
               </Reveal>
             </div>
@@ -253,12 +252,13 @@ function ThankYouBusinessPage() {
                 </Reveal>
                 <Reveal delay={0.05}>
                   <h2 className="h-mix mt-6 text-[28px] sm:text-[36px] lg:text-[44px] text-foreground">
-                    A sua empresa em <em>todas as telas.</em>
+                    A sua empresa em{" "}
+                    <em className="whitespace-nowrap">todas as telas.</em>
                   </h2>
                 </Reveal>
                 <Reveal delay={0.1}>
                   <p className="mt-6 text-[17px] sm:text-[18px] text-sage leading-[1.65] max-w-[520px]">
-                    Depois do diagnóstico, é isso que a gente constrói com você — um sistema próprio
+                    Depois do diagnóstico, é isso que a gente constrói com você. Um sistema próprio
                     que mostra a operação em tempo real, no desktop, tablet e celular.
                   </p>
                 </Reveal>
