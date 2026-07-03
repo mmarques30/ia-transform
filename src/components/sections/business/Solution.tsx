@@ -1,6 +1,14 @@
 import { Reveal } from "@/components/Reveal";
 
-const TOOL_BADGES = ["Make", "n8n", "Zapier", "HubSpot", "Notion", "Google Workspace"];
+const TOOL_BADGES = [
+  "planilhas",
+  "sistemas fiscais",
+  "bancários",
+  "documentos",
+  "erps",
+  "microsoft",
+  "google",
+];
 
 export function Solution() {
   return (
