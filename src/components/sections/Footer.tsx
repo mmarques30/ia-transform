@@ -1,10 +1,5 @@
 import { Logo } from "@/components/Logo";
 
-const PRODUCTS = [
-  { label: "Business", href: "/" },
-  { label: "Academy", href: "https://academy.iaplicada.com" },
-];
-
 const SOCIAL = [
   { label: "LinkedIn", href: "https://www.linkedin.com/in/marianamarquescabral/" },
   { label: "Instagram", href: "https://www.instagram.com/marimarquescb/" },
@@ -12,9 +7,7 @@ const SOCIAL = [
 
 /**
  * Footer compacto — single-row no desktop, stack no mobile.
- * Versão anterior tinha 3 colunas grandes + bottom row separada,
- * ocupando muito espaço vertical. Agora tudo numa linha enxuta:
- * logo · tagline · #hashtag | produtos · redes | © + email.
+ * Contém: logo · #hashtag | redes | © + email + telefone.
  */
 export function Footer() {
   return (
@@ -32,9 +25,6 @@ export function Footer() {
                 Business
               </span>
             </div>
-            <span className="text-[11.5px] text-muted-foreground">
-              IA aplicada ao trabalho real.
-            </span>
             <span
               className="text-[10.5px] font-mono"
               style={{ color: "var(--color-primary)" }}
@@ -43,29 +33,8 @@ export function Footer() {
             </span>
           </div>
 
-          {/* Links inline */}
+          {/* Redes */}
           <nav className="flex flex-wrap items-center gap-x-5 gap-y-2 text-[12.5px]">
-            <span className="text-[10px] uppercase tracking-[0.14em] text-muted-foreground font-semibold">
-              Produtos
-            </span>
-            {PRODUCTS.map((p) => {
-              const external = p.href.startsWith("http");
-              return (
-                <a
-                  key={p.label}
-                  href={p.href}
-                  target={external ? "_blank" : undefined}
-                  rel={external ? "noopener noreferrer" : undefined}
-                  className="text-sage hover:text-foreground transition-colors"
-                >
-                  {p.label}
-                </a>
-              );
-            })}
-            <span
-              aria-hidden
-              className="hidden sm:inline-block h-3 w-px bg-border"
-            />
             <span className="text-[10px] uppercase tracking-[0.14em] text-muted-foreground font-semibold">
               Redes
             </span>
@@ -86,10 +55,16 @@ export function Footer() {
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-muted-foreground">
             <span>© 2026 IAplicada</span>
             <a
-              href="mailto:equipe@iaplicada.com"
+              href="mailto:comercial@iaplicada.com"
               className="hover:text-foreground transition-colors"
             >
-              equipe@iaplicada.com
+              comercial@iaplicada.com
+            </a>
+            <a
+              href="tel:+5511950566101"
+              className="hover:text-foreground transition-colors"
+            >
+              (11) 95056-6101
             </a>
           </div>
         </div>
