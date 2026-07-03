@@ -202,8 +202,6 @@ export function HeroForm({
    * Lista de campos obrigatórios pra qualificação MQL no CRM.
    * Sem todos preenchidos a Edge Function devolve missing[] e o lead
    * fica desqualificado. Bloqueamos no client antes pra evitar o roundtrip.
-   *
-   * setor_do_mercado é opcional por design — o CRM aceita lead sem ele.
    */
   const REQUIRED_FIELDS = [
     "firstname",
@@ -212,6 +210,7 @@ export function HeroForm({
     "company",
     "cargo",
     "faixa_de_faturamento",
+    "setor_do_mercado",
   ] as const;
 
   /** Valida um único field. Retorna mensagem de erro ou "" se OK. */
@@ -619,11 +618,17 @@ export function HeroForm({
             </select>
           </Field>
 
-          <Field id="setor_do_mercado" label="Setor da empresa (opcional)">
+          <Field
+            id="setor_do_mercado"
+            label="Setor da empresa"
+            required
+            error={fieldErrors.setor_do_mercado}
+          >
             <select
               id="setor_do_mercado"
               name="setor_do_mercado"
               defaultValue=""
+              required
               className="form-input"
             >
               <option value="" disabled>
