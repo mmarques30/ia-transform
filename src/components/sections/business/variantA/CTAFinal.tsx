@@ -21,7 +21,7 @@ export function CTAFinal() {
           <Reveal delay={0.05}>
             <p className="mt-6 text-[17px] sm:text-[18px] text-sage leading-[1.65] max-w-[560px] mx-auto">
               O diagnóstico é sem custo, sem follow-up insistente. Você sai sabendo onde está o
-              gargalo, quanto ele custa por mês e o que muda ao resolver — mesmo se a gente não
+              gargalo, quanto ele custa por mês e o que muda ao resolver, mesmo se a gente não
               fechar.
             </p>
           </Reveal>
