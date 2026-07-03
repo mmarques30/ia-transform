@@ -8,7 +8,8 @@ export function CTAFinal() {
         <div className="max-w-[820px] mx-auto text-center">
           <Reveal>
             <h2 className="h-mix text-[28px] sm:text-[36px] lg:text-[44px] text-foreground">
-              60 minutos. Você sai com o mapa da <em>sua operação.</em>
+              60 minutos. Você sai com o mapa da{" "}
+              <em className="whitespace-nowrap">sua operação.</em>
             </h2>
           </Reveal>
           <Reveal delay={0.05}>
