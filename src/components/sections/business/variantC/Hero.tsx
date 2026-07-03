@@ -52,8 +52,9 @@ export function Hero() {
                 />
               </Reveal>
 
-              <h1 className="h-mix mt-6 lg:mt-7 text-[32px] sm:text-[44px] lg:text-[58px] leading-[1.05] text-foreground">
-                90h liberadas. 5 sistemas. <em>Operação rodando.</em>
+              <h1 className="h-mix mt-6 lg:mt-7 text-[34px] sm:text-[48px] lg:text-[62px] leading-[1.05] text-foreground">
+                Sua equipe ainda faz o que nossos sistemas{" "}
+                <em>já fazem sozinhos.</em>
               </h1>
 
               <Reveal delay={0.1}>
