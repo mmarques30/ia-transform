@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { Reveal } from "@/components/Reveal";
 
 const STATEMENTS = [
@@ -14,13 +15,21 @@ interface OliveWaveProps {
    * competiam com ele. LP-B/C mantém o comportamento antigo (default).
    */
   plainBg?: boolean;
+  /**
+   * Bloco adicional renderizado dentro da mesma section, abaixo do
+   * disclaimer. Usado na LP `/` pra empurrar o carrossel de logos
+   * (ClientLogos) pra dentro dessa dobra em vez de deixar ele como
+   * uma dobra própria com só o carrossel — que ficava com sensação
+   * de "background solto".
+   */
+  children?: ReactNode;
 }
 
 /**
  * OliveWave — typography-driven, no icon cards. Olive bg + tech grid drift +
  * lime glow. The 3 statements são chips minimalistas inline.
  */
-export function OliveWave({ plainBg = false }: OliveWaveProps = {}) {
+export function OliveWave({ plainBg = false, children }: OliveWaveProps = {}) {
   return (
     <section className="relative pt-[150px] pb-[170px] lg:pt-[190px] lg:pb-[210px] overflow-hidden">
       {!plainBg && (
@@ -73,7 +82,7 @@ export function OliveWave({ plainBg = false }: OliveWaveProps = {}) {
 
           <Reveal delay={0.05}>
             <h2
-              className="h-mix mt-7 text-[36px] sm:text-[48px] lg:text-[60px] tracking-tight"
+              className="h-mix mt-7 text-[32px] sm:text-[42px] lg:text-[52px] tracking-tight"
               style={{ color: "oklch(0.97 0.012 110)" }}
             >
               O problema não é falta de esforço.
@@ -133,7 +142,7 @@ export function OliveWave({ plainBg = false }: OliveWaveProps = {}) {
           {/* Disclaimer in subtle pill */}
           <Reveal delay={0.26}>
             <p
-              className="mt-8 text-[13.5px] leading-[1.6] max-w-[560px] mx-auto"
+              className="mt-8 text-[14px] leading-[1.6] max-w-[580px] mx-auto"
               style={{ color: "oklch(0.96 0.012 110 / 0.7)" }}
             >
               Mais carteira significa mais gente, mais custo e mais retrabalho. Sem automação, a
@@ -141,6 +150,8 @@ export function OliveWave({ plainBg = false }: OliveWaveProps = {}) {
             </p>
           </Reveal>
         </div>
+
+        {children && <div className="mt-16 lg:mt-20">{children}</div>}
       </div>
     </section>
   );

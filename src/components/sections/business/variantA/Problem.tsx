@@ -41,29 +41,6 @@ export function Problem() {
   return (
     <section className="relative">
       <div className="section-veil w-full py-[80px] lg:py-[120px]">
-        <svg
-          aria-hidden
-          className="pointer-events-none absolute inset-0 w-full h-full opacity-[0.14]"
-          viewBox="0 0 1440 900"
-          preserveAspectRatio="none"
-        >
-          <defs>
-            <linearGradient id="problem-line" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stopColor="oklch(0.75 0.20 122)" stopOpacity="0" />
-              <stop offset="50%" stopColor="oklch(0.75 0.20 122)" stopOpacity="0.8" />
-              <stop offset="100%" stopColor="oklch(0.75 0.20 122)" stopOpacity="0" />
-            </linearGradient>
-          </defs>
-          <line
-            x1="-100"
-            y1="0"
-            x2="1540"
-            y2="900"
-            stroke="url(#problem-line)"
-            strokeWidth="1"
-          />
-        </svg>
-
         <div className="relative z-10 container-page w-full">
           <div className="text-center max-w-[860px] mx-auto">
             <Reveal>
@@ -72,13 +49,13 @@ export function Problem() {
               </span>
             </Reveal>
             <Reveal delay={0.05}>
-              <h2 className="h-mix mt-6 text-[26px] sm:text-[32px] lg:text-[36px] text-foreground">
+              <h2 className="h-mix mt-6 text-[28px] sm:text-[36px] lg:text-[44px] text-foreground">
                 Seu time já tá no limite. Só que o custo{" "}
                 <em>não aparece em lugar nenhum.</em>
               </h2>
             </Reveal>
             <Reveal delay={0.1}>
-              <p className="mt-6 text-[17px] text-sage leading-[1.6] max-w-[620px] mx-auto">
+              <p className="mt-6 text-[17px] sm:text-[18px] text-sage leading-[1.6] max-w-[640px] mx-auto">
                 O problema não é falta de esforço. É processo manual demais pra quem você já tem.
               </p>
             </Reveal>

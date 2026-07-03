@@ -68,7 +68,7 @@ export function FAQ({ items = FAQS }: FAQProps = {}) {
           </span>
         </Reveal>
         <Reveal delay={0.05}>
-          <h2 className="h-mix mt-6 text-[26px] sm:text-[32px] lg:text-[36px] text-foreground">
+          <h2 className="h-mix mt-6 text-[28px] sm:text-[36px] lg:text-[44px] text-foreground">
             O que a gente <em>mais ouve</em>.
           </h2>
         </Reveal>
@@ -81,7 +81,7 @@ export function FAQ({ items = FAQS }: FAQProps = {}) {
           >
             {items.map((item, i) => (
               <AccordionItem key={i} value={`item-${i}`} className="border-b border-border">
-                <AccordionTrigger className="text-left text-foreground hover:text-primary text-[16px] font-semibold py-5">
+                <AccordionTrigger className="text-left text-foreground hover:text-primary text-[17px] font-semibold py-5">
                   {item.q}
                 </AccordionTrigger>
                 <AccordionContent className="text-sage leading-[1.6] text-[15px] pb-5">
