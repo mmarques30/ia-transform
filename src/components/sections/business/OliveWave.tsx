@@ -156,7 +156,7 @@ export function OliveWave({ plainBg = false, children }: OliveWaveProps = {}) {
           pra rodar edge-to-edge do viewport. O componente children pode
           conter seu próprio container interno pro título/label se
           precisar limitar. */}
-      {children && <div className="relative mt-28 lg:mt-36">{children}</div>}
+      {children && <div className="relative mt-40 lg:mt-56">{children}</div>}
     </section>
   );
 }
