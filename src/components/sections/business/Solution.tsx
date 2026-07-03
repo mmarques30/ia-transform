@@ -25,7 +25,7 @@ export function Solution() {
               {TOOL_BADGES.map((t, i) => (
                 <span
                   key={t}
-                  className="text-[11px] font-semibold text-muted-foreground flex items-center gap-2"
+                  className="text-[11px] font-semibold text-muted-foreground inline-flex items-center gap-2 whitespace-nowrap"
                 >
                   {t}
                   {i < TOOL_BADGES.length - 1 && (
@@ -89,11 +89,11 @@ export function Solution() {
               Roda sobre os sistemas que sua empresa já usa
             </p>
             <div className="flex justify-center">
-              <div className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3.5 py-1.5">
+              <div className="max-w-full flex flex-wrap items-center justify-center gap-x-2 gap-y-1 rounded-2xl border border-border bg-card px-3.5 py-2">
                 {TOOL_BADGES.map((t, i) => (
                   <span
                     key={t}
-                    className="text-[10.5px] font-semibold text-muted-foreground flex items-center gap-2"
+                    className="text-[10.5px] font-semibold text-muted-foreground inline-flex items-center gap-2 whitespace-nowrap"
                   >
                     {t}
                     {i < TOOL_BADGES.length - 1 && (
