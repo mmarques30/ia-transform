@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { BgDobra } from "@/components/BgDobra";
 import { Hero } from "@/components/sections/business/variantB/Hero";
 import { Ticker } from "@/components/sections/business/variantB/Ticker";
 import { Problem } from "@/components/sections/business/variantB/Problem";
@@ -70,21 +71,40 @@ export const Route = createFileRoute("/businessv2")({
   component: BusinessV2Landing,
 });
 
+/**
+ * Cadência intercalada (mesmo sistema da LP `/`): EFFECT ⟷ NEUTRAL.
+ * ClientLogos vira children do OliveWave (edge-to-edge, sem fundo
+ * separado). Process é mantido porque o CTAFinal da LP-B tem copy
+ * próprio ("60 minutos. Você sai com o mapa da sua operação").
+ */
 function BusinessV2Landing() {
   return (
-    <main className="min-h-screen text-foreground">
-      <Hero />
+    <main className="min-h-screen text-foreground" style={{ backgroundColor: "#0a0c07" }}>
+      <BgDobra intensity="alta">
+        <Hero />
+      </BgDobra>
       <Ticker />
       <Problem />
-      <Solution />
+      <BgDobra intensity="media">
+        <Solution />
+      </BgDobra>
       <Systems />
-      <OliveWave />
-      <ClientLogos />
-      <Process />
+      <BgDobra intensity="media">
+        <OliveWave plainBg>
+          <ClientLogos transparent />
+        </OliveWave>
+      </BgDobra>
+      <BgDobra intensity="media">
+        <Process />
+      </BgDobra>
       <Authority />
-      <Comparison />
+      <BgDobra intensity="media">
+        <Comparison />
+      </BgDobra>
       <FAQ items={FAQ_ITEMS_LP_B} />
-      <CTAFinal />
+      <BgDobra intensity="alta">
+        <CTAFinal />
+      </BgDobra>
       <Footer />
     </main>
   );

@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { BgDobra } from "@/components/BgDobra";
 import { Hero } from "@/components/sections/business/variantC/Hero";
 import { Ticker } from "@/components/sections/business/variantC/Ticker";
 import { Problem } from "@/components/sections/business/variantC/Problem";
@@ -74,21 +75,39 @@ export const Route = createFileRoute("/businessv3")({
   component: BusinessV3Landing,
 });
 
+/**
+ * Cadência intercalada (mesmo sistema da LP `/`): EFFECT ⟷ NEUTRAL.
+ * ClientLogos vira children do OliveWave (edge-to-edge). Process é
+ * mantido porque o CTAFinal da LP-C tem copy próprio (PSA 85%→94%).
+ */
 function BusinessV3Landing() {
   return (
-    <main className="min-h-screen text-foreground">
-      <Hero />
+    <main className="min-h-screen text-foreground" style={{ backgroundColor: "#0a0c07" }}>
+      <BgDobra intensity="alta">
+        <Hero />
+      </BgDobra>
       <Ticker />
       <Problem />
-      <Solution />
+      <BgDobra intensity="media">
+        <Solution />
+      </BgDobra>
       <Systems />
-      <OliveWave />
-      <ClientLogos />
-      <Process />
+      <BgDobra intensity="media">
+        <OliveWave plainBg>
+          <ClientLogos transparent />
+        </OliveWave>
+      </BgDobra>
+      <BgDobra intensity="media">
+        <Process />
+      </BgDobra>
       <Authority />
-      <Comparison />
+      <BgDobra intensity="media">
+        <Comparison />
+      </BgDobra>
       <FAQ items={FAQ_ITEMS_LP_C} />
-      <CTAFinal />
+      <BgDobra intensity="alta">
+        <CTAFinal />
+      </BgDobra>
       <Footer />
     </main>
   );
