@@ -47,11 +47,25 @@ interface ProcessProps {
   title?: ReactNode;
   /** Esconde a linha de chevrons abaixo do heading. */
   hideChevrons?: boolean;
-  /** Esconde o heading "A jornada, semana a semana:" + os 4 step cards. */
+  /**
+   * Esconde o heading "A jornada, semana a semana:" + os 4 step cards
+   * (some com a jornada inteira). Se você quer só sumir com o texto de
+   * heading mas manter os cards, use hideJourneyHeading.
+   */
   hideJourney?: boolean;
+  /**
+   * Esconde apenas o subheading "A jornada, semana a semana:", mas
+   * mantém os 4 step cards abaixo. Ignorado quando hideJourney=true.
+   */
+  hideJourneyHeading?: boolean;
 }
 
-export function Process({ title, hideChevrons = false, hideJourney = false }: ProcessProps = {}) {
+export function Process({
+  title,
+  hideChevrons = false,
+  hideJourney = false,
+  hideJourneyHeading = false,
+}: ProcessProps = {}) {
   return (
     <section id="abordagem" className="section-veil relative overflow-hidden">
       <div className="container-page py-[100px] lg:py-[140px] relative">
@@ -90,17 +104,19 @@ export function Process({ title, hideChevrons = false, hideJourney = false }: Pr
 
         {!hideJourney && (
           <>
-            <Reveal delay={0.15}>
-              <h3
-                className="mt-16 text-center text-[22px] lg:text-[26px] font-semibold"
-                style={{ color: "var(--color-primary)" }}
-              >
-                A jornada, semana a semana:
-              </h3>
-            </Reveal>
+            {!hideJourneyHeading && (
+              <Reveal delay={0.15}>
+                <h3
+                  className="mt-16 text-center text-[22px] lg:text-[26px] font-semibold"
+                  style={{ color: "var(--color-primary)" }}
+                >
+                  A jornada, semana a semana:
+                </h3>
+              </Reveal>
+            )}
 
             {/* Connected timeline com mini-mockups */}
-            <div className="mt-14 relative">
+            <div className={`${hideJourneyHeading ? "mt-14 lg:mt-16" : "mt-14"} relative`}>
               {/* Connector line — passa por trás dos cards */}
               <div
                 aria-hidden

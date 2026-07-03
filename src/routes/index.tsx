@@ -68,10 +68,10 @@ export const Route = createFileRoute("/")({
 
 /**
  * Ritmo intercalado (mesmo sistema em /businessv2 e /businessv3):
- * dobras COM ia-bg (grid/glow/sparks) alternam com dobras NEUTRAS
- * (só palette bg + section-veil). LP `/` remove Process do route
- * porque o copy "Em 30 dias" migrou pro CTAFinal — LP-B/C mantêm
- * Process porque seus CTAFinals têm copy próprio.
+ * dobras COM ia-bg (grid/glow/sparks) alternam com dobras NEUTRAS.
+ * Process vive acima do Authority ("quem entrega") em todas as 3 LPs,
+ * com título "30 dias" e sem chevrons/heading da jornada — só os 4
+ * step cards + CTA.
  */
 function BusinessLanding() {
   return (
@@ -89,6 +89,17 @@ function BusinessLanding() {
         <OliveWave plainBg>
           <ClientLogos transparent />
         </OliveWave>
+      </BgDobra>
+      <BgDobra intensity="media">
+        <Process
+          title={
+            <>
+              Em 30 dias, sua operação <em>pode rodar sozinha</em>.
+            </>
+          }
+          hideChevrons
+          hideJourneyHeading
+        />
       </BgDobra>
       <Authority />
       <BgDobra intensity="media">
