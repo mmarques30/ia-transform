@@ -1303,23 +1303,13 @@
   /* Sem bg opaco: o <main> já pinta #0a0c07 continuamente por toda a
      LP. Deixar a ia-bg transparente evita a sensação de "colagem"
      entre dobras. */
-  /* Máscara vertical: efeitos (grid/glow/sparks/sweep/ghost) somem
-     nas bordas top/bottom da dobra, fazendo a transição pra dobra
-     vizinha (neutra ou não) ser suave, sem linha de corte. */
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    black 9%,
-    black 91%,
-    transparent 100%
-  );
-  mask-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    black 9%,
-    black 91%,
-    transparent 100%
-  );
+  /* Máscara removida — antes ia-bg fazia fade to transparent nas
+     bordas top/bottom, o que criava uma "faixa preta" perceptível
+     na junção entre duas dobras ia-bg (o padrão sumia e sobrava só
+     o main #0a0c07 blendado com o alpha 0.34 do wrapper). Agora o
+     grid/glows/sparks correm até as bordas do wrapper, e como duas
+     .ia-dobra consecutivas compartilham a mesma cor, a transição
+     fica contínua. */
 }
 
 /* grade blueprint */
@@ -1555,7 +1545,7 @@
  * refactor, contábil, etc), .section-veil ainda usa o alpha 0.62
  * padrão definido em outro bloco. */
 .ia-dobra {
-  background-color: oklch(0.14 0.018 122 / 0.34);
+  background-color: oklch(0.16 0.02 122 / 0.55);
 }
 .ia-dobra .section-veil {
   background-color: transparent;
