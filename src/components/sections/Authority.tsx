@@ -24,11 +24,13 @@ export function Authority() {
     >
       <div className="container-page relative max-w-[1180px]">
         <div className="grid lg:grid-cols-[5fr_7fr] gap-10 lg:gap-16 items-start">
-          {/* FOTO — left col */}
+          {/* FOTO — left col. No mobile a foto vem menor (max-w 260,
+              aspect quadrado) pra não dominar a viewport e revelar
+              rosto sem crop estranho. */}
           <Reveal>
             <div className="relative">
               <div
-                className="relative aspect-[3/4] w-full max-w-[420px] mx-auto lg:mx-0 rounded-2xl overflow-hidden"
+                className="relative aspect-square lg:aspect-[3/4] w-full max-w-[260px] lg:max-w-[420px] mx-auto lg:mx-0 rounded-2xl overflow-hidden"
                 style={{
                   border: "1px solid oklch(0.55 0.06 122 / 0.5)",
                   boxShadow:
@@ -43,6 +45,7 @@ export function Authority() {
                   loading="lazy"
                   decoding="async"
                   className="absolute inset-0 h-full w-full object-cover"
+                  style={{ objectPosition: "center top" }}
                   onError={(e) => {
                     const img = e.currentTarget;
                     if (img.src.includes(FOUNDER.photoSrc.split("/").pop()!)) {
@@ -52,7 +55,7 @@ export function Authority() {
                 />
               </div>
               {/* Caption discreto abaixo da foto */}
-              <div className="mt-4 flex items-center gap-3">
+              <div className="mt-4 flex items-center justify-center lg:justify-start gap-3">
                 <span
                   aria-hidden
                   className="h-[1px] w-8"
@@ -101,14 +104,20 @@ export function Authority() {
                 <em>{FOUNDER.manifesto}</em>
               </p>
 
-              {/* Bio — passagens enterprise */}
-              <p className="mt-6 text-[15px] lg:text-[16.5px] text-sage leading-[1.6]">
+              {/* Bio — passagens enterprise. No mobile mostra versão
+                  reduzida (bio_short quando existir, senão só uma linha
+                  chave) pra não virar parede de texto. */}
+              <p className="mt-6 hidden lg:block text-[15px] lg:text-[16.5px] text-sage leading-[1.6]">
                 {FOUNDER.bio}
               </p>
+              <p className="mt-6 lg:hidden text-[14.5px] text-sage leading-[1.55]">
+                Antes da IAplicada, passei por Mercado Livre, Suzano e AngloGold. Hoje implementamos
+                IA na operação de +100 empresas.
+              </p>
 
-              {/* Passagens enterprise — nome saiu daqui (foi pra caption
-                  abaixo da foto). Linha agora carrega só os 3 cases. */}
-              <div className="mt-7 flex flex-wrap items-center gap-x-4 gap-y-1">
+              {/* Passagens enterprise — só desktop. No mobile a bio_short
+                  acima já cita os 3, então o chip seria redundante. */}
+              <div className="mt-7 hidden lg:flex flex-wrap items-center gap-x-4 gap-y-1">
                 {ENTERPRISE.map((name, i) => (
                   <span key={name} className="inline-flex items-center gap-3">
                     <span

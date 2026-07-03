@@ -85,40 +85,13 @@ export function Solution() {
             principais (7 dias / 2 meses). */}
         <div className="lg:hidden">
           <Reveal>
-            <p className="text-[11px] uppercase tracking-[0.18em] font-semibold text-muted-foreground mb-3 text-center">
-              Roda sobre os sistemas que sua empresa já usa
-            </p>
-            <div className="flex justify-center">
-              <div className="max-w-full flex flex-wrap items-center justify-center gap-x-2 gap-y-1 rounded-2xl border border-border bg-card px-3.5 py-2">
-                {TOOL_BADGES.map((t, i) => (
-                  <span
-                    key={t}
-                    className="text-[10.5px] font-semibold text-muted-foreground inline-flex items-center gap-2 whitespace-nowrap"
-                  >
-                    {t}
-                    {i < TOOL_BADGES.length - 1 && (
-                      <span className="h-1 w-1 rounded-full bg-border" />
-                    )}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </Reveal>
-
-          <Reveal delay={0.05}>
-            <h2 className="h-mix mt-7 text-[26px] leading-[1.1] text-foreground text-center">
+            <h2 className="h-mix text-[26px] leading-[1.1] text-foreground text-center">
               O Método APLICA <em>automatiza a sua operação.</em>
             </h2>
           </Reveal>
 
-          <Reveal delay={0.1}>
-            <p className="mt-5 text-[15px] text-sage leading-[1.6] text-center">
-              Entramos na rotina real e automatizamos os processos que mais custam.
-            </p>
-          </Reveal>
-
-          <Reveal delay={0.13}>
-            <p className="mt-3 text-[15px] text-foreground font-semibold leading-[1.5] text-center">
+          <Reveal delay={0.05}>
+            <p className="mt-5 text-[15px] text-sage leading-[1.6] text-center max-w-[380px] mx-auto">
               Dentro do fluxo que seu time já conhece. Sem trocar de sistema, sem depender de TI.
             </p>
           </Reveal>
