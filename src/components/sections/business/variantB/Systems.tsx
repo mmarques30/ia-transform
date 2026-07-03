@@ -125,7 +125,7 @@ export function Systems() {
 
 function ClinicaMockup() {
   return (
-    <div className="relative mx-auto mt-14 lg:mt-20 max-w-[1080px]">
+    <div className="relative mx-auto mt-14 lg:mt-20 max-w-[860px]">
       <div
         aria-hidden
         className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[70%] rounded-full"
@@ -424,25 +424,52 @@ function ClinicaMockup() {
             >
               <div className="flex items-start gap-2.5 min-w-0">
                 <div
-                  className="h-8 w-8 rounded-full flex items-center justify-center shrink-0"
+                  className="h-8 w-8 rounded-full flex items-center justify-center shrink-0 relative"
                   style={{ backgroundColor: "#0d9488" }}
                 >
                   <Mic className="h-4 w-4 text-white" strokeWidth={2.5} />
                 </div>
-                <div className="min-w-0">
+                <div className="min-w-0 flex-1">
                   <p
-                    className="text-[11px] font-bold inline-flex items-center gap-1.5"
+                    className="text-[11px] font-bold inline-flex items-center gap-2"
                     style={{ color: "#134e4a" }}
                   >
                     Gravando · IA estruturando SOAP
+                    {/* Waveform mini — 5 barras verticais pulsando,
+                        sinaliza áudio captando ao lado do texto. */}
                     <span
-                      className="psa-pulse h-1.5 w-1.5 rounded-full"
-                      style={{ backgroundColor: "#0d9488" }}
-                    />
+                      aria-hidden
+                      className="psa-audio-wave"
+                      style={{ color: "#0d9488" }}
+                    >
+                      <i />
+                      <i />
+                      <i />
+                      <i />
+                      <i />
+                    </span>
                   </p>
                   <p className="mt-0.5 text-[9px]" style={{ color: "#0f766e" }}>
                     Áudio da sessão em tempo real. A IA transcreve e organiza em Subjetivo ·
                     Objetivo · Plano; o fisioterapeuta revisa e assina.
+                  </p>
+                  {/* Linha de transcrição fake — texto aparecendo em
+                      steps + cursor piscando, sensação de IA escrevendo
+                      no prontuário ao vivo. */}
+                  <p
+                    className="mt-1 text-[9px] font-mono"
+                    style={{ color: "#134e4a" }}
+                  >
+                    <span aria-hidden style={{ color: "#0f766e", marginRight: 4 }}>
+                      SUBJ ›
+                    </span>
+                    <span className="psa-typewriter">
+                      paciente refere melhora no equilíbrio…
+                    </span>
+                    <span
+                      className="psa-typing-cursor"
+                      style={{ color: "#0d9488" }}
+                    />
                   </p>
                   <div
                     className="mt-1.5 h-1 rounded-full overflow-hidden"
