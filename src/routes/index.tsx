@@ -117,9 +117,10 @@ function BusinessLanding() {
       </BgDobra>
       <Systems />
       <BgDobra intensity="media">
-        <OliveWave plainBg />
+        <OliveWave plainBg>
+          <ClientLogos />
+        </OliveWave>
       </BgDobra>
-      <ClientLogos />
       <BgDobra intensity="media">
         <Process
           title={

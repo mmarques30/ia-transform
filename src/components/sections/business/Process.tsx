@@ -57,7 +57,7 @@ export function Process({ title, hideChevrons = false, hideJourney = false }: Pr
       <div className="container-page py-[100px] lg:py-[140px] relative">
         <div className="text-center max-w-[820px] mx-auto">
           <Reveal>
-            <h2 className="h-mix text-[26px] sm:text-[32px] lg:text-[36px] text-foreground">
+            <h2 className="h-mix text-[28px] sm:text-[36px] lg:text-[44px] text-foreground">
               {title ?? (
                 <>
                   Em apenas 8 semanas,

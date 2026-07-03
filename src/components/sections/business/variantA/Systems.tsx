@@ -88,13 +88,13 @@ export function Systems() {
             </span>
           </Reveal>
           <Reveal delay={0.05}>
-            <h2 className="h-mix mt-6 text-[26px] sm:text-[32px] lg:text-[36px] text-foreground">
+            <h2 className="h-mix mt-6 text-[28px] sm:text-[36px] lg:text-[44px] text-foreground">
               Não vendemos slides.{" "}
               <em>Entregamos o sistema rodando na sua operação.</em>
             </h2>
           </Reveal>
           <Reveal delay={0.1}>
-            <p className="mt-6 text-[16px] text-sage leading-[1.6] max-w-[560px] mx-auto">
+            <p className="mt-6 text-[17px] sm:text-[18px] text-sage leading-[1.6] max-w-[600px] mx-auto">
               Painel de controle tributário com a camada de IA identificando créditos, priorizando
               intimações e projetando cenário mensal em tempo real. Layout de referência com dados
               demonstrativos.

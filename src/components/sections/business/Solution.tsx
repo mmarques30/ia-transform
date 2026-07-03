@@ -29,7 +29,7 @@ export function Solution() {
           </Reveal>
 
           <Reveal delay={0.05}>
-            <h2 className="h-mix mt-6 text-[26px] sm:text-[32px] lg:text-[36px] text-foreground">
+            <h2 className="h-mix mt-6 text-[28px] sm:text-[36px] lg:text-[44px] text-foreground">
               O Método APLICA
               <br />
               <em>automatiza a sua operação.</em>
@@ -37,7 +37,7 @@ export function Solution() {
           </Reveal>
 
           <Reveal delay={0.1}>
-            <p className="mt-6 text-[17px] text-sage leading-[1.65] mx-auto">
+            <p className="mt-6 text-[17px] sm:text-[18px] text-sage leading-[1.65] mx-auto">
               A gente entra na rotina real da empresa e automatiza os processos que mais custam{" "}
               <span className="text-foreground font-semibold">
                 dentro do fluxo que o time já conhece

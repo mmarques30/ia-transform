@@ -1462,14 +1462,15 @@
 }
 .ia-bg__ghost-win {
   position: absolute;
-  left: -80px;
+  left: 40px;
   top: 120px;
   width: 640px;
   height: 440px;
   border-radius: 22px;
   border: 1.5px solid rgba(158, 176, 56, 0.22);
   transform: rotate(-3deg);
-  animation: ia-bg-ghost-float 16s ease-in-out infinite alternate;
+  /* Sem animação de flutuar — o ghost agora fica parado. User pediu
+     pra parar o movimento por parecer distraente atrás do título. */
 }
 .ia-bg__ghost-win::before {
   content: "";
@@ -1497,24 +1498,26 @@
 }
 .ia-bg__ghost-bars i {
   width: 40px;
-  height: 100%;
   background: rgba(158, 176, 56, 0.22);
   border-radius: 4px 4px 0 0;
   transform-origin: bottom;
-  transform: scaleY(0.5);
-  animation: ia-bg-ghost-bar 3.6s ease-in-out infinite;
+  /* Alturas fixas escalonadas — antes cada barra scalava com animação
+     ia-bg-ghost-bar. Agora ficam estáticas para o ghost não distrair. */
+}
+.ia-bg__ghost-bars i:nth-child(1) {
+  height: 55%;
 }
 .ia-bg__ghost-bars i:nth-child(2) {
-  animation-delay: 0.3s;
+  height: 78%;
 }
 .ia-bg__ghost-bars i:nth-child(3) {
-  animation-delay: 0.6s;
+  height: 46%;
 }
 .ia-bg__ghost-bars i:nth-child(4) {
-  animation-delay: 0.9s;
+  height: 92%;
 }
 .ia-bg__ghost-bars i:nth-child(5) {
-  animation-delay: 1.2s;
+  height: 68%;
 }
 @keyframes ia-bg-ghost-bar {
   0%,

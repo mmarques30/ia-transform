@@ -7,13 +7,13 @@ export function CTAFinal() {
       <div className="container-page">
         <div className="max-w-[820px] mx-auto text-center">
           <Reveal>
-            <h2 className="h-mix text-[26px] sm:text-[32px] lg:text-[36px] text-foreground">
+            <h2 className="h-mix text-[28px] sm:text-[36px] lg:text-[44px] text-foreground">
               60 minutos. Você sai com clareza do que está{" "}
               <em>custando sem aparecer.</em>
             </h2>
           </Reveal>
           <Reveal delay={0.05}>
-            <p className="mt-6 text-[16px] text-sage leading-[1.65] max-w-[520px] mx-auto">
+            <p className="mt-6 text-[17px] sm:text-[18px] text-sage leading-[1.65] max-w-[540px] mx-auto">
               O diagnóstico é sem custo, sem follow-up insistente. Você sai com um mapa de onde a
               empresa perde hora, mesmo se a gente não fechar.
             </p>

@@ -73,12 +73,12 @@ export function Comparison() {
             </span>
           </Reveal>
           <Reveal delay={0.05}>
-            <h2 className="h-mix mt-6 text-[24px] sm:text-[28px] lg:text-[32px] text-foreground">
+            <h2 className="h-mix mt-6 text-[28px] sm:text-[36px] lg:text-[44px] text-foreground">
               Por que a <em>IAplicada</em> é diferente
             </h2>
           </Reveal>
           <Reveal delay={0.1}>
-            <p className="mt-5 text-[16px] text-sage leading-[1.6] max-w-[600px] mx-auto">
+            <p className="mt-5 text-[17px] sm:text-[18px] text-sage leading-[1.6] max-w-[620px] mx-auto">
               5 critérios estratégicos. ERP, fábrica de software, squads internos e nós.
             </p>
           </Reveal>
