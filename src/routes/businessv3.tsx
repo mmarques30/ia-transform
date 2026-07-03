@@ -101,7 +101,8 @@ function BusinessV3Landing() {
         <Process
           title={
             <>
-              Em 30 dias, sua operação <em>pode rodar sozinha</em>.
+              Em 30 dias, sua operação{" "}
+              <em className="whitespace-nowrap">pode rodar sozinha</em>.
             </>
           }
           hideChevrons
