@@ -52,7 +52,7 @@ export function Hero() {
                 />
               </Reveal>
 
-              <h1 className="h-mix mt-6 lg:mt-7 text-[30px] sm:text-[48px] lg:text-[62px] leading-[1.05] text-foreground">
+              <h1 className="h-mix mt-4 lg:mt-7 text-[26px] sm:text-[48px] lg:text-[62px] leading-[1.1] text-foreground">
                 Contratar mais não vai resolver.
                 <br />
                 O problema está <em>no processo.</em>
@@ -87,7 +87,7 @@ export function Hero() {
             </div>
 
             <Reveal delay={0.1}>
-              <div id="diagnostico-form" className="mt-6 lg:mt-0 lg:sticky lg:top-24 scroll-mt-24">
+              <div id="diagnostico-form" className="mt-5 lg:mt-0 lg:sticky lg:top-24 scroll-mt-24">
                 <HeroForm />
               </div>
             </Reveal>
