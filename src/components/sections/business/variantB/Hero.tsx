@@ -52,8 +52,10 @@ export function Hero() {
                 />
               </Reveal>
 
-              <h1 className="h-mix mt-6 lg:mt-7 text-[32px] sm:text-[44px] lg:text-[58px] leading-[1.05] text-foreground">
-                Seu negócio cresceu. A operação <em>não acompanhou.</em>
+              <h1 className="h-mix mt-6 lg:mt-7 text-[34px] sm:text-[48px] lg:text-[62px] leading-[1.05] text-foreground">
+                Seu negócio cresceu.
+                <br />
+                A operação <em>não acompanhou.</em>
               </h1>
 
               <Reveal delay={0.1}>
