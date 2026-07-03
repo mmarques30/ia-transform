@@ -59,7 +59,7 @@ export function Hero() {
 
               <Reveal delay={0.1}>
                 <p className="mt-5 lg:mt-7 text-[15px] lg:text-[16px] text-sage leading-[1.6] max-w-[540px]">
-                  Não são promessas. São os números reais das empresas que passaram pela IAplicada.
+                  PSA, CB Move e Borges & Zembruski já têm sistemas rodando. Veja o que mudou.
                 </p>
               </Reveal>
 

@@ -60,8 +60,8 @@ export function Hero() {
 
               <Reveal delay={0.1}>
                 <p className="mt-5 lg:mt-7 text-[15px] lg:text-[16px] text-sage leading-[1.6] max-w-[540px]">
-                  Está no retrabalho, no follow-up perdido e no fechamento manual. A IAplicada
-                  mapeia, calcula e constrói o sistema que elimina.
+                  A IAplicada encontra esse custo invisível, coloca número nele e constrói o
+                  sistema que o elimina.
                 </p>
               </Reveal>
 

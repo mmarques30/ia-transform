@@ -270,25 +270,28 @@ export function HeroForm({
     if (loading) return;
     setError(null);
 
-    // Validação completa antes de qualquer chamada de rede. Mostra todos os
-    // erros inline e foca no primeiro campo com problema.
+    // Validação: em vez de mostrar todos os erros de uma vez, achamos
+    // o primeiro campo obrigatório inválido, marcamos SÓ o erro dele,
+    // focamos e deixamos que o próprio fluxo de onBlur do usuário
+    // popule os erros dos demais conforme ele avança. Isso evita a
+    // "parede vermelha" de erros no submit.
     const form = e.currentTarget;
     const fdValidate = new FormData(form);
-    const newErrors: Record<string, string> = {};
+    let firstErrName: (typeof REQUIRED_FIELDS)[number] | null = null;
+    let firstErrMsg = "";
     for (const name of REQUIRED_FIELDS) {
       const value = String(fdValidate.get(name) ?? "");
       const err = validateField(name, value);
-      if (err) newErrors[name] = err;
-    }
-    // E-mail/phone também podem ter formato errado mesmo com valor — re-valida
-    // (REQUIRED_FIELDS loop já cobre, mas duplica pra clareza).
-    setFieldErrors(newErrors);
-    if (Object.keys(newErrors).length > 0) {
-      const firstErrName = REQUIRED_FIELDS.find((f) => newErrors[f]);
-      if (firstErrName) {
-        const el = form.elements.namedItem(firstErrName) as HTMLElement | null;
-        el?.focus();
+      if (err) {
+        firstErrName = name;
+        firstErrMsg = err;
+        break;
       }
+    }
+    if (firstErrName) {
+      setFieldErrors((prev) => ({ ...prev, [firstErrName!]: firstErrMsg }));
+      const el = form.elements.namedItem(firstErrName) as HTMLElement | null;
+      el?.focus();
       return;
     }
 
@@ -503,7 +506,7 @@ export function HeroForm({
               className="h-1.5 w-1.5 rounded-full"
               style={{ backgroundColor: "var(--color-primary)" }}
             />
-            Vagas abertas
+            Vagas limitadas por ciclo
           </span>
         </div>
       </div>
