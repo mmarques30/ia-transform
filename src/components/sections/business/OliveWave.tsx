@@ -150,9 +150,13 @@ export function OliveWave({ plainBg = false, children }: OliveWaveProps = {}) {
             </p>
           </Reveal>
         </div>
-
-        {children && <div className="mt-16 lg:mt-20">{children}</div>}
       </div>
+
+      {/* Children (ex: ClientLogos transparent) — fora do container-page
+          pra rodar edge-to-edge do viewport. O componente children pode
+          conter seu próprio container interno pro título/label se
+          precisar limitar. */}
+      {children && <div className="relative mt-16 lg:mt-20">{children}</div>}
     </section>
   );
 }
