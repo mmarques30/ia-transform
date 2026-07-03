@@ -22,10 +22,12 @@ const BrandBackground = lazy(() =>
 // projeto da LP business — usado também por rotas que não casam com
 // nenhum dos prefixos específicos abaixo.
 //
-// A rota /contabil02 é prefixada por "/contabil", então o matching
-// precisa ser feito do MAIS específico pro menos específico (ver runtime
-// selector no script abaixo).
+// Prefixos como /contabil02 e /businessv2 colidem por prefixo — o
+// matching é feito do MAIS específico pro menos específico no runtime
+// selector abaixo.
 const CLARITY_PROJECT_ID_BUSINESS = "wpgxq27fhi"; // /
+const CLARITY_PROJECT_ID_BUSINESS_V2 = "xggoupkuk8"; // /businessv2
+const CLARITY_PROJECT_ID_BUSINESS_V3 = "xggp972x2l"; // /businessv3
 const CLARITY_PROJECT_ID_CONTABIL = "wxsk6a8ej4"; // /contabil (+ /contabil-thank-you)
 const CLARITY_PROJECT_ID_CONTABIL02 = "x291ty5740"; // /contabil02
 const META_PIXEL_ID = "619312151238896";
@@ -143,7 +145,7 @@ export const Route = createRootRoute({
       // AdBlock Plus). O Worker proxia pra clarity.ms e reescreve as
       // URLs internas do SDK pra rotear tudo via /c/*.
       {
-        children: `(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="/c/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script",(function(){var p=(window.location&&window.location.pathname)||"";if(p.indexOf("/contabil02")===0)return "${CLARITY_PROJECT_ID_CONTABIL02}";if(p.indexOf("/contabil")===0)return "${CLARITY_PROJECT_ID_CONTABIL}";return "${CLARITY_PROJECT_ID_BUSINESS}";})());try{if(window.location&&window.location.hostname==="iaplicada.com"){window.clarity("set","environment","production");}else{window.clarity("set","environment","preview");}}catch(e){}`,
+        children: `(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="/c/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script",(function(){var p=(window.location&&window.location.pathname)||"";if(p.indexOf("/contabil02")===0)return "${CLARITY_PROJECT_ID_CONTABIL02}";if(p.indexOf("/contabil")===0)return "${CLARITY_PROJECT_ID_CONTABIL}";if(p.indexOf("/businessv2")===0)return "${CLARITY_PROJECT_ID_BUSINESS_V2}";if(p.indexOf("/businessv3")===0)return "${CLARITY_PROJECT_ID_BUSINESS_V3}";return "${CLARITY_PROJECT_ID_BUSINESS}";})());try{if(window.location&&window.location.hostname==="iaplicada.com"){window.clarity("set","environment","production");}else{window.clarity("set","environment","preview");}}catch(e){}`,
       },
       // Meta Pixel — conversões / remarketing Facebook/Instagram Ads.
       // Define a função fbq() imediatamente (com fila) e dispara
