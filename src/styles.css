@@ -1543,12 +1543,21 @@
   opacity: 0.7;
 }
 
-/* Dentro das dobras da LP `/`, o .section-veil (0.62 alpha) escondia
-   demais o ia-bg atrás — grid/sweep/sparks ficavam invisíveis. Aqui
-   afinamos o véu só quando ele está dentro de uma dobra ia-bg, sem
-   tocar em como as LPs B/C usam o mesmo componente. */
+/* Dentro das dobras COM ia-bg (LP /, LP-B, LP-C na cadência intercalada):
+ * - Afina o véu (0.62 → 0.34 alpha) pra o grid/sweep/sparks vazarem
+ * - Substitui background-color por um linear-gradient que fade no topo
+ *   e na base do véu. Assim, quando duas dobras `ia-dobra` empilham,
+ *   os dois véus se cruzam em soft-fade em vez de bater linha reta,
+ *   eliminando o "corte" horizontal que aparecia na junção. */
 .ia-dobra .section-veil {
-  background-color: oklch(0.14 0.018 122 / 0.34);
+  background-color: transparent;
+  background-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    oklch(0.14 0.018 122 / 0.34) 9%,
+    oklch(0.14 0.018 122 / 0.34) 91%,
+    transparent 100%
+  );
 }
 
 /* BAIXA — só grade + grão */
