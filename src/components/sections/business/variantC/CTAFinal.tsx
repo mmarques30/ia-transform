@@ -8,7 +8,7 @@ export function CTAFinal() {
         <div className="max-w-[820px] mx-auto text-center">
           <Reveal>
             <h2 className="h-mix text-[28px] sm:text-[36px] lg:text-[44px] text-foreground">
-              A PSA reduziu o retrabalho interno de 85% para 43%.{" "}
+              A PSA aumentou a produtividade da equipe de 43% pra 85% em 4 meses.{" "}
               <em>Qual é o seu número?</em>
             </h2>
           </Reveal>
