@@ -118,19 +118,8 @@ function BusinessLanding() {
       <Systems />
       <BgDobra intensity="media">
         <OliveWave plainBg>
-          <ClientLogos />
+          <ClientLogos transparent />
         </OliveWave>
-      </BgDobra>
-      <BgDobra intensity="media">
-        <Process
-          title={
-            <>
-              Em 30 dias, sua operação <em>pode rodar sozinha</em>.
-            </>
-          }
-          hideChevrons
-          hideJourney
-        />
       </BgDobra>
       <Authority />
       <BgDobra intensity="media">

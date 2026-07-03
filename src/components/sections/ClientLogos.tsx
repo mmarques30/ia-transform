@@ -42,11 +42,24 @@ const CLIENTS: Client[] = [
   { name: "Uiara Intimates" },
 ];
 
-export function ClientLogos() {
+interface ClientLogosProps {
+  /**
+   * Desliga o `.section-veil` local e reduz o padding. Usado quando o
+   * carrossel roda por dentro de outra dobra (ex: LP `/` renderiza
+   * <ClientLogos transparent /> como children do OliveWave) — evita a
+   * caixa escura em torno do carrossel que dava sensação de "fundo
+   * separado". LP-B e LP-C mantêm o comportamento antigo (default).
+   */
+  transparent?: boolean;
+}
+
+export function ClientLogos({ transparent = false }: ClientLogosProps = {}) {
   // Renderiza 2x pra animação contínua sem gap
   const loop = [...CLIENTS, ...CLIENTS];
   return (
-    <section className="section-veil py-[56px] lg:py-[72px] overflow-hidden">
+    <section
+      className={`${transparent ? "" : "section-veil "}${transparent ? "py-4 lg:py-6" : "py-[56px] lg:py-[72px]"} overflow-hidden`}
+    >
       <div className="container-page">
         <p className="text-center text-[11px] uppercase tracking-[0.18em] font-semibold text-muted-foreground">
           Empresas que já operam com a IAplicada
