@@ -7,7 +7,7 @@ import {
   Mail,
   Inbox,
 } from "lucide-react";
-import { Header } from "@/components/sections/Header";
+import { BgDobra } from "@/components/BgDobra";
 import { Footer } from "@/components/sections/Footer";
 import { Reveal } from "@/components/Reveal";
 
@@ -73,119 +73,163 @@ function useFireLeadBackup(eid: string | undefined) {
 
 const NEXT_STEPS = [
   {
+    n: "01",
     Icon: MessageSquare,
     title: "Nosso contato pra alinhar o diagnóstico",
     text: "Um sócio do time vai te chamar pra entender contexto e agendar a conversa.",
   },
   {
+    n: "02",
     Icon: Mail,
     title: "Um e-mail com orientações sobre o processo",
     text: "Detalhes do que vamos discutir e o que preparar pra conversa render mais.",
   },
   {
+    n: "03",
     Icon: Inbox,
     title: "Se não encontrar o e-mail",
     text: "Confira a caixa de spam ou promoções. Em alguns provedores chega por lá.",
   },
 ];
 
+/**
+ * Thank-you shared entre LP-A (/), LP-B (/businessv2) e LP-C (/businessv3).
+ * Reformulada no layout dark das LPs (BgDobra + ia-bg + Reveal + tipografia
+ * padronizada 28/36/44), no lugar do academy-theme cream anterior.
+ */
 function ThankYouBusinessPage() {
   const { eid } = Route.useSearch();
   useFireLeadBackup(eid);
 
   return (
-    <main className="academy-theme min-h-screen">
-      <Header theme="light" />
-
-      {/* HERO confirmação — academy theme (cream + Fraunces) */}
-      <section
-        id="top"
-        className="bg-hero-canvas relative overflow-hidden pt-[120px] pb-[60px] lg:pt-[160px] lg:pb-[80px]"
-      >
-        <div className="container-wide-academy">
-          <div className="text-center max-w-[720px] mx-auto">
-            <Reveal>
-              <span
-                className="inline-flex h-16 w-16 items-center justify-center rounded-full"
-                style={{
-                  backgroundColor: "color-mix(in oklab, var(--academy-brand) 18%, transparent)",
-                  border: "1px solid color-mix(in oklab, var(--academy-brand-dark) 45%, transparent)",
-                }}
-              >
-                <CheckCircle2
-                  className="h-9 w-9"
-                  strokeWidth={2}
-                  style={{ color: "var(--academy-brand-dark)" }}
+    <main className="min-h-screen text-foreground" style={{ backgroundColor: "#0a0c07" }}>
+      {/* HERO confirmação */}
+      <BgDobra intensity="alta">
+        <section
+          id="top"
+          className="relative pt-[100px] pb-[60px] lg:pt-[140px] lg:pb-[80px]"
+        >
+          <div className="container-page">
+            <div className="text-center max-w-[760px] mx-auto">
+              <Reveal>
+                <img
+                  src="/brand/iaplicada-logo-dark.png"
+                  alt="IAplicada"
+                  height={28}
+                  className="block mx-auto"
+                  style={{ height: 28, width: "auto" }}
                 />
-              </span>
-            </Reveal>
+              </Reveal>
 
-            <Reveal delay={0.05}>
-              <span className="eyebrow mt-7">Inscrição confirmada</span>
-            </Reveal>
+              <Reveal delay={0.05}>
+                <span
+                  className="inline-flex h-16 w-16 items-center justify-center rounded-full mt-8"
+                  style={{
+                    backgroundColor: "oklch(0.75 0.20 122 / 0.14)",
+                    border: "1px solid oklch(0.75 0.20 122 / 0.4)",
+                  }}
+                >
+                  <CheckCircle2
+                    className="h-9 w-9"
+                    strokeWidth={2}
+                    style={{ color: "var(--color-primary)" }}
+                  />
+                </span>
+              </Reveal>
 
-            <Reveal delay={0.1}>
-              <h1 className="h-hero mt-6">
-                Recebemos suas{" "}
-                <span className="serif-italic text-accent-mark">informações</span>.
-              </h1>
-            </Reveal>
+              <Reveal delay={0.1}>
+                <span
+                  className="mt-6 inline-flex items-center gap-2 rounded-full px-3 py-1 text-[10px] uppercase tracking-[0.16em] font-semibold"
+                  style={{
+                    borderColor: "oklch(0.75 0.20 122 / 0.3)",
+                    backgroundColor: "oklch(0.75 0.20 122 / 0.08)",
+                    color: "oklch(0.85 0.15 122)",
+                    border: "1px solid oklch(0.75 0.20 122 / 0.3)",
+                  }}
+                >
+                  <span
+                    className="h-1.5 w-1.5 rounded-full"
+                    style={{ backgroundColor: "var(--color-primary)" }}
+                  />
+                  Inscrição confirmada
+                </span>
+              </Reveal>
 
-            <Reveal delay={0.15}>
-              <p className="lede mt-7 mx-auto" style={{ fontWeight: 500 }}>
-                Em breve você será contatado pra dar continuidade ao seu diagnóstico.
-              </p>
-            </Reveal>
+              <Reveal delay={0.15}>
+                <h1 className="h-mix mt-7 text-[34px] sm:text-[48px] lg:text-[62px] leading-[1.05] text-foreground">
+                  Recebemos suas <em>informações.</em>
+                </h1>
+              </Reveal>
+
+              <Reveal delay={0.2}>
+                <p className="mt-7 text-[17px] sm:text-[18px] text-sage leading-[1.65] max-w-[600px] mx-auto">
+                  Em breve você será contatado pra dar continuidade ao seu diagnóstico.
+                </p>
+              </Reveal>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </BgDobra>
 
-      {/* PRÓXIMOS PASSOS — instruções claras */}
-      <section className="section-veil py-[70px] lg:py-[100px]">
+      {/* PRÓXIMOS PASSOS */}
+      <section className="section-veil py-[80px] lg:py-[120px]">
         <div className="container-page">
           <div className="max-w-[1080px] mx-auto">
-            <div className="text-center max-w-[640px] mx-auto">
+            <div className="text-center max-w-[720px] mx-auto">
               <Reveal>
-                <span className="eyebrow">Próximos passos</span>
+                <span className="label-chip">
+                  <span className="dot" />
+                  Próximos passos
+                </span>
               </Reveal>
               <Reveal delay={0.05}>
-                <h2 className="h-section mt-6">
-                  O que <span className="serif-italic">vem a seguir</span>.
+                <h2 className="h-mix mt-6 text-[28px] sm:text-[36px] lg:text-[44px] text-foreground">
+                  O que <em>vem a seguir.</em>
                 </h2>
               </Reveal>
               <Reveal delay={0.1}>
-                <p
-                  className="mt-5 text-[15px] leading-[1.6]"
-                  style={{ color: "var(--academy-cocoa-soft)" }}
-                >
+                <p className="mt-6 text-[17px] sm:text-[18px] text-sage leading-[1.6] max-w-[640px] mx-auto">
                   Em até 1 dia útil você vai receber duas coisas — fique de olho no seu e-mail e
                   WhatsApp.
                 </p>
               </Reveal>
             </div>
 
-            <div className="mt-12 grid md:grid-cols-3 gap-4">
+            <div className="mt-12 lg:mt-14 grid md:grid-cols-3 gap-4 lg:gap-5 items-stretch">
               {NEXT_STEPS.map((step, i) => (
-                <Reveal key={step.title} delay={i * 0.06}>
-                  <div className="tech-card p-6 h-full flex flex-col">
+                <Reveal key={step.title} delay={0.18 + i * 0.09} className="h-full">
+                  <div className="tech-card p-6 lg:p-7 relative h-full flex flex-col">
+                    <div className="flex items-center gap-3">
+                      <span
+                        className="num-display text-[13px] tracking-wider"
+                        style={{ color: "var(--color-primary)" }}
+                      >
+                        {step.n}
+                      </span>
+                      <span
+                        className="h-[1px] flex-1"
+                        style={{
+                          background:
+                            "linear-gradient(90deg, var(--color-primary), transparent)",
+                        }}
+                      />
+                    </div>
                     <span
-                      className="inline-flex h-10 w-10 items-center justify-center rounded-xl"
+                      className="mt-4 inline-flex h-10 w-10 items-center justify-center rounded-xl"
                       style={{
-                        backgroundColor:
-                          "color-mix(in oklab, var(--academy-brand) 18%, transparent)",
-                        border:
-                          "1px solid color-mix(in oklab, var(--academy-brand-dark) 45%, transparent)",
+                        backgroundColor: "oklch(0.75 0.20 122 / 0.12)",
+                        border: "1px solid oklch(0.75 0.20 122 / 0.3)",
                       }}
                     >
                       <step.Icon
                         className="h-5 w-5"
                         strokeWidth={2}
-                        style={{ color: "var(--academy-brand-dark)" }}
+                        style={{ color: "var(--color-primary)" }}
                       />
                     </span>
-                    <p className="mt-5 text-[16px] font-bold tracking-tight text-foreground leading-snug">
+                    <h3 className="mt-4 text-[16px] lg:text-[18px] font-bold tracking-tight text-foreground leading-[1.3]">
                       {step.title}
-                    </p>
+                    </h3>
                     <p className="mt-2 text-[13.5px] text-sage leading-[1.55]">{step.text}</p>
                   </div>
                 </Reveal>
@@ -195,71 +239,74 @@ function ThankYouBusinessPage() {
         </div>
       </section>
 
-      {/* MOCKUPS compactos — preview do produto */}
-      <section className="section-veil py-[70px] lg:py-[90px] relative overflow-hidden">
-        <div className="container-page relative">
-          <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-center max-w-[1100px] mx-auto">
-            <div className="lg:order-1 order-2">
-              <Reveal>
-                <span className="eyebrow">Operação que enxerga</span>
-              </Reveal>
-              <Reveal delay={0.05}>
-                <h2 className="h-section mt-6">
-                  A sua empresa em{" "}
-                  <span className="serif-italic">todas as telas</span>.
-                </h2>
-              </Reveal>
-              <Reveal delay={0.1}>
-                <p
-                  className="mt-5 text-[15px] leading-[1.65]"
-                  style={{ color: "var(--academy-cocoa-soft)" }}
+      {/* PREVIEW OPERAÇÃO — mantido, ajustado pro dark */}
+      <BgDobra intensity="media">
+        <section className="relative py-[80px] lg:py-[120px] overflow-hidden">
+          <div className="container-page relative">
+            <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center max-w-[1100px] mx-auto">
+              <div className="lg:order-1 order-2">
+                <Reveal>
+                  <span className="label-chip">
+                    <span className="dot" />
+                    Operação que enxerga
+                  </span>
+                </Reveal>
+                <Reveal delay={0.05}>
+                  <h2 className="h-mix mt-6 text-[28px] sm:text-[36px] lg:text-[44px] text-foreground">
+                    A sua empresa em <em>todas as telas.</em>
+                  </h2>
+                </Reveal>
+                <Reveal delay={0.1}>
+                  <p className="mt-6 text-[17px] sm:text-[18px] text-sage leading-[1.65] max-w-[520px]">
+                    Depois do diagnóstico, é isso que a gente constrói com você — um sistema próprio
+                    que mostra a operação em tempo real, no desktop, tablet e celular.
+                  </p>
+                </Reveal>
+                <Reveal delay={0.15}>
+                  <ul className="mt-6 space-y-2.5">
+                    {[
+                      "Indicadores em tempo real, acessíveis a quem decide",
+                      "Processos documentados e papéis claros",
+                      "Operação que roda sem depender do dono",
+                    ].map((line) => (
+                      <li
+                        key={line}
+                        className="flex items-start gap-2.5 text-[14px] lg:text-[15px] text-foreground"
+                      >
+                        <span
+                          className="mt-1.5 h-1.5 w-1.5 rounded-full shrink-0"
+                          style={{ backgroundColor: "var(--color-primary)" }}
+                        />
+                        {line}
+                      </li>
+                    ))}
+                  </ul>
+                </Reveal>
+              </div>
+
+              <Reveal delay={0.2}>
+                <div
+                  className="lg:order-2 order-1 relative mx-auto w-full"
+                  style={{ maxWidth: 520 }}
                 >
-                  Depois do diagnóstico, é isso que a gente constrói com você — um sistema próprio
-                  que mostra a operação em tempo real, no desktop, tablet e celular.
-                </p>
-              </Reveal>
-              <Reveal delay={0.15}>
-                <ul className="mt-6 space-y-2.5">
-                  {[
-                    "Indicadores em tempo real, acessíveis a quem decide",
-                    "Processos documentados e papéis claros",
-                    "Operação que roda sem depender do dono",
-                  ].map((line) => (
-                    <li
-                      key={line}
-                      className="flex items-start gap-2.5 text-[14px] text-foreground"
-                    >
-                      <span
-                        className="mt-1.5 h-1.5 w-1.5 rounded-full shrink-0"
-                        style={{ backgroundColor: "var(--academy-brand-dark)" }}
-                      />
-                      {line}
-                    </li>
-                  ))}
-                </ul>
+                  <DeviceComposition />
+                </div>
               </Reveal>
             </div>
-
-            <Reveal delay={0.2}>
-              <div
-                className="lg:order-2 order-1 relative mx-auto w-full"
-                style={{ maxWidth: 520 }}
-              >
-                <DeviceComposition />
-              </div>
-            </Reveal>
           </div>
-        </div>
-      </section>
+        </section>
+      </BgDobra>
 
       {/* CTA voltar */}
-      <section className="section-veil py-[50px] lg:py-[70px]">
+      <section className="section-veil py-[60px] lg:py-[80px]">
         <div className="container-page">
           <Reveal>
             <div className="text-center">
-              <Link to="/" className="btn-primary-academy">
+              <Link to="/" className="cta-primary">
                 Voltar pro site
-                <ArrowRight className="h-3.5 w-3.5" />
+                <span className="arrow">
+                  <ArrowRight className="h-3.5 w-3.5" />
+                </span>
               </Link>
             </div>
           </Reveal>
@@ -273,22 +320,21 @@ function ThankYouBusinessPage() {
 
 /* ------------------------------------------------------------------
  * Composição compacta: laptop principal + tablet à esquerda + phone à
- * direita, em escala reduzida pra acompanhar o texto ao lado.
+ * direita. Palette adaptada pro dark theme das LPs — panels em tom
+ * off-white pra ainda "brilharem" contra o fundo escuro sem quebrar
+ * a leitura.
  * ------------------------------------------------------------------ */
 
 const PANEL_BG = "oklch(0.99 0.005 110)";
-const PANEL_BORDER = "oklch(0.9 0.01 115)";
-const ACCENT = "var(--color-primary)";
+const PANEL_BORDER = "oklch(0.86 0.01 115)";
+const ACCENT = "oklch(0.62 0.17 125)";
 const INK = "oklch(0.2 0.02 122)";
 const MUTED = "oklch(0.7 0.015 115)";
 
 function DeviceComposition() {
   return (
     <div className="relative w-full" style={{ aspectRatio: "5 / 4" }}>
-      <div
-        className="absolute left-1/2 -translate-x-1/2 bottom-0"
-        style={{ width: "82%" }}
-      >
+      <div className="absolute left-1/2 -translate-x-1/2 bottom-0" style={{ width: "82%" }}>
         <Laptop />
       </div>
       <div
@@ -326,8 +372,9 @@ function Laptop() {
       <div
         className="rounded-[12px] p-[7px]"
         style={{
-          backgroundColor: "oklch(0.15 0.015 122)",
-          boxShadow: "0 22px 50px -18px oklch(0 0 0 / 0.35)",
+          backgroundColor: "oklch(0.12 0.015 122)",
+          boxShadow: "0 30px 60px -20px oklch(0 0 0 / 0.7)",
+          border: "1px solid oklch(0.28 0.02 122)",
         }}
       >
         <div
@@ -348,9 +395,9 @@ function Laptop() {
           marginLeft: "-4%",
           height: 10,
           background:
-            "linear-gradient(180deg, oklch(0.18 0.015 122) 0%, oklch(0.12 0.015 122) 100%)",
+            "linear-gradient(180deg, oklch(0.18 0.015 122) 0%, oklch(0.1 0.015 122) 100%)",
           borderRadius: "0 0 10px 10px",
-          boxShadow: "0 6px 12px -4px oklch(0 0 0 / 0.3)",
+          boxShadow: "0 8px 16px -6px oklch(0 0 0 / 0.5)",
         }}
       />
       <div
@@ -358,7 +405,7 @@ function Laptop() {
         style={{
           width: "14%",
           height: 3,
-          backgroundColor: "oklch(0.1 0.015 122)",
+          backgroundColor: "oklch(0.08 0.015 122)",
           borderRadius: "0 0 5px 5px",
         }}
       />
@@ -371,8 +418,9 @@ function Tablet() {
     <div
       className="rounded-[14px] p-[6px]"
       style={{
-        backgroundColor: "oklch(0.15 0.015 122)",
-        boxShadow: "0 16px 40px -12px oklch(0 0 0 / 0.4)",
+        backgroundColor: "oklch(0.12 0.015 122)",
+        boxShadow: "0 20px 40px -14px oklch(0 0 0 / 0.7)",
+        border: "1px solid oklch(0.28 0.02 122)",
       }}
     >
       <div
@@ -394,8 +442,9 @@ function Phone() {
     <div
       className="rounded-[18px] p-[4px] relative"
       style={{
-        backgroundColor: "oklch(0.12 0.015 122)",
-        boxShadow: "0 14px 32px -10px oklch(0 0 0 / 0.45)",
+        backgroundColor: "oklch(0.1 0.015 122)",
+        boxShadow: "0 18px 36px -12px oklch(0 0 0 / 0.75)",
+        border: "1px solid oklch(0.28 0.02 122)",
       }}
     >
       <div
@@ -410,7 +459,7 @@ function Phone() {
           style={{
             width: "30%",
             height: 6,
-            backgroundColor: "oklch(0.12 0.015 122)",
+            backgroundColor: "oklch(0.1 0.015 122)",
           }}
         />
         <PhoneScreen />
@@ -459,10 +508,7 @@ function DashboardScreen() {
 
       <div className="flex-1 p-[8px] flex flex-col gap-[6px]">
         <div className="flex items-center justify-between">
-          <div
-            className="rounded-sm"
-            style={{ width: 50, height: 4, backgroundColor: INK }}
-          />
+          <div className="rounded-sm" style={{ width: 50, height: 4, backgroundColor: INK }} />
           <div className="flex gap-1">
             <div
               className="rounded-full"
@@ -484,10 +530,7 @@ function DashboardScreen() {
             <div
               key={i}
               className="rounded-md p-1.5"
-              style={{
-                backgroundColor: "white",
-                border: `1px solid ${PANEL_BORDER}`,
-              }}
+              style={{ backgroundColor: "white", border: `1px solid ${PANEL_BORDER}` }}
             >
               <div
                 className="rounded-sm"
@@ -508,10 +551,7 @@ function DashboardScreen() {
 
         <div
           className="rounded-md p-1.5 flex-1 relative"
-          style={{
-            backgroundColor: "white",
-            border: `1px solid ${PANEL_BORDER}`,
-          }}
+          style={{ backgroundColor: "white", border: `1px solid ${PANEL_BORDER}` }}
         >
           <div
             className="rounded-sm"
@@ -525,7 +565,11 @@ function DashboardScreen() {
                 style={{
                   height: `${h}%`,
                   backgroundColor:
-                    i === 9 ? ACCENT : i % 2 === 0 ? "oklch(0.85 0.04 115)" : "oklch(0.92 0.02 115)",
+                    i === 9
+                      ? ACCENT
+                      : i % 2 === 0
+                        ? "oklch(0.85 0.04 115)"
+                        : "oklch(0.92 0.02 115)",
                 }}
               />
             ))}
@@ -540,10 +584,7 @@ function TabletScreen() {
   return (
     <div className="absolute inset-0 p-[6px] flex flex-col gap-[5px]">
       <div className="flex items-center justify-between">
-        <div
-          className="rounded-sm"
-          style={{ width: 22, height: 3, backgroundColor: INK }}
-        />
+        <div className="rounded-sm" style={{ width: 22, height: 3, backgroundColor: INK }} />
         <div
           className="rounded-full"
           style={{ width: 5, height: 5, backgroundColor: ACCENT }}
@@ -552,10 +593,7 @@ function TabletScreen() {
 
       <div
         className="rounded-md p-1.5"
-        style={{
-          backgroundColor: "white",
-          border: `1px solid ${PANEL_BORDER}`,
-        }}
+        style={{ backgroundColor: "white", border: `1px solid ${PANEL_BORDER}` }}
       >
         <div
           className="rounded-sm"
@@ -583,10 +621,7 @@ function TabletScreen() {
           <div
             key={i}
             className="rounded-md flex items-center gap-1 p-1"
-            style={{
-              backgroundColor: "white",
-              border: `1px solid ${PANEL_BORDER}`,
-            }}
+            style={{ backgroundColor: "white", border: `1px solid ${PANEL_BORDER}` }}
           >
             <div
               className="rounded-full"
@@ -617,19 +652,13 @@ function TabletScreen() {
 function PhoneScreen() {
   return (
     <div className="absolute inset-0 pt-[14%] px-[8%] pb-[8%] flex flex-col gap-0.5">
-      <div
-        className="rounded-sm"
-        style={{ width: "45%", height: 2.5, backgroundColor: INK }}
-      />
+      <div className="rounded-sm" style={{ width: "45%", height: 2.5, backgroundColor: INK }} />
       <div
         className="rounded-sm"
         style={{ width: "70%", height: 2, backgroundColor: MUTED, opacity: 0.5 }}
       />
 
-      <div
-        className="mt-1.5 rounded-md p-1"
-        style={{ backgroundColor: ACCENT, color: "white" }}
-      >
+      <div className="mt-1.5 rounded-md p-1" style={{ backgroundColor: ACCENT, color: "white" }}>
         <div
           className="rounded-sm"
           style={{ width: "50%", height: 1.5, backgroundColor: "white", opacity: 0.5 }}
@@ -644,10 +673,7 @@ function PhoneScreen() {
           <div
             key={i}
             className="rounded-md flex items-center gap-1 p-0.5"
-            style={{
-              backgroundColor: "white",
-              border: `1px solid ${PANEL_BORDER}`,
-            }}
+            style={{ backgroundColor: "white", border: `1px solid ${PANEL_BORDER}` }}
           >
             <div
               className="rounded-full shrink-0"
