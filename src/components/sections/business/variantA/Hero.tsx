@@ -53,7 +53,7 @@ export function Hero() {
               </Reveal>
 
               <h1 className="h-mix mt-6 lg:mt-7 text-[32px] sm:text-[44px] lg:text-[58px] leading-[1.05] text-foreground">
-                Contratar mais gente não vai resolver. O problema está{" "}
+                Contratar mais não vai resolver. O problema está{" "}
                 <em>no processo.</em>
               </h1>
 
