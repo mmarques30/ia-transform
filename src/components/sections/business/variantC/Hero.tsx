@@ -52,18 +52,18 @@ export function Hero() {
                 />
               </Reveal>
 
-              <h1 className="h-mix mt-6 lg:mt-7 text-[34px] sm:text-[48px] lg:text-[62px] leading-[1.05] text-foreground">
+              <h1 className="h-mix mt-6 lg:mt-7 text-[30px] sm:text-[48px] lg:text-[62px] leading-[1.05] text-foreground">
                 Sua equipe ainda faz o que nossos sistemas{" "}
                 <em>já fazem sozinhos.</em>
               </h1>
 
-              <Reveal delay={0.1}>
+              <Reveal delay={0.1} className="hidden md:block">
                 <p className="mt-5 lg:mt-7 text-[15px] lg:text-[16px] text-sage leading-[1.6] max-w-[540px]">
                   PSA, CB Move e Borges & Zembruski já têm sistemas rodando. Veja o que mudou.
                 </p>
               </Reveal>
 
-              <Reveal delay={0.15}>
+              <Reveal delay={0.15} className="hidden md:block">
                 <p className="mt-6 lg:mt-7 inline-flex items-center">
                   <span
                     aria-hidden

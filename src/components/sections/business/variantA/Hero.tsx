@@ -52,20 +52,20 @@ export function Hero() {
                 />
               </Reveal>
 
-              <h1 className="h-mix mt-6 lg:mt-7 text-[34px] sm:text-[48px] lg:text-[62px] leading-[1.05] text-foreground">
+              <h1 className="h-mix mt-6 lg:mt-7 text-[30px] sm:text-[48px] lg:text-[62px] leading-[1.05] text-foreground">
                 Contratar mais não vai resolver.
                 <br />
-                O problema está <em className="whitespace-nowrap">no processo.</em>
+                O problema está <em>no processo.</em>
               </h1>
 
-              <Reveal delay={0.1}>
+              <Reveal delay={0.1} className="hidden md:block">
                 <p className="mt-5 lg:mt-7 text-[15px] lg:text-[16px] text-sage leading-[1.6] max-w-[540px]">
                   A IAplicada encontra esse custo invisível, coloca número nele e constrói o
                   sistema que o elimina.
                 </p>
               </Reveal>
 
-              <Reveal delay={0.15}>
+              <Reveal delay={0.15} className="hidden md:block">
                 <p className="mt-6 lg:mt-7 inline-flex items-center">
                   <span
                     aria-hidden

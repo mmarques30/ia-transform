@@ -103,7 +103,16 @@ export function Systems() {
         </div>
 
         <Reveal delay={0.15}>
-          <ControleMockup />
+          <div className="hidden md:block">
+            <ControleMockup />
+          </div>
+          <MobileStats
+            items={[
+              { value: "42", label: "Clientes ativos" },
+              { value: "R$ 8,3 mi", label: "Volume processado" },
+              { value: "96%", label: "Assertividade IA" },
+            ]}
+          />
         </Reveal>
 
         <Reveal delay={0.2}>
@@ -119,6 +128,45 @@ export function Systems() {
         </Reveal>
       </div>
     </section>
+  );
+}
+
+/**
+ * MobileStats — versão simplificada do mockup pra viewport <768px.
+ * Renderiza 3 stat cards empilhados (número Fraunces lime + label Inter
+ * muted) no lugar do mockup completo com browser frame + tabs + gráficos
+ * que ficaria com fonts microscópicas no mobile.
+ */
+function MobileStats({ items }: { items: { value: string; label: string }[] }) {
+  return (
+    <div className="md:hidden mt-10 flex flex-col gap-3 max-w-[380px] mx-auto">
+      {items.map((s) => (
+        <div
+          key={s.label}
+          className="rounded-2xl px-5 py-6 text-center"
+          style={{
+            backgroundColor: "#0b1f0e",
+            border: "1px solid #1e3021",
+          }}
+        >
+          <p
+            className="text-[36px] font-bold tracking-tight leading-none"
+            style={{
+              color: "#c8e040",
+              fontFamily: '"Fraunces", Georgia, serif',
+            }}
+          >
+            {s.value}
+          </p>
+          <p
+            className="mt-2 text-[11px] uppercase tracking-[0.14em] font-semibold"
+            style={{ color: "#6a8c62" }}
+          >
+            {s.label}
+          </p>
+        </div>
+      ))}
+    </div>
   );
 }
 
