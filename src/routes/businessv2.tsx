@@ -95,7 +95,15 @@ function BusinessV2Landing() {
         </OliveWave>
       </BgDobra>
       <BgDobra intensity="media">
-        <Process />
+        <Process
+          title={
+            <>
+              Em 30 dias, sua operação <em>pode rodar sozinha</em>.
+            </>
+          }
+          hideChevrons
+          hideJourneyHeading
+        />
       </BgDobra>
       <Authority />
       <BgDobra intensity="media">
