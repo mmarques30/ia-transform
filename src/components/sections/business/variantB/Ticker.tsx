@@ -8,11 +8,12 @@
  */
 
 const TICKER_ITEMS = [
-  "De operação fragmentada a operação que escala",
-  "PSA Consultores · 110+ profissionais num único sistema",
-  "Quadra Arquitetura · R$10k contratado, R$32k+ entregue",
-  "Turystar · 17.886 vendas processadas no ERP",
-  "CB Move · de 30 a 100+ pacientes sem contratar",
+  "PSA Consultores · fechamento de 5 dias para 4 horas",
+  "CB Move · de planilha para sistema em 8 semanas",
+  "Borges & Zembruski · SDR manual para SDR autônomo",
+  "Quadra Arquitetura · operação manual para digital em 10 semanas",
+  "Turystar · 3 sistemas integrados, zero retrabalho",
+  "Focus Fintax · 5 processos automatizados, 1 time menor",
 ];
 
 export function Ticker() {

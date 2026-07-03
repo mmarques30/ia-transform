@@ -61,7 +61,7 @@ export const Route = createFileRoute("/businessv3")({
   head: () => ({
     meta: [
       {
-        title: "IAplicada Business v3 · 90h liberadas. 5 sistemas. Operação rodando.",
+        title: "IAplicada Business · Sua equipe ainda faz o que nossos sistemas já fazem sozinhos.",
       },
       {
         name: "description",

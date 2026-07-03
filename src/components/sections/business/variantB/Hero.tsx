@@ -55,7 +55,7 @@ export function Hero() {
               <h1 className="h-mix mt-6 lg:mt-7 text-[34px] sm:text-[48px] lg:text-[62px] leading-[1.05] text-foreground">
                 Seu negócio cresceu.
                 <br />
-                A operação <em>não acompanhou.</em>
+                A operação <em>virou o gargalo.</em>
               </h1>
 
               <Reveal delay={0.1}>
