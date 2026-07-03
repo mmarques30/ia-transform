@@ -142,6 +142,10 @@ function ControleMockup() {
           boxShadow: "0 40px 80px -30px oklch(0 0 0 / 0.7)",
         }}
       >
+        {/* Scan line — feixe verde descendo pelo mockup indicando que
+            o sistema está processando linhas de dados ao vivo. */}
+        <div aria-hidden className="psa-scan-line" />
+
         {/* Browser bar */}
         <div
           className="flex items-center gap-2 px-4 py-2.5"
@@ -162,22 +166,33 @@ function ControleMockup() {
         <div className="flex" style={{ backgroundColor: "#f2f4f7" }}>
           {/* Sidebar */}
           <div
-            className="hidden sm:flex flex-col items-center gap-4 py-4"
+            className="hidden sm:flex flex-col items-center gap-4 py-4 relative"
             style={{ width: 44, backgroundColor: "#08306b", color: "#ffffff" }}
           >
             <div
-              className="h-7 w-7 rounded-md flex items-center justify-center text-[12px] font-bold"
+              className="h-7 w-7 rounded-md flex items-center justify-center text-[12px] font-bold psa-module-active"
               style={{ backgroundColor: "#0b3a80", color: "#e5edf6" }}
             >
               IA
             </div>
             {[LayoutDashboard, UserPlus, Bell, FileText, Settings, Shield].map((Icon, i) => (
-              <Icon
-                key={i}
-                className="h-[14px] w-[14px]"
-                strokeWidth={1.75}
-                style={{ color: i === 0 ? "#89b7ec" : "#4d7bb0" }}
-              />
+              <div key={i} className="relative">
+                <Icon
+                  className="h-[14px] w-[14px]"
+                  strokeWidth={1.75}
+                  style={{ color: i === 0 ? "#89b7ec" : "#4d7bb0" }}
+                />
+                {/* Sinal de "módulo ativo" — 3 ícones pulsando (dashboard,
+                    intimações, integrações). Passa a ideia de sistema
+                    processando em várias frentes ao mesmo tempo. */}
+                {[0, 2, 5].includes(i) && (
+                  <span
+                    aria-hidden
+                    className="psa-pulse absolute -right-1 -top-1 h-1.5 w-1.5 rounded-full"
+                    style={{ backgroundColor: "#86efac" }}
+                  />
+                )}
+              </div>
             ))}
           </div>
 
@@ -378,7 +393,7 @@ function ControleMockup() {
                     >
                       <div className="flex items-end gap-0.5 w-full justify-center h-full">
                         <div
-                          className="rounded-t-sm"
+                          className="psa-bar-loop rounded-t-sm"
                           style={{
                             width: "42%",
                             height: `${c.comp}%`,
@@ -386,7 +401,7 @@ function ControleMockup() {
                           }}
                         />
                         <div
-                          className="rounded-t-sm"
+                          className="psa-bar-loop rounded-t-sm"
                           style={{
                             width: "42%",
                             height: `${c.hon}%`,

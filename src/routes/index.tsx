@@ -93,6 +93,17 @@ function BgDobra({
   );
 }
 
+/**
+ * Ritmo intercalado: dobras COM ia-bg (grid/glow/sparks) alternam com
+ * dobras NEUTRAS (só palette bg + section-veil, sem camada técnica).
+ * Isso quebra o "efeito colagem" (todas as dobras com o mesmo bg) e
+ * dá um respiro visual entre os blocos densos.
+ *
+ * EFFECT ⟷ NEUTRAL cadência:
+ *   Hero (alta)      → Ticker  → Problem (neutral)   → Solution (media)
+ *   Systems (neutral) → OliveWave (media)  → ClientLogos (neutral) → Process (media)
+ *   Authority (neutral) → Comparison (media) → FAQ (neutral) → CTAFinal (alta)
+ */
 function BusinessLanding() {
   return (
     <main className="min-h-screen text-foreground" style={{ backgroundColor: "#0a0c07" }}>
@@ -100,21 +111,15 @@ function BusinessLanding() {
         <Hero />
       </BgDobra>
       <Ticker />
-      <BgDobra intensity="media">
-        <Problem />
-      </BgDobra>
+      <Problem />
       <BgDobra intensity="media">
         <Solution />
       </BgDobra>
-      <BgDobra intensity="baixa">
-        <Systems />
-      </BgDobra>
+      <Systems />
       <BgDobra intensity="media">
         <OliveWave plainBg />
       </BgDobra>
-      <BgDobra intensity="baixa">
-        <ClientLogos />
-      </BgDobra>
+      <ClientLogos />
       <BgDobra intensity="media">
         <Process
           title={
@@ -126,15 +131,11 @@ function BusinessLanding() {
           hideJourney
         />
       </BgDobra>
-      <BgDobra intensity="media">
-        <Authority />
-      </BgDobra>
+      <Authority />
       <BgDobra intensity="media">
         <Comparison />
       </BgDobra>
-      <BgDobra intensity="media">
-        <FAQ items={FAQ_ITEMS_LP_A} />
-      </BgDobra>
+      <FAQ items={FAQ_ITEMS_LP_A} />
       <BgDobra intensity="alta">
         <CTAFinal />
       </BgDobra>

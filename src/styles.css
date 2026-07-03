@@ -1300,7 +1300,26 @@
   z-index: 0;
   overflow: hidden;
   pointer-events: none;
-  background: #0a0c07;
+  /* Sem bg opaco: o <main> já pinta #0a0c07 continuamente por toda a
+     LP. Deixar a ia-bg transparente evita a sensação de "colagem"
+     entre dobras. */
+  /* Máscara vertical: efeitos (grid/glow/sparks/sweep/ghost) somem
+     nas bordas top/bottom da dobra, fazendo a transição pra dobra
+     vizinha (neutra ou não) ser suave, sem linha de corte. */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 9%,
+    black 91%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 9%,
+    black 91%,
+    transparent 100%
+  );
 }
 
 /* grade blueprint */
@@ -1618,15 +1637,118 @@
   animation: psa-step-glow 2s ease-in-out infinite;
 }
 
+/* Scan line — feixe horizontal descendo pelo mockup periodicamente,
+   simulando o sistema processando os dados linha a linha. */
+@keyframes psa-scan-y {
+  0% {
+    top: -6%;
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 0.9;
+  }
+  92% {
+    opacity: 0;
+  }
+  100% {
+    top: 105%;
+    opacity: 0;
+  }
+}
+.psa-scan-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -6%;
+  height: 42px;
+  pointer-events: none;
+  z-index: 5;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(134, 239, 172, 0.16) 45%,
+    rgba(134, 239, 172, 0.55) 50%,
+    rgba(134, 239, 172, 0.16) 55%,
+    transparent 100%
+  );
+  filter: blur(0.5px);
+  animation: psa-scan-y 5.5s cubic-bezier(0.6, 0, 0.4, 1) infinite;
+}
+
+/* Barras que crescem periodicamente em loop (chart evolução mensal).
+   Diferente do psa-bar-fill (one-shot forwards), aqui a barra cresce,
+   segura por um beat e reinicia — dá sensação de "atualizando dado". */
+@keyframes psa-bar-loop {
+  0% {
+    transform: scaleY(0.15);
+  }
+  55%,
+  80% {
+    transform: scaleY(1);
+  }
+  100% {
+    transform: scaleY(0.15);
+  }
+}
+.psa-bar-loop {
+  transform-origin: bottom center;
+  animation: psa-bar-loop 4.2s ease-in-out infinite;
+}
+.psa-bar-loop:nth-of-type(2) {
+  animation-delay: 0.25s;
+}
+.psa-bar-loop:nth-of-type(3) {
+  animation-delay: 0.5s;
+}
+.psa-bar-loop:nth-of-type(4) {
+  animation-delay: 0.75s;
+}
+.psa-bar-loop:nth-of-type(5) {
+  animation-delay: 1s;
+}
+.psa-bar-loop:nth-of-type(6) {
+  animation-delay: 1.25s;
+}
+.psa-bar-loop:nth-of-type(7) {
+  animation-delay: 1.5s;
+}
+
+/* Indicador de "módulo processando" — dot atrás de um ícone da sidebar,
+   com halo suave que pulsa em ritmo lento. Usado pra sinalizar que os
+   sub-sistemas do painel estão ativos, mesmo quando o dashboard exibe
+   número estático. */
+@keyframes psa-module-active {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(134, 239, 172, 0.55);
+  }
+  50% {
+    box-shadow: 0 0 0 4px rgba(134, 239, 172, 0);
+  }
+}
+.psa-module-active {
+  animation: psa-module-active 2.4s ease-in-out infinite;
+}
+
 /* Reduced motion — desliga todas as animações do PSA duo */
 @media (prefers-reduced-motion: reduce) {
   .psa-bar-fill,
   .psa-pulse,
   .psa-ticker-track,
-  .psa-step-active {
+  .psa-step-active,
+  .psa-scan-line,
+  .psa-bar-loop,
+  .psa-module-active {
     animation: none !important;
   }
-  .psa-bar-fill {
+  .psa-bar-fill,
+  .psa-bar-loop {
     transform: none;
+  }
+  .psa-scan-line {
+    display: none;
   }
 }
