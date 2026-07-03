@@ -40,7 +40,7 @@ export function Hero() {
         />
 
         <div className="container-page relative">
-          <div className="grid lg:grid-cols-[1.05fr_1fr] gap-8 lg:gap-16 items-center">
+          <div className="grid lg:grid-cols-[1.05fr_1fr] gap-8 lg:gap-24 items-center">
             <div>
               <Reveal>
                 <img
