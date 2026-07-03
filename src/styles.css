@@ -1736,6 +1736,93 @@
   animation: psa-module-active 2.4s ease-in-out infinite;
 }
 
+/* Waveform de áudio — 5 barras verticais pulsando em ritmo diferente,
+   simula microfone captando som ao lado do ícone Mic. */
+@keyframes psa-audio-wave {
+  0%,
+  100% {
+    transform: scaleY(0.28);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+.psa-audio-wave {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  height: 14px;
+}
+.psa-audio-wave i {
+  display: inline-block;
+  width: 2px;
+  height: 100%;
+  background: currentColor;
+  border-radius: 1px;
+  transform-origin: center;
+  animation: psa-audio-wave 0.9s ease-in-out infinite;
+}
+.psa-audio-wave i:nth-child(1) {
+  animation-delay: 0s;
+}
+.psa-audio-wave i:nth-child(2) {
+  animation-delay: 0.12s;
+}
+.psa-audio-wave i:nth-child(3) {
+  animation-delay: 0.24s;
+}
+.psa-audio-wave i:nth-child(4) {
+  animation-delay: 0.36s;
+}
+.psa-audio-wave i:nth-child(5) {
+  animation-delay: 0.08s;
+}
+
+/* Cursor piscando — barrinha vertical que sinaliza texto sendo
+   escrito. Reforça a ideia de IA transcrevendo ao vivo. */
+@keyframes psa-typing-cursor {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+.psa-typing-cursor {
+  display: inline-block;
+  width: 1.5px;
+  height: 0.9em;
+  background: currentColor;
+  vertical-align: text-bottom;
+  margin-left: 2px;
+  animation: psa-typing-cursor 0.9s steps(1, end) infinite;
+}
+
+/* Máquina de escrever — largura crescendo em steps pra simular
+   caracteres sendo digitados. Usado em uma frase curta de exemplo
+   de transcrição SOAP. */
+@keyframes psa-typewriter {
+  0% {
+    width: 0;
+  }
+  55%,
+  75% {
+    width: 100%;
+  }
+  100% {
+    width: 0;
+  }
+}
+.psa-typewriter {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  vertical-align: bottom;
+  animation: psa-typewriter 6s steps(38, end) infinite;
+}
+
 /* Reduced motion — desliga todas as animações do PSA duo */
 @media (prefers-reduced-motion: reduce) {
   .psa-bar-fill,
@@ -1744,14 +1831,21 @@
   .psa-step-active,
   .psa-scan-line,
   .psa-bar-loop,
-  .psa-module-active {
+  .psa-module-active,
+  .psa-audio-wave i,
+  .psa-typing-cursor,
+  .psa-typewriter {
     animation: none !important;
   }
   .psa-bar-fill,
-  .psa-bar-loop {
+  .psa-bar-loop,
+  .psa-audio-wave i {
     transform: none;
   }
   .psa-scan-line {
     display: none;
+  }
+  .psa-typewriter {
+    width: 100%;
   }
 }
