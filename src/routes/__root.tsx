@@ -17,19 +17,22 @@ const BrandBackground = lazy(() =>
   })),
 );
 
-// IDs do Microsoft Clarity por LP. Cada projeto tem seu próprio dashboard
-// com heatmaps/replays isolados pra não misturar funis. Default é o
-// projeto da LP business — usado também por rotas que não casam com
-// nenhum dos prefixos específicos abaixo.
+// IDs do Microsoft Clarity — consolidados por vertical.
 //
-// Prefixos como /contabil02 e /businessv2 colidem por prefixo — o
-// matching é feito do MAIS específico pro menos específico no runtime
-// selector abaixo.
-const CLARITY_PROJECT_ID_BUSINESS = "wpgxq27fhi"; // /
-const CLARITY_PROJECT_ID_BUSINESS_V2 = "xggoupkuk8"; // /businessv2
-const CLARITY_PROJECT_ID_BUSINESS_V3 = "xggp972x2l"; // /businessv3
-const CLARITY_PROJECT_ID_CONTABIL = "wxsk6a8ej4"; // /contabil (+ /contabil-thank-you)
-const CLARITY_PROJECT_ID_CONTABIL02 = "x291ty5740"; // /contabil02
+// Antes tínhamos 1 projeto Clarity por LP (v1/v2/v3 e contabil/contabil02).
+// Só que a dashboard interna que consome as sessões via Data Export precisa
+// de UM token JWT por projeto Clarity — cada token só é gerado pela conta
+// dona daquele projeto. Como não conseguimos gerar tokens novos, deixamos
+// todas as LPs de cada vertical apontarem pro MESMO projeto Clarity, e
+// separamos as visitas pela URL na dashboard (já que o Clarity registra
+// pageUrl por sessão).
+//
+// Business: `/`, `/businessv2`, `/businessv3` → wpgxq27fhi
+// Contábil: `/contabil`, `/contabil-thank-you`, `/contabil02` → x291ty5740
+//
+// Rotas que não casam com nenhum prefixo caem no default Business.
+const CLARITY_PROJECT_ID_BUSINESS = "wpgxq27fhi"; // / + /businessv2 + /businessv3
+const CLARITY_PROJECT_ID_CONTABIL = "x291ty5740"; // /contabil + /contabil-thank-you + /contabil02
 const META_PIXEL_ID = "619312151238896";
 
 function NotFoundComponent() {
@@ -147,7 +150,7 @@ export const Route = createRootRoute({
       // Aceitamos ~5-15% de perda por adblock em troca de detecção
       // correta no dashboard e nos anúncios.
       {
-        children: `(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script",(function(){var p=(window.location&&window.location.pathname)||"";if(p.indexOf("/contabil02")===0)return "${CLARITY_PROJECT_ID_CONTABIL02}";if(p.indexOf("/contabil")===0)return "${CLARITY_PROJECT_ID_CONTABIL}";if(p.indexOf("/businessv2")===0)return "${CLARITY_PROJECT_ID_BUSINESS_V2}";if(p.indexOf("/businessv3")===0)return "${CLARITY_PROJECT_ID_BUSINESS_V3}";return "${CLARITY_PROJECT_ID_BUSINESS}";})());try{if(window.location&&window.location.hostname==="iaplicada.com"){window.clarity("set","environment","production");}else{window.clarity("set","environment","preview");}}catch(e){}`,
+        children: `(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script",(function(){var p=(window.location&&window.location.pathname)||"";if(p.indexOf("/contabil")===0)return "${CLARITY_PROJECT_ID_CONTABIL}";return "${CLARITY_PROJECT_ID_BUSINESS}";})());try{if(window.location&&window.location.hostname==="iaplicada.com"){window.clarity("set","environment","production");}else{window.clarity("set","environment","preview");}}catch(e){}`,
       },
       // Meta Pixel — conversões / remarketing Facebook/Instagram Ads.
       // Define a função fbq() imediatamente (com fila) e dispara
