@@ -139,13 +139,15 @@ export const Route = createRootRoute({
       // colisão de prefixos (/contabil02 começa com "/contabil").
       // Carrega um único tag por página (sem dupla contagem).
       //
-      // Tag carregado via /c/tag/<id> (proxy do nosso próprio domínio
-      // implementado em src/server-entry.ts). Bypass de adblockers
-      // que bloqueiam *.clarity.ms na lista padrão (uBlock, Brave,
-      // AdBlock Plus). O Worker proxia pra clarity.ms e reescreve as
-      // URLs internas do SDK pra rotear tudo via /c/*.
+      // Tag carregado direto de www.clarity.ms/tag/<id>. Antes usávamos
+      // /c/tag/<id> (proxy no server-entry.ts) pra driblar adblockers,
+      // mas o validador oficial do Clarity procura pelo domínio real
+      // — com o proxy, o dashboard marcava as LPs como "não instalado"
+      // e a integração Ads (Facebook, Google) não puxava as sessões.
+      // Aceitamos ~5-15% de perda por adblock em troca de detecção
+      // correta no dashboard e nos anúncios.
       {
-        children: `(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="/c/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script",(function(){var p=(window.location&&window.location.pathname)||"";if(p.indexOf("/contabil02")===0)return "${CLARITY_PROJECT_ID_CONTABIL02}";if(p.indexOf("/contabil")===0)return "${CLARITY_PROJECT_ID_CONTABIL}";if(p.indexOf("/businessv2")===0)return "${CLARITY_PROJECT_ID_BUSINESS_V2}";if(p.indexOf("/businessv3")===0)return "${CLARITY_PROJECT_ID_BUSINESS_V3}";return "${CLARITY_PROJECT_ID_BUSINESS}";})());try{if(window.location&&window.location.hostname==="iaplicada.com"){window.clarity("set","environment","production");}else{window.clarity("set","environment","preview");}}catch(e){}`,
+        children: `(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script",(function(){var p=(window.location&&window.location.pathname)||"";if(p.indexOf("/contabil02")===0)return "${CLARITY_PROJECT_ID_CONTABIL02}";if(p.indexOf("/contabil")===0)return "${CLARITY_PROJECT_ID_CONTABIL}";if(p.indexOf("/businessv2")===0)return "${CLARITY_PROJECT_ID_BUSINESS_V2}";if(p.indexOf("/businessv3")===0)return "${CLARITY_PROJECT_ID_BUSINESS_V3}";return "${CLARITY_PROJECT_ID_BUSINESS}";})());try{if(window.location&&window.location.hostname==="iaplicada.com"){window.clarity("set","environment","production");}else{window.clarity("set","environment","preview");}}catch(e){}`,
       },
       // Meta Pixel — conversões / remarketing Facebook/Instagram Ads.
       // Define a função fbq() imediatamente (com fila) e dispara
