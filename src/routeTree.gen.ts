@@ -17,6 +17,7 @@ import { Route as ContabilRouteImport } from './routes/contabil'
 import { Route as Businessv3RouteImport } from './routes/businessv3'
 import { Route as Businessv2RouteImport } from './routes/businessv2'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as Businessv2DiagnosticoRouteImport } from './routes/businessv2.diagnostico'
 
 const ThankYouBusinessRoute = ThankYouBusinessRouteImport.update({
   id: '/thank-you-business',
@@ -58,37 +59,45 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const Businessv2DiagnosticoRoute = Businessv2DiagnosticoRouteImport.update({
+  id: '/diagnostico',
+  path: '/diagnostico',
+  getParentRoute: () => Businessv2Route,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/businessv2': typeof Businessv2Route
+  '/businessv2': typeof Businessv2RouteWithChildren
   '/businessv3': typeof Businessv3Route
   '/contabil': typeof ContabilRoute
   '/contabil-thank-you': typeof ContabilThankYouRoute
   '/contabil02': typeof Contabil02Route
   '/indicacaobusiness': typeof IndicacaobusinessRoute
   '/thank-you-business': typeof ThankYouBusinessRoute
+  '/businessv2/diagnostico': typeof Businessv2DiagnosticoRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/businessv2': typeof Businessv2Route
+  '/businessv2': typeof Businessv2RouteWithChildren
   '/businessv3': typeof Businessv3Route
   '/contabil': typeof ContabilRoute
   '/contabil-thank-you': typeof ContabilThankYouRoute
   '/contabil02': typeof Contabil02Route
   '/indicacaobusiness': typeof IndicacaobusinessRoute
   '/thank-you-business': typeof ThankYouBusinessRoute
+  '/businessv2/diagnostico': typeof Businessv2DiagnosticoRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/businessv2': typeof Businessv2Route
+  '/businessv2': typeof Businessv2RouteWithChildren
   '/businessv3': typeof Businessv3Route
   '/contabil': typeof ContabilRoute
   '/contabil-thank-you': typeof ContabilThankYouRoute
   '/contabil02': typeof Contabil02Route
   '/indicacaobusiness': typeof IndicacaobusinessRoute
   '/thank-you-business': typeof ThankYouBusinessRoute
+  '/businessv2/diagnostico': typeof Businessv2DiagnosticoRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -101,6 +110,7 @@ export interface FileRouteTypes {
     | '/contabil02'
     | '/indicacaobusiness'
     | '/thank-you-business'
+    | '/businessv2/diagnostico'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -111,6 +121,7 @@ export interface FileRouteTypes {
     | '/contabil02'
     | '/indicacaobusiness'
     | '/thank-you-business'
+    | '/businessv2/diagnostico'
   id:
     | '__root__'
     | '/'
@@ -121,11 +132,12 @@ export interface FileRouteTypes {
     | '/contabil02'
     | '/indicacaobusiness'
     | '/thank-you-business'
+    | '/businessv2/diagnostico'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  Businessv2Route: typeof Businessv2Route
+  Businessv2Route: typeof Businessv2RouteWithChildren
   Businessv3Route: typeof Businessv3Route
   ContabilRoute: typeof ContabilRoute
   ContabilThankYouRoute: typeof ContabilThankYouRoute
@@ -192,12 +204,31 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/businessv2/diagnostico': {
+      id: '/businessv2/diagnostico'
+      path: '/diagnostico'
+      fullPath: '/businessv2/diagnostico'
+      preLoaderRoute: typeof Businessv2DiagnosticoRouteImport
+      parentRoute: typeof Businessv2Route
+    }
   }
 }
 
+interface Businessv2RouteChildren {
+  Businessv2DiagnosticoRoute: typeof Businessv2DiagnosticoRoute
+}
+
+const Businessv2RouteChildren: Businessv2RouteChildren = {
+  Businessv2DiagnosticoRoute: Businessv2DiagnosticoRoute,
+}
+
+const Businessv2RouteWithChildren = Businessv2Route._addFileChildren(
+  Businessv2RouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  Businessv2Route: Businessv2Route,
+  Businessv2Route: Businessv2RouteWithChildren,
   Businessv3Route: Businessv3Route,
   ContabilRoute: ContabilRoute,
   ContabilThankYouRoute: ContabilThankYouRoute,
