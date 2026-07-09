@@ -35,6 +35,17 @@ interface HeroFormProps {
   formSlug?: string;
   /** Rota da página de obrigado pra onde redireciona após o envio. */
   thankYouPath?: string;
+  /**
+   * Callback opcional pós-submit bem-sucedido. Quando fornecido, ele é
+   * chamado NO LUGAR do redirect pra thankYouPath — permite embutir o
+   * form em modal/overlay que mostra estado de sucesso inline (LP-B
+   * usa isso na modal do hero CTA).
+   *
+   * Recebe o event_id gerado pra eventual tracking/deep link. Se retornar
+   * true (ou por padrão), a navegação é PULADA. Não fornecer = comporta
+   * como sempre (navigate → thankYouPath).
+   */
+  onSuccess?: (eventID: string) => void;
 }
 
 /** Opções sincronizadas com form_fields do CRM (slug=business). */
@@ -90,6 +101,7 @@ const LOADING_STAGES: Array<{ at: number; text: string }> = [
 export function HeroForm({
   formSlug = "business",
   thankYouPath = "/thank-you-business",
+  onSuccess,
 }: HeroFormProps = {}) {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -115,9 +127,7 @@ export function HeroForm({
       if (stage.at === 0) {
         setLoadingMsg(stage.text);
       } else {
-        loadingTimers.current.push(
-          window.setTimeout(() => setLoadingMsg(stage.text), stage.at),
-        );
+        loadingTimers.current.push(window.setTimeout(() => setLoadingMsg(stage.text), stage.at));
       }
     }
   }
@@ -391,7 +401,10 @@ export function HeroForm({
       if (!res.ok) {
         const body = await res.json().catch(() => ({}));
         const missing = Array.isArray(body?.missing)
-          ? body.missing.map((m: { label?: string }) => m.label).filter(Boolean).join(", ")
+          ? body.missing
+              .map((m: { label?: string }) => m.label)
+              .filter(Boolean)
+              .join(", ")
           : "";
         throw new Error(
           missing
@@ -440,8 +453,13 @@ export function HeroForm({
       submitted.current = true;
 
       clearLoadingStages();
-      console.log("[form] redirecting");
-      navigate({ to: thankYouPath, search: { eid: eventID } });
+      if (onSuccess) {
+        console.log("[form] onSuccess handler present, skipping navigate");
+        onSuccess(eventID);
+      } else {
+        console.log("[form] redirecting");
+        navigate({ to: thankYouPath, search: { eid: eventID } });
+      }
     } catch (err) {
       const message =
         err instanceof Error
