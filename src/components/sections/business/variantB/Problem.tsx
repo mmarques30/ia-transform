@@ -2,27 +2,26 @@ import { Reveal } from "@/components/Reveal";
 import { CtaGlow } from "@/components/sections/business/variantB/CtaGlow";
 
 /**
- * Problem (LP-B refactor Acelerador) — dobra "Você tem esses problemas
- * em sua empresa?". Estrutura:
- *  - H2 lime centralizada
+ * Problem (LP-B refactor Acelerador) — dobra "SE VOCÊ RECONHECE 3
+ * DESSES, ESSA PÁGINA É PRA VOCÊ". Estrutura:
+ *  - H2 lime centralizada (novo copy: reconhecer 3 dos 6)
  *  - trio de fotos "PROBLEMA" em polígono inclinado (moldura lime,
  *    skewX). Placeholder até termos assets — 3 gradientes dark
- *  - 2 colunas de lista com bullets circulares lime
- *  - transição "Se você disse sim..." + CTA glow
+ *  - 2 colunas de lista com 3 itens cada (6 sintomas do dono
+ *    dependente do operacional)
+ *  - transição "Esse não é um problema de gestão..." + CTA glow
  */
 
 const COL_LEFT = [
-  "Multiplicidade de demandas, processos desorganizados e falta de indicadores;",
-  'Política do "Apaga Incêndio", negligenciando o importante por conta das urgências;',
-  "Time dependente, sem autonomia ou iniciativa;",
-  "Falta de clareza e perspectiva no processo de crescimento e escalada.",
+  "Você aprova tudo — porque sem você a coisa não anda",
+  "Seu time pede resposta pra tudo, o dia todo",
+  "Você não sabe o que está acontecendo na operação agora",
 ];
 
 const COL_RIGHT = [
-  "Sobrecarga de trabalho, mais de 12 horas por dia;",
-  "Dificuldade em se ausentar da empresa e tirar férias;",
-  "Falta de tempo para a família, amigos e lazer;",
-  "Reflexos na saúde, como estresse e vida sedentária.",
+  "Perdeu tempo com consultor que entregou slide e sumiu",
+  "Tem medo de crescer porque não consegue entregar o que já tem",
+  "Sua melhor pessoa segura a operação inteira na cabeça dela",
 ];
 
 export function Problem() {
@@ -32,10 +31,12 @@ export function Problem() {
         <div className="relative z-10 container-page">
           <Reveal>
             <h2
-              className="text-center font-extrabold text-[28px] sm:text-[36px] lg:text-[42px] leading-[1.1] tracking-[-0.02em] max-w-[780px] mx-auto"
+              className="text-center font-extrabold text-[24px] sm:text-[32px] lg:text-[38px] leading-[1.15] tracking-[-0.02em] max-w-[880px] mx-auto uppercase"
               style={{ textWrap: "balance", color: "var(--color-primary)" }}
             >
-              Você tem esses problemas <span className="text-foreground">em sua empresa?</span>
+              Se você reconhece <span className="text-foreground">3 desses,</span>
+              <br className="hidden sm:block" /> essa página{" "}
+              <span className="text-foreground">é pra você</span>
             </h2>
           </Reveal>
 
@@ -50,53 +51,38 @@ export function Problem() {
             </div>
           </Reveal>
 
-          <div className="mt-12 lg:mt-16 grid md:grid-cols-2 gap-8 lg:gap-14 max-w-[900px] mx-auto">
+          <div className="mt-12 lg:mt-16 grid md:grid-cols-2 gap-6 lg:gap-14 max-w-[900px] mx-auto">
             <Reveal delay={0.15}>
-              <div>
-                <h3
-                  className="font-extrabold text-[18px] lg:text-[20px] mb-5"
-                  style={{ color: "var(--color-primary)" }}
-                >
-                  Isso acontece em sua empresa?
-                </h3>
-                <ul className="flex flex-col gap-4">
-                  {COL_LEFT.map((item) => (
-                    <ProblemItem key={item}>{item}</ProblemItem>
-                  ))}
-                </ul>
-              </div>
+              <ul className="flex flex-col gap-4">
+                {COL_LEFT.map((item) => (
+                  <ProblemItem key={item}>{item}</ProblemItem>
+                ))}
+              </ul>
             </Reveal>
 
             <Reveal delay={0.2}>
-              <div>
-                <h3
-                  className="font-extrabold text-[18px] lg:text-[20px] mb-5"
-                  style={{ color: "var(--color-primary)" }}
-                >
-                  Você sofre com:
-                </h3>
-                <ul className="flex flex-col gap-4">
-                  {COL_RIGHT.map((item) => (
-                    <ProblemItem key={item}>{item}</ProblemItem>
-                  ))}
-                </ul>
-              </div>
+              <ul className="flex flex-col gap-4">
+                {COL_RIGHT.map((item) => (
+                  <ProblemItem key={item}>{item}</ProblemItem>
+                ))}
+              </ul>
             </Reveal>
           </div>
 
           <Reveal delay={0.25}>
-            <p className="mt-14 text-center text-[18px] lg:text-[22px] leading-[1.35] max-w-[620px] mx-auto text-foreground">
-              Se você{" "}
+            <p className="mt-14 text-center text-[18px] lg:text-[22px] leading-[1.35] max-w-[720px] mx-auto text-foreground">
+              Esse não é um problema de{" "}
+              <strong className="font-extrabold text-foreground">gestão.</strong> É um problema de{" "}
               <strong style={{ color: "var(--color-primary)" }} className="font-extrabold">
-                disse sim
+                sistema.
               </strong>{" "}
-              a qualquer item, então a IAplicada é pra você.
+              E sistema a gente constrói.
             </p>
           </Reveal>
 
           <Reveal delay={0.3}>
             <div className="mt-8 text-center">
-              <CtaGlow size="lg">Quero o diagnóstico do meu negócio</CtaGlow>
+              <CtaGlow size="lg">Quero sair do operacional →</CtaGlow>
             </div>
           </Reveal>
         </div>

@@ -58,15 +58,15 @@ function DiagnosticoPage() {
 
               <Reveal delay={0.05}>
                 <h1 className="h-mix mt-8 text-[28px] sm:text-[38px] lg:text-[46px] leading-[1.05] text-foreground">
-                  Preencha pra receber <em>o diagnóstico</em> da sua operação.
+                  Primeiro passo para <em>sair do operacional.</em>
                 </h1>
               </Reveal>
 
               <Reveal delay={0.1}>
-                <p className="mt-6 text-[15.5px] lg:text-[16px] text-sage leading-[1.6] max-w-[500px] mx-auto">
-                  Um sócio da IAplicada revisa suas respostas e chama por WhatsApp em até{" "}
-                  <strong className="text-foreground font-semibold">24 horas úteis</strong> pra
-                  agendar a call.
+                <p className="mt-6 text-[15.5px] lg:text-[16px] text-sage leading-[1.6] max-w-[520px] mx-auto">
+                  Preencha abaixo. Nosso time entra em contato em até{" "}
+                  <strong className="text-foreground font-semibold">24h</strong> para agendar seu
+                  diagnóstico gratuito com a Mari.
                 </p>
               </Reveal>
             </div>
@@ -78,7 +78,14 @@ function DiagnosticoPage() {
             </Reveal>
 
             <Reveal delay={0.2}>
-              <p className="mt-10 text-center text-[10.5px] uppercase tracking-[0.22em] font-bold text-muted-foreground">
+              <p className="mt-6 text-center text-[12px] uppercase tracking-[0.18em] font-bold text-muted-foreground">
+                Sem compromisso.{" "}
+                <span style={{ color: "var(--color-primary)" }}>100% confidencial.</span>
+              </p>
+            </Reveal>
+
+            <Reveal delay={0.25}>
+              <p className="mt-8 text-center text-[10px] uppercase tracking-[0.22em] font-bold text-muted-foreground opacity-60">
                 GRUPO <span style={{ color: "var(--color-primary)" }}>IAPLICADA</span> · MÉTODO
                 APLICA · 2026
               </p>

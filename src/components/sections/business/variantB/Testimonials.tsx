@@ -118,19 +118,17 @@ export function Testimonials() {
         <div className="max-w-[860px] mx-auto text-center">
           <Reveal>
             <h2
-              className="font-extrabold text-[28px] sm:text-[36px] lg:text-[42px] leading-[1.08] tracking-[-0.02em]"
+              className="font-extrabold text-[28px] sm:text-[36px] lg:text-[42px] leading-[1.08] tracking-[-0.02em] uppercase"
               style={{ textWrap: "balance", color: "var(--color-primary)" }}
             >
-              DEZENAS DE EMPRESAS{" "}
-              <span className="text-foreground">
-                JÁ VIRARAM OPERAÇÃO
-                <br className="hidden lg:block" /> COM ESSE MÉTODO
-              </span>
+              Quem já saiu <span className="text-foreground">do operacional</span>
             </h2>
           </Reveal>
           <Reveal delay={0.05}>
-            <p className="mt-5 text-[15.5px] text-sage leading-[1.6] max-w-[480px] mx-auto">
-              Veja o que empresários que já passaram por aqui têm a dizer sobre a IAplicada
+            <p className="mt-5 text-[15.5px] text-sage leading-[1.6] max-w-[560px] mx-auto">
+              Empresas de{" "}
+              <strong className="text-foreground font-bold">serviço, produto e indústria</strong> —
+              todas com o mesmo padrão de problema. Todas com o mesmo resultado.
             </p>
           </Reveal>
         </div>

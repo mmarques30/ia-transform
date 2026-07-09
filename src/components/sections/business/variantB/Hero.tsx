@@ -64,28 +64,53 @@ export function Hero() {
                 />
               </Reveal>
 
+              <Reveal delay={0.03}>
+                <p
+                  className="mt-5 lg:mt-6 text-[11px] lg:text-[12px] uppercase tracking-[0.22em] font-bold"
+                  style={{
+                    color: "var(--color-primary)",
+                    fontFamily: '"JetBrains Mono", ui-monospace, Menlo, monospace',
+                  }}
+                >
+                  IAplicada · Sistemas de IA sob medida
+                </p>
+              </Reveal>
+
               <Reveal delay={0.05}>
                 <h1
-                  className="mt-8 lg:mt-10 text-[32px] sm:text-[48px] lg:text-[62px] font-extrabold leading-[1.03] tracking-[-0.03em] text-foreground"
+                  className="mt-4 lg:mt-5 text-[30px] sm:text-[44px] lg:text-[58px] font-extrabold leading-[1.03] tracking-[-0.03em] text-foreground"
                   style={{ textWrap: "balance" }}
                 >
-                  Sua operação <span style={{ color: "var(--color-primary)" }}>pode rodar</span>{" "}
-                  sozinha em até <span style={{ color: "var(--color-primary)" }}>60 dias.</span>
+                  Você foi feito para{" "}
+                  <span style={{ color: "var(--color-primary)" }}>crescer a empresa,</span>
+                  <br />
+                  não para <span style={{ color: "var(--color-primary)" }}>apagar incêndio.</span>
                 </h1>
               </Reveal>
 
+              <Reveal delay={0.08}>
+                <p
+                  className="mt-5 lg:mt-6 text-[19px] sm:text-[22px] lg:text-[26px] leading-[1.15] tracking-[-0.015em] text-foreground"
+                  style={{ fontFamily: '"Instrument Serif", serif', fontWeight: 500 }}
+                >
+                  Em <em style={{ color: "var(--color-primary)" }}>90 dias</em> a gente te tira do
+                  operacional.
+                </p>
+              </Reveal>
+
               <Reveal delay={0.1}>
-                <p className="mt-6 lg:mt-7 text-[15.5px] lg:text-[17px] text-sage leading-[1.55] max-w-[500px]">
-                  Mais de <strong className="text-foreground font-bold">40 empresas</strong> — de
-                  arquitetura a turismo — já entregaram planilha, whatsapp e retrabalho pra um
-                  sistema próprio. Entenda como a sua pode também.
+                <p className="mt-5 lg:mt-6 text-[14.5px] lg:text-[15.5px] text-sage leading-[1.6] max-w-[500px]">
+                  Construímos sistemas de IA sob medida que colocam seu time para executar com
+                  padrão — para você{" "}
+                  <strong className="text-foreground font-bold">sair do dia a dia</strong> e focar
+                  em fechar clientes, não em resolver problema interno.
                 </p>
               </Reveal>
 
               <Reveal delay={0.15}>
-                <div className="mt-9 lg:mt-10">
+                <div className="mt-8 lg:mt-9">
                   <CtaGlow shape="pill" size="xl">
-                    Quero o diagnóstico do meu negócio
+                    Quero sair do operacional →
                   </CtaGlow>
                 </div>
               </Reveal>
@@ -110,7 +135,7 @@ export function Hero() {
             className="text-[16px] sm:text-[20px] lg:text-[24px] leading-tight"
             style={{ fontFamily: '"Instrument Serif", serif', color: "#f4f5ec" }}
           >
-            <em>Processo mapeado</em>
+            <em>Diagnóstico</em>
             <span
               className="mx-2 lg:mx-3 not-italic font-normal"
               style={{ color: "var(--color-primary)", fontFamily: "Inter, sans-serif" }}
@@ -124,7 +149,7 @@ export function Hero() {
             >
               =
             </span>
-            <em>Operação que roda sozinha.</em>
+            <em>Você fora do operacional.</em>
           </p>
         </div>
       </section>

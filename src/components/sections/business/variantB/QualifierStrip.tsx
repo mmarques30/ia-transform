@@ -12,7 +12,7 @@ export function QualifierStrip() {
       className="text-white text-center font-extrabold text-[12px] sm:text-[13.5px] tracking-[0.06em] px-5 py-3.5"
       style={{ background: "linear-gradient(180deg, #dc2626, #b91c1c)" }}
     >
-      EXCLUSIVO PARA DONOS DE EMPRESA COM{" "}
+      EXCLUSIVO PARA DONOS DE EMPRESA QUE QUEREM SAIR DO OPERACIONAL —{" "}
       <strong className="underline underline-offset-[3px]">
         FATURAMENTO A PARTIR DE R$ 1 MILHÃO/ANO
       </strong>
