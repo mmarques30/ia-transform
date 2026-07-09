@@ -28,25 +28,29 @@ export function MentorMari() {
   return (
     <section id="mentora" className="relative">
       <div className="section-veil">
-        <div className="grid lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] min-h-[520px] lg:min-h-[640px] items-stretch">
-          <Reveal>
+        <div className="grid lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] items-stretch">
+          <Reveal className="h-full min-h-[420px] lg:min-h-[620px]">
             <div
-              className="relative flex items-end justify-center overflow-hidden"
+              className="relative w-full h-full overflow-hidden"
               style={{
-                minHeight: 380,
                 background:
                   "radial-gradient(100% 100% at 30% 30%, rgba(200,224,64,0.16), transparent 60%), linear-gradient(180deg, #0f1109 0%, #05060a 100%)",
               }}
             >
+              {/* Foto absoluta preenchendo TODO o container — sem
+                  flex items-end (que empurrava a foto pra baixo e deixava
+                  vazio em cima) e sem width/height fixos. object-cover
+                  object-center recorta e centraliza a face no eixo Y. */}
               <img
                 src={FOUNDER.photoSrc}
                 alt={FOUNDER.name}
-                width={520}
-                height={720}
                 loading="lazy"
                 decoding="async"
-                className="relative z-10 object-cover object-[center_top] w-full h-full"
-                style={{ filter: "brightness(0.92) contrast(1.06)", maxHeight: 720 }}
+                className="absolute inset-0 w-full h-full object-cover"
+                style={{
+                  objectPosition: "center 30%",
+                  filter: "brightness(0.92) contrast(1.06)",
+                }}
                 onError={(e) => {
                   const img = e.currentTarget;
                   if (
@@ -65,7 +69,7 @@ export function MentorMari() {
                 className="pointer-events-none absolute inset-0 z-20"
                 style={{
                   background:
-                    "linear-gradient(90deg, transparent 45%, rgba(13,15,8,0.55) 82%, #0d0f08 100%), linear-gradient(180deg, transparent 55%, rgba(10,12,7,0.55) 100%)",
+                    "linear-gradient(90deg, transparent 55%, rgba(13,15,8,0.5) 85%, #0d0f08 100%), linear-gradient(180deg, transparent 65%, rgba(10,12,7,0.4) 100%)",
                 }}
               />
               {/* Halo lime sutil vindo do painel de texto pra "entrar" na foto
