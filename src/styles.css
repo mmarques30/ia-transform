@@ -30,9 +30,9 @@
   font-weight: 100 900;
   font-display: swap;
   src: url("/fonts/inter-latin.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC,
-    U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F,
-    U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 @font-face {
@@ -41,9 +41,9 @@
   font-weight: 400;
   font-display: swap;
   src: url("/fonts/instrument-serif-latin.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC,
-    U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F,
-    U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 @font-face {
@@ -52,9 +52,9 @@
   font-weight: 400;
   font-display: swap;
   src: url("/fonts/instrument-serif-italic-latin.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC,
-    U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F,
-    U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 /* ────────────────────────────────────────────────────────────────
@@ -75,9 +75,9 @@
   font-weight: 100 900;
   font-display: swap;
   src: url("/fonts/fraunces-latin.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC,
-    U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F,
-    U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 @font-face {
@@ -86,9 +86,9 @@
   font-weight: 100 900;
   font-display: swap;
   src: url("/fonts/inter-tight-latin.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC,
-    U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F,
-    U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 @font-face {
@@ -97,9 +97,9 @@
   font-weight: 100 900;
   font-display: swap;
   src: url("/fonts/jetbrains-mono-latin.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC,
-    U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F,
-    U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 :root {
@@ -253,7 +253,9 @@
     line-height: 0.96;
     letter-spacing: -0.035em;
     font-weight: 400;
-    font-variation-settings: "opsz" 144, "SOFT" 30;
+    font-variation-settings:
+      "opsz" 144,
+      "SOFT" 30;
     color: var(--academy-cocoa);
   }
   .h-hero {
@@ -284,7 +286,9 @@
   .serif-italic {
     font-family: "Fraunces", Georgia, serif;
     font-style: italic;
-    font-variation-settings: "opsz" 144, "SOFT" 100;
+    font-variation-settings:
+      "opsz" 144,
+      "SOFT" 100;
   }
   .lede {
     font-size: clamp(1.05rem, 0.5vw + 0.95rem, 1.25rem);
@@ -490,7 +494,7 @@
   --foreground: oklch(0.96 0.012 110); /* creme suave */
   --muted-foreground: oklch(0.68 0.014 115);
   /* Primary = lime saturado (CTAs e highlights) */
-  --primary: oklch(0.75 0.20 122);
+  --primary: oklch(0.75 0.2 122);
   --primary-foreground: oklch(0.14 0.018 122);
   --primary-glow: oklch(0.85 0.22 118); /* bright lime glow */
   /* Accent = creme pra CTAs invertidos premium */
@@ -509,14 +513,9 @@
     oklch(0.14 0.018 122) 65%
   );
   --gradient-cta-lime: linear-gradient(180deg, oklch(0.85 0.22 118) 0%, oklch(0.72 0.2 122) 100%);
-  --gradient-olive-wave: linear-gradient(
-    180deg,
-    oklch(0.42 0.14 125) 0%,
-    oklch(0.32 0.10 125) 100%
-  );
+  --gradient-olive-wave: linear-gradient(180deg, oklch(0.42 0.14 125) 0%, oklch(0.32 0.1 125) 100%);
   --shadow-card: 0 1px 2px 0 oklch(0 0 0 / 0.4), 0 1px 0 0 oklch(0.3 0.02 122 / 0.6);
-  --shadow-elevated:
-    0 30px 60px -20px oklch(0 0 0 / 0.6), 0 8px 20px -8px oklch(0 0 0 / 0.4);
+  --shadow-elevated: 0 30px 60px -20px oklch(0 0 0 / 0.6), 0 8px 20px -8px oklch(0 0 0 / 0.4);
 }
 
 /* Light theme override — aplicado em sections que ainda não foram redesignadas
@@ -987,7 +986,7 @@
     background-size: 56px 56px;
   }
   .tech-bg-dots {
-    background-image: radial-gradient(oklch(0.75 0.20 122 / 0.22) 1px, transparent 1.5px);
+    background-image: radial-gradient(oklch(0.75 0.2 122 / 0.22) 1px, transparent 1.5px);
     background-size: 24px 24px;
   }
   .tech-card {
@@ -1036,19 +1035,19 @@
      que ficava destoando do design dark do card. */
   .diagnostico-modal-scroll {
     scrollbar-width: thin;
-    scrollbar-color: oklch(0.55 0.06 122 / 0.7) oklch(0.10 0.012 122);
+    scrollbar-color: oklch(0.55 0.06 122 / 0.7) oklch(0.1 0.012 122);
   }
   .diagnostico-modal-scroll::-webkit-scrollbar {
     width: 10px;
   }
   .diagnostico-modal-scroll::-webkit-scrollbar-track {
-    background-color: oklch(0.10 0.012 122);
+    background-color: oklch(0.1 0.012 122);
     border-radius: 0 1rem 1rem 0;
   }
   .diagnostico-modal-scroll::-webkit-scrollbar-thumb {
     background-color: oklch(0.45 0.08 122 / 0.6);
     border-radius: 6px;
-    border: 2px solid oklch(0.10 0.012 122);
+    border: 2px solid oklch(0.1 0.012 122);
   }
   .diagnostico-modal-scroll::-webkit-scrollbar-thumb:hover {
     background-color: var(--color-primary);
@@ -1327,7 +1326,9 @@
 }
 @keyframes ia-bg-grid {
   to {
-    background-position: 58px 58px, 58px 58px;
+    background-position:
+      58px 58px,
+      58px 58px;
   }
 }
 
@@ -1356,11 +1357,7 @@
   height: 640px;
   left: -180px;
   bottom: -220px;
-  background: radial-gradient(
-    circle,
-    rgba(115, 137, 37, 0.2) 0%,
-    transparent 68%
-  );
+  background: radial-gradient(circle, rgba(115, 137, 37, 0.2) 0%, transparent 68%);
   animation: ia-bg-drift-2 16s ease-in-out infinite alternate;
 }
 @keyframes ia-bg-drift-1 {
@@ -1382,12 +1379,7 @@
   width: 46%;
   height: 160%;
   transform: rotate(16deg);
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(158, 176, 56, 0.1),
-    transparent
-  );
+  background: linear-gradient(90deg, transparent, rgba(158, 176, 56, 0.1), transparent);
   filter: blur(26px);
   animation: ia-bg-sweep 8s linear infinite;
 }
@@ -1443,11 +1435,7 @@
   position: absolute;
   inset: 0;
   opacity: 0.55;
-  -webkit-mask-image: radial-gradient(
-    55% 55% at 24% 45%,
-    #000 32%,
-    transparent 78%
-  );
+  -webkit-mask-image: radial-gradient(55% 55% at 24% 45%, #000 32%, transparent 78%);
   mask-image: radial-gradient(55% 55% at 24% 45%, #000 32%, transparent 78%);
 }
 .ia-bg__ghost-win {
@@ -1596,22 +1584,41 @@
 
 /* Barras horizontais crescendo (usado no chart de assertividade) */
 @keyframes psa-bar-grow {
-  from { transform: scaleX(0); }
-  to { transform: scaleX(1); }
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
 }
 .psa-bar-fill {
   transform-origin: left center;
   animation: psa-bar-grow 1.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
-.psa-bar-fill:nth-child(2) { animation-delay: 0.15s; }
-.psa-bar-fill:nth-child(3) { animation-delay: 0.30s; }
-.psa-bar-fill:nth-child(4) { animation-delay: 0.45s; }
-.psa-bar-fill:nth-child(5) { animation-delay: 0.60s; }
+.psa-bar-fill:nth-child(2) {
+  animation-delay: 0.15s;
+}
+.psa-bar-fill:nth-child(3) {
+  animation-delay: 0.3s;
+}
+.psa-bar-fill:nth-child(4) {
+  animation-delay: 0.45s;
+}
+.psa-bar-fill:nth-child(5) {
+  animation-delay: 0.6s;
+}
 
 /* Live pulse — bolinha ao vivo pulsando */
 @keyframes psa-pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.35; transform: scale(0.85); }
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.35;
+    transform: scale(0.85);
+  }
 }
 .psa-pulse {
   animation: psa-pulse 1.6s ease-in-out infinite;
@@ -1620,10 +1627,21 @@
 /* Ticker de contador — número que sobe 3 estados em loop
    (usado pra simular "divergências detectadas" ao vivo). */
 @keyframes psa-ticker {
-  0%, 25% { transform: translateY(0); }
-  33.33%, 58.33% { transform: translateY(-1em); }
-  66.66%, 91.66% { transform: translateY(-2em); }
-  100% { transform: translateY(0); }
+  0%,
+  25% {
+    transform: translateY(0);
+  }
+  33.33%,
+  58.33% {
+    transform: translateY(-1em);
+  }
+  66.66%,
+  91.66% {
+    transform: translateY(-2em);
+  }
+  100% {
+    transform: translateY(0);
+  }
 }
 .psa-ticker-track {
   display: inline-block;
@@ -1633,8 +1651,13 @@
 
 /* Timeline step "em execução" — animação de progresso */
 @keyframes psa-step-glow {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(200, 224, 64, 0.4); }
-  50% { box-shadow: 0 0 0 6px rgba(200, 224, 64, 0); }
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(200, 224, 64, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(200, 224, 64, 0);
+  }
 }
 .psa-step-active {
   animation: psa-step-glow 2s ease-in-out infinite;
@@ -1847,5 +1870,38 @@
   }
   .psa-typewriter {
     width: 100%;
+  }
+}
+
+/* ============================================================
+   LP-B CTA GLOW — pulse ring pulsante em volta do CTA principal.
+   Usado na Hero, Problem, Urgency e Mentor (variantB).
+   ============================================================ */
+
+@keyframes cta-glow-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 6px rgba(200, 224, 64, 0.15),
+      0 24px 48px -14px rgba(200, 224, 64, 0.5),
+      inset 0 -2px 0 rgba(0, 0, 0, 0.2);
+  }
+  50% {
+    box-shadow:
+      0 0 0 12px rgba(200, 224, 64, 0.08),
+      0 32px 60px -14px rgba(200, 224, 64, 0.65),
+      inset 0 -2px 0 rgba(0, 0, 0, 0.2);
+  }
+}
+.cta-glow-btn {
+  animation: cta-glow-pulse 2.6s ease-in-out infinite;
+  transition: transform 0.18s ease;
+}
+.cta-glow-btn:hover {
+  transform: translateY(-2px);
+}
+@media (prefers-reduced-motion: reduce) {
+  .cta-glow-btn {
+    animation: none;
   }
 }
