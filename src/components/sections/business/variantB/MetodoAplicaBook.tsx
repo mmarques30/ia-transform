@@ -2,19 +2,26 @@ import { Reveal } from "@/components/Reveal";
 import { CtaGlow } from "@/components/sections/business/variantB/CtaGlow";
 
 /**
- * MetodoAplicaBook (LP-B) — book 3D "Método APLICA" em destaque.
+ * MetodoAplicaBook (LP-B) — reescrito: no lugar do book 3D
+ * (que ficava desconectado da proposta) agora é uma TRILHA vertical
+ * dos 6 passos do Método APLICA integrada ao lado direito da seção.
  *
- * Equivalente ao book de metodologia do Marcus no Acelerador. Aqui é
- * capa dark com detalhe lime, círculo IAplicada no lugar do brasão,
- * assinatura Mari no rodapé.
+ * O nome do arquivo/componente ficou por compatibilidade — poderíamos
+ * renomear pra MetodoAplicaTrail, mas ia rippolar em todo o route + PR
+ * histórico. O comentário aqui documenta o que ele é hoje.
  *
- * Etapas do método APLICA (uma letra por bullet):
- *   A · Analisar   — mapear onde a operação trava
- *   P · Planejar   — desenhar o sistema que elimina o gargalo
- *   L · Listar     — inventariar processos, gente, ferramentas
+ * Etapas do método (A → P → L → I → C → A):
+ *   A · Analisar    — mapear onde a operação trava
+ *   P · Planejar    — desenhar o sistema que elimina o gargalo
+ *   L · Listar      — inventariar processos, gente, ferramentas
  *   I · Implementar — construir o sistema dentro do negócio
- *   C · Conectar   — integrar com o que já existe (sem trocar tudo)
+ *   C · Conectar    — integrar com o que já existe (sem trocar tudo)
  *   A · Automatizar — piloto automático das rotinas repetitivas
+ *
+ * Trilha visual: 6 nós circulares com letra em Instrument Serif italic
+ * lime, ligados por uma linha vertical dashed (traço de sistema/circuito),
+ * cada nó com número + label + descrição curta ao lado. Reveal escalonado
+ * pra dar entrada progressiva.
  */
 
 interface AplicaStep {
@@ -36,17 +43,18 @@ export function MetodoAplicaBook() {
   return (
     <section
       id="metodo-aplica"
-      className="section-veil py-[80px] lg:py-[110px] relative overflow-hidden"
+      className="section-veil py-[80px] lg:py-[120px] relative overflow-hidden"
     >
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0"
         style={{
-          background: "radial-gradient(80% 80% at 30% 50%, rgba(200,224,64,0.08), transparent 60%)",
+          background:
+            "radial-gradient(70% 60% at 25% 40%, rgba(200,224,64,0.08), transparent 60%), radial-gradient(60% 55% at 85% 60%, rgba(200,224,64,0.06), transparent 60%)",
         }}
       />
       <div className="container-page relative">
-        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center max-w-[1080px] mx-auto">
+        <div className="grid lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] gap-12 lg:gap-16 items-center max-w-[1100px] mx-auto">
           <Reveal>
             <div>
               <span
@@ -61,7 +69,7 @@ export function MetodoAplicaBook() {
                 Como a gente faz
               </span>
               <h2
-                className="mt-5 font-extrabold text-[30px] sm:text-[36px] lg:text-[44px] leading-[1.05] tracking-[-0.025em] text-foreground"
+                className="mt-5 font-extrabold text-[30px] sm:text-[36px] lg:text-[46px] leading-[1.05] tracking-[-0.025em] text-foreground"
                 style={{ textWrap: "balance" }}
               >
                 Um diagnóstico. Um sistema.{" "}
@@ -75,7 +83,7 @@ export function MetodoAplicaBook() {
                   90 dias.
                 </em>
               </h2>
-              <p className="mt-5 text-[15px] lg:text-[16px] text-sage leading-[1.6] max-w-[460px]">
+              <p className="mt-5 text-[15px] lg:text-[16.5px] text-sage leading-[1.6] max-w-[480px]">
                 O Método <strong className="text-foreground font-bold">APLICA</strong> mapeia onde
                 sua operação trava, constrói o sistema que elimina o gargalo e implementa dentro do
                 seu negócio —{" "}
@@ -84,31 +92,6 @@ export function MetodoAplicaBook() {
                 </strong>
                 .
               </p>
-              <ul className="mt-6 flex flex-col gap-2">
-                {APLICA_STEPS.map((s) => (
-                  <li
-                    key={s.label}
-                    className="grid items-baseline gap-3 text-[13.5px] lg:text-[14.5px] text-foreground leading-[1.4]"
-                    style={{ gridTemplateColumns: "28px 1fr" }}
-                  >
-                    <span
-                      aria-hidden
-                      className="font-extrabold text-[16px] lg:text-[18px] leading-none"
-                      style={{
-                        color: "var(--color-primary)",
-                        fontFamily: '"Instrument Serif", serif',
-                        fontStyle: "italic",
-                      }}
-                    >
-                      {s.letter}
-                    </span>
-                    <span>
-                      <strong className="font-bold text-foreground">{s.label}</strong>{" "}
-                      <span className="text-sage">— {s.detail}</span>
-                    </span>
-                  </li>
-                ))}
-              </ul>
               <div className="mt-8">
                 <CtaGlow size="md">Conhecer o Método APLICA →</CtaGlow>
               </div>
@@ -116,9 +99,7 @@ export function MetodoAplicaBook() {
           </Reveal>
 
           <Reveal delay={0.15}>
-            <div className="flex items-center justify-center" style={{ perspective: 1200 }}>
-              <Book3D />
-            </div>
+            <MetodoAplicaTrail />
           </Reveal>
         </div>
       </div>
@@ -126,93 +107,92 @@ export function MetodoAplicaBook() {
   );
 }
 
-function Book3D() {
+function MetodoAplicaTrail() {
   return (
-    <div
-      className="relative"
-      style={{
-        width: 290,
-        height: 380,
-        transform: "rotateY(-24deg) rotateX(4deg)",
-        transformStyle: "preserve-3d",
-        filter: "drop-shadow(0 40px 60px rgba(0,0,0,0.6))",
-      }}
-    >
-      <div
-        className="absolute inset-0 overflow-hidden flex flex-col justify-between p-8"
+    <ol className="relative flex flex-col gap-5 lg:gap-6" aria-label="Passos do Método APLICA">
+      {/* Linha vertical conectando os nós — dashed lime com fade nas extremidades. */}
+      <span
+        aria-hidden
+        className="pointer-events-none absolute top-6 bottom-6"
         style={{
-          borderRadius: "4px 14px 14px 4px",
-          background: "linear-gradient(140deg, #0a0c07 0%, #14180d 50%, #1a2013 100%)",
-          border: "1px solid var(--color-primary)",
-          boxShadow: "inset 0 0 60px rgba(200,224,64,0.06)",
+          left: 24,
+          width: 2,
+          backgroundImage:
+            "linear-gradient(180deg, transparent 0%, rgba(200,224,64,0.55) 15%, rgba(200,224,64,0.55) 85%, transparent 100%)",
+          backgroundSize: "2px 8px",
+          backgroundRepeat: "repeat-y",
+          maskImage: "linear-gradient(180deg, black 8px, transparent 8px)",
+          WebkitMaskImage: "linear-gradient(180deg, black 8px, transparent 8px)",
+          maskSize: "100% 12px",
+          WebkitMaskSize: "100% 12px",
+          maskRepeat: "repeat-y",
+          WebkitMaskRepeat: "repeat-y",
+        }}
+      />
+
+      {APLICA_STEPS.map((s, i) => (
+        <li key={i} className="relative flex items-start gap-4 lg:gap-5">
+          <TrailNode letter={s.letter} index={i} />
+          <div className="pt-1 min-w-0">
+            <p
+              className="text-[9.5px] uppercase tracking-[0.22em] font-bold"
+              style={{
+                color: "rgba(200,224,64,0.55)",
+                fontFamily: '"JetBrains Mono", ui-monospace, Menlo, monospace',
+              }}
+            >
+              STEP {String(i + 1).padStart(2, "0")}
+            </p>
+            <h3
+              className="mt-1 text-[19px] lg:text-[22px] leading-[1.15] font-extrabold text-foreground"
+              style={{ letterSpacing: "-0.01em" }}
+            >
+              {s.label}
+            </h3>
+            <p className="mt-1 text-[13.5px] lg:text-[14px] text-sage leading-[1.5]">{s.detail}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  );
+}
+
+function TrailNode({ letter, index }: { letter: string; index: number }) {
+  const isFirst = index === 0;
+  return (
+    <div className="relative shrink-0">
+      {/* Halo lime blur atrás do nó — mais forte no primeiro pra sinalizar
+          "começa aqui". */}
+      <span
+        aria-hidden
+        className="pointer-events-none absolute inset-0 rounded-full"
+        style={{
+          background: "radial-gradient(circle at center, rgba(200,224,64,0.35), transparent 70%)",
+          filter: `blur(${isFirst ? 18 : 12}px)`,
+          transform: "scale(1.4)",
+        }}
+      />
+      <span
+        className="relative z-10 flex items-center justify-center rounded-full"
+        style={{
+          width: 50,
+          height: 50,
+          background: "radial-gradient(circle at 30% 30%, #14180d, #0a0c07 70%)",
+          border: "2px solid var(--color-primary)",
+          boxShadow: "inset 0 1px 0 rgba(255,255,255,0.06), 0 6px 14px -4px rgba(200,224,64,0.35)",
         }}
       >
-        <div
-          aria-hidden
-          className="absolute left-0 top-0 bottom-0"
-          style={{
-            width: 16,
-            background: "linear-gradient(90deg, rgba(0,0,0,0.7), transparent)",
-          }}
-        />
-
-        <div>
-          <p
-            className="text-[10px] tracking-[0.28em] uppercase font-bold"
-            style={{
-              color: "var(--color-primary)",
-              fontFamily: '"JetBrains Mono", ui-monospace, Menlo, monospace',
-            }}
-          >
-            METODOLOGIA · IAPLICADA
-          </p>
-          <div
-            className="mt-4 h-10 w-10 rounded-full"
-            style={{
-              background: "radial-gradient(circle at 30% 30%, #d5e95a, #7a8f30)",
-              boxShadow: "0 0 30px rgba(200,224,64,0.5)",
-            }}
-          />
-        </div>
-
-        <div>
-          <p
-            className="italic font-medium leading-[0.95] text-[38px] text-foreground"
-            style={{
-              fontFamily: '"Instrument Serif", serif',
-              letterSpacing: "-0.01em",
-            }}
-          >
-            Método
-            <br />
-            APLICA
-          </p>
-          <p className="mt-3 text-[9.5px] tracking-[0.24em] uppercase font-bold text-sage">
-            2026 · edição empresarial
-          </p>
-        </div>
-
-        <div
-          className="italic pt-3"
+        <span
+          className="text-[26px] leading-none italic"
           style={{
             fontFamily: '"Instrument Serif", serif',
-            fontSize: 16,
             color: "var(--color-primary)",
-            borderTop: "1px solid rgba(200,224,64,0.3)",
+            fontWeight: 500,
           }}
         >
-          Mariana Marques
-          <span
-            className="block not-italic mt-1 tracking-[0.22em] uppercase font-bold text-sage"
-            style={{
-              fontFamily: '"JetBrains Mono", ui-monospace, Menlo, monospace',
-              fontSize: 8,
-            }}
-          >
-            Fundadora · IAplicada
-          </span>
-        </div>
-      </div>
+          {letter}
+        </span>
+      </span>
     </div>
   );
 }
