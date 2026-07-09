@@ -1907,11 +1907,16 @@
 }
 
 /* ============================================================
-   LP-B TESTIMONIALS COLUMNS — scroll infinito por coluna.
+   LP-B TESTIMONIALS COLUMNS — scroll infinito por coluna
+   (padrão 21st.dev/testimonials-columns-1).
+
    Cada coluna duplica o array de items no JSX e este keyframe
    translata -50%, resultando em loop sem "salto" perceptível
    (o segundo bloco é cópia idêntica do primeiro, então quando
    o track volta a 0% visualmente está no mesmo ponto).
+
+   animation-duration é passado inline por coluna via style prop
+   (15s / 19s / 17s pra bater com a referência 21st.dev).
    ============================================================ */
 
 @keyframes testimonial-col-scroll {
