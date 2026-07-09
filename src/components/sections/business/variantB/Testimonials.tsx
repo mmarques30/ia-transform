@@ -47,7 +47,7 @@ const ITEMS: Testimonial[] = [
         <HL>110+ profissionais</HL> num único painel. Reunião virou dado, não achismo.
       </>
     ),
-    pos: { top: "5%", left: "25%", width: 270, rotate: -3 },
+    pos: { top: "0%", left: "3%", width: 300, rotate: -3 },
   },
   {
     initials: "CB",
@@ -59,7 +59,7 @@ const ITEMS: Testimonial[] = [
         o SOAP, fisio revisa e assina. Escala sem virar fábrica.
       </>
     ),
-    pos: { top: "8%", right: "5%", width: 290, rotate: 2 },
+    pos: { top: "2%", right: "3%", width: 300, rotate: 2 },
   },
   {
     initials: "AZ",
@@ -71,7 +71,7 @@ const ITEMS: Testimonial[] = [
         <HL>Receita que ficava na mesa entrou.</HL>
       </>
     ),
-    pos: { top: "30%", left: "3%", width: 250, rotate: -2 },
+    pos: { top: "36%", left: "6%", width: 290, rotate: -2 },
   },
   {
     initials: "FF",
@@ -83,7 +83,7 @@ const ITEMS: Testimonial[] = [
         painel roda no nosso domínio, com a nossa cara.
       </>
     ),
-    pos: { top: "42%", left: "33%", width: 260, rotate: 1 },
+    pos: { top: "38%", right: "6%", width: 290, rotate: 1 },
   },
   {
     initials: "TS",
@@ -95,7 +95,7 @@ const ITEMS: Testimonial[] = [
         virou tempo real.
       </>
     ),
-    pos: { top: "55%", right: "10%", width: 260, rotate: -2 },
+    pos: { top: "72%", left: "3%", width: 290, rotate: -2 },
   },
   {
     initials: "QA",
@@ -107,7 +107,7 @@ const ITEMS: Testimonial[] = [
         estava faltando — o sistema lembra.
       </>
     ),
-    pos: { top: "75%", left: "20%", width: 240, rotate: 3 },
+    pos: { top: "74%", right: "3%", width: 290, rotate: 3 },
   },
 ];
 
@@ -135,8 +135,8 @@ export function Testimonials() {
 
         {/* Desktop: collage posicional. Mobile: stack vertical simples. */}
         <div
-          className="hidden lg:block relative mt-14 mx-auto max-w-[920px]"
-          style={{ height: 620 }}
+          className="hidden lg:block relative mt-14 mx-auto max-w-[1080px]"
+          style={{ height: 780 }}
         >
           {ITEMS.map((t, i) => (
             <Reveal key={t.author} delay={0.1 + i * 0.06}>
