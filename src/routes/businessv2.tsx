@@ -10,6 +10,7 @@ import { MentorMari } from "@/components/sections/business/variantB/MentorMari";
 import { Guarantee } from "@/components/sections/business/variantB/Guarantee";
 import { Urgency } from "@/components/sections/business/variantB/Urgency";
 import { Manifesto } from "@/components/sections/business/variantB/Manifesto";
+import { FinalForm } from "@/components/sections/business/variantB/FinalForm";
 import { QualifierStrip } from "@/components/sections/business/variantB/QualifierStrip";
 import { Footer } from "@/components/sections/Footer";
 
@@ -28,8 +29,9 @@ import { Footer } from "@/components/sections/Footer";
  *   08 Guarantee (carta cartório + carimbo lime "diagnóstico sem custo")
  *   09 Urgency (banda vermelha "4 slots/semana" + CTA glow)
  *   10 Manifesto (equação editorial serif italic)
- *   11 QualifierStrip rodapé
- *   12 Footer padrão
+ *   11 FinalForm (form embedded no fim — HeroForm inline)
+ *   12 QualifierStrip rodapé
+ *   13 Footer padrão
  *
  * Componentes shared (Solution / Process / OliveWave / Comparison /
  * Authority / FAQ / Ticker / Systems / Impact / CTAFinal antigo) foram
@@ -93,6 +95,8 @@ function BusinessV2Landing() {
       <Urgency />
 
       <Manifesto />
+
+      <FinalForm />
 
       <QualifierStrip />
 

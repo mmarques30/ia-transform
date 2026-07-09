@@ -18,10 +18,11 @@ export function Hero() {
       <QualifierStrip />
       <section
         id="top"
-        className="relative overflow-hidden pb-[64px] lg:pb-[110px] pt-[36px] lg:pt-[56px]"
+        className="relative overflow-hidden pb-[120px] lg:pb-[180px] pt-[60px] lg:pt-[100px]"
         style={{
           background:
             "radial-gradient(120% 90% at 100% 40%, rgba(200,224,64,0.08), transparent 60%)",
+          minHeight: "780px",
         }}
       >
         <div
@@ -125,7 +126,7 @@ export function Hero() {
         </div>
 
         <div
-          className="relative mt-12 lg:mt-16 py-6 lg:py-7 px-6 text-center"
+          className="relative mt-20 lg:mt-28 py-6 lg:py-8 px-6 text-center"
           style={{
             background: "linear-gradient(180deg, transparent, rgba(0,0,0,0.35))",
             borderTop: "1px solid rgba(200,224,64,0.15)",

@@ -28,12 +28,12 @@ export function MentorMari() {
   return (
     <section id="mentora" className="relative">
       <div className="section-veil">
-        <div className="grid lg:grid-cols-2 min-h-[560px] lg:min-h-[720px]">
+        <div className="grid lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] min-h-[520px] lg:min-h-[640px] items-stretch">
           <Reveal>
             <div
               className="relative flex items-end justify-center overflow-hidden"
               style={{
-                minHeight: 420,
+                minHeight: 380,
                 background:
                   "radial-gradient(100% 100% at 30% 30%, rgba(200,224,64,0.16), transparent 60%), linear-gradient(180deg, #0f1109 0%, #05060a 100%)",
               }}
@@ -41,12 +41,12 @@ export function MentorMari() {
               <img
                 src={FOUNDER.photoSrc}
                 alt={FOUNDER.name}
-                width={640}
-                height={880}
+                width={520}
+                height={720}
                 loading="lazy"
                 decoding="async"
-                className="relative z-10 object-cover object-top w-full h-full"
-                style={{ filter: "brightness(0.94) contrast(1.05)" }}
+                className="relative z-10 object-cover object-[center_top] w-full h-full"
+                style={{ filter: "brightness(0.92) contrast(1.06)", maxHeight: 720 }}
                 onError={(e) => {
                   const img = e.currentTarget;
                   if (
@@ -57,12 +57,31 @@ export function MentorMari() {
                   }
                 }}
               />
+              {/* Gradiente forte à direita — foto bleed pro fundo do painel de
+                  texto (#0d0f08), sem borda dura entre as duas colunas. Em
+                  baixo, fade suave pra dar peso. */}
               <div
                 aria-hidden
-                className="pointer-events-none absolute inset-0"
+                className="pointer-events-none absolute inset-0 z-20"
                 style={{
                   background:
-                    "linear-gradient(180deg, transparent 60%, rgba(10,12,7,0.5) 100%), linear-gradient(90deg, transparent 60%, rgba(10,12,7,0.35) 100%)",
+                    "linear-gradient(90deg, transparent 45%, rgba(13,15,8,0.55) 82%, #0d0f08 100%), linear-gradient(180deg, transparent 55%, rgba(10,12,7,0.55) 100%)",
+                }}
+              />
+              {/* Halo lime sutil vindo do painel de texto pra "entrar" na foto
+                  — cria o elo visual pedido: mesma paleta em ambos lados. */}
+              <div
+                aria-hidden
+                className="pointer-events-none absolute z-30 hidden lg:block"
+                style={{
+                  right: "-8%",
+                  top: "35%",
+                  width: 160,
+                  height: 160,
+                  borderRadius: "50%",
+                  background:
+                    "radial-gradient(circle at center, rgba(200,224,64,0.22), transparent 70%)",
+                  filter: "blur(30px)",
                 }}
               />
             </div>
@@ -70,9 +89,23 @@ export function MentorMari() {
 
           <Reveal delay={0.1}>
             <div
-              className="flex flex-col justify-center px-8 py-14 lg:px-16 lg:py-20"
+              className="relative flex flex-col justify-center px-8 py-14 lg:px-16 lg:py-20"
               style={{ background: "#0d0f08" }}
             >
+              {/* Marcador vertical lime no fim esquerdo do painel — cria
+                  elo visual com a foto ao lado (a foto termina, este stripe
+                  começa, mesma cor primária). */}
+              <span
+                aria-hidden
+                className="pointer-events-none absolute left-0 top-1/2 -translate-y-1/2 hidden lg:block"
+                style={{
+                  width: 3,
+                  height: 60,
+                  background:
+                    "linear-gradient(180deg, transparent, var(--color-primary), transparent)",
+                  boxShadow: "0 0 12px rgba(200,224,64,0.4)",
+                }}
+              />
               <span
                 className="text-[11px] uppercase tracking-[0.2em] font-bold"
                 style={{
