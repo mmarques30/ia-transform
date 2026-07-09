@@ -18,12 +18,10 @@ interface Cred {
 }
 
 const CREDENCIAIS: Cred[] = [
-  { bold: "Passagem enterprise", rest: " · Mercado Livre, Suzano e AngloGold antes da IAplicada" },
-  { bold: "+100 empresas", rest: " com sistema IAplicada rodando" },
-  { bold: "750+ colaboradores", rest: " usando os sistemas construídos por ela" },
-  { bold: "150+ processos", rest: " automatizados em operações reais" },
-  { bold: "De arquitetura a turismo:", rest: " IA na operação real, não em slide" },
-  { bold: "MBA + engenharia de produção", rest: " · não é entusiasta, é operadora" },
+  { bold: "Mariana Marques", rest: " · Fundadora da IAplicada" },
+  { bold: "+5 anos", rest: " mapeando e construindo operações" },
+  { bold: "+40 sistemas", rest: " implementados dentro de empresas de verdade" },
+  { bold: "Referência em automação operacional", rest: " para PMEs" },
 ];
 
 export function MentorMari() {
@@ -82,10 +80,11 @@ export function MentorMari() {
                   fontFamily: '"JetBrains Mono", ui-monospace, Menlo, monospace',
                 }}
               >
-                Sua mentora · quem entrega
+                Quem constrói o sistema
               </span>
-              <h2 className="mt-4 font-extrabold text-[34px] sm:text-[42px] lg:text-[46px] leading-[1.05] tracking-[-0.02em] text-foreground">
-                Mariana <span style={{ color: "var(--color-primary)" }}>Marques</span>
+              <h2 className="mt-4 font-extrabold text-[28px] sm:text-[36px] lg:text-[42px] leading-[1.05] tracking-[-0.02em] text-foreground">
+                Quem constrói o sistema{" "}
+                <span style={{ color: "var(--color-primary)" }}>dentro da sua empresa.</span>
               </h2>
 
               <ul className="mt-7 flex flex-col gap-3.5">
@@ -99,8 +98,16 @@ export function MentorMari() {
                 ))}
               </ul>
 
-              <div className="mt-9">
-                <CtaGlow size="lg">Quero o diagnóstico com a Mari</CtaGlow>
+              <p className="mt-7 text-[14.5px] lg:text-[15px] text-sage leading-[1.6] max-w-[520px]">
+                <strong className="text-foreground font-bold">
+                  Não mandamos estagiário. Não entregamos metodologia em PDF.
+                </strong>{" "}
+                Cada empresa passa por diagnóstico comigo — e o sistema é construído sob medida para
+                o jeito que o seu negócio funciona.
+              </p>
+
+              <div className="mt-8">
+                <CtaGlow size="lg">Agendar diagnóstico com a Mari →</CtaGlow>
               </div>
             </div>
           </Reveal>

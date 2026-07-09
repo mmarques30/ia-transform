@@ -1,4 +1,5 @@
 import { Reveal } from "@/components/Reveal";
+import { CtaGlow } from "@/components/sections/business/variantB/CtaGlow";
 
 /**
  * MetodoAplicaBook (LP-B) — book 3D "Método APLICA" em destaque.
@@ -7,14 +8,28 @@ import { Reveal } from "@/components/Reveal";
  * capa dark com detalhe lime, círculo IAplicada no lugar do brasão,
  * assinatura Mari no rodapé.
  *
- * Se o book físico existir de fato, substituímos por <img> real.
+ * Etapas do método APLICA (uma letra por bullet):
+ *   A · Analisar   — mapear onde a operação trava
+ *   P · Planejar   — desenhar o sistema que elimina o gargalo
+ *   L · Listar     — inventariar processos, gente, ferramentas
+ *   I · Implementar — construir o sistema dentro do negócio
+ *   C · Conectar   — integrar com o que já existe (sem trocar tudo)
+ *   A · Automatizar — piloto automático das rotinas repetitivas
  */
 
-const BULLETS = [
-  "Auditoria dos 5 processos que mais custam",
-  'Ranking dos "ladrões de hora" do seu time',
-  "ROI projetado por automação (com hipótese, não chute)",
-  "Playbook do próximo trimestre entregue impresso",
+interface AplicaStep {
+  letter: string;
+  label: string;
+  detail: string;
+}
+
+const APLICA_STEPS: AplicaStep[] = [
+  { letter: "A", label: "Analisar", detail: "onde sua operação trava hoje" },
+  { letter: "P", label: "Planejar", detail: "o sistema que elimina o gargalo" },
+  { letter: "L", label: "Listar", detail: "processos, gente e ferramentas" },
+  { letter: "I", label: "Implementar", detail: "dentro do seu negócio, não em slide" },
+  { letter: "C", label: "Conectar", detail: "com o que já roda, sem trocar tudo" },
+  { letter: "A", label: "Automatizar", detail: "as rotinas que consomem seu time" },
 ];
 
 export function MetodoAplicaBook() {
@@ -43,13 +58,13 @@ export function MetodoAplicaBook() {
                   fontFamily: '"JetBrains Mono", ui-monospace, Menlo, monospace',
                 }}
               >
-                Ativo 1 · Diagnóstico documentado
+                Como a gente faz
               </span>
               <h2
-                className="mt-5 font-extrabold text-[32px] sm:text-[38px] lg:text-[44px] leading-[1.05] tracking-[-0.025em] text-foreground"
+                className="mt-5 font-extrabold text-[30px] sm:text-[36px] lg:text-[44px] leading-[1.05] tracking-[-0.025em] text-foreground"
                 style={{ textWrap: "balance" }}
               >
-                Método{" "}
+                Um diagnóstico. Um sistema.{" "}
                 <em
                   style={{
                     fontFamily: '"Instrument Serif", serif',
@@ -57,36 +72,46 @@ export function MetodoAplicaBook() {
                     fontWeight: 500,
                   }}
                 >
-                  APLICA
+                  90 dias.
                 </em>
-                : o mapa da sua operação em papel.
               </h2>
               <p className="mt-5 text-[15px] lg:text-[16px] text-sage leading-[1.6] max-w-[460px]">
-                O framework que aplicamos em{" "}
-                <strong className="text-foreground font-bold">+40 empresas</strong> — dos 5
-                processos mais caros até o painel do próximo trimestre.{" "}
+                O Método <strong className="text-foreground font-bold">APLICA</strong> mapeia onde
+                sua operação trava, constrói o sistema que elimina o gargalo e implementa dentro do
+                seu negócio —{" "}
                 <strong className="text-foreground font-bold">
-                  Você fica com o material mesmo se a gente não implementar
+                  não numa planilha de recomendação
                 </strong>
-                . Método completo, sem fumaça, sem PDFzinho de template.
+                .
               </p>
-              <ul className="mt-6 flex flex-col gap-2.5">
-                {BULLETS.map((b) => (
+              <ul className="mt-6 flex flex-col gap-2">
+                {APLICA_STEPS.map((s) => (
                   <li
-                    key={b}
-                    className="pl-6 relative text-[14px] lg:text-[14.5px] text-foreground leading-[1.5]"
+                    key={s.label}
+                    className="grid items-baseline gap-3 text-[13.5px] lg:text-[14.5px] text-foreground leading-[1.4]"
+                    style={{ gridTemplateColumns: "28px 1fr" }}
                   >
                     <span
                       aria-hidden
-                      className="absolute left-0 top-0 text-[14px] font-black"
-                      style={{ color: "var(--color-primary)" }}
+                      className="font-extrabold text-[16px] lg:text-[18px] leading-none"
+                      style={{
+                        color: "var(--color-primary)",
+                        fontFamily: '"Instrument Serif", serif',
+                        fontStyle: "italic",
+                      }}
                     >
-                      ✓
+                      {s.letter}
                     </span>
-                    {b}
+                    <span>
+                      <strong className="font-bold text-foreground">{s.label}</strong>{" "}
+                      <span className="text-sage">— {s.detail}</span>
+                    </span>
                   </li>
                 ))}
               </ul>
+              <div className="mt-8">
+                <CtaGlow size="md">Conhecer o Método APLICA →</CtaGlow>
+              </div>
             </div>
           </Reveal>
 

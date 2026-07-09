@@ -1,4 +1,5 @@
 import { Reveal } from "@/components/Reveal";
+import { CtaGlow } from "@/components/sections/business/variantB/CtaGlow";
 
 /**
  * AppShowcase (LP-B) — celular + backdrop lime arredondado.
@@ -9,14 +10,12 @@ import { Reveal } from "@/components/Reveal";
  */
 
 const BULLETS = [
+  <>Cada processo no lugar certo</>,
+  <>Cada entrega rastreável</>,
   <>
-    Primeira rotina rodando em <strong className="text-foreground font-bold">7 dias</strong>
-  </>,
-  <>
-    Time autônomo em <strong className="text-foreground font-bold">60 dias</strong>
+    Sem precisar <strong className="text-foreground font-bold">perguntar pra ninguém</strong>
   </>,
   <>Painel próprio · seu domínio, seu logo</>,
-  <>Integração com WhatsApp, Google, planilhas legadas</>,
 ];
 
 export function AppShowcase() {
@@ -35,13 +34,13 @@ export function AppShowcase() {
                   fontFamily: '"JetBrains Mono", ui-monospace, Menlo, monospace',
                 }}
               >
-                Ativo 2 · Sistema sob medida
+                O que seu time usa depois que a gente constrói
               </span>
               <h2
-                className="mt-5 font-extrabold text-[32px] sm:text-[38px] lg:text-[44px] leading-[1.05] tracking-[-0.025em] text-foreground"
+                className="mt-5 font-extrabold text-[28px] sm:text-[36px] lg:text-[42px] leading-[1.05] tracking-[-0.025em] text-foreground"
                 style={{ textWrap: "balance" }}
               >
-                O painel da sua operação,{" "}
+                Seu time executa com{" "}
                 <em
                   style={{
                     fontFamily: '"Instrument Serif", serif',
@@ -49,14 +48,25 @@ export function AppShowcase() {
                     fontWeight: 500,
                   }}
                 >
-                  com sua cara.
+                  padrão.
+                </em>
+                <br />
+                Você vê tudo, sem precisar{" "}
+                <em
+                  style={{
+                    fontFamily: '"Instrument Serif", serif',
+                    color: "var(--color-primary)",
+                    fontWeight: 500,
+                  }}
+                >
+                  estar em tudo.
                 </em>
               </h2>
               <p className="mt-5 text-[15px] lg:text-[16px] text-sage leading-[1.6] max-w-[460px]">
-                O sistema roda no <strong className="text-foreground font-bold">seu domínio</strong>
-                , com o <strong className="text-foreground font-bold">seu branding</strong>, no
-                fluxo que o seu time já conhece. Sem trocar de ERP, sem depender de TI, sem tela
-                extra pra treinar. A rotina que consome uma pessoa hoje entra em piloto automático.
+                <strong className="text-foreground font-bold">
+                  Cada processo no lugar certo. Cada entrega rastreável.
+                </strong>{" "}
+                Sem precisar perguntar pra ninguém.
               </p>
               <ul className="mt-6 flex flex-col gap-2.5">
                 {BULLETS.map((b, i) => (
@@ -75,6 +85,9 @@ export function AppShowcase() {
                   </li>
                 ))}
               </ul>
+              <div className="mt-8">
+                <CtaGlow size="md">Ver como funciona →</CtaGlow>
+              </div>
             </div>
           </Reveal>
 

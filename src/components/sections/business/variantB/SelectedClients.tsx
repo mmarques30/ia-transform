@@ -34,15 +34,14 @@ export function SelectedClients() {
                 color: "#0a0c07",
               }}
             >
-              100% dos clientes da IAplicada
+              Construído dentro de empresas como a sua
             </span>
           </Reveal>
           <Reveal delay={0.05}>
             <h2
-              className="mt-4 font-extrabold text-[26px] sm:text-[32px] lg:text-[36px] leading-[1.15] tracking-[-0.02em] text-foreground"
+              className="mt-4 font-extrabold text-[26px] sm:text-[32px] lg:text-[38px] leading-[1.15] tracking-[-0.02em] text-foreground"
               style={{ textWrap: "balance" }}
             >
-              são{" "}
               <em
                 style={{
                   fontFamily: '"Instrument Serif", serif',
@@ -50,16 +49,17 @@ export function SelectedClients() {
                   fontWeight: 500,
                 }}
               >
-                criteriosamente selecionados.
-              </em>
+                +40 sistemas
+              </em>{" "}
+              implementados.
             </h2>
           </Reveal>
           <Reveal delay={0.1}>
             <p
-              className="mt-5 text-[15px] lg:text-[16px] font-bold leading-[1.4] max-w-[620px] mx-auto"
+              className="mt-4 text-[15px] lg:text-[16px] font-bold leading-[1.4] max-w-[620px] mx-auto"
               style={{ color: "var(--color-primary)" }}
             >
-              Alguns fundadores que já entregaram a operação a um sistema IAplicada
+              +R$ 2M em horas de operação recuperadas.
             </p>
           </Reveal>
         </div>
