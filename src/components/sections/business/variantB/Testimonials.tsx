@@ -1,27 +1,35 @@
 import { Reveal } from "@/components/Reveal";
 
 /**
- * Testimonials (LP-B) — colagem de "screenshots" com 6 depoimentos
- * dispostos em ângulo, cada um simulando um card de Insta/WhatsApp/
- * e-mail. Números-chave sublinhados em lime como no Acelerador.
+ * Testimonials (LP-B) — 3 colunas verticais com scroll infinito em
+ * velocidades diferentes, no formato do padrão 21st.dev/testimonials-
+ * columns-1 (adaptado do Framer Motion pra CSS keyframe puro).
  *
- * Se termos prints reais dos clientes elogiando, troca por
- * <img> real mantendo o formato do card.
+ * Cards mantêm o visual dark IAplicada — bg #0f1109 + moldura sutil,
+ * lime nos números-chave via underline, avatar em iniciais. O que
+ * muda é a organização: em vez de collage overlapping bagunçado
+ * (versão anterior tinha sobreposição e não caberia bem em qualquer
+ * viewport), agora é 3 colunas independentes que rolam sozinhas.
+ *
+ * Speeds bem mais lentas que a referência (60-70s vs 15-19s) — a
+ * ideia é que o usuário consiga ler enquanto rola, não que passe
+ * como um ticker.
+ *
+ * Breakpoints:
+ *  - mobile   : 1 coluna
+ *  - md       : 2 colunas
+ *  - lg       : 3 colunas
+ *
+ * Loop infinito: cada coluna duplica o array de items internamente e
+ * o track anima translateY 0 → -50%. Como o segundo bloco é cópia
+ * exata do primeiro, o "salto" no fim do keyframe é imperceptível.
  */
 
-interface Testimonial {
+interface TestimonialItem {
   initials: string;
   author: string;
   company: string;
   body: React.ReactNode;
-  /** Posição no collage (desktop). Ordem também é a ordem mobile. */
-  pos: {
-    top?: string;
-    left?: string;
-    right?: string;
-    width: number;
-    rotate: number;
-  };
 }
 
 const HL = ({ children }: { children: React.ReactNode }) => (
@@ -36,7 +44,8 @@ const HL = ({ children }: { children: React.ReactNode }) => (
   </u>
 );
 
-const ITEMS: Testimonial[] = [
+/** Distribuição dos 6 clientes em 3 colunas (2 por coluna). */
+const COL_1: TestimonialItem[] = [
   {
     initials: "RS",
     author: "Ricardo Salvatti",
@@ -47,31 +56,6 @@ const ITEMS: Testimonial[] = [
         <HL>110+ profissionais</HL> num único painel. Reunião virou dado, não achismo.
       </>
     ),
-    pos: { top: "0%", left: "3%", width: 300, rotate: -3 },
-  },
-  {
-    initials: "CB",
-    author: "Camila Brito",
-    company: "CB Move",
-    body: (
-      <>
-        Passamos de 30 pra <HL>100+ pacientes sem contratar admin</HL>. Sessão gravada, IA estrutura
-        o SOAP, fisio revisa e assina. Escala sem virar fábrica.
-      </>
-    ),
-    pos: { top: "2%", right: "3%", width: 300, rotate: 2 },
-  },
-  {
-    initials: "AZ",
-    author: "André Zembruski",
-    company: "Borges",
-    body: (
-      <>
-        R$5k/mês economizados de SDR humano. O sistema assumiu a cadência de follow-up.{" "}
-        <HL>Receita que ficava na mesa entrou.</HL>
-      </>
-    ),
-    pos: { top: "36%", left: "6%", width: 290, rotate: -2 },
   },
   {
     initials: "FF",
@@ -83,7 +67,20 @@ const ITEMS: Testimonial[] = [
         painel roda no nosso domínio, com a nossa cara.
       </>
     ),
-    pos: { top: "38%", right: "6%", width: 290, rotate: 1 },
+  },
+];
+
+const COL_2: TestimonialItem[] = [
+  {
+    initials: "CB",
+    author: "Camila Brito",
+    company: "CB Move",
+    body: (
+      <>
+        Passamos de 30 pra <HL>100+ pacientes sem contratar admin</HL>. Sessão gravada, IA estrutura
+        o SOAP, fisio revisa e assina. Escala sem virar fábrica.
+      </>
+    ),
   },
   {
     initials: "TS",
@@ -95,7 +92,20 @@ const ITEMS: Testimonial[] = [
         virou tempo real.
       </>
     ),
-    pos: { top: "72%", left: "3%", width: 290, rotate: -2 },
+  },
+];
+
+const COL_3: TestimonialItem[] = [
+  {
+    initials: "AZ",
+    author: "André Zembruski",
+    company: "Borges",
+    body: (
+      <>
+        R$5k/mês economizados de SDR humano. O sistema assumiu a cadência de follow-up.{" "}
+        <HL>Receita que ficava na mesa entrou.</HL>
+      </>
+    ),
   },
   {
     initials: "QA",
@@ -107,7 +117,6 @@ const ITEMS: Testimonial[] = [
         estava faltando — o sistema lembra.
       </>
     ),
-    pos: { top: "74%", right: "3%", width: 290, rotate: 3 },
   },
 ];
 
@@ -133,93 +142,81 @@ export function Testimonials() {
           </Reveal>
         </div>
 
-        {/* Desktop: collage posicional. Mobile: stack vertical simples. */}
-        <div
-          className="hidden lg:block relative mt-14 mx-auto max-w-[1080px]"
-          style={{ height: 780 }}
-        >
-          {ITEMS.map((t, i) => (
-            <Reveal key={t.author} delay={0.1 + i * 0.06}>
-              <CollageCard t={t} />
-            </Reveal>
-          ))}
-        </div>
-
-        <div className="lg:hidden mt-10 flex flex-col gap-4 max-w-[420px] mx-auto">
-          {ITEMS.map((t, i) => (
-            <Reveal key={t.author} delay={0.05 + i * 0.05}>
-              <MobileTestimonial t={t} />
-            </Reveal>
-          ))}
-        </div>
+        <Reveal delay={0.1}>
+          <div
+            className="mt-14 flex justify-center gap-4 lg:gap-6 mx-auto max-w-[1120px]"
+            style={{
+              maxHeight: 660,
+              overflow: "hidden",
+              WebkitMaskImage:
+                "linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)",
+              maskImage:
+                "linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)",
+            }}
+          >
+            <TestimonialColumn items={COL_1} duration={60} />
+            <TestimonialColumn items={COL_2} duration={70} className="hidden md:flex" />
+            <TestimonialColumn items={COL_3} duration={65} className="hidden lg:flex" />
+          </div>
+        </Reveal>
       </div>
     </section>
   );
 }
 
-function CollageCard({ t }: { t: Testimonial }) {
-  const { pos } = t;
+function TestimonialColumn({
+  items,
+  duration,
+  className = "",
+}: {
+  items: TestimonialItem[];
+  duration: number;
+  className?: string;
+}) {
+  const doubled = [...items, ...items];
   return (
-    <div
-      className="absolute rounded-xl p-3.5 flex gap-2.5 items-start"
-      style={{
-        top: pos.top,
-        left: pos.left,
-        right: pos.right,
-        width: pos.width,
-        transform: `rotate(${pos.rotate}deg)`,
-        background: "#0f1109",
-        boxShadow: "0 30px 50px -20px rgba(0,0,0,0.7)",
-      }}
-    >
-      <TestimonialAvatar initials={t.initials} />
-      <div className="text-[12.5px] text-foreground leading-[1.55]">
-        <b
-          className="block mb-1 text-[11.5px]"
-          style={{ color: "var(--color-primary)", fontWeight: 700 }}
-        >
-          {t.author} · {t.company}
-        </b>
-        {t.body}
+    <div className={`flex-1 max-w-[360px] ${className}`}>
+      <div
+        className="flex flex-col gap-5 testimonial-col-track"
+        style={{ animationDuration: `${duration}s` }}
+      >
+        {doubled.map((item, i) => (
+          <TestimonialCard key={i} item={item} />
+        ))}
       </div>
     </div>
   );
 }
 
-function MobileTestimonial({ t }: { t: Testimonial }) {
+function TestimonialCard({ item }: { item: TestimonialItem }) {
   return (
     <div
       className="rounded-xl p-4 flex gap-3 items-start"
       style={{
         background: "#0f1109",
         border: "1px solid #262a1c",
+        boxShadow: "0 20px 40px -20px rgba(0,0,0,0.5)",
       }}
     >
-      <TestimonialAvatar initials={t.initials} />
+      <span
+        className="shrink-0 h-[32px] w-[32px] rounded-full flex items-center justify-center text-[10.5px] font-bold"
+        style={{
+          background: "linear-gradient(135deg, #4c5340, #1a1e14)",
+          color: "var(--color-primary)",
+          fontFamily: '"JetBrains Mono", ui-monospace, Menlo, monospace',
+        }}
+      >
+        {item.initials}
+      </span>
       <div className="text-[13.5px] text-foreground leading-[1.55]">
         <b
           className="block mb-1 text-[11.5px]"
           style={{ color: "var(--color-primary)", fontWeight: 700 }}
         >
-          {t.author} · {t.company}
+          {item.author} · {item.company}
         </b>
-        {t.body}
+        {item.body}
       </div>
     </div>
-  );
-}
-
-function TestimonialAvatar({ initials }: { initials: string }) {
-  return (
-    <span
-      className="shrink-0 h-[30px] w-[30px] rounded-full flex items-center justify-center text-[10px] font-bold"
-      style={{
-        background: "linear-gradient(135deg, #4c5340, #1a1e14)",
-        color: "var(--color-primary)",
-        fontFamily: '"JetBrains Mono", ui-monospace, Menlo, monospace',
-      }}
-    >
-      {initials}
-    </span>
   );
 }

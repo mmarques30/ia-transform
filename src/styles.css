@@ -1905,3 +1905,31 @@
     animation: none;
   }
 }
+
+/* ============================================================
+   LP-B TESTIMONIALS COLUMNS — scroll infinito por coluna.
+   Cada coluna duplica o array de items no JSX e este keyframe
+   translata -50%, resultando em loop sem "salto" perceptível
+   (o segundo bloco é cópia idêntica do primeiro, então quando
+   o track volta a 0% visualmente está no mesmo ponto).
+   ============================================================ */
+
+@keyframes testimonial-col-scroll {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-50%);
+  }
+}
+.testimonial-col-track {
+  animation-name: testimonial-col-scroll;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+@media (prefers-reduced-motion: reduce) {
+  .testimonial-col-track {
+    animation: none;
+  }
+}
