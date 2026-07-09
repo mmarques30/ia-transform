@@ -29,68 +29,38 @@ export function MentorMari() {
     <section id="mentora" className="relative">
       <div className="section-veil">
         <div className="grid lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] items-stretch">
-          <Reveal className="h-full min-h-[420px] lg:min-h-[620px]">
+          <Reveal className="h-full min-h-[380px] lg:min-h-[560px]">
             <div
               className="relative w-full h-full overflow-hidden"
               style={{
                 background:
-                  "radial-gradient(70% 65% at 45% 55%, rgba(200,224,64,0.14), transparent 65%), linear-gradient(180deg, #0f1109 0%, #05060a 100%)",
+                  "radial-gradient(80% 80% at 40% 45%, rgba(200,224,64,0.14), transparent 65%), linear-gradient(180deg, #0f1109 0%, #05060a 100%)",
               }}
             >
-              {/* Halo lime blur ATRÁS da foto — cria o "spot" verde que a foto
-                  parece emergir. Sem esse spot, a foto seria uma bolha isolada
-                  no dark. */}
-              <span
-                aria-hidden
-                className="pointer-events-none absolute z-0"
-                style={{
-                  left: "50%",
-                  top: "45%",
-                  width: "80%",
-                  height: "70%",
-                  transform: "translate(-50%, -50%)",
-                  background:
-                    "radial-gradient(ellipse at center, rgba(120,150,60,0.22), transparent 65%)",
-                  filter: "blur(50px)",
-                }}
-              />
-
               {/*
-               * Foto com "fake cutout" via CSS:
+               * Foto original (sem mask/blend) preenchendo toda a coluna.
                *
-               *   1. `maskImage` radial elíptico — o CENTRO (rosto + torso)
-               *      fica 100% opaco; as bordas (topo, laterais, baixo)
-               *      desvanecem gradualmente pra transparente. Isso apaga
-               *      o retângulo duro da foto — nenhuma linha de borda visível.
+               * Feedback anterior sobre o cutout: "ficou péssimo, num nível
+               * assim muito alto". Revertido — sem mixBlendMode, sem
+               * maskImage, sem boost de brightness/contrast/saturate.
                *
-               *   2. `mixBlendMode: lighten` — o fundo olive da foto
-               *      original tem tom escuro parecido com o bg da seção
-               *      (#0f1109/#05060a). Com lighten, os pixels da foto SÓ
-               *      aparecem onde são MAIS CLAROS que o bg — ou seja, o
-               *      olive escuro do fundo original some, e apenas a Mari
-               *      (rosto + roupa + cabelo, todos mais claros) fica visível.
+               * objectPosition ajustada pra 55% — mostra a face + torso
+               * bem mais próximos do topo do container, sem faixa vazia
+               * de escuro acima da cabeça. Antes era 22% (mostrava demais
+               * do fundo do enquadramento original da foto).
                *
-               *   3. `filter: brightness/contrast` compensam a perda de
-               *      saturação do mixBlendMode.
-               *
-               * Efeito combinado: a Mari "emerge" do fundo dark sem contorno
-               * de foto retangular. Não é tão limpo quanto um PNG cutout
-               * profissional, mas resolve sem asset novo.
+               * Integração com a página vem SÓ dos overlays (bottom fade
+               * + right bleed) — não mais de blend mode na imagem em si.
                */}
               <img
                 src={FOUNDER.photoSrc}
                 alt={FOUNDER.name}
                 loading="lazy"
                 decoding="async"
-                className="absolute inset-0 w-full h-full object-cover z-10"
+                className="absolute inset-0 w-full h-full object-cover"
                 style={{
-                  objectPosition: "center 22%",
-                  mixBlendMode: "lighten",
-                  filter: "brightness(1.05) contrast(1.15) saturate(1.05)",
-                  maskImage:
-                    "radial-gradient(ellipse 55% 78% at 50% 42%, black 30%, rgba(0,0,0,0.85) 55%, transparent 92%)",
-                  WebkitMaskImage:
-                    "radial-gradient(ellipse 55% 78% at 50% 42%, black 30%, rgba(0,0,0,0.85) 55%, transparent 92%)",
+                  objectPosition: "center 55%",
+                  filter: "brightness(0.95) contrast(1.05)",
                 }}
                 onError={(e) => {
                   const img = e.currentTarget;
@@ -103,15 +73,20 @@ export function MentorMari() {
                 }}
               />
 
-              {/* Bleed suave à direita — dissolve qualquer borda residual
-                  da foto no bg do painel de texto (#0d0f08). Bem mais leve
-                  que antes, só o suficiente pra emenda ficar imperceptível. */}
+              {/* Overlays de integração — 3 gradientes empilhados:
+                    - top-fade: escurece o topo (onde a foto tem menos
+                      informação útil) pra emenda com o QualifierStrip/
+                      seção anterior
+                    - bottom-fade: escurece a base (roupa/mesa) sem cortar
+                      o rosto — dá peso e integra com Guarantee abaixo
+                    - right-bleed: dissolve a borda direita no bg do painel
+                      de texto (#0d0f08), sem borda dura visível */}
               <div
                 aria-hidden
-                className="pointer-events-none absolute inset-0 z-20"
+                className="pointer-events-none absolute inset-0 z-10"
                 style={{
                   background:
-                    "linear-gradient(90deg, transparent 70%, rgba(13,15,8,0.4) 90%, #0d0f08 100%)",
+                    "linear-gradient(180deg, rgba(10,12,7,0.5) 0%, transparent 22%, transparent 70%, rgba(10,12,7,0.6) 100%), linear-gradient(90deg, transparent 65%, rgba(13,15,8,0.55) 88%, #0d0f08 100%)",
                 }}
               />
             </div>
