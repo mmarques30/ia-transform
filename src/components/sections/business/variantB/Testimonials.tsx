@@ -1,35 +1,38 @@
 import { Reveal } from "@/components/Reveal";
 
 /**
- * Testimonials (LP-B) — 3 colunas verticais com scroll infinito em
- * velocidades diferentes, no formato do padrão 21st.dev/testimonials-
- * columns-1 (adaptado do Framer Motion pra CSS keyframe puro).
+ * Testimonials (LP-B) — 3 colunas verticais com scroll infinito,
+ * seguindo o padrão 21st.dev/testimonials-columns-1 que a Mari passou
+ * como referência.
  *
- * Cards mantêm o visual dark IAplicada — bg #0f1109 + moldura sutil,
- * lime nos números-chave via underline, avatar em iniciais. O que
- * muda é a organização: em vez de collage overlapping bagunçado
- * (versão anterior tinha sobreposição e não caberia bem em qualquer
- * viewport), agora é 3 colunas independentes que rolam sozinhas.
+ * Speeds MATCH da referência (15s / 19s / 17s) — a versão anterior
+ * usava 60-70s e o feedback foi "não dá pra perceber que tem
+ * animação". Agora o scroll é visível de cara.
  *
- * Speeds bem mais lentas que a referência (60-70s vs 15-19s) — a
- * ideia é que o usuário consiga ler enquanto rola, não que passe
- * como um ticker.
+ * Estrutura dos cards MATCH da referência:
+ *  - padding grande (p-8), border radius 3xl
+ *  - texto do depoimento vem primeiro
+ *  - avatar + nome + role embaixo, alinhados horizontalmente
+ *  - max-width 320px fixo
+ *  - border sutil + sombra com tint primary
  *
- * Breakpoints:
- *  - mobile   : 1 coluna
- *  - md       : 2 colunas
- *  - lg       : 3 colunas
+ * Implementação: CSS keyframe puro (translateY 0 → -50%) em vez de
+ * framer-motion. A referência 21st.dev usa Motion, mas trazer o
+ * pacote inteiro pro chunk /businessv2 subia +284kB. CSS puro entrega
+ * o mesmo efeito visual com zero bundle cost.
  *
- * Loop infinito: cada coluna duplica o array de items internamente e
- * o track anima translateY 0 → -50%. Como o segundo bloco é cópia
- * exata do primeiro, o "salto" no fim do keyframe é imperceptível.
+ * Loop infinito: cada coluna duplica o array de items no JSX
+ * (`.fill(0).map(() => testimonials)`), e o track anima translateY
+ * -50%. O segundo bloco é cópia exata do primeiro, então quando o
+ * keyframe reseta em 100%, visualmente está no mesmo ponto (sem
+ * "salto" perceptível).
  */
 
 interface TestimonialItem {
   initials: string;
-  author: string;
-  company: string;
-  body: React.ReactNode;
+  name: string;
+  role: string;
+  text: React.ReactNode;
 }
 
 const HL = ({ children }: { children: React.ReactNode }) => (
@@ -44,13 +47,12 @@ const HL = ({ children }: { children: React.ReactNode }) => (
   </u>
 );
 
-/** Distribuição dos 6 clientes em 3 colunas (2 por coluna). */
 const COL_1: TestimonialItem[] = [
   {
     initials: "RS",
-    author: "Ricardo Salvatti",
-    company: "PSA",
-    body: (
+    name: "Ricardo Salvatti",
+    role: "PSA Consultores",
+    text: (
       <>
         A operação da PSA rodava em ferramentas separadas. Com o sistema de acompanhamento,{" "}
         <HL>110+ profissionais</HL> num único painel. Reunião virou dado, não achismo.
@@ -59,9 +61,9 @@ const COL_1: TestimonialItem[] = [
   },
   {
     initials: "FF",
-    author: "Focus Fintax",
-    company: "Compensação Tributária",
-    body: (
+    name: "Focus Fintax",
+    role: "Compensação Tributária",
+    text: (
       <>
         <HL>5 processos automatizados</HL> em 60 dias. Time menor, mais entrega, mais margem. E o
         painel roda no nosso domínio, com a nossa cara.
@@ -73,9 +75,9 @@ const COL_1: TestimonialItem[] = [
 const COL_2: TestimonialItem[] = [
   {
     initials: "CB",
-    author: "Camila Brito",
-    company: "CB Move",
-    body: (
+    name: "Camila Brito",
+    role: "CB Move",
+    text: (
       <>
         Passamos de 30 pra <HL>100+ pacientes sem contratar admin</HL>. Sessão gravada, IA estrutura
         o SOAP, fisio revisa e assina. Escala sem virar fábrica.
@@ -84,9 +86,9 @@ const COL_2: TestimonialItem[] = [
   },
   {
     initials: "TS",
-    author: "Turystar",
-    company: "Operadora",
-    body: (
+    name: "Turystar",
+    role: "Operadora de Turismo",
+    text: (
       <>
         3 sistemas integrados, <HL>zero retrabalho</HL> entre setores. Fechamento que travava 5 dias
         virou tempo real.
@@ -98,9 +100,9 @@ const COL_2: TestimonialItem[] = [
 const COL_3: TestimonialItem[] = [
   {
     initials: "AZ",
-    author: "André Zembruski",
-    company: "Borges",
-    body: (
+    name: "André Zembruski",
+    role: "Borges & Zembruski",
+    text: (
       <>
         R$5k/mês economizados de SDR humano. O sistema assumiu a cadência de follow-up.{" "}
         <HL>Receita que ficava na mesa entrou.</HL>
@@ -109,9 +111,9 @@ const COL_3: TestimonialItem[] = [
   },
   {
     initials: "QA",
-    author: "Quadra Arquitetura",
-    company: "Escritório Corporativo",
-    body: (
+    name: "Quadra Arquitetura",
+    role: "Escritório Corporativo",
+    text: (
       <>
         Operação manual pra digital em <HL>10 semanas</HL>. Nunca mais precisei "lembrar" do que
         estava faltando — o sistema lembra.
@@ -142,46 +144,43 @@ export function Testimonials() {
           </Reveal>
         </div>
 
-        <Reveal delay={0.1}>
-          <div
-            className="mt-14 flex justify-center gap-4 lg:gap-6 mx-auto max-w-[1120px]"
-            style={{
-              maxHeight: 660,
-              overflow: "hidden",
-              WebkitMaskImage:
-                "linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)",
-              maskImage:
-                "linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)",
-            }}
-          >
-            <TestimonialColumn items={COL_1} duration={60} />
-            <TestimonialColumn items={COL_2} duration={70} className="hidden md:flex" />
-            <TestimonialColumn items={COL_3} duration={65} className="hidden lg:flex" />
-          </div>
-        </Reveal>
+        <div
+          className="mt-14 flex justify-center gap-6 mx-auto max-w-[1120px]"
+          style={{
+            maxHeight: 680,
+            overflow: "hidden",
+            WebkitMaskImage:
+              "linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%)",
+            maskImage:
+              "linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%)",
+          }}
+        >
+          <TestimonialsColumn testimonials={COL_1} duration={15} />
+          <TestimonialsColumn testimonials={COL_2} duration={19} className="hidden md:block" />
+          <TestimonialsColumn testimonials={COL_3} duration={17} className="hidden lg:block" />
+        </div>
       </div>
     </section>
   );
 }
 
-function TestimonialColumn({
-  items,
-  duration,
-  className = "",
-}: {
-  items: TestimonialItem[];
-  duration: number;
+function TestimonialsColumn(props: {
   className?: string;
+  testimonials: TestimonialItem[];
+  duration?: number;
 }) {
-  const doubled = [...items, ...items];
   return (
-    <div className={`flex-1 max-w-[360px] ${className}`}>
+    <div className={props.className}>
       <div
-        className="flex flex-col gap-5 testimonial-col-track"
-        style={{ animationDuration: `${duration}s` }}
+        className="flex flex-col gap-6 pb-6 testimonial-col-track"
+        style={{ animationDuration: `${props.duration || 15}s` }}
       >
-        {doubled.map((item, i) => (
-          <TestimonialCard key={i} item={item} />
+        {[...new Array(2)].map((_, blockIndex) => (
+          <div key={blockIndex} className="flex flex-col gap-6">
+            {props.testimonials.map((t, i) => (
+              <TestimonialCard key={i} item={t} />
+            ))}
+          </div>
         ))}
       </div>
     </div>
@@ -191,31 +190,33 @@ function TestimonialColumn({
 function TestimonialCard({ item }: { item: TestimonialItem }) {
   return (
     <div
-      className="rounded-xl p-4 flex gap-3 items-start"
+      className="p-7 lg:p-8 rounded-3xl max-w-[320px] w-full"
       style={{
         background: "#0f1109",
-        border: "1px solid #262a1c",
-        boxShadow: "0 20px 40px -20px rgba(0,0,0,0.5)",
+        border: "1px solid rgba(200,224,64,0.15)",
+        boxShadow: "0 20px 40px -20px rgba(0,0,0,0.6), 0 0 0 1px rgba(200,224,64,0.04)",
       }}
     >
-      <span
-        className="shrink-0 h-[32px] w-[32px] rounded-full flex items-center justify-center text-[10.5px] font-bold"
-        style={{
-          background: "linear-gradient(135deg, #4c5340, #1a1e14)",
-          color: "var(--color-primary)",
-          fontFamily: '"JetBrains Mono", ui-monospace, Menlo, monospace',
-        }}
-      >
-        {item.initials}
-      </span>
-      <div className="text-[13.5px] text-foreground leading-[1.55]">
-        <b
-          className="block mb-1 text-[11.5px]"
-          style={{ color: "var(--color-primary)", fontWeight: 700 }}
+      <div className="text-[14px] text-foreground leading-[1.6]">{item.text}</div>
+      <div className="mt-6 flex items-center gap-3">
+        <span
+          className="shrink-0 h-10 w-10 rounded-full flex items-center justify-center text-[11.5px] font-bold"
+          style={{
+            background: "linear-gradient(135deg, #4c5340, #1a1e14)",
+            color: "var(--color-primary)",
+            fontFamily: '"JetBrains Mono", ui-monospace, Menlo, monospace',
+          }}
         >
-          {item.author} · {item.company}
-        </b>
-        {item.body}
+          {item.initials}
+        </span>
+        <div className="flex flex-col">
+          <div className="font-medium tracking-tight leading-5 text-[13.5px] text-foreground">
+            {item.name}
+          </div>
+          <div className="leading-5 opacity-60 tracking-tight text-[12px] text-foreground">
+            {item.role}
+          </div>
+        </div>
       </div>
     </div>
   );
