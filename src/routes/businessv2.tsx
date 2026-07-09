@@ -12,6 +12,7 @@ import { Urgency } from "@/components/sections/business/variantB/Urgency";
 import { Manifesto } from "@/components/sections/business/variantB/Manifesto";
 import { FinalForm } from "@/components/sections/business/variantB/FinalForm";
 import { QualifierStrip } from "@/components/sections/business/variantB/QualifierStrip";
+import { DiagnosticoModalProvider } from "@/components/sections/business/variantB/DiagnosticoModal";
 import { Footer } from "@/components/sections/Footer";
 
 /**
@@ -67,40 +68,42 @@ export const Route = createFileRoute("/businessv2")({
  */
 function BusinessV2Landing() {
   return (
-    <main className="min-h-screen text-foreground" style={{ backgroundColor: "#0a0c07" }}>
-      <Hero />
+    <DiagnosticoModalProvider>
+      <main className="min-h-screen text-foreground" style={{ backgroundColor: "#0a0c07" }}>
+        <Hero />
 
-      <BgDobra intensity="media">
-        <Problem />
-      </BgDobra>
+        <BgDobra intensity="media">
+          <Problem />
+        </BgDobra>
 
-      <Testimonials />
+        <Testimonials />
 
-      <BgDobra intensity="media">
-        <SelectedClients />
-      </BgDobra>
+        <BgDobra intensity="media">
+          <SelectedClients />
+        </BgDobra>
 
-      <BgDobra intensity="media">
-        <MetodoAplicaBook />
-      </BgDobra>
+        <BgDobra intensity="media">
+          <MetodoAplicaBook />
+        </BgDobra>
 
-      <AppShowcase />
+        <AppShowcase />
 
-      <MentorMari />
+        <MentorMari />
 
-      <BgDobra intensity="media">
-        <Guarantee />
-      </BgDobra>
+        <BgDobra intensity="media">
+          <Guarantee />
+        </BgDobra>
 
-      <Urgency />
+        <Urgency />
 
-      <Manifesto />
+        <Manifesto />
 
-      <FinalForm />
+        <FinalForm />
 
-      <QualifierStrip />
+        <QualifierStrip />
 
-      <Footer />
-    </main>
+        <Footer />
+      </main>
+    </DiagnosticoModalProvider>
   );
 }
