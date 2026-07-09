@@ -34,22 +34,63 @@ export function MentorMari() {
               className="relative w-full h-full overflow-hidden"
               style={{
                 background:
-                  "radial-gradient(100% 100% at 30% 30%, rgba(200,224,64,0.16), transparent 60%), linear-gradient(180deg, #0f1109 0%, #05060a 100%)",
+                  "radial-gradient(70% 65% at 45% 55%, rgba(200,224,64,0.14), transparent 65%), linear-gradient(180deg, #0f1109 0%, #05060a 100%)",
               }}
             >
-              {/* Foto absoluta preenchendo TODO o container — sem
-                  flex items-end (que empurrava a foto pra baixo e deixava
-                  vazio em cima) e sem width/height fixos. object-cover
-                  object-center recorta e centraliza a face no eixo Y. */}
+              {/* Halo lime blur ATRÁS da foto — cria o "spot" verde que a foto
+                  parece emergir. Sem esse spot, a foto seria uma bolha isolada
+                  no dark. */}
+              <span
+                aria-hidden
+                className="pointer-events-none absolute z-0"
+                style={{
+                  left: "50%",
+                  top: "45%",
+                  width: "80%",
+                  height: "70%",
+                  transform: "translate(-50%, -50%)",
+                  background:
+                    "radial-gradient(ellipse at center, rgba(120,150,60,0.22), transparent 65%)",
+                  filter: "blur(50px)",
+                }}
+              />
+
+              {/*
+               * Foto com "fake cutout" via CSS:
+               *
+               *   1. `maskImage` radial elíptico — o CENTRO (rosto + torso)
+               *      fica 100% opaco; as bordas (topo, laterais, baixo)
+               *      desvanecem gradualmente pra transparente. Isso apaga
+               *      o retângulo duro da foto — nenhuma linha de borda visível.
+               *
+               *   2. `mixBlendMode: lighten` — o fundo olive da foto
+               *      original tem tom escuro parecido com o bg da seção
+               *      (#0f1109/#05060a). Com lighten, os pixels da foto SÓ
+               *      aparecem onde são MAIS CLAROS que o bg — ou seja, o
+               *      olive escuro do fundo original some, e apenas a Mari
+               *      (rosto + roupa + cabelo, todos mais claros) fica visível.
+               *
+               *   3. `filter: brightness/contrast` compensam a perda de
+               *      saturação do mixBlendMode.
+               *
+               * Efeito combinado: a Mari "emerge" do fundo dark sem contorno
+               * de foto retangular. Não é tão limpo quanto um PNG cutout
+               * profissional, mas resolve sem asset novo.
+               */}
               <img
                 src={FOUNDER.photoSrc}
                 alt={FOUNDER.name}
                 loading="lazy"
                 decoding="async"
-                className="absolute inset-0 w-full h-full object-cover"
+                className="absolute inset-0 w-full h-full object-cover z-10"
                 style={{
-                  objectPosition: "center 30%",
-                  filter: "brightness(0.92) contrast(1.06)",
+                  objectPosition: "center 22%",
+                  mixBlendMode: "lighten",
+                  filter: "brightness(1.05) contrast(1.15) saturate(1.05)",
+                  maskImage:
+                    "radial-gradient(ellipse 55% 78% at 50% 42%, black 30%, rgba(0,0,0,0.85) 55%, transparent 92%)",
+                  WebkitMaskImage:
+                    "radial-gradient(ellipse 55% 78% at 50% 42%, black 30%, rgba(0,0,0,0.85) 55%, transparent 92%)",
                 }}
                 onError={(e) => {
                   const img = e.currentTarget;
@@ -61,31 +102,16 @@ export function MentorMari() {
                   }
                 }}
               />
-              {/* Gradiente forte à direita — foto bleed pro fundo do painel de
-                  texto (#0d0f08), sem borda dura entre as duas colunas. Em
-                  baixo, fade suave pra dar peso. */}
+
+              {/* Bleed suave à direita — dissolve qualquer borda residual
+                  da foto no bg do painel de texto (#0d0f08). Bem mais leve
+                  que antes, só o suficiente pra emenda ficar imperceptível. */}
               <div
                 aria-hidden
                 className="pointer-events-none absolute inset-0 z-20"
                 style={{
                   background:
-                    "linear-gradient(90deg, transparent 55%, rgba(13,15,8,0.5) 85%, #0d0f08 100%), linear-gradient(180deg, transparent 65%, rgba(10,12,7,0.4) 100%)",
-                }}
-              />
-              {/* Halo lime sutil vindo do painel de texto pra "entrar" na foto
-                  — cria o elo visual pedido: mesma paleta em ambos lados. */}
-              <div
-                aria-hidden
-                className="pointer-events-none absolute z-30 hidden lg:block"
-                style={{
-                  right: "-8%",
-                  top: "35%",
-                  width: 160,
-                  height: 160,
-                  borderRadius: "50%",
-                  background:
-                    "radial-gradient(circle at center, rgba(200,224,64,0.22), transparent 70%)",
-                  filter: "blur(30px)",
+                    "linear-gradient(90deg, transparent 70%, rgba(13,15,8,0.4) 90%, #0d0f08 100%)",
                 }}
               />
             </div>
