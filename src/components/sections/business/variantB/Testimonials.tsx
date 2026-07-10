@@ -10,9 +10,9 @@ import { Reveal } from "@/components/Reveal";
  * corrigido (antes constava como "Juliana · Jmob").
  *
  * Distribuição por coluna (3 cada, sem PSAs adjacentes):
- *   Col 1 — Mariana Quadra, Alcir Foco Syntex, Bruno LCR
+ *   Col 1 — Mariana Quadra, Alcir Focus Fintax, Bruno LCR
  *   Col 2 — Patrícia PSA, Julie Tijolo Capital, Karen Turystar
- *   Col 3 — Carlos Prado PSA, Juliana BIZ, Uiara Intimates
+ *   Col 3 — Carlos Prado PSA, Juliana B&Z, Uiara Intimates
  */
 
 interface TestimonialItem {
@@ -52,7 +52,7 @@ const COL_1: TestimonialItem[] = [
   {
     initials: "AL",
     name: "Alcir",
-    role: "Foco Syntex · Teses tributárias",
+    role: "Focus Fintax · Teses tributárias",
     photoSrc: "/clients/alcir.jpg",
     text: (
       <>
@@ -137,7 +137,7 @@ const COL_3: TestimonialItem[] = [
   {
     initials: "JB",
     name: "Juliana",
-    role: "BIZ",
+    role: "B&Z",
     photoSrc: "/clients/juliana-biz.png",
     text: (
       <>

@@ -93,9 +93,9 @@ const NEXT_STEPS = [
 ];
 
 /**
- * Thank-you shared entre LP-A (/), LP-B (/businessv2) e LP-C (/businessv3).
- * Reformulada no layout dark das LPs (BgDobra + ia-bg + Reveal + tipografia
- * padronizada 28/36/44), no lugar do academy-theme cream anterior.
+ * Thank-you shared entre LP-A (/) e LP-B (/businessv2). Reformulada no
+ * layout dark das LPs (BgDobra + ia-bg + Reveal + tipografia padronizada
+ * 28/36/44), no lugar do academy-theme cream anterior.
  */
 function ThankYouBusinessPage() {
   const { eid } = Route.useSearch();
@@ -105,10 +105,7 @@ function ThankYouBusinessPage() {
     <main className="min-h-screen text-foreground" style={{ backgroundColor: "#0a0c07" }}>
       {/* HERO confirmação */}
       <BgDobra intensity="alta">
-        <section
-          id="top"
-          className="relative pt-[100px] pb-[60px] lg:pt-[140px] lg:pb-[80px]"
-        >
+        <section id="top" className="relative pt-[100px] pb-[60px] lg:pt-[140px] lg:pb-[80px]">
           <div className="container-page">
             <div className="text-center max-w-[760px] mx-auto">
               <Reveal>
@@ -208,8 +205,7 @@ function ThankYouBusinessPage() {
                       <span
                         className="h-[1px] flex-1"
                         style={{
-                          background:
-                            "linear-gradient(90deg, var(--color-primary), transparent)",
+                          background: "linear-gradient(90deg, var(--color-primary), transparent)",
                         }}
                       />
                     </div>
@@ -252,8 +248,7 @@ function ThankYouBusinessPage() {
                 </Reveal>
                 <Reveal delay={0.05}>
                   <h2 className="h-mix mt-6 text-[28px] sm:text-[36px] lg:text-[44px] text-foreground">
-                    A sua empresa em{" "}
-                    <em className="whitespace-nowrap">todas as telas.</em>
+                    A sua empresa em <em className="whitespace-nowrap">todas as telas.</em>
                   </h2>
                 </Reveal>
                 <Reveal delay={0.1}>
@@ -486,10 +481,7 @@ function DashboardScreen() {
             className="inline-block rounded-sm"
             style={{ width: 6, height: 6, backgroundColor: ACCENT }}
           />
-          <span
-            className="rounded-sm"
-            style={{ width: "60%", height: 3, backgroundColor: INK }}
-          />
+          <span className="rounded-sm" style={{ width: "60%", height: 3, backgroundColor: INK }} />
         </div>
         {[0, 1, 2, 3, 4].map((i) => (
           <div
@@ -536,10 +528,7 @@ function DashboardScreen() {
                 className="rounded-sm"
                 style={{ width: "55%", height: 2.5, backgroundColor: MUTED, opacity: 0.6 }}
               />
-              <div
-                className="mt-0.5 font-bold"
-                style={{ fontSize: 8, color: INK, lineHeight: 1 }}
-              >
+              <div className="mt-0.5 font-bold" style={{ fontSize: 8, color: INK, lineHeight: 1 }}>
                 {k.v}
               </div>
               <div className="mt-0.5" style={{ fontSize: 5, color: MUTED }}>
@@ -585,10 +574,7 @@ function TabletScreen() {
     <div className="absolute inset-0 p-[6px] flex flex-col gap-[5px]">
       <div className="flex items-center justify-between">
         <div className="rounded-sm" style={{ width: 22, height: 3, backgroundColor: INK }} />
-        <div
-          className="rounded-full"
-          style={{ width: 5, height: 5, backgroundColor: ACCENT }}
-        />
+        <div className="rounded-full" style={{ width: 5, height: 5, backgroundColor: ACCENT }} />
       </div>
 
       <div

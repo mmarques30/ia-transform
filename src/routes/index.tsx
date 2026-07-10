@@ -67,11 +67,10 @@ export const Route = createFileRoute("/")({
 });
 
 /**
- * Ritmo intercalado (mesmo sistema em /businessv2 e /businessv3):
- * dobras COM ia-bg (grid/glow/sparks) alternam com dobras NEUTRAS.
- * Process vive acima do Authority ("quem entrega") em todas as 3 LPs,
- * com título "30 dias" e sem chevrons/heading da jornada — só os 4
- * step cards + CTA.
+ * Ritmo intercalado (mesmo sistema em /businessv2): dobras COM ia-bg
+ * (grid/glow/sparks) alternam com dobras NEUTRAS. Process vive acima
+ * do Authority ("quem entrega") em ambas as LPs, com título "30 dias"
+ * e sem chevrons/heading da jornada — só os 4 step cards + CTA.
  */
 function BusinessLanding() {
   return (
@@ -94,8 +93,7 @@ function BusinessLanding() {
         <Process
           title={
             <>
-              Em 30 dias, sua operação{" "}
-              <em className="whitespace-nowrap">pode rodar sozinha</em>.
+              Em 30 dias, sua operação <em className="whitespace-nowrap">pode rodar sozinha</em>.
             </>
           }
           hideChevrons

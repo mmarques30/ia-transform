@@ -1,33 +1,27 @@
 # Business LP sections
 
-Shell shared entre as LPs Business (`/`, `/businessv2`, `/businessv3`) —
-visual dark charcoal alinhado com `/contabil`, tipografia h-mix,
-mesmo Header/Footer/ClientLogos/Comparison/Authority/FAQ do resto do
-site.
+Shell shared entre as LPs Business (`/` e `/businessv2`) — visual dark
+charcoal alinhado com `/contabil`, tipografia h-mix, mesmo Header/
+Footer/ClientLogos/Comparison/Authority/FAQ do resto do site.
 
-## Estrutura final (pós refactor 5 fases)
+## Estrutura atual
 
 ```
 business/
-├── Solution.tsx    (dobra 5 — Método APLICA, shared nas 3 LPs)
-├── Process.tsx     (dobra 8 — Jornada semana a semana, shared)
+├── Solution.tsx    (dobra Método APLICA, shared)
+├── Process.tsx     (dobra Jornada semana a semana, shared)
 ├── OliveWave.tsx   (visual filler shared)
 ├── variantA/       ← LP `/`  (ângulo: custo escondido no processo)
-├── variantB/       ← LP `/businessv2`  (ângulo: operação que escala)
-└── variantC/       ← LP `/businessv3`  (ângulo: prova social pura)
+└── variantB/       ← LP `/businessv2`  (ângulo: operação que escala)
 ```
 
-Cada `variant*/` tem 5 sections variant-specific:
-
-- `Hero.tsx` (dobra 3 + ticker dobra 2 embutido no MarqueeStrip)
-- `Problem.tsx` (dobra 4 — 4 cards)
-- `Systems.tsx` (dobra 6 — sistema em ação)
-- `Impact.tsx` (dobra 9 — ROI/prova)
-- `CTAFinal.tsx` (dobra 13)
+`variantC/` (LP `/businessv3` — ângulo prova social pura) foi removida
+depois do teste — a LP-B assumiu a prova social via depoimentos +
+mockups reais.
 
 ## Form
 
-Todas as 3 LPs usam `HeroForm` (business, 7 campos): firstname, email,
+Todas as LPs usam `HeroForm` (business, 7 campos): firstname, email,
 phone, company, cargo, faixa_de_faturamento, setor_do_mercado.
 
 ## FAQ
