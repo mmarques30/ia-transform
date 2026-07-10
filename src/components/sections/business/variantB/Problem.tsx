@@ -1,12 +1,16 @@
 import { Reveal } from "@/components/Reveal";
 import { CtaGlow } from "@/components/sections/business/variantB/CtaGlow";
+import { ChaosCards } from "@/components/sections/business/variantB/ChaosCards";
 
 /**
- * Problem (LP-B refactor Acelerador) — dobra "SE VOCÊ RECONHECE 3
- * DESSES, ESSA PÁGINA É PRA VOCÊ". Estrutura:
- *  - H2 lime centralizada (novo copy: reconhecer 3 dos 6)
- *  - trio de fotos "PROBLEMA" em polígono inclinado (moldura lime,
- *    skewX). Placeholder até termos assets — 3 gradientes dark
+ * Problem (LP-B) — dobra "SE VOCÊ RECONHECE 3 DESSES, ESSA PÁGINA É PRA
+ * VOCÊ". Estrutura:
+ *  - H2 lime centralizada
+ *  - trio de mockups "do caos" (WhatsApp lotado, planilha quebrada,
+ *    inbox de madrugada) via <ChaosCards />. Substituiu os polígonos
+ *    lime placeholder — hoje os cards já mostram concretamente as 3
+ *    telas que o dono olha todo dia (dessaturadas, com vermelho de
+ *    alerta como único acento).
  *  - 2 colunas de lista com 3 itens cada (6 sintomas do dono
  *    dependente do operacional)
  *  - transição "Esse não é um problema de gestão..." + CTA glow
@@ -40,18 +44,11 @@ export function Problem() {
             </h2>
           </Reveal>
 
-          <Reveal delay={0.1}>
-            <div
-              className="mt-10 lg:mt-14 mx-auto max-w-[620px] grid grid-cols-3 gap-2.5 lg:gap-3"
-              style={{ transform: "skewX(-8deg)", aspectRatio: "3 / 1.2" }}
-            >
-              {[0, 1, 2].map((i) => (
-                <ProblemPolygonCell key={i} />
-              ))}
-            </div>
-          </Reveal>
+          <div className="mt-12 lg:mt-16">
+            <ChaosCards />
+          </div>
 
-          <div className="mt-12 lg:mt-16 grid md:grid-cols-2 gap-6 lg:gap-14 max-w-[900px] mx-auto">
+          <div className="mt-14 lg:mt-20 grid md:grid-cols-2 gap-6 lg:gap-14 max-w-[900px] mx-auto">
             <Reveal delay={0.15}>
               <ul className="flex flex-col gap-4">
                 {COL_LEFT.map((item) => (
@@ -88,46 +85,6 @@ export function Problem() {
         </div>
       </div>
     </section>
-  );
-}
-
-/**
- * Célula do polígono "PROBLEMA" — placeholder até termos as fotos reais.
- * A skew externa (-8deg) enviesa a moldura; a contra-skew (+8deg) mantém
- * o gradiente/label reto. Moldura lime + shadow pesado dá o mesmo peso
- * visual das fotos do Acelerador Empresarial.
- */
-function ProblemPolygonCell() {
-  return (
-    <div
-      className="relative overflow-hidden rounded-[4px]"
-      style={{
-        background: "radial-gradient(circle at 40% 30%, #2a2f22, #0d0f08 70%)",
-        border: "3px solid var(--color-primary)",
-        boxShadow: "0 20px 40px -10px rgba(0,0,0,0.5)",
-      }}
-    >
-      <div
-        aria-hidden
-        className="absolute inset-0"
-        style={{
-          transform: "skewX(8deg)",
-          backgroundImage:
-            "linear-gradient(180deg, rgba(255,255,255,0.06), transparent 30%), radial-gradient(60% 40% at 50% 30%, rgba(230,220,200,0.15), transparent 70%)",
-        }}
-      />
-      <span
-        aria-hidden
-        className="absolute bottom-2.5 left-1/2 -translate-x-1/2 text-[8.5px] tracking-[0.16em] font-bold"
-        style={{
-          transform: "translateX(-50%) skewX(8deg)",
-          color: "rgba(200,224,64,0.35)",
-          fontFamily: '"JetBrains Mono", ui-monospace, Menlo, monospace',
-        }}
-      >
-        PROBLEMA
-      </span>
-    </div>
   );
 }
 

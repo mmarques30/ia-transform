@@ -2722,3 +2722,384 @@
     transition: none !important;
   }
 }
+
+/* ============================================================
+   CAOS Cards — 3 mockups "do antes" que substituem os slots
+   verdes inclinados na dobra Problem da /businessv2.
+   Paleta dessaturada (filter: saturate(.55)) + único acento
+   #e5484d — contraste proposital com os painéis coloridos do
+   "depois". Portado de mockups_caos_lp_businessv2.html.
+   ============================================================ */
+
+.caos-trio {
+  display: flex;
+  gap: 26px;
+  justify-content: center;
+  perspective: 1800px;
+  flex-wrap: wrap;
+}
+
+.caos-card {
+  width: 330px;
+  flex-shrink: 0;
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  background: #141518;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow: 0 50px 100px -40px rgba(0, 0, 0, 0.9);
+  color: #eceef2;
+  font-family: "Schibsted Grotesk", "Inter", sans-serif;
+  filter: saturate(0.55);
+  opacity: 0;
+  transform: translateY(26px) rotateY(-7deg) rotateX(2deg) skewY(-1deg);
+  transition:
+    opacity 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) var(--caos-d, 0s),
+    transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) var(--caos-d, 0s),
+    box-shadow 0.6s,
+    filter 0.6s;
+}
+
+.iap-in .caos-card {
+  opacity: 1;
+  transform: rotateY(-7deg) rotateX(2deg) skewY(-1deg);
+}
+
+.iap-in .caos-card:hover {
+  transform: rotateY(-3deg) rotateX(1deg) skewY(0) translateY(-6px);
+  filter: saturate(0.7);
+  box-shadow: 0 60px 110px -40px rgba(0, 0, 0, 0.95);
+}
+
+.caos-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent 55%, rgba(10, 11, 13, 0.55) 100%);
+}
+
+.caos-label {
+  position: absolute;
+  bottom: 14px;
+  left: 16px;
+  z-index: 2;
+  font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(236, 238, 242, 0.55);
+}
+.caos-label b {
+  color: #fff;
+  font-weight: 700;
+}
+
+/* barra de status comum */
+.caos-statusbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  font-size: 10px;
+  color: #6b7078;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+.caos-statusbar .caos-t {
+  color: #b8bcc4;
+  font-weight: 700;
+}
+
+/* ============ CARD 1 · WHATSAPP ============ */
+.caos-app-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+.caos-app-title {
+  font-size: 13.5px;
+  font-weight: 800;
+  color: #b8bcc4;
+}
+.caos-badge-total {
+  font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  font-size: 10px;
+  font-weight: 700;
+  color: #fff;
+  background: #e5484d;
+  border-radius: 99px;
+  padding: 2px 8px;
+  animation: caos-throb 2s ease-in-out infinite;
+}
+.caos-chat {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 11px 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+.caos-chat .caos-av {
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #2a2d33;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 800;
+  color: #6b7078;
+}
+.caos-chat .caos-body {
+  flex: 1;
+  min-width: 0;
+}
+.caos-chat .caos-row1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+}
+.caos-chat .caos-name {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #b8bcc4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.caos-chat .caos-time {
+  font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  font-size: 9px;
+  color: #6b7078;
+  flex-shrink: 0;
+}
+.caos-chat .caos-prev {
+  font-size: 11.5px;
+  color: #6b7078;
+  margin-top: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.caos-chat .caos-n {
+  flex-shrink: 0;
+  align-self: center;
+  min-width: 19px;
+  height: 19px;
+  border-radius: 99px;
+  background: #e5484d;
+  color: #fff;
+  font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  font-size: 9.5px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 5px;
+}
+
+/* ============ CARD 2 · PLANILHA ============ */
+.caos-sheet-head {
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+.caos-sheet-file {
+  font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  font-size: 10.5px;
+  color: #b8bcc4;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.caos-sheet-file small {
+  color: #e5484d;
+}
+.caos-formula {
+  display: flex;
+  gap: 8px;
+  padding: 7px 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  font-size: 10px;
+  color: #6b7078;
+}
+.caos-formula .caos-fx {
+  color: #b8bcc4;
+  font-weight: 700;
+}
+.caos-formula .caos-err {
+  color: #e5484d;
+}
+.caos-grid {
+  display: grid;
+  grid-template-columns: 30px repeat(4, 1fr);
+  font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  font-size: 9.5px;
+}
+.caos-cell {
+  padding: 7px 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  border-right: 1px solid rgba(255, 255, 255, 0.07);
+  color: #6b7078;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.caos-cell.caos-h {
+  color: #b8bcc4;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.025);
+}
+.caos-cell.caos-cell-err {
+  color: #fff;
+  background: rgba(229, 72, 77, 0.35);
+  font-weight: 700;
+  animation: caos-throb 2.4s ease-in-out infinite;
+}
+.caos-cell.caos-warn {
+  color: #e5484d;
+  font-weight: 700;
+}
+.caos-tabs {
+  display: flex;
+  gap: 2px;
+  padding: 8px 10px 10px;
+  overflow: hidden;
+}
+.caos-tab {
+  flex-shrink: 0;
+  font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  font-size: 8.5px;
+  color: #6b7078;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 5px;
+  padding: 4px 8px;
+  white-space: nowrap;
+}
+.caos-tab.caos-on {
+  color: #b8bcc4;
+  background: rgba(255, 255, 255, 0.08);
+}
+.caos-tab.caos-more {
+  color: #e5484d;
+  font-weight: 700;
+}
+
+/* ============ CARD 3 · INBOX ============ */
+.caos-inbox-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+.caos-inbox-title {
+  font-size: 13.5px;
+  font-weight: 800;
+  color: #b8bcc4;
+}
+.caos-inbox-count {
+  font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  font-size: 10px;
+  font-weight: 700;
+  color: #e5484d;
+}
+.caos-mail {
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+.caos-mail .caos-row1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+}
+.caos-mail .caos-from {
+  font-size: 12px;
+  font-weight: 700;
+  color: #b8bcc4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.caos-mail .caos-time {
+  font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  font-size: 9px;
+  color: #6b7078;
+  flex-shrink: 0;
+}
+.caos-mail .caos-subj {
+  font-size: 11.5px;
+  color: #6b7078;
+  margin-top: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.caos-mail .caos-subj .caos-urg {
+  color: #e5484d;
+  font-weight: 700;
+}
+.caos-mail.caos-unread {
+  background: rgba(255, 255, 255, 0.02);
+}
+.caos-mail.caos-unread .caos-from::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #e5484d;
+  margin-right: 6px;
+  vertical-align: 1px;
+}
+
+@keyframes caos-throb {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+
+@media (max-width: 1100px) {
+  .caos-trio {
+    gap: 20px;
+  }
+  .caos-card {
+    width: 300px;
+  }
+}
+
+@media (max-width: 700px) {
+  .caos-card {
+    transform: translateY(26px);
+    width: 100%;
+    max-width: 360px;
+  }
+  .iap-in .caos-card {
+    transform: none;
+  }
+  .iap-in .caos-card:hover {
+    transform: translateY(-4px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .caos-card,
+  .caos-badge-total,
+  .caos-cell.caos-cell-err {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+  }
+}
