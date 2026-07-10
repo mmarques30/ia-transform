@@ -2535,70 +2535,137 @@
 }
 
 /* ============================================================
-   Hero Mockup 3D — perspectiva + bleed lateral direita
-   ============================================================
-   Composição do mockup na hero da /businessv2:
-    - .hero-mockup-3d aplica perspective e rotate 3D no filho
-      (rotateY -10deg, hover -6deg com transição suave)
-    - .hero-mockup-bleed permite o painel sangrar pra fora da
-      coluna com margin-right negativo (usa o overflow-x: clip
-      do grid do hero pra não gerar scroll horizontal)
-    - box-shadow ajustada pra luz vindo da esquerda (offset -x)
+   Hero /businessv2 — layout travado do zero.
+   Grade 5fr / 6fr (texto 45% / mockup 55%) com gap 56 e container
+   1360 max. Padding 96/48 do container = texto começa exatamente
+   48px da borda esquerda em desktop.
 
-   Mobile (<900px): desliga tudo — sem rotate 3D, sem bleed,
-   scale volta pro natural, painel empilha abaixo do texto.
+   Headline com 3 linhas fixas via <br>: white-space: nowrap trava
+   as 3 linhas em desktop e só solta em <=1100px (mobile). Se
+   qualquer segmento for maior que a coluna, reduzir o clamp
+   máximo até caber.
+
+   Mockup: width calc(100% + 6vw) sangra ~6vw pra direita, com teto
+   absoluto 980px. Rotate 3D (rotateY -8deg / rotateX 2deg) direto
+   no .iap-device, sem hover-scale.
    ============================================================ */
 
-.hero-mockup-3d {
+.hero-section-b {
+  position: relative;
+  overflow-x: clip;
+  overflow-y: visible;
+  background: radial-gradient(120% 90% at 100% 40%, rgba(200, 224, 64, 0.08), transparent 60%);
+}
+
+.hero-b {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 96px 48px;
+  display: grid;
+  grid-template-columns: 5fr 6fr;
+  gap: 56px;
+  align-items: center;
+  overflow: visible;
+}
+
+.hero-b-text {
+  min-width: 0;
+}
+.hero-b-mockup-col {
+  min-width: 0;
+}
+
+.hero-b-logo {
+  display: block;
+  height: 28px;
+  width: auto;
+}
+.hero-b-eyebrow {
+  margin-top: 28px;
+  font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+.hero-b-h1 {
+  margin-top: 16px;
+  /* clamp reduzido do spec (58 → 42) porque "não para apagar
+     incêndio." (25 chars) não cabia na coluna de texto de ~549px
+     a 54.7px. Medido: font Inter extrabold com -0.03em tracking
+     usa ~0.484 em/char de média, então cap 42 dá linha ~508px
+     que cabe em 549 (1440) e 512 (1280). Regra respeitada: 3
+     linhas fixas em desktop; solta em <=1100px. */
+  font-size: clamp(30px, 3vw, 42px);
+  font-weight: 800;
+  line-height: 1.06;
+  letter-spacing: -0.03em;
+  color: var(--color-foreground, #f4f5ec);
+  white-space: nowrap;
+}
+.hero-b-sub {
+  margin-top: 20px;
+  font-family: "Instrument Serif", serif;
+  font-size: clamp(20px, 1.7vw, 26px);
+  line-height: 1.18;
+  letter-spacing: -0.015em;
+  font-weight: 500;
+  color: var(--color-foreground, #f4f5ec);
+}
+.hero-b-p {
+  margin-top: 14px;
+  max-width: 44ch;
+  font-size: 15.5px;
+  line-height: 1.6;
+  color: var(--color-sage, #b8bcae);
+}
+.hero-b-cta {
+  margin-top: 32px;
+}
+
+.hero-mockup-b {
   perspective: 1600px;
   perspective-origin: 20% 50%;
+  /* Reduzido do spec (980 → 860 max, 6vw → 3vw bleed) porque
+     visualmente estava dominando o hero. Ainda sangra um pouco
+     pra direita mas mantém o texto respirando à esquerda. */
+  width: calc(100% + 3vw);
+  max-width: 860px;
 }
-.hero-mockup-bleed {
-  margin-right: -12vw;
-}
-.hero-mockup-3d .iap-device-scale {
+.hero-mockup-b .iap-device-scale {
   transform-origin: top left;
-  transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
-.hero-mockup-3d .iap-device {
-  transform: rotateY(-10deg) rotateX(3deg) rotateZ(0.5deg);
+.hero-mockup-b .iap-device {
+  transform: rotateY(-8deg) rotateX(2deg);
   transform-style: preserve-3d;
   transform-origin: center center;
-  transition:
-    transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1),
-    box-shadow 0.8s;
   box-shadow:
     -40px 60px 120px -30px rgba(0, 0, 0, 0.85),
     0 30px 80px -30px rgba(111, 110, 255, 0.35);
 }
-.hero-mockup-3d .iap-stage:hover .iap-device {
-  transform: rotateY(-6deg) rotateX(2deg) rotateZ(0.3deg);
-  box-shadow:
-    -46px 70px 130px -30px rgba(0, 0, 0, 0.85),
-    0 40px 90px -30px rgba(111, 110, 255, 0.45);
-}
 
+@media (max-width: 1100px) {
+  .hero-b-h1 {
+    white-space: normal;
+  }
+}
 @media (max-width: 900px) {
-  .hero-mockup-bleed {
-    margin-right: 0;
+  .hero-b {
+    grid-template-columns: 1fr;
+    padding: 64px 24px;
+    gap: 40px;
   }
-  .hero-mockup-3d {
+  .hero-mockup-b {
     perspective: none;
+    width: 100%;
+    max-width: 100%;
   }
-  .hero-mockup-3d .iap-device {
-    transform: none !important;
+  .hero-mockup-b .iap-device {
+    transform: none;
     box-shadow:
       0 60px 120px -40px rgba(0, 0, 0, 0.9),
       0 30px 70px -30px var(--iap-glow, rgba(111, 110, 255, 0.4));
-  }
-  .hero-mockup-3d .iap-stage:hover .iap-device {
-    transform: none !important;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .hero-mockup-3d .iap-device,
-  .hero-mockup-3d .iap-device-scale {
-    transition: none !important;
   }
 }
 
