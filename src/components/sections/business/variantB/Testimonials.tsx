@@ -4,13 +4,15 @@ import { Reveal } from "@/components/Reveal";
  * Testimonials (LP-B) — 3 colunas verticais com scroll infinito
  * seguindo o padrão 21st.dev/testimonials-columns-1.
  *
- * Cards com foto real do cliente quando `photoSrc` está presente,
- * fallback pra avatar circular de iniciais quando não. Trechos-chave
- * do depoimento vão em <HL> (underline lime).
+ * APENAS os 9 depoimentos reais da carteira IAplicada. Removidos os
+ * cards fictícios que estavam misturados (Ricardo Salvatti, Camila
+ * Brito, Focus Fintax, André Zembruski). Julie · Tijolo Capital
+ * corrigido (antes constava como "Juliana · Jmob").
  *
- * Distribuição por coluna: cards intercalados de forma que empresas
- * iguais (2 da PSA: Patrícia + Carlos Prado + Ricardo) fiquem em
- * colunas diferentes pra evitar adjacência.
+ * Distribuição por coluna (3 cada, sem PSAs adjacentes):
+ *   Col 1 — Mariana Quadra, Alcir Foco Syntex, Bruno LCR
+ *   Col 2 — Patrícia PSA, Julie Tijolo Capital, Karen Turystar
+ *   Col 3 — Carlos Prado PSA, Juliana BIZ, Uiara Intimates
  */
 
 interface TestimonialItem {
@@ -33,10 +35,6 @@ const HL = ({ children }: { children: React.ReactNode }) => (
   </u>
 );
 
-/**
- * Coluna 1: Mariana Quadra, Ricardo PSA (velho, sem foto), Alcir Foco
- * Syntex, Bruno LCR.
- */
 const COL_1: TestimonialItem[] = [
   {
     initials: "MQ",
@@ -48,17 +46,6 @@ const COL_1: TestimonialItem[] = [
         A gente gerenciava obra no papel, na planilha e na memória. Hoje cada etapa da obra tem
         dono, prazo e status que eu vejo do celular.{" "}
         <HL>Parei de visitar canteiro pra descobrir problema</HL>. O sistema me avisa antes.
-      </>
-    ),
-  },
-  {
-    initials: "RS",
-    name: "Ricardo Salvatti",
-    role: "PSA Consultores",
-    text: (
-      <>
-        A operação da PSA rodava em ferramentas separadas. Com o sistema de acompanhamento,{" "}
-        <HL>110+ profissionais</HL> num único painel. Reunião virou dado, não achismo.
       </>
     ),
   },
@@ -90,10 +77,6 @@ const COL_1: TestimonialItem[] = [
   },
 ];
 
-/**
- * Coluna 2: Patrícia PSA, Camila CB Move (velho), Juliana Jmob, Karen
- * Turystar.
- */
 const COL_2: TestimonialItem[] = [
   {
     initials: "PT",
@@ -109,21 +92,10 @@ const COL_2: TestimonialItem[] = [
     ),
   },
   {
-    initials: "CB",
-    name: "Camila Brito",
-    role: "CB Move",
-    text: (
-      <>
-        Passamos de 30 pra <HL>100+ pacientes sem contratar admin</HL>. Sessão gravada, IA estrutura
-        o SOAP, fisio revisa e assina. Escala sem virar fábrica.
-      </>
-    ),
-  },
-  {
-    initials: "JJ",
-    name: "Juliana",
-    role: "Jmob · Imobiliário",
-    photoSrc: "/clients/juliana-jmob.png",
+    initials: "JU",
+    name: "Julie",
+    role: "Tijolo Capital · Imobiliário",
+    photoSrc: "/clients/julie.png",
     text: (
       <>
         Processo imobiliário é burocracia em cima de burocracia. Hoje o que travava dias sai no
@@ -147,10 +119,6 @@ const COL_2: TestimonialItem[] = [
   },
 ];
 
-/**
- * Coluna 3: Carlos Prado PSA, Focus Fintax (velho), Juliana BIZ,
- * Uiara Intimates, André Zembruski (velho, sem foto).
- */
 const COL_3: TestimonialItem[] = [
   {
     initials: "CP",
@@ -163,17 +131,6 @@ const COL_3: TestimonialItem[] = [
         trabalho repetitivo e começaram a entregar mais rápido.{" "}
         <HL>Eficiência operacional subiu pelo menos 50% em seis meses</HL>. O mesmo time, produzindo
         o dobro.
-      </>
-    ),
-  },
-  {
-    initials: "FF",
-    name: "Focus Fintax",
-    role: "Compensação Tributária",
-    text: (
-      <>
-        <HL>5 processos automatizados</HL> em 60 dias. Time menor, mais entrega, mais margem. E o
-        painel roda no nosso domínio, com a nossa cara.
       </>
     ),
   },
@@ -201,17 +158,6 @@ const COL_3: TestimonialItem[] = [
         imaginava. Com a IAplicada saiu exatamente como eu sempre quis.{" "}
         <HL>Todas as expectativas atingidas em dois meses e meio</HL>. Melhor decisão que eu tomei
         pro meu negócio.
-      </>
-    ),
-  },
-  {
-    initials: "AZ",
-    name: "André Zembruski",
-    role: "Borges & Zembruski",
-    text: (
-      <>
-        R$5k/mês economizados de SDR humano. O sistema assumiu a cadência de follow-up.{" "}
-        <HL>Receita que ficava na mesa entrou.</HL>
       </>
     ),
   },

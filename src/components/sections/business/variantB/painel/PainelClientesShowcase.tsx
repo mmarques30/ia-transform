@@ -5,9 +5,13 @@ import { PainelRotaSul } from "./PainelRotaSul";
 import { PainelScaler } from "./PainelScaler";
 
 /**
- * PainelClientesShowcase — carrossel com tabs dos 3 painéis
- * V1 (Blocaz · indústria), V2 (Atlas · serviços) e V3 (Rota Sul ·
- * logística).
+ * PainelClientesShowcase — carrossel com tabs dos 3 painéis de
+ * demonstração (indústria, serviços, logística). Os nomes das
+ * empresas dentro dos painéis (Blocaz, Atlas, Rota Sul) são
+ * fictícios — mesmo padrão do Vetra na dobra hero. Antes do fix,
+ * o rótulo da tab exibia "Indústria · Blocaz Pré-Moldados" ao
+ * lado do label, o que lia como prova social; hoje só o setor
+ * aparece.
  *
  * Encaixe: dentro do AppShowcase (LP-B) no lugar do phone mockup.
  * O usuário troca de tab manualmente clicando no chip; auto-rotação
@@ -20,29 +24,13 @@ type TabKey = "industria" | "servicos" | "logistica";
 interface Tab {
   key: TabKey;
   label: string;
-  detail: string;
   render: () => React.ReactNode;
 }
 
 const TABS: Tab[] = [
-  {
-    key: "industria",
-    label: "Indústria",
-    detail: "Blocaz Pré-Moldados",
-    render: () => <PainelBlocaz />,
-  },
-  {
-    key: "servicos",
-    label: "Serviços",
-    detail: "Atlas Contábil",
-    render: () => <PainelAtlas />,
-  },
-  {
-    key: "logistica",
-    label: "Logística",
-    detail: "Rota Sul Transportes",
-    render: () => <PainelRotaSul />,
-  },
+  { key: "industria", label: "Indústria", render: () => <PainelBlocaz /> },
+  { key: "servicos", label: "Serviços", render: () => <PainelAtlas /> },
+  { key: "logistica", label: "Logística", render: () => <PainelRotaSul /> },
 ];
 
 const AUTO_ROTATE_MS = 8000;
@@ -87,9 +75,6 @@ export function PainelClientesShowcase() {
               }}
             >
               {t.label}
-              <span className="ml-2 opacity-60 font-medium normal-case tracking-normal text-[10px]">
-                {t.detail}
-              </span>
             </button>
           );
         })}
