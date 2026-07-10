@@ -5,20 +5,20 @@ import { PainelVetra } from "@/components/sections/business/variantB/painel/Pain
 import { PainelScaler } from "@/components/sections/business/variantB/painel/PainelScaler";
 
 /**
- * Hero (LP-B) — refeito do zero com estrutura travada.
+ * Hero (LP-B) — ajuste final da estrutura.
  *
- * Grade fixa via CSS (.hero-b) — max-width 1360, padding 96/48,
- * 5fr texto / 6fr mockup, gap 56. Sem margin/padding extra na
- * coluna de texto: começa exatamente no padding do container.
+ * Grade via CSS (.hero-b) — max-width 1280, padding 80/48, 45%/55%,
+ * gap 56. Coluna esquerda com 4 elementos apenas (logo, h1, sub,
+ * parágrafo, CTA) — eyebrow "IAplicada · Sistemas de IA sob medida"
+ * removido (o logo já identifica a marca).
  *
- * Headline com 3 linhas fixas via <br> — cada segmento em uma linha,
- * `white-space: nowrap` no h1 impede o browser de recompor as
- * quebras em desktop. Solta em <=1100px.
+ * Headline com 3 linhas fixas via <br> + `white-space: nowrap`, solta
+ * em <=1100px. Clamp da fonte calibrado (30/2.8vw/40) pra "não para
+ * apagar incêndio." caber na col de ~508px sem overflow.
  *
- * Mockup: PainelVetra dentro de PainelScaler dentro de .hero-mockup-b.
- * O wrapper tem width calc(100% + 6vw) pra sangrar até 6vw pra
- * direita, com teto absoluto 980px. Rotate 3D fica no CSS
- * (.hero-mockup-b .iap-device).
+ * Mockup: PainelVetra dentro de PainelScaler dentro de .hero-mockup-b
+ * com width calc(100% + 40px) (sangramento discreto pra direita) e
+ * teto de max-width 780. Rotate 3D suavizado: -6deg Y / 1.5deg X.
  */
 
 export function Hero() {
@@ -35,10 +35,6 @@ export function Hero() {
                 height={28}
                 className="hero-b-logo"
               />
-            </Reveal>
-
-            <Reveal delay={0.03}>
-              <p className="hero-b-eyebrow">IAplicada · Sistemas de IA sob medida</p>
             </Reveal>
 
             <Reveal delay={0.05}>
@@ -60,9 +56,8 @@ export function Hero() {
 
             <Reveal delay={0.1}>
               <p className="hero-b-p">
-                Construímos sistemas de IA sob medida que colocam seu time para executar com padrão.
-                Você <strong className="text-foreground font-bold">sai do dia a dia</strong> e foca
-                em fechar clientes, não em resolver problema interno.
+                Construímos sistemas de IA sob medida que colocam seu time pra executar com padrão —
+                para você focar em fechar, não em resolver.
               </p>
             </Reveal>
 
