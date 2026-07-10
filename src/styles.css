@@ -2596,10 +2596,14 @@
 }
 .hero-b-h1 {
   margin-top: 40px;
-  font-size: clamp(30px, 2.8vw, 40px);
+  /* Bump discreto do max de 40 → 42. Pra caber sem overflow na col
+     de 507.6 (1440/1920), reduzi letter-spacing de -0.03em → -0.04em:
+     a linha mais larga ("não para apagar incêndio.") fica em ~497px,
+     dentro da col com margem de ~10px. */
+  font-size: clamp(32px, 3vw, 42px);
   font-weight: 800;
   line-height: 1.06;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.04em;
   color: var(--color-foreground, #f4f5ec);
   white-space: nowrap;
 }
