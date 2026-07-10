@@ -3103,3 +3103,53 @@
     opacity: 1 !important;
   }
 }
+
+/* ============================================================
+   Clients ticker — marquee horizontal duplo da nova
+   SelectedClients (/businessv2). Cada .clients-ticker-track
+   contém DUAS cópias idênticas do conteúdo (linha inteira +
+   uma cópia). Anima translateX de 0 → -50% em `duration`s
+   linear, loop infinito. animation-direction: reverse inverte
+   pra rodar da esquerda pra direita. Hover pausa.
+   ============================================================ */
+
+@keyframes clients-ticker-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.clients-ticker-track {
+  display: flex;
+  width: max-content;
+  animation-name: clients-ticker-scroll;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+.clients-ticker-track:hover {
+  animation-play-state: paused;
+}
+.clients-ticker-copy {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+.clients-ticker-item {
+  padding: 0;
+}
+.clients-ticker-sep {
+  display: inline-block;
+  margin: 0 32px;
+  font-size: 15px;
+  line-height: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .clients-ticker-track {
+    animation: none;
+  }
+}
