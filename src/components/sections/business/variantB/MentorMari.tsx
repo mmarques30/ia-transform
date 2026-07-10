@@ -140,8 +140,8 @@ export function MentorMari() {
                 <strong className="text-foreground font-bold">
                   Não mandamos estagiário. Não entregamos metodologia em PDF.
                 </strong>{" "}
-                Cada empresa passa por diagnóstico comigo — e o sistema é construído sob medida para
-                o jeito que o seu negócio funciona.
+                Cada empresa passa por diagnóstico comigo. O sistema é construído pelo time
+                IAplicada sob medida para o jeito que o seu negócio funciona.
               </p>
 
               <div className="mt-8">

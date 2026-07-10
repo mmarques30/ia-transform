@@ -3,15 +3,23 @@ import { Reveal } from "@/components/Reveal";
 /**
  * Manifesto (LP-B) — dobra editorial de fecho.
  *
- * Headline serif italic de peso alto ("empresa foi feita pra crescer,
- * não pra depender de você"), 3 parágrafos curtos de body (o problema
- * é estrutura, não culpa do dono) e um fechamento em 3 elementos ("Em
- * 90 dias. Com garantia. Sob medida.") que amarra o método, a garantia
- * e o produto num único triplet memorável.
+ * Simplificada depois de feedback: "tem traço/travessão. Já te pedi
+ * pra tirar isso diversas vezes. Tá com muita informação. Não sei
+ * se tá útil esse visual."
+ *
+ * Mudanças:
+ *  - Removidos todos os em-dashes (—) — restrutura pra pontos e
+ *    vírgulas
+ *  - Cortado o parágrafo do meio ("Todo dono chega num ponto...")
+ *    que era o mais longo e adicionava menos
+ *  - Removido "com garantia" do fechamento (o modelo de garantia
+ *    mudou na dobra 08, não é mais promessa universal)
+ *  - Padding vertical reduzido — seção mais compacta, menos
+ *    "espaço morto" abaixo
  */
 export function Manifesto() {
   return (
-    <section id="manifesto" className="section-veil py-[80px] lg:py-[120px]">
+    <section id="manifesto" className="section-veil py-[70px] lg:py-[100px]">
       <div className="container-page">
         <div className="max-w-[820px] mx-auto text-center">
           <Reveal>
@@ -43,60 +51,37 @@ export function Manifesto() {
             </h2>
           </Reveal>
 
-          <Reveal delay={0.08}>
-            <p className="mt-8 text-[15.5px] lg:text-[16.5px] text-sage leading-[1.7] max-w-[680px] mx-auto">
-              Todo dono de empresa chega num ponto onde percebe que o maior obstáculo para crescer{" "}
-              <strong className="text-foreground font-bold">é ele mesmo</strong> — porque a operação
-              não funciona sem a sua presença.
-            </p>
-          </Reveal>
-
-          <Reveal delay={0.12}>
-            <p className="mt-5 text-[15.5px] lg:text-[16.5px] text-sage leading-[1.7] max-w-[680px] mx-auto">
+          <Reveal delay={0.1}>
+            <p className="mt-7 text-[15.5px] lg:text-[16.5px] text-sage leading-[1.65] max-w-[620px] mx-auto">
               Não é culpa sua.{" "}
               <strong className="text-foreground font-bold">
                 É estrutura. É processo. É sistema.
-              </strong>
+              </strong>{" "}
+              A IAplicada constrói o sistema que coloca sua empresa no{" "}
+              <strong className="text-foreground font-bold">piloto automático</strong>.
             </p>
           </Reveal>
 
           <Reveal delay={0.16}>
-            <p className="mt-5 text-[15.5px] lg:text-[16.5px] text-sage leading-[1.7] max-w-[680px] mx-auto">
-              A IAplicada existe para construir o sistema que coloca sua empresa no{" "}
-              <strong className="text-foreground font-bold">piloto automático</strong> — para você
-              parar de apagar incêndio e voltar a fazer o que realmente importa:{" "}
-              <em
-                style={{
-                  fontFamily: '"Instrument Serif", serif',
-                  color: "var(--color-primary)",
-                  fontWeight: 500,
-                }}
-              >
-                crescer.
-              </em>
-            </p>
-          </Reveal>
-
-          <Reveal delay={0.2}>
             <p
-              className="mt-10 text-[20px] sm:text-[26px] lg:text-[32px] leading-[1.15] tracking-[-0.015em] text-foreground"
+              className="mt-9 text-[20px] sm:text-[26px] lg:text-[32px] leading-[1.15] tracking-[-0.015em] text-foreground"
               style={{ fontFamily: '"Instrument Serif", serif' }}
             >
-              <em>Em 90 dias.</em>{" "}
+              <em>Sob medida.</em>{" "}
               <span
                 className="mx-1 not-italic font-normal"
                 style={{ color: "var(--color-primary)" }}
               >
                 ·
               </span>{" "}
-              <em>Com garantia.</em>{" "}
+              <em>Dentro da sua operação.</em>{" "}
               <span
                 className="mx-1 not-italic font-normal"
                 style={{ color: "var(--color-primary)" }}
               >
                 ·
               </span>{" "}
-              <em>Sob medida.</em>
+              <em>Rodando de verdade.</em>
             </p>
           </Reveal>
         </div>

@@ -138,8 +138,8 @@ export function Testimonials() {
           <Reveal delay={0.05}>
             <p className="mt-5 text-[15.5px] text-sage leading-[1.6] max-w-[560px] mx-auto">
               Empresas de{" "}
-              <strong className="text-foreground font-bold">serviço, produto e indústria</strong> —
-              todas com o mesmo padrão de problema. Todas com o mesmo resultado.
+              <strong className="text-foreground font-bold">serviço, produto e indústria</strong>.
+              Todas com o mesmo padrão de problema. Todas com o mesmo resultado.
             </p>
           </Reveal>
         </div>

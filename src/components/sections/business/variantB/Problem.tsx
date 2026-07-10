@@ -13,7 +13,7 @@ import { CtaGlow } from "@/components/sections/business/variantB/CtaGlow";
  */
 
 const COL_LEFT = [
-  "Você aprova tudo — porque sem você a coisa não anda",
+  "Você aprova tudo, porque sem você a coisa não anda",
   "Seu time pede resposta pra tudo, o dia todo",
   "Você não sabe o que está acontecendo na operação agora",
 ];
