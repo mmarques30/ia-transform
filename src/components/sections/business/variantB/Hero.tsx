@@ -56,8 +56,8 @@ export function Hero() {
 
             <Reveal delay={0.1}>
               <p className="hero-b-p">
-                Construímos sistemas de IA sob medida que colocam seu time pra executar com padrão —
-                para você focar em fechar, não em resolver.
+                Construímos sistemas de IA sob medida que colocam seu time pra executar com padrão.
+                Para você focar em fechar, não em resolver.
               </p>
             </Reveal>
 
