@@ -66,7 +66,7 @@ function DiagnosticoPage() {
                 <p className="mt-6 text-[15.5px] lg:text-[16px] text-sage leading-[1.6] max-w-[520px] mx-auto">
                   Preencha abaixo. Nosso time entra em contato em até{" "}
                   <strong className="text-foreground font-semibold">24h</strong> para agendar seu
-                  diagnóstico gratuito com a Mari.
+                  diagnóstico gratuito com a IAplicada.
                 </p>
               </Reveal>
             </div>
