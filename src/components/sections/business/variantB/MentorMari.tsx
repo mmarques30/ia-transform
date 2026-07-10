@@ -19,8 +19,8 @@ interface Cred {
 
 const CREDENCIAIS: Cred[] = [
   { bold: "Mariana Marques", rest: " · Fundadora da IAplicada" },
-  { bold: "+5 anos", rest: " mapeando e construindo operações" },
-  { bold: "+40 sistemas", rest: " implementados dentro de empresas de verdade" },
+  { bold: "+5 anos", rest: " mapeando operações e liderando implementações" },
+  { bold: "+40 sistemas", rest: " implementados pelo time IAplicada" },
   { bold: "Referência em automação operacional", rest: " para PMEs" },
 ];
 
@@ -118,11 +118,12 @@ export function MentorMari() {
                   fontFamily: '"JetBrains Mono", ui-monospace, Menlo, monospace',
                 }}
               >
-                Quem constrói o sistema
+                Quem lidera a IAplicada
               </span>
               <h2 className="mt-4 font-extrabold text-[28px] sm:text-[36px] lg:text-[42px] leading-[1.05] tracking-[-0.02em] text-foreground">
-                Quem constrói o sistema{" "}
-                <span style={{ color: "var(--color-primary)" }}>dentro da sua empresa.</span>
+                Diagnóstico é comigo.
+                <br />
+                Implementação é do <span style={{ color: "var(--color-primary)" }}>time.</span>
               </h2>
 
               <ul className="mt-7 flex flex-col gap-3.5">
@@ -140,8 +141,8 @@ export function MentorMari() {
                 <strong className="text-foreground font-bold">
                   Não mandamos estagiário. Não entregamos metodologia em PDF.
                 </strong>{" "}
-                Cada empresa passa por diagnóstico comigo. O sistema é construído pelo time
-                IAplicada sob medida para o jeito que o seu negócio funciona.
+                Cada empresa passa por diagnóstico comigo. Depois, o time IAplicada constrói o
+                sistema sob medida para o jeito que o seu negócio funciona.
               </p>
 
               <div className="mt-8">
