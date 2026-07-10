@@ -2485,6 +2485,54 @@
     display: none;
   }
 }
+
+/* ============================================================
+   PainelScaler — envolve o .iap-device numa "tela horizontal"
+   com largura fixa nativa (990px) e escala via transform pra
+   caber na coluna do parent.
+
+   Motivação: o painel é desenhado horizontal (990px). Se ele
+   reflow em coluna estreita, os KPIs quebram em 3 linhas, os
+   cards de ação esmagam e o layout vira lixo. O scaler resolve
+   isso mantendo o painel SEMPRE 990px internamente e escalando
+   uniformemente pra caber onde estiver.
+
+   Uso:
+     <div class="iap-device-viewport">   ← width: 100% da coluna
+       <div class="iap-device-scale">    ← width: 990px + scale
+         <div class="iap-device">...</div>
+       </div>
+     </div>
+
+   O componente React PainelScaler faz o cálculo via ResizeObserver:
+   scale = viewport.width / 990, e ajusta viewport.height =
+   scale.offsetHeight * scale (pro layout do parent reservar
+   espaço certo pós-scale).
+   ============================================================ */
+
+.iap-device-viewport {
+  position: relative;
+  width: 100%;
+  overflow: visible;
+}
+.iap-device-scale {
+  width: 990px;
+  transform-origin: top left;
+}
+
+/* Dentro do scaler, os grids INTERNOS mantêm o formato horizontal
+   independente do viewport do browser. O media query padrão de
+   <760px do .iap-kpis/.iap-grid2 é sobrescrito aqui — o scale já
+   resolve viewports menores, encolhendo o painel inteiro. */
+.iap-device-scale .iap-kpis {
+  grid-template-columns: 1fr 1fr 1fr !important;
+}
+.iap-device-scale .iap-grid2 {
+  grid-template-columns: 1.35fr 1fr !important;
+}
+.iap-device-scale .iap-ai-tag {
+  display: inline-block !important;
+}
 @media (prefers-reduced-motion: reduce) {
   .iap-device,
   .iap-ai-bar,

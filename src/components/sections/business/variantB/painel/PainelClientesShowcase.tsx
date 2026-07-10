@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { PainelBlocaz } from "./PainelBlocaz";
 import { PainelAtlas } from "./PainelAtlas";
 import { PainelRotaSul } from "./PainelRotaSul";
+import { PainelScaler } from "./PainelScaler";
 
 /**
  * PainelClientesShowcase — carrossel com tabs dos 3 painéis
@@ -98,8 +99,13 @@ export function PainelClientesShowcase() {
        * Rendering: key={active} força o React a desmontar/remontar quando
        * a tab muda — isso faz o IntersectionObserver do useIapIn rodar de
        * novo e as animações de entrada tocarem em cada troca de tab.
+       *
+       * PainelScaler mantém o painel horizontal 990px sempre — não
+       * reflow em containers estreitos.
        */}
-      <div key={activeTab.key}>{activeTab.render()}</div>
+      <div key={activeTab.key}>
+        <PainelScaler>{activeTab.render()}</PainelScaler>
+      </div>
     </div>
   );
 }
