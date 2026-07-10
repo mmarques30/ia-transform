@@ -28,8 +28,14 @@ export function MentorMari() {
   return (
     <section id="mentora" className="relative">
       <div className="section-veil">
-        <div className="grid lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] items-stretch">
-          <Reveal className="h-full min-h-[380px] lg:min-h-[560px]">
+        <div className="grid lg:grid-cols-[minmax(0,0.42fr)_minmax(0,0.58fr)] items-stretch">
+          {/* Coluna da imagem — 42% da largura. Feedback anterior era
+              que a foto dominava (rosto muito grande em primeiro plano).
+              Reequilibrada: menor coluna + object-position "center 30%"
+              pra mostrar mais busto/ombros + degradê forte na borda
+              direita pra integrar com o painel de texto. Altura máxima
+              desktop 640px (era 720+ antes). Mobile mantém 380px. */}
+          <Reveal className="h-full min-h-[380px] lg:min-h-[560px] lg:max-h-[640px]">
             <div
               className="relative w-full h-full overflow-hidden"
               style={{
@@ -37,21 +43,6 @@ export function MentorMari() {
                   "radial-gradient(80% 80% at 40% 45%, rgba(200,224,64,0.14), transparent 65%), linear-gradient(180deg, #0f1109 0%, #05060a 100%)",
               }}
             >
-              {/*
-               * Foto original (sem mask/blend) preenchendo toda a coluna.
-               *
-               * Feedback anterior sobre o cutout: "ficou péssimo, num nível
-               * assim muito alto". Revertido — sem mixBlendMode, sem
-               * maskImage, sem boost de brightness/contrast/saturate.
-               *
-               * objectPosition ajustada pra 55% — mostra a face + torso
-               * bem mais próximos do topo do container, sem faixa vazia
-               * de escuro acima da cabeça. Antes era 22% (mostrava demais
-               * do fundo do enquadramento original da foto).
-               *
-               * Integração com a página vem SÓ dos overlays (bottom fade
-               * + right bleed) — não mais de blend mode na imagem em si.
-               */}
               <img
                 src={FOUNDER.photoSrc}
                 alt={FOUNDER.name}
@@ -59,7 +50,10 @@ export function MentorMari() {
                 decoding="async"
                 className="absolute inset-0 w-full h-full object-cover"
                 style={{
-                  objectPosition: "center 55%",
+                  // "center 30%" mostra rosto + busto + ombros (menos
+                  // close no rosto). Antes era 55%, que centralizava só
+                  // no rosto.
+                  objectPosition: "center 30%",
                   filter: "brightness(0.95) contrast(1.05)",
                 }}
                 onError={(e) => {
@@ -73,20 +67,19 @@ export function MentorMari() {
                 }}
               />
 
-              {/* Overlays de integração — 3 gradientes empilhados:
-                    - top-fade: escurece o topo (onde a foto tem menos
-                      informação útil) pra emenda com o QualifierStrip/
-                      seção anterior
-                    - bottom-fade: escurece a base (roupa/mesa) sem cortar
-                      o rosto — dá peso e integra com Guarantee abaixo
-                    - right-bleed: dissolve a borda direita no bg do painel
-                      de texto (#0d0f08), sem borda dura visível */}
+              {/* Overlays de integração — 4 gradientes empilhados:
+                    - top-fade: escurece topo pra emendar com seção anterior
+                    - bottom-fade: escurece a base sem cortar o rosto
+                    - right-bleed FORTE (era transparent 65% agora 40%):
+                      dissolve a borda direita direto no #0d0f08 do painel
+                      de texto, com transição bem mais suave e mais larga.
+                    - haze radial no centro pra sutil dramaticidade */}
               <div
                 aria-hidden
                 className="pointer-events-none absolute inset-0 z-10"
                 style={{
                   background:
-                    "linear-gradient(180deg, rgba(10,12,7,0.5) 0%, transparent 22%, transparent 70%, rgba(10,12,7,0.6) 100%), linear-gradient(90deg, transparent 65%, rgba(13,15,8,0.55) 88%, #0d0f08 100%)",
+                    "linear-gradient(180deg, rgba(10,12,7,0.55) 0%, transparent 20%, transparent 72%, rgba(10,12,7,0.65) 100%), linear-gradient(90deg, transparent 40%, rgba(13,15,8,0.35) 70%, rgba(13,15,8,0.75) 88%, #0d0f08 100%)",
                 }}
               />
             </div>
@@ -94,7 +87,7 @@ export function MentorMari() {
 
           <Reveal delay={0.1}>
             <div
-              className="relative flex flex-col justify-center px-8 py-14 lg:px-16 lg:py-20"
+              className="relative flex flex-col justify-center px-8 py-14 lg:pl-20 lg:pr-16 lg:py-20"
               style={{ background: "#0d0f08" }}
             >
               {/* Marcador vertical lime no fim esquerdo do painel — cria
@@ -146,7 +139,7 @@ export function MentorMari() {
               </p>
 
               <div className="mt-8">
-                <CtaGlow size="lg">Agendar diagnóstico com a Mari →</CtaGlow>
+                <CtaGlow size="lg">Agendar diagnóstico com a IAplicada →</CtaGlow>
               </div>
             </div>
           </Reveal>

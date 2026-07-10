@@ -86,7 +86,7 @@ export function Urgency() {
             style={{ color: "rgba(255,255,255,0.55)" }}
           >
             Diagnóstico conduzido{" "}
-            <strong style={{ color: "#ffffff", fontWeight: 600 }}>pessoalmente pela Mari</strong> —
+            <strong style={{ color: "#ffffff", fontWeight: 600 }}>pelo time IAplicada</strong> —
             poucas empresas por mês. Quem fecha,{" "}
             <strong style={{ color: "#ffffff", fontWeight: 600 }}>começa na mesma semana</strong>.
           </p>

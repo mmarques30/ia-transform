@@ -170,7 +170,7 @@ function ModalSuccessCard({ onClose }: { onClose: () => void }) {
         >
           Um sócio da IAplicada revisa e chama por WhatsApp em até{" "}
           <strong style={{ color: "oklch(0.18 0.02 122)", fontWeight: 700 }}>24 horas úteis</strong>{" "}
-          pra agendar o diagnóstico com a Mari.
+          pra agendar o diagnóstico com a IAplicada.
         </p>
 
         <ul className="mt-6 mx-auto max-w-[400px] flex flex-col gap-2.5 text-left">
@@ -182,7 +182,7 @@ function ModalSuccessCard({ onClose }: { onClose: () => void }) {
           <SuccessRow
             icon={<MessageCircle className="h-3.5 w-3.5" />}
             title="Diagnóstico"
-            detail="60 min por vídeo · direto com a Mari"
+            detail="60 min por vídeo · direto com a IAplicada"
           />
           <SuccessRow
             icon={<Sparkles className="h-3.5 w-3.5" />}
