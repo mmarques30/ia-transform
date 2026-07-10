@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
-import { X, CheckCircle2, MessageCircle, Clock, Sparkles } from "lucide-react";
+import { X, Check } from "lucide-react";
 import { HeroForm } from "@/components/HeroForm";
 
 /**
@@ -122,10 +122,18 @@ export function DiagnosticoModalProvider({ children }: { children: React.ReactNo
 }
 
 /**
- * Card de sucesso — MESMO estilo visual do HeroForm (creme
- * arredondado com shadow) pra a transição form → success ficar
- * consistente. Copy resumida em vez de puxar tudo do /thank-you-
- * business, com 3 rows dos próximos passos.
+ * Card de sucesso — mesmo card creme do HeroForm pra manter
+ * consistência visual na transição form → success.
+ *
+ * Redesign pro tom sênior/institucional pedido pelo fundador:
+ *  - Retirados os icones colorados (Clock/MessageCircle/Sparkles) e
+ *    os cards verdes ao redor deles — pareciam checklist infantil.
+ *  - Substituídos por uma lista editorial: label mono uppercase em
+ *    cima do valor, separada por hairline. Zero cor, zero ícone
+ *    nas rows.
+ *  - Copy atualizada: sócio "chama agora no WhatsApp" (não é mais
+ *    "em até 24h úteis" — chamamos na hora) e diagnóstico agora é
+ *    de 45 min (não 60).
  */
 function ModalSuccessCard({ onClose }: { onClose: () => void }) {
   return (
@@ -144,16 +152,17 @@ function ModalSuccessCard({ onClose }: { onClose: () => void }) {
         style={{ boxShadow: "inset 0 1px 0 oklch(1 0 0 / 0.9)" }}
       />
 
-      <div className="px-6 pt-6 pb-6 lg:px-8 lg:pt-8 lg:pb-8 text-center relative">
+      <div className="px-6 pt-8 pb-7 lg:px-10 lg:pt-10 lg:pb-9 text-center relative">
+        {/* Check minimalista — ring fino em vez do disco verde. Comunica
+            sucesso sem virar sticker de app infantil. */}
         <div
-          className="mx-auto flex items-center justify-center h-14 w-14 rounded-full mb-4"
+          className="mx-auto flex items-center justify-center h-12 w-12 rounded-full mb-5"
           style={{
-            background:
-              "radial-gradient(circle at 30% 30%, oklch(0.92 0.15 122), oklch(0.85 0.15 122))",
-            boxShadow: "0 8px 24px -8px oklch(0.62 0.17 125 / 0.5)",
+            background: "transparent",
+            border: "1.5px solid oklch(0.62 0.17 125)",
           }}
         >
-          <CheckCircle2 className="h-7 w-7 text-white" strokeWidth={2.4} />
+          <Check className="h-5 w-5" strokeWidth={2.4} style={{ color: "oklch(0.55 0.17 125)" }} />
         </div>
 
         <h2
@@ -168,32 +177,21 @@ function ModalSuccessCard({ onClose }: { onClose: () => void }) {
           className="mt-3 text-[13.5px] lg:text-[14.5px] leading-[1.55] max-w-[420px] mx-auto"
           style={{ color: "oklch(0.35 0.02 122)" }}
         >
-          Um sócio da IAplicada revisa e chama por WhatsApp em até{" "}
-          <strong style={{ color: "oklch(0.18 0.02 122)", fontWeight: 700 }}>24 horas úteis</strong>{" "}
-          pra agendar o diagnóstico com a IAplicada.
+          Um sócio da IAplicada chama{" "}
+          <strong style={{ color: "oklch(0.18 0.02 122)", fontWeight: 700 }}>agora</strong> no
+          WhatsApp. Deixa o celular por perto e prepara um resumo curto da sua operação — vai
+          adiantar o diagnóstico.
         </p>
 
-        <ul className="mt-6 mx-auto max-w-[400px] flex flex-col gap-2.5 text-left">
-          <SuccessRow
-            icon={<Clock className="h-3.5 w-3.5" />}
-            title="Próximo contato"
-            detail="WhatsApp em até 24h úteis"
-          />
-          <SuccessRow
-            icon={<MessageCircle className="h-3.5 w-3.5" />}
-            title="Diagnóstico"
-            detail="60 min por vídeo · direto com a IAplicada"
-          />
-          <SuccessRow
-            icon={<Sparkles className="h-3.5 w-3.5" />}
-            title="Material entregue"
-            detail="Mapa da operação · playbook do trimestre"
-          />
+        <ul className="mt-7 mx-auto max-w-[420px] text-left">
+          <SuccessRow title="Próximo contato" detail="WhatsApp em minutos" />
+          <SuccessRow title="Diagnóstico" detail="45 min por vídeo · direto com a IAplicada" />
+          <SuccessRow title="Material entregue" detail="Mapa da operação · playbook do trimestre" />
         </ul>
 
         <button
           onClick={onClose}
-          className="mt-6 inline-flex items-center gap-2 px-6 py-3 rounded-full text-[13px] font-bold uppercase tracking-[0.06em] transition-colors"
+          className="mt-8 inline-flex items-center gap-2 px-6 py-3 rounded-full text-[13px] font-bold uppercase tracking-[0.06em] transition-colors"
           style={{
             background: "oklch(0.18 0.02 122)",
             color: "oklch(0.995 0.003 110)",
@@ -206,47 +204,30 @@ function ModalSuccessCard({ onClose }: { onClose: () => void }) {
   );
 }
 
-function SuccessRow({
-  icon,
-  title,
-  detail,
-}: {
-  icon: React.ReactNode;
-  title: string;
-  detail: string;
-}) {
+function SuccessRow({ title, detail }: { title: string; detail: string }) {
   return (
     <li
-      className="flex items-start gap-3 p-2.5 rounded-lg"
+      className="grid items-baseline gap-6 py-3"
       style={{
-        background: "oklch(0.96 0.025 125)",
-        border: "1px solid oklch(0.85 0.05 125)",
+        gridTemplateColumns: "minmax(140px, auto) 1fr",
+        borderTop: "1px solid oklch(0.88 0.02 115)",
       }}
     >
       <span
-        className="shrink-0 h-7 w-7 rounded-full flex items-center justify-center mt-0.5"
+        className="text-[10px] uppercase tracking-[0.16em] font-bold"
         style={{
-          background: "white",
-          color: "var(--color-primary)",
-          border: "1px solid oklch(0.85 0.05 125)",
+          color: "oklch(0.5 0.02 122)",
+          fontFamily: '"JetBrains Mono", ui-monospace, Menlo, monospace',
         }}
       >
-        {icon}
+        {title}
       </span>
-      <div>
-        <p
-          className="text-[9.5px] uppercase tracking-[0.14em] font-bold"
-          style={{
-            color: "var(--color-primary)",
-            fontFamily: '"JetBrains Mono", ui-monospace, Menlo, monospace',
-          }}
-        >
-          {title}
-        </p>
-        <p className="mt-0.5 text-[12.5px] leading-[1.4]" style={{ color: "oklch(0.18 0.02 122)" }}>
-          {detail}
-        </p>
-      </div>
+      <span
+        className="text-[13.5px] leading-[1.35]"
+        style={{ color: "oklch(0.18 0.02 122)", fontWeight: 500 }}
+      >
+        {detail}
+      </span>
     </li>
   );
 }
