@@ -3,18 +3,13 @@ import { Reveal } from "@/components/Reveal";
 import { useIapIn } from "@/components/sections/business/variantB/painel/useIapIn";
 
 /**
- * SelectedClients (LP-B) — refeita como prova de amplitude em 2 blocos:
+ * SelectedClients (LP-B) — prova de amplitude só com os 3 números
+ * agregados (37 empresas · +40 sistemas · R$ 2M+ recuperados) com
+ * count-up quando a seção entra no viewport.
  *
- *  Bloco 1: 3 números gigantes (37 empresas · +40 sistemas ·
- *  R$ 2M+ recuperados) com count-up quando entra no viewport.
- *
- *  Bloco 2: 2 tickers infinitos com "empresa · setor — resultado curto",
- *  rolando em direções opostas (linha 1 → esquerda em ~40s, linha 2 →
- *  direita em ~52s), pausando no hover. Fade nas bordas via mask-image.
- *
- * Sem cards, sem fotos, sem logos. A ideia é substituir os 8 placeholders
- * borrados (que não passavam prova) por números concretos + resultados
- * em movimento.
+ * O bloco de tickers (2 marquees em direções opostas) foi retirado
+ * a pedido do fundador — os depoimentos logo abaixo já dão o mesmo
+ * papel visual.
  */
 
 const STATS = [
@@ -39,27 +34,6 @@ const STATS = [
     label: "em horas de operação recuperadas",
     accent: "both" as const,
   },
-];
-
-/**
- * Ticker: só empresas reais da carteira IAplicada, alinhado com os 9
- * depoimentos. Removidos os fictícios que estavam misturados aqui —
- * Blocaz (empresa dos mockups), Focus Fintax, CB Move, Borges &
- * Zembruski, Cimed. Jmob virou Tijolo Capital.
- */
-const LINE_1 = [
-  { name: "Turystar", sector: "Turismo", result: "2 semanas viraram 2 horas" },
-  { name: "PSA Consultores", sector: "Consultoria", result: "+50% de eficiência em 6 meses" },
-  { name: "LCR", sector: "Contábil", result: "conciliação classificada por IA" },
-  { name: "Tijolo Capital", sector: "Imobiliário", result: "escalou sem contratar" },
-  { name: "Quadra Arquitetura", sector: "Obras", result: "canteiro gerenciado do celular" },
-];
-
-const LINE_2 = [
-  { name: "Foco Syntex", sector: "Tributário", result: "processo automatizado ponta a ponta" },
-  { name: "BIZ", sector: "Serviços", result: "visibilidade total da operação" },
-  { name: "Uiara Intimates", sector: "Varejo", result: "comunidade no ar em 2 meses e meio" },
-  { name: "PSA Consultores", sector: "Business Case", result: "R$ 191 mil de ROI em 5 meses" },
 ];
 
 export function SelectedClients() {
@@ -101,11 +75,6 @@ export function SelectedClients() {
         </div>
 
         <StatsRow />
-
-        <div className="mt-[72px] lg:mt-[96px] flex flex-col gap-4">
-          <Ticker items={LINE_1} duration={40} direction="left" />
-          <Ticker items={LINE_2} duration={52} direction="right" />
-        </div>
       </div>
     </section>
   );
@@ -208,92 +177,4 @@ function useCountUp(target: number, active: boolean, durationMs: number): number
   }, [active, target, durationMs]);
 
   return Math.round(value);
-}
-
-/**
- * Ticker — marquee infinito com o conteúdo duplicado e translateX
- * animado de 0 a -50%. `direction: "right"` inverte via animation-
- * direction reverse. Pausa no hover (CSS). Fade edges via mask-image.
- */
-function Ticker({
-  items,
-  duration,
-  direction,
-}: {
-  items: typeof LINE_1;
-  duration: number;
-  direction: "left" | "right";
-}) {
-  return (
-    <div
-      className="relative overflow-hidden"
-      style={{
-        WebkitMaskImage:
-          "linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%)",
-        maskImage: "linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%)",
-      }}
-    >
-      <div
-        className="clients-ticker-track"
-        style={{
-          animationDuration: `${duration}s`,
-          animationDirection: direction === "left" ? "normal" : "reverse",
-        }}
-      >
-        {[0, 1].map((copy) => (
-          <div key={copy} className="clients-ticker-copy" aria-hidden={copy === 1}>
-            {items.map((it, i) => (
-              <TickerItem
-                key={`${copy}-${it.name}-${i}`}
-                name={it.name}
-                sector={it.sector}
-                result={it.result}
-                showSep={i > 0}
-              />
-            ))}
-            <TickerItem name="" sector="" result="" showSep={true} spacerOnly />
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function TickerItem({
-  name,
-  sector,
-  result,
-  showSep,
-  spacerOnly,
-}: {
-  name: string;
-  sector: string;
-  result: string;
-  showSep: boolean;
-  spacerOnly?: boolean;
-}) {
-  if (spacerOnly) {
-    return (
-      <span className="clients-ticker-sep" aria-hidden style={{ color: "rgba(213,233,90,0.3)" }}>
-        ✦
-      </span>
-    );
-  }
-  return (
-    <>
-      {showSep && (
-        <span className="clients-ticker-sep" aria-hidden style={{ color: "rgba(213,233,90,0.3)" }}>
-          ✦
-        </span>
-      )}
-      <span className="clients-ticker-item" style={{ fontSize: 15, whiteSpace: "nowrap" }}>
-        <span className="font-bold text-foreground">{name}</span>
-        <span style={{ color: "rgba(255,255,255,0.4)" }}> · {sector}</span>
-        <span style={{ color: "rgba(255,255,255,0.4)" }}> — </span>
-        <span className="font-semibold" style={{ color: "var(--color-primary)" }}>
-          {result}
-        </span>
-      </span>
-    </>
-  );
 }

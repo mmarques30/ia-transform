@@ -2535,19 +2535,21 @@
 }
 
 /* ============================================================
-   Hero /businessv2 — layout travado do zero.
-   Grade 5fr / 6fr (texto 45% / mockup 55%) com gap 56 e container
-   1360 max. Padding 96/48 do container = texto começa exatamente
-   48px da borda esquerda em desktop.
+   Hero /businessv2 — ajuste final.
+   Container 1280 max, padding 80/48, grid 45%/55% com gap 56.
+   Coluna esquerda tem só 4 elementos (logo, h1, sub, parágrafo,
+   CTA) — sem eyebrow, o logo já identifica a marca.
 
-   Headline com 3 linhas fixas via <br>: white-space: nowrap trava
-   as 3 linhas em desktop e só solta em <=1100px (mobile). Se
-   qualquer segmento for maior que a coluna, reduzir o clamp
-   máximo até caber.
+   Ritmo travado: logo → 40px → h1 → 20px → sub → 14px → parágrafo
+   (max 42ch) → 36px → CTA.
 
-   Mockup: width calc(100% + 6vw) sangra ~6vw pra direita, com teto
-   absoluto 980px. Rotate 3D (rotateY -8deg / rotateX 2deg) direto
-   no .iap-device, sem hover-scale.
+   Headline com 3 linhas fixas via <br> + white-space: nowrap.
+   Solta em <=1100px. Clamp calibrado (30/2.8vw/40) pra a linha
+   mais larga caber na col (~508px em 1280/1440).
+
+   Mockup: width calc(100% + 40px) sangra 40px pra direita da col,
+   com teto absoluto max-width 780. Rotate 3D suave:
+   rotateY(-6deg) rotateX(1.5deg).
    ============================================================ */
 
 .hero-section-b {
@@ -2555,14 +2557,26 @@
   overflow-x: clip;
   overflow-y: visible;
   background: radial-gradient(120% 90% at 100% 40%, rgba(200, 224, 64, 0.08), transparent 60%);
+  /* Section preenche o viewport pra baixo pra evitar que a próxima
+     seção apareça acima da dobra em telas altas (1080/1200). Valor:
+     100vh - altura da QualifierStrip (~48px). Usa min-height, não
+     height, pra conteúdo poder crescer quando a copy cresce. */
+  min-height: calc(100vh - 48px);
+  display: flex;
+  align-items: center;
 }
 
 .hero-b {
-  max-width: 1360px;
+  width: 100%;
+  max-width: 1280px;
   margin: 0 auto;
-  padding: 96px 48px;
+  padding: 80px 48px;
   display: grid;
-  grid-template-columns: 5fr 6fr;
+  /* fr units em vez de % pra grid respeitar o gap 56 dentro do
+     content-area (% ignora o gap e causa overflow horizontal do
+     mockup wrapper em viewports <= container max-width). Proporção
+     45/55 mantida. */
+  grid-template-columns: 45fr 55fr;
   gap: 56px;
   align-items: center;
   overflow: visible;
@@ -2580,24 +2594,9 @@
   height: 28px;
   width: auto;
 }
-.hero-b-eyebrow {
-  margin-top: 28px;
-  font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
-  font-size: 12px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  font-weight: 700;
-  color: var(--color-primary);
-}
 .hero-b-h1 {
-  margin-top: 16px;
-  /* clamp reduzido do spec (58 → 42) porque "não para apagar
-     incêndio." (25 chars) não cabia na coluna de texto de ~549px
-     a 54.7px. Medido: font Inter extrabold com -0.03em tracking
-     usa ~0.484 em/char de média, então cap 42 dá linha ~508px
-     que cabe em 549 (1440) e 512 (1280). Regra respeitada: 3
-     linhas fixas em desktop; solta em <=1100px. */
-  font-size: clamp(30px, 3vw, 42px);
+  margin-top: 40px;
+  font-size: clamp(30px, 2.8vw, 40px);
   font-weight: 800;
   line-height: 1.06;
   letter-spacing: -0.03em;
@@ -2607,6 +2606,7 @@
 .hero-b-sub {
   margin-top: 20px;
   font-family: "Instrument Serif", serif;
+  font-style: italic;
   font-size: clamp(20px, 1.7vw, 26px);
   line-height: 1.18;
   letter-spacing: -0.015em;
@@ -2615,29 +2615,26 @@
 }
 .hero-b-p {
   margin-top: 14px;
-  max-width: 44ch;
+  max-width: 42ch;
   font-size: 15.5px;
   line-height: 1.6;
   color: var(--color-sage, #b8bcae);
 }
 .hero-b-cta {
-  margin-top: 32px;
+  margin-top: 36px;
 }
 
 .hero-mockup-b {
   perspective: 1600px;
   perspective-origin: 20% 50%;
-  /* Reduzido do spec (980 → 860 max, 6vw → 3vw bleed) porque
-     visualmente estava dominando o hero. Ainda sangra um pouco
-     pra direita mas mantém o texto respirando à esquerda. */
-  width: calc(100% + 3vw);
-  max-width: 860px;
+  width: calc(100% + 40px);
+  max-width: 780px;
 }
 .hero-mockup-b .iap-device-scale {
   transform-origin: top left;
 }
 .hero-mockup-b .iap-device {
-  transform: rotateY(-8deg) rotateX(2deg);
+  transform: rotateY(-6deg) rotateX(1.5deg);
   transform-style: preserve-3d;
   transform-origin: center center;
   box-shadow:
@@ -3168,56 +3165,6 @@
     animation: none !important;
     transition: none !important;
     opacity: 1 !important;
-  }
-}
-
-/* ============================================================
-   Clients ticker — marquee horizontal duplo da nova
-   SelectedClients (/businessv2). Cada .clients-ticker-track
-   contém DUAS cópias idênticas do conteúdo (linha inteira +
-   uma cópia). Anima translateX de 0 → -50% em `duration`s
-   linear, loop infinito. animation-direction: reverse inverte
-   pra rodar da esquerda pra direita. Hover pausa.
-   ============================================================ */
-
-@keyframes clients-ticker-scroll {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-.clients-ticker-track {
-  display: flex;
-  width: max-content;
-  animation-name: clients-ticker-scroll;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-  will-change: transform;
-}
-.clients-ticker-track:hover {
-  animation-play-state: paused;
-}
-.clients-ticker-copy {
-  display: flex;
-  align-items: center;
-  flex-shrink: 0;
-}
-.clients-ticker-item {
-  padding: 0;
-}
-.clients-ticker-sep {
-  display: inline-block;
-  margin: 0 32px;
-  font-size: 15px;
-  line-height: 1;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .clients-ticker-track {
-    animation: none;
   }
 }
 
