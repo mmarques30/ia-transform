@@ -6,9 +6,10 @@ import { PainelClientesShowcase } from "@/components/sections/business/variantB/
  * AppShowcase (LP-B) — texto + carrossel de 3 painéis de cliente.
  *
  * Refeito depois do brief dos mockups: no lugar do phone com backdrop
- * lime, agora mostramos 3 painéis reais (Blocaz · indústria, Atlas ·
- * serviços, Rota Sul · logística) com tabs pra o visitante conseguir
- * ver o padrão da IAplicada aplicado em diferentes verticais.
+ * lime, agora mostramos 3 painéis de demonstração (indústria, serviços,
+ * logística) com tabs pra o visitante conseguir ver o padrão da
+ * IAplicada aplicado em diferentes verticais. As empresas dentro dos
+ * painéis são fictícias — mesmo padrão do Vetra na dobra hero.
  *
  * Layout: texto centralizado no topo (eyebrow + h2 + copy), showcase
  * full-width abaixo, CTA no rodapé. Bullets com ✓ removidos após

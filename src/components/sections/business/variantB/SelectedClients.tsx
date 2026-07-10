@@ -41,22 +41,24 @@ const STATS = [
   },
 ];
 
+/**
+ * Ticker: só empresas reais da carteira IAplicada, alinhado com os 9
+ * depoimentos. Removidos os fictícios que estavam misturados aqui —
+ * Blocaz (empresa dos mockups), Focus Fintax, CB Move, Borges &
+ * Zembruski, Cimed. Jmob virou Tijolo Capital.
+ */
 const LINE_1 = [
   { name: "Turystar", sector: "Turismo", result: "2 semanas viraram 2 horas" },
   { name: "PSA Consultores", sector: "Consultoria", result: "+50% de eficiência em 6 meses" },
   { name: "LCR", sector: "Contábil", result: "conciliação classificada por IA" },
-  { name: "Blocaz", sector: "Indústria", result: "orçamento em 4 minutos" },
-  { name: "Jmob", sector: "Imobiliário", result: "escalou sem contratar" },
+  { name: "Tijolo Capital", sector: "Imobiliário", result: "escalou sem contratar" },
   { name: "Quadra Arquitetura", sector: "Obras", result: "canteiro gerenciado do celular" },
 ];
 
 const LINE_2 = [
-  { name: "Focus Fintax", sector: "Tributário", result: "5 processos automatizados em 60 dias" },
-  { name: "CB Move", sector: "Saúde", result: "de 30 pra 100+ pacientes sem admin" },
-  { name: "Borges & Zembruski", sector: "Advocacia", result: "R$ 5 mil/mês economizados" },
+  { name: "Foco Syntex", sector: "Tributário", result: "processo automatizado ponta a ponta" },
   { name: "BIZ", sector: "Serviços", result: "visibilidade total da operação" },
   { name: "Uiara Intimates", sector: "Varejo", result: "comunidade no ar em 2 meses e meio" },
-  { name: "Cimed", sector: "Farmacêutica", result: "automação de processos internos" },
   { name: "PSA Consultores", sector: "Business Case", result: "R$ 191 mil de ROI em 5 meses" },
 ];
 
