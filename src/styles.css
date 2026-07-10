@@ -2622,3 +2622,103 @@
     stroke-dashoffset: 0;
   }
 }
+
+/* ============================================================
+   Guarantee list — lista editorial dos 3 entregáveis do
+   diagnóstico (Mapa / Ranking / Playbook). Sem cards, sem
+   ícones, sem "VOCÊ LEVA" repetido — só a lista.
+   ============================================================ */
+
+.guarantee-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.guarantee-item {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 20px;
+  padding: 28px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+  cursor: default;
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.guarantee-item__n {
+  font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  background: linear-gradient(120deg, #d5e95a, #7a8f30);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  opacity: 0.7;
+  transition:
+    opacity 0.4s ease,
+    text-shadow 0.4s ease;
+  align-self: baseline;
+  padding-top: 2px;
+}
+
+.guarantee-item__body {
+  min-width: 0;
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.guarantee-item__title {
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.guarantee-item__detail {
+  margin-top: 8px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.5);
+  max-width: 42ch;
+}
+
+/* Divisor abaixo com gradient lime que expande da esquerda no hover.
+   Usa ::after em cima do border-bottom (que continua servindo de
+   hairline base). O ::after cresce 0 → 100% da width no hover. */
+.guarantee-item::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  background: linear-gradient(90deg, #d5e95a, transparent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  pointer-events: none;
+}
+
+.guarantee-item:hover .guarantee-item__n {
+  opacity: 1;
+  text-shadow: 0 0 12px rgba(200, 224, 64, 0.55);
+}
+.guarantee-item:hover .guarantee-item__body {
+  transform: translateX(4px);
+}
+.guarantee-item:hover::after {
+  transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .guarantee-item,
+  .guarantee-item__body,
+  .guarantee-item__n,
+  .guarantee-item::after {
+    transition: none !important;
+  }
+}
