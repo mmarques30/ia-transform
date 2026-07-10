@@ -14,7 +14,6 @@ import { Route as IndicacaobusinessRouteImport } from './routes/indicacaobusines
 import { Route as Contabil02RouteImport } from './routes/contabil02'
 import { Route as ContabilThankYouRouteImport } from './routes/contabil-thank-you'
 import { Route as ContabilRouteImport } from './routes/contabil'
-import { Route as Businessv3RouteImport } from './routes/businessv3'
 import { Route as Businessv2RouteImport } from './routes/businessv2'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as Businessv2DiagnosticoRouteImport } from './routes/businessv2.diagnostico'
@@ -44,11 +43,6 @@ const ContabilRoute = ContabilRouteImport.update({
   path: '/contabil',
   getParentRoute: () => rootRouteImport,
 } as any)
-const Businessv3Route = Businessv3RouteImport.update({
-  id: '/businessv3',
-  path: '/businessv3',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const Businessv2Route = Businessv2RouteImport.update({
   id: '/businessv2',
   path: '/businessv2',
@@ -68,7 +62,6 @@ const Businessv2DiagnosticoRoute = Businessv2DiagnosticoRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/businessv2': typeof Businessv2RouteWithChildren
-  '/businessv3': typeof Businessv3Route
   '/contabil': typeof ContabilRoute
   '/contabil-thank-you': typeof ContabilThankYouRoute
   '/contabil02': typeof Contabil02Route
@@ -79,7 +72,6 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/businessv2': typeof Businessv2RouteWithChildren
-  '/businessv3': typeof Businessv3Route
   '/contabil': typeof ContabilRoute
   '/contabil-thank-you': typeof ContabilThankYouRoute
   '/contabil02': typeof Contabil02Route
@@ -91,7 +83,6 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/businessv2': typeof Businessv2RouteWithChildren
-  '/businessv3': typeof Businessv3Route
   '/contabil': typeof ContabilRoute
   '/contabil-thank-you': typeof ContabilThankYouRoute
   '/contabil02': typeof Contabil02Route
@@ -104,7 +95,6 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/businessv2'
-    | '/businessv3'
     | '/contabil'
     | '/contabil-thank-you'
     | '/contabil02'
@@ -115,7 +105,6 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/businessv2'
-    | '/businessv3'
     | '/contabil'
     | '/contabil-thank-you'
     | '/contabil02'
@@ -126,7 +115,6 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/businessv2'
-    | '/businessv3'
     | '/contabil'
     | '/contabil-thank-you'
     | '/contabil02'
@@ -138,7 +126,6 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   Businessv2Route: typeof Businessv2RouteWithChildren
-  Businessv3Route: typeof Businessv3Route
   ContabilRoute: typeof ContabilRoute
   ContabilThankYouRoute: typeof ContabilThankYouRoute
   Contabil02Route: typeof Contabil02Route
@@ -183,13 +170,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContabilRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/businessv3': {
-      id: '/businessv3'
-      path: '/businessv3'
-      fullPath: '/businessv3'
-      preLoaderRoute: typeof Businessv3RouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/businessv2': {
       id: '/businessv2'
       path: '/businessv2'
@@ -229,7 +209,6 @@ const Businessv2RouteWithChildren = Businessv2Route._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   Businessv2Route: Businessv2RouteWithChildren,
-  Businessv3Route: Businessv3Route,
   ContabilRoute: ContabilRoute,
   ContabilThankYouRoute: ContabilThankYouRoute,
   Contabil02Route: Contabil02Route,

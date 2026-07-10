@@ -27,11 +27,11 @@ const BrandBackground = lazy(() =>
 // separamos as visitas pela URL na dashboard (já que o Clarity registra
 // pageUrl por sessão).
 //
-// Business: `/`, `/businessv2`, `/businessv3` → wpgxq27fhi
+// Business: `/`, `/businessv2` → wpgxq27fhi
 // Contábil: `/contabil`, `/contabil-thank-you`, `/contabil02` → x291ty5740
 //
 // Rotas que não casam com nenhum prefixo caem no default Business.
-const CLARITY_PROJECT_ID_BUSINESS = "wpgxq27fhi"; // / + /businessv2 + /businessv3
+const CLARITY_PROJECT_ID_BUSINESS = "wpgxq27fhi"; // / + /businessv2
 const CLARITY_PROJECT_ID_CONTABIL = "x291ty5740"; // /contabil + /contabil-thank-you + /contabil02
 const META_PIXEL_ID = "619312151238896";
 

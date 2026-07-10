@@ -10,8 +10,8 @@ import { IABackground, type IABackgroundIntensity } from "@/components/IABackgro
  * A classe .ia-dobra afina o .section-veil (0.34 alpha) dentro do
  * escopo, deixando o grid/glow/sparks vazarem.
  *
- * Usado por /, /businessv2 e /businessv3 pra manter o mesmo sistema
- * visual entre as 3 LPs.
+ * Usado por / e /businessv2 pra manter o mesmo sistema visual entre
+ * as LPs.
  */
 interface BgDobraProps {
   intensity: IABackgroundIntensity;
