@@ -10,19 +10,11 @@ import { PainelClientesShowcase } from "@/components/sections/business/variantB/
  * serviços, Rota Sul · logística) com tabs pra o visitante conseguir
  * ver o padrão da IAplicada aplicado em diferentes verticais.
  *
- * Layout: texto centralizado no topo (h2 + copy + bullets + CTA),
- * showcase full-width abaixo — o painel precisa de largura decente
- * pros KPIs em 3 cols e gráficos SVG.
+ * Layout: texto centralizado no topo (eyebrow + h2 + copy), showcase
+ * full-width abaixo, CTA no rodapé. Bullets com ✓ removidos após
+ * feedback — eram redundantes com o parágrafo body (mesmo conteúdo
+ * dito duas vezes).
  */
-
-const BULLETS = [
-  <>Cada processo no lugar certo</>,
-  <>Cada entrega rastreável</>,
-  <>
-    Sem precisar <strong className="text-foreground font-bold">perguntar pra ninguém</strong>
-  </>,
-  <>Painel próprio · seu domínio, seu logo</>,
-];
 
 export function AppShowcase() {
   return (
@@ -77,25 +69,6 @@ export function AppShowcase() {
               </strong>{" "}
               Sem precisar perguntar pra ninguém.
             </p>
-          </Reveal>
-          <Reveal delay={0.12}>
-            <ul className="mt-6 flex flex-wrap justify-center gap-x-6 gap-y-2">
-              {BULLETS.map((b, i) => (
-                <li
-                  key={i}
-                  className="pl-5 relative text-[13.5px] lg:text-[14px] text-foreground leading-[1.5]"
-                >
-                  <span
-                    aria-hidden
-                    className="absolute left-0 top-0 text-[13.5px] font-black"
-                    style={{ color: "var(--color-primary)" }}
-                  >
-                    ✓
-                  </span>
-                  {b}
-                </li>
-              ))}
-            </ul>
           </Reveal>
         </div>
 
