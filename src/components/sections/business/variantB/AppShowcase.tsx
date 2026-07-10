@@ -72,8 +72,14 @@ export function AppShowcase() {
           </Reveal>
         </div>
 
+        {/* Wrapper max-w-[880px] pra reduzir o showcase ~15% (era 1040px) —
+            o mockup do hero é o protagonista (grande, 3D, sangrando); este
+            é ilustrativo e deve caber com margem visível dos dois lados.
+            mt-10 (40px) implementa "parágrafo → 40px → tabs" do brief.
+            Tabs mantêm mb-5 (20px) dentro do PainelClientesShowcase →
+            "tabs → 20px → mockup" atendido. */}
         <Reveal delay={0.15}>
-          <div className="mt-14 max-w-[1040px] mx-auto">
+          <div className="mt-10 max-w-[880px] mx-auto">
             <PainelClientesShowcase />
           </div>
         </Reveal>
