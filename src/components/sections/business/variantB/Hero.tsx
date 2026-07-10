@@ -102,9 +102,9 @@ export function Hero() {
               <Reveal delay={0.1}>
                 <p className="mt-5 lg:mt-6 text-[14.5px] lg:text-[15.5px] text-sage leading-[1.6] max-w-[500px]">
                   Construímos sistemas de IA sob medida que colocam seu time para executar com
-                  padrão — para você{" "}
-                  <strong className="text-foreground font-bold">sair do dia a dia</strong> e focar
-                  em fechar clientes, não em resolver problema interno.
+                  padrão. Você{" "}
+                  <strong className="text-foreground font-bold">sai do dia a dia</strong> e foca em
+                  fechar clientes, não em resolver problema interno.
                 </p>
               </Reveal>
 

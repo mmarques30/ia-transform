@@ -86,11 +86,10 @@ export function MetodoAplicaBook() {
               <p className="mt-5 text-[15px] lg:text-[16.5px] text-sage leading-[1.6] max-w-[480px]">
                 O Método <strong className="text-foreground font-bold">APLICA</strong> mapeia onde
                 sua operação trava, constrói o sistema que elimina o gargalo e implementa dentro do
-                seu negócio —{" "}
+                seu negócio.{" "}
                 <strong className="text-foreground font-bold">
-                  não numa planilha de recomendação
+                  Não numa planilha de recomendação.
                 </strong>
-                .
               </p>
               <div className="mt-8">
                 <CtaGlow size="md">Conhecer o Método APLICA →</CtaGlow>

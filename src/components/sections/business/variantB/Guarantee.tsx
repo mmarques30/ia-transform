@@ -1,16 +1,57 @@
 import { Reveal } from "@/components/Reveal";
+import { FileCheck, Sparkles, Target } from "lucide-react";
 
 /**
  * Guarantee (LP-B) — dobra de redução de risco.
  *
- * Promessa: se em 90 dias o sistema não estiver rodando dentro da
- * operação, a IAplicada devolve 100% do investimento — sem cláusula,
- * sem burocracia. Carta assinada + registrada em cartório funciona
- * como âncora de credibilidade.
+ * Reescrita depois de feedback: "carimbo de cartório? é uma
+ * assinatura digital, não faz o menor sentido. Não sei se isso é só
+ * para venda. 90 dias, nem todos os projetos são em 90 dias."
  *
- * Visual: carta amarelada rotacionada + carimbo circular lime
- * sobreposto (100% GARANTIDO).
+ * Removidos:
+ *  - Carta cartório rotacionada com assinatura M. Marques fake
+ *  - Carimbo circular "100% GARANTIDO"
+ *  - Promessa "devolvemos 100% do investimento em 90 dias" —
+ *    inaplicável universalmente (fatores externos podem atrasar,
+ *    escopo varia por projeto)
+ *
+ * A nova promessa é a que a IAplicada REALMENTE cumpre:
+ *   1. O diagnóstico é bancado pela IAplicada — não custa nada
+ *      pra você
+ *   2. Independente de fecharmos contrato, você fica com o material
+ *      (mapa de processos + ranking gargalos + playbook trimestre)
+ *   3. Se topar seguir, o escopo do contrato tem marcos semanais e
+ *      critérios de aceite objetivos
+ *
+ * Visual: 3 cards mostrando o que o cliente leva do diagnóstico,
+ * como um "kit real" de entregáveis. Sem selo, sem carimbo, sem
+ * documento fake — honesto e informativo.
  */
+
+interface GaranteeItem {
+  icon: React.ReactNode;
+  label: string;
+  detail: string;
+}
+
+const KIT_ITEMS: GaranteeItem[] = [
+  {
+    icon: <Target className="h-5 w-5" strokeWidth={2} />,
+    label: "Mapa de processos",
+    detail: "Os 5 processos que mais consomem tempo do seu time hoje, documentados.",
+  },
+  {
+    icon: <Sparkles className="h-5 w-5" strokeWidth={2} />,
+    label: "Ranking de gargalos",
+    detail: "Onde a operação trava, ordenado por custo (horas/mês) e impacto no faturamento.",
+  },
+  {
+    icon: <FileCheck className="h-5 w-5" strokeWidth={2} />,
+    label: "Playbook do trimestre",
+    detail: "Priorização de automações com hipótese de ROI. Você usa mesmo sem a gente.",
+  },
+];
+
 export function Guarantee() {
   return (
     <section
@@ -43,7 +84,7 @@ export function Guarantee() {
                 className="mt-5 font-extrabold text-[30px] sm:text-[36px] lg:text-[42px] leading-[1.05] tracking-[-0.025em] text-foreground"
                 style={{ textWrap: "balance" }}
               >
-                Garantia com{" "}
+                Diagnóstico sem custo. Material{" "}
                 <em
                   style={{
                     fontFamily: '"Instrument Serif", serif',
@@ -51,39 +92,30 @@ export function Guarantee() {
                     fontWeight: 500,
                   }}
                 >
-                  carimbo de cartório.
+                  fica com você.
                 </em>
               </h2>
               <p className="mt-5 text-[14.5px] lg:text-[15.5px] text-sage leading-[1.65]">
-                Se ao final de <strong className="text-foreground font-bold">90 dias</strong> o
-                sistema não estiver rodando dentro da sua operação —{" "}
-                <strong className="text-foreground font-bold">
-                  devolvemos 100% do investimento
-                </strong>
-                . Sem cláusula, sem burocracia, sem discussão.
+                O diagnóstico é bancado pela{" "}
+                <strong className="text-foreground font-bold">IAplicada</strong>. Se ao fim você não
+                fechar contrato de implementação, ainda leva o mapa de processos, o ranking de
+                gargalos e o playbook do próximo trimestre.
               </p>
               <p className="mt-4 text-[14.5px] lg:text-[15.5px] text-sage leading-[1.65]">
+                Se topar seguir, o contrato tem{" "}
                 <strong className="text-foreground font-bold">
-                  Carta assinada + registrada em cartório.
+                  escopo, marcos semanais e critérios de aceite
                 </strong>{" "}
-                Não porque precisamos.{" "}
-                <em
-                  style={{
-                    fontFamily: '"Instrument Serif", serif',
-                    color: "var(--color-primary)",
-                    fontWeight: 500,
-                  }}
-                >
-                  Porque acreditamos no que entregamos.
-                </em>
+                objetivos. Sem letras miúdas, sem carimbo de vendedor.
               </p>
             </div>
           </Reveal>
 
           <Reveal delay={0.15}>
-            <div className="relative flex items-center justify-center min-h-[460px]">
-              <GuaranteeDocument />
-              <GuaranteeStamp />
+            <div className="flex flex-col gap-3.5">
+              {KIT_ITEMS.map((item, i) => (
+                <GaranteeKitCard key={i} item={item} />
+              ))}
             </div>
           </Reveal>
         </div>
@@ -92,110 +124,45 @@ export function Guarantee() {
   );
 }
 
-function GuaranteeDocument() {
+function GaranteeKitCard({ item }: { item: GaranteeItem }) {
   return (
     <div
-      className="relative"
+      className="relative p-5 lg:p-6 rounded-2xl overflow-hidden"
       style={{
-        width: 320,
-        padding: "32px 28px",
-        background: "#fdfaf0",
-        color: "#1a1d10",
-        borderRadius: 4,
-        transform: "rotate(-4deg)",
-        boxShadow: "0 40px 60px -20px rgba(0,0,0,0.6)",
-        border: "1px solid #d9d3b8",
+        background: "linear-gradient(180deg, rgba(20,24,13,0.8), rgba(15,17,9,0.85))",
+        border: "1px solid rgba(200,224,64,0.2)",
+        boxShadow: "0 20px 40px -20px rgba(0,0,0,0.5)",
       }}
     >
-      <div
-        aria-hidden
-        className="absolute inset-1 rounded pointer-events-none"
-        style={{ border: "1px solid rgba(200,180,100,0.4)" }}
-      />
-      <p
-        className="text-center text-[9px] font-extrabold uppercase mb-5"
-        style={{
-          color: "#7a6d3d",
-          letterSpacing: "0.24em",
-          fontFamily: '"JetBrains Mono", ui-monospace, Menlo, monospace',
-        }}
-      >
-        TERMO · IAPLICADA · CNPJ XX.XXX.XXX/0001-XX
-      </p>
-      <p
-        className="text-center text-[21px] leading-[1.1] italic font-medium mb-3.5"
-        style={{ fontFamily: '"Instrument Serif", serif', color: "#131610" }}
-      >
-        Garantia de
-        <br />
-        <em>100% do investimento</em>
-      </p>
-      <p className="text-[10px] leading-[1.5] mb-4 text-justify" style={{ color: "#4a4a3a" }}>
-        Eu, Mariana Marques, na qualidade de fundadora da IAplicada, garanto ao contratante deste
-        termo que — se ao final de 90 dias corridos a contar da assinatura do contrato de
-        implementação o sistema não estiver rodando dentro da operação — o valor integral do
-        investimento será restituído em até 15 dias úteis.
-      </p>
-      <div style={{ height: 1, background: "#d9d3b8", margin: "12px 0" }} />
-      <p className="text-[9.5px] leading-[1.5]" style={{ color: "#4a4a3a" }}>
-        Sem cláusula de saída, sem discussão de escopo, sem burocracia. A garantia é reconhecida em
-        cartório e vale a partir da data de emissão deste termo.
-      </p>
-      <div className="mt-6 w-[60%] text-center pt-1.5" style={{ borderTop: "1px solid #4a4a3a" }}>
-        <p
-          className="italic text-[21px] leading-none"
+      <div className="flex items-start gap-4">
+        <span
+          className="shrink-0 h-11 w-11 rounded-xl flex items-center justify-center"
           style={{
-            fontFamily: '"Instrument Serif", serif',
-            color: "#2a2410",
-            letterSpacing: "-0.01em",
+            background:
+              "radial-gradient(circle at 30% 30%, rgba(200,224,64,0.18), rgba(200,224,64,0.05))",
+            border: "1px solid rgba(200,224,64,0.3)",
+            color: "var(--color-primary)",
           }}
         >
-          M. Marques
-        </p>
-        <p
-          className="mt-1 text-[8px] uppercase font-bold"
-          style={{
-            color: "#7a6d3d",
-            letterSpacing: "0.14em",
-            fontFamily: "Inter, sans-serif",
-          }}
-        >
-          Mariana Marques · Fundadora · IAplicada
-        </p>
-      </div>
-    </div>
-  );
-}
-
-function GuaranteeStamp() {
-  return (
-    <div
-      className="absolute flex items-center justify-center text-center"
-      style={{
-        top: 40,
-        right: 20,
-        width: 130,
-        height: 130,
-        borderRadius: "50%",
-        background: "linear-gradient(180deg, #d5e95a, #7a8f30)",
-        border: "4px double #0a0c07",
-        color: "#0a0c07",
-        fontWeight: 900,
-        fontSize: 11,
-        letterSpacing: "0.08em",
-        textTransform: "uppercase",
-        lineHeight: 1.15,
-        transform: "rotate(12deg)",
-        boxShadow: "0 20px 40px -10px rgba(200,224,64,0.5)",
-      }}
-    >
-      <div>
-        100%
-        <br />
-        GARANTIDO
-        <span className="block mt-1 font-bold" style={{ fontSize: 8.5 }}>
-          90 dias · Método APLICA
+          {item.icon}
         </span>
+        <div className="min-w-0">
+          <p
+            className="text-[10px] uppercase tracking-[0.2em] font-bold"
+            style={{
+              color: "var(--color-primary)",
+              fontFamily: '"JetBrains Mono", ui-monospace, Menlo, monospace',
+            }}
+          >
+            Você leva
+          </p>
+          <h3 className="mt-1 text-[16px] lg:text-[17.5px] font-extrabold text-foreground tracking-[-0.01em]">
+            {item.label}
+          </h3>
+          <p className="mt-1.5 text-[13px] lg:text-[13.5px] text-sage leading-[1.5]">
+            {item.detail}
+          </p>
+        </div>
       </div>
     </div>
   );

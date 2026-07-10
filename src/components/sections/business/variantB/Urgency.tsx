@@ -4,22 +4,19 @@ import { CtaGlow } from "@/components/sections/business/variantB/CtaGlow";
 /**
  * Urgency (LP-B) — banda de escassez.
  *
- * Reframada: antes usava "N vagas por mês" (implicava limite fake).
- * Agora joga em cima de dois fatores reais:
+ * Reframada de novo depois do feedback: "a implementação não é feita
+ * por mim, é pelo time da IAplicada" + "ajuste o quanto de informação".
  *
- *  1) Cada semana travada no operacional é R$ escapando da operação.
- *     A urgência é de CUSTO DE INAÇÃO, não de vaga artificial.
- *  2) Como a implementação é feita pela Mari direto (com marcos
- *     semanais), os projetos entram em ciclo de 90 dias. Novo ciclo
- *     começa em agosto — quem entra depois só começa em novembro.
+ * Antes o texto sugeria que a Mari fazia a implementação direto —
+ * inaplicável, os projetos são conduzidos pelo time. Diagnóstico
+ * sim é feito com a Mari; implementação vai pelo time.
  *
- * Nenhum número inventado (não dizemos "R$X custo/mês" porque varia
- * por empresa). Só o framing. Se em algum momento quisermos citar
- * um valor de referência, viria de dado agregado dos clientes.
+ * Copy simplificada: h2 sobre custo de esperar (mantido, funciona),
+ * paragrafo introdutório reduzido, card do próximo ciclo com uma
+ * frase curta explicando a cadência.
  *
  * Nota: o mês/ano do próximo ciclo é hard-coded aqui. Atualizar
- * manualmente conforme o ciclo real corre. Se virar recorrente,
- * migro pra prop ou CMS.
+ * manualmente conforme o ciclo real corre.
  */
 const NEXT_COHORT_MONTH = "Agosto";
 const NEXT_COHORT_YEAR = "2026";
@@ -62,14 +59,13 @@ export function Urgency() {
         <Reveal delay={0.08}>
           <p className="mt-6 text-[14.5px] lg:text-[15.5px] text-sage leading-[1.6] max-w-[620px] mx-auto">
             Enquanto a operação depende de você, é você o teto do faturamento. Cada mês assim é uma
-            conta que não fecha: o operacional consome o time que devia estar vendendo, o líder que
-            devia estar decidindo, e o dono que devia estar crescendo.
+            conta que não fecha.
           </p>
         </Reveal>
 
         <Reveal delay={0.12}>
           <div
-            className="mt-9 mx-auto max-w-[560px] p-6 lg:p-7 rounded-xl text-left"
+            className="mt-9 mx-auto max-w-[520px] p-6 lg:p-7 rounded-xl text-left"
             style={{
               background: "rgba(20, 24, 13, 0.7)",
               border: "1px solid rgba(200,224,64,0.25)",
@@ -100,13 +96,14 @@ export function Urgency() {
               </span>
             </p>
             <p className="mt-4 text-[13.5px] lg:text-[14px] text-sage leading-[1.55]">
-              A implementação é feita <strong className="text-foreground font-bold">por mim</strong>{" "}
-              — com marcos semanais e reuniões individuais. Por isso os projetos entram em ciclos de
-              90 dias. Quem começa o diagnóstico agora entra no ciclo de{" "}
+              Diagnóstico feito com a <strong className="text-foreground font-bold">Mari</strong>.
+              Implementação conduzida pelo{" "}
+              <strong className="text-foreground font-bold">time IAplicada</strong>, com marcos
+              semanais. Quem começa agora entra no ciclo de{" "}
               <strong className="text-foreground font-bold">
                 {NEXT_COHORT_MONTH.toLowerCase()}
               </strong>
-              . Quem espera, entra no próximo.
+              .
             </p>
           </div>
         </Reveal>
