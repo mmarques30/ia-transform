@@ -1,53 +1,46 @@
 import { Reveal } from "@/components/Reveal";
-import { FileCheck, Sparkles, Target } from "lucide-react";
 
 /**
  * Guarantee (LP-B) — dobra de redução de risco.
  *
- * Reescrita depois de feedback: "carimbo de cartório? é uma
- * assinatura digital, não faz o menor sentido. Não sei se isso é só
- * para venda. 90 dias, nem todos os projetos são em 90 dias."
+ * Coluna esquerda: eyebrow "Nossa garantia" + h2 "Diagnóstico sem
+ * custo. Material fica com você." + 2 parágrafos body. Inalterada.
  *
- * Removidos:
- *  - Carta cartório rotacionada com assinatura M. Marques fake
- *  - Carimbo circular "100% GARANTIDO"
- *  - Promessa "devolvemos 100% do investimento em 90 dias" —
- *    inaplicável universalmente (fatores externos podem atrasar,
- *    escopo varia por projeto)
- *
- * A nova promessa é a que a IAplicada REALMENTE cumpre:
- *   1. O diagnóstico é bancado pela IAplicada — não custa nada
- *      pra você
- *   2. Independente de fecharmos contrato, você fica com o material
- *      (mapa de processos + ranking gargalos + playbook trimestre)
- *   3. Se topar seguir, o escopo do contrato tem marcos semanais e
- *      critérios de aceite objetivos
- *
- * Visual: 3 cards mostrando o que o cliente leva do diagnóstico,
- * como um "kit real" de entregáveis. Sem selo, sem carimbo, sem
- * documento fake — honesto e informativo.
+ * Coluna direita: lista editorial numerada dos 3 entregáveis.
+ * Refeita depois do feedback: os 3 cards genéricos com ícones e
+ * "VOCÊ LEVA" repetido 3x foram substituídos por lista única sem
+ * cards, sem ícones, com:
+ *  - label "VOCÊ LEVA" só 1x no topo
+ *  - números 01/02/03 mono lime numa coluna de 48px
+ *  - títulos brancos 19-20px weight 700
+ *  - descrições rgba(255,255,255,.5) max-width 42ch
+ *  - divisores hairline 1px rgba(255,255,255,.08)
+ *  - padding vertical 28px por item
+ *  - hover: número acende + glow, título desliza 4px direita,
+ *    divisor de baixo ganha gradient lime que expande da esquerda
+ *  - entrada em cascata com stagger 120ms via delay do Reveal
  */
 
-interface GaranteeItem {
-  icon: React.ReactNode;
-  label: string;
+interface DeliverableItem {
+  n: string;
+  title: string;
   detail: string;
 }
 
-const KIT_ITEMS: GaranteeItem[] = [
+const KIT_ITEMS: DeliverableItem[] = [
   {
-    icon: <Target className="h-5 w-5" strokeWidth={2} />,
-    label: "Mapa de processos",
-    detail: "Os 5 processos que mais consomem tempo do seu time hoje, documentados.",
+    n: "01",
+    title: "Mapa de processos",
+    detail: "Os 5 processos que mais consomem tempo do seu time, documentados.",
   },
   {
-    icon: <Sparkles className="h-5 w-5" strokeWidth={2} />,
-    label: "Ranking de gargalos",
-    detail: "Onde a operação trava, ordenado por custo (horas/mês) e impacto no faturamento.",
+    n: "02",
+    title: "Ranking de gargalos",
+    detail: "Onde a operação trava, ordenado por custo e impacto no faturamento.",
   },
   {
-    icon: <FileCheck className="h-5 w-5" strokeWidth={2} />,
-    label: "Playbook do trimestre",
+    n: "03",
+    title: "Playbook do trimestre",
     detail: "Priorização de automações com hipótese de ROI. Você usa mesmo sem a gente.",
   },
 ];
@@ -111,59 +104,40 @@ export function Guarantee() {
             </div>
           </Reveal>
 
-          <Reveal delay={0.15}>
-            <div className="flex flex-col gap-3.5">
+          <div>
+            <Reveal>
+              <p
+                className="text-[10px] uppercase tracking-[0.22em] font-bold mb-4"
+                style={{
+                  color: "var(--color-primary)",
+                  fontFamily: '"JetBrains Mono", ui-monospace, Menlo, monospace',
+                }}
+              >
+                Você leva
+              </p>
+            </Reveal>
+            <ul className="guarantee-list">
               {KIT_ITEMS.map((item, i) => (
-                <GaranteeKitCard key={i} item={item} />
+                <Reveal key={item.n} delay={0.05 + i * 0.12}>
+                  <DeliverableRow item={item} />
+                </Reveal>
               ))}
-            </div>
-          </Reveal>
+            </ul>
+          </div>
         </div>
       </div>
     </section>
   );
 }
 
-function GaranteeKitCard({ item }: { item: GaranteeItem }) {
+function DeliverableRow({ item }: { item: DeliverableItem }) {
   return (
-    <div
-      className="relative p-5 lg:p-6 rounded-2xl overflow-hidden"
-      style={{
-        background: "linear-gradient(180deg, rgba(20,24,13,0.8), rgba(15,17,9,0.85))",
-        border: "1px solid rgba(200,224,64,0.2)",
-        boxShadow: "0 20px 40px -20px rgba(0,0,0,0.5)",
-      }}
-    >
-      <div className="flex items-start gap-4">
-        <span
-          className="shrink-0 h-11 w-11 rounded-xl flex items-center justify-center"
-          style={{
-            background:
-              "radial-gradient(circle at 30% 30%, rgba(200,224,64,0.18), rgba(200,224,64,0.05))",
-            border: "1px solid rgba(200,224,64,0.3)",
-            color: "var(--color-primary)",
-          }}
-        >
-          {item.icon}
-        </span>
-        <div className="min-w-0">
-          <p
-            className="text-[10px] uppercase tracking-[0.2em] font-bold"
-            style={{
-              color: "var(--color-primary)",
-              fontFamily: '"JetBrains Mono", ui-monospace, Menlo, monospace',
-            }}
-          >
-            Você leva
-          </p>
-          <h3 className="mt-1 text-[16px] lg:text-[17.5px] font-extrabold text-foreground tracking-[-0.01em]">
-            {item.label}
-          </h3>
-          <p className="mt-1.5 text-[13px] lg:text-[13.5px] text-sage leading-[1.5]">
-            {item.detail}
-          </p>
-        </div>
+    <li className="guarantee-item">
+      <span className="guarantee-item__n">{item.n}</span>
+      <div className="guarantee-item__body">
+        <h3 className="guarantee-item__title">{item.title}</h3>
+        <p className="guarantee-item__detail">{item.detail}</p>
       </div>
-    </div>
+    </li>
   );
 }
