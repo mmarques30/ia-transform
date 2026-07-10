@@ -27,7 +27,7 @@ export const Route = createFileRoute("/businessv2/diagnostico")({
       {
         name: "description",
         content:
-          "Preencha os dados pra receber o diagnóstico da sua operação. Um sócio da IAplicada revisa e chama por WhatsApp em até 24h úteis.",
+          "Preencha os dados pra receber o diagnóstico da sua operação. Um sócio da IAplicada chama agora por WhatsApp.",
       },
       { name: "robots", content: "noindex, nofollow" },
       { name: "theme-color", content: "#0d0d0d" },
@@ -64,9 +64,9 @@ function DiagnosticoPage() {
 
               <Reveal delay={0.1}>
                 <p className="mt-6 text-[15.5px] lg:text-[16px] text-sage leading-[1.6] max-w-[520px] mx-auto">
-                  Preencha abaixo. Nosso time entra em contato em até{" "}
-                  <strong className="text-foreground font-semibold">24h</strong> para agendar seu
-                  diagnóstico gratuito com a IAplicada.
+                  Preencha abaixo. Um sócio da IAplicada te chama{" "}
+                  <strong className="text-foreground font-semibold">agora</strong> no WhatsApp pra
+                  agendar seu diagnóstico gratuito.
                 </p>
               </Reveal>
             </div>
