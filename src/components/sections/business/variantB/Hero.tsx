@@ -1,24 +1,24 @@
 import { Reveal } from "@/components/Reveal";
-import { CtaGlow } from "@/components/sections/business/variantB/CtaGlow";
 import { QualifierStrip } from "@/components/sections/business/variantB/QualifierStrip";
-import { PainelVetra } from "@/components/sections/business/variantB/painel/PainelVetra";
-import { PainelScaler } from "@/components/sections/business/variantB/painel/PainelScaler";
+import { HeroForm } from "@/components/HeroForm";
 
 /**
- * Hero (LP-B) — ajuste final da estrutura.
+ * Hero (LP-B) — versão com form inline no lugar do mockup.
  *
- * Grade via CSS (.hero-b) — max-width 1280, padding 80/48, 45%/55%,
- * gap 56. Coluna esquerda com 4 elementos apenas (logo, h1, sub,
- * parágrafo, CTA) — eyebrow "IAplicada · Sistemas de IA sob medida"
- * removido (o logo já identifica a marca).
+ * A dobra hero agora traz o HeroForm creme no lado direito (mesmo
+ * componente da /businessv2/diagnostico e do FinalForm no fim da LP —
+ * os leads caem no mesmo funil business no CRM). Assim o visitante
+ * pode converter sem clicar no CTA da modal, com o form já visível
+ * na primeira dobra.
  *
- * Headline com 3 linhas fixas via <br> + `white-space: nowrap`, solta
- * em <=1100px. Clamp da fonte calibrado (30/2.8vw/40) pra "não para
- * apagar incêndio." caber na col de ~508px sem overflow.
+ * Título com tratamento editorial: linhas "sans extrabold" alternando
+ * com "Instrument Serif italic" nas partes destacadas em lime — mesma
+ * cadência da hero da / (LP-A), pra a página de biz sênior ler como
+ * material editorial e não como landing pop.
  *
- * Mockup: PainelVetra dentro de PainelScaler dentro de .hero-mockup-b
- * com width calc(100% + 40px) (sangramento discreto pra direita) e
- * teto de max-width 780. Rotate 3D suavizado: -6deg Y / 1.5deg X.
+ * Grade travada via CSS (.hero-b): container 1280 max, padding 80/48,
+ * 45/55, gap 56, section com min-height 100vh - 48 (QualifierStrip)
+ * pra preencher o fold sem next-section peek-through.
  */
 
 export function Hero() {
@@ -39,11 +39,12 @@ export function Hero() {
 
             <Reveal delay={0.05}>
               <h1 className="hero-b-h1">
-                Você foi feito para
+                <span className="hero-b-h1-sans">Você foi feito para</span>
                 <br />
-                <span style={{ color: "var(--color-primary)" }}>crescer a empresa,</span>
+                <em className="hero-b-h1-em">crescer a empresa,</em>
                 <br />
-                não para <span style={{ color: "var(--color-primary)" }}>apagar incêndio.</span>
+                <span className="hero-b-h1-sans">não para</span>{" "}
+                <em className="hero-b-h1-em">apagar incêndio.</em>
               </h1>
             </Reveal>
 
@@ -60,23 +61,11 @@ export function Hero() {
                 Para você focar em fechar, não em resolver.
               </p>
             </Reveal>
-
-            <Reveal delay={0.15}>
-              <div className="hero-b-cta">
-                <CtaGlow shape="pill" size="xl">
-                  Quero sair do operacional →
-                </CtaGlow>
-              </div>
-            </Reveal>
           </div>
 
-          <div className="hero-b-mockup-col">
+          <div className="hero-b-form-col">
             <Reveal delay={0.15}>
-              <div className="hero-mockup-b">
-                <PainelScaler>
-                  <PainelVetra />
-                </PainelScaler>
-              </div>
+              <HeroForm formSlug="business" thankYouPath="/thank-you-business" compact />
             </Reveal>
           </div>
         </div>

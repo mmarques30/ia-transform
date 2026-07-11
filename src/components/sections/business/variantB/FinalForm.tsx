@@ -81,9 +81,9 @@ export function FinalForm() {
 
           <Reveal delay={0.1}>
             <p className="mt-6 text-[15.5px] lg:text-[17px] text-sage leading-[1.6] max-w-[560px] mx-auto">
-              Preencha abaixo. Nosso time entra em contato em até{" "}
-              <strong className="text-foreground font-semibold">24h</strong> para agendar seu
-              diagnóstico gratuito com a IAplicada.
+              Preencha abaixo. Um sócio da IAplicada te chama{" "}
+              <strong className="text-foreground font-semibold">agora</strong> no WhatsApp pra
+              agendar seu diagnóstico gratuito.
             </p>
           </Reveal>
         </div>

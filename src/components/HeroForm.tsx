@@ -46,6 +46,14 @@ interface HeroFormProps {
    * como sempre (navigate → thankYouPath).
    */
   onSuccess?: (eventID: string) => void;
+  /**
+   * Variante compacta pro uso no hero da /businessv2 (form ao lado do
+   * título): esconde o eyebrow "Vagas limitadas por ciclo" (redundante
+   * com a QualifierStrip vermelha no topo), reduz padding vertical do
+   * card e tighter gap entre campos. Só afeta o layout; a lógica de
+   * submit e o payload são idênticos ao form normal.
+   */
+  compact?: boolean;
 }
 
 /** Opções sincronizadas com form_fields do CRM (slug=business). */
@@ -102,6 +110,7 @@ export function HeroForm({
   formSlug = "business",
   thankYouPath = "/thank-you-business",
   onSuccess,
+  compact = false,
 }: HeroFormProps = {}) {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -480,7 +489,7 @@ export function HeroForm({
   return (
     <div
       ref={cardRef}
-      className="rounded-[24px] overflow-hidden relative"
+      className={`rounded-[24px] overflow-hidden relative${compact ? " hero-form-compact" : ""}`}
       style={{
         backgroundColor: "oklch(0.995 0.003 110)",
         border: "1px solid oklch(0.88 0.02 115)",
@@ -494,32 +503,48 @@ export function HeroForm({
         style={{ boxShadow: "inset 0 1px 0 oklch(1 0 0 / 0.9)" }}
       />
 
-      <div className="px-6 pt-4 lg:px-7 lg:pt-5 relative">
-        <span
-          className="inline-flex items-center gap-1.5 text-[10px] uppercase tracking-[0.14em] font-semibold rounded-full px-2.5 py-1 select-none"
-          style={{
-            backgroundColor: "oklch(0.96 0.025 125)",
-            color: "var(--color-primary)",
-            border: "1px solid oklch(0.85 0.05 125)",
-            cursor: "default",
-          }}
-          aria-hidden
-        >
+      <div
+        className={
+          compact ? "px-6 pt-4 lg:px-7 lg:pt-4 relative" : "px-6 pt-4 lg:px-7 lg:pt-5 relative"
+        }
+      >
+        {!compact && (
           <span
-            className="h-1.5 w-1.5 rounded-full"
-            style={{ backgroundColor: "var(--color-primary)" }}
-          />
-          Vagas limitadas por ciclo
-        </span>
+            className="inline-flex items-center gap-1.5 text-[10px] uppercase tracking-[0.14em] font-semibold rounded-full px-2.5 py-1 select-none"
+            style={{
+              backgroundColor: "oklch(0.96 0.025 125)",
+              color: "var(--color-primary)",
+              border: "1px solid oklch(0.85 0.05 125)",
+              cursor: "default",
+            }}
+            aria-hidden
+          >
+            <span
+              className="h-1.5 w-1.5 rounded-full"
+              style={{ backgroundColor: "var(--color-primary)" }}
+            />
+            Vagas limitadas por ciclo
+          </span>
+        )}
         <p
-          className="mt-2 text-[16.5px] font-semibold tracking-tight"
+          className={
+            compact
+              ? "text-[15px] font-semibold tracking-tight"
+              : "mt-2 text-[16.5px] font-semibold tracking-tight"
+          }
           style={{ color: "oklch(0.18 0.02 122)" }}
         >
           Conte sobre sua operação
         </p>
       </div>
 
-      <div className="px-6 pb-4 pt-3 lg:px-7 lg:pb-5 lg:pt-3 relative">
+      <div
+        className={
+          compact
+            ? "px-6 pb-4 pt-3 lg:px-7 lg:pb-4 lg:pt-2 relative"
+            : "px-6 pb-4 pt-3 lg:px-7 lg:pb-5 lg:pt-3 relative"
+        }
+      >
         <form
           onSubmit={handleSubmit}
           onFocusCapture={handleFocusCapture}
@@ -529,7 +554,7 @@ export function HeroForm({
           }}
           onInput={handleFormInput}
           onChange={handleFormInput}
-          className="space-y-2"
+          className={compact ? "space-y-1.5" : "space-y-2"}
           noValidate
         >
           <Field id="firstname" label="Nome Completo" required error={fieldErrors.firstname}>
