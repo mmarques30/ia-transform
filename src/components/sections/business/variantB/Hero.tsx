@@ -39,11 +39,12 @@ export function Hero() {
 
             <Reveal delay={0.05}>
               <h1 className="hero-b-h1">
-                Você foi feito para
+                <span className="hero-b-h1-sans">Você foi feito para</span>
                 <br />
                 <em className="hero-b-h1-em">crescer a empresa,</em>
                 <br />
-                não para <em className="hero-b-h1-em">apagar incêndio.</em>
+                <span className="hero-b-h1-sans">não para</span>{" "}
+                <em className="hero-b-h1-em">apagar incêndio.</em>
               </h1>
             </Reveal>
 

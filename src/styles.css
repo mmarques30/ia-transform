@@ -2572,10 +2572,10 @@
   margin: 0 auto;
   padding: 72px 48px;
   display: grid;
-  /* 48/52 dá coluna direita ~572px (num container de 1280) — largura
-     confortável pro HeroForm (max ~560) sem esmagar. Text col ~528
-     comporta a headline de 3 linhas com folga. */
-  grid-template-columns: 48fr 52fr;
+  /* 56/44 dá coluna esquerda mais generosa (~618px) pro título
+     editorial gigante e coluna direita menor (~486px) pra o form
+     não dominar visualmente. */
+  grid-template-columns: 56fr 44fr;
   gap: 48px;
   align-items: center;
   overflow: visible;
@@ -2586,6 +2586,15 @@
 }
 .hero-b-form-col {
   min-width: 0;
+  display: flex;
+  justify-content: flex-end;
+}
+/* Cap absoluto no wrapper do HeroForm dentro do hero — o form nunca
+   passa de 460px, mesmo se a col crescer em telas largas. Assim ele
+   fica compacto e cede protagonismo pro título. */
+.hero-b-form-col > * {
+  width: 100%;
+  max-width: 460px;
 }
 
 .hero-b-logo {
@@ -2595,28 +2604,30 @@
 }
 .hero-b-h1 {
   margin-top: 44px;
-  font-size: clamp(34px, 3.4vw, 48px);
-  font-weight: 800;
-  line-height: 1.02;
-  letter-spacing: -0.035em;
-  color: var(--color-foreground, #f4f5ec);
-  white-space: nowrap;
-}
-/* Trechos destacados: Instrument Serif italic em lime. O peso do
-   serif italic é bem menor que o sans extrabold da mesma altura,
-   então a linha "não para apagar incêndio." sobra folga mesmo em
-   viewports estreitos (1280). */
-.hero-b-h1-em {
+  /* Título editorial em Instrument Serif italic — todo o h1 usa a
+     face italic serif (mesma vibe do "Aula de IA todo mês. De graça."
+     da comunidade). Trechos destacados em lime via .hero-b-h1-em;
+     restante em foreground via .hero-b-h1-sans (nome herdado, mas
+     agora é serif também). Font maior porque italic serif é bem
+     mais estreito que sans extrabold — a linha widest ("não para
+     apagar incêndio.") cabe folgada mesmo em 1280. */
   font-family: "Instrument Serif", serif;
   font-style: italic;
   font-weight: 400;
+  font-size: clamp(44px, 5vw, 68px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--color-foreground, #f4f5ec);
+  white-space: nowrap;
+}
+.hero-b-h1-sans {
+  /* Mesma family/style do parent — o span existe pra facilitar
+     ajustes futuros sem mexer na estrutura. */
+  color: inherit;
+}
+.hero-b-h1-em {
   color: var(--color-primary);
-  letter-spacing: -0.01em;
-  /* Ajuste vertical fino pra alinhar com a baseline sans acima/abaixo.
-     O italic serif tem descent maior que o sans extrabold — sem esse
-     nudge o "crescer a empresa," parece "flutuando" 3px pra baixo. */
-  display: inline-block;
-  transform: translateY(1px);
+  font-style: italic;
 }
 .hero-b-sub {
   margin-top: 20px;
