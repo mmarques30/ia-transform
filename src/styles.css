@@ -2535,21 +2535,23 @@
 }
 
 /* ============================================================
-   Hero /businessv2 — ajuste final.
-   Container 1280 max, padding 80/48, grid 45%/55% com gap 56.
-   Coluna esquerda tem só 4 elementos (logo, h1, sub, parágrafo,
-   CTA) — sem eyebrow, o logo já identifica a marca.
+   Hero /businessv2 — layout com form inline no lado direito.
+   Container 1280 max, padding 80/48, grid 48/52 com gap 48. A
+   coluna direita agora carrega o HeroForm (creme card, mesmo
+   componente do FinalForm e da /businessv2/diagnostico) em vez
+   do mockup Vetra que estava ali antes.
 
-   Ritmo travado: logo → 40px → h1 → 20px → sub → 14px → parágrafo
-   (max 42ch) → 36px → CTA.
+   Ritmo da col esquerda: logo → 44px → h1 (título editorial,
+   sans + serif italic) → 20px → sub serif italic → 14px →
+   parágrafo (max 42ch).
 
-   Headline com 3 linhas fixas via <br> + white-space: nowrap.
-   Solta em <=1100px. Clamp calibrado (30/2.8vw/40) pra a linha
-   mais larga caber na col (~508px em 1280/1440).
+   Título editorial: linhas sans extrabold alternando com Instrument
+   Serif italic nos trechos destacados em lime — mesma cadência da
+   hero da / (LP-A). Isso dá o mix magazine estilo referência da
+   comunidade (Aula de IA todo mês / De graça.).
 
-   Mockup: width calc(100% + 40px) sangra 40px pra direita da col,
-   com teto absoluto max-width 780. Rotate 3D suave:
-   rotateY(-6deg) rotateX(1.5deg).
+   Headline com 3 linhas fixas via <br> + white-space: nowrap;
+   solta em <=1100px.
    ============================================================ */
 
 .hero-section-b {
@@ -2558,9 +2560,7 @@
   overflow-y: visible;
   background: radial-gradient(120% 90% at 100% 40%, rgba(200, 224, 64, 0.08), transparent 60%);
   /* Section preenche o viewport pra baixo pra evitar que a próxima
-     seção apareça acima da dobra em telas altas (1080/1200). Valor:
-     100vh - altura da QualifierStrip (~48px). Usa min-height, não
-     height, pra conteúdo poder crescer quando a copy cresce. */
+     seção apareça acima da dobra em telas altas. */
   min-height: calc(100vh - 48px);
   display: flex;
   align-items: center;
@@ -2570,14 +2570,13 @@
   width: 100%;
   max-width: 1280px;
   margin: 0 auto;
-  padding: 80px 48px;
+  padding: 72px 48px;
   display: grid;
-  /* fr units em vez de % pra grid respeitar o gap 56 dentro do
-     content-area (% ignora o gap e causa overflow horizontal do
-     mockup wrapper em viewports <= container max-width). Proporção
-     45/55 mantida. */
-  grid-template-columns: 45fr 55fr;
-  gap: 56px;
+  /* 48/52 dá coluna direita ~572px (num container de 1280) — largura
+     confortável pro HeroForm (max ~560) sem esmagar. Text col ~528
+     comporta a headline de 3 linhas com folga. */
+  grid-template-columns: 48fr 52fr;
+  gap: 48px;
   align-items: center;
   overflow: visible;
 }
@@ -2585,7 +2584,7 @@
 .hero-b-text {
   min-width: 0;
 }
-.hero-b-mockup-col {
+.hero-b-form-col {
   min-width: 0;
 }
 
@@ -2595,17 +2594,29 @@
   width: auto;
 }
 .hero-b-h1 {
-  margin-top: 40px;
-  /* Bump discreto do max de 40 → 42. Pra caber sem overflow na col
-     de 507.6 (1440/1920), reduzi letter-spacing de -0.03em → -0.04em:
-     a linha mais larga ("não para apagar incêndio.") fica em ~497px,
-     dentro da col com margem de ~10px. */
-  font-size: clamp(32px, 3vw, 42px);
+  margin-top: 44px;
+  font-size: clamp(34px, 3.4vw, 48px);
   font-weight: 800;
-  line-height: 1.06;
-  letter-spacing: -0.04em;
+  line-height: 1.02;
+  letter-spacing: -0.035em;
   color: var(--color-foreground, #f4f5ec);
   white-space: nowrap;
+}
+/* Trechos destacados: Instrument Serif italic em lime. O peso do
+   serif italic é bem menor que o sans extrabold da mesma altura,
+   então a linha "não para apagar incêndio." sobra folga mesmo em
+   viewports estreitos (1280). */
+.hero-b-h1-em {
+  font-family: "Instrument Serif", serif;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--color-primary);
+  letter-spacing: -0.01em;
+  /* Ajuste vertical fino pra alinhar com a baseline sans acima/abaixo.
+     O italic serif tem descent maior que o sans extrabold — sem esse
+     nudge o "crescer a empresa," parece "flutuando" 3px pra baixo. */
+  display: inline-block;
+  transform: translateY(1px);
 }
 .hero-b-sub {
   margin-top: 20px;
@@ -2624,27 +2635,6 @@
   line-height: 1.6;
   color: var(--color-sage, #b8bcae);
 }
-.hero-b-cta {
-  margin-top: 36px;
-}
-
-.hero-mockup-b {
-  perspective: 1600px;
-  perspective-origin: 20% 50%;
-  width: calc(100% + 40px);
-  max-width: 780px;
-}
-.hero-mockup-b .iap-device-scale {
-  transform-origin: top left;
-}
-.hero-mockup-b .iap-device {
-  transform: rotateY(-6deg) rotateX(1.5deg);
-  transform-style: preserve-3d;
-  transform-origin: center center;
-  box-shadow:
-    -40px 60px 120px -30px rgba(0, 0, 0, 0.85),
-    0 30px 80px -30px rgba(111, 110, 255, 0.35);
-}
 
 @media (max-width: 1100px) {
   .hero-b-h1 {
@@ -2654,19 +2644,19 @@
 @media (max-width: 900px) {
   .hero-b {
     grid-template-columns: 1fr;
-    padding: 64px 24px;
-    gap: 40px;
+    padding: 56px 24px 64px;
+    gap: 36px;
+    /* No mobile a section não força 100vh — o conteúdo empilhado
+       naturalmente enche a viewport, forçar min-height forçaria
+       scroll interno estranho. */
+    min-height: 0;
   }
-  .hero-mockup-b {
-    perspective: none;
-    width: 100%;
-    max-width: 100%;
+  .hero-section-b {
+    align-items: stretch;
+    min-height: 0;
   }
-  .hero-mockup-b .iap-device {
-    transform: none;
-    box-shadow:
-      0 60px 120px -40px rgba(0, 0, 0, 0.9),
-      0 30px 70px -30px var(--iap-glow, rgba(111, 110, 255, 0.4));
+  .hero-b-h1 {
+    font-size: clamp(30px, 8vw, 42px);
   }
 }
 
