@@ -3244,3 +3244,31 @@
     padding: 40px 24px 48px;
   }
 }
+
+/* ============================================================
+   HeroForm compact — variante usada no hero da /businessv2 (form
+   ao lado do título). Encolhe padding/labels/inputs pra o form
+   caber na fold em viewports ~800 de altura sem que o botão
+   "Solicitar diagnóstico" fique abaixo da dobra.
+
+   Regras só se aplicam dentro de .hero-form-compact — o form
+   normal (FinalForm, modal, /businessv2/diagnostico) fica intacto.
+   ============================================================ */
+
+.hero-form-compact label {
+  font-size: 11.5px;
+  margin-bottom: 2px;
+}
+.hero-form-compact .form-input {
+  padding: 8px 12px;
+  font-size: 13.5px;
+  border-radius: 10px;
+}
+.hero-form-compact select.form-input {
+  padding-right: 34px;
+  background-position: right 12px center;
+}
+.hero-form-compact button[type="submit"] {
+  padding: 10px 20px;
+  font-size: 13.5px;
+}

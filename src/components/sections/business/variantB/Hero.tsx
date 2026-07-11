@@ -65,7 +65,7 @@ export function Hero() {
 
           <div className="hero-b-form-col">
             <Reveal delay={0.15}>
-              <HeroForm formSlug="business" thankYouPath="/thank-you-business" />
+              <HeroForm formSlug="business" thankYouPath="/thank-you-business" compact />
             </Reveal>
           </div>
         </div>
