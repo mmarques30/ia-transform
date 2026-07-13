@@ -75,9 +75,7 @@ export const Route = createFileRoute("/")({
 function BusinessLanding() {
   return (
     <main className="min-h-screen text-foreground" style={{ backgroundColor: "#0a0c07" }}>
-      <BgDobra intensity="alta">
-        <Hero />
-      </BgDobra>
+      <Hero />
       <Ticker />
       <Problem />
       <BgDobra intensity="media">
