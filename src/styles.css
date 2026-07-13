@@ -2567,6 +2567,8 @@
 }
 
 .hero-b {
+  position: relative;
+  z-index: 3;
   width: 100%;
   max-width: 1280px;
   margin: 0 auto;
@@ -2579,6 +2581,39 @@
   gap: 48px;
   align-items: center;
   overflow: visible;
+}
+
+/* Camada decorativa de fluxo de dados no fundo — SVG absoluto
+   cobrindo a section inteira, com pointer-events: none pra não
+   interceptar cliques do form/CTAs. z-index: 1 (abaixo do .hero-b
+   que é 3, acima do gradient de fundo da section). */
+.hero-flow-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+.hero-flow-bg svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.hero-flow-glow {
+  position: absolute;
+  z-index: 1;
+  top: 15%;
+  left: 30%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle at center, rgba(200, 224, 64, 0.12), transparent 60%);
+  filter: blur(60px);
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-flow-bg svg animate {
+    display: none;
+  }
 }
 
 .hero-b-text {
