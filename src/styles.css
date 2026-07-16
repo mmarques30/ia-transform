@@ -2690,8 +2690,8 @@
 @media (max-width: 900px) {
   .hero-b {
     grid-template-columns: 1fr;
-    padding: 56px 24px 64px;
-    gap: 36px;
+    padding: 32px 24px 48px;
+    gap: 28px;
     /* No mobile a section não força 100vh — o conteúdo empilhado
        naturalmente enche a viewport, forçar min-height forçaria
        scroll interno estranho. */
@@ -2701,8 +2701,25 @@
     align-items: stretch;
     min-height: 0;
   }
+  /* Hierarquia mobile forte: título grande e dominante, sub e p
+     bem menores. Ratio h1:sub ~2.5x pra o título "cantar" acima
+     do resto. Line-height 1.05 dá respiro nas 4 linhas italic
+     serif sem cramp. */
   .hero-b-h1 {
-    font-size: clamp(30px, 8vw, 42px);
+    margin-top: 28px;
+    font-size: clamp(36px, 10vw, 46px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+  .hero-b-sub {
+    margin-top: 16px;
+    font-size: clamp(15px, 4vw, 18px);
+    line-height: 1.3;
+  }
+  .hero-b-p {
+    margin-top: 8px;
+    font-size: 13.5px;
+    line-height: 1.55;
   }
 }
 
