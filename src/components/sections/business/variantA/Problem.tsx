@@ -1,106 +1,105 @@
 import { Reveal } from "@/components/Reveal";
-import { TiltCard } from "@/components/TiltCard";
-
-const PROBLEMS = [
-  {
-    n: "01",
-    title: "Contratar mais gente pra dar conta do volume",
-    text: "Mais pessoas na mesma rotina manual só aumenta o custo. O gargalo continua. O mês seguinte é igual.",
-  },
-  {
-    n: "02",
-    title: "Fechamento mensal que consome a sua melhor analista",
-    text: "5 dias. Todo mês. A pessoa que mais entende da operação passa a semana em planilha. E ninguém questiona porque é assim que sempre foi.",
-  },
-  {
-    n: "03",
-    title: "Follow-up que existe só quando alguém lembrou",
-    text: "Leads que somem. Clientes que não foram nutridos. Receita que ficou na mesa porque ninguém fez o segundo contato no momento certo.",
-  },
-  {
-    n: "04",
-    title: "Relatório que chega tarde. E ainda pode ter erro",
-    text: "A diretoria quer decisão rápida. Os dados chegam na quinta. E podem estar errados porque foram consolidados na mão.",
-  },
-];
+import { CtaGlow } from "@/components/sections/business/variantB/CtaGlow";
+import { ChaosCards } from "@/components/sections/business/variantB/ChaosCards";
 
 /**
- * Problem (LP-A) — versão sem pin/scrub GSAP.
+ * Problem (LP-A) — mesma estrutura da /businessv2 (Problem):
+ *  - H2 "SE VOCÊ RECONHECE 3 DESSES, ESSA PÁGINA É PRA VOCÊ"
+ *  - ChaosCards (WhatsApp lotado, planilha, inbox) — reusa da v2
+ *  - 2 colunas de bullets com pain-points
+ *  - transição "Esse não é um problema de time..." + CTA glow
  *
- * Antes: section de 200vh com sticky + timeline GSAP fazendo giro
- * dos chars + rotação do dial + entrada rígida por scrub. Isso
- * gerava (a) uma "dobra vazia" de ~100vh após o unpin e (b) um
- * "giro" visualmente pesado. User pediu para a entrada dos cards
- * ficar progressiva e delicada.
- *
- * Agora: section flui natural, com <Reveal> IntersectionObserver
- * fazendo fade-up staggered nos elementos. Sem dial, sem pin, sem
- * empty dobra.
+ * Só a copy dos bullets muda pra o ângulo LP-A (crescimento sem
+ * contratação): fala em receita, contratação, custo, gargalo — no
+ * lugar do LP-B que fala em "apagar incêndio, aprova tudo".
  */
+
+const COL_LEFT = [
+  "Sua receita cresceu, mas a operação não acompanhou",
+  "Você contrata mais gente pra resolver o que deveria ser processo",
+  "O time passa horas em tarefas que poderiam ser automáticas",
+];
+
+const COL_RIGHT = [
+  "Você não tem visibilidade real do que está acontecendo na operação",
+  "Perdeu cliente ou contrato porque a operação não deu conta",
+  "Cada nova contratação aumenta o custo mas não resolve o gargalo",
+];
+
 export function Problem() {
   return (
     <section className="relative">
-      <div className="section-veil w-full py-[80px] lg:py-[120px]">
-        <div className="relative z-10 container-page w-full">
-          <div className="text-center max-w-[860px] mx-auto">
-            <Reveal>
-              <span className="label-chip">
-                <span className="dot" />O cenário da sua operação
-              </span>
+      <div className="section-veil w-full py-[72px] lg:py-[110px]">
+        <div className="relative z-10 container-page">
+          <Reveal>
+            <h2
+              className="text-center font-extrabold text-[24px] sm:text-[32px] lg:text-[38px] leading-[1.15] tracking-[-0.02em] max-w-[880px] mx-auto uppercase"
+              style={{ textWrap: "balance", color: "var(--color-primary)" }}
+            >
+              Se você reconhece <span className="text-foreground">3 desses,</span>
+              <br className="hidden sm:block" /> essa página{" "}
+              <span className="text-foreground">é pra você</span>
+            </h2>
+          </Reveal>
+
+          <div className="mt-12 lg:mt-16">
+            <ChaosCards />
+          </div>
+
+          <div className="mt-14 lg:mt-20 grid md:grid-cols-2 gap-6 lg:gap-14 max-w-[900px] mx-auto">
+            <Reveal delay={0.15}>
+              <ul className="flex flex-col gap-4">
+                {COL_LEFT.map((item) => (
+                  <ProblemItem key={item}>{item}</ProblemItem>
+                ))}
+              </ul>
             </Reveal>
-            <Reveal delay={0.05}>
-              <h2 className="h-mix mt-6 text-[28px] sm:text-[36px] lg:text-[44px] text-foreground">
-                Seu time já tá no limite. Só que o custo{" "}
-                <em>não aparece em lugar nenhum.</em>
-              </h2>
-            </Reveal>
-            <Reveal delay={0.1}>
-              <p className="mt-6 text-[17px] sm:text-[18px] text-sage leading-[1.6] max-w-[640px] mx-auto">
-                O problema não é falta de esforço. É processo manual demais pra quem você já tem.
-              </p>
+
+            <Reveal delay={0.2}>
+              <ul className="flex flex-col gap-4">
+                {COL_RIGHT.map((item) => (
+                  <ProblemItem key={item}>{item}</ProblemItem>
+                ))}
+              </ul>
             </Reveal>
           </div>
 
-          <div className="mt-10 lg:mt-14 grid md:grid-cols-2 gap-4 lg:gap-5 max-w-[980px] mx-auto items-stretch">
-            {PROBLEMS.map((p, i) => (
-              <Reveal key={p.n} delay={0.18 + i * 0.09} className="h-full">
-                <TiltCard
-                  className="problem-card tech-card p-6 lg:p-7 relative h-full flex flex-col"
-                  maxTilt={6}
-                >
-                  <div className="flex items-center gap-3">
-                    <span
-                      className="num-display text-[13px] tracking-wider"
-                      style={{ color: "var(--color-primary)" }}
-                    >
-                      {p.n}
-                    </span>
-                    <span
-                      className="h-[1px] flex-1"
-                      style={{
-                        background: "linear-gradient(90deg, var(--color-primary), transparent)",
-                      }}
-                    />
-                  </div>
-                  <h3 className="mt-4 text-[16px] lg:text-[18px] font-bold tracking-tight text-foreground leading-[1.3]">
-                    {p.title}
-                  </h3>
-                  <p className="mt-2 text-[13.5px] text-sage leading-[1.55]">{p.text}</p>
-                </TiltCard>
-              </Reveal>
-            ))}
-          </div>
-
-          <Reveal delay={0.65}>
-            <p className="hidden lg:block mt-10 text-center text-[13.5px] text-sage leading-[1.6] max-w-[760px] mx-auto">
-              <span className="font-semibold text-foreground">Sintomas comuns:</span>{" "}
-              fechamento que atrasa, follow-up inconsistente, relatório montado manualmente, dado
-              incorreto chegando à diretoria, dependência de uma pessoa específica para cada processo
-              existir.
+          <Reveal delay={0.25}>
+            <p className="mt-14 text-center text-[18px] lg:text-[22px] leading-[1.35] max-w-[720px] mx-auto text-foreground">
+              Esse não é um problema de{" "}
+              <strong className="font-extrabold text-foreground">time.</strong> É um problema de{" "}
+              <strong style={{ color: "var(--color-primary)" }} className="font-extrabold">
+                sistema.
+              </strong>{" "}
+              E sistema a gente constrói.
             </p>
+          </Reveal>
+
+          <Reveal delay={0.3}>
+            <div className="mt-8 text-center">
+              <CtaGlow size="lg">Quero recuperar o controle →</CtaGlow>
+            </div>
           </Reveal>
         </div>
       </div>
     </section>
+  );
+}
+
+function ProblemItem({ children }: { children: React.ReactNode }) {
+  return (
+    <li
+      className="grid items-baseline gap-3 text-[14.5px] lg:text-[15px] leading-[1.5] text-foreground"
+      style={{ gridTemplateColumns: "16px 1fr" }}
+    >
+      <span
+        aria-hidden
+        className="inline-block h-2.5 w-2.5 rounded-full mt-2"
+        style={{
+          border: "1.5px solid var(--color-primary)",
+        }}
+      />
+      <span>{children}</span>
+    </li>
   );
 }

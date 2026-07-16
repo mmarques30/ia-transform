@@ -1,19 +1,13 @@
 import { Reveal } from "@/components/Reveal";
-import { QualifierStrip } from "@/components/sections/business/variantB/QualifierStrip";
+import { QualifierStrip } from "@/components/sections/business/variantA/QualifierStrip";
 import { HeroForm } from "@/components/HeroForm";
 
 /**
- * Hero (LP-A) — mesma estrutura da /businessv2 (variantB/Hero) aplicada
- * na `/`. Estrutura, layout, grid, tipografia e background são idênticos
- * ao LP-B; só a copy do title + sub + paragraph muda pra o ângulo da
- * LP-A ("custo escondido no processo") em vez do LP-B ("crescer, não
- * apagar incêndio").
+ * Hero (LP-A) — mesma estrutura da /businessv2 com copy própria da /.
  *
- * Título 100% Instrument Serif italic com trechos destacados em lime
- * (mesmo padrão editorial do LP-B). QualifierStrip vermelha no topo,
- * HeroFlowBg SVG no fundo (linhas curvadas + nós), HeroForm compact no
- * canto direito. Grade 56fr/44fr, section fills fold (min-height calc
- * 100vh - 48 pra QualifierStrip).
+ * Layout/tipografia/background travados via classes .hero-b-* no
+ * styles.css (compartilhado com /businessv2). Copy própria pro ângulo
+ * "recupere o controle da operação e escale a receita sem contratar".
  */
 
 export function Hero() {
@@ -35,27 +29,27 @@ export function Hero() {
 
             <Reveal delay={0.05}>
               <h1 className="hero-b-h1">
-                <span className="hero-b-h1-sans">Contratar mais</span>
+                <span className="hero-b-h1-sans">Recupere o controle</span>
                 <br />
-                <em className="hero-b-h1-em">não vai resolver.</em>
+                <em className="hero-b-h1-em">da operação</em>
                 <br />
-                <span className="hero-b-h1-sans">O problema está</span>
+                <span className="hero-b-h1-sans">e escale a receita.</span>
                 <br />
-                <em className="hero-b-h1-em">no processo.</em>
+                <em className="hero-b-h1-em">Sem aumentar a folha.</em>
               </h1>
             </Reveal>
 
             <Reveal delay={0.08}>
               <p className="hero-b-sub">
-                <em style={{ color: "var(--color-primary)" }}>+40 empresas</em> já operam com a
-                IAplicada.
+                Em até <em style={{ color: "var(--color-primary)" }}>90 dias</em> implementamos os
+                sistemas de IA que automatizam o operacional e liberam seu time para crescer.
               </p>
             </Reveal>
 
             <Reveal delay={0.1}>
               <p className="hero-b-p">
-                A IAplicada encontra esse custo invisível, coloca número nele e constrói o sistema
-                que o elimina.
+                Construímos sistemas de IA sob medida que eliminam o trabalho manual que trava sua
+                operação — para você escalar receita sem precisar contratar mais ninguém.
               </p>
             </Reveal>
           </div>
@@ -73,15 +67,8 @@ export function Hero() {
 
 /**
  * HeroFlowBg — camada decorativa de fluxo de dados no fundo da hero.
- * Cópia idêntica do componente da variantB/Hero: 5 linhas curvadas
- * convergindo do lado esquerdo pro cluster de destino atrás do form,
- * com pontos de dados ao longo e nós de origem/destino. Um circle
- * central tem SMIL animation (radius pulsando 2s cycle) — respeita
- * prefers-reduced-motion via CSS.
- *
- * Duplicado aqui (não importado de variantB) pra manter cada Hero
- * self-contained e evitar cross-variant coupling. As duas versões
- * devem ficar sincronizadas manualmente se o desenho do fluxo mudar.
+ * Cópia idêntica do componente da variantB/Hero (ids sufixados -a pra
+ * não colidir com o do LP-B se as duas telas coexistirem no bundle).
  */
 function HeroFlowBg() {
   return (
