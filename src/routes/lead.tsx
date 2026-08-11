@@ -1,105 +1,129 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { BgDobra } from "@/components/BgDobra";
-import { Hero } from "@/components/sections/business/variantA/Hero";
-import { Problem } from "@/components/sections/business/variantA/Problem";
-import { MetodoAplicaBook } from "@/components/sections/business/variantA/MetodoAplicaBook";
-import { AppShowcase } from "@/components/sections/business/variantA/AppShowcase";
-import { MentorMari } from "@/components/sections/business/variantA/MentorMari";
-import { Guarantee } from "@/components/sections/business/variantA/Guarantee";
-import { Urgency } from "@/components/sections/business/variantA/Urgency";
-import { Manifesto } from "@/components/sections/business/variantA/Manifesto";
-import { FinalForm } from "@/components/sections/business/variantA/FinalForm";
-import { QualifierStrip } from "@/components/sections/business/variantA/QualifierStrip";
-import { Testimonials } from "@/components/sections/business/variantB/Testimonials";
-import { SelectedClients } from "@/components/sections/business/variantB/SelectedClients";
-import { DiagnosticoModalProvider } from "@/components/sections/business/variantB/DiagnosticoModal";
+import { LeadHero } from "@/components/sections/business/lead/LeadHero";
+import { LeadProblem } from "@/components/sections/business/lead/LeadProblem";
+import { LeadKitContent } from "@/components/sections/business/lead/LeadKitContent";
+import { LeadCredibility } from "@/components/sections/business/lead/LeadCredibility";
+import { LeadCtaFinal } from "@/components/sections/business/lead/LeadCtaFinal";
+import {
+  LeadModalProvider,
+  useLeadModal,
+} from "@/components/sections/business/lead/LeadFormModal";
 import { Footer } from "@/components/sections/Footer";
 
 export const Route = createFileRoute("/lead")({
   head: () => ({
     meta: [
       {
-        title: "IAplicada Business · Recupere o controle da operação e escale a receita",
+        title: "Kit de Automacao com IA — IAplicada",
       },
       {
         name: "description",
         content:
-          "Em até 90 dias implementamos os sistemas de IA que automatizam o operacional e liberam seu time para crescer. Sem aumentar a folha.",
+          "Prompts, automacoes e agentes de IA prontos para usar na sua empresa — testados em operacoes reais, nao em teoria. Gratuito.",
       },
       {
         property: "og:title",
-        content: "IAplicada Business · Recupere o controle da operação e escale a receita",
+        content: "Kit de Automacao com IA — IAplicada",
       },
       {
         property: "og:description",
         content:
-          "Construímos sistemas de IA sob medida que eliminam o trabalho manual que trava sua operação — para você escalar receita sem precisar contratar mais ninguém.",
+          "Prompts, automacoes e agentes de IA prontos para usar na sua empresa. Gratuito, acesso imediato.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "theme-color", content: "#0d0d0d" },
+      { name: "theme-color", content: "#080a07" },
     ],
   }),
   component: LeadMagnetLanding,
 });
 
 /**
- * /lead — Lead Magnet (isca digital). Estrutura duplicada da LP-A (/)
- * para servir de base pra página de captura com isca.
+ * /lead — Lead Magnet (isca digital). LP de captura com kit gratuito
+ * de automacao com IA.
  *
- * Ordem espelha o fluxo da LP-A:
- *  01 Hero (QualifierStrip + form inline + fluxo SVG no bg)
- *  02 Problem (ChaosCards + 2-col bullets + CTA glow)
- *  03 Testimonials (reusa v2 — 9 depoimentos reais)
- *  04 SelectedClients (reusa v2 — stats com count-up)
- *  05 MetodoAplicaBook (trilha vertical A·P·L·I·C·A)
- *  06 AppShowcase (tabs de painéis)
- *  07 MentorMari (foto full-bleed + credenciais)
- *  08 Guarantee (lista editorial dos 3 entregáveis)
- *  09 Urgency (banda vermelha "custo de esperar")
- *  10 Manifesto (fecho editorial)
- *  11 FinalForm (HeroForm inline no fim)
- *  12 QualifierStrip rodapé
- *  13 Footer
+ * Estrutura:
+ *  01 Hero (2 colunas: copy + kit preview card, CTA abre modal)
+ *  02 Separador
+ *  03 Problem (3 pain cards com borda esquerda verde)
+ *  04 Separador
+ *  05 KitContent (grid 3 modulos detalhados)
+ *  06 Separador
+ *  07 Credibility (foto Mariana + credenciais + tags)
+ *  08 Separador
+ *  09 CTA Final (R$0 centralizado + CTA)
+ *  10 Footer
+ *  -- Modal do formulario (abre via CTA)
  */
 function LeadMagnetLanding() {
   return (
-    <DiagnosticoModalProvider>
-      <main className="min-h-screen text-foreground" style={{ backgroundColor: "#0a0c07" }}>
-        <Hero />
+    <LeadModalProvider>
+      <main className="min-h-screen text-foreground" style={{ backgroundColor: "#080a07" }}>
+        <LeadNav />
+
+        <LeadHeroWithModal />
+
+        <Separator />
 
         <BgDobra intensity="media">
-          <Problem />
+          <LeadProblem />
         </BgDobra>
 
-        <Testimonials />
+        <Separator />
 
-        <BgDobra intensity="media">
-          <SelectedClients />
-        </BgDobra>
+        <LeadKitContent />
 
-        <BgDobra intensity="media">
-          <MetodoAplicaBook />
-        </BgDobra>
+        <Separator />
 
-        <AppShowcase />
+        <LeadCredibility />
 
-        <MentorMari />
+        <Separator />
 
-        <BgDobra intensity="media">
-          <Guarantee />
-        </BgDobra>
-
-        <Urgency />
-
-        <Manifesto />
-
-        <FinalForm />
-
-        <QualifierStrip />
+        <LeadCtaFinalWithModal />
 
         <Footer />
       </main>
-    </DiagnosticoModalProvider>
+    </LeadModalProvider>
+  );
+}
+
+function LeadHeroWithModal() {
+  const modal = useLeadModal();
+  return <LeadHero onOpenModal={modal?.openModal ?? (() => {})} />;
+}
+
+function LeadCtaFinalWithModal() {
+  const modal = useLeadModal();
+  return <LeadCtaFinal onOpenModal={modal?.openModal ?? (() => {})} />;
+}
+
+function Separator() {
+  return (
+    <div className="lead-sep" aria-hidden>
+      &#10038; &#10038; &#10038;
+    </div>
+  );
+}
+
+function LeadNav() {
+  return (
+    <nav
+      className="fixed top-0 left-0 right-0 z-[200] flex items-center h-16 px-6 lg:px-16"
+      style={{
+        background: "rgba(8,10,7,0.88)",
+        backdropFilter: "blur(16px)",
+        borderBottom: "1px solid rgba(255,255,255,0.07)",
+      }}
+    >
+      <a href="/lead" className="flex items-center gap-2.5 no-underline">
+        <img
+          src="/brand/iaplicada-logo-dark.png"
+          alt="IAplicada"
+          height={22}
+          style={{ height: 22, width: "auto" }}
+        />
+      </a>
+    </nav>
   );
 }
