@@ -39,23 +39,6 @@ export const Route = createFileRoute("/lead")({
   component: LeadMagnetLanding,
 });
 
-/**
- * /lead — Lead Magnet (isca digital). LP de captura com kit gratuito
- * de automacao com IA.
- *
- * Estrutura:
- *  01 Hero (2 colunas: copy + kit preview card, CTA abre modal)
- *  02 Separador
- *  03 Problem (3 pain cards com borda esquerda verde)
- *  04 Separador
- *  05 KitContent (grid 3 modulos detalhados)
- *  06 Separador
- *  07 Credibility (foto Mariana + credenciais + tags)
- *  08 Separador
- *  09 CTA Final (R$0 centralizado + CTA)
- *  10 Footer
- *  -- Modal do formulario (abre via CTA)
- */
 function LeadMagnetLanding() {
   return (
     <LeadModalProvider>
@@ -67,7 +50,7 @@ function LeadMagnetLanding() {
         <Separator />
 
         <BgDobra intensity="media">
-          <LeadProblem />
+          <LeadProblemWithModal />
         </BgDobra>
 
         <Separator />
@@ -76,7 +59,7 @@ function LeadMagnetLanding() {
 
         <Separator />
 
-        <LeadCredibility />
+        <LeadCredibilityWithModal />
 
         <Separator />
 
@@ -91,6 +74,16 @@ function LeadMagnetLanding() {
 function LeadHeroWithModal() {
   const modal = useLeadModal();
   return <LeadHero onOpenModal={modal?.openModal ?? (() => {})} />;
+}
+
+function LeadProblemWithModal() {
+  const modal = useLeadModal();
+  return <LeadProblem onOpenModal={modal?.openModal ?? (() => {})} />;
+}
+
+function LeadCredibilityWithModal() {
+  const modal = useLeadModal();
+  return <LeadCredibility onOpenModal={modal?.openModal ?? (() => {})} />;
 }
 
 function LeadCtaFinalWithModal() {

@@ -1,78 +1,103 @@
 import { Reveal } from "@/components/Reveal";
 
-const PAIN_CARDS = [
-  "Cada decisao operacional passa por voce. A empresa so avanca quando voce esta presente.",
-  "Voce experimenta ferramentas de IA, mas nada encaixa de verdade no processo da empresa.",
-  "Voce sabe que a solucao existe — mas nao tem tempo para descobrir e implementar.",
+interface LeadProblemProps {
+  onOpenModal: () => void;
+}
+
+const COL_LEFT = [
+  "Cada decisao operacional passa por voce — a empresa so avanca quando voce esta",
+  "O time gasta horas em tarefas que deveriam ser automaticas",
+  "Voce sabe que a solucao existe, mas nao tem tempo pra implementar",
 ];
 
-export function LeadProblem() {
+const COL_RIGHT = [
+  "Voce experimenta ferramentas de IA, mas nada encaixa no processo real",
+  "Contratar mais gente resolve no curto prazo — e cria outro gargalo",
+  "Sem processo claro, cada novo cliente e mais caos na operacao",
+];
+
+export function LeadProblem({ onOpenModal }: LeadProblemProps) {
   return (
     <section className="relative">
-      <div className="section-veil w-full py-[80px] lg:py-[110px]">
+      <div className="section-veil w-full py-[72px] lg:py-[110px]">
         <div className="relative z-10 container-page">
           <Reveal>
-            <span
-              className="text-[11px] uppercase tracking-[0.13em] font-semibold"
-              style={{ color: "var(--color-primary)" }}
-            >
-              O problema que resolve
-            </span>
-          </Reveal>
-
-          <Reveal delay={0.05}>
             <h2
-              className="mt-4 font-extrabold text-[28px] sm:text-[36px] lg:text-[42px] leading-[1.12] tracking-[-0.025em] text-foreground"
-              style={{ textWrap: "balance" }}
+              className="text-center font-extrabold text-[24px] sm:text-[32px] lg:text-[38px] leading-[1.15] tracking-[-0.02em] max-w-[880px] mx-auto uppercase"
+              style={{ textWrap: "balance", color: "var(--color-primary)" }}
             >
               Sua empresa esta{" "}
-              <em
-                style={{
-                  fontFamily: '"Instrument Serif", serif',
-                  color: "var(--color-primary)",
-                  fontWeight: 500,
-                }}
-              >
-                refem da sua presenca.
-              </em>
-              <br />
-              E contratar mais gente nao resolve.
+              <span className="text-foreground">refem da sua presenca.</span>
+              <br className="hidden sm:block" /> E contratar mais gente{" "}
+              <span className="text-foreground">nao resolve.</span>
             </h2>
           </Reveal>
 
-          <Reveal delay={0.08}>
-            <p
-              className="mt-5 text-[15.5px] lg:text-[16px] leading-[1.8] max-w-[640px]"
-              style={{ color: "var(--text-sage, #c4c8bc)" }}
-            >
-              Cada processo que trava quando voce sai e um processo que nao existe de verdade.
-              IA nao e hype — e a unica forma de escalar sem inflar a folha de pagamento.
+          <div className="mt-14 lg:mt-20 grid md:grid-cols-2 gap-6 lg:gap-14 max-w-[900px] mx-auto">
+            <Reveal delay={0.15}>
+              <ul className="flex flex-col gap-4">
+                {COL_LEFT.map((item) => (
+                  <ProblemItem key={item}>{item}</ProblemItem>
+                ))}
+              </ul>
+            </Reveal>
+
+            <Reveal delay={0.2}>
+              <ul className="flex flex-col gap-4">
+                {COL_RIGHT.map((item) => (
+                  <ProblemItem key={item}>{item}</ProblemItem>
+                ))}
+              </ul>
+            </Reveal>
+          </div>
+
+          <Reveal delay={0.25}>
+            <p className="mt-14 text-center text-[18px] lg:text-[22px] leading-[1.35] max-w-[720px] mx-auto text-foreground">
+              IA nao e hype — e a unica forma de{" "}
+              <strong style={{ color: "var(--color-primary)" }} className="font-extrabold">
+                escalar sem inflar a folha.
+              </strong>{" "}
+              E este kit mostra como comecar.
             </p>
           </Reveal>
 
-          <div className="mt-12 lg:mt-14 grid md:grid-cols-3 gap-4">
-            {PAIN_CARDS.map((text, i) => (
-              <Reveal key={i} delay={0.12 + i * 0.08}>
-                <div
-                  className="p-7 h-full"
-                  style={{
-                    background: "#141613",
-                    border: "1px solid rgba(255,255,255,0.07)",
-                    borderLeft: "2px solid var(--color-primary)",
-                  }}
-                >
-                  <p
-                    className="text-[14.5px] lg:text-[15px] leading-[1.75]"
-                    style={{ color: "var(--text-sage, #c4c8bc)" }}
-                  >
-                    {text}
-                  </p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
+          <Reveal delay={0.3}>
+            <div className="mt-8 text-center">
+              <button
+                type="button"
+                onClick={onOpenModal}
+                className="cta-glow-btn inline-flex items-center justify-center gap-2.5 px-7 py-5 rounded-[10px] font-black text-[13.5px] lg:text-[14.5px] uppercase tracking-[0.06em] no-underline"
+                style={{
+                  background: "linear-gradient(180deg, #d5e95a, #7a8f30)",
+                  color: "#0a0c07",
+                  boxShadow:
+                    "0 0 0 6px rgba(200,224,64,0.15), 0 24px 48px -14px rgba(200,224,64,0.5), inset 0 -2px 0 rgba(0,0,0,0.2)",
+                }}
+              >
+                Quero o kit gratuito &rarr;
+              </button>
+            </div>
+          </Reveal>
         </div>
       </div>
     </section>
+  );
+}
+
+function ProblemItem({ children }: { children: React.ReactNode }) {
+  return (
+    <li
+      className="grid items-baseline gap-3 text-[14.5px] lg:text-[15px] leading-[1.5] text-foreground"
+      style={{ gridTemplateColumns: "16px 1fr" }}
+    >
+      <span
+        aria-hidden
+        className="inline-block h-2.5 w-2.5 rounded-full mt-2"
+        style={{
+          border: "1.5px solid var(--color-primary)",
+        }}
+      />
+      <span>{children}</span>
+    </li>
   );
 }

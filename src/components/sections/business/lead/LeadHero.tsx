@@ -6,114 +6,78 @@ interface LeadHeroProps {
 
 export function LeadHero({ onOpenModal }: LeadHeroProps) {
   return (
-    <>
-      <section className="relative min-h-screen flex items-center overflow-hidden">
-        <HeroGlow />
-        <div className="container-page relative z-10 py-[120px] lg:py-[140px]">
-          <div className="grid lg:grid-cols-[1fr_400px] gap-12 lg:gap-20 items-center">
-            <div>
-              <Reveal>
-                <span
-                  className="inline-flex items-center gap-2.5 text-[11px] font-bold uppercase tracking-[0.13em]"
-                  style={{ color: "var(--color-primary)" }}
-                >
-                  <span
-                    className="inline-block w-6 h-px"
-                    style={{ background: "var(--color-primary)" }}
-                  />
-                  Kit gratuito &#10038; Acesso imediato
-                </span>
-              </Reveal>
+    <section className="hero-section-b">
+      <HeroFlowBg />
+      <div className="hero-b">
+        <div className="hero-b-text">
+          <Reveal>
+            <img
+              src="/brand/iaplicada-logo-dark.png"
+              alt="IAplicada"
+              height={28}
+              className="hero-b-logo"
+            />
+          </Reveal>
 
-              <Reveal delay={0.05}>
-                <h1
-                  className="mt-7 font-extrabold text-[36px] sm:text-[46px] lg:text-[58px] leading-[1.08] tracking-[-0.03em] text-foreground"
-                  style={{ textWrap: "balance" }}
-                >
-                  Automatize
-                  <br />
-                  <em
-                    style={{
-                      fontFamily: '"Instrument Serif", serif',
-                      color: "var(--color-primary)",
-                      fontWeight: 500,
-                    }}
-                  >
-                    o que trava
-                  </em>
-                  <br />
-                  sua operacao.
-                  <br />
-                  <em
-                    style={{
-                      fontFamily: '"Instrument Serif", serif',
-                      color: "var(--color-primary)",
-                      fontWeight: 500,
-                    }}
-                  >
-                    Sem contratar ninguem.
-                  </em>
-                </h1>
-              </Reveal>
+          <Reveal delay={0.05}>
+            <h1 className="hero-b-h1">
+              <span className="hero-b-h1-sans">Automatize</span>
+              <br />
+              <em className="hero-b-h1-em">o que trava</em>
+              <br />
+              <span className="hero-b-h1-sans">sua operacao.</span>
+              <br />
+              <em className="hero-b-h1-em">Sem contratar ninguem.</em>
+            </h1>
+          </Reveal>
 
-              <Reveal delay={0.08}>
-                <p className="mt-6 text-[16px] lg:text-[17px] leading-[1.75] max-w-[500px]" style={{ color: "var(--text-sage, #a3a898)" }}>
-                  Prompts, automacoes e agentes de IA prontos para usar na sua empresa
-                  — testados em operacoes reais, nao em teoria.
-                </p>
-              </Reveal>
+          <Reveal delay={0.08}>
+            <p className="hero-b-sub">
+              Prompts, automacoes e agentes de IA{" "}
+              <em style={{ color: "var(--color-primary)" }}>prontos para usar</em> na sua empresa
+              — testados em operacoes reais, nao em teoria.
+            </p>
+          </Reveal>
 
-              <Reveal delay={0.1}>
-                <ul className="mt-8 flex flex-col gap-3.5">
-                  {[
-                    "Prompts calibrados para processos reais de empresa",
-                    "Fluxos prontos para n8n, Make e Zapier — copiar e usar",
-                    "Sem precisar de equipe de TI ou saber programar",
-                  ].map((item) => (
-                    <li key={item} className="flex items-start gap-3 text-[14.5px] lg:text-[15px]" style={{ color: "var(--text-sage, #c4c8bc)" }}>
-                      <span
-                        className="shrink-0 mt-[7px] h-1.5 w-1.5 rounded-full"
-                        style={{ background: "var(--color-primary)" }}
-                      />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </Reveal>
+          <Reveal delay={0.1}>
+            <p className="hero-b-p">
+              Um kit gratuito com tudo que voce precisa para comecar a automatizar
+              processos — sem equipe de TI e sem saber programar.
+            </p>
+          </Reveal>
 
-              <Reveal delay={0.14}>
-                <div className="mt-10">
-                  <button
-                    type="button"
-                    onClick={onOpenModal}
-                    className="cta-glow-btn inline-flex items-center gap-2.5 px-8 py-[18px] font-black text-[13px] uppercase tracking-[0.08em] rounded-[10px]"
-                    style={{
-                      background: "linear-gradient(180deg, #d5e95a, #7a8f30)",
-                      color: "#0a0c07",
-                      boxShadow:
-                        "0 0 0 6px rgba(200,224,64,0.15), 0 24px 48px -14px rgba(200,224,64,0.5), inset 0 -2px 0 rgba(0,0,0,0.2)",
-                    }}
-                  >
-                    Quero o kit completo
-                    <span className="text-[16px]">&rarr;</span>
-                  </button>
-                  <p
-                    className="mt-3.5 text-[12px] tracking-[0.04em]"
-                    style={{ color: "var(--text-muted, #8a8e82)" }}
-                  >
-                    Gratuito &#10038; Acesso imediato &#10038; Sem cartao de credito
-                  </p>
-                </div>
-              </Reveal>
+          <Reveal delay={0.14}>
+            <div className="mt-8">
+              <button
+                type="button"
+                onClick={onOpenModal}
+                className="cta-glow-btn inline-flex items-center justify-center gap-2.5 px-7 py-5 rounded-[10px] font-black text-[13.5px] lg:text-[14.5px] uppercase tracking-[0.06em] no-underline"
+                style={{
+                  background: "linear-gradient(180deg, #d5e95a, #7a8f30)",
+                  color: "#0a0c07",
+                  boxShadow:
+                    "0 0 0 6px rgba(200,224,64,0.15), 0 24px 48px -14px rgba(200,224,64,0.5), inset 0 -2px 0 rgba(0,0,0,0.2)",
+                }}
+              >
+                Quero o kit completo &rarr;
+              </button>
+              <p
+                className="mt-3.5 text-[12px] tracking-[0.04em]"
+                style={{ color: "var(--text-muted, #8a8e82)" }}
+              >
+                Gratuito &#10038; Acesso imediato &#10038; Sem cartao de credito
+              </p>
             </div>
-
-            <Reveal delay={0.18}>
-              <KitPreviewCard />
-            </Reveal>
-          </div>
+          </Reveal>
         </div>
-      </section>
-    </>
+
+        <div className="hero-b-form-col">
+          <Reveal delay={0.15}>
+            <KitPreviewCard />
+          </Reveal>
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -126,7 +90,6 @@ const KIT_MODULES = [
 function KitPreviewCard() {
   return (
     <div
-      className="relative rounded-none lg:rounded-none overflow-hidden"
       style={{
         background: "#141613",
         border: "1px solid rgba(139,155,58,0.18)",
@@ -135,7 +98,10 @@ function KitPreviewCard() {
       <div className="p-7 lg:p-8">
         <span
           className="text-[10px] font-semibold uppercase tracking-[0.14em] block mb-5"
-          style={{ color: "var(--color-primary)" }}
+          style={{
+            color: "var(--color-primary)",
+            fontFamily: '"JetBrains Mono", ui-monospace, Menlo, monospace',
+          }}
         >
           O que esta dentro
         </span>
@@ -189,16 +155,68 @@ function KitPreviewCard() {
   );
 }
 
-function HeroGlow() {
+function HeroFlowBg() {
   return (
-    <div className="absolute inset-0 pointer-events-none" aria-hidden>
-      <div
-        className="absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(ellipse 60% 50% at 25% 55%, rgba(139,155,58,0.07) 0%, transparent 70%), radial-gradient(ellipse 40% 30% at 85% 20%, rgba(139,155,58,0.04) 0%, transparent 60%)",
-        }}
-      />
+    <div className="hero-flow-bg" aria-hidden="true">
+      <div className="hero-flow-glow" />
+      <svg
+        viewBox="0 0 1440 852"
+        preserveAspectRatio="xMidYMid slice"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient id="hero-flow-grad-lead" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stopColor="#d5e95a" stopOpacity="0" />
+            <stop offset="0.3" stopColor="#d5e95a" stopOpacity="0.55" />
+            <stop offset="0.7" stopColor="#d5e95a" stopOpacity="0.55" />
+            <stop offset="1" stopColor="#d5e95a" stopOpacity="0" />
+          </linearGradient>
+          <filter id="hero-flow-blur-lead">
+            <feGaussianBlur stdDeviation="0.5" />
+          </filter>
+        </defs>
+
+        <g
+          stroke="url(#hero-flow-grad-lead)"
+          strokeWidth="1.4"
+          fill="none"
+          filter="url(#hero-flow-blur-lead)"
+        >
+          <path d="M 200 200 C 500 220, 700 350, 940 380" opacity="0.7" />
+          <path d="M 240 320 C 520 320, 720 400, 940 430" opacity="0.6" />
+          <path d="M 260 470 C 520 460, 720 490, 940 490" opacity="0.7" />
+          <path d="M 220 600 C 520 580, 720 560, 940 550" opacity="0.55" />
+          <path d="M 320 700 C 560 660, 760 620, 940 600" opacity="0.4" />
+        </g>
+
+        <g fill="#d5e95a">
+          <circle cx="380" cy="270" r="2.5" opacity="0.85" />
+          <circle cx="620" cy="330" r="2" opacity="0.7" />
+          <circle cx="810" cy="370" r="1.8" opacity="0.5" />
+          <circle cx="450" cy="340" r="2" opacity="0.65" />
+          <circle cx="720" cy="410" r="2.5" opacity="0.85" />
+          <circle cx="380" cy="465" r="2.2" opacity="0.7" />
+          <circle cx="660" cy="480" r="2.8" opacity="0.9">
+            <animate attributeName="r" values="2.8;4;2.8" dur="2s" repeatCount="indefinite" />
+          </circle>
+          <circle cx="880" cy="495" r="2" opacity="0.6" />
+          <circle cx="400" cy="590" r="1.8" opacity="0.5" />
+          <circle cx="700" cy="570" r="2.2" opacity="0.65" />
+        </g>
+
+        <g fill="none" stroke="#d5e95a" strokeWidth="1" opacity="0.35">
+          <circle cx="200" cy="200" r="6" />
+          <circle cx="200" cy="200" r="12" opacity="0.4" />
+          <circle cx="260" cy="470" r="6" />
+          <circle cx="260" cy="470" r="12" opacity="0.4" />
+        </g>
+
+        <g fill="none" stroke="#d5e95a" strokeWidth="1" opacity="0.5">
+          <circle cx="940" cy="490" r="10" />
+          <circle cx="940" cy="490" r="18" opacity="0.5" />
+          <circle cx="940" cy="490" r="28" opacity="0.25" />
+        </g>
+      </svg>
     </div>
   );
 }
