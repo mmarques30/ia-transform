@@ -27,10 +27,10 @@ const ETAPAS = [
 ];
 
 const GARGALOS = [
-  { value: "operacao", label: "Operacao desorganizada — tudo passa por mim" },
-  { value: "pessoas", label: "Dependencia de pessoas-chave na equipe" },
-  { value: "informacao", label: "Perda de informacoes entre setores" },
-  { value: "escala", label: "Nao consigo escalar sem contratar mais" },
+  { value: "operacao", label: "Operação desorganizada — tudo passa por mim" },
+  { value: "pessoas", label: "Dependência de pessoas-chave na equipe" },
+  { value: "informacao", label: "Perda de informações entre setores" },
+  { value: "escala", label: "Não consigo escalar sem contratar mais" },
 ];
 
 const LOADING_STAGES = [
@@ -258,7 +258,7 @@ function FormState({ onSuccess }: { onSuccess: () => void }) {
     } catch (err) {
       clearTimers();
       setLoadingMsg("");
-      setError(err instanceof Error ? err.message : "Nao conseguimos enviar agora. Tente novamente.");
+      setError(err instanceof Error ? err.message : "Não conseguimos enviar agora. Tente novamente.");
       setLoading(false);
     }
   }
@@ -361,7 +361,7 @@ function FormState({ onSuccess }: { onSuccess: () => void }) {
           </OriginButton>
 
           <p className="text-[11px] text-center leading-relaxed" style={{ color: "var(--text-muted, #8a8e82)" }}>
-            Ao enviar, voce autoriza contato por e-mail e WhatsApp.
+            Ao enviar, você autoriza contato por e-mail e WhatsApp.
             <br />
             Sem spam. Cancele quando quiser.
           </p>

@@ -3431,8 +3431,10 @@ select.lead-input option {
 .lead-mockup__frame {
   border-radius: 12px;
   overflow: hidden;
-  border: 1.5px solid rgba(255,255,255,0.12);
+  border: 1.5px solid rgba(139,155,58,0.18);
   box-shadow:
+    0 0 40px -8px rgba(200,224,64,0.12),
+    0 0 80px -16px rgba(139,155,58,0.08),
     0 20px 50px -12px rgba(0,0,0,0.65),
     0 8px 20px -6px rgba(0,0,0,0.4);
   background: #111;

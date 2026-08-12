@@ -9,13 +9,13 @@ interface DeliverableItem {
 const KIT_ITEMS: DeliverableItem[] = [
   {
     n: "01",
-    title: "Prompts de IA para Operacao",
+    title: "Prompts de IA para Operação",
     detail:
-      "Prompts prontos e calibrados para atendimento ao cliente, analise financeira rapida e aceleracao de vendas. Copie, ajuste e use hoje.",
+      "Prompts prontos e calibrados para atendimento ao cliente, análise financeira rápida e aceleração de vendas. Copie, ajuste e use hoje.",
   },
   {
     n: "02",
-    title: "Automacoes Prontas",
+    title: "Automações Prontas",
     detail:
       "Fluxos completos para n8n, Make e Zapier que eliminam tarefas manuais repetitivas. Importe direto, sem precisar construir do zero.",
   },
@@ -23,7 +23,7 @@ const KIT_ITEMS: DeliverableItem[] = [
     n: "03",
     title: "Agentes de IA Configurados",
     detail:
-      "Exemplos reais de agentes rodando em operacoes — com contexto de como foram configurados e o que cada um resolve.",
+      "Exemplos reais de agentes rodando em operações — com contexto de como foram configurados e o que cada um resolve.",
   },
 ];
 
@@ -52,13 +52,13 @@ export function LeadKitContent() {
                   fontFamily: '"JetBrains Mono", ui-monospace, Menlo, monospace',
                 }}
               >
-                O que esta dentro
+                O que está dentro
               </span>
               <h2
                 className="mt-5 font-extrabold text-[30px] sm:text-[36px] lg:text-[42px] leading-[1.05] tracking-[-0.025em] text-foreground"
                 style={{ textWrap: "balance" }}
               >
-                Tres modulos.{" "}
+                Três módulos.{" "}
                 <em
                   style={{
                     fontFamily: '"Instrument Serif", serif',
@@ -70,13 +70,13 @@ export function LeadKitContent() {
                 </em>
               </h2>
               <p className="mt-5 text-[14.5px] lg:text-[15.5px] text-sage leading-[1.65]">
-                Cada modulo foi construido a partir de implementacoes reais. Nao e conteudo
-                teorico — e o que ja esta funcionando em empresas como a sua.
+                Cada módulo foi construído a partir de implementações reais. Não é conteúdo
+                teórico — é o que já está funcionando em empresas como a sua.
               </p>
               <p className="mt-4 text-[14.5px] lg:text-[15.5px] text-sage leading-[1.65]">
-                Sem teoria. Sem enrolacao.{" "}
+                Sem teoria. Sem enrolação.{" "}
                 <strong className="text-foreground font-bold">
-                  O que ja funciona, pronto pra aplicar.
+                  O que já funciona, pronto pra aplicar.
                 </strong>
               </p>
             </div>
@@ -91,7 +91,7 @@ export function LeadKitContent() {
                   fontFamily: '"JetBrains Mono", ui-monospace, Menlo, monospace',
                 }}
               >
-                Voce leva
+                Você leva
               </p>
             </Reveal>
             <ul className="guarantee-list">
