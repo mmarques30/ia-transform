@@ -7,6 +7,7 @@ interface LeadHeroProps {
 export function LeadHero({ onOpenModal }: LeadHeroProps) {
   return (
     <section
+      id="lead-hero"
       className="relative overflow-hidden"
       style={{
         minHeight: "100vh",
@@ -19,15 +20,12 @@ export function LeadHero({ onOpenModal }: LeadHeroProps) {
     >
       <div className="relative z-[3] w-full max-w-[1280px] mx-auto px-6 lg:px-12 py-[72px]">
         <div className="max-w-[860px] mx-auto text-center">
-          <Reveal>
-            <img
-              src="/brand/iaplicada-logo-dark.png"
-              alt="IAplicada"
-              height={28}
-              className="mx-auto mb-10"
-              style={{ height: 28, width: "auto" }}
-            />
-          </Reveal>
+          <div
+            id="lead-logo-anchor"
+            className="mx-auto mb-10"
+            style={{ width: 52, height: 52 }}
+            aria-hidden
+          />
 
           <Reveal delay={0.05}>
             <h1
