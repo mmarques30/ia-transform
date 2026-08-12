@@ -7,7 +7,6 @@ import { AppShowcase } from "@/components/sections/business/variantA/AppShowcase
 import { MentorMari } from "@/components/sections/business/variantA/MentorMari";
 import { Guarantee } from "@/components/sections/business/variantA/Guarantee";
 import { FinalForm } from "@/components/sections/business/variantA/FinalForm";
-import { QualifierStrip } from "@/components/sections/business/variantA/QualifierStrip";
 import { Testimonials } from "@/components/sections/business/variantB/Testimonials";
 import { SelectedClients } from "@/components/sections/business/variantB/SelectedClients";
 import { DiagnosticoModalProvider } from "@/components/sections/business/variantB/DiagnosticoModal";
@@ -88,8 +87,6 @@ function BusinessLanding() {
         <Guarantee />
 
         <FinalForm />
-
-        <QualifierStrip />
 
         <Footer />
       </main>
