@@ -29,27 +29,20 @@ export function Hero() {
 
             <Reveal delay={0.05}>
               <h1 className="hero-b-h1">
-                <span className="hero-b-h1-sans">Recupere o controle</span>
+                <span className="hero-b-h1-sans">Faça o dobro.</span>
                 <br />
-                <em className="hero-b-h1-em">da operação</em>
+                <em className="hero-b-h1-em">Entregue em metade do tempo.</em>
                 <br />
-                <span className="hero-b-h1-sans">e escale a receita.</span>
-                <br />
-                <em className="hero-b-h1-em">Sem aumentar a folha.</em>
+                <span className="hero-b-h1-sans">Com o time que você já tem.</span>
               </h1>
             </Reveal>
 
             <Reveal delay={0.08}>
               <p className="hero-b-sub">
-                Em até <em style={{ color: "var(--color-primary)" }}>90 dias</em> implementamos os
-                sistemas de IA que automatizam o operacional e liberam seu time para crescer.
-              </p>
-            </Reveal>
-
-            <Reveal delay={0.1}>
-              <p className="hero-b-p">
-                Construímos sistemas de IA sob medida que eliminam o trabalho manual que trava sua
-                operação — para você escalar receita sem precisar contratar mais ninguém.
+                Em até <em style={{ color: "var(--color-primary)" }}>90 dias</em> construímos o
+                software com IA que automatiza sua operação de ponta a ponta — sob medida para o
+                jeito que seu negócio funciona. Sem ERP engessado. Sem consultoria que some depois
+                da apresentação.
               </p>
             </Reveal>
           </div>

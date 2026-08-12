@@ -3325,6 +3325,29 @@
   font-size: 13.5px;
 }
 
+/* CTA do form — hover com lift + glow */
+.hero-form-cta {
+  background-color: var(--academy-brand-dark);
+  color: #ffffff;
+  box-shadow:
+    0 1px 0 0 rgba(255, 255, 255, 0.12) inset,
+    0 14px 32px -10px rgba(115, 137, 37, 0.45);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+.hero-form-cta:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow:
+    0 1px 0 0 rgba(255, 255, 255, 0.15) inset,
+    0 20px 40px -10px rgba(115, 137, 37, 0.55);
+  filter: brightness(1.08);
+}
+.hero-form-cta:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow:
+    0 1px 0 0 rgba(255, 255, 255, 0.12) inset,
+    0 8px 20px -8px rgba(115, 137, 37, 0.4);
+}
+
 /* ============================================================
    Lead Magnet modal — inputs dark pra form dentro do modal da
    LP /lead. Estilo alinhado com o dark theme da LP.
