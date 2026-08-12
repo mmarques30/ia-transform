@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:transparent;display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:'Inter',sans-serif;}
+.card{width:320px;background:#111;border-radius:10px;overflow:hidden;box-shadow:0 28px 72px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.07);}
+.titlebar{height:36px;background:#1a1a1a;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;padding:0 12px;gap:6px;}
+.dot{width:10px;height:10px;border-radius:50%;}
+.title-txt{font-size:11px;font-weight:500;color:rgba(255,255,255,.3);margin-left:6px;}
+
+/* accounts strip */
+.accounts{background:#161616;border-bottom:1px solid rgba(255,255,255,.06);padding:10px 14px;}
+.accounts-lbl{font-size:8.5px;font-weight:600;color:rgba(255,255,255,.25);letter-spacing:.06em;margin-bottom:7px;text-transform:uppercase;}
+.acc-list{display:flex;gap:6px;}
+.acc{display:flex;align-items:center;gap:5px;background:#1e1e1e;border:1px solid rgba(255,255,255,.08);border-radius:6px;padding:5px 8px;flex:1;}
+.acc-logo{width:18px;height:18px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;flex-shrink:0;}
+.acc-info{min-width:0;}
+.acc-name{font-size:8.5px;font-weight:600;color:rgba(255,255,255,.7);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.acc-val{font-size:8px;color:rgba(255,255,255,.3);}
+.acc-dot{width:5px;height:5px;border-radius:50%;background:#22c55e;flex-shrink:0;margin-left:auto;}
+
+/* KPI row */
+.kpis{display:flex;gap:1px;background:rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.06);}
+.kpi{flex:1;background:#111;padding:10px 10px;}
+.kpi-val{font-size:13px;font-weight:700;color:#fff;letter-spacing:-.02em;}
+.kpi-lbl{font-size:8px;color:rgba(255,255,255,.3);margin-top:2px;}
+.kpi-delta{font-size:8.5px;font-weight:600;margin-top:3px;}
+.up{color:#22c55e;} .dn{color:#f43f5e;}
+
+/* AI insights */
+.ai-section{padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.06);}
+.ai-header{display:flex;align-items:center;gap:6px;margin-bottom:8px;}
+.ai-badge{display:flex;align-items:center;gap:4px;font-size:8.5px;font-weight:600;color:#818cf8;}
+.ai-dot-pulse{width:7px;height:7px;border-radius:50%;background:#6366f1;position:relative;}
+.ai-dot-pulse::after{content:'';position:absolute;inset:-3px;border-radius:50%;border:1.5px solid rgba(99,102,241,.4);}
+.ai-title{font-size:9px;color:rgba(255,255,255,.25);margin-left:auto;}
+
+.insight{background:#191932;border:1px solid rgba(99,102,241,.2);border-radius:7px;padding:8px 10px;margin-bottom:6px;}
+.insight:last-child{margin-bottom:0;}
+.ins-row{display:flex;align-items:flex-start;gap:7px;}
+.ins-icon{width:20px;height:20px;border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.ins-txt{font-size:10px;color:rgba(255,255,255,.7);line-height:1.4;flex:1;}
+.ins-chip{font-size:8px;font-weight:600;padding:1px 6px;border-radius:20px;margin-top:4px;display:inline-block;}
+.chip-warn{background:rgba(234,179,8,.12);color:#ca8a04;border:1px solid rgba(234,179,8,.2);}
+.chip-ok{background:rgba(34,197,94,.1);color:#22c55e;border:1px solid rgba(34,197,94,.2);}
+.chip-tip{background:rgba(99,102,241,.12);color:#818cf8;border:1px solid rgba(99,102,241,.2);}
+
+.footer{background:#1a1a1a;border-top:1px solid rgba(255,255,255,.06);padding:7px 14px;display:flex;justify-content:space-between;align-items:center;}
+.ft{font-size:9px;color:rgba(255,255,255,.3);}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="titlebar">
+    <span class="dot" style="background:#ff5f57;"></span>
+    <span class="dot" style="background:#ffbd2e;"></span>
+    <span class="dot" style="background:#28ca41;"></span>
+    <span class="title-txt">financeiro-ia.dashboard</span>
+  </div>
+
+  <!-- connected accounts -->
+  <div class="accounts">
+    <div class="accounts-lbl">Contas conectadas</div>
+    <div class="acc-list">
+      <div class="acc">
+        <div class="acc-logo" style="background:rgba(249,115,22,.15);color:#f97316;">BB</div>
+        <div class="acc-info">
+          <div class="acc-name">Banco do Brasil</div>
+          <div class="acc-val">R$43.200</div>
+        </div>
+        <div class="acc-dot"></div>
+      </div>
+      <div class="acc">
+        <div class="acc-logo" style="background:rgba(14,165,233,.15);color:#0ea5e9;">IT</div>
+        <div class="acc-info">
+          <div class="acc-name">Itau</div>
+          <div class="acc-val">R$18.750</div>
+        </div>
+        <div class="acc-dot"></div>
+      </div>
+      <div class="acc">
+        <div class="acc-logo" style="background:rgba(99,102,241,.15);color:#818cf8;">NU</div>
+        <div class="acc-info">
+          <div class="acc-name">Nubank</div>
+          <div class="acc-val">R$9.180</div>
+        </div>
+        <div class="acc-dot"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KPIs -->
+  <div class="kpis">
+    <div class="kpi">
+      <div class="kpi-val">R$127k</div>
+      <div class="kpi-lbl">MRR total</div>
+      <div class="kpi-delta up">+12,3%</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-val">R$71k</div>
+      <div class="kpi-lbl">Saldo liquido</div>
+      <div class="kpi-delta up">+8,1%</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-val">4,2 mo</div>
+      <div class="kpi-lbl">Runway</div>
+      <div class="kpi-delta dn">-0,6</div>
+    </div>
+  </div>
+
+  <!-- AI insights -->
+  <div class="ai-section">
+    <div class="ai-header">
+      <span class="ai-dot-pulse"></span>
+      <span class="ai-badge">Analise por IA</span>
+      <span class="ai-title">atualizado agora</span>
+    </div>
+
+    <div class="insight">
+      <div class="ins-row">
+        <div class="ins-icon" style="background:rgba(234,179,8,.1);">
+          <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M6 1v6M6 9.5v1" stroke="#ca8a04" stroke-width="1.5" stroke-linecap="round"/><circle cx="6" cy="6" r="5" stroke="#ca8a04" stroke-width="1.2"/></svg>
+        </div>
+        <div class="ins-txt">Fornecedor Logistica consome 34% da receita. Margem em queda ha 3 meses.
+          <div><span class="ins-chip chip-warn">Atencao</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="insight">
+      <div class="ins-row">
+        <div class="ins-icon" style="background:rgba(34,197,94,.1);">
+          <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#22c55e" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <div class="ins-txt">Recorrencia em 87%. Churn abaixo da meta trimestral.
+          <div><span class="ins-chip chip-ok">Meta atingida</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="insight">
+      <div class="ins-row">
+        <div class="ins-icon" style="background:rgba(99,102,241,.1);">
+          <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M6 2v4l2.5 2.5" stroke="#818cf8" stroke-width="1.5" stroke-linecap="round"/><circle cx="6" cy="6" r="5" stroke="#818cf8" stroke-width="1.2"/></svg>
+        </div>
+        <div class="ins-txt">Runway de 4,2 meses. Recomendado acelerar conversoes em 15 dias.
+          <div><span class="ins-chip chip-tip">Sugestao IA</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span class="ft">3 contas · atualizado em tempo real</span>
+    <span class="ft">Kit IAplicada · Modulo 01</span>
+  </div>
+</div>
+</body>
+</html>

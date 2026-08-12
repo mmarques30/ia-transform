@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:transparent;display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:'Inter',sans-serif;}
+.card{width:320px;background:#111;border-radius:10px;overflow:hidden;box-shadow:0 28px 72px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.07);}
+.titlebar{height:36px;background:#1a1a1a;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;padding:0 12px;gap:6px;}
+.dot{width:10px;height:10px;border-radius:50%;}
+.title-txt{font-size:11px;font-weight:500;color:rgba(255,255,255,.3);margin-left:6px;}
+
+.chat-header{background:#1a1a1a;border-bottom:1px solid rgba(255,255,255,.06);padding:10px 14px;display:flex;align-items:center;gap:10px;}
+.av-wrap{position:relative;flex-shrink:0;}
+.avatar{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#6366f1 0%,#8b5cf6 100%);display:flex;align-items:center;justify-content:center;}
+.av-txt{font-size:13px;font-weight:800;color:#fff;letter-spacing:-.01em;}
+.online{width:9px;height:9px;border-radius:50%;background:#22c55e;border:2px solid #1a1a1a;position:absolute;bottom:-1px;right:-1px;}
+.agent-name{font-size:12px;font-weight:700;color:#fff;}
+.agent-co{font-size:9px;color:rgba(255,255,255,.35);margin-top:1px;}
+.agent-status{display:flex;align-items:center;gap:4px;margin-top:3px;}
+.status-pill{display:flex;align-items:center;gap:3px;font-size:8.5px;font-weight:600;color:#22c55e;}
+.pulse{width:5px;height:5px;border-radius:50%;background:#22c55e;}
+
+.topics{background:#161616;border-bottom:1px solid rgba(255,255,255,.06);padding:7px 14px;display:flex;gap:5px;overflow:hidden;}
+.topic{font-size:8.5px;font-weight:500;padding:3px 8px;border-radius:20px;background:#1e1e1e;color:rgba(255,255,255,.4);border:1px solid rgba(255,255,255,.07);white-space:nowrap;}
+
+.messages{padding:12px 12px 6px;display:flex;flex-direction:column;gap:8px;}
+.msg-row{display:flex;gap:7px;align-items:flex-end;}
+.msg-row.right{flex-direction:row-reverse;}
+.mini-av{width:20px;height:20px;border-radius:6px;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:800;color:#fff;flex-shrink:0;}
+.bubble{padding:7px 10px;border-radius:10px;font-size:10.5px;line-height:1.45;max-width:78%;}
+.bubble.agent{background:#1e1e1e;color:rgba(255,255,255,.8);border-bottom-left-radius:2px;}
+.bubble.user{background:#2563eb;color:#fff;border-bottom-right-radius:2px;}
+.msg-time{font-size:8px;color:rgba(255,255,255,.2);margin-top:2px;}
+
+.resolved{margin:0 12px 10px;background:rgba(34,197,94,.07);border:1px solid rgba(34,197,94,.18);border-radius:7px;padding:7px 10px;display:flex;align-items:center;gap:7px;}
+.res-icon{width:16px;height:16px;flex-shrink:0;}
+.res-txt{font-size:9px;color:rgba(34,197,94,.85);line-height:1.35;}
+
+.input-area{background:#1a1a1a;border-top:1px solid rgba(255,255,255,.06);padding:9px 12px;display:flex;gap:8px;align-items:center;}
+.input-box{flex:1;background:#111;border:1px solid rgba(255,255,255,.08);border-radius:6px;padding:6px 10px;font-size:10px;color:rgba(255,255,255,.25);font-family:'Inter',sans-serif;}
+.send-btn{width:26px;height:26px;border-radius:6px;background:#2563eb;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="titlebar">
+    <span class="dot" style="background:#ff5f57;"></span>
+    <span class="dot" style="background:#ffbd2e;"></span>
+    <span class="dot" style="background:#28ca41;"></span>
+    <span class="title-txt">sofia-agente.ia</span>
+  </div>
+
+  <div class="chat-header">
+    <div class="av-wrap">
+      <div class="avatar"><span class="av-txt">S</span></div>
+      <span class="online"></span>
+    </div>
+    <div>
+      <div class="agent-name">Sofia</div>
+      <div class="agent-co">Assistente Virtual · Empresa XYZ</div>
+      <div class="agent-status">
+        <span class="status-pill"><span class="pulse"></span>Online agora</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- topic chips -->
+  <div class="topics">
+    <div class="topic">Pedidos</div>
+    <div class="topic">Financeiro</div>
+    <div class="topic">Suporte</div>
+    <div class="topic">Agenda</div>
+    <div class="topic">RH</div>
+  </div>
+
+  <div class="messages">
+    <div class="msg-row right">
+      <div>
+        <div class="bubble user">Oi Sofia, preciso da NF do pedido #2847</div>
+        <div class="msg-time" style="text-align:right;">14:23</div>
+      </div>
+    </div>
+    <div class="msg-row">
+      <div class="mini-av">S</div>
+      <div>
+        <div class="bubble agent">Oi! Localizei o pedido #2847. A NF-e foi emitida em 08/08 e ja enviada para seu e-mail cadastrado.</div>
+        <div class="msg-time">14:23</div>
+      </div>
+    </div>
+    <div class="msg-row right">
+      <div>
+        <div class="bubble user">E o status da entrega?</div>
+        <div class="msg-time" style="text-align:right;">14:24</div>
+      </div>
+    </div>
+    <div class="msg-row">
+      <div class="mini-av">S</div>
+      <div>
+        <div class="bubble agent">Em transito. Previsao: amanha ate 18h pelo Correios — codigo PE847291BR.</div>
+        <div class="msg-time">14:24</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="resolved">
+    <svg class="res-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="#22c55e" stroke-width="1.3"/><path d="M5 8l2 2 4-4" stroke="#22c55e" stroke-width="1.4" stroke-linecap="round"/></svg>
+    <span class="res-txt">2 perguntas resolvidas em 38 segundos · Sem intervencao humana</span>
+  </div>
+
+  <div class="input-area">
+    <div class="input-box">Pergunte qualquer coisa...</div>
+    <div class="send-btn">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 6h10M7 2l4 4-4 4" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </div>
+  </div>
+</div>
+</body>
+</html>

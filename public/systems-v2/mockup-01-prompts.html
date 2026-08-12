@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:transparent;display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:'Inter',sans-serif;}
+.card{width:320px;background:#111;border-radius:10px;overflow:hidden;box-shadow:0 28px 72px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.07);}
+.titlebar{height:36px;background:#1a1a1a;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;padding:0 12px;gap:6px;}
+.dot{width:10px;height:10px;border-radius:50%;}
+.title-txt{font-size:11px;font-weight:500;color:rgba(255,255,255,.3);margin-left:6px;}
+
+.tabs{display:flex;border-bottom:1px solid rgba(255,255,255,.06);}
+.tab{font-size:10.5px;padding:7px 14px;color:rgba(255,255,255,.3);cursor:default;font-family:'Inter',sans-serif;}
+.tab.active{color:#fff;background:#111;border-top:1px solid #569cd6;border-right:1px solid rgba(255,255,255,.06);}
+.code{padding:14px 0 14px;background:#111;}
+.line{display:flex;align-items:flex-start;padding:1px 14px 1px 0;}
+.ln{width:32px;text-align:right;font-size:10px;color:rgba(255,255,255,.18);font-family:'JetBrains Mono',monospace;padding-right:16px;flex-shrink:0;line-height:1.6;}
+.code-txt{font-size:10.5px;font-family:'JetBrains Mono',monospace;line-height:1.6;white-space:pre;}
+.c-comment{color:#6a9955;} .c-key{color:#569cd6;} .c-str{color:#ce9178;} .c-var{color:#9cdcfe;} .c-op{color:#d4d4d4;} .c-hl{background:rgba(86,156,214,.12);}
+
+.statusbar{background:#007acc;padding:4px 10px;display:flex;justify-content:space-between;align-items:center;}
+.sb-txt{font-size:9.5px;color:rgba(255,255,255,.85);font-family:'Inter',sans-serif;}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="titlebar">
+    <span class="dot" style="background:#ff5f57;"></span>
+    <span class="dot" style="background:#ffbd2e;"></span>
+    <span class="dot" style="background:#28ca41;"></span>
+    <span class="title-txt">prompt-atendimento.md</span>
+  </div>
+  <div class="tabs">
+    <div class="tab active">prompt-atendimento.md</div>
+    <div class="tab">prompt-vendas.md</div>
+  </div>
+  <div class="code">
+    <div class="line"><span class="ln">1</span><span class="code-txt c-comment"># Agente de Atendimento — v3.2</span></div>
+    <div class="line"><span class="ln">2</span><span class="code-txt c-op"> </span></div>
+    <div class="line c-hl"><span class="ln">3</span><span class="code-txt"><span class="c-key">role</span><span class="c-op">: </span><span class="c-str">"Assistente especializado"</span></span></div>
+    <div class="line"><span class="ln">4</span><span class="code-txt c-op"> </span></div>
+    <div class="line"><span class="ln">5</span><span class="code-txt"><span class="c-key">context</span><span class="c-op">: |</span></span></div>
+    <div class="line"><span class="ln">6</span><span class="code-txt">  <span class="c-var">empresa</span><span class="c-op">:</span> <span class="c-str">{{company_name}}</span></span></div>
+    <div class="line"><span class="ln">7</span><span class="code-txt">  <span class="c-var">tom</span><span class="c-op">:</span> <span class="c-str">profissional, direto</span></span></div>
+    <div class="line"><span class="ln">8</span><span class="code-txt c-op"> </span></div>
+    <div class="line"><span class="ln">9</span><span class="code-txt"><span class="c-key">rules</span><span class="c-op">:</span></span></div>
+    <div class="line"><span class="ln">10</span><span class="code-txt">  <span class="c-op">- </span><span class="c-str">Responder em até 3 linhas</span></span></div>
+    <div class="line"><span class="ln">11</span><span class="code-txt">  <span class="c-op">- </span><span class="c-str">Escalar se não souber</span></span></div>
+    <div class="line"><span class="ln">12</span><span class="code-txt">  <span class="c-op">- </span><span class="c-str">Nunca inventar dados</span></span></div>
+    <div class="line"><span class="ln">13</span><span class="code-txt c-op"> </span></div>
+    <div class="line"><span class="ln">14</span><span class="code-txt"><span class="c-comment"># 12 prompts incluídos no kit</span></span></div>
+  </div>
+  <div class="statusbar">
+    <span class="sb-txt">Markdown</span>
+    <span class="sb-txt">Kit IAplicada · Módulo 01</span>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:transparent;display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:'Inter',sans-serif;}
+.card{width:320px;background:#111;border-radius:10px;overflow:hidden;box-shadow:0 28px 72px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.07);}
+.titlebar{height:36px;background:#1a1a1a;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;padding:0 12px;gap:6px;}
+.dot{width:10px;height:10px;border-radius:50%;}
+.title-txt{font-size:11px;font-weight:500;color:rgba(255,255,255,.3);margin-left:6px;}
+
+.seq-header{padding:12px 14px 10px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between;align-items:center;}
+.seq-title{font-size:11.5px;font-weight:700;color:#fff;}
+.seq-badge{font-size:9px;font-weight:600;padding:2px 8px;border-radius:20px;background:rgba(244,63,94,.1);color:#f43f5e;border:1px solid rgba(244,63,94,.25);}
+
+.steps{padding:12px 14px;}
+.step{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;position:relative;}
+.step:not(:last-child)::after{content:'';position:absolute;left:13px;top:26px;width:1px;height:calc(100% - 6px);background:rgba(255,255,255,.08);}
+.step-circle{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;position:relative;z-index:1;}
+.step-circle.done{border:2px solid #16a34a;background:rgba(22,163,74,.1);}
+.step-circle.active{border:2px solid #3b82f6;background:rgba(59,130,246,.1);}
+.step-circle.todo{border:2px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);}
+.step-body{flex:1;padding-top:3px;}
+.step-day{font-size:9px;font-weight:700;color:rgba(255,255,255,.3);margin-bottom:1px;}
+.step-name{font-size:10.5px;font-weight:600;color:rgba(255,255,255,.8);}
+.step-sub{font-size:9px;color:rgba(255,255,255,.3);margin-top:1px;}
+.step-status{font-size:8.5px;font-weight:600;margin-top:3px;}
+.s-sent{color:#22c55e;} .s-pend{color:#60a5fa;} .s-todo{color:rgba(255,255,255,.25);}
+
+.stats{display:flex;justify-content:space-between;padding:10px 14px;background:#1a1a1a;border-top:1px solid rgba(255,255,255,.06);}
+.stat{text-align:center;}
+.stat-val{font-size:14px;font-weight:700;color:#fff;}
+.stat-lbl{font-size:8.5px;color:rgba(255,255,255,.3);margin-top:2px;}
+
+.footer{padding:7px 14px;border-top:1px solid rgba(255,255,255,.06);display:flex;align-items:center;gap:5px;}
+.footer-dot{width:6px;height:6px;border-radius:50%;background:#3b82f6;}
+.footer-txt{font-size:9px;color:rgba(255,255,255,.3);}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="titlebar">
+    <span class="dot" style="background:#ff5f57;"></span>
+    <span class="dot" style="background:#ffbd2e;"></span>
+    <span class="dot" style="background:#28ca41;"></span>
+    <span class="title-txt">cadencia-vendas-b2b.flow</span>
+  </div>
+  <div class="seq-header">
+    <div class="seq-title">Cadencia de Vendas B2B</div>
+    <div class="seq-badge">23 leads ativos</div>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-circle done">
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2.5L8 2.5" stroke="#22c55e" stroke-width="1.4" stroke-linecap="round"/></svg>
+      </div>
+      <div class="step-body">
+        <div class="step-day">D+0</div>
+        <div class="step-name">WhatsApp de apresentacao</div>
+        <div class="step-sub">Enviado automaticamente</div>
+        <div class="step-status s-sent">Enviado · 41,3% de resposta</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-circle done">
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2.5L8 2.5" stroke="#22c55e" stroke-width="1.4" stroke-linecap="round"/></svg>
+      </div>
+      <div class="step-body">
+        <div class="step-day">D+2</div>
+        <div class="step-name">E-mail de valor</div>
+        <div class="step-sub">Conteudo personalizado por setor</div>
+        <div class="step-status s-sent">Enviado · 28,7% de abertura</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-circle active">
+        <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><circle cx="4" cy="4" r="2.5" stroke="#60a5fa" stroke-width="1.2"/><circle cx="4" cy="4" r="1" fill="#60a5fa"/></svg>
+      </div>
+      <div class="step-body">
+        <div class="step-day">D+5</div>
+        <div class="step-name">Ligacao estrategica</div>
+        <div class="step-sub">Roteiro incluido no kit</div>
+        <div class="step-status s-pend">Em andamento</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-circle todo"></div>
+      <div class="step-body">
+        <div class="step-day">D+8</div>
+        <div class="step-name">Ultima tentativa</div>
+        <div class="step-sub">Auto-concessao + deadline</div>
+        <div class="step-status s-todo">Agendado</div>
+      </div>
+    </div>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="stat-val">23</div><div class="stat-lbl">em cadencia</div></div>
+    <div class="stat"><div class="stat-val">41%</div><div class="stat-lbl">resp. WhatsApp</div></div>
+    <div class="stat"><div class="stat-val">11%</div><div class="stat-lbl">conversao</div></div>
+  </div>
+  <div class="footer">
+    <span class="footer-dot"></span>
+    <span class="footer-txt">Kit IAplicada · Modulo 02 · Cadencia automatica</span>
+  </div>
+</div>
+</body>
+</html>
