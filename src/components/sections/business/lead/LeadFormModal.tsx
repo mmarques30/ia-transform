@@ -27,7 +27,7 @@ const ETAPAS = [
 ];
 
 const GARGALOS = [
-  { value: "operacao", label: "Operação desorganizada — tudo passa por mim" },
+  { value: "operacao", label: "Operação desorganizada, tudo passa por mim" },
   { value: "pessoas", label: "Dependência de pessoas-chave na equipe" },
   { value: "informacao", label: "Perda de informações entre setores" },
   { value: "escala", label: "Não consigo escalar sem contratar mais" },
@@ -97,7 +97,7 @@ function LeadModal({ onClose }: { onClose: () => void }) {
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
       <div
-        className="relative w-full max-w-[520px] max-h-[92vh] overflow-y-auto"
+        className="relative w-full max-w-[520px] max-h-[92vh] overflow-y-auto rounded-2xl"
         style={{
           background: "#111310",
           border: "1px solid rgba(139,155,58,0.22)",
@@ -350,7 +350,7 @@ function FormState({ onSuccess }: { onSuccess: () => void }) {
             type="submit"
             disabled={loading || !allFilled}
             loading={loading}
-            className="w-full mt-2 rounded-none py-[17px] text-[13px] tracking-[0.09em]"
+            className="w-full mt-2 py-[17px] text-[13px] tracking-[0.09em]"
           >
             {loading ? loadingMsg || "Enviando..." : (
               <>
@@ -360,10 +360,11 @@ function FormState({ onSuccess }: { onSuccess: () => void }) {
             )}
           </OriginButton>
 
-          <p className="text-[11px] text-center leading-relaxed" style={{ color: "var(--text-muted, #8a8e82)" }}>
-            Ao enviar, você autoriza contato por e-mail e WhatsApp.
-            <br />
-            Sem spam. Cancele quando quiser.
+          <p
+            className="text-[10px] text-center uppercase tracking-[0.06em] mt-3"
+            style={{ color: "var(--text-muted, #8a8e82)" }}
+          >
+            Gratuito &#10038; Acesso imediato
           </p>
         </form>
       </div>
@@ -395,10 +396,10 @@ function SuccessState() {
         href={KIT_LINK}
         target="_blank"
         rel="noopener"
-        className="mt-8 inline-flex items-center gap-2.5 px-7 py-4 font-bold text-[13px] uppercase tracking-[0.08em] transition-colors"
+        className="mt-8 inline-flex items-center gap-2.5 px-7 py-4 rounded-full font-bold text-[13px] uppercase tracking-[0.08em] transition-colors"
         style={{
           background: "var(--color-primary)",
-          color: "#fff",
+          color: "#0a0c07",
         }}
       >
         Acessar o kit completo

@@ -82,7 +82,7 @@ export function LeadCtaFinal({ onOpenModal }: LeadCtaFinalProps) {
               className="mt-2.5 text-[12px] uppercase tracking-[0.06em]"
               style={{ color: "var(--text-muted, #8a8e82)" }}
             >
-              Gratuito &#10038; Acesso imediato &#10038; Sem cartao
+              Gratuito &#10038; Acesso imediato
             </p>
           </Reveal>
 
