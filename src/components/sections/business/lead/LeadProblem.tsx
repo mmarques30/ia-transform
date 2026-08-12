@@ -1,5 +1,6 @@
 import { lazy, Suspense } from "react";
 import { Reveal } from "@/components/Reveal";
+import { OriginButton } from "@/components/ui/origin-button";
 
 const IAPLogo3D = lazy(() =>
   import("./IAPLogo3D").then((m) => ({ default: m.IAPLogo3D }))
@@ -80,19 +81,9 @@ export function LeadProblem({ onOpenModal }: LeadProblemProps) {
 
               <Reveal delay={0.3}>
                 <div className="mt-8 text-center lg:text-left">
-                  <button
-                    type="button"
-                    onClick={onOpenModal}
-                    className="cta-glow-btn inline-flex items-center justify-center gap-2.5 px-7 py-5 rounded-[10px] font-black text-[13.5px] lg:text-[14.5px] uppercase tracking-[0.06em] no-underline"
-                    style={{
-                      background: "linear-gradient(180deg, #d5e95a, #7a8f30)",
-                      color: "#0a0c07",
-                      boxShadow:
-                        "0 0 0 6px rgba(200,224,64,0.15), 0 24px 48px -14px rgba(200,224,64,0.5), inset 0 -2px 0 rgba(0,0,0,0.2)",
-                    }}
-                  >
+                  <OriginButton onClick={onOpenModal}>
                     Quero o kit gratuito &rarr;
-                  </button>
+                  </OriginButton>
                 </div>
               </Reveal>
             </div>

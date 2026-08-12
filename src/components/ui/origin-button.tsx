@@ -138,14 +138,18 @@ const OriginButton = React.forwardRef<HTMLButtonElement, OriginButtonProps>(
         {...props}
         aria-busy={loading || undefined}
         className={cn(
-          "relative inline-flex h-14 cursor-pointer touch-manipulation select-none items-center justify-center overflow-hidden rounded-xl px-8 font-bold text-[14px] uppercase tracking-[0.06em]",
-          "border border-[rgba(200,224,64,0.25)] bg-[#111408] text-[#e8ecd0]",
+          "relative inline-flex cursor-pointer touch-manipulation select-none items-center justify-center overflow-hidden rounded-[10px] px-8 py-5 font-black text-[14px] lg:text-[15px] uppercase tracking-[0.06em]",
           "transition-[color] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]",
-          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(200,224,64,0.4)] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0c07]",
+          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(200,224,64,0.5)] focus-visible:ring-offset-2 focus-visible:ring-offset-[#080a07]",
           "disabled:pointer-events-none disabled:opacity-50",
-          showFill && "text-[#0a0c07]",
           className
         )}
+        style={{
+          background: "linear-gradient(180deg, #d5e95a, #7a8f30)",
+          color: showFill ? "#d5e95a" : "#0a0c07",
+          boxShadow:
+            "0 0 0 6px rgba(200,224,64,0.15), 0 24px 48px -14px rgba(200,224,64,0.5), inset 0 -2px 0 rgba(0,0,0,0.2)",
+        }}
         data-pressed={isPressed ? "true" : "false"}
         disabled={isDisabled}
         onBlur={(event) => {
@@ -211,11 +215,11 @@ const OriginButton = React.forwardRef<HTMLButtonElement, OriginButtonProps>(
             left: origin.x,
             top: origin.y,
             width: coverSize,
-            background: "linear-gradient(135deg, #c8e040, #a4be34)",
+            background: "#0a0c07",
           }}
           transition={fillTransition}
         />
-        <span className="relative z-10 inline-flex items-center justify-center gap-2">
+        <span className="relative z-10 inline-flex items-center justify-center gap-2.5">
           {children}
         </span>
       </motion.button>
