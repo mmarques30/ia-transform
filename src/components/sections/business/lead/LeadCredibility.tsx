@@ -7,9 +7,9 @@ interface LeadCredibilityProps {
 
 const BULLETS: string[] = [
   "Mariana Marques · Fundadora da IAplicada",
-  "11 anos como executiva em Mercado Livre, Suzano e Amor Gold",
-  "Especialista em transformacao digital para LATAM",
-  "Referencia em IA aplicada para crescimento sem contratacao",
+  "11 anos como executiva no Mercado Livre, Suzano e Anglo Gold",
+  "Especialista em transformação de processos LATAM",
+  "Referência em IA aplicada para crescimento sem contratação",
 ];
 
 export function LeadCredibility({ onOpenModal }: LeadCredibilityProps) {
@@ -64,7 +64,7 @@ export function LeadCredibility({ onOpenModal }: LeadCredibilityProps) {
               <strong className="text-foreground font-semibold">
                 Criou a IAplicada para trazer esse mesmo padrao para empresas de medio porte:
               </strong>{" "}
-              software + IA + automacoes + integracoes, implementados, nao so ensinados.
+              software + IA + automações + integrações, implementados sem complicação, não só ensinados.
             </p>
 
             <div className="mt-7">
