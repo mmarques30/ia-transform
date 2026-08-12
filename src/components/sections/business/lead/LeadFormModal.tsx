@@ -10,6 +10,7 @@ import {
   type ReactNode,
 } from "react";
 import { AlertCircle, ArrowRight, CheckCircle2, X } from "lucide-react";
+import { OriginButton } from "@/components/ui/origin-button";
 import { getMetaPixelCookies, getFbclidFromUrl } from "@/lib/metaCookies";
 
 const FORM_ENDPOINT = "https://ciwdlceyjsnlnunktqzx.supabase.co/functions/v1/form-submit";
@@ -345,14 +346,11 @@ function FormState({ onSuccess }: { onSuccess: () => void }) {
             </div>
           )}
 
-          <button
+          <OriginButton
             type="submit"
             disabled={loading || !allFilled}
-            className="w-full mt-2 inline-flex items-center justify-center gap-2 py-[17px] font-bold text-[13px] uppercase tracking-[0.09em] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-            style={{
-              background: loading ? "rgba(139,155,58,0.7)" : "var(--color-primary)",
-              color: "#fff",
-            }}
+            loading={loading}
+            className="w-full mt-2 rounded-none py-[17px] text-[13px] tracking-[0.09em]"
           >
             {loading ? loadingMsg || "Enviando..." : (
               <>
@@ -360,7 +358,7 @@ function FormState({ onSuccess }: { onSuccess: () => void }) {
                 <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
               </>
             )}
-          </button>
+          </OriginButton>
 
           <p className="text-[11px] text-center leading-relaxed" style={{ color: "var(--text-muted, #8a8e82)" }}>
             Ao enviar, voce autoriza contato por e-mail e WhatsApp.
