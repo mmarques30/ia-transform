@@ -16,8 +16,8 @@ import { CtaGlow } from "@/components/sections/business/variantB/CtaGlow";
 
 const BULLETS: string[] = [
   "Mariana Marques · Fundadora da IAplicada",
-  "+5 anos automatizando operações de PME",
-  "+40 sistemas implementados",
+  "+5 anos automatizando operações",
+  "+50 sistemas implementados",
   "Referência em IA aplicada para crescimento sem contratação",
 ];
 
@@ -68,8 +68,8 @@ export function MentorMari() {
               <strong className="text-foreground font-semibold">
                 Não entregamos recomendação. Entregamos sistema rodando.
               </strong>{" "}
-              Cada projeto começa com um diagnóstico com a IAplicada — e o sistema é construído para
-              o jeito que o seu negócio funciona.
+              Cada projeto começa com um diagnóstico com a IAplicada e o sistema é construído para o
+              jeito que o seu negócio funciona.
             </p>
 
             <div className="mt-7">
