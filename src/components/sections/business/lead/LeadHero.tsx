@@ -47,9 +47,9 @@ export function LeadHero({ onOpenModal }: LeadHeroProps) {
             >
               Automatize{" "}
               <span style={{ color: "var(--color-primary)" }}>o que trava</span>{" "}
-              sua operacao.{" "}
+              sua operação.{" "}
               <span style={{ color: "var(--color-primary)" }}>
-                Sem contratar ninguem.
+                Sem contratar ninguém.
               </span>
             </h1>
           </Reveal>

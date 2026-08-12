@@ -63,7 +63,7 @@ export function LeadCredibility({ onOpenModal }: LeadCredibilityProps) {
 
             <p className="mt-6 text-[14px] lg:text-[14.5px] text-sage leading-[1.55] max-w-[560px]">
               <strong className="text-foreground font-semibold">
-                Criou a IAplicada para trazer esse mesmo padrao para empresas de medio porte:
+                Criou a IAplicada para trazer esse mesmo padrão para empresas de médio porte:
               </strong>{" "}
               software + IA + automações + integrações, implementados sem complicação, não só ensinados.
             </p>

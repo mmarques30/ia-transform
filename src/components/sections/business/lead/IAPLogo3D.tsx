@@ -47,7 +47,7 @@ function LogoFromGLB({ scale = 1 }: { scale?: number }) {
   }, [gltf.scene, material]);
 
   return (
-    <Float speed={1.5} rotationIntensity={0.08} floatIntensity={0.4}>
+    <Float speed={1.5} rotationIntensity={0.05} floatIntensity={0.2}>
       <group ref={group} scale={scale}>
         <primitive object={cloned} />
       </group>
@@ -182,7 +182,7 @@ export function IAPLogo3D({
   return (
     <div style={{ width, height }}>
       <Canvas
-        camera={{ position: [0, 0, 4.5], fov: 42 }}
+        camera={{ position: [0, 0, 6], fov: 36 }}
         gl={{
           antialias: true,
           alpha: true,

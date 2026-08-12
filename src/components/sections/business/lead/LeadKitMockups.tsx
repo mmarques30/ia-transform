@@ -22,7 +22,7 @@ const CARDS: MockupCard[] = [
   },
   {
     src: "/mockups/mockup-automacao.png",
-    label: "Automacoes",
+    label: "Automações",
     pos: "lead-mockup--br",
   },
 ];

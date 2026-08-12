@@ -66,7 +66,7 @@ export function LeadCtaFinal({ onOpenModal }: LeadCtaFinalProps) {
                   fontWeight: 500,
                 }}
               >
-                Para voce em minutos.
+                Para você em minutos.
               </em>
             </h2>
           </Reveal>

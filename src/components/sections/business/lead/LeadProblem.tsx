@@ -13,7 +13,7 @@ interface LeadProblemProps {
 
 const PROBLEMS: { icon: typeof AlertCircle; title: string; text: string }[] = [
   { icon: AlertCircle, title: "Dependência total de você", text: "Cada decisão operacional passa por você. A empresa só avança quando você está presente." },
-  { icon: Clock, title: "Tempo desperdiçado", text: "O time gasta horas em tarefas que deveriam ser automáticas, todo santo dia." },
+  { icon: Clock, title: "Tempo desperdiçado", text: "O time gasta horas em tarefas que deveriam ser automáticas. Todo santo dia." },
   { icon: Puzzle, title: "IA sem encaixe", text: "Você experimenta ferramentas de IA, mas nada encaixa no processo real da operação." },
   { icon: Users, title: "Mais gente, mesmo gargalo", text: "Contratar mais gente resolve no curto prazo. E cria outro gargalo logo depois." },
 ];
@@ -28,18 +28,18 @@ export function LeadProblem({ onOpenModal }: LeadProblemProps) {
               className="text-center font-extrabold text-[24px] sm:text-[32px] lg:text-[38px] leading-[1.15] tracking-[-0.02em] max-w-[880px] mx-auto uppercase"
               style={{ textWrap: "balance", color: "var(--color-primary)" }}
             >
-              Sua empresa esta{" "}
-              <span className="text-foreground">refem da sua presenca.</span>
+              Sua empresa está{" "}
+              <span className="text-foreground">refém da sua presença.</span>
               <br className="hidden sm:block" /> E contratar mais gente{" "}
-              <span className="text-foreground">nao resolve.</span>
+              <span className="text-foreground">não resolve.</span>
             </h2>
           </Reveal>
 
-          <div className="mt-14 lg:mt-16 grid lg:grid-cols-[320px_1fr] gap-10 lg:gap-20 items-center max-w-[1100px] mx-auto">
+          <div className="mt-14 lg:mt-16 grid lg:grid-cols-[380px_1fr] gap-10 lg:gap-16 items-center max-w-[1100px] mx-auto">
             <Reveal delay={0.08}>
               <div className="hidden lg:flex items-center justify-center">
                 <Suspense fallback={null}>
-                  <IAPLogo3D width={300} height={300} scale={1.5} />
+                  <IAPLogo3D width={360} height={360} scale={1.6} />
                 </Suspense>
               </div>
             </Reveal>
@@ -88,11 +88,11 @@ export function LeadProblem({ onOpenModal }: LeadProblemProps) {
 
           <Reveal delay={0.4}>
             <p className="mt-14 text-center text-[18px] lg:text-[22px] leading-[1.35] max-w-[720px] mx-auto text-foreground">
-              IA nao e hype. E a unica forma de{" "}
+              IA não é hype. É a única forma de{" "}
               <strong style={{ color: "var(--color-primary)" }} className="font-extrabold">
                 escalar sem inflar a folha.
               </strong>{" "}
-              E este kit mostra como comecar.
+              E este kit mostra como começar.
             </p>
           </Reveal>
 
