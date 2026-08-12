@@ -23,7 +23,7 @@ const KIT_ITEMS: DeliverableItem[] = [
     n: "03",
     title: "Agentes de IA Configurados",
     detail:
-      "Exemplos reais de agentes rodando em operações — com contexto de como foram configurados e o que cada um resolve.",
+      "Exemplos reais de agentes rodando em operações, com contexto de como foram configurados e o que cada um resolve.",
   },
 ];
 
@@ -71,7 +71,7 @@ export function LeadKitContent() {
               </h2>
               <p className="mt-5 text-[14.5px] lg:text-[15.5px] text-sage leading-[1.65]">
                 Cada módulo foi construído a partir de implementações reais. Não é conteúdo
-                teórico — é o que já está funcionando em empresas como a sua.
+                teórico, é o que já está funcionando em empresas como a sua.
               </p>
               <p className="mt-4 text-[14.5px] lg:text-[15.5px] text-sage leading-[1.65]">
                 Sem teoria. Sem enrolação.{" "}
