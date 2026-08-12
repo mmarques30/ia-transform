@@ -9,7 +9,7 @@ import {
   type FocusEvent,
   type ReactNode,
 } from "react";
-import { AlertCircle, ArrowRight, CheckCircle2, X } from "lucide-react";
+import { AlertCircle, ArrowRight, CheckCircle2, Mail, MessageCircle, X } from "lucide-react";
 import { OriginButton } from "@/components/ui/origin-button";
 import { getMetaPixelCookies, getFbclidFromUrl } from "@/lib/metaCookies";
 
@@ -17,7 +17,6 @@ const FORM_ENDPOINT = "https://ciwdlceyjsnlnunktqzx.supabase.co/functions/v1/for
 const SUPABASE_ANON_KEY =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNpd2RsY2V5anNubG51bmt0cXp4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyMTU3OTksImV4cCI6MjA4OTc5MTc5OX0.tl-7gEObYBB7wDUS5_pKh9UyRlJQNdnWPiRpMFYrbUM";
 
-const KIT_LINK = "[LINK_DO_KIT]";
 
 const FAIXAS = [
   { value: "Menos de R$ 1 milhão", label: "Menos de R$ 1 milhão" },
@@ -377,35 +376,63 @@ function SuccessState() {
   return (
     <div className="text-center px-8 py-14">
       <span
-        className="inline-flex h-14 w-14 items-center justify-center rounded-full mx-auto mb-6"
+        className="inline-flex h-16 w-16 items-center justify-center rounded-full mx-auto mb-6"
         style={{
-          backgroundColor: "rgba(139,155,58,0.12)",
-          border: "1px solid rgba(139,155,58,0.35)",
+          backgroundColor: "rgba(139,155,58,0.15)",
+          border: "1.5px solid rgba(139,155,58,0.4)",
+          boxShadow: "0 0 30px -6px rgba(200,224,64,0.2)",
         }}
       >
-        <CheckCircle2 className="h-7 w-7" strokeWidth={2} style={{ color: "var(--color-primary)" }} />
+        <CheckCircle2 className="h-8 w-8" strokeWidth={2} style={{ color: "var(--color-primary)" }} />
       </span>
 
-      <h3 className="text-[21px] font-bold text-foreground">Kit enviado!</h3>
-      <p className="mt-3 text-[14px] leading-[1.75]" style={{ color: "var(--text-sage, #c4c8bc)" }}>
-        O link chegou no seu e-mail e WhatsApp.
+      <h3 className="text-[22px] font-bold text-foreground">Pronto! Kit a caminho.</h3>
+      <p className="mt-3 text-[14px] leading-[1.7]" style={{ color: "var(--text-sage, #c4c8bc)" }}>
+        Enviamos o acesso completo para você.
         <br />
-        Acesse agora pelo botao abaixo.
+        Confira agora:
       </p>
 
-      <a
-        href={KIT_LINK}
-        target="_blank"
-        rel="noopener"
-        className="mt-8 inline-flex items-center gap-2.5 px-7 py-4 rounded-full font-bold text-[13px] uppercase tracking-[0.08em] transition-colors"
-        style={{
-          background: "var(--color-primary)",
-          color: "#0a0c07",
-        }}
+      <div className="mt-7 flex flex-col gap-3 max-w-[320px] mx-auto">
+        <div
+          className="flex items-center gap-3 rounded-xl px-5 py-4 text-left"
+          style={{
+            background: "rgba(139,155,58,0.08)",
+            border: "1px solid rgba(139,155,58,0.25)",
+          }}
+        >
+          <MessageCircle className="h-5 w-5 shrink-0" style={{ color: "var(--color-primary)" }} />
+          <div>
+            <p className="text-[13px] font-semibold text-foreground">WhatsApp</p>
+            <p className="text-[12px]" style={{ color: "var(--text-sage, #c4c8bc)" }}>
+              Verifique suas mensagens
+            </p>
+          </div>
+        </div>
+
+        <div
+          className="flex items-center gap-3 rounded-xl px-5 py-4 text-left"
+          style={{
+            background: "rgba(139,155,58,0.08)",
+            border: "1px solid rgba(139,155,58,0.25)",
+          }}
+        >
+          <Mail className="h-5 w-5 shrink-0" style={{ color: "var(--color-primary)" }} />
+          <div>
+            <p className="text-[13px] font-semibold text-foreground">E-mail</p>
+            <p className="text-[12px]" style={{ color: "var(--text-sage, #c4c8bc)" }}>
+              Confira sua caixa de entrada
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <p
+        className="mt-7 text-[11px] uppercase tracking-[0.08em]"
+        style={{ color: "var(--text-muted, #8a8e82)" }}
       >
-        Acessar o kit completo
-        <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
-      </a>
+        &#10038; IAplicada
+      </p>
     </div>
   );
 }
