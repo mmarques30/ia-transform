@@ -61,7 +61,7 @@ export function Guarantee() {
 
           <Reveal delay={0.15}>
             <div
-              className="mt-10 lg:mt-14 rounded-[20px] px-8 py-8 lg:px-10 lg:py-10 text-left"
+              className="mt-10 lg:mt-14 rounded-[20px] px-8 py-8 lg:px-10 lg:py-10 text-center"
               style={{
                 background: "linear-gradient(160deg, rgba(200,224,64,0.08) 0%, rgba(200,224,64,0.02) 100%)",
                 border: "1.5px solid rgba(200,224,64,0.3)",
