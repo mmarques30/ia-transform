@@ -8,50 +8,67 @@ export function LeadHero({ onOpenModal }: LeadHeroProps) {
   return (
     <section className="hero-section-b">
       <HeroFlowBg />
-      <div className="hero-b">
-        <div className="hero-b-text">
+      <div
+        className="relative z-[3] w-full max-w-[1280px] mx-auto px-6 lg:px-12 py-[72px]"
+      >
+        <div className="max-w-[860px] mx-auto text-center">
           <Reveal>
-            <img
-              src="/brand/iaplicada-logo-dark.png"
-              alt="IAplicada"
-              height={28}
-              className="hero-b-logo"
-            />
-          </Reveal>
-
-          <Reveal delay={0.05}>
-            <h1 className="hero-b-h1">
-              <span className="hero-b-h1-sans">Automatize</span>
-              <br />
-              <em className="hero-b-h1-em">o que trava</em>
-              <br />
-              <span className="hero-b-h1-sans">sua operacao.</span>
-              <br />
-              <em className="hero-b-h1-em">Sem contratar ninguem.</em>
+            <h1
+              className="font-extrabold leading-[1.04] tracking-[-0.03em] text-foreground"
+              style={{
+                fontFamily: '"Instrument Serif", serif',
+                fontStyle: "italic",
+                fontSize: "clamp(40px, 7vw, 68px)",
+                textWrap: "balance",
+              }}
+            >
+              Automatize{" "}
+              <span style={{ color: "var(--color-primary)" }}>o que trava</span>{" "}
+              sua operacao.{" "}
+              <span style={{ color: "var(--color-primary)" }}>
+                Sem contratar ninguem.
+              </span>
             </h1>
           </Reveal>
 
-          <Reveal delay={0.08}>
-            <p className="hero-b-sub">
+          <Reveal delay={0.05}>
+            <p
+              className="mt-5"
+              style={{
+                fontFamily: '"Instrument Serif", serif',
+                fontStyle: "italic",
+                fontSize: "clamp(18px, 3vw, 24px)",
+                lineHeight: 1.35,
+                color: "var(--color-foreground, #f4f5ec)",
+              }}
+            >
               Prompts, automacoes e agentes de IA{" "}
               <em style={{ color: "var(--color-primary)" }}>prontos para usar</em> na sua empresa
               — testados em operacoes reais, nao em teoria.
             </p>
           </Reveal>
 
-          <Reveal delay={0.1}>
-            <p className="hero-b-p">
+          <Reveal delay={0.08}>
+            <p
+              className="mt-4 mx-auto"
+              style={{
+                maxWidth: "42ch",
+                fontSize: "15.5px",
+                lineHeight: 1.65,
+                color: "var(--text-sage, #a3a898)",
+              }}
+            >
               Um kit gratuito com tudo que voce precisa para comecar a automatizar
               processos — sem equipe de TI e sem saber programar.
             </p>
           </Reveal>
 
-          <Reveal delay={0.14}>
-            <div className="mt-8">
+          <Reveal delay={0.12}>
+            <div className="mt-9">
               <button
                 type="button"
                 onClick={onOpenModal}
-                className="cta-glow-btn inline-flex items-center justify-center gap-2.5 px-7 py-5 rounded-[10px] font-black text-[13.5px] lg:text-[14.5px] uppercase tracking-[0.06em] no-underline"
+                className="cta-glow-btn inline-flex items-center justify-center gap-2.5 px-8 py-5 rounded-[10px] font-black text-[14px] lg:text-[15px] uppercase tracking-[0.06em]"
                 style={{
                   background: "linear-gradient(180deg, #d5e95a, #7a8f30)",
                   color: "#0a0c07",
@@ -70,88 +87,8 @@ export function LeadHero({ onOpenModal }: LeadHeroProps) {
             </div>
           </Reveal>
         </div>
-
-        <div className="hero-b-form-col">
-          <Reveal delay={0.15}>
-            <KitPreviewCard />
-          </Reveal>
-        </div>
       </div>
     </section>
-  );
-}
-
-const KIT_MODULES = [
-  { n: "01", title: "Prompts de IA para Operacao", desc: "Atendimento, financeiro e vendas" },
-  { n: "02", title: "Automacoes Prontas", desc: "Fluxos no-code para n8n e Make" },
-  { n: "03", title: "Agentes de IA Configurados", desc: "Exemplos rodando em empresas reais" },
-];
-
-function KitPreviewCard() {
-  return (
-    <div
-      style={{
-        background: "#141613",
-        border: "1px solid rgba(139,155,58,0.18)",
-      }}
-    >
-      <div className="p-7 lg:p-8">
-        <span
-          className="text-[10px] font-semibold uppercase tracking-[0.14em] block mb-5"
-          style={{
-            color: "var(--color-primary)",
-            fontFamily: '"JetBrains Mono", ui-monospace, Menlo, monospace',
-          }}
-        >
-          O que esta dentro
-        </span>
-        <h3 className="text-[18px] font-bold tracking-[-0.02em] text-foreground">
-          Kit de Automacao com IA
-        </h3>
-        <p className="mt-1.5 text-[12px]" style={{ color: "var(--text-muted, #8a8e82)" }}>
-          3 modulos prontos para implementar
-        </p>
-
-        <div className="mt-7 flex flex-col gap-2.5">
-          {KIT_MODULES.map((m) => (
-            <div
-              key={m.n}
-              className="flex items-start gap-3.5 p-3.5"
-              style={{
-                background: "rgba(255,255,255,0.03)",
-                border: "1px solid rgba(255,255,255,0.07)",
-              }}
-            >
-              <span
-                className="shrink-0 text-[10px] font-bold tracking-[0.1em] pt-0.5"
-                style={{ color: "var(--color-primary)" }}
-              >
-                {m.n}
-              </span>
-              <div>
-                <p className="text-[13px] font-semibold text-foreground">{m.title}</p>
-                <p className="text-[11px] mt-0.5" style={{ color: "var(--text-muted, #8a8e82)" }}>
-                  {m.desc}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-6">
-          <span
-            className="inline-block px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.08em]"
-            style={{
-              background: "rgba(139,155,58,0.1)",
-              border: "1px solid rgba(139,155,58,0.3)",
-              color: "var(--color-primary)",
-            }}
-          >
-            R$ 0 — Acesso imediato
-          </span>
-        </div>
-      </div>
-    </div>
   );
 }
 
