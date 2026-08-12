@@ -19,18 +19,19 @@ const SUPABASE_ANON_KEY =
 
 const KIT_LINK = "[LINK_DO_KIT]";
 
-const ETAPAS = [
-  { value: "ate500k", label: "Faturamento ate R$ 500 mil / ano" },
-  { value: "500k-1m", label: "R$ 500 mil – R$ 1 milhao / ano" },
-  { value: "1m-5m", label: "R$ 1 milhao – R$ 5 milhoes / ano" },
-  { value: "acima5m", label: "Acima de R$ 5 milhoes / ano" },
+const FAIXAS = [
+  { value: "Menos de R$ 1 milhão", label: "Menos de R$ 1 milhão" },
+  { value: "Entre 1MM e 5MM", label: "Entre 1MM e 5MM" },
+  { value: "Entre 5MM e 10MM", label: "Entre 5MM e 10MM" },
+  { value: "Entre 10MM e 50MM", label: "Entre 10MM e 50MM" },
+  { value: "Acima de 50MM", label: "Acima de 50MM" },
 ];
 
 const GARGALOS = [
-  { value: "operacao", label: "Operação desorganizada, tudo passa por mim" },
-  { value: "pessoas", label: "Dependência de pessoas-chave na equipe" },
-  { value: "informacao", label: "Perda de informações entre setores" },
-  { value: "escala", label: "Não consigo escalar sem contratar mais" },
+  { value: "Operação desorganizada, tudo passa por mim", label: "Operação desorganizada, tudo passa por mim" },
+  { value: "Dependência de pessoas-chave na equipe", label: "Dependência de pessoas-chave na equipe" },
+  { value: "Perda de informações entre setores", label: "Perda de informações entre setores" },
+  { value: "Não consigo escalar sem contratar mais", label: "Não consigo escalar sem contratar mais" },
 ];
 
 const LOADING_STAGES = [
@@ -40,7 +41,7 @@ const LOADING_STAGES = [
   { at: 3200, text: "Quase la..." },
 ];
 
-const REQUIRED_FIELDS = ["firstname", "email", "phone", "etapa", "gargalo"] as const;
+const REQUIRED_FIELDS = ["firstname", "email", "phone", "faixa_faturamento", "gargalo"] as const;
 
 interface ModalCtx {
   isOpen: boolean;
@@ -202,12 +203,12 @@ function FormState({ onSuccess }: { onSuccess: () => void }) {
       const { fbp, fbc } = getMetaPixelCookies();
 
       const payload = {
-        form_slug: "lead",
+        form_slug: "isca-business-gargalos",
         fields: {
           firstname: String(fd.get("firstname") ?? "").trim(),
           email: String(fd.get("email") ?? "").trim(),
           phone: String(fd.get("phone") ?? "").trim(),
-          etapa: String(fd.get("etapa") ?? "").trim(),
+          faixa_faturamento: String(fd.get("faixa_faturamento") ?? "").trim(),
           gargalo: String(fd.get("gargalo") ?? "").trim(),
         },
         utm: {
@@ -317,14 +318,14 @@ function FormState({ onSuccess }: { onSuccess: () => void }) {
             Sobre sua empresa
           </p>
 
-          <ModalField id="etapa" label="Em qual etapa esta sua empresa?" error={fieldErrors.etapa}>
-            <select id="etapa" name="etapa" required defaultValue="" className="lead-input">
+          <ModalField id="faixa_faturamento" label="Em qual etapa está sua empresa?" error={fieldErrors.faixa_faturamento}>
+            <select id="faixa_faturamento" name="faixa_faturamento" required defaultValue="" className="lead-input">
               <option value="" disabled>Selecione</option>
-              {ETAPAS.map((e) => <option key={e.value} value={e.value}>{e.label}</option>)}
+              {FAIXAS.map((f) => <option key={f.value} value={f.value}>{f.label}</option>)}
             </select>
           </ModalField>
 
-          <ModalField id="gargalo" label="Qual e o seu maior gargalo hoje?" error={fieldErrors.gargalo}>
+          <ModalField id="gargalo" label="Qual é o seu maior gargalo hoje?" error={fieldErrors.gargalo}>
             <select id="gargalo" name="gargalo" required defaultValue="" className="lead-input">
               <option value="" disabled>Selecione</option>
               {GARGALOS.map((g) => <option key={g.value} value={g.value}>{g.label}</option>)}
