@@ -40,7 +40,7 @@ export function Hero() {
             <Reveal delay={0.08}>
               <p className="hero-b-sub">
                 Em até <em style={{ color: "var(--color-primary)" }}>90 dias</em> construímos o
-                software com IA que automatiza sua operação de ponta a ponta — sob medida para o
+                software com IA que automatiza sua operação de ponta a ponta, sob medida para o
                 jeito que seu negócio funciona. Sem ERP engessado. Sem consultoria que some depois
                 da apresentação.
               </p>

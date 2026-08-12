@@ -529,12 +529,12 @@ export function HeroForm({
         <p
           className={
             compact
-              ? "text-[15px] font-semibold tracking-tight"
-              : "mt-2 text-[16.5px] font-semibold tracking-tight"
+              ? "text-[17px] font-extrabold tracking-[-0.02em] leading-tight"
+              : "mt-2 text-[19px] font-extrabold tracking-[-0.02em] leading-tight"
           }
-          style={{ color: "oklch(0.18 0.02 122)" }}
+          style={{ color: "oklch(0.15 0.02 122)" }}
         >
-          Solicite seu diagnóstico
+          Vamos construir o seu?
         </p>
       </div>
 
