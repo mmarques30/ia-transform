@@ -1,5 +1,6 @@
 import { Reveal } from "@/components/Reveal";
-import { CtaGlow } from "@/components/sections/business/variantB/CtaGlow";
+import { OriginButton } from "@/components/ui/origin-button";
+import { useDiagnosticoModal } from "@/components/sections/business/variantB/DiagnosticoModal";
 
 export function Guarantee() {
   return (
@@ -90,12 +91,21 @@ export function Guarantee() {
           </Reveal>
 
           <Reveal delay={0.2}>
-            <div className="mt-10 text-center">
-              <CtaGlow size="lg">Garantir minha vaga →</CtaGlow>
-            </div>
+            <GuaranteeCta />
           </Reveal>
         </div>
       </div>
     </section>
+  );
+}
+
+function GuaranteeCta() {
+  const modal = useDiagnosticoModal();
+  return (
+    <div className="mt-10 text-center">
+      <OriginButton onClick={modal?.openModal}>
+        quero meu diagnóstico
+      </OriginButton>
+    </div>
   );
 }

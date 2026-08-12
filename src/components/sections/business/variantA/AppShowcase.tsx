@@ -1,5 +1,6 @@
 import { Reveal } from "@/components/Reveal";
-import { CtaGlow } from "@/components/sections/business/variantB/CtaGlow";
+import { OriginButton } from "@/components/ui/origin-button";
+import { useDiagnosticoModal } from "@/components/sections/business/variantB/DiagnosticoModal";
 import { PainelClientesShowcase } from "@/components/sections/business/variantB/painel/PainelClientesShowcase";
 
 /**
@@ -62,11 +63,20 @@ export function AppShowcase() {
         </Reveal>
 
         <Reveal delay={0.2}>
-          <div className="mt-12 text-center">
-            <CtaGlow size="md">Ver como funciona →</CtaGlow>
-          </div>
+          <AppShowcaseCta />
         </Reveal>
       </div>
     </section>
+  );
+}
+
+function AppShowcaseCta() {
+  const modal = useDiagnosticoModal();
+  return (
+    <div className="mt-12 text-center">
+      <OriginButton onClick={modal?.openModal}>
+        quero meu sistema
+      </OriginButton>
+    </div>
   );
 }

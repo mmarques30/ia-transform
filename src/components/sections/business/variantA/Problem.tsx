@@ -1,5 +1,4 @@
 import { Reveal } from "@/components/Reveal";
-import { CtaGlow } from "@/components/sections/business/variantB/CtaGlow";
 import { ChaosCards } from "@/components/sections/business/variantB/ChaosCards";
 
 /**
@@ -87,11 +86,6 @@ export function Problem() {
             </div>
           </Reveal>
 
-          <Reveal delay={0.3}>
-            <div className="mt-8 text-center">
-              <CtaGlow size="lg">Quero recuperar o controle →</CtaGlow>
-            </div>
-          </Reveal>
         </div>
       </div>
     </section>

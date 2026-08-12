@@ -1,5 +1,6 @@
 import { Reveal } from "@/components/Reveal";
-import { CtaGlow } from "@/components/sections/business/variantB/CtaGlow";
+import { OriginButton } from "@/components/ui/origin-button";
+import { useDiagnosticoModal } from "@/components/sections/business/variantB/DiagnosticoModal";
 
 interface CompareCard {
   eyebrow: string;
@@ -94,9 +95,7 @@ export function MetodoAplicaBook() {
         </div>
 
         <Reveal delay={0.35}>
-          <div className="mt-10 lg:mt-12 text-center">
-            <CtaGlow size="lg">Agendar diagnóstico com a IAplicada →</CtaGlow>
-          </div>
+          <MetodoCta />
         </Reveal>
       </div>
     </section>
@@ -132,6 +131,17 @@ function CompareCardComponent({ card }: { card: CompareCard }) {
         {card.title}
       </h3>
       <p className="mt-3 text-[13.5px] lg:text-[14.5px] text-sage leading-[1.55]">{card.detail}</p>
+    </div>
+  );
+}
+
+function MetodoCta() {
+  const modal = useDiagnosticoModal();
+  return (
+    <div className="mt-10 lg:mt-12 text-center">
+      <OriginButton onClick={modal?.openModal}>
+        quero meu diagnóstico
+      </OriginButton>
     </div>
   );
 }

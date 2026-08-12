@@ -1,5 +1,4 @@
 import { FOUNDER } from "@/config/brand";
-import { CtaGlow } from "@/components/sections/business/variantB/CtaGlow";
 
 /**
  * MentorMari (LP-A) — mesma estrutura da /businessv2, copy própria.
@@ -72,9 +71,6 @@ export function MentorMari() {
               jeito que o seu negócio funciona.
             </p>
 
-            <div className="mt-7">
-              <CtaGlow size="lg">Agendar diagnóstico com a IAplicada →</CtaGlow>
-            </div>
           </div>
         </div>
       </div>
