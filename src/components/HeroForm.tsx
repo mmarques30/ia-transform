@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type FocusEvent, type FormEvent } from "react";
 import { useNavigate } from "@tanstack/react-router";
-import { ArrowRight, AlertCircle } from "lucide-react";
+import { AlertCircle } from "lucide-react";
 import { getMetaPixelCookies, getFbclidFromUrl } from "@/lib/metaCookies";
 
 /**
@@ -701,10 +701,20 @@ export function HeroForm({
           <button
             type="submit"
             disabled={loading || !allRequiredFilled}
-            className="hero-form-cta mt-1 w-full inline-flex items-center justify-center gap-2 rounded-full px-6 py-4 text-[14.5px] font-bold uppercase tracking-[0.06em] disabled:opacity-50 disabled:cursor-not-allowed"
+            className="hero-form-cta mt-1 w-full inline-flex items-center justify-center rounded-full px-6 py-4 text-[14.5px] font-bold uppercase tracking-[0.06em] disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {loading ? loadingMsg || "Enviando..." : "SOLICITAR DIAGNÓSTICO"}
-            {!loading && <ArrowRight className="h-4 w-4" strokeWidth={2.5} />}
+            {!loading && (
+              <span className="cta-accent-bar">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <circle className="bd-dot" cx="4" cy="8" r="1.5" fill="#fff" style={{ animationDelay: "0s" }} />
+                  <circle className="bd-dot" cx="8" cy="8" r="1.5" fill="#fff" style={{ animationDelay: "0.15s" }} />
+                  <circle className="bd-dot" cx="12" cy="8" r="1.5" fill="#fff" style={{ animationDelay: "0.3s" }} />
+                </svg>
+              </span>
+            )}
+            <span className="cta-label">
+              {loading ? loadingMsg || "Enviando..." : "SOLICITAR DIAGNÓSTICO"}
+            </span>
           </button>
         </form>
       </div>
