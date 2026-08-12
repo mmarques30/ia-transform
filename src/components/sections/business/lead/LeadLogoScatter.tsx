@@ -1,9 +1,12 @@
 import { useEffect, useRef } from "react";
 
-const ICON_SIZE = 52;
+const LOGO_SIZE_HERO = 52;
+const LOGO_SIZE_DEST = 80;
 
-interface PieceDef {
-  clip: string;
+interface PetalDef {
+  id: string;
+  color: string;
+  d: string;
   tx: number;
   ty: number;
   tz: number;
@@ -12,60 +15,59 @@ interface PieceDef {
   rz: number;
 }
 
-const PIECES: PieceDef[] = [
+const PETALS: PetalDef[] = [
   {
-    clip: "polygon(0% 0%, 46.9% 0%, 46.9% 46.9%, 0% 46.9%)",
-    tx: -90,
-    ty: -70,
-    tz: 50,
-    rx: 30,
-    ry: -20,
-    rz: -25,
+    id: "tl",
+    color: "#D4DCAE",
+    d: "M 47 3 C 23 3, 3 23, 3 47 L 47 47 Z",
+    tx: -140,
+    ty: -100,
+    tz: 70,
+    rx: 28,
+    ry: -35,
+    rz: -22,
   },
   {
-    clip: "polygon(53.1% 0%, 100% 0%, 100% 46.9%, 53.1% 46.9%)",
-    tx: 90,
-    ty: -60,
-    tz: -40,
-    rx: -25,
-    ry: 30,
-    rz: 20,
+    id: "tr",
+    color: "#587716",
+    d: "M 53 3 C 77 3, 97 23, 97 47 L 53 47 Z",
+    tx: 140,
+    ty: -90,
+    tz: -60,
+    rx: -22,
+    ry: 32,
+    rz: 18,
   },
   {
-    clip: "polygon(53.1% 53.1%, 100% 53.1%, 100% 100%, 53.1% 100%)",
-    tx: 80,
-    ty: 70,
-    tz: 60,
-    rx: 20,
-    ry: -25,
-    rz: 30,
-  },
-  {
-    clip: "polygon(0% 53.1%, 46.9% 53.1%, 46.9% 100%, 0% 100%)",
-    tx: -80,
-    ty: 60,
+    id: "bl",
+    color: "#D4DCAE",
+    d: "M 3 53 C 3 77, 23 97, 47 97 L 47 53 Z",
+    tx: -130,
+    ty: 105,
     tz: -50,
-    rx: -20,
-    ry: 20,
-    rz: -30,
+    rx: -28,
+    ry: -28,
+    rz: 22,
   },
   {
-    clip: "polygon(50% 44.5%, 55.5% 50%, 50% 55.5%, 44.5% 50%)",
-    tx: 0,
-    ty: -40,
-    tz: 100,
-    rx: 40,
-    ry: 0,
-    rz: 50,
+    id: "br",
+    color: "#8EAF28",
+    d: "M 97 53 C 97 77, 77 97, 53 97 L 53 53 Z",
+    tx: 120,
+    ty: 110,
+    tz: 60,
+    rx: 22,
+    ry: 35,
+    rz: -18,
   },
 ];
 
-const PARTICLE_COUNT = 10;
+const PARTICLE_COUNT = 8;
 const PARTICLES = Array.from({ length: PARTICLE_COUNT }, (_, i) => {
   const angle = (i / PARTICLE_COUNT) * Math.PI * 2;
   return {
-    tx: Math.cos(angle) * (100 + (i % 3) * 30),
-    ty: Math.sin(angle) * (80 + (i % 2) * 25),
+    tx: Math.cos(angle) * (85 + (i % 3) * 22),
+    ty: Math.sin(angle) * (70 + (i % 2) * 18),
     size: 2 + (i % 3),
   };
 });
@@ -74,52 +76,26 @@ function easeInOutCubic(t: number) {
   return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 }
 
-function scatterCurve(progress: number): number {
-  const p = Math.max(0, Math.min(1, progress));
-  if (p <= 0.1) return 0;
-  if (p >= 0.9) return 0;
-  if (p <= 0.5) return easeInOutCubic((p - 0.1) / 0.4);
-  return easeInOutCubic((0.9 - p) / 0.4);
+function clamp(v: number, min: number, max: number) {
+  return Math.max(min, Math.min(max, v));
 }
 
-function IconSvg({ index }: { index: number }) {
-  return (
-    <svg
-      width={ICON_SIZE}
-      height={ICON_SIZE}
-      viewBox="0 0 128 128"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <defs>
-        <mask
-          id={`scatter-m-${index}`}
-          maskUnits="userSpaceOnUse"
-          x="0"
-          y="0"
-          width="128"
-          height="128"
-        >
-          <rect width="128" height="128" fill="black" />
-          <circle cx="64" cy="64" r="48" fill="white" />
-          <rect x="60" y="10" width="8" height="108" rx="4" fill="black" />
-          <rect x="10" y="60" width="108" height="8" rx="4" fill="black" />
-          <polygon points="64,57 71,64 64,71 57,64" fill="white" />
-        </mask>
-      </defs>
-      <rect
-        width="128"
-        height="128"
-        fill="#8BAB23"
-        mask={`url(#scatter-m-${index})`}
-      />
-    </svg>
-  );
+function lerp(a: number, b: number, t: number) {
+  return a + (b - a) * clamp(t, 0, 1);
+}
+
+function scatterAmount(progress: number): number {
+  if (progress <= 0.08) return 0;
+  if (progress <= 0.38) return easeInOutCubic((progress - 0.08) / 0.3);
+  if (progress <= 0.6) return 1;
+  if (progress <= 0.92) return 1 - easeInOutCubic((progress - 0.6) / 0.32);
+  return 0;
 }
 
 export function LeadLogoScatter() {
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const pieceEls = useRef<(HTMLDivElement | null)[]>([]);
+  const innerRef = useRef<HTMLDivElement>(null);
+  const petalEls = useRef<(HTMLDivElement | null)[]>([]);
   const particleEls = useRef<(HTMLDivElement | null)[]>([]);
   const rafId = useRef(0);
 
@@ -127,49 +103,85 @@ export function LeadLogoScatter() {
     const hero = document.getElementById("lead-hero");
     const section2 = document.getElementById("lead-section2");
     const anchor = document.getElementById("lead-logo-anchor");
-    if (!hero || !section2 || !anchor || !wrapperRef.current) return;
+    if (!hero || !section2 || !anchor || !wrapperRef.current || !innerRef.current)
+      return;
 
     const reducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
 
-    function positionWrapper() {
-      if (!wrapperRef.current || !anchor) return;
-      const rect = anchor.getBoundingClientRect();
-      wrapperRef.current.style.top = `${rect.top + rect.height / 2}px`;
+    let heroPageTop = 0;
+    let s2PageTop = 0;
+
+    function measure() {
+      heroPageTop = hero!.getBoundingClientRect().top + window.scrollY;
+      s2PageTop = section2!.getBoundingClientRect().top + window.scrollY;
     }
 
-    positionWrapper();
+    measure();
 
     function tick() {
-      if (!hero || !section2) return;
+      if (!hero || !section2 || !wrapperRef.current || !innerRef.current || !anchor)
+        return;
 
-      const heroRect = hero.getBoundingClientRect();
-      const scrollRange = heroRect.height * 0.85;
-      const scrolled = -heroRect.top;
-      const progress = Math.max(0, Math.min(1, scrolled / scrollRange));
+      const isDesktop = window.innerWidth >= 1024;
+      const range = s2PageTop - heroPageTop;
+      if (range <= 0) return;
 
-      const scatter = reducedMotion ? 0 : scatterCurve(progress);
+      const progress = clamp((window.scrollY - heroPageTop) / range, -0.1, 1.5);
+      const scatter = reducedMotion ? 0 : scatterAmount(progress);
 
-      pieceEls.current.forEach((el, i) => {
+      const anchorRect = anchor.getBoundingClientRect();
+      const startX = anchorRect.left + anchorRect.width / 2;
+      const startY = anchorRect.top + anchorRect.height / 2;
+
+      let endX: number;
+      let endY: number;
+
+      if (isDesktop) {
+        const logoTarget = document.getElementById("lead-logo-target");
+        if (logoTarget) {
+          const tRect = logoTarget.getBoundingClientRect();
+          endX = tRect.left + tRect.width / 2;
+        } else {
+          endX = window.innerWidth * 0.14;
+        }
+        endY = window.innerHeight * 0.45;
+      } else {
+        endX = startX;
+        endY = window.innerHeight * 0.38;
+      }
+
+      const posT = easeInOutCubic(clamp((progress - 0.15) / 0.65, 0, 1));
+
+      const clampedStartY = clamp(startY, -80, window.innerHeight * 0.5);
+      const x = lerp(startX, endX, posT);
+      const y = lerp(clampedStartY, endY, posT);
+
+      const size = lerp(LOGO_SIZE_HERO, LOGO_SIZE_DEST, posT);
+
+      wrapperRef.current.style.left = `${x}px`;
+      wrapperRef.current.style.top = `${y}px`;
+      innerRef.current.style.width = `${size}px`;
+      innerRef.current.style.height = `${size}px`;
+
+      petalEls.current.forEach((el, i) => {
         if (!el) return;
-        const p = PIECES[i];
+        const p = PETALS[i];
         el.style.transform = `translate3d(${p.tx * scatter}px,${p.ty * scatter}px,${p.tz * scatter}px) rotateX(${p.rx * scatter}deg) rotateY(${p.ry * scatter}deg) rotateZ(${p.rz * scatter}deg)`;
-        el.style.opacity = String(1 - scatter * 0.15);
+        el.style.opacity = String(1 - scatter * 0.12);
       });
 
       particleEls.current.forEach((el, i) => {
         if (!el) return;
         const p = PARTICLES[i];
         el.style.transform = `translate(-50%,-50%) translate3d(${p.tx * scatter}px,${p.ty * scatter}px,0)`;
-        el.style.opacity = String(scatter * 0.55);
+        el.style.opacity = String(scatter * 0.45);
       });
 
-      if (wrapperRef.current) {
-        const s2Bottom = section2.getBoundingClientRect().bottom;
-        wrapperRef.current.style.opacity =
-          s2Bottom < -100 ? "0" : "1";
-      }
+      const s2Bottom = section2.getBoundingClientRect().bottom;
+      const fade = s2Bottom < 0 ? 0 : s2Bottom < 120 ? s2Bottom / 120 : 1;
+      wrapperRef.current.style.opacity = String(fade);
     }
 
     function onScroll() {
@@ -177,15 +189,18 @@ export function LeadLogoScatter() {
       rafId.current = requestAnimationFrame(tick);
     }
 
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", () => {
-      positionWrapper();
+    function onResize() {
+      measure();
       tick();
-    });
+    }
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onResize);
     tick();
 
     return () => {
       window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onResize);
       cancelAnimationFrame(rafId.current);
     };
   }, []);
@@ -196,37 +211,44 @@ export function LeadLogoScatter() {
       aria-hidden
       style={{
         position: "fixed",
-        left: "50%",
-        zIndex: 50,
+        zIndex: 40,
         pointerEvents: "none",
         perspective: "800px",
-        transition: "opacity 0.3s",
+        transition: "opacity 0.25s",
       }}
     >
       <div
+        ref={innerRef}
         style={{
           position: "relative",
-          width: ICON_SIZE,
-          height: ICON_SIZE,
+          width: LOGO_SIZE_HERO,
+          height: LOGO_SIZE_HERO,
           transformStyle: "preserve-3d",
           transform: "translate(-50%, -50%)",
         }}
       >
-        {PIECES.map((piece, i) => (
+        {PETALS.map((petal, i) => (
           <div
-            key={i}
+            key={petal.id}
             ref={(el) => {
-              pieceEls.current[i] = el;
+              petalEls.current[i] = el;
             }}
             style={{
               position: "absolute",
               inset: 0,
-              clipPath: piece.clip,
               willChange: "transform, opacity",
               transformStyle: "preserve-3d",
             }}
           >
-            <IconSvg index={i} />
+            <svg
+              width="100%"
+              height="100%"
+              viewBox="0 0 100 100"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d={petal.d} fill={petal.color} />
+            </svg>
           </div>
         ))}
 
@@ -243,7 +265,7 @@ export function LeadLogoScatter() {
               width: particle.size,
               height: particle.size,
               borderRadius: "50%",
-              background: "#8BAB23",
+              background: "#8EAF28",
               opacity: 0,
               willChange: "transform, opacity",
             }}
