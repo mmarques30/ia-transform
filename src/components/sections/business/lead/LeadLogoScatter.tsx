@@ -1,8 +1,7 @@
 import { useEffect, useRef } from "react";
 
 const LOGO_SRC = "/brand/Design sem nome (19).png";
-const LOGO_SIZE_HERO = 52;
-const LOGO_SIZE_DEST = 80;
+const LOGO_SIZE = 52;
 
 interface PetalDef {
   id: string;
@@ -40,15 +39,11 @@ function clamp(v: number, min: number, max: number) {
   return Math.max(min, Math.min(max, v));
 }
 
-function lerp(a: number, b: number, t: number) {
-  return a + (b - a) * clamp(t, 0, 1);
-}
-
 function scatterAmount(progress: number): number {
-  if (progress <= 0.08) return 0;
-  if (progress <= 0.38) return easeInOutCubic((progress - 0.08) / 0.3);
-  if (progress <= 0.6) return 1;
-  if (progress <= 0.92) return 1 - easeInOutCubic((progress - 0.6) / 0.32);
+  if (progress <= 0.02) return 0;
+  if (progress <= 0.15) return easeInOutCubic((progress - 0.02) / 0.13);
+  if (progress <= 0.3) return 1;
+  if (progress <= 0.5) return 1 - easeInOutCubic((progress - 0.3) / 0.2);
   return 0;
 }
 
@@ -61,69 +56,22 @@ export function LeadLogoScatter() {
 
   useEffect(() => {
     const hero = document.getElementById("lead-hero");
-    const section2 = document.getElementById("lead-section2");
     const anchor = document.getElementById("lead-logo-anchor");
-    if (!hero || !section2 || !anchor || !wrapperRef.current || !innerRef.current)
-      return;
+    if (!hero || !anchor || !wrapperRef.current || !innerRef.current) return;
 
-    const reducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
-
-    let heroPageTop = 0;
-    let s2PageTop = 0;
-
-    function measure() {
-      heroPageTop = hero!.getBoundingClientRect().top + window.scrollY;
-      s2PageTop = section2!.getBoundingClientRect().top + window.scrollY;
-    }
-
-    measure();
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let heroH = hero.offsetHeight;
 
     function tick() {
-      if (!hero || !section2 || !wrapperRef.current || !innerRef.current || !anchor)
-        return;
+      if (!hero || !wrapperRef.current || !innerRef.current || !anchor) return;
 
-      const isDesktop = window.innerWidth >= 1024;
-      const range = s2PageTop - heroPageTop;
-      if (range <= 0) return;
-
-      const progress = clamp((window.scrollY - heroPageTop) / range, -0.1, 1.5);
+      const heroRect = hero.getBoundingClientRect();
+      const progress = clamp(-heroRect.top / (heroH * 0.7), 0, 1.5);
       const scatter = reducedMotion ? 0 : scatterAmount(progress);
 
       const anchorRect = anchor.getBoundingClientRect();
-      const startX = anchorRect.left + anchorRect.width / 2;
-      const startY = anchorRect.top + anchorRect.height / 2;
-
-      let endX: number;
-      let endY: number;
-
-      if (isDesktop) {
-        const logoTarget = document.getElementById("lead-logo-target");
-        if (logoTarget) {
-          const tRect = logoTarget.getBoundingClientRect();
-          endX = tRect.left + tRect.width / 2;
-        } else {
-          endX = window.innerWidth * 0.14;
-        }
-        endY = window.innerHeight * 0.45;
-      } else {
-        endX = startX;
-        endY = window.innerHeight * 0.38;
-      }
-
-      const posT = easeInOutCubic(clamp((progress - 0.15) / 0.65, 0, 1));
-
-      const clampedStartY = clamp(startY, -80, window.innerHeight * 0.5);
-      const x = lerp(startX, endX, posT);
-      const y = lerp(clampedStartY, endY, posT);
-
-      const size = lerp(LOGO_SIZE_HERO, LOGO_SIZE_DEST, posT);
-
-      wrapperRef.current.style.left = `${x}px`;
-      wrapperRef.current.style.top = `${y}px`;
-      innerRef.current.style.width = `${size}px`;
-      innerRef.current.style.height = `${size}px`;
+      wrapperRef.current.style.left = `${anchorRect.left + anchorRect.width / 2}px`;
+      wrapperRef.current.style.top = `${anchorRect.top + anchorRect.height / 2}px`;
 
       petalEls.current.forEach((el, i) => {
         if (!el) return;
@@ -139,10 +87,8 @@ export function LeadLogoScatter() {
         el.style.opacity = String(scatter * 0.45);
       });
 
-      const s2Bottom = section2.getBoundingClientRect().bottom;
-      const fadeExit = s2Bottom < 0 ? 0 : s2Bottom < 120 ? s2Bottom / 120 : 1;
-      const fadeFor3D = progress > 0.88 ? 1 - clamp((progress - 0.88) / 0.08, 0, 1) : 1;
-      wrapperRef.current.style.opacity = String(Math.min(fadeExit, fadeFor3D));
+      const fade = progress > 0.35 ? 1 - clamp((progress - 0.35) / 0.15, 0, 1) : 1;
+      wrapperRef.current.style.opacity = String(fade);
     }
 
     function onScroll() {
@@ -151,7 +97,7 @@ export function LeadLogoScatter() {
     }
 
     function onResize() {
-      measure();
+      heroH = hero!.offsetHeight;
       tick();
     }
 
@@ -182,8 +128,8 @@ export function LeadLogoScatter() {
         ref={innerRef}
         style={{
           position: "relative",
-          width: LOGO_SIZE_HERO,
-          height: LOGO_SIZE_HERO,
+          width: LOGO_SIZE,
+          height: LOGO_SIZE,
           transformStyle: "preserve-3d",
           transform: "translate(-50%, -50%)",
         }}

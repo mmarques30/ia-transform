@@ -1,25 +1,16 @@
-import { lazy, Suspense } from "react";
 import { Reveal } from "@/components/Reveal";
 import { OriginButton } from "@/components/ui/origin-button";
-
-const IAPLogo3D = lazy(() =>
-  import("./IAPLogo3D").then((m) => ({ default: m.IAPLogo3D }))
-);
+import { AlertCircle, Clock, Puzzle, Users } from "lucide-react";
 
 interface LeadProblemProps {
   onOpenModal: () => void;
 }
 
-const COL_LEFT = [
-  "Cada decisao operacional passa por voce — a empresa so avanca quando voce esta",
-  "O time gasta horas em tarefas que deveriam ser automaticas",
-  "Voce sabe que a solucao existe, mas nao tem tempo pra implementar",
-];
-
-const COL_RIGHT = [
-  "Voce experimenta ferramentas de IA, mas nada encaixa no processo real",
-  "Contratar mais gente resolve no curto prazo — e cria outro gargalo",
-  "Sem processo claro, cada novo cliente e mais caos na operacao",
+const PROBLEMS: { icon: typeof AlertCircle; text: string }[] = [
+  { icon: AlertCircle, text: "Cada decisao operacional passa por voce — a empresa so avanca quando voce esta" },
+  { icon: Clock, text: "O time gasta horas em tarefas que deveriam ser automaticas" },
+  { icon: Puzzle, text: "Voce experimenta ferramentas de IA, mas nada encaixa no processo real" },
+  { icon: Users, text: "Contratar mais gente resolve no curto prazo — e cria outro gargalo" },
 ];
 
 export function LeadProblem({ onOpenModal }: LeadProblemProps) {
@@ -27,87 +18,63 @@ export function LeadProblem({ onOpenModal }: LeadProblemProps) {
     <section id="lead-section2" className="relative">
       <div className="section-veil w-full py-[72px] lg:py-[110px]">
         <div className="relative z-10 container-page">
-          <div className="lg:grid lg:grid-cols-[200px_1fr] lg:gap-12 lg:items-start">
-            <div
-              id="lead-logo-target"
-              className="hidden lg:flex lg:items-start lg:justify-center"
-              style={{ minHeight: 200, position: "sticky", top: 110 }}
+          <Reveal>
+            <h2
+              className="text-center font-extrabold text-[24px] sm:text-[32px] lg:text-[38px] leading-[1.15] tracking-[-0.02em] max-w-[880px] mx-auto uppercase"
+              style={{ textWrap: "balance", color: "var(--color-primary)" }}
             >
-              <Suspense fallback={null}>
-                <IAPLogo3D width={200} height={200} scale={1.2} />
-              </Suspense>
-            </div>
+              Sua empresa esta{" "}
+              <span className="text-foreground">refem da sua presenca.</span>
+              <br className="hidden sm:block" /> E contratar mais gente{" "}
+              <span className="text-foreground">nao resolve.</span>
+            </h2>
+          </Reveal>
 
-            <div>
-              <Reveal>
-                <h2
-                  className="text-center lg:text-left font-extrabold text-[24px] sm:text-[32px] lg:text-[38px] leading-[1.15] tracking-[-0.02em] max-w-[880px] uppercase"
-                  style={{ textWrap: "balance", color: "var(--color-primary)" }}
-                >
-                  Sua empresa esta{" "}
-                  <span className="text-foreground">refem da sua presenca.</span>
-                  <br className="hidden sm:block" /> E contratar mais gente{" "}
-                  <span className="text-foreground">nao resolve.</span>
-                </h2>
-              </Reveal>
-
-              <div className="mt-14 lg:mt-16 grid md:grid-cols-2 gap-6 lg:gap-10 max-w-[900px]">
-                <Reveal delay={0.15}>
-                  <ul className="flex flex-col gap-4">
-                    {COL_LEFT.map((item) => (
-                      <ProblemItem key={item}>{item}</ProblemItem>
-                    ))}
-                  </ul>
+          <div className="mt-14 lg:mt-16 grid sm:grid-cols-2 gap-4 lg:gap-5 max-w-[820px] mx-auto">
+            {PROBLEMS.map((item, i) => {
+              const Icon = item.icon;
+              return (
+                <Reveal key={i} delay={0.1 + i * 0.06}>
+                  <div
+                    className="p-6"
+                    style={{
+                      background: "rgba(255,255,255,0.03)",
+                      border: "1px solid rgba(139,155,58,0.12)",
+                    }}
+                  >
+                    <Icon
+                      className="h-5 w-5 mb-3"
+                      strokeWidth={1.5}
+                      style={{ color: "var(--color-primary)" }}
+                    />
+                    <p className="text-[14px] lg:text-[14.5px] leading-[1.55] text-foreground">
+                      {item.text}
+                    </p>
+                  </div>
                 </Reveal>
-
-                <Reveal delay={0.2}>
-                  <ul className="flex flex-col gap-4">
-                    {COL_RIGHT.map((item) => (
-                      <ProblemItem key={item}>{item}</ProblemItem>
-                    ))}
-                  </ul>
-                </Reveal>
-              </div>
-
-              <Reveal delay={0.25}>
-                <p className="mt-14 text-center lg:text-left text-[18px] lg:text-[22px] leading-[1.35] max-w-[720px] text-foreground">
-                  IA nao e hype — e a unica forma de{" "}
-                  <strong style={{ color: "var(--color-primary)" }} className="font-extrabold">
-                    escalar sem inflar a folha.
-                  </strong>{" "}
-                  E este kit mostra como comecar.
-                </p>
-              </Reveal>
-
-              <Reveal delay={0.3}>
-                <div className="mt-8 text-center lg:text-left">
-                  <OriginButton onClick={onOpenModal}>
-                    Quero o kit gratuito &rarr;
-                  </OriginButton>
-                </div>
-              </Reveal>
-            </div>
+              );
+            })}
           </div>
+
+          <Reveal delay={0.4}>
+            <p className="mt-14 text-center text-[18px] lg:text-[22px] leading-[1.35] max-w-[720px] mx-auto text-foreground">
+              IA nao e hype — e a unica forma de{" "}
+              <strong style={{ color: "var(--color-primary)" }} className="font-extrabold">
+                escalar sem inflar a folha.
+              </strong>{" "}
+              E este kit mostra como comecar.
+            </p>
+          </Reveal>
+
+          <Reveal delay={0.45}>
+            <div className="mt-8 text-center">
+              <OriginButton onClick={onOpenModal}>
+                Quero o kit gratuito &rarr;
+              </OriginButton>
+            </div>
+          </Reveal>
         </div>
       </div>
     </section>
-  );
-}
-
-function ProblemItem({ children }: { children: React.ReactNode }) {
-  return (
-    <li
-      className="grid items-baseline gap-3 text-[14.5px] lg:text-[15px] leading-[1.5] text-foreground"
-      style={{ gridTemplateColumns: "16px 1fr" }}
-    >
-      <span
-        aria-hidden
-        className="inline-block h-2.5 w-2.5 rounded-full mt-2"
-        style={{
-          border: "1.5px solid var(--color-primary)",
-        }}
-      />
-      <span>{children}</span>
-    </li>
   );
 }
