@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type FocusEvent, type FormEvent } from "react";
+import { useCallback, useEffect, useRef, useState, type FocusEvent, type FormEvent } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { AlertCircle } from "lucide-react";
 import { getMetaPixelCookies, getFbclidFromUrl } from "@/lib/metaCookies";
@@ -143,6 +143,25 @@ export function HeroForm({
 
   /** Cleanup dos timers no unmount pra não vazar setTimeout. */
   useEffect(() => clearLoadingStages, []);
+
+  const tiltRAF = useRef(0);
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    const el = cardRef.current;
+    if (!el) return;
+    cancelAnimationFrame(tiltRAF.current);
+    tiltRAF.current = requestAnimationFrame(() => {
+      const rect = el.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      el.style.transform = `perspective(800px) rotateY(${x * 4}deg) rotateX(${-y * 4}deg)`;
+    });
+  }, []);
+  const handleMouseLeave = useCallback(() => {
+    const el = cardRef.current;
+    if (!el) return;
+    cancelAnimationFrame(tiltRAF.current);
+    el.style.transform = "perspective(800px) rotateY(0deg) rotateX(0deg)";
+  }, []);
 
   /**
    * Refs de tracking — fora do state pra evitar re-renders. Cada flag
@@ -489,12 +508,16 @@ export function HeroForm({
   return (
     <div
       ref={cardRef}
-      className={`rounded-[24px] overflow-hidden relative${compact ? " hero-form-compact" : ""}`}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className={`hero-form-card rounded-[24px] overflow-hidden relative${compact ? " hero-form-compact" : ""}`}
       style={{
         backgroundColor: "oklch(0.995 0.003 110)",
         border: "1px solid oklch(0.88 0.02 115)",
         boxShadow:
           "0 30px 60px -25px oklch(0.18 0.02 122 / 0.18), 0 10px 25px -10px oklch(0.18 0.02 122 / 0.08)",
+        transition: "transform 0.25s ease-out, box-shadow 0.4s ease",
+        willChange: "transform",
       }}
     >
       <div

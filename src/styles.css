@@ -3325,6 +3325,16 @@
   font-size: 13.5px;
 }
 
+/* Form card — glow ao focar em qualquer campo */
+.hero-form-card:focus-within {
+  box-shadow:
+    0 30px 60px -25px oklch(0.18 0.02 122 / 0.18),
+    0 10px 25px -10px oklch(0.18 0.02 122 / 0.08),
+    0 0 40px 8px rgba(200,224,64,0.18),
+    0 0 80px 20px rgba(200,224,64,0.08) !important;
+  border-color: oklch(0.78 0.08 125) !important;
+}
+
 /* CTA do form — verde vibrante com hover escurecido */
 .hero-form-cta {
   background: linear-gradient(135deg, #8da32e 0%, #a4be34 50%, #8da32e 100%);
