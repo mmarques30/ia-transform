@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:transparent;display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:'Inter',sans-serif;}
+.card{width:320px;height:430px;display:flex;flex-direction:column;background:#111;border-radius:10px;overflow:hidden;box-shadow:0 28px 72px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.07);}
+
+.statusbar{background:#1a1a1a;padding:8px 14px 5px;display:flex;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.06);}
+.time{font-size:11px;font-weight:700;color:#fff;}
+.day{font-size:10px;color:rgba(255,255,255,.3);}
+
+.inbox-header{background:#1a1a1a;padding:10px 14px;display:flex;align-items:baseline;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.06);}
+.inbox-title{font-size:15px;font-weight:800;color:#fff;}
+.unread-count{font-size:11px;font-weight:700;color:#f87171;}
+
+.emails{flex:1;overflow:hidden;}
+.email-item{padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.04);display:flex;gap:10px;align-items:flex-start;}
+.unread-dot{width:7px;height:7px;border-radius:50%;background:#dc2626;flex-shrink:0;margin-top:4px;}
+.read-dot{width:7px;height:7px;flex-shrink:0;}
+.email-body{flex:1;min-width:0;}
+.email-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:2px;}
+.sender{font-size:11px;font-weight:700;color:rgba(255,255,255,.85);}
+.sender.urgent{color:#f87171;}
+.email-time{font-size:9.5px;color:rgba(255,255,255,.25);flex-shrink:0;}
+.email-preview{font-size:10.5px;color:rgba(255,255,255,.4);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.urg{font-weight:700;color:#f87171;}
+.muted{color:rgba(255,255,255,.25);}
+
+.label{background:#0a0a0a;padding:8px 14px;display:flex;align-items:center;gap:8px;border-top:1px solid rgba(255,255,255,.06);}
+.label-num{font-size:8px;font-weight:700;color:#dc2626;letter-spacing:.1em;}
+.label-sep{width:1px;height:10px;background:rgba(255,255,255,.15);}
+.label-txt{font-size:8px;font-weight:700;color:rgba(255,255,255,.4);letter-spacing:.08em;}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="statusbar">
+    <span class="time">23:47</span>
+    <span class="day">quinta-feira</span>
+  </div>
+  <div class="inbox-header">
+    <span class="inbox-title">Caixa de entrada</span>
+    <span class="unread-count">312 nao lidos</span>
+  </div>
+  <div class="emails">
+    <div class="email-item">
+      <div class="unread-dot"></div>
+      <div class="email-body">
+        <div class="email-top">
+          <span class="sender urgent">Cliente Meridian</span>
+          <span class="email-time">23:31</span>
+        </div>
+        <div class="email-preview"><span class="urg">URGENTE:</span> prazo de amanha esta de pe?</div>
+      </div>
+    </div>
+    <div class="email-item">
+      <div class="unread-dot"></div>
+      <div class="email-body">
+        <div class="email-top">
+          <span class="sender">Banco · Cobranca</span>
+          <span class="email-time">22:58</span>
+        </div>
+        <div class="email-preview">Aviso: titulo vence hoje</div>
+      </div>
+    </div>
+    <div class="email-item">
+      <div class="unread-dot"></div>
+      <div class="email-body">
+        <div class="email-top">
+          <span class="sender">Renata · Operacao</span>
+          <span class="email-time">22:15</span>
+        </div>
+        <div class="email-preview">Re: Re: Re: Re: orcamento revisado (v4)</div>
+      </div>
+    </div>
+    <div class="email-item">
+      <div class="read-dot"></div>
+      <div class="email-body">
+        <div class="email-top">
+          <span class="sender" style="color:rgba(255,255,255,.45);font-weight:500;">Contabilidade</span>
+          <span class="email-time">21:40</span>
+        </div>
+        <div class="email-preview"><span class="muted">Pendencias do fechamento — faltam 14 itens</span></div>
+      </div>
+    </div>
+    <div class="email-item">
+      <div class="unread-dot"></div>
+      <div class="email-body">
+        <div class="email-top">
+          <span class="sender urgent">Cliente Alfa</span>
+          <span class="email-time">20:52</span>
+        </div>
+        <div class="email-preview"><span class="urg">Sem resposta:</span> proposta enviada ha 6 dias</div>
+      </div>
+    </div>
+  </div>
+  <div class="label">
+    <span class="label-num">PROBLEMA 03</span>
+    <span class="label-sep"></span>
+    <span class="label-txt">O DIA TERMINA, O CAOS NAO</span>
+  </div>
+</div>
+</body>
+</html>

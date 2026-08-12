@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:transparent;display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:'Inter',sans-serif;}
+.card{width:320px;height:430px;display:flex;flex-direction:column;background:#111;border-radius:10px;overflow:hidden;box-shadow:0 28px 72px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.07);}
+
+.titlebar{background:#1d6f42;padding:7px 12px;display:flex;align-items:center;justify-content:space-between;}
+.file-wrap{display:flex;align-items:center;gap:8px;}
+.file-name{font-size:10.5px;font-weight:600;color:#fff;}
+.conflict{font-size:8.5px;font-weight:600;color:#fca5a5;background:rgba(220,38,38,.3);padding:2px 7px;border-radius:4px;border:1px solid rgba(220,38,38,.5);}
+.editors{font-size:9px;color:rgba(255,255,255,.5);margin-top:1px;}
+
+.formula-bar{background:#1e1e1e;border-bottom:1px solid rgba(255,255,255,.06);padding:5px 10px;display:flex;align-items:center;gap:8px;}
+.cell-ref{font-size:10px;font-weight:600;color:rgba(255,255,255,.7);font-family:'JetBrains Mono',monospace;background:#2a2a2a;border:1px solid rgba(255,255,255,.1);padding:2px 6px;border-radius:3px;}
+.fx-label{font-size:10px;color:rgba(255,255,255,.3);font-style:italic;}
+.formula{font-size:9.5px;font-family:'JetBrains Mono',monospace;color:#f87171;}
+
+.sheet{flex:1;overflow:hidden;}
+.col-header{display:flex;border-bottom:1px solid rgba(255,255,255,.08);background:#1a1a1a;}
+.col-h{flex:1;text-align:center;font-size:9.5px;font-weight:600;color:rgba(255,255,255,.35);padding:4px 0;border-right:1px solid rgba(255,255,255,.06);}
+.col-h.row-num{width:28px;flex:none;}
+.row{display:flex;border-bottom:1px solid rgba(255,255,255,.04);}
+.cell{flex:1;font-size:9.5px;padding:5px 6px;border-right:1px solid rgba(255,255,255,.04);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:rgba(255,255,255,.6);font-family:'JetBrains Mono',monospace;}
+.cell.row-num{width:28px;flex:none;background:#1a1a1a;color:rgba(255,255,255,.25);text-align:center;font-size:9px;}
+.cell.err{background:rgba(220,38,38,.15);color:#f87171;font-weight:700;}
+.cell.warn{background:rgba(234,179,8,.1);color:#fbbf24;}
+.cell.ok{color:#4ade80;}
+.cell.muted{color:rgba(255,255,255,.25);font-style:italic;}
+
+.tabs{background:#1a1a1a;border-top:1px solid rgba(255,255,255,.06);display:flex;gap:0;padding:4px 6px 0;overflow:hidden;}
+.tab{font-size:8.5px;padding:4px 8px;border-radius:4px 4px 0 0;color:rgba(255,255,255,.4);background:#222;border:1px solid rgba(255,255,255,.08);border-bottom:none;margin-right:3px;white-space:nowrap;}
+.tab.active{background:#111;color:rgba(255,255,255,.8);font-weight:600;}
+.tab.danger{background:rgba(220,38,38,.12);color:#f87171;border-color:rgba(220,38,38,.3);}
+
+.label{background:#0a0a0a;padding:8px 14px;display:flex;align-items:center;gap:8px;border-top:1px solid rgba(255,255,255,.06);}
+.label-num{font-size:8px;font-weight:700;color:#dc2626;letter-spacing:.1em;}
+.label-sep{width:1px;height:10px;background:rgba(255,255,255,.15);}
+.label-txt{font-size:8px;font-weight:700;color:rgba(255,255,255,.4);letter-spacing:.08em;}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="titlebar">
+    <div>
+      <div class="file-wrap">
+        <span class="file-name">FINAL_v3_AGORA-VAI.xlsx</span>
+        <span class="conflict">conflito de versao</span>
+      </div>
+      <div class="editors">editado por 4 pessoas</div>
+    </div>
+  </div>
+  <div class="formula-bar">
+    <div class="cell-ref">A47</div>
+    <span class="fx-label">fx</span>
+    <span class="formula">=PROCV(A47;#REF!;3;FALSO)</span>
+  </div>
+  <div class="sheet">
+    <div class="col-header">
+      <div class="col-h row-num"></div>
+      <div class="col-h">A</div>
+      <div class="col-h">B</div>
+      <div class="col-h">C</div>
+      <div class="col-h">D</div>
+    </div>
+    <div class="row">
+      <div class="cell row-num">45</div>
+      <div class="cell">Pedido 10...</div>
+      <div class="cell ok">entregue?</div>
+      <div class="cell">R$ 12.400</div>
+      <div class="cell warn">atrasado</div>
+    </div>
+    <div class="row">
+      <div class="cell row-num">46</div>
+      <div class="cell">Pedido 10...</div>
+      <div class="cell muted">ver c/ Jo...</div>
+      <div class="cell">R$ 8.900</div>
+      <div class="cell muted">—</div>
+    </div>
+    <div class="row" style="background:rgba(220,38,38,.07);">
+      <div class="cell row-num" style="background:rgba(220,38,38,.1);">47</div>
+      <div class="cell">Pedido 10...</div>
+      <div class="cell err">#REF!</div>
+      <div class="cell err">#REF!</div>
+      <div class="cell err" style="font-size:9px;">???</div>
+    </div>
+    <div class="row">
+      <div class="cell row-num">48</div>
+      <div class="cell">Pedido 10...</div>
+      <div class="cell muted">perguntar</div>
+      <div class="cell">R$ 21.300</div>
+      <div class="cell muted">—</div>
+    </div>
+    <div class="row" style="background:rgba(220,38,38,.07);">
+      <div class="cell row-num" style="background:rgba(220,38,38,.1);">49</div>
+      <div class="cell">Pedido 10...</div>
+      <div class="cell muted">—</div>
+      <div class="cell err">#DIV/0!</div>
+      <div class="cell warn">refazer</div>
+    </div>
+  </div>
+  <div class="tabs">
+    <div class="tab active">Geral</div>
+    <div class="tab">Pedidos</div>
+    <div class="tab">Estoque_v2</div>
+    <div class="tab">Cobranca</div>
+    <div class="tab danger">NAO MEXER</div>
+    <div class="tab muted" style="color:rgba(255,255,255,.25);">+7</div>
+  </div>
+  <div class="label">
+    <span class="label-num">PROBLEMA 02</span>
+    <span class="label-sep"></span>
+    <span class="label-txt">A OPERACAO NUMA PLANILHA</span>
+  </div>
+</div>
+</body>
+</html>

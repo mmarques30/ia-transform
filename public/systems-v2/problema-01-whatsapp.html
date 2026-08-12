@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:transparent;display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:'Inter',sans-serif;}
+.card{width:320px;height:430px;display:flex;flex-direction:column;background:#111;border-radius:10px;overflow:hidden;box-shadow:0 28px 72px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.07);}
+
+.statusbar{background:#1a1a1a;padding:8px 14px 6px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,.06);}
+.time{font-size:11px;font-weight:700;color:#fff;}
+.icons{display:flex;align-items:center;gap:4px;}
+.icon-txt{font-size:9px;font-weight:600;color:rgba(255,255,255,.5);}
+
+.header{background:#1a1a1a;padding:10px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,.06);}
+.group-av{width:36px;height:36px;border-radius:50%;background:#25d366;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;flex-shrink:0;}
+.group-name{font-size:13px;font-weight:700;color:#fff;}
+.group-members{font-size:10px;color:rgba(255,255,255,.35);margin-top:1px;}
+.header-badge{margin-left:auto;background:#dc2626;color:#fff;font-size:10px;font-weight:700;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+
+.chats{flex:1;overflow:hidden;}
+.chat-item{background:#111;padding:10px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,.04);}
+.av{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0;}
+.chat-body{flex:1;min-width:0;}
+.chat-top{display:flex;justify-content:space-between;align-items:baseline;}
+.chat-name{font-size:11.5px;font-weight:600;color:rgba(255,255,255,.85);}
+.chat-time{font-size:9.5px;color:rgba(255,255,255,.3);}
+.chat-msg{font-size:10.5px;color:rgba(255,255,255,.4);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px;}
+.chat-badge{background:#dc2626;color:#fff;font-size:9px;font-weight:700;min-width:18px;height:18px;border-radius:9px;display:flex;align-items:center;justify-content:center;padding:0 4px;flex-shrink:0;}
+
+.label{background:#0a0a0a;padding:8px 14px;display:flex;align-items:center;gap:8px;border-top:1px solid rgba(255,255,255,.06);}
+.label-num{font-size:8px;font-weight:700;color:#dc2626;letter-spacing:.1em;}
+.label-sep{width:1px;height:10px;background:rgba(255,255,255,.15);}
+.label-txt{font-size:8px;font-weight:700;color:rgba(255,255,255,.4);letter-spacing:.08em;}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="statusbar">
+    <span class="time">22:41</span>
+    <div class="icons">
+      <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><rect x="0" y="4" width="2" height="6" rx="1" fill="rgba(255,255,255,.6)"/><rect x="3" y="2.5" width="2" height="7.5" rx="1" fill="rgba(255,255,255,.6)"/><rect x="6" y="1" width="2" height="9" rx="1" fill="rgba(255,255,255,.6)"/><rect x="9" y="0" width="2" height="10" rx="1" fill="rgba(255,255,255,.2)"/></svg>
+      <span class="icon-txt">12%</span>
+    </div>
+  </div>
+  <div class="header">
+    <div class="group-av">O</div>
+    <div>
+      <div class="group-name">Operacao</div>
+      <div class="group-members">voce, Fernanda, Joao, Carlos +4</div>
+    </div>
+    <div class="header-badge">47</div>
+  </div>
+  <div class="chats">
+    <div class="chat-item">
+      <div class="av" style="background:#6366f1;">EQ</div>
+      <div class="chat-body">
+        <div class="chat-top"><span class="chat-name">Equipe · Operacao</span><span class="chat-time">22:39</span></div>
+        <div class="chat-msg">chefe, aprova esse aqui?</div>
+      </div>
+      <div class="chat-badge">12</div>
+    </div>
+    <div class="chat-item">
+      <div class="av" style="background:#f97316;">FC</div>
+      <div class="chat-body">
+        <div class="chat-top"><span class="chat-name">Fernanda · Comercial</span><span class="chat-time">22:31</span></div>
+        <div class="chat-msg">e aquele orcamento? cliente cobrando</div>
+      </div>
+      <div class="chat-badge">8</div>
+    </div>
+    <div class="chat-item">
+      <div class="av" style="background:#0ea5e9;">CA</div>
+      <div class="chat-body">
+        <div class="chat-top"><span class="chat-name">Cliente · Alfa</span><span class="chat-time">22:04</span></div>
+        <div class="chat-msg">terceira vez que pergunto o status...</div>
+      </div>
+      <div class="chat-badge">5</div>
+    </div>
+    <div class="chat-item">
+      <div class="av" style="background:#64748b;">JF</div>
+      <div class="chat-body">
+        <div class="chat-top"><span class="chat-name">Joao · Financeiro</span><span class="chat-time">21:47</span></div>
+        <div class="chat-msg">nao achei a planilha, qual a versao certa?</div>
+      </div>
+      <div class="chat-badge">9</div>
+    </div>
+    <div class="chat-item">
+      <div class="av" style="background:#475569;">EN</div>
+      <div class="chat-body">
+        <div class="chat-top"><span class="chat-name">Entregas</span><span class="chat-time">21:12</span></div>
+        <div class="chat-msg">precisa de voce aqui na doca</div>
+      </div>
+      <div class="chat-badge">11</div>
+    </div>
+  </div>
+  <div class="label">
+    <span class="label-num">PROBLEMA 01</span>
+    <span class="label-sep"></span>
+    <span class="label-txt">TUDO PASSA POR VOCE</span>
+  </div>
+</div>
+</body>
+</html>
