@@ -27,14 +27,15 @@ export function MetodoAplicaBook() {
   return (
     <section
       id="metodo-aplica"
-      className="section-veil py-[80px] lg:py-[120px] relative overflow-hidden"
+      className="py-[80px] lg:py-[120px] relative overflow-hidden"
+      style={{ background: "linear-gradient(180deg, #0c0f07 0%, #111408 50%, #0c0f07 100%)" }}
     >
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "radial-gradient(70% 60% at 25% 40%, rgba(200,224,64,0.08), transparent 60%), radial-gradient(60% 55% at 85% 60%, rgba(200,224,64,0.06), transparent 60%)",
+            "radial-gradient(70% 60% at 25% 40%, rgba(200,224,64,0.06), transparent 60%), radial-gradient(60% 55% at 85% 60%, rgba(200,224,64,0.04), transparent 60%)",
         }}
       />
       <div className="container-page relative">
@@ -68,13 +69,31 @@ export function MetodoAplicaBook() {
                 </em>
               </h2>
               <p className="mt-5 text-[15px] lg:text-[16.5px] text-sage leading-[1.6] max-w-[480px]">
-                O Método <strong className="text-foreground font-bold">APLICA</strong> mapeia onde
-                sua operação perde dinheiro com trabalho manual, constrói os sistemas que
-                automatizam e implementa dentro do seu negócio —{" "}
-                <strong className="text-foreground font-bold">
-                  sem consultor que some depois.
-                </strong>
+                O Método <strong className="text-foreground font-bold">APLICA</strong> identifica
+                onde sua operação sangra, constrói o sistema que para o sangramento e implementa
+                dentro do seu negócio — em 90 dias, com marcos semanais, sem depender de você para
+                funcionar.
               </p>
+
+              <ul className="mt-6 flex flex-col gap-2.5 max-w-[480px]">
+                <li className="text-[13.5px] lg:text-[14.5px] text-sage leading-[1.5]">
+                  <strong className="text-foreground font-semibold">Por que ERP não resolve:</strong>{" "}
+                  foi projetado para operações padrão. A sua não é.
+                </li>
+                <li className="text-[13.5px] lg:text-[14.5px] text-sage leading-[1.5]">
+                  <strong className="text-foreground font-semibold">
+                    Por que consultoria não resolve:
+                  </strong>{" "}
+                  entrega diagnóstico. Você ainda precisa implementar.
+                </li>
+                <li className="text-[13.5px] lg:text-[14.5px] text-sage leading-[1.5]">
+                  <strong className="text-foreground font-semibold">
+                    O que a IAplicada entrega:
+                  </strong>{" "}
+                  software com IA que roda na sua operação, do jeito que ela funciona.
+                </li>
+              </ul>
+
               <div className="mt-8">
                 <CtaGlow size="md">Conhecer o Método APLICA →</CtaGlow>
               </div>

@@ -65,14 +65,26 @@ export function Problem() {
           </div>
 
           <Reveal delay={0.25}>
-            <p className="mt-14 text-center text-[18px] lg:text-[22px] leading-[1.35] max-w-[720px] mx-auto text-foreground">
-              Esse não é um problema de{" "}
-              <strong className="font-extrabold text-foreground">time.</strong> É um problema de{" "}
-              <strong style={{ color: "var(--color-primary)" }} className="font-extrabold">
-                sistema.
-              </strong>{" "}
-              E sistema a gente constrói.
-            </p>
+            <div className="mt-14 max-w-[720px] mx-auto text-center">
+              <p className="text-[18px] lg:text-[22px] leading-[1.35] text-foreground">
+                Esse não é um problema de{" "}
+                <strong className="font-extrabold text-foreground">time.</strong> É um problema de{" "}
+                <strong style={{ color: "var(--color-primary)" }} className="font-extrabold">
+                  sistema.
+                </strong>
+              </p>
+              <p className="mt-5 text-[15px] lg:text-[16px] text-sage leading-[1.6]">
+                ERP não resolve: foi feito pra padronizar, não pra pensar. Consultoria não resolve:
+                entrega slide e vai embora. O que você precisa é de software com IA construído dentro
+                da sua operação — que automatiza, que aprende e que fica.
+              </p>
+              <p
+                className="mt-4 text-[16px] lg:text-[18px] font-bold leading-[1.4]"
+                style={{ color: "var(--color-primary)" }}
+              >
+                É isso que a IAplicada constrói.
+              </p>
+            </div>
           </Reveal>
 
           <Reveal delay={0.3}>
