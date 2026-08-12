@@ -59,9 +59,9 @@ export function LeadHero({ onOpenModal }: LeadHeroProps) {
                 color: "var(--color-foreground, #f4f5ec)",
               }}
             >
-              Prompts, automacoes e agentes de IA{" "}
-              <em style={{ color: "var(--color-primary)" }}>prontos para usar</em> na sua empresa
-              — testados em operacoes reais, nao em teoria.
+              Prompts, automações e agentes de IA{" "}
+              <em style={{ color: "var(--color-primary)" }}>prontos para usar</em> na sua empresa,
+              testados em operações reais, não em teoria.
             </p>
           </Reveal>
 
@@ -75,8 +75,8 @@ export function LeadHero({ onOpenModal }: LeadHeroProps) {
                 color: "var(--text-sage, #a3a898)",
               }}
             >
-              Um kit gratuito com tudo que voce precisa para comecar a automatizar
-              processos — sem equipe de TI e sem saber programar.
+              Um kit gratuito com tudo que você precisa para começar a automatizar
+              processos, sem equipe de TI e sem saber programar.
             </p>
           </Reveal>
 
@@ -95,12 +95,6 @@ export function LeadHero({ onOpenModal }: LeadHeroProps) {
               >
                 Quero o kit completo &rarr;
               </button>
-              <p
-                className="mt-3.5 text-[12px] tracking-[0.04em]"
-                style={{ color: "var(--text-muted, #8a8e82)" }}
-              >
-                Gratuito &#10038; Acesso imediato &#10038; Sem cartao de credito
-              </p>
             </div>
           </Reveal>
         </div>
