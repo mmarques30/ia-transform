@@ -6,8 +6,6 @@ import { MetodoAplicaBook } from "@/components/sections/business/variantA/Metodo
 import { AppShowcase } from "@/components/sections/business/variantA/AppShowcase";
 import { MentorMari } from "@/components/sections/business/variantA/MentorMari";
 import { Guarantee } from "@/components/sections/business/variantA/Guarantee";
-import { Urgency } from "@/components/sections/business/variantA/Urgency";
-import { Manifesto } from "@/components/sections/business/variantA/Manifesto";
 import { FinalForm } from "@/components/sections/business/variantA/FinalForm";
 import { QualifierStrip } from "@/components/sections/business/variantA/QualifierStrip";
 import { Testimonials } from "@/components/sections/business/variantB/Testimonials";
@@ -58,10 +56,8 @@ export const Route = createFileRoute("/")({
  *  05 MetodoAplicaBook (trilha vertical A·P·L·I·C·A)
  *  06 AppShowcase (tabs de painéis)
  *  07 MentorMari (foto full-bleed + credenciais)
- *  08 Guarantee (lista editorial dos 3 entregáveis)
- *  09 Urgency (banda vermelha "custo de esperar")
- *  10 Manifesto (fecho editorial)
- *  11 FinalForm (HeroForm inline no fim)
+ *  08 Guarantee (entregáveis + garantia de implementação)
+ *  09 FinalForm (HeroForm inline no fim)
  *  12 QualifierStrip rodapé
  *  13 Footer
  */
@@ -89,13 +85,7 @@ function BusinessLanding() {
 
         <MentorMari />
 
-        <BgDobra intensity="media">
-          <Guarantee />
-        </BgDobra>
-
-        <Urgency />
-
-        <Manifesto />
+        <Guarantee />
 
         <FinalForm />
 

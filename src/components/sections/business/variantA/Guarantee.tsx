@@ -1,16 +1,5 @@
 import { Reveal } from "@/components/Reveal";
-
-/**
- * Guarantee (LP-A) — mesma estrutura da /businessv2 (Guarantee):
- * lista editorial de 3 entregáveis do diagnóstico. Copy adaptada
- * pro ângulo LP-A ("crescimento sem contratação") — foca em
- * "recuperar controle" e "escalar sem contratar" no lugar de
- * "sair do operacional".
- *
- * Mantém o formato honesto (SEM carimbo de cartório): "diagnóstico
- * sem custo, material fica com você" — decisão anterior de manter
- * garantia baseada em entregáveis reais.
- */
+import { CtaGlow } from "@/components/sections/business/variantB/CtaGlow";
 
 interface DeliverableItem {
   n: string;
@@ -40,13 +29,15 @@ export function Guarantee() {
   return (
     <section
       id="garantia"
-      className="relative section-veil py-[80px] lg:py-[110px] overflow-hidden"
+      className="relative py-[80px] lg:py-[110px] overflow-hidden"
+      style={{ background: "linear-gradient(180deg, #0c0f07 0%, #111408 50%, #0c0f07 100%)" }}
     >
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0"
         style={{
-          background: "radial-gradient(80% 80% at 70% 50%, rgba(200,224,64,0.08), transparent 60%)",
+          background:
+            "radial-gradient(80% 80% at 70% 50%, rgba(200,224,64,0.06), transparent 60%)",
         }}
       />
       <div className="container-page relative">
@@ -85,13 +76,6 @@ export function Guarantee() {
                 fechar contrato de implementação, ainda leva o mapa de processos, o ranking de
                 gargalos e o playbook do próximo trimestre.
               </p>
-              <p className="mt-4 text-[14.5px] lg:text-[15.5px] text-sage leading-[1.65]">
-                Se topar seguir, o contrato tem{" "}
-                <strong className="text-foreground font-bold">
-                  escopo, marcos semanais e critérios de aceite
-                </strong>{" "}
-                objetivos. Sem letras miúdas, sem carimbo de vendedor.
-              </p>
             </div>
           </Reveal>
 
@@ -116,6 +100,39 @@ export function Guarantee() {
             </ul>
           </div>
         </div>
+
+        <Reveal delay={0.25}>
+          <div
+            className="mt-14 lg:mt-20 max-w-[720px] mx-auto rounded-[20px] px-8 py-8 lg:px-10 lg:py-10"
+            style={{
+              background: "rgba(200,224,64,0.04)",
+              border: "1px solid rgba(200,224,64,0.15)",
+            }}
+          >
+            <h3
+              className="text-[18px] lg:text-[22px] font-extrabold leading-[1.2] tracking-[-0.01em] text-foreground"
+              style={{ textWrap: "balance" }}
+            >
+              E se você avançar para a implementação:
+            </h3>
+            <p className="mt-4 text-[14.5px] lg:text-[15.5px] text-sage leading-[1.65]">
+              Se você seguir o processo que acordamos — fizer os testes dentro do prazo, implementar
+              do jeito que combinamos — e o sistema não funcionar,{" "}
+              <strong className="text-foreground font-bold">devolvemos o investimento</strong>. Sem
+              letra miúda.
+            </p>
+            <p className="mt-4 text-[13.5px] lg:text-[14px] leading-[1.6]" style={{ color: "rgba(255,255,255,0.5)" }}>
+              O condicionante existe porque o resultado depende dos dois lados. Quem cumpre o
+              processo não pede devolução. Nunca aconteceu.
+            </p>
+          </div>
+        </Reveal>
+
+        <Reveal delay={0.3}>
+          <div className="mt-10 text-center">
+            <CtaGlow size="lg">Garantir minha vaga →</CtaGlow>
+          </div>
+        </Reveal>
       </div>
     </section>
   );
