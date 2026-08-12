@@ -9,44 +9,19 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as Businessv2RouteImport } from './routes/businessv2'
-import { Route as ContabilRouteImport } from './routes/contabil'
-import { Route as ContabilThankYouRouteImport } from './routes/contabil-thank-you'
-import { Route as Contabil02RouteImport } from './routes/contabil02'
-import { Route as IndicacaobusinessRouteImport } from './routes/indicacaobusiness'
-import { Route as LeadRouteImport } from './routes/lead'
 import { Route as ThankYouBusinessRouteImport } from './routes/thank-you-business'
+import { Route as LeadRouteImport } from './routes/lead'
+import { Route as IndicacaobusinessRouteImport } from './routes/indicacaobusiness'
+import { Route as Contabil02RouteImport } from './routes/contabil02'
+import { Route as ContabilThankYouRouteImport } from './routes/contabil-thank-you'
+import { Route as ContabilRouteImport } from './routes/contabil'
+import { Route as Businessv2RouteImport } from './routes/businessv2'
+import { Route as IndexRouteImport } from './routes/index'
 import { Route as Businessv2DiagnosticoRouteImport } from './routes/businessv2.diagnostico'
 
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const Businessv2Route = Businessv2RouteImport.update({
-  id: '/businessv2',
-  path: '/businessv2',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ContabilRoute = ContabilRouteImport.update({
-  id: '/contabil',
-  path: '/contabil',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ContabilThankYouRoute = ContabilThankYouRouteImport.update({
-  id: '/contabil-thank-you',
-  path: '/contabil-thank-you',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const Contabil02Route = Contabil02RouteImport.update({
-  id: '/contabil02',
-  path: '/contabil02',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IndicacaobusinessRoute = IndicacaobusinessRouteImport.update({
-  id: '/indicacaobusiness',
-  path: '/indicacaobusiness',
+const ThankYouBusinessRoute = ThankYouBusinessRouteImport.update({
+  id: '/thank-you-business',
+  path: '/thank-you-business',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LeadRoute = LeadRouteImport.update({
@@ -54,9 +29,34 @@ const LeadRoute = LeadRouteImport.update({
   path: '/lead',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ThankYouBusinessRoute = ThankYouBusinessRouteImport.update({
-  id: '/thank-you-business',
-  path: '/thank-you-business',
+const IndicacaobusinessRoute = IndicacaobusinessRouteImport.update({
+  id: '/indicacaobusiness',
+  path: '/indicacaobusiness',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Contabil02Route = Contabil02RouteImport.update({
+  id: '/contabil02',
+  path: '/contabil02',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContabilThankYouRoute = ContabilThankYouRouteImport.update({
+  id: '/contabil-thank-you',
+  path: '/contabil-thank-you',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContabilRoute = ContabilRouteImport.update({
+  id: '/contabil',
+  path: '/contabil',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Businessv2Route = Businessv2RouteImport.update({
+  id: '/businessv2',
+  path: '/businessv2',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const Businessv2DiagnosticoRoute = Businessv2DiagnosticoRouteImport.update({
@@ -148,46 +148,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/businessv2': {
-      id: '/businessv2'
-      path: '/businessv2'
-      fullPath: '/businessv2'
-      preLoaderRoute: typeof Businessv2RouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/contabil': {
-      id: '/contabil'
-      path: '/contabil'
-      fullPath: '/contabil'
-      preLoaderRoute: typeof ContabilRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/contabil-thank-you': {
-      id: '/contabil-thank-you'
-      path: '/contabil-thank-you'
-      fullPath: '/contabil-thank-you'
-      preLoaderRoute: typeof ContabilThankYouRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/contabil02': {
-      id: '/contabil02'
-      path: '/contabil02'
-      fullPath: '/contabil02'
-      preLoaderRoute: typeof Contabil02RouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/indicacaobusiness': {
-      id: '/indicacaobusiness'
-      path: '/indicacaobusiness'
-      fullPath: '/indicacaobusiness'
-      preLoaderRoute: typeof IndicacaobusinessRouteImport
+    '/thank-you-business': {
+      id: '/thank-you-business'
+      path: '/thank-you-business'
+      fullPath: '/thank-you-business'
+      preLoaderRoute: typeof ThankYouBusinessRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/lead': {
@@ -197,11 +162,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LeadRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/thank-you-business': {
-      id: '/thank-you-business'
-      path: '/thank-you-business'
-      fullPath: '/thank-you-business'
-      preLoaderRoute: typeof ThankYouBusinessRouteImport
+    '/indicacaobusiness': {
+      id: '/indicacaobusiness'
+      path: '/indicacaobusiness'
+      fullPath: '/indicacaobusiness'
+      preLoaderRoute: typeof IndicacaobusinessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contabil02': {
+      id: '/contabil02'
+      path: '/contabil02'
+      fullPath: '/contabil02'
+      preLoaderRoute: typeof Contabil02RouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contabil-thank-you': {
+      id: '/contabil-thank-you'
+      path: '/contabil-thank-you'
+      fullPath: '/contabil-thank-you'
+      preLoaderRoute: typeof ContabilThankYouRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contabil': {
+      id: '/contabil'
+      path: '/contabil'
+      fullPath: '/contabil'
+      preLoaderRoute: typeof ContabilRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/businessv2': {
+      id: '/businessv2'
+      path: '/businessv2'
+      fullPath: '/businessv2'
+      preLoaderRoute: typeof Businessv2RouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/businessv2/diagnostico': {
@@ -239,3 +239,12 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}
