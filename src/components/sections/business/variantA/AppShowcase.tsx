@@ -57,7 +57,7 @@ export function AppShowcase() {
         </div>
 
         <Reveal delay={0.15}>
-          <div className="mt-10 max-w-[880px] mx-auto">
+          <div className="mt-10 max-w-[720px] mx-auto">
             <PainelClientesShowcase />
           </div>
         </Reveal>
