@@ -40,7 +40,7 @@ const LOADING_STAGES = [
   { at: 3200, text: "Quase la..." },
 ];
 
-const REQUIRED_FIELDS = ["firstname", "email", "phone", "faixa_faturamento", "gargalo"] as const;
+const REQUIRED_FIELDS = ["firstname", "email", "phone", "faixa_de_faturamento", "gargalo"] as const;
 
 interface ModalCtx {
   isOpen: boolean;
@@ -201,32 +201,43 @@ function FormState({ onSuccess }: { onSuccess: () => void }) {
       const params = new URLSearchParams(window.location.search);
       const { fbp, fbc } = getMetaPixelCookies();
 
+      const utmSource = params.get("utm_source") ?? "";
+      const utmMedium = params.get("utm_medium") ?? "";
+      const utmCampaign = params.get("utm_campaign") ?? "";
+      const utmTerm = params.get("utm_term") ?? "";
+      const utmContent = params.get("utm_content") ?? "";
+      const fbclid = getFbclidFromUrl() ?? params.get("fbclid") ?? "";
+      const gclid = params.get("gclid") ?? "";
+
       const payload = {
         form_slug: "isca-business-gargalos",
         fields: {
           firstname: String(fd.get("firstname") ?? "").trim(),
           email: String(fd.get("email") ?? "").trim(),
           phone: String(fd.get("phone") ?? "").trim(),
-          faixa_faturamento: String(fd.get("faixa_faturamento") ?? "").trim(),
+          faixa_de_faturamento: String(fd.get("faixa_de_faturamento") ?? "").trim(),
           gargalo: String(fd.get("gargalo") ?? "").trim(),
         },
         utm: {
-          source: params.get("utm_source") ?? "",
-          medium: params.get("utm_medium") ?? "",
-          campaign: params.get("utm_campaign") ?? "",
-          term: params.get("utm_term") ?? "",
-          content: params.get("utm_content") ?? "",
+          source: utmSource,
+          medium: utmMedium,
+          campaign: utmCampaign,
+          term: utmTerm,
+          content: utmContent,
         },
-        attribution: {
-          fbclid: getFbclidFromUrl() ?? params.get("fbclid") ?? "",
-          gclid: params.get("gclid") ?? "",
-          fbp, fbc,
-        },
+        attribution: { fbclid, gclid, fbp, fbc },
         meta: {
           page_url: window.location.href,
           referrer: document.referrer,
           user_agent: navigator.userAgent,
         },
+        utm_source: utmSource,
+        utm_medium: utmMedium,
+        utm_campaign: utmCampaign,
+        utm_term: utmTerm,
+        utm_content: utmContent,
+        fbclid,
+        gclid,
         event_id: eventID,
       };
 
@@ -317,8 +328,8 @@ function FormState({ onSuccess }: { onSuccess: () => void }) {
             Sobre sua empresa
           </p>
 
-          <ModalField id="faixa_faturamento" label="Em qual etapa está sua empresa?" error={fieldErrors.faixa_faturamento}>
-            <select id="faixa_faturamento" name="faixa_faturamento" required defaultValue="" className="lead-input">
+          <ModalField id="faixa_de_faturamento" label="Em qual etapa está sua empresa?" error={fieldErrors.faixa_de_faturamento}>
+            <select id="faixa_de_faturamento" name="faixa_de_faturamento" required defaultValue="" className="lead-input">
               <option value="" disabled>Selecione</option>
               {FAIXAS.map((f) => <option key={f.value} value={f.value}>{f.label}</option>)}
             </select>
