@@ -1,12 +1,12 @@
 import { useEffect, useRef } from "react";
 
+const LOGO_SRC = "/brand/Design sem nome (19).png";
 const LOGO_SIZE_HERO = 52;
 const LOGO_SIZE_DEST = 80;
 
 interface PetalDef {
   id: string;
-  color: string;
-  d: string;
+  clip: string;
   tx: number;
   ty: number;
   tz: number;
@@ -16,50 +16,10 @@ interface PetalDef {
 }
 
 const PETALS: PetalDef[] = [
-  {
-    id: "tl",
-    color: "#D4DCAE",
-    d: "M 47 3 C 23 3, 3 23, 3 47 L 47 47 Z",
-    tx: -140,
-    ty: -100,
-    tz: 70,
-    rx: 28,
-    ry: -35,
-    rz: -22,
-  },
-  {
-    id: "tr",
-    color: "#587716",
-    d: "M 53 3 C 77 3, 97 23, 97 47 L 53 47 Z",
-    tx: 140,
-    ty: -90,
-    tz: -60,
-    rx: -22,
-    ry: 32,
-    rz: 18,
-  },
-  {
-    id: "bl",
-    color: "#D4DCAE",
-    d: "M 3 53 C 3 77, 23 97, 47 97 L 47 53 Z",
-    tx: -130,
-    ty: 105,
-    tz: -50,
-    rx: -28,
-    ry: -28,
-    rz: 22,
-  },
-  {
-    id: "br",
-    color: "#8EAF28",
-    d: "M 97 53 C 97 77, 77 97, 53 97 L 53 53 Z",
-    tx: 120,
-    ty: 110,
-    tz: 60,
-    rx: 22,
-    ry: 35,
-    rz: -18,
-  },
+  { id: "tl", clip: "inset(0 50% 50% 0)", tx: -140, ty: -100, tz: 70, rx: 28, ry: -35, rz: -22 },
+  { id: "tr", clip: "inset(0 0 50% 50%)", tx: 140, ty: -90, tz: -60, rx: -22, ry: 32, rz: 18 },
+  { id: "bl", clip: "inset(50% 50% 0 0)", tx: -130, ty: 105, tz: -50, rx: -28, ry: -28, rz: 22 },
+  { id: "br", clip: "inset(50% 0 0 50%)", tx: 120, ty: 110, tz: 60, rx: 22, ry: 35, rz: -18 },
 ];
 
 const PARTICLE_COUNT = 8;
@@ -238,17 +198,15 @@ export function LeadLogoScatter() {
               inset: 0,
               willChange: "transform, opacity",
               transformStyle: "preserve-3d",
+              clipPath: petal.clip,
             }}
           >
-            <svg
-              width="100%"
-              height="100%"
-              viewBox="0 0 100 100"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path d={petal.d} fill={petal.color} />
-            </svg>
+            <img
+              src={LOGO_SRC}
+              alt=""
+              draggable={false}
+              style={{ display: "block", width: "100%", height: "100%" }}
+            />
           </div>
         ))}
 
