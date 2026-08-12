@@ -81,7 +81,7 @@ export function MetodoAplicaBook() {
             <p className="mt-5 text-[15px] lg:text-[16.5px] text-sage leading-[1.6] max-w-[640px] mx-auto">
               O Método <strong className="text-foreground font-bold">APLICA</strong> identifica onde
               sua operação sangra, constrói o sistema que para o sangramento e implementa dentro do
-              seu negócio — em 90 dias, com marcos semanais, sem depender de você para funcionar.
+              seu negócio em 90 dias, com marcos semanais, sem depender de você para funcionar.
             </p>
           </Reveal>
         </div>
