@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { BgDobra } from "@/components/BgDobra";
 import { LeadHero } from "@/components/sections/business/lead/LeadHero";
-import { LeadLogoScatter } from "@/components/sections/business/lead/LeadLogoScatter";
 import { LeadProblem } from "@/components/sections/business/lead/LeadProblem";
 import { LeadKitContent } from "@/components/sections/business/lead/LeadKitContent";
 import { LeadCredibility } from "@/components/sections/business/lead/LeadCredibility";
@@ -44,8 +43,6 @@ function LeadMagnetLanding() {
   return (
     <LeadModalProvider>
       <main className="min-h-screen text-foreground" style={{ backgroundColor: "#080a07", overflowX: "hidden" }}>
-        <LeadLogoScatter />
-
         <LeadHeroWithModal />
 
         <BgDobra intensity="media">
