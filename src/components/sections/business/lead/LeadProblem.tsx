@@ -18,7 +18,7 @@ const COL_RIGHT = [
 
 export function LeadProblem({ onOpenModal }: LeadProblemProps) {
   return (
-    <section className="relative">
+    <section id="lead-section2" className="relative">
       <div className="section-veil w-full py-[72px] lg:py-[110px]">
         <div className="relative z-10 container-page">
           <Reveal>
