@@ -12,7 +12,7 @@ export function QualifierStrip() {
         style={{
           fontFamily: '"Instrument Serif", serif',
           fontStyle: "italic",
-          fontWeight: 500,
+          fontWeight: 700,
           color: "#0a0c07",
         }}
       >
