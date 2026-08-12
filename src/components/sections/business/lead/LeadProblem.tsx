@@ -35,11 +35,11 @@ export function LeadProblem({ onOpenModal }: LeadProblemProps) {
             </h2>
           </Reveal>
 
-          <div className="mt-14 lg:mt-16 grid lg:grid-cols-[minmax(280px,420px)_1fr] gap-10 lg:gap-14 items-center max-w-[1100px] mx-auto">
+          <div className="mt-14 lg:mt-16 grid lg:grid-cols-[320px_1fr] gap-10 lg:gap-20 items-center max-w-[1100px] mx-auto">
             <Reveal delay={0.08}>
-              <div className="hidden lg:flex items-center justify-start">
+              <div className="hidden lg:flex items-center justify-center">
                 <Suspense fallback={null}>
-                  <IAPLogo3D width={420} height={420} scale={2} />
+                  <IAPLogo3D width={300} height={300} scale={1.5} />
                 </Suspense>
               </div>
             </Reveal>

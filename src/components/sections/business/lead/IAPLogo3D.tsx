@@ -180,7 +180,7 @@ export function IAPLogo3D({
   scale?: number;
 }) {
   return (
-    <div style={{ width, height, overflow: "visible" }}>
+    <div style={{ width, height }}>
       <Canvas
         camera={{ position: [0, 0, 4.5], fov: 42 }}
         gl={{
