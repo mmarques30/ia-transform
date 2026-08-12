@@ -3457,53 +3457,43 @@ select.lead-input option {
 
 /* ── Card positions in hero (desktop 1280+) ── */
 .lead-mockup--tl {
-  top: 40px;
-  left: -20px;
-  width: 150px;
+  top: 32px;
+  left: -10px;
+  width: 220px;
   transform: rotate(-8deg);
 }
 .lead-mockup--tl:hover { transform: rotate(-2deg) scale(1.06); }
 
 .lead-mockup--tr {
-  top: 30px;
-  right: -20px;
-  width: 160px;
+  top: 24px;
+  right: -10px;
+  width: 230px;
   transform: rotate(6deg);
 }
 .lead-mockup--tr:hover { transform: rotate(2deg) scale(1.06); }
 
 .lead-mockup--bl {
   bottom: 100px;
-  left: -30px;
-  width: 130px;
+  left: -20px;
+  width: 200px;
   transform: rotate(-5deg);
 }
 .lead-mockup--bl:hover { transform: rotate(-1deg) scale(1.06); }
 
 .lead-mockup--br {
   bottom: 80px;
-  right: -20px;
-  width: 140px;
+  right: -10px;
+  width: 210px;
   transform: rotate(4.5deg);
 }
 .lead-mockup--br:hover { transform: rotate(1deg) scale(1.06); }
 
-.lead-mockup--bc {
-  bottom: 16px;
-  left: 50%;
-  margin-left: -75px;
-  width: 150px;
-  transform: rotate(-2deg);
-}
-.lead-mockup--bc:hover { transform: rotate(0deg) scale(1.06) translateY(-10px); }
-
 /* ── Larger screens (1536+) ── */
 @media (min-width: 1536px) {
-  .lead-mockup--tl { left: 32px; top: 48px; width: 180px; }
-  .lead-mockup--tr { right: 28px; top: 36px; width: 190px; }
-  .lead-mockup--bl { left: 24px; bottom: 120px; width: 150px; }
-  .lead-mockup--br { right: 20px; bottom: 100px; width: 160px; }
-  .lead-mockup--bc { width: 170px; margin-left: -85px; bottom: 24px; }
+  .lead-mockup--tl { left: 40px; top: 40px; width: 260px; }
+  .lead-mockup--tr { right: 36px; top: 28px; width: 270px; }
+  .lead-mockup--bl { left: 32px; bottom: 120px; width: 240px; }
+  .lead-mockup--br { right: 28px; bottom: 100px; width: 250px; }
 }
 
 /* ── Tablet: hide mockups ── */

@@ -25,11 +25,6 @@ const CARDS: MockupCard[] = [
     label: "Automacoes",
     pos: "lead-mockup--br",
   },
-  {
-    src: "/mockups/mockup-cadencia.png",
-    label: "Cadencia B2B",
-    pos: "lead-mockup--bc",
-  },
 ];
 
 export function LeadKitMockups() {
