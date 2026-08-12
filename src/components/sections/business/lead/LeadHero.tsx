@@ -1,6 +1,11 @@
+import { lazy, Suspense } from "react";
 import { Reveal } from "@/components/Reveal";
 import { OriginButton } from "@/components/ui/origin-button";
 import { LeadKitMockups } from "./LeadKitMockups";
+
+const IAPLogo3D = lazy(() =>
+  import("./IAPLogo3D").then((m) => ({ default: m.IAPLogo3D }))
+);
 
 interface LeadHeroProps {
   onOpenModal: () => void;
@@ -24,12 +29,11 @@ export function LeadHero({ onOpenModal }: LeadHeroProps) {
 
       <div className="relative z-[3] w-full max-w-[1280px] mx-auto px-6 lg:px-12 py-[72px]">
         <div className="max-w-[860px] mx-auto text-center">
-          <div
-            id="lead-logo-anchor"
-            className="mx-auto mb-10"
-            style={{ width: 52, height: 52 }}
-            aria-hidden
-          />
+          <div className="mx-auto mb-8 flex items-center justify-center" style={{ width: 90, height: 90 }}>
+            <Suspense fallback={null}>
+              <IAPLogo3D width={90} height={90} scale={1.8} />
+            </Suspense>
+          </div>
 
           <Reveal delay={0.05}>
             <h1

@@ -1,24 +1,24 @@
-import { useRef, useMemo, Suspense } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
-import { Float, Environment, useGLTF } from "@react-three/drei";
+import { useRef, useMemo, useState, useEffect, Suspense } from "react";
+import { Canvas, useFrame, useLoader } from "@react-three/fiber";
+import { Float } from "@react-three/drei";
 import * as THREE from "three";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
-const GLB_URL = "/brand/iaplicada-logo-3d.glb";
-
-function LogoModel({ scale = 1 }: { scale?: number }) {
+function LogoFromGLB({ scale = 1 }: { scale?: number }) {
   const group = useRef<THREE.Group>(null);
-  const { scene } = useGLTF(GLB_URL);
+  const gltf = useLoader(GLTFLoader, "/brand/iaplicada-logo-3d.glb");
 
   const material = useMemo(
     () =>
       new THREE.MeshPhysicalMaterial({
         color: new THREE.Color("#8B9B3A"),
-        metalness: 0.72,
-        roughness: 0.15,
+        metalness: 0.75,
+        roughness: 0.12,
         clearcoat: 1.0,
-        clearcoatRoughness: 0.08,
+        clearcoatRoughness: 0.05,
         reflectivity: 1,
-        envMapIntensity: 2.0,
+        envMapIntensity: 1.5,
+        side: THREE.DoubleSide,
       }),
     []
   );
@@ -26,13 +26,13 @@ function LogoModel({ scale = 1 }: { scale?: number }) {
   useFrame((state) => {
     if (!group.current) return;
     const t = state.clock.elapsedTime;
-    group.current.rotation.y = t * 0.3;
-    group.current.rotation.x = Math.sin(t * 0.35) * 0.12;
-    group.current.rotation.z = Math.sin(t * 0.22) * 0.06;
+    group.current.rotation.y = t * 0.35;
+    group.current.rotation.x = Math.sin(t * 0.3) * 0.15;
+    group.current.rotation.z = Math.sin(t * 0.2) * 0.08;
   });
 
   const cloned = useMemo(() => {
-    const c = scene.clone(true);
+    const c = gltf.scene.clone(true);
     c.traverse((child) => {
       if ((child as THREE.Mesh).isMesh) {
         (child as THREE.Mesh).material = material;
@@ -42,15 +42,128 @@ function LogoModel({ scale = 1 }: { scale?: number }) {
     const center = box.getCenter(new THREE.Vector3());
     c.position.sub(center);
     return c;
-  }, [scene, material]);
+  }, [gltf.scene, material]);
 
   return (
-    <Float speed={1.5} rotationIntensity={0.1} floatIntensity={0.5}>
+    <Float speed={1.5} rotationIntensity={0.08} floatIntensity={0.4}>
       <group ref={group} scale={scale}>
         <primitive object={cloned} />
       </group>
     </Float>
   );
+}
+
+function FallbackLogo({ scale = 1 }: { scale?: number }) {
+  const group = useRef<THREE.Group>(null);
+
+  useFrame((state) => {
+    if (!group.current) return;
+    const t = state.clock.elapsedTime;
+    group.current.rotation.y = t * 0.35;
+    group.current.rotation.x = Math.sin(t * 0.3) * 0.15;
+    group.current.rotation.z = Math.sin(t * 0.2) * 0.08;
+  });
+
+  const geom = useMemo(() => {
+    const g = new THREE.DodecahedronGeometry(1.2, 1);
+    return g;
+  }, []);
+
+  return (
+    <Float speed={1.5} rotationIntensity={0.08} floatIntensity={0.4}>
+      <group ref={group} scale={scale}>
+        <mesh geometry={geom}>
+          <meshPhysicalMaterial
+            color="#8B9B3A"
+            metalness={0.75}
+            roughness={0.12}
+            clearcoat={1.0}
+            clearcoatRoughness={0.05}
+            side={THREE.DoubleSide}
+          />
+        </mesh>
+      </group>
+    </Float>
+  );
+}
+
+function SceneLights() {
+  return (
+    <>
+      <ambientLight intensity={0.6} />
+      <directionalLight position={[5, 8, 5]} intensity={2.0} color="#fff8e8" />
+      <directionalLight position={[-5, -4, 3]} intensity={0.8} color="#A8BE6E" />
+      <directionalLight position={[0, 5, -5]} intensity={0.6} color="#C9D89B" />
+      <pointLight position={[0, 0, 6]} intensity={1.0} color="#F4F1E4" />
+      <pointLight position={[-4, 3, -2]} intensity={0.5} color="#C9D89B" />
+      <pointLight position={[4, -3, 2]} intensity={0.4} color="#fff" />
+    </>
+  );
+}
+
+function SceneWithModel({ scale }: { scale: number }) {
+  const [glbFailed, setGlbFailed] = useState(false);
+
+  if (glbFailed) {
+    return (
+      <>
+        <SceneLights />
+        <FallbackLogo scale={scale} />
+      </>
+    );
+  }
+
+  return (
+    <>
+      <SceneLights />
+      <ErrorCatcher onError={() => setGlbFailed(true)}>
+        <Suspense fallback={<FallbackLogo scale={scale} />}>
+          <LogoFromGLB scale={scale} />
+        </Suspense>
+      </ErrorCatcher>
+    </>
+  );
+}
+
+function ErrorCatcher({
+  children,
+  onError,
+}: {
+  children: React.ReactNode;
+  onError: () => void;
+}) {
+  const [hasError, setHasError] = useState(false);
+
+  useEffect(() => {
+    if (hasError) onError();
+  }, [hasError, onError]);
+
+  if (hasError) return null;
+
+  return (
+    <ErrorBoundaryInner onCatch={() => setHasError(true)}>
+      {children}
+    </ErrorBoundaryInner>
+  );
+}
+
+import { Component, type ErrorInfo, type ReactNode } from "react";
+
+class ErrorBoundaryInner extends Component<
+  { children: ReactNode; onCatch: () => void },
+  { hasError: boolean }
+> {
+  state = { hasError: false };
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+  componentDidCatch(_: Error, __: ErrorInfo) {
+    this.props.onCatch();
+  }
+  render() {
+    if (this.state.hasError) return null;
+    return this.props.children;
+  }
 }
 
 export function IAPLogo3D({
@@ -65,26 +178,19 @@ export function IAPLogo3D({
   return (
     <div style={{ width, height }}>
       <Canvas
-        camera={{ position: [0, 0, 5], fov: 40 }}
+        camera={{ position: [0, 0, 4.5], fov: 42 }}
         gl={{
           antialias: true,
           alpha: true,
           toneMapping: THREE.ACESFilmicToneMapping,
-          toneMappingExposure: 1.3,
+          toneMappingExposure: 1.4,
+          powerPreference: "default",
         }}
         dpr={[1, 2]}
         style={{ background: "transparent" }}
         resize={{ scroll: false, offsetSize: true }}
       >
-        <ambientLight intensity={0.5} />
-        <directionalLight position={[5, 8, 5]} intensity={1.8} color="#fff8e8" />
-        <directionalLight position={[-4, -3, 3]} intensity={0.6} color="#A8BE6E" />
-        <pointLight position={[0, 0, 5]} intensity={0.8} color="#F4F1E4" />
-        <pointLight position={[-3, 2, -2]} intensity={0.35} color="#C9D89B" />
-        <Environment preset="city" />
-        <Suspense fallback={null}>
-          <LogoModel scale={scale} />
-        </Suspense>
+        <SceneWithModel scale={scale} />
       </Canvas>
     </div>
   );

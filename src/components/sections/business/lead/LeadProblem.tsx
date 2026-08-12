@@ -12,10 +12,10 @@ interface LeadProblemProps {
 }
 
 const PROBLEMS: { icon: typeof AlertCircle; title: string; text: string }[] = [
-  { icon: AlertCircle, title: "Dependência total de você", text: "Cada decisão operacional passa por você — a empresa só avança quando você está presente." },
+  { icon: AlertCircle, title: "Dependência total de você", text: "Cada decisão operacional passa por você. A empresa só avança quando você está presente." },
   { icon: Clock, title: "Tempo desperdiçado", text: "O time gasta horas em tarefas que deveriam ser automáticas, todo santo dia." },
   { icon: Puzzle, title: "IA sem encaixe", text: "Você experimenta ferramentas de IA, mas nada encaixa no processo real da operação." },
-  { icon: Users, title: "Mais gente, mesmo gargalo", text: "Contratar mais gente resolve no curto prazo — e cria outro gargalo logo depois." },
+  { icon: Users, title: "Mais gente, mesmo gargalo", text: "Contratar mais gente resolve no curto prazo. E cria outro gargalo logo depois." },
 ];
 
 export function LeadProblem({ onOpenModal }: LeadProblemProps) {
@@ -37,7 +37,7 @@ export function LeadProblem({ onOpenModal }: LeadProblemProps) {
 
           <div className="mt-14 lg:mt-16 grid lg:grid-cols-[minmax(280px,420px)_1fr] gap-10 lg:gap-14 items-center max-w-[1100px] mx-auto">
             <Reveal delay={0.08}>
-              <div className="hidden lg:flex items-center justify-center">
+              <div className="hidden lg:flex items-center justify-start">
                 <Suspense fallback={null}>
                   <IAPLogo3D width={420} height={420} scale={2} />
                 </Suspense>
@@ -88,7 +88,7 @@ export function LeadProblem({ onOpenModal }: LeadProblemProps) {
 
           <Reveal delay={0.4}>
             <p className="mt-14 text-center text-[18px] lg:text-[22px] leading-[1.35] max-w-[720px] mx-auto text-foreground">
-              IA nao e hype — e a unica forma de{" "}
+              IA nao e hype. E a unica forma de{" "}
               <strong style={{ color: "var(--color-primary)" }} className="font-extrabold">
                 escalar sem inflar a folha.
               </strong>{" "}
