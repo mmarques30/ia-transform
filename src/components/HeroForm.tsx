@@ -534,7 +534,7 @@ export function HeroForm({
           }
           style={{ color: "oklch(0.18 0.02 122)" }}
         >
-          Conte sobre sua operação
+          Solicite seu diagnóstico
         </p>
       </div>
 
@@ -696,24 +696,11 @@ export function HeroForm({
           <button
             type="submit"
             disabled={loading || !allRequiredFilled}
-            className="mt-1 w-full inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-[14px] font-medium transition-[transform,opacity,box-shadow] disabled:opacity-60 disabled:cursor-not-allowed hover:-translate-y-0.5"
-            style={{
-              backgroundColor: "var(--academy-brand-dark)",
-              color: "#ffffff",
-              boxShadow:
-                "0 1px 0 0 rgba(255, 255, 255, 0.12) inset, 0 14px 32px -10px rgba(115, 137, 37, 0.45)",
-            }}
+            className="hero-form-cta mt-1 w-full inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-[14px] font-medium disabled:opacity-60 disabled:cursor-not-allowed"
           >
             {loading ? loadingMsg || "Enviando..." : "SOLICITAR DIAGNÓSTICO"}
             {!loading && <ArrowRight className="h-4 w-4" strokeWidth={2.5} />}
           </button>
-
-          <p
-            className="pt-2 text-[11.5px] text-center leading-relaxed"
-            style={{ color: "oklch(0.55 0.015 115)" }}
-          >
-            Ao enviar, você autoriza contato por WhatsApp e email.
-          </p>
         </form>
       </div>
     </div>
