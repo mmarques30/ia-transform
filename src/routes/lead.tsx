@@ -43,8 +43,6 @@ function LeadMagnetLanding() {
   return (
     <LeadModalProvider>
       <main className="min-h-screen text-foreground" style={{ backgroundColor: "#080a07" }}>
-        <LeadNav />
-
         <LeadHeroWithModal />
 
         <Separator />
@@ -99,24 +97,3 @@ function Separator() {
   );
 }
 
-function LeadNav() {
-  return (
-    <nav
-      className="fixed top-0 left-0 right-0 z-[200] flex items-center h-16 px-6 lg:px-16"
-      style={{
-        background: "rgba(8,10,7,0.88)",
-        backdropFilter: "blur(16px)",
-        borderBottom: "1px solid rgba(255,255,255,0.07)",
-      }}
-    >
-      <a href="/lead" className="flex items-center gap-2.5 no-underline">
-        <img
-          src="/brand/iaplicada-logo-dark.png"
-          alt="IAplicada"
-          height={22}
-          style={{ height: 22, width: "auto" }}
-        />
-      </a>
-    </nav>
-  );
-}
