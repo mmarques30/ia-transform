@@ -78,12 +78,6 @@ export function LeadCtaFinal({ onOpenModal }: LeadCtaFinalProps) {
             >
               R$ 0
             </p>
-            <p
-              className="mt-2.5 text-[12px] uppercase tracking-[0.06em]"
-              style={{ color: "var(--text-muted, #8a8e82)" }}
-            >
-              Gratuito &#10038; Acesso imediato
-            </p>
           </Reveal>
 
           <Reveal delay={0.12}>
@@ -92,6 +86,12 @@ export function LeadCtaFinal({ onOpenModal }: LeadCtaFinalProps) {
                 Quero o kit completo &rarr;
               </OriginButton>
             </div>
+            <p
+              className="mt-4 text-[12px] uppercase tracking-[0.06em]"
+              style={{ color: "var(--text-muted, #8a8e82)" }}
+            >
+              Gratuito &#10038; Acesso imediato
+            </p>
           </Reveal>
 
         </div>
