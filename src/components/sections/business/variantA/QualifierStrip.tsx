@@ -1,19 +1,19 @@
 export function QualifierStrip() {
   return (
     <div
-      className="text-center px-5 py-3"
+      className="text-center px-5 py-3.5"
       style={{
-        background: "linear-gradient(180deg, #3d3a10, #2a2808)",
-        borderBottom: "1px solid rgba(200,224,64,0.15)",
+        background: "linear-gradient(180deg, #c8a82e, #a68b1a)",
+        borderBottom: "1px solid rgba(255,255,255,0.1)",
       }}
     >
       <span
-        className="text-[13px] sm:text-[15px] tracking-[-0.01em]"
+        className="text-[15px] sm:text-[17px] tracking-[-0.01em]"
         style={{
           fontFamily: '"Instrument Serif", serif',
           fontStyle: "italic",
           fontWeight: 500,
-          color: "var(--color-primary)",
+          color: "#0a0c07",
         }}
       >
         Exclusivo para donos de empresa com faturamento a partir de R$ 1 milhão/ano
