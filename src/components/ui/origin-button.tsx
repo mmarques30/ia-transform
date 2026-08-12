@@ -170,7 +170,7 @@ const OriginButton = React.forwardRef<HTMLButtonElement, OriginButtonProps>(
         aria-busy={loading || undefined}
         className={cn(
           iapTheme,
-          "relative inline-flex h-12 cursor-pointer touch-manipulation select-none items-center justify-center overflow-hidden rounded-xl px-8 font-bold text-[14px] lg:text-[15px] uppercase tracking-[0.06em]",
+          "relative inline-flex h-14 cursor-pointer touch-manipulation select-none items-center justify-center overflow-hidden rounded-full px-10 font-bold text-[14px] lg:text-[15px] uppercase tracking-[0.06em]",
           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-[#080a07]",
           "disabled:pointer-events-none disabled:opacity-50",
           className
