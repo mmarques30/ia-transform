@@ -1,23 +1,23 @@
-/**
- * QualifierStrip (LP-A) — barra vermelha do ICP, copy simplificada.
- *
- * Aparece no topo do Hero e no rodapé (antes do Footer). Filtra
- * visitantes fora do ICP (faturamento < R$1MM/ano) já no primeiro
- * pixel visível.
- *
- * Copy mais curta que o variantB — cortou "QUE QUEREM SAIR DO
- * OPERACIONAL" pra ficar direto no critério de faturamento.
- */
 export function QualifierStrip() {
   return (
     <div
-      className="text-white text-center font-extrabold text-[12px] sm:text-[13.5px] tracking-[0.06em] px-5 py-3.5"
-      style={{ background: "linear-gradient(180deg, #dc2626, #b91c1c)" }}
+      className="text-center px-5 py-3"
+      style={{
+        background: "linear-gradient(180deg, #3d3a10, #2a2808)",
+        borderBottom: "1px solid rgba(200,224,64,0.15)",
+      }}
     >
-      EXCLUSIVO PARA DONOS DE EMPRESA COM{" "}
-      <strong className="underline underline-offset-[3px]">
-        FATURAMENTO A PARTIR DE R$ 1 MILHÃO/ANO
-      </strong>
+      <span
+        className="text-[13px] sm:text-[15px] tracking-[-0.01em]"
+        style={{
+          fontFamily: '"Instrument Serif", serif',
+          fontStyle: "italic",
+          fontWeight: 500,
+          color: "var(--color-primary)",
+        }}
+      >
+        Exclusivo para donos de empresa com faturamento a partir de R$ 1 milhão/ano
+      </span>
     </div>
   );
 }
