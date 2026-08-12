@@ -11,9 +11,11 @@ function LogoFromGLB({ scale = 1 }: { scale?: number }) {
   const material = useMemo(
     () =>
       new THREE.MeshPhysicalMaterial({
-        color: new THREE.Color("#8B9B3A"),
-        metalness: 0.75,
-        roughness: 0.12,
+        color: new THREE.Color("#B8CC4A"),
+        emissive: new THREE.Color("#3a4210"),
+        emissiveIntensity: 0.3,
+        metalness: 0.6,
+        roughness: 0.18,
         clearcoat: 1.0,
         clearcoatRoughness: 0.05,
         reflectivity: 1,
@@ -74,9 +76,11 @@ function FallbackLogo({ scale = 1 }: { scale?: number }) {
       <group ref={group} scale={scale}>
         <mesh geometry={geom}>
           <meshPhysicalMaterial
-            color="#8B9B3A"
-            metalness={0.75}
-            roughness={0.12}
+            color="#B8CC4A"
+            emissive="#3a4210"
+            emissiveIntensity={0.3}
+            metalness={0.6}
+            roughness={0.18}
             clearcoat={1.0}
             clearcoatRoughness={0.05}
             side={THREE.DoubleSide}
@@ -90,13 +94,13 @@ function FallbackLogo({ scale = 1 }: { scale?: number }) {
 function SceneLights() {
   return (
     <>
-      <ambientLight intensity={0.6} />
-      <directionalLight position={[5, 8, 5]} intensity={2.0} color="#fff8e8" />
-      <directionalLight position={[-5, -4, 3]} intensity={0.8} color="#A8BE6E" />
-      <directionalLight position={[0, 5, -5]} intensity={0.6} color="#C9D89B" />
-      <pointLight position={[0, 0, 6]} intensity={1.0} color="#F4F1E4" />
-      <pointLight position={[-4, 3, -2]} intensity={0.5} color="#C9D89B" />
-      <pointLight position={[4, -3, 2]} intensity={0.4} color="#fff" />
+      <ambientLight intensity={1.2} />
+      <directionalLight position={[5, 8, 5]} intensity={3.0} color="#fff8e8" />
+      <directionalLight position={[-5, -4, 3]} intensity={1.5} color="#d5e95a" />
+      <directionalLight position={[0, 5, -5]} intensity={1.2} color="#C9D89B" />
+      <pointLight position={[0, 0, 6]} intensity={2.0} color="#F4F1E4" />
+      <pointLight position={[-4, 3, -2]} intensity={1.0} color="#d5e95a" />
+      <pointLight position={[4, -3, 2]} intensity={0.8} color="#fff" />
     </>
   );
 }
@@ -176,18 +180,18 @@ export function IAPLogo3D({
   scale?: number;
 }) {
   return (
-    <div style={{ width, height }}>
+    <div style={{ width, height, overflow: "visible" }}>
       <Canvas
         camera={{ position: [0, 0, 4.5], fov: 42 }}
         gl={{
           antialias: true,
           alpha: true,
           toneMapping: THREE.ACESFilmicToneMapping,
-          toneMappingExposure: 1.4,
+          toneMappingExposure: 1.8,
           powerPreference: "default",
         }}
         dpr={[1, 2]}
-        style={{ background: "transparent" }}
+        style={{ background: "transparent", overflow: "visible" }}
         resize={{ scroll: false, offsetSize: true }}
       >
         <SceneWithModel scale={scale} />

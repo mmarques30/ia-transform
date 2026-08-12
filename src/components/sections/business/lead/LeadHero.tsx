@@ -29,9 +29,9 @@ export function LeadHero({ onOpenModal }: LeadHeroProps) {
 
       <div className="relative z-[3] w-full max-w-[1280px] mx-auto px-6 lg:px-12 py-[72px]">
         <div className="max-w-[860px] mx-auto text-center">
-          <div className="mx-auto mb-8 flex items-center justify-center" style={{ width: 90, height: 90 }}>
+          <div className="mx-auto mb-8 flex items-center justify-center pointer-events-none" style={{ width: 100, height: 100, background: "none" }}>
             <Suspense fallback={null}>
-              <IAPLogo3D width={90} height={90} scale={1.8} />
+              <IAPLogo3D width={100} height={100} scale={2} />
             </Suspense>
           </div>
 
