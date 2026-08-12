@@ -39,7 +39,7 @@ export function LeadProblem({ onOpenModal }: LeadProblemProps) {
             <Reveal delay={0.08}>
               <div className="hidden lg:flex items-center justify-center">
                 <Suspense fallback={null}>
-                  <IAPLogo3D width={360} height={360} scale={1.6} />
+                  <IAPLogo3D width={420} height={420} scale={2} />
                 </Suspense>
               </div>
             </Reveal>

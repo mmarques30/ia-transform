@@ -1,80 +1,55 @@
-import { useRef, useMemo } from "react";
+import { useRef, useMemo, Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Float } from "@react-three/drei";
+import { Float, Environment, useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 
-const PETAL_COLORS = ["#5C6A2E", "#A8BE6E", "#5C6A2E", "#C9D89B"];
-const PETAL_OFFSET = 0.6;
-const SPIN_SPEED = 0.1;
+const GLB_URL = "/brand/iaplicada-logo-3d.glb";
 
-function leafShape(): THREE.Shape {
-  const s = new THREE.Shape();
-  s.moveTo(0, 0);
-  s.quadraticCurveTo(0.45, 0.55, 1.0, 0);
-  s.quadraticCurveTo(0.45, -0.55, 0, 0);
-  return s;
-}
-
-const extrudeSettings: THREE.ExtrudeGeometryOptions = {
-  depth: 0.18,
-  bevelEnabled: true,
-  bevelSegments: 4,
-  bevelSize: 0.04,
-  bevelThickness: 0.04,
-  curveSegments: 32,
-};
-
-function Petal({
-  angle,
-  color,
-  offset,
-}: {
-  angle: number;
-  color: string;
-  offset: number;
-}) {
-  const geom = useMemo(() => {
-    const g = new THREE.ExtrudeGeometry(leafShape(), extrudeSettings);
-    g.center();
-    return g;
-  }, []);
-  const x = Math.cos(angle) * offset;
-  const y = Math.sin(angle) * offset;
-  return (
-    <mesh
-      geometry={geom}
-      position={[x, y, 0]}
-      rotation={[0, 0, angle + Math.PI / 2]}
-    >
-      <meshStandardMaterial color={color} roughness={0.45} metalness={0.25} />
-    </mesh>
-  );
-}
-
-function Logo() {
+function LogoModel({ scale = 1 }: { scale?: number }) {
   const group = useRef<THREE.Group>(null);
-  useFrame((s) => {
+  const { scene } = useGLTF(GLB_URL);
+
+  const material = useMemo(
+    () =>
+      new THREE.MeshPhysicalMaterial({
+        color: new THREE.Color("#8B9B3A"),
+        metalness: 0.72,
+        roughness: 0.15,
+        clearcoat: 1.0,
+        clearcoatRoughness: 0.08,
+        reflectivity: 1,
+        envMapIntensity: 2.0,
+      }),
+    []
+  );
+
+  useFrame((state) => {
     if (!group.current) return;
-    group.current.rotation.y =
-      Math.sin(s.clock.elapsedTime * 0.4) * 0.5;
-    group.current.rotation.x =
-      Math.sin(s.clock.elapsedTime * 0.3) * 0.2;
-    group.current.rotation.z = s.clock.elapsedTime * SPIN_SPEED;
+    const t = state.clock.elapsedTime;
+    group.current.rotation.y = t * 0.3;
+    group.current.rotation.x = Math.sin(t * 0.35) * 0.12;
+    group.current.rotation.z = Math.sin(t * 0.22) * 0.06;
   });
 
-  const petals = [
-    { angle: Math.PI * 0.25, color: PETAL_COLORS[0] },
-    { angle: Math.PI * 0.75, color: PETAL_COLORS[1] },
-    { angle: Math.PI * 1.25, color: PETAL_COLORS[2] },
-    { angle: Math.PI * 1.75, color: PETAL_COLORS[3] },
-  ];
+  const cloned = useMemo(() => {
+    const c = scene.clone(true);
+    c.traverse((child) => {
+      if ((child as THREE.Mesh).isMesh) {
+        (child as THREE.Mesh).material = material;
+      }
+    });
+    const box = new THREE.Box3().setFromObject(c);
+    const center = box.getCenter(new THREE.Vector3());
+    c.position.sub(center);
+    return c;
+  }, [scene, material]);
 
   return (
-    <group ref={group}>
-      {petals.map((p, i) => (
-        <Petal key={i} angle={p.angle} color={p.color} offset={PETAL_OFFSET} />
-      ))}
-    </group>
+    <Float speed={1.5} rotationIntensity={0.1} floatIntensity={0.5}>
+      <group ref={group} scale={scale}>
+        <primitive object={cloned} />
+      </group>
+    </Float>
   );
 }
 
@@ -90,29 +65,26 @@ export function IAPLogo3D({
   return (
     <div style={{ width, height }}>
       <Canvas
-        camera={{ position: [0, 0, 4.5], fov: 40 }}
-        gl={{ antialias: true, alpha: true }}
+        camera={{ position: [0, 0, 5], fov: 40 }}
+        gl={{
+          antialias: true,
+          alpha: true,
+          toneMapping: THREE.ACESFilmicToneMapping,
+          toneMappingExposure: 1.3,
+        }}
         dpr={[1, 2]}
         style={{ background: "transparent" }}
         resize={{ scroll: false, offsetSize: true }}
       >
-        <ambientLight intensity={0.6} />
-        <directionalLight
-          position={[5, 6, 5]}
-          intensity={1.2}
-          color="#fff8e8"
-        />
-        <directionalLight
-          position={[-5, -3, 2]}
-          intensity={0.45}
-          color="#A8BE6E"
-        />
-        <pointLight position={[0, 0, 4]} intensity={0.5} color="#F4F1E4" />
-        <Float speed={1.2} rotationIntensity={0.15} floatIntensity={0.5}>
-          <group scale={scale}>
-            <Logo />
-          </group>
-        </Float>
+        <ambientLight intensity={0.5} />
+        <directionalLight position={[5, 8, 5]} intensity={1.8} color="#fff8e8" />
+        <directionalLight position={[-4, -3, 3]} intensity={0.6} color="#A8BE6E" />
+        <pointLight position={[0, 0, 5]} intensity={0.8} color="#F4F1E4" />
+        <pointLight position={[-3, 2, -2]} intensity={0.35} color="#C9D89B" />
+        <Environment preset="city" />
+        <Suspense fallback={null}>
+          <LogoModel scale={scale} />
+        </Suspense>
       </Canvas>
     </div>
   );
