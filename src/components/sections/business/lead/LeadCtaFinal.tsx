@@ -94,12 +94,6 @@ export function LeadCtaFinal({ onOpenModal }: LeadCtaFinalProps) {
             </div>
           </Reveal>
 
-          <Reveal delay={0.15}>
-            <p className="mt-6 text-[12px] uppercase tracking-[0.18em] font-bold text-muted-foreground">
-              Sem compromisso.{" "}
-              <span style={{ color: "var(--color-primary)" }}>100% confidencial.</span>
-            </p>
-          </Reveal>
         </div>
       </div>
     </section>
