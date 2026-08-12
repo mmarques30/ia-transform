@@ -75,8 +75,8 @@ export function Guarantee() {
                 E se você avançar para a implementação:
               </h3>
               <p className="mt-4 text-[15px] lg:text-[16px] text-sage leading-[1.65]">
-                Se você seguir o processo que acordamos — fizer os testes dentro do prazo,
-                implementar do jeito que combinamos — e o sistema não funcionar,{" "}
+                Se você seguir o processo que acordamos, fizer os testes dentro do prazo,
+                implementar do jeito que combinamos, e o sistema não funcionar,{" "}
                 <strong className="text-foreground font-bold">devolvemos o investimento</strong>.
                 Sem letra miúda.
               </p>
