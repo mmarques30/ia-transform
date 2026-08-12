@@ -6,11 +6,11 @@ interface LeadProblemProps {
   onOpenModal: () => void;
 }
 
-const PROBLEMS: { icon: typeof AlertCircle; text: string }[] = [
-  { icon: AlertCircle, text: "Cada decisao operacional passa por voce — a empresa so avanca quando voce esta" },
-  { icon: Clock, text: "O time gasta horas em tarefas que deveriam ser automaticas" },
-  { icon: Puzzle, text: "Voce experimenta ferramentas de IA, mas nada encaixa no processo real" },
-  { icon: Users, text: "Contratar mais gente resolve no curto prazo — e cria outro gargalo" },
+const PROBLEMS: { icon: typeof AlertCircle; title: string; text: string }[] = [
+  { icon: AlertCircle, title: "Dependência total de você", text: "Cada decisão operacional passa por você — a empresa só avança quando você está presente." },
+  { icon: Clock, title: "Tempo desperdiçado", text: "O time gasta horas em tarefas que deveriam ser automáticas, todo santo dia." },
+  { icon: Puzzle, title: "IA sem encaixe", text: "Você experimenta ferramentas de IA, mas nada encaixa no processo real da operação." },
+  { icon: Users, title: "Mais gente, mesmo gargalo", text: "Contratar mais gente resolve no curto prazo — e cria outro gargalo logo depois." },
 ];
 
 export function LeadProblem({ onOpenModal }: LeadProblemProps) {
@@ -30,24 +30,39 @@ export function LeadProblem({ onOpenModal }: LeadProblemProps) {
             </h2>
           </Reveal>
 
-          <div className="mt-14 lg:mt-16 grid sm:grid-cols-2 gap-4 lg:gap-5 max-w-[820px] mx-auto">
+          <div className="mt-14 lg:mt-16 grid sm:grid-cols-2 gap-5 lg:gap-6 max-w-[860px] mx-auto">
             {PROBLEMS.map((item, i) => {
               const Icon = item.icon;
               return (
                 <Reveal key={i} delay={0.1 + i * 0.06}>
                   <div
-                    className="p-6"
+                    className="rounded-2xl p-7 lg:p-8"
                     style={{
-                      background: "rgba(255,255,255,0.03)",
+                      background: "rgba(255,255,255,0.04)",
                       border: "1px solid rgba(139,155,58,0.12)",
                     }}
                   >
-                    <Icon
-                      className="h-5 w-5 mb-3"
-                      strokeWidth={1.5}
-                      style={{ color: "var(--color-primary)" }}
-                    />
-                    <p className="text-[14px] lg:text-[14.5px] leading-[1.55] text-foreground">
+                    <div
+                      className="flex items-center justify-center rounded-full mb-5"
+                      style={{
+                        width: 48,
+                        height: 48,
+                        background: "rgba(139,155,58,0.12)",
+                      }}
+                    >
+                      <Icon
+                        className="h-5 w-5"
+                        strokeWidth={1.5}
+                        style={{ color: "var(--color-primary)" }}
+                      />
+                    </div>
+                    <h3 className="font-bold text-[16px] lg:text-[17px] leading-tight text-foreground mb-2">
+                      {item.title}
+                    </h3>
+                    <p
+                      className="text-[14px] lg:text-[14.5px] leading-[1.6]"
+                      style={{ color: "var(--text-sage, #a3a898)" }}
+                    >
                       {item.text}
                     </p>
                   </div>
