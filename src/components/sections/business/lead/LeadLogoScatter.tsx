@@ -140,8 +140,9 @@ export function LeadLogoScatter() {
       });
 
       const s2Bottom = section2.getBoundingClientRect().bottom;
-      const fade = s2Bottom < 0 ? 0 : s2Bottom < 120 ? s2Bottom / 120 : 1;
-      wrapperRef.current.style.opacity = String(fade);
+      const fadeExit = s2Bottom < 0 ? 0 : s2Bottom < 120 ? s2Bottom / 120 : 1;
+      const fadeFor3D = progress > 0.88 ? 1 - clamp((progress - 0.88) / 0.08, 0, 1) : 1;
+      wrapperRef.current.style.opacity = String(Math.min(fadeExit, fadeFor3D));
     }
 
     function onScroll() {

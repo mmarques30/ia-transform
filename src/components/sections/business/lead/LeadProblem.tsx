@@ -1,4 +1,9 @@
+import { lazy, Suspense } from "react";
 import { Reveal } from "@/components/Reveal";
+
+const IAPLogo3D = lazy(() =>
+  import("./IAPLogo3D").then((m) => ({ default: m.IAPLogo3D }))
+);
 
 interface LeadProblemProps {
   onOpenModal: () => void;
@@ -24,10 +29,13 @@ export function LeadProblem({ onOpenModal }: LeadProblemProps) {
           <div className="lg:grid lg:grid-cols-[200px_1fr] lg:gap-12 lg:items-start">
             <div
               id="lead-logo-target"
-              className="hidden lg:block"
-              aria-hidden
-              style={{ minHeight: 160 }}
-            />
+              className="hidden lg:flex lg:items-start lg:justify-center"
+              style={{ minHeight: 200, position: "sticky", top: 110 }}
+            >
+              <Suspense fallback={null}>
+                <IAPLogo3D width={200} height={200} scale={1.2} />
+              </Suspense>
+            </div>
 
             <div>
               <Reveal>
