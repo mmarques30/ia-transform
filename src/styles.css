@@ -3423,6 +3423,143 @@ select.lead-input option {
   background: #1a1c18;
 }
 
+/* ── Scattered mockup cards (ProjectOne-style layout) ── */
+.lead-mockups-wrap {
+  position: relative;
+  overflow: hidden;
+}
+
+.lead-mockups {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.lead-mockup {
+  position: absolute;
+  pointer-events: auto;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.lead-mockup:hover {
+  z-index: 10;
+}
+
+.lead-mockup__frame {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1.5px solid rgba(255,255,255,0.12);
+  box-shadow:
+    0 20px 50px -12px rgba(0,0,0,0.65),
+    0 8px 20px -6px rgba(0,0,0,0.4);
+  background: #111;
+}
+
+.lead-mockup__frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.lead-mockup__label {
+  display: block;
+  margin-top: 6px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: rgba(255,255,255,0.3);
+  text-align: center;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* ── Card positions (xl desktop 1280+) ── */
+.lead-mockup--tl {
+  top: -10px;
+  left: -20px;
+  width: 150px;
+  transform: rotate(-8deg);
+}
+.lead-mockup--tl:hover { transform: rotate(-2deg) scale(1.06); }
+
+.lead-mockup--tr {
+  top: -8px;
+  right: -24px;
+  width: 160px;
+  transform: rotate(6deg);
+}
+.lead-mockup--tr:hover { transform: rotate(2deg) scale(1.06); }
+
+.lead-mockup--bl {
+  bottom: 40px;
+  left: -30px;
+  width: 120px;
+  transform: rotate(-5deg);
+}
+.lead-mockup--bl:hover { transform: rotate(-1deg) scale(1.06); }
+
+.lead-mockup--br {
+  bottom: 30px;
+  right: -20px;
+  width: 130px;
+  transform: rotate(4.5deg);
+}
+.lead-mockup--br:hover { transform: rotate(1deg) scale(1.06); }
+
+.lead-mockup--bc {
+  bottom: -160px;
+  left: 50%;
+  margin-left: -75px;
+  width: 150px;
+  transform: rotate(-2deg);
+}
+.lead-mockup--bc:hover { transform: rotate(0deg) scale(1.06) translateY(-10px); }
+
+/* ── Larger screens (1536+) show more of the cards ── */
+@media (min-width: 1536px) {
+  .lead-mockup--tl { left: 24px; top: 8px; width: 170px; }
+  .lead-mockup--tr { right: 20px; top: 4px; width: 180px; }
+  .lead-mockup--bl { left: 16px; width: 140px; }
+  .lead-mockup--br { right: 12px; width: 150px; }
+  .lead-mockup--bc { width: 170px; margin-left: -85px; bottom: -140px; }
+}
+
+/* ── Tablet/smaller: grid layout ── */
+@media (max-width: 1279px) {
+  .lead-mockups {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    padding: 48px 0 0;
+    pointer-events: auto;
+  }
+  .lead-mockup {
+    position: relative !important;
+    inset: auto !important;
+    margin-left: 0 !important;
+    width: 100% !important;
+    max-width: 220px;
+    transform: none !important;
+    margin: 0 auto;
+  }
+  .lead-mockup:hover { transform: scale(1.04) !important; }
+  .lead-mockup--bc { grid-column: 2; }
+}
+
+@media (max-width: 639px) {
+  .lead-mockups {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding: 36px 0 0;
+  }
+  .lead-mockup { max-width: 180px; }
+  .lead-mockup--bc {
+    grid-column: 1 / -1;
+    max-width: 180px;
+  }
+}
+
 /* Separador visual entre dobras do lead magnet */
 .lead-sep {
   display: flex;
