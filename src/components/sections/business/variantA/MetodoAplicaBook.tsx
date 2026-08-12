@@ -1,26 +1,30 @@
 import { Reveal } from "@/components/Reveal";
 import { CtaGlow } from "@/components/sections/business/variantB/CtaGlow";
 
-/**
- * MetodoAplicaBook (LP-A) — trilha vertical dos 6 passos do Método
- * APLICA. Copy adaptada pro ângulo LP-A (crescimento sem contratação):
- * o parágrafo body destaca "trabalho manual", "automatizam" e
- * "sem consultor que some depois". Steps mantidos (APLICA é APLICA).
- */
-
-interface AplicaStep {
-  letter: string;
-  label: string;
+interface CompareCard {
+  eyebrow: string;
+  title: string;
   detail: string;
+  highlight?: boolean;
 }
 
-const APLICA_STEPS: AplicaStep[] = [
-  { letter: "A", label: "Analisar", detail: "onde sua operação trava hoje" },
-  { letter: "P", label: "Planejar", detail: "o sistema que elimina o gargalo" },
-  { letter: "L", label: "Listar", detail: "processos, gente e ferramentas" },
-  { letter: "I", label: "Implementar", detail: "dentro do seu negócio, não em slide" },
-  { letter: "C", label: "Conectar", detail: "com o que já roda, sem trocar tudo" },
-  { letter: "A", label: "Automatizar", detail: "as rotinas que consomem seu time" },
+const CARDS: CompareCard[] = [
+  {
+    eyebrow: "ERP",
+    title: "Feito pra padronizar",
+    detail: "Foi projetado para operações padrão. A sua não é.",
+  },
+  {
+    eyebrow: "Consultoria",
+    title: "Entrega diagnóstico",
+    detail: "Você ainda precisa implementar. O slide não roda sozinho.",
+  },
+  {
+    eyebrow: "IAplicada",
+    title: "Software com IA que roda",
+    detail: "Na sua operação, do jeito que ela funciona. Construído, implementado e funcionando.",
+    highlight: true,
+  },
 ];
 
 export function MetodoAplicaBook() {
@@ -35,163 +39,99 @@ export function MetodoAplicaBook() {
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "radial-gradient(70% 60% at 25% 40%, rgba(200,224,64,0.06), transparent 60%), radial-gradient(60% 55% at 85% 60%, rgba(200,224,64,0.04), transparent 60%)",
+            "radial-gradient(70% 60% at 50% 40%, rgba(200,224,64,0.05), transparent 60%)",
         }}
       />
       <div className="container-page relative">
-        <div className="grid lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] gap-12 lg:gap-16 items-center max-w-[1100px] mx-auto">
+        <div className="max-w-[900px] mx-auto text-center">
           <Reveal>
-            <div>
-              <span
-                className="inline-block px-3.5 py-1.5 rounded-full text-[11px] tracking-[0.2em] uppercase font-bold"
+            <span
+              className="inline-block px-3.5 py-1.5 rounded-full text-[11px] tracking-[0.2em] uppercase font-bold"
+              style={{
+                border: "1px solid rgba(200,224,64,0.4)",
+                background: "rgba(200,224,64,0.06)",
+                color: "var(--color-primary)",
+                fontFamily: '"JetBrains Mono", ui-monospace, Menlo, monospace',
+              }}
+            >
+              Como a gente faz
+            </span>
+          </Reveal>
+
+          <Reveal delay={0.05}>
+            <h2
+              className="mt-5 font-extrabold text-[30px] sm:text-[36px] lg:text-[46px] leading-[1.05] tracking-[-0.025em] text-foreground"
+              style={{ textWrap: "balance" }}
+            >
+              Um diagnóstico. Um sistema.{" "}
+              <em
                 style={{
-                  border: "1px solid rgba(200,224,64,0.4)",
-                  background: "rgba(200,224,64,0.06)",
+                  fontFamily: '"Instrument Serif", serif',
                   color: "var(--color-primary)",
-                  fontFamily: '"JetBrains Mono", ui-monospace, Menlo, monospace',
+                  fontWeight: 500,
                 }}
               >
-                Como a gente faz
-              </span>
-              <h2
-                className="mt-5 font-extrabold text-[30px] sm:text-[36px] lg:text-[46px] leading-[1.05] tracking-[-0.025em] text-foreground"
-                style={{ textWrap: "balance" }}
-              >
-                Um diagnóstico. Um sistema.{" "}
-                <em
-                  style={{
-                    fontFamily: '"Instrument Serif", serif',
-                    color: "var(--color-primary)",
-                    fontWeight: 500,
-                  }}
-                >
-                  90 dias.
-                </em>
-              </h2>
-              <p className="mt-5 text-[15px] lg:text-[16.5px] text-sage leading-[1.6] max-w-[480px]">
-                O Método <strong className="text-foreground font-bold">APLICA</strong> identifica
-                onde sua operação sangra, constrói o sistema que para o sangramento e implementa
-                dentro do seu negócio — em 90 dias, com marcos semanais, sem depender de você para
-                funcionar.
-              </p>
-
-              <ul className="mt-6 flex flex-col gap-2.5 max-w-[480px]">
-                <li className="text-[13.5px] lg:text-[14.5px] text-sage leading-[1.5]">
-                  <strong className="text-foreground font-semibold">Por que ERP não resolve:</strong>{" "}
-                  foi projetado para operações padrão. A sua não é.
-                </li>
-                <li className="text-[13.5px] lg:text-[14.5px] text-sage leading-[1.5]">
-                  <strong className="text-foreground font-semibold">
-                    Por que consultoria não resolve:
-                  </strong>{" "}
-                  entrega diagnóstico. Você ainda precisa implementar.
-                </li>
-                <li className="text-[13.5px] lg:text-[14.5px] text-sage leading-[1.5]">
-                  <strong className="text-foreground font-semibold">
-                    O que a IAplicada entrega:
-                  </strong>{" "}
-                  software com IA que roda na sua operação, do jeito que ela funciona.
-                </li>
-              </ul>
-
-              <div className="mt-8">
-                <CtaGlow size="md">Conhecer o Método APLICA →</CtaGlow>
-              </div>
-            </div>
+                90 dias.
+              </em>
+            </h2>
           </Reveal>
 
-          <Reveal delay={0.15}>
-            <MetodoAplicaTrail />
+          <Reveal delay={0.08}>
+            <p className="mt-5 text-[15px] lg:text-[16.5px] text-sage leading-[1.6] max-w-[640px] mx-auto">
+              O Método <strong className="text-foreground font-bold">APLICA</strong> identifica onde
+              sua operação sangra, constrói o sistema que para o sangramento e implementa dentro do
+              seu negócio — em 90 dias, com marcos semanais, sem depender de você para funcionar.
+            </p>
           </Reveal>
         </div>
+
+        <div className="mt-12 lg:mt-16 grid md:grid-cols-3 gap-5 lg:gap-6 max-w-[1000px] mx-auto">
+          {CARDS.map((card, i) => (
+            <Reveal key={card.eyebrow} delay={0.1 + i * 0.08}>
+              <CompareCardComponent card={card} />
+            </Reveal>
+          ))}
+        </div>
+
+        <Reveal delay={0.35}>
+          <div className="mt-10 lg:mt-12 text-center">
+            <CtaGlow size="lg">Agendar diagnóstico com a IAplicada →</CtaGlow>
+          </div>
+        </Reveal>
       </div>
     </section>
   );
 }
 
-function MetodoAplicaTrail() {
+function CompareCardComponent({ card }: { card: CompareCard }) {
   return (
-    <ol className="relative flex flex-col gap-5 lg:gap-6" aria-label="Passos do Método APLICA">
+    <div
+      className="rounded-[16px] px-6 py-7 lg:px-7 lg:py-8 h-full flex flex-col"
+      style={{
+        background: card.highlight
+          ? "linear-gradient(160deg, rgba(200,224,64,0.12) 0%, rgba(200,224,64,0.04) 100%)"
+          : "rgba(255,255,255,0.03)",
+        border: card.highlight
+          ? "1.5px solid rgba(200,224,64,0.4)"
+          : "1px solid rgba(255,255,255,0.06)",
+      }}
+    >
       <span
-        aria-hidden
-        className="pointer-events-none absolute top-6 bottom-6"
+        className="text-[10px] uppercase tracking-[0.2em] font-bold"
         style={{
-          left: 24,
-          width: 2,
-          backgroundImage:
-            "linear-gradient(180deg, transparent 0%, rgba(200,224,64,0.55) 15%, rgba(200,224,64,0.55) 85%, transparent 100%)",
-          backgroundSize: "2px 8px",
-          backgroundRepeat: "repeat-y",
-          maskImage: "linear-gradient(180deg, black 8px, transparent 8px)",
-          WebkitMaskImage: "linear-gradient(180deg, black 8px, transparent 8px)",
-          maskSize: "100% 12px",
-          WebkitMaskSize: "100% 12px",
-          maskRepeat: "repeat-y",
-          WebkitMaskRepeat: "repeat-y",
-        }}
-      />
-
-      {APLICA_STEPS.map((s, i) => (
-        <li key={i} className="relative flex items-start gap-4 lg:gap-5">
-          <TrailNode letter={s.letter} index={i} />
-          <div className="pt-1 min-w-0">
-            <p
-              className="text-[9.5px] uppercase tracking-[0.22em] font-bold"
-              style={{
-                color: "rgba(200,224,64,0.55)",
-                fontFamily: '"JetBrains Mono", ui-monospace, Menlo, monospace',
-              }}
-            >
-              STEP {String(i + 1).padStart(2, "0")}
-            </p>
-            <h3
-              className="mt-1 text-[19px] lg:text-[22px] leading-[1.15] font-extrabold text-foreground"
-              style={{ letterSpacing: "-0.01em" }}
-            >
-              {s.label}
-            </h3>
-            <p className="mt-1 text-[13.5px] lg:text-[14px] text-sage leading-[1.5]">{s.detail}</p>
-          </div>
-        </li>
-      ))}
-    </ol>
-  );
-}
-
-function TrailNode({ letter, index }: { letter: string; index: number }) {
-  const isFirst = index === 0;
-  return (
-    <div className="relative shrink-0">
-      <span
-        aria-hidden
-        className="pointer-events-none absolute inset-0 rounded-full"
-        style={{
-          background: "radial-gradient(circle at center, rgba(200,224,64,0.35), transparent 70%)",
-          filter: `blur(${isFirst ? 18 : 12}px)`,
-          transform: "scale(1.4)",
-        }}
-      />
-      <span
-        className="relative z-10 flex items-center justify-center rounded-full"
-        style={{
-          width: 50,
-          height: 50,
-          background: "radial-gradient(circle at 30% 30%, #14180d, #0a0c07 70%)",
-          border: "2px solid var(--color-primary)",
-          boxShadow: "inset 0 1px 0 rgba(255,255,255,0.06), 0 6px 14px -4px rgba(200,224,64,0.35)",
+          color: card.highlight ? "var(--color-primary)" : "rgba(255,255,255,0.4)",
+          fontFamily: '"JetBrains Mono", ui-monospace, Menlo, monospace',
         }}
       >
-        <span
-          className="text-[26px] leading-none italic"
-          style={{
-            fontFamily: '"Instrument Serif", serif',
-            color: "var(--color-primary)",
-            fontWeight: 500,
-          }}
-        >
-          {letter}
-        </span>
+        {card.eyebrow}
       </span>
+      <h3
+        className="mt-3 text-[18px] lg:text-[20px] font-extrabold leading-[1.15] tracking-[-0.01em]"
+        style={{ color: card.highlight ? "var(--color-primary)" : "var(--color-foreground)" }}
+      >
+        {card.title}
+      </h3>
+      <p className="mt-3 text-[13.5px] lg:text-[14.5px] text-sage leading-[1.55]">{card.detail}</p>
     </div>
   );
 }
