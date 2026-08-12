@@ -226,7 +226,7 @@ export function HeroForm({
   }
 
   function handleBlurCapture(e: FocusEvent<HTMLFormElement>) {
-    const target = e.target as HTMLInputElement | HTMLSelectElement | null;
+    const target = e.target as unknown as HTMLInputElement | HTMLSelectElement | null;
     if (!target || !target.name) return;
     const value = (target.value ?? "").trim();
     if (!value) return;
@@ -278,7 +278,7 @@ export function HeroForm({
   /** Cleared error do field assim que o usuário começa a digitar/selecionar.
    *  Também recalcula allRequiredFilled. */
   function handleFormInput(e: React.FormEvent<HTMLFormElement>) {
-    const target = e.target as HTMLInputElement | HTMLSelectElement | null;
+    const target = e.target as unknown as HTMLInputElement | HTMLSelectElement | null;
     if (target && target.name && fieldErrors[target.name]) {
       setFieldErrors((prev) => {
         const next = { ...prev };
@@ -292,7 +292,7 @@ export function HeroForm({
   /** Valida o field ao perder foco (pattern leve — não cobrar erro durante
    *  digitação). */
   function handleFieldBlur(e: FocusEvent<HTMLFormElement>) {
-    const target = e.target as HTMLInputElement | HTMLSelectElement | null;
+    const target = e.target as unknown as HTMLInputElement | HTMLSelectElement | null;
     if (!target || !target.name) return;
     const err = validateField(target.name, target.value);
     setFieldErrors((prev) => {

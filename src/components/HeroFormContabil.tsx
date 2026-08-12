@@ -170,7 +170,7 @@ export function HeroForm({
   }
 
   function handleBlurCapture(e: FocusEvent<HTMLFormElement>) {
-    const target = e.target as HTMLInputElement | HTMLSelectElement | null;
+    const target = e.target as unknown as HTMLInputElement | HTMLSelectElement | null;
     if (!target || !target.name) return;
     const value = (target.value ?? "").trim();
     if (!value) return;
@@ -217,7 +217,7 @@ export function HeroForm({
   }
 
   function handleFormInput(e: React.FormEvent<HTMLFormElement>) {
-    const target = e.target as HTMLInputElement | HTMLSelectElement | null;
+    const target = e.target as unknown as HTMLInputElement | HTMLSelectElement | null;
     if (target && target.name && fieldErrors[target.name]) {
       setFieldErrors((prev) => {
         const next = { ...prev };
@@ -229,7 +229,7 @@ export function HeroForm({
   }
 
   function handleFieldBlur(e: FocusEvent<HTMLFormElement>) {
-    const target = e.target as HTMLInputElement | HTMLSelectElement | null;
+    const target = e.target as unknown as HTMLInputElement | HTMLSelectElement | null;
     if (!target || !target.name) return;
     const err = validateField(target.name, target.value);
     setFieldErrors((prev) => {

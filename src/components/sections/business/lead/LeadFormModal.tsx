@@ -158,7 +158,7 @@ function FormState({ onSuccess }: { onSuccess: () => void }) {
   }
 
   function handleInput(e: React.FormEvent<HTMLFormElement>) {
-    const t = e.target as HTMLInputElement | HTMLSelectElement | null;
+    const t = e.target as unknown as HTMLInputElement | HTMLSelectElement | null;
     if (t?.name && fieldErrors[t.name]) {
       setFieldErrors((p) => { const n = { ...p }; delete n[t.name]; return n; });
     }
@@ -166,7 +166,7 @@ function FormState({ onSuccess }: { onSuccess: () => void }) {
   }
 
   function handleBlur(e: FocusEvent<HTMLFormElement>) {
-    const t = e.target as HTMLInputElement | HTMLSelectElement | null;
+    const t = e.target as unknown as HTMLInputElement | HTMLSelectElement | null;
     if (!t?.name) return;
     const err = validateField(t.name, t.value);
     setFieldErrors((p) => {
