@@ -6,19 +6,36 @@ interface LeadHeroProps {
 
 export function LeadHero({ onOpenModal }: LeadHeroProps) {
   return (
-    <section className="hero-section-b">
-      <HeroFlowBg />
-      <div
-        className="relative z-[3] w-full max-w-[1280px] mx-auto px-6 lg:px-12 py-[72px]"
-      >
+    <section
+      className="relative overflow-hidden"
+      style={{
+        minHeight: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        background:
+          "radial-gradient(ellipse 80% 60% at 50% 40%, rgba(200,224,64,0.07), transparent 70%), #080a07",
+      }}
+    >
+      <div className="relative z-[3] w-full max-w-[1280px] mx-auto px-6 lg:px-12 py-[72px]">
         <div className="max-w-[860px] mx-auto text-center">
           <Reveal>
+            <img
+              src="/brand/iaplicada-logo-dark.png"
+              alt="IAplicada"
+              height={28}
+              className="mx-auto mb-10"
+              style={{ height: 28, width: "auto" }}
+            />
+          </Reveal>
+
+          <Reveal delay={0.05}>
             <h1
               className="font-extrabold leading-[1.04] tracking-[-0.03em] text-foreground"
               style={{
                 fontFamily: '"Instrument Serif", serif',
                 fontStyle: "italic",
-                fontSize: "clamp(40px, 7vw, 68px)",
+                fontSize: "clamp(48px, 8vw, 80px)",
                 textWrap: "balance",
               }}
             >
@@ -31,9 +48,9 @@ export function LeadHero({ onOpenModal }: LeadHeroProps) {
             </h1>
           </Reveal>
 
-          <Reveal delay={0.05}>
+          <Reveal delay={0.08}>
             <p
-              className="mt-5"
+              className="mt-6"
               style={{
                 fontFamily: '"Instrument Serif", serif',
                 fontStyle: "italic",
@@ -48,7 +65,7 @@ export function LeadHero({ onOpenModal }: LeadHeroProps) {
             </p>
           </Reveal>
 
-          <Reveal delay={0.08}>
+          <Reveal delay={0.1}>
             <p
               className="mt-4 mx-auto"
               style={{
@@ -63,8 +80,8 @@ export function LeadHero({ onOpenModal }: LeadHeroProps) {
             </p>
           </Reveal>
 
-          <Reveal delay={0.12}>
-            <div className="mt-9">
+          <Reveal delay={0.14}>
+            <div className="mt-10">
               <button
                 type="button"
                 onClick={onOpenModal}
@@ -89,71 +106,5 @@ export function LeadHero({ onOpenModal }: LeadHeroProps) {
         </div>
       </div>
     </section>
-  );
-}
-
-function HeroFlowBg() {
-  return (
-    <div className="hero-flow-bg" aria-hidden="true">
-      <div className="hero-flow-glow" />
-      <svg
-        viewBox="0 0 1440 852"
-        preserveAspectRatio="xMidYMid slice"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <defs>
-          <linearGradient id="hero-flow-grad-lead" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0" stopColor="#d5e95a" stopOpacity="0" />
-            <stop offset="0.3" stopColor="#d5e95a" stopOpacity="0.55" />
-            <stop offset="0.7" stopColor="#d5e95a" stopOpacity="0.55" />
-            <stop offset="1" stopColor="#d5e95a" stopOpacity="0" />
-          </linearGradient>
-          <filter id="hero-flow-blur-lead">
-            <feGaussianBlur stdDeviation="0.5" />
-          </filter>
-        </defs>
-
-        <g
-          stroke="url(#hero-flow-grad-lead)"
-          strokeWidth="1.4"
-          fill="none"
-          filter="url(#hero-flow-blur-lead)"
-        >
-          <path d="M 200 200 C 500 220, 700 350, 940 380" opacity="0.7" />
-          <path d="M 240 320 C 520 320, 720 400, 940 430" opacity="0.6" />
-          <path d="M 260 470 C 520 460, 720 490, 940 490" opacity="0.7" />
-          <path d="M 220 600 C 520 580, 720 560, 940 550" opacity="0.55" />
-          <path d="M 320 700 C 560 660, 760 620, 940 600" opacity="0.4" />
-        </g>
-
-        <g fill="#d5e95a">
-          <circle cx="380" cy="270" r="2.5" opacity="0.85" />
-          <circle cx="620" cy="330" r="2" opacity="0.7" />
-          <circle cx="810" cy="370" r="1.8" opacity="0.5" />
-          <circle cx="450" cy="340" r="2" opacity="0.65" />
-          <circle cx="720" cy="410" r="2.5" opacity="0.85" />
-          <circle cx="380" cy="465" r="2.2" opacity="0.7" />
-          <circle cx="660" cy="480" r="2.8" opacity="0.9">
-            <animate attributeName="r" values="2.8;4;2.8" dur="2s" repeatCount="indefinite" />
-          </circle>
-          <circle cx="880" cy="495" r="2" opacity="0.6" />
-          <circle cx="400" cy="590" r="1.8" opacity="0.5" />
-          <circle cx="700" cy="570" r="2.2" opacity="0.65" />
-        </g>
-
-        <g fill="none" stroke="#d5e95a" strokeWidth="1" opacity="0.35">
-          <circle cx="200" cy="200" r="6" />
-          <circle cx="200" cy="200" r="12" opacity="0.4" />
-          <circle cx="260" cy="470" r="6" />
-          <circle cx="260" cy="470" r="12" opacity="0.4" />
-        </g>
-
-        <g fill="none" stroke="#d5e95a" strokeWidth="1" opacity="0.5">
-          <circle cx="940" cy="490" r="10" />
-          <circle cx="940" cy="490" r="18" opacity="0.5" />
-          <circle cx="940" cy="490" r="28" opacity="0.25" />
-        </g>
-      </svg>
-    </div>
   );
 }
