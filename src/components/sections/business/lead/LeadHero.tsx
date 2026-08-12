@@ -68,26 +68,11 @@ export function LeadHero({ onOpenModal }: LeadHeroProps) {
               Prompts, automações e agentes de IA{" "}
               <em style={{ color: "var(--color-primary)" }}>prontos para usar</em> na sua empresa,
               <br />
-              testados em operações reais, não em teoria.
+              testados em operações reais, tudo isso em um kit gratuito pra você começar a automatizar.
             </p>
           </Reveal>
 
           <Reveal delay={0.1}>
-            <p
-              className="mt-4 mx-auto"
-              style={{
-                maxWidth: "56ch",
-                fontSize: "15.5px",
-                lineHeight: 1.65,
-                color: "var(--text-sage, #a3a898)",
-              }}
-            >
-              Um kit gratuito com tudo que você precisa para começar a automatizar
-              {" "}processos, sem equipe de TI e sem saber programar.
-            </p>
-          </Reveal>
-
-          <Reveal delay={0.14}>
             <div className="mt-10">
               <OriginButton onClick={onOpenModal}>
                 Quero o kit completo &rarr;
