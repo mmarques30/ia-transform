@@ -529,10 +529,15 @@ export function HeroForm({
         <p
           className={
             compact
-              ? "text-[17px] font-extrabold tracking-[-0.02em] leading-tight"
-              : "mt-2 text-[19px] font-extrabold tracking-[-0.02em] leading-tight"
+              ? "text-[20px] tracking-[-0.02em] leading-tight"
+              : "mt-2 text-[22px] tracking-[-0.02em] leading-tight"
           }
-          style={{ color: "oklch(0.15 0.02 122)" }}
+          style={{
+            color: "oklch(0.15 0.02 122)",
+            fontFamily: '"Instrument Serif", serif',
+            fontWeight: 500,
+            fontStyle: "italic",
+          }}
         >
           Vamos construir o seu?
         </p>
@@ -696,7 +701,7 @@ export function HeroForm({
           <button
             type="submit"
             disabled={loading || !allRequiredFilled}
-            className="hero-form-cta mt-1 w-full inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-[14px] font-medium disabled:opacity-60 disabled:cursor-not-allowed"
+            className="hero-form-cta mt-1 w-full inline-flex items-center justify-center gap-2 rounded-full px-6 py-4 text-[14.5px] font-bold uppercase tracking-[0.06em] disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? loadingMsg || "Enviando..." : "SOLICITAR DIAGNÓSTICO"}
             {!loading && <ArrowRight className="h-4 w-4" strokeWidth={2.5} />}
