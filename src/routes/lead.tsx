@@ -43,7 +43,7 @@ export const Route = createFileRoute("/lead")({
 function LeadMagnetLanding() {
   return (
     <LeadModalProvider>
-      <main className="min-h-screen text-foreground" style={{ backgroundColor: "#080a07" }}>
+      <main className="min-h-screen text-foreground" style={{ backgroundColor: "#080a07", overflowX: "hidden" }}>
         <LeadLogoScatter />
 
         <LeadHeroWithModal />

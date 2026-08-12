@@ -1,5 +1,4 @@
 import { Reveal } from "@/components/Reveal";
-import { LeadKitMockups } from "./LeadKitMockups";
 
 interface DeliverableItem {
   n: string;
@@ -30,7 +29,7 @@ const KIT_ITEMS: DeliverableItem[] = [
 
 export function LeadKitContent() {
   return (
-    <section className="lead-mockups-wrap relative section-veil py-[100px] lg:py-[140px] xl:py-[160px]">
+    <section className="relative section-veil py-[100px] lg:py-[140px] xl:py-[160px]">
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0"
@@ -39,8 +38,6 @@ export function LeadKitContent() {
             "radial-gradient(80% 80% at 70% 50%, rgba(200,224,64,0.08), transparent 60%)",
         }}
       />
-
-      <LeadKitMockups />
 
       <div className="container-page relative z-[2]">
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center max-w-[960px] mx-auto">

@@ -1,4 +1,5 @@
 import { Reveal } from "@/components/Reveal";
+import { LeadKitMockups } from "./LeadKitMockups";
 
 interface LeadHeroProps {
   onOpenModal: () => void;
@@ -8,7 +9,7 @@ export function LeadHero({ onOpenModal }: LeadHeroProps) {
   return (
     <section
       id="lead-hero"
-      className="relative overflow-hidden"
+      className="lead-hero-wrap relative"
       style={{
         minHeight: "100vh",
         display: "flex",
@@ -18,6 +19,8 @@ export function LeadHero({ onOpenModal }: LeadHeroProps) {
           "radial-gradient(ellipse 80% 60% at 50% 40%, rgba(200,224,64,0.07), transparent 70%), #080a07",
       }}
     >
+      <LeadKitMockups />
+
       <div className="relative z-[3] w-full max-w-[1280px] mx-auto px-6 lg:px-12 py-[72px]">
         <div className="max-w-[860px] mx-auto text-center">
           <div
