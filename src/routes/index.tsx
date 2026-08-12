@@ -8,7 +8,6 @@ import { MentorMari } from "@/components/sections/business/variantA/MentorMari";
 import { Guarantee } from "@/components/sections/business/variantA/Guarantee";
 import { FinalForm } from "@/components/sections/business/variantA/FinalForm";
 import { Testimonials } from "@/components/sections/business/variantB/Testimonials";
-import { SelectedClients } from "@/components/sections/business/variantB/SelectedClients";
 import { DiagnosticoModalProvider } from "@/components/sections/business/variantB/DiagnosticoModal";
 import { Footer } from "@/components/sections/Footer";
 
@@ -71,10 +70,6 @@ function BusinessLanding() {
         </BgDobra>
 
         <Testimonials />
-
-        <BgDobra intensity="media">
-          <SelectedClients />
-        </BgDobra>
 
         <BgDobra intensity="media">
           <MetodoAplicaBook />

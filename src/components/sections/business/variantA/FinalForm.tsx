@@ -88,8 +88,8 @@ export function FinalForm() {
         </div>
 
         <Reveal delay={0.15}>
-          <div className="mt-12 max-w-[560px] mx-auto">
-            <HeroForm formSlug="business" thankYouPath="/thank-you-business" />
+          <div className="mt-10 max-w-[460px] mx-auto">
+            <HeroForm formSlug="business" thankYouPath="/thank-you-business" compact />
           </div>
         </Reveal>
 
