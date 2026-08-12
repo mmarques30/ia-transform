@@ -1,6 +1,11 @@
+import { lazy, Suspense } from "react";
 import { Reveal } from "@/components/Reveal";
 import { OriginButton } from "@/components/ui/origin-button";
 import { AlertCircle, Clock, Puzzle, Users } from "lucide-react";
+
+const IAPLogo3D = lazy(() =>
+  import("./IAPLogo3D").then((m) => ({ default: m.IAPLogo3D }))
+);
 
 interface LeadProblemProps {
   onOpenModal: () => void;
@@ -30,45 +35,55 @@ export function LeadProblem({ onOpenModal }: LeadProblemProps) {
             </h2>
           </Reveal>
 
-          <div className="mt-14 lg:mt-16 grid sm:grid-cols-2 gap-5 lg:gap-6 max-w-[860px] mx-auto">
-            {PROBLEMS.map((item, i) => {
-              const Icon = item.icon;
-              return (
-                <Reveal key={i} delay={0.1 + i * 0.06}>
-                  <div
-                    className="rounded-2xl p-7 lg:p-8"
-                    style={{
-                      background: "rgba(255,255,255,0.04)",
-                      border: "1px solid rgba(139,155,58,0.12)",
-                    }}
-                  >
+          <div className="mt-14 lg:mt-16 grid lg:grid-cols-[minmax(280px,420px)_1fr] gap-10 lg:gap-14 items-center max-w-[1100px] mx-auto">
+            <Reveal delay={0.08}>
+              <div className="hidden lg:flex items-center justify-center">
+                <Suspense fallback={null}>
+                  <IAPLogo3D width={360} height={360} scale={1.6} />
+                </Suspense>
+              </div>
+            </Reveal>
+
+            <div className="grid sm:grid-cols-2 gap-5 lg:gap-5">
+              {PROBLEMS.map((item, i) => {
+                const Icon = item.icon;
+                return (
+                  <Reveal key={i} delay={0.1 + i * 0.06}>
                     <div
-                      className="flex items-center justify-center rounded-full mb-5"
+                      className="rounded-2xl p-6 lg:p-7 h-full"
                       style={{
-                        width: 48,
-                        height: 48,
-                        background: "rgba(139,155,58,0.12)",
+                        background: "rgba(255,255,255,0.04)",
+                        border: "1px solid rgba(139,155,58,0.12)",
                       }}
                     >
-                      <Icon
-                        className="h-5 w-5"
-                        strokeWidth={1.5}
-                        style={{ color: "var(--color-primary)" }}
-                      />
+                      <div
+                        className="flex items-center justify-center rounded-full mb-4"
+                        style={{
+                          width: 48,
+                          height: 48,
+                          background: "rgba(139,155,58,0.12)",
+                        }}
+                      >
+                        <Icon
+                          className="h-5 w-5"
+                          strokeWidth={1.5}
+                          style={{ color: "var(--color-primary)" }}
+                        />
+                      </div>
+                      <h3 className="font-bold text-[16px] lg:text-[17px] leading-tight text-foreground mb-2">
+                        {item.title}
+                      </h3>
+                      <p
+                        className="text-[13.5px] lg:text-[14px] leading-[1.6]"
+                        style={{ color: "var(--text-sage, #a3a898)" }}
+                      >
+                        {item.text}
+                      </p>
                     </div>
-                    <h3 className="font-bold text-[16px] lg:text-[17px] leading-tight text-foreground mb-2">
-                      {item.title}
-                    </h3>
-                    <p
-                      className="text-[14px] lg:text-[14.5px] leading-[1.6]"
-                      style={{ color: "var(--text-sage, #a3a898)" }}
-                    >
-                      {item.text}
-                    </p>
-                  </div>
-                </Reveal>
-              );
-            })}
+                  </Reveal>
+                );
+              })}
+            </div>
           </div>
 
           <Reveal delay={0.4}>

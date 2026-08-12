@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-const LOGO_SRC = "/brand/Design sem nome (19).png";
+const LOGO_SRC = "/brand/logo-petals.png";
 const LOGO_SIZE = 52;
 
 interface PetalDef {
