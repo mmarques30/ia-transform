@@ -95,20 +95,24 @@ function LeadModal({ onClose }: { onClose: () => void }) {
 
   return (
     <div
-      className="fixed inset-0 z-[500] flex items-center justify-center p-5"
+      className="fixed inset-0 z-[500] overflow-y-auto overscroll-contain"
       style={{
         background: "rgba(0,0,0,0.72)",
         backdropFilter: "blur(6px)",
+        WebkitOverflowScrolling: "touch",
       }}
-      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
       <div
-        className="relative w-full max-w-[520px] max-h-[92vh] overflow-y-auto rounded-2xl"
-        style={{
-          background: "#111310",
-          border: "1px solid rgba(139,155,58,0.22)",
-        }}
+        className="flex min-h-full items-center justify-center p-5"
+        onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
       >
+        <div
+          className="relative w-full max-w-[520px] rounded-2xl"
+          style={{
+            background: "#111310",
+            border: "1px solid rgba(139,155,58,0.22)",
+          }}
+        >
         <button
           type="button"
           onClick={onClose}
@@ -120,7 +124,8 @@ function LeadModal({ onClose }: { onClose: () => void }) {
           <X className="h-5 w-5" />
         </button>
 
-        <FormState onSuccess={handleSuccess} />
+          <FormState onSuccess={handleSuccess} />
+        </div>
       </div>
     </div>
   );
