@@ -9,7 +9,8 @@ import {
   type FocusEvent,
   type ReactNode,
 } from "react";
-import { AlertCircle, ArrowRight, CheckCircle2, Mail, MessageCircle, X } from "lucide-react";
+import { AlertCircle, ArrowRight, X } from "lucide-react";
+import { useNavigate } from "@tanstack/react-router";
 import { OriginButton } from "@/components/ui/origin-button";
 import { getMetaPixelCookies, getFbclidFromUrl } from "@/lib/metaCookies";
 
@@ -40,7 +41,7 @@ const LOADING_STAGES = [
   { at: 3200, text: "Quase la..." },
 ];
 
-const REQUIRED_FIELDS = ["firstname", "email", "phone", "faixa_de_faturamento", "gargalo"] as const;
+const REQUIRED_FIELDS = ["firstname", "email", "phone", "faixa_faturamento", "gargalo"] as const;
 
 interface ModalCtx {
   isOpen: boolean;
@@ -85,7 +86,12 @@ export function LeadModalProvider({ children }: { children: ReactNode }) {
 }
 
 function LeadModal({ onClose }: { onClose: () => void }) {
-  const [submitted, setSubmitted] = useState(false);
+  const navigate = useNavigate();
+
+  function handleSuccess(eventID: string) {
+    onClose();
+    navigate({ to: "/lead-obrigado", search: { eid: eventID } });
+  }
 
   return (
     <div
@@ -114,13 +120,13 @@ function LeadModal({ onClose }: { onClose: () => void }) {
           <X className="h-5 w-5" />
         </button>
 
-        {submitted ? <SuccessState /> : <FormState onSuccess={() => setSubmitted(true)} />}
+        <FormState onSuccess={handleSuccess} />
       </div>
     </div>
   );
 }
 
-function FormState({ onSuccess }: { onSuccess: () => void }) {
+function FormState({ onSuccess }: { onSuccess: (eventID: string) => void }) {
   const [loading, setLoading] = useState(false);
   const [loadingMsg, setLoadingMsg] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -215,7 +221,7 @@ function FormState({ onSuccess }: { onSuccess: () => void }) {
           firstname: String(fd.get("firstname") ?? "").trim(),
           email: String(fd.get("email") ?? "").trim(),
           phone: String(fd.get("phone") ?? "").trim(),
-          faixa_de_faturamento: String(fd.get("faixa_de_faturamento") ?? "").trim(),
+          faixa_faturamento: String(fd.get("faixa_faturamento") ?? "").trim(),
           gargalo: String(fd.get("gargalo") ?? "").trim(),
         },
         utm: {
@@ -265,7 +271,7 @@ function FormState({ onSuccess }: { onSuccess: () => void }) {
       }
 
       clearTimers();
-      onSuccess();
+      onSuccess(eventID);
     } catch (err) {
       clearTimers();
       setLoadingMsg("");
@@ -328,8 +334,8 @@ function FormState({ onSuccess }: { onSuccess: () => void }) {
             Sobre sua empresa
           </p>
 
-          <ModalField id="faixa_de_faturamento" label="Em qual etapa está sua empresa?" error={fieldErrors.faixa_de_faturamento}>
-            <select id="faixa_de_faturamento" name="faixa_de_faturamento" required defaultValue="" className="lead-input">
+          <ModalField id="faixa_faturamento" label="Em qual etapa está sua empresa?" error={fieldErrors.faixa_faturamento}>
+            <select id="faixa_faturamento" name="faixa_faturamento" required defaultValue="" className="lead-input">
               <option value="" disabled>Selecione</option>
               {FAIXAS.map((f) => <option key={f.value} value={f.value}>{f.label}</option>)}
             </select>
@@ -380,71 +386,6 @@ function FormState({ onSuccess }: { onSuccess: () => void }) {
         </form>
       </div>
     </>
-  );
-}
-
-function SuccessState() {
-  return (
-    <div className="text-center px-8 py-14">
-      <span
-        className="inline-flex h-16 w-16 items-center justify-center rounded-full mx-auto mb-6"
-        style={{
-          backgroundColor: "rgba(139,155,58,0.15)",
-          border: "1.5px solid rgba(139,155,58,0.4)",
-          boxShadow: "0 0 30px -6px rgba(200,224,64,0.2)",
-        }}
-      >
-        <CheckCircle2 className="h-8 w-8" strokeWidth={2} style={{ color: "var(--color-primary)" }} />
-      </span>
-
-      <h3 className="text-[22px] font-bold text-foreground">Pronto! Kit a caminho.</h3>
-      <p className="mt-3 text-[14px] leading-[1.7]" style={{ color: "var(--text-sage, #c4c8bc)" }}>
-        Enviamos o acesso completo para você.
-        <br />
-        Confira agora:
-      </p>
-
-      <div className="mt-7 flex flex-col gap-3 max-w-[320px] mx-auto">
-        <div
-          className="flex items-center gap-3 rounded-xl px-5 py-4 text-left"
-          style={{
-            background: "rgba(139,155,58,0.08)",
-            border: "1px solid rgba(139,155,58,0.25)",
-          }}
-        >
-          <MessageCircle className="h-5 w-5 shrink-0" style={{ color: "var(--color-primary)" }} />
-          <div>
-            <p className="text-[13px] font-semibold text-foreground">WhatsApp</p>
-            <p className="text-[12px]" style={{ color: "var(--text-sage, #c4c8bc)" }}>
-              Verifique suas mensagens
-            </p>
-          </div>
-        </div>
-
-        <div
-          className="flex items-center gap-3 rounded-xl px-5 py-4 text-left"
-          style={{
-            background: "rgba(139,155,58,0.08)",
-            border: "1px solid rgba(139,155,58,0.25)",
-          }}
-        >
-          <Mail className="h-5 w-5 shrink-0" style={{ color: "var(--color-primary)" }} />
-          <div>
-            <p className="text-[13px] font-semibold text-foreground">E-mail</p>
-            <p className="text-[12px]" style={{ color: "var(--text-sage, #c4c8bc)" }}>
-              Confira sua caixa de entrada
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <p
-        className="mt-7 text-[11px] uppercase tracking-[0.08em]"
-        style={{ color: "var(--text-muted, #8a8e82)" }}
-      >
-        &#10038; IAplicada
-      </p>
-    </div>
   );
 }
 
