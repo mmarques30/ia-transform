@@ -3406,6 +3406,49 @@ select.lead-input option {
   background: #1a1c18;
 }
 
+/* ── Lead modal: compact spacing on short viewports (laptops / landscape) ──
+   so the card fits without depending on scroll. The overlay stays scrollable
+   as a fallback for very short screens. Desktop (tall) layout is untouched. */
+@media (max-height: 820px) {
+  .lead-modal-header {
+    padding-top: 1.25rem;
+    padding-bottom: 0.9rem;
+  }
+  .lead-modal-body {
+    padding-top: 1rem;
+    padding-bottom: 1.25rem;
+  }
+  .lead-modal-divider {
+    margin-top: 0.85rem;
+    margin-bottom: 0.85rem;
+  }
+  .lead-form.space-y-4 > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 0.7rem;
+  }
+  .lead-modal-body .lead-cta {
+    padding-top: 13px;
+    padding-bottom: 13px;
+  }
+  .lead-input {
+    padding-top: 11px;
+    padding-bottom: 11px;
+  }
+}
+
+@media (max-height: 680px) {
+  .lead-modal-header {
+    padding-top: 1rem;
+    padding-bottom: 0.75rem;
+  }
+  .lead-modal-body {
+    padding-top: 0.85rem;
+    padding-bottom: 1rem;
+  }
+  .lead-form.space-y-4 > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 0.55rem;
+  }
+}
+
 /* ── Hero wrapper: allow mockup card overflow ── */
 .lead-hero-wrap {
   overflow: visible;
