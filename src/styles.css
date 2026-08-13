@@ -3406,6 +3406,29 @@ select.lead-input option {
   background: #1a1c18;
 }
 
+/* ── Lead modal: discreet olive scrollbar on the scrollable overlay ──
+   Replaces the default white/grey browser bar that clashes with the dark
+   card when the modal is taller than the viewport. */
+.lead-modal-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(139, 155, 58, 0.5) transparent;
+}
+.lead-modal-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+.lead-modal-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.lead-modal-scroll::-webkit-scrollbar-thumb {
+  background-color: rgba(139, 155, 58, 0.45);
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+.lead-modal-scroll::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(139, 155, 58, 0.7);
+}
+
 /* ── Lead modal: compact spacing on short viewports (laptops / landscape) ──
    so the card fits without depending on scroll. The overlay stays scrollable
    as a fallback for very short screens. Desktop (tall) layout is untouched. */

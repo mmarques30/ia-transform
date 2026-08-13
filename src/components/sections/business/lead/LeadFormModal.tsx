@@ -61,12 +61,22 @@ export function LeadModalProvider({ children }: { children: ReactNode }) {
   const closeModal = useCallback(() => setIsOpen(false), []);
 
   useEffect(() => {
+    // The page uses Lenis (smooth scroll) which hijacks wheel/touch, so
+    // `body { overflow: hidden }` alone does NOT freeze the background —
+    // Lenis keeps scrolling the page behind the modal. Stop Lenis while
+    // the modal is open (and resume on close) so only the modal scrolls.
+    const lenis = (window as unknown as { lenis?: { stop: () => void; start: () => void } }).lenis;
     if (isOpen) {
       document.body.style.overflow = "hidden";
+      lenis?.stop();
     } else {
       document.body.style.overflow = "";
+      lenis?.start();
     }
-    return () => { document.body.style.overflow = ""; };
+    return () => {
+      document.body.style.overflow = "";
+      lenis?.start();
+    };
   }, [isOpen]);
 
   useEffect(() => {
@@ -95,7 +105,8 @@ function LeadModal({ onClose }: { onClose: () => void }) {
 
   return (
     <div
-      className="fixed inset-0 z-[500] overflow-y-auto overscroll-contain"
+      className="lead-modal-scroll fixed inset-0 z-[500] overflow-y-auto overscroll-contain"
+      data-lenis-prevent
       style={{
         background: "rgba(0,0,0,0.72)",
         backdropFilter: "blur(6px)",
