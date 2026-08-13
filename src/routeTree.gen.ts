@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ThankYouBusinessRouteImport } from './routes/thank-you-business'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as LeadObrigadoRouteImport } from './routes/lead-obrigado'
 import { Route as LeadRouteImport } from './routes/lead'
 import { Route as IndicacaobusinessRouteImport } from './routes/indicacaobusiness'
@@ -23,6 +24,11 @@ import { Route as Businessv2DiagnosticoRouteImport } from './routes/businessv2.d
 const ThankYouBusinessRoute = ThankYouBusinessRouteImport.update({
   id: '/thank-you-business',
   path: '/thank-you-business',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LeadObrigadoRoute = LeadObrigadoRouteImport.update({
@@ -80,6 +86,7 @@ export interface FileRoutesByFullPath {
   '/indicacaobusiness': typeof IndicacaobusinessRoute
   '/lead': typeof LeadRoute
   '/lead-obrigado': typeof LeadObrigadoRoute
+  '/login': typeof LoginRoute
   '/thank-you-business': typeof ThankYouBusinessRoute
   '/businessv2/diagnostico': typeof Businessv2DiagnosticoRoute
 }
@@ -92,6 +99,7 @@ export interface FileRoutesByTo {
   '/indicacaobusiness': typeof IndicacaobusinessRoute
   '/lead': typeof LeadRoute
   '/lead-obrigado': typeof LeadObrigadoRoute
+  '/login': typeof LoginRoute
   '/thank-you-business': typeof ThankYouBusinessRoute
   '/businessv2/diagnostico': typeof Businessv2DiagnosticoRoute
 }
@@ -105,6 +113,7 @@ export interface FileRoutesById {
   '/indicacaobusiness': typeof IndicacaobusinessRoute
   '/lead': typeof LeadRoute
   '/lead-obrigado': typeof LeadObrigadoRoute
+  '/login': typeof LoginRoute
   '/thank-you-business': typeof ThankYouBusinessRoute
   '/businessv2/diagnostico': typeof Businessv2DiagnosticoRoute
 }
@@ -119,6 +128,7 @@ export interface FileRouteTypes {
     | '/indicacaobusiness'
     | '/lead'
     | '/lead-obrigado'
+    | '/login'
     | '/thank-you-business'
     | '/businessv2/diagnostico'
   fileRoutesByTo: FileRoutesByTo
@@ -131,6 +141,7 @@ export interface FileRouteTypes {
     | '/indicacaobusiness'
     | '/lead'
     | '/lead-obrigado'
+    | '/login'
     | '/thank-you-business'
     | '/businessv2/diagnostico'
   id:
@@ -143,6 +154,7 @@ export interface FileRouteTypes {
     | '/indicacaobusiness'
     | '/lead'
     | '/lead-obrigado'
+    | '/login'
     | '/thank-you-business'
     | '/businessv2/diagnostico'
   fileRoutesById: FileRoutesById
@@ -156,6 +168,7 @@ export interface RootRouteChildren {
   IndicacaobusinessRoute: typeof IndicacaobusinessRoute
   LeadRoute: typeof LeadRoute
   LeadObrigadoRoute: typeof LeadObrigadoRoute
+  LoginRoute: typeof LoginRoute
   ThankYouBusinessRoute: typeof ThankYouBusinessRoute
 }
 
@@ -166,6 +179,13 @@ declare module '@tanstack/react-router' {
       path: '/thank-you-business'
       fullPath: '/thank-you-business'
       preLoaderRoute: typeof ThankYouBusinessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/lead-obrigado': {
@@ -255,6 +275,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndicacaobusinessRoute: IndicacaobusinessRoute,
   LeadRoute: LeadRoute,
   LeadObrigadoRoute: LeadObrigadoRoute,
+  LoginRoute: LoginRoute,
   ThankYouBusinessRoute: ThankYouBusinessRoute,
 }
 export const routeTree = rootRouteImport
