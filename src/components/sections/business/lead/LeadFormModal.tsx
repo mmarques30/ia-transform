@@ -288,7 +288,7 @@ function FormState({ onSuccess }: { onSuccess: (eventID: string) => void }) {
   return (
     <>
       <div
-        className="px-8 pt-8 pb-5"
+        className="lead-modal-header px-8 pt-8 pb-5"
         style={{ borderBottom: "1px solid rgba(255,255,255,0.07)" }}
       >
         <span
@@ -302,14 +302,14 @@ function FormState({ onSuccess }: { onSuccess: (eventID: string) => void }) {
         </h3>
       </div>
 
-      <div className="px-8 pt-6 pb-8">
+      <div className="lead-modal-body px-8 pt-6 pb-8">
         <form
           onSubmit={handleSubmit}
           onInput={handleInput}
           onChange={handleInput}
           onBlurCapture={handleBlur}
           noValidate
-          className="space-y-4"
+          className="lead-form space-y-4"
         >
           <p
             className="text-[10px] font-semibold uppercase tracking-[0.12em] mb-4"
@@ -330,7 +330,7 @@ function FormState({ onSuccess }: { onSuccess: (eventID: string) => void }) {
             <input id="phone" name="phone" type="tel" required autoComplete="tel" placeholder="(11) 99999-9999" className="lead-input" />
           </ModalField>
 
-          <div className="my-5" style={{ height: 1, background: "rgba(255,255,255,0.07)" }} />
+          <div className="lead-modal-divider my-5" style={{ height: 1, background: "rgba(255,255,255,0.07)" }} />
 
           <p
             className="text-[10px] font-semibold uppercase tracking-[0.12em] mb-4"
@@ -372,7 +372,7 @@ function FormState({ onSuccess }: { onSuccess: (eventID: string) => void }) {
             type="submit"
             disabled={loading || !allFilled}
             loading={loading}
-            className="w-full mt-2 py-[17px] text-[13px] tracking-[0.09em]"
+            className="lead-cta w-full mt-2 py-[17px] text-[13px] tracking-[0.09em]"
           >
             {loading ? loadingMsg || "Enviando..." : (
               <>
