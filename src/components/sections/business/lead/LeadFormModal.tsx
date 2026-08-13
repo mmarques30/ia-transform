@@ -40,7 +40,7 @@ const LOADING_STAGES = [
   { at: 3200, text: "Quase la..." },
 ];
 
-const REQUIRED_FIELDS = ["firstname", "email", "phone", "faixa_de_faturamento", "gargalo"] as const;
+const REQUIRED_FIELDS = ["firstname", "email", "phone", "faixa_faturamento", "gargalo"] as const;
 
 interface ModalCtx {
   isOpen: boolean;
@@ -215,7 +215,7 @@ function FormState({ onSuccess }: { onSuccess: () => void }) {
           firstname: String(fd.get("firstname") ?? "").trim(),
           email: String(fd.get("email") ?? "").trim(),
           phone: String(fd.get("phone") ?? "").trim(),
-          faixa_de_faturamento: String(fd.get("faixa_de_faturamento") ?? "").trim(),
+          faixa_faturamento: String(fd.get("faixa_faturamento") ?? "").trim(),
           gargalo: String(fd.get("gargalo") ?? "").trim(),
         },
         utm: {
@@ -328,8 +328,8 @@ function FormState({ onSuccess }: { onSuccess: () => void }) {
             Sobre sua empresa
           </p>
 
-          <ModalField id="faixa_de_faturamento" label="Em qual etapa está sua empresa?" error={fieldErrors.faixa_de_faturamento}>
-            <select id="faixa_de_faturamento" name="faixa_de_faturamento" required defaultValue="" className="lead-input">
+          <ModalField id="faixa_faturamento" label="Em qual etapa está sua empresa?" error={fieldErrors.faixa_faturamento}>
+            <select id="faixa_faturamento" name="faixa_faturamento" required defaultValue="" className="lead-input">
               <option value="" disabled>Selecione</option>
               {FAIXAS.map((f) => <option key={f.value} value={f.value}>{f.label}</option>)}
             </select>
