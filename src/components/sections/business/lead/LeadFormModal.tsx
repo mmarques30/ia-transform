@@ -5,11 +5,9 @@ import {
   useEffect,
   useRef,
   useState,
-  type FormEvent,
-  type FocusEvent,
   type ReactNode,
 } from "react";
-import { AlertCircle, ArrowRight, X } from "lucide-react";
+import { AlertCircle, ArrowLeft, ArrowRight, Check, X } from "lucide-react";
 import { useNavigate } from "@tanstack/react-router";
 import { OriginButton } from "@/components/ui/origin-button";
 import { getMetaPixelCookies, getFbclidFromUrl } from "@/lib/metaCookies";
@@ -18,30 +16,104 @@ const FORM_ENDPOINT = "https://ciwdlceyjsnlnunktqzx.supabase.co/functions/v1/for
 const SUPABASE_ANON_KEY =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNpd2RsY2V5anNubG51bmt0cXp4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyMTU3OTksImV4cCI6MjA4OTc5MTc5OX0.tl-7gEObYBB7wDUS5_pKh9UyRlJQNdnWPiRpMFYrbUM";
 
-
-const FAIXAS = [
-  { value: "Menos de R$ 1 milhão", label: "Menos de R$ 1 milhão" },
-  { value: "Entre 1MM e 5MM", label: "Entre 1MM e 5MM" },
-  { value: "Entre 5MM e 10MM", label: "Entre 5MM e 10MM" },
-  { value: "Entre 10MM e 50MM", label: "Entre 10MM e 50MM" },
-  { value: "Acima de 50MM", label: "Acima de 50MM" },
+const QUESTIONS: {
+  field: string;
+  section: string;
+  label: string;
+  options: string[];
+}[] = [
+  {
+    field: "faixa_de_faturamento",
+    section: "Sobre sua empresa",
+    label: "Em qual etapa está sua empresa?",
+    options: [
+      "Menos de R$ 1 milhão",
+      "Entre 1MM e 5MM",
+      "Entre 5MM e 10MM",
+      "Entre 10MM e 50MM",
+      "Acima de 50MM",
+    ],
+  },
+  {
+    field: "equipe_repetitiva",
+    section: "Sobre sua empresa",
+    label: "Quantas pessoas da sua equipe fazem tarefas repetitivas que poderiam ser automatizadas?",
+    options: [
+      "Nenhuma, só eu",
+      "1 a 3 pessoas",
+      "4 a 10 pessoas",
+      "Mais de 10 pessoas",
+    ],
+  },
+  {
+    field: "operacao_atual",
+    section: "Sobre sua empresa",
+    label: "Como sua operação funciona hoje?",
+    options: [
+      "Tudo em planilhas e WhatsApp",
+      "Tenho sistema mas não uso direito",
+      "Está estruturada mas dependo de mim para tudo funcionar",
+      "Funciona bem e não preciso mudar nada",
+    ],
+  },
+  {
+    field: "cargo",
+    section: "Sobre você",
+    label: "Qual é o seu cargo?",
+    options: [
+      "Dono / Sócio",
+      "CEO",
+      "Diretor",
+      "Gerente",
+      "Coordenador",
+      "Analista",
+      "Assistente",
+      "Outro",
+    ],
+  },
+  {
+    field: "perdeu_cliente",
+    section: "Sobre você",
+    label: "Você já perdeu cliente ou oportunidade por falta de processo?",
+    options: [
+      "Sim, acontece com frequência",
+      "Sim, já aconteceu algumas vezes",
+      "Raramente",
+      "Não, nunca aconteceu",
+    ],
+  },
+  {
+    field: "gargalo",
+    section: "Sobre você",
+    label: "Qual é o seu maior gargalo hoje?",
+    options: [
+      "Operação desorganizada, tudo passa por mim",
+      "Dependência de pessoas-chave na equipe",
+      "Perda de informações entre setores",
+      "Não consigo escalar sem contratar mais",
+    ],
+  },
+  {
+    field: "orcamento",
+    section: "Intenção",
+    label: "Você tem orçamento para investir em melhoria operacional este ano?",
+    options: [
+      "Sim, já está reservado",
+      "Sim, se fizer sentido investir",
+      "Ainda estou avaliando",
+      "Não no momento",
+    ],
+  },
 ];
 
-const GARGALOS = [
-  { value: "Operação desorganizada, tudo passa por mim", label: "Operação desorganizada, tudo passa por mim" },
-  { value: "Dependência de pessoas-chave na equipe", label: "Dependência de pessoas-chave na equipe" },
-  { value: "Perda de informações entre setores", label: "Perda de informações entre setores" },
-  { value: "Não consigo escalar sem contratar mais", label: "Não consigo escalar sem contratar mais" },
-];
+const TOTAL_STEPS = 1 + QUESTIONS.length;
 
 const LOADING_STAGES = [
   { at: 0, text: "Enviando..." },
   { at: 600, text: "Validando seus dados..." },
   { at: 1800, text: "Criando seu acesso..." },
-  { at: 3200, text: "Quase la..." },
+  { at: 3200, text: "Quase lá..." },
 ];
-
-const REQUIRED_FIELDS = ["firstname", "email", "phone", "faixa_de_faturamento", "gargalo"] as const;
 
 interface ModalCtx {
   isOpen: boolean;
@@ -95,7 +167,7 @@ function LeadModal({ onClose }: { onClose: () => void }) {
 
   return (
     <div
-      className="fixed inset-0 z-[500] flex items-center justify-center p-5"
+      className="fixed inset-0 z-[500] flex items-center justify-center p-4"
       style={{
         background: "rgba(0,0,0,0.72)",
         backdropFilter: "blur(6px)",
@@ -103,7 +175,7 @@ function LeadModal({ onClose }: { onClose: () => void }) {
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
       <div
-        className="relative w-full max-w-[520px] max-h-[92vh] overflow-y-auto rounded-2xl"
+        className="relative w-full max-w-[540px] rounded-2xl overflow-hidden"
         style={{
           background: "#111310",
           border: "1px solid rgba(139,155,58,0.22)",
@@ -120,18 +192,20 @@ function LeadModal({ onClose }: { onClose: () => void }) {
           <X className="h-5 w-5" />
         </button>
 
-        <FormState onSuccess={handleSuccess} />
+        <FormWizard onSuccess={handleSuccess} />
       </div>
     </div>
   );
 }
 
-function FormState({ onSuccess }: { onSuccess: (eventID: string) => void }) {
+function FormWizard({ onSuccess }: { onSuccess: (eventID: string) => void }) {
+  const [step, setStep] = useState(0);
+  const [answers, setAnswers] = useState<Record<string, string>>({});
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
   const [loadingMsg, setLoadingMsg] = useState("");
   const [error, setError] = useState<string | null>(null);
-  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
-  const [allFilled, setAllFilled] = useState(false);
+  const [animKey, setAnimKey] = useState(0);
   const loadingTimers = useRef<number[]>([]);
 
   function clearTimers() {
@@ -147,59 +221,48 @@ function FormState({ onSuccess }: { onSuccess: (eventID: string) => void }) {
   }
   useEffect(() => clearTimers, []);
 
-  function validateField(name: string, value: string): string {
-    const v = value.trim();
-    if ((REQUIRED_FIELDS as readonly string[]).includes(name) && !v) return "Campo obrigatorio";
-    if (name === "email" && v && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) return "E-mail invalido";
-    if (name === "phone" && v && v.replace(/\D/g, "").length < 10) return "Inclua DDD (min. 10 digitos)";
-    return "";
+  function goTo(s: number) {
+    setAnimKey((k) => k + 1);
+    setStep(s);
   }
 
-  function allHaveValue(form: HTMLFormElement) {
-    const fd = new FormData(form);
-    for (const name of REQUIRED_FIELDS) {
-      if (!String(fd.get(name) ?? "").trim()) return false;
+  function validatePersonalData(): boolean {
+    const errs: Record<string, string> = {};
+    const name = (answers.firstname ?? "").trim();
+    const email = (answers.email ?? "").trim();
+    const phone = (answers.phone ?? "").trim();
+
+    if (!name) errs.firstname = "Campo obrigatório";
+    if (!email) errs.email = "Campo obrigatório";
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errs.email = "E-mail inválido";
+    if (!phone) errs.phone = "Campo obrigatório";
+    else if (phone.replace(/\D/g, "").length < 10) errs.phone = "Inclua DDD (min. 10 dígitos)";
+
+    setFieldErrors(errs);
+    return Object.keys(errs).length === 0;
+  }
+
+  function handlePersonalContinue() {
+    if (validatePersonalData()) goTo(1);
+  }
+
+  function handleOptionSelect(field: string, value: string) {
+    setAnswers((p) => ({ ...p, [field]: value }));
+
+    const questionIndex = step - 1;
+    const isLast = questionIndex === QUESTIONS.length - 1;
+
+    if (isLast) {
+      setTimeout(() => submitForm({ ...answers, [field]: value }), 400);
+    } else {
+      setTimeout(() => goTo(step + 1), 400);
     }
-    return true;
   }
 
-  function handleInput(e: React.FormEvent<HTMLFormElement>) {
-    const t = e.target as unknown as HTMLInputElement | HTMLSelectElement | null;
-    if (t?.name && fieldErrors[t.name]) {
-      setFieldErrors((p) => { const n = { ...p }; delete n[t.name]; return n; });
-    }
-    setAllFilled(allHaveValue(e.currentTarget));
-  }
-
-  function handleBlur(e: FocusEvent<HTMLFormElement>) {
-    const t = e.target as unknown as HTMLInputElement | HTMLSelectElement | null;
-    if (!t?.name) return;
-    const err = validateField(t.name, t.value);
-    setFieldErrors((p) => {
-      const n = { ...p };
-      if (err) n[t.name] = err; else delete n[t.name];
-      return n;
-    });
-  }
-
-  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    if (loading) return;
-    setError(null);
-
-    const form = e.currentTarget;
-    const fd = new FormData(form);
-    for (const name of REQUIRED_FIELDS) {
-      const err = validateField(name, String(fd.get(name) ?? ""));
-      if (err) {
-        setFieldErrors((p) => ({ ...p, [name]: err }));
-        (form.elements.namedItem(name) as HTMLElement | null)?.focus();
-        return;
-      }
-    }
-
+  async function submitForm(data: Record<string, string>) {
     setLoading(true);
     startTimers();
+    setError(null);
 
     const eventID = `lead_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`;
 
@@ -215,15 +278,18 @@ function FormState({ onSuccess }: { onSuccess: (eventID: string) => void }) {
       const fbclid = getFbclidFromUrl() ?? params.get("fbclid") ?? "";
       const gclid = params.get("gclid") ?? "";
 
+      const fields: Record<string, string> = {
+        firstname: (data.firstname ?? "").trim(),
+        email: (data.email ?? "").trim(),
+        phone: (data.phone ?? "").trim(),
+      };
+      for (const q of QUESTIONS) {
+        fields[q.field] = (data[q.field] ?? "").trim();
+      }
+
       const payload = {
         form_slug: "isca-business-gargalos",
-        fields: {
-          firstname: String(fd.get("firstname") ?? "").trim(),
-          email: String(fd.get("email") ?? "").trim(),
-          phone: String(fd.get("phone") ?? "").trim(),
-          faixa_de_faturamento: String(fd.get("faixa_de_faturamento") ?? "").trim(),
-          gargalo: String(fd.get("gargalo") ?? "").trim(),
-        },
+        fields,
         utm: {
           source: utmSource,
           medium: utmMedium,
@@ -280,122 +346,299 @@ function FormState({ onSuccess }: { onSuccess: (eventID: string) => void }) {
     }
   }
 
+  const progress = ((step + 1) / TOTAL_STEPS) * 100;
+
+  if (loading) {
+    return (
+      <div className="flex flex-col items-center justify-center py-20 px-8">
+        <div className="relative h-12 w-12 mb-6">
+          <div
+            className="absolute inset-0 rounded-full"
+            style={{
+              border: "2.5px solid rgba(139,155,58,0.15)",
+            }}
+          />
+          <div
+            className="absolute inset-0 rounded-full lead-spinner"
+            style={{
+              border: "2.5px solid transparent",
+              borderTopColor: "var(--color-primary)",
+            }}
+          />
+        </div>
+        <p className="text-[14px] font-medium text-foreground">{loadingMsg}</p>
+        {error && (
+          <div
+            role="alert"
+            className="mt-4 flex items-start gap-2 rounded-md px-3 py-2.5 text-[12.5px] max-w-[360px]"
+            style={{
+              backgroundColor: "rgba(200,50,50,0.12)",
+              border: "1px solid rgba(200,50,50,0.3)",
+              color: "rgba(255,140,140,1)",
+            }}
+          >
+            <AlertCircle className="h-4 w-4 mt-0.5 shrink-0" strokeWidth={2} />
+            <span>{error}</span>
+          </div>
+        )}
+      </div>
+    );
+  }
+
   return (
-    <>
-      <div
-        className="px-8 pt-8 pb-5"
-        style={{ borderBottom: "1px solid rgba(255,255,255,0.07)" }}
-      >
-        <span
-          className="text-[10px] font-semibold uppercase tracking-[0.14em] block mb-1.5"
-          style={{ color: "var(--color-primary)" }}
-        >
-          Kit gratuito &#10038; Acesso imediato
-        </span>
-        <h3 className="text-[21px] font-bold tracking-[-0.02em] text-foreground">
-          Para onde envio o kit?
-        </h3>
+    <div className="flex flex-col">
+      {/* Progress bar */}
+      <div className="h-[3px] w-full" style={{ background: "rgba(255,255,255,0.06)" }}>
+        <div
+          className="h-full transition-all duration-500 ease-out"
+          style={{
+            width: `${progress}%`,
+            background: "linear-gradient(90deg, #8b9b3a, #c8e040)",
+          }}
+        />
       </div>
 
-      <div className="px-8 pt-6 pb-8">
-        <form
-          onSubmit={handleSubmit}
-          onInput={handleInput}
-          onChange={handleInput}
-          onBlurCapture={handleBlur}
-          noValidate
-          className="space-y-4"
-        >
-          <p
-            className="text-[10px] font-semibold uppercase tracking-[0.12em] mb-4"
-            style={{ color: "var(--color-primary)" }}
-          >
-            Seus dados
-          </p>
-
-          <ModalField id="firstname" label="Nome" error={fieldErrors.firstname}>
-            <input id="firstname" name="firstname" type="text" required autoComplete="name" placeholder="Seu nome completo" className="lead-input" />
-          </ModalField>
-
-          <ModalField id="email" label="E-mail" error={fieldErrors.email}>
-            <input id="email" name="email" type="email" required autoComplete="email" placeholder="seu@email.com" className="lead-input" />
-          </ModalField>
-
-          <ModalField id="phone" label="WhatsApp" error={fieldErrors.phone}>
-            <input id="phone" name="phone" type="tel" required autoComplete="tel" placeholder="(11) 99999-9999" className="lead-input" />
-          </ModalField>
-
-          <div className="my-5" style={{ height: 1, background: "rgba(255,255,255,0.07)" }} />
-
-          <p
-            className="text-[10px] font-semibold uppercase tracking-[0.12em] mb-4"
-            style={{ color: "var(--color-primary)" }}
-          >
-            Sobre sua empresa
-          </p>
-
-          <ModalField id="faixa_de_faturamento" label="Em qual etapa está sua empresa?" error={fieldErrors.faixa_de_faturamento}>
-            <select id="faixa_de_faturamento" name="faixa_de_faturamento" required defaultValue="" className="lead-input">
-              <option value="" disabled>Selecione</option>
-              {FAIXAS.map((f) => <option key={f.value} value={f.value}>{f.label}</option>)}
-            </select>
-          </ModalField>
-
-          <ModalField id="gargalo" label="Qual é o seu maior gargalo hoje?" error={fieldErrors.gargalo}>
-            <select id="gargalo" name="gargalo" required defaultValue="" className="lead-input">
-              <option value="" disabled>Selecione</option>
-              {GARGALOS.map((g) => <option key={g.value} value={g.value}>{g.label}</option>)}
-            </select>
-          </ModalField>
-
-          {error && (
-            <div
-              role="alert"
-              className="flex items-start gap-2 rounded-md px-3 py-2.5 text-[12.5px]"
-              style={{
-                backgroundColor: "rgba(200,50,50,0.12)",
-                border: "1px solid rgba(200,50,50,0.3)",
-                color: "rgba(255,140,140,1)",
-              }}
+      {/* Header */}
+      <div className="flex items-center justify-between px-6 pt-5 pb-2">
+        <div className="flex items-center gap-3">
+          {step > 0 && (
+            <button
+              type="button"
+              onClick={() => goTo(step - 1)}
+              className="p-1.5 rounded-lg transition-colors"
+              style={{ color: "var(--text-muted, #8a8e82)" }}
+              onMouseEnter={(e) => { e.currentTarget.style.color = "#fff"; e.currentTarget.style.background = "rgba(255,255,255,0.06)"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.color = "var(--text-muted, #8a8e82)"; e.currentTarget.style.background = "transparent"; }}
             >
-              <AlertCircle className="h-4 w-4 mt-0.5 shrink-0" strokeWidth={2} />
-              <span>{error}</span>
-            </div>
+              <ArrowLeft className="h-4 w-4" strokeWidth={2} />
+            </button>
           )}
-
-          <OriginButton
-            type="submit"
-            disabled={loading || !allFilled}
-            loading={loading}
-            className="w-full mt-2 py-[17px] text-[13px] tracking-[0.09em]"
-          >
-            {loading ? loadingMsg || "Enviando..." : (
-              <>
-                Quero o kit completo
-                <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
-              </>
-            )}
-          </OriginButton>
-
-          <p
-            className="text-[10px] text-center uppercase tracking-[0.06em] mt-3"
-            style={{ color: "var(--text-muted, #8a8e82)" }}
-          >
-            Gratuito &#10038; Acesso imediato
-          </p>
-        </form>
+        </div>
+        <span
+          className="text-[11px] font-medium tracking-[0.04em]"
+          style={{ color: "var(--text-muted, #8a8e82)" }}
+        >
+          {step + 1} de {TOTAL_STEPS}
+        </span>
       </div>
-    </>
+
+      {/* Step content */}
+      <div
+        key={animKey}
+        className="lead-step-enter px-7 pb-8 pt-2"
+        style={{ minHeight: 320 }}
+      >
+        {step === 0 ? (
+          <PersonalDataStep
+            answers={answers}
+            fieldErrors={fieldErrors}
+            onChange={(field, value) => {
+              setAnswers((p) => ({ ...p, [field]: value }));
+              if (fieldErrors[field]) {
+                setFieldErrors((p) => { const n = { ...p }; delete n[field]; return n; });
+              }
+            }}
+            onContinue={handlePersonalContinue}
+          />
+        ) : (
+          <QuestionStep
+            question={QUESTIONS[step - 1]}
+            selected={answers[QUESTIONS[step - 1].field]}
+            onSelect={(value) => handleOptionSelect(QUESTIONS[step - 1].field, value)}
+          />
+        )}
+
+        {error && !loading && (
+          <div
+            role="alert"
+            className="mt-4 flex items-start gap-2 rounded-md px-3 py-2.5 text-[12.5px]"
+            style={{
+              backgroundColor: "rgba(200,50,50,0.12)",
+              border: "1px solid rgba(200,50,50,0.3)",
+              color: "rgba(255,140,140,1)",
+            }}
+          >
+            <AlertCircle className="h-4 w-4 mt-0.5 shrink-0" strokeWidth={2} />
+            <span>{error}</span>
+          </div>
+        )}
+      </div>
+    </div>
   );
 }
 
-function ModalField({
-  id,
+function PersonalDataStep({
+  answers,
+  fieldErrors,
+  onChange,
+  onContinue,
+}: {
+  answers: Record<string, string>;
+  fieldErrors: Record<string, string>;
+  onChange: (field: string, value: string) => void;
+  onContinue: () => void;
+}) {
+  function handleKeyDown(e: React.KeyboardEvent) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      onContinue();
+    }
+  }
+
+  return (
+    <div>
+      <span
+        className="text-[10px] font-semibold uppercase tracking-[0.14em] block mb-2"
+        style={{ color: "var(--color-primary)" }}
+      >
+        Kit gratuito &#10038; Acesso imediato
+      </span>
+      <h3 className="text-[22px] font-bold tracking-[-0.02em] text-foreground mb-7">
+        Para onde envio o kit?
+      </h3>
+
+      <div className="space-y-4" onKeyDown={handleKeyDown}>
+        <WizardField label="Nome" error={fieldErrors.firstname}>
+          <input
+            type="text"
+            autoComplete="name"
+            placeholder="Seu nome completo"
+            className="lead-input"
+            value={answers.firstname ?? ""}
+            onChange={(e) => onChange("firstname", e.target.value)}
+            autoFocus
+          />
+        </WizardField>
+
+        <WizardField label="E-mail" error={fieldErrors.email}>
+          <input
+            type="email"
+            autoComplete="email"
+            placeholder="seu@email.com"
+            className="lead-input"
+            value={answers.email ?? ""}
+            onChange={(e) => onChange("email", e.target.value)}
+          />
+        </WizardField>
+
+        <WizardField label="WhatsApp" error={fieldErrors.phone}>
+          <input
+            type="tel"
+            autoComplete="tel"
+            placeholder="(11) 99999-9999"
+            className="lead-input"
+            value={answers.phone ?? ""}
+            onChange={(e) => onChange("phone", e.target.value)}
+          />
+        </WizardField>
+      </div>
+
+      <OriginButton
+        type="button"
+        onClick={onContinue}
+        className="w-full mt-6 py-[17px] text-[13px] tracking-[0.09em]"
+      >
+        Continuar
+        <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
+      </OriginButton>
+
+      <p
+        className="text-[10px] text-center uppercase tracking-[0.06em] mt-3"
+        style={{ color: "var(--text-muted, #8a8e82)" }}
+      >
+        Gratuito &#10038; Acesso imediato
+      </p>
+    </div>
+  );
+}
+
+function QuestionStep({
+  question,
+  selected,
+  onSelect,
+}: {
+  question: (typeof QUESTIONS)[number];
+  selected: string | undefined;
+  onSelect: (value: string) => void;
+}) {
+  return (
+    <div>
+      <span
+        className="text-[10px] font-semibold uppercase tracking-[0.14em] block mb-2"
+        style={{ color: "var(--color-primary)" }}
+      >
+        {question.section}
+      </span>
+      <h3 className="text-[20px] sm:text-[22px] font-bold tracking-[-0.02em] text-foreground mb-6 leading-[1.25]">
+        {question.label}
+      </h3>
+
+      <div className="flex flex-col gap-2.5">
+        {question.options.map((opt) => {
+          const isSelected = selected === opt;
+          return (
+            <button
+              key={opt}
+              type="button"
+              onClick={() => onSelect(opt)}
+              className="group flex items-center gap-3 w-full text-left rounded-xl px-4 py-3.5 transition-all duration-200"
+              style={{
+                background: isSelected
+                  ? "rgba(139,155,58,0.12)"
+                  : "rgba(255,255,255,0.03)",
+                border: isSelected
+                  ? "1.5px solid rgba(139,155,58,0.5)"
+                  : "1.5px solid rgba(255,255,255,0.08)",
+              }}
+              onMouseEnter={(e) => {
+                if (!isSelected) {
+                  e.currentTarget.style.borderColor = "rgba(139,155,58,0.3)";
+                  e.currentTarget.style.background = "rgba(255,255,255,0.05)";
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (!isSelected) {
+                  e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)";
+                  e.currentTarget.style.background = "rgba(255,255,255,0.03)";
+                }
+              }}
+            >
+              <span
+                className="flex items-center justify-center shrink-0 rounded-full transition-all duration-200"
+                style={{
+                  width: 22,
+                  height: 22,
+                  background: isSelected
+                    ? "var(--color-primary)"
+                    : "rgba(255,255,255,0.06)",
+                  border: isSelected
+                    ? "none"
+                    : "1.5px solid rgba(255,255,255,0.12)",
+                }}
+              >
+                {isSelected && <Check className="h-3.5 w-3.5" strokeWidth={3} style={{ color: "#0a0c07" }} />}
+              </span>
+              <span
+                className="text-[14px] font-medium leading-[1.35]"
+                style={{
+                  color: isSelected ? "#fff" : "var(--text-sage, #c4c8bc)",
+                }}
+              >
+                {opt}
+              </span>
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function WizardField({
   label,
   error,
   children,
 }: {
-  id: string;
   label: string;
   error?: string;
   children: ReactNode;
@@ -403,7 +646,6 @@ function ModalField({
   return (
     <div>
       <label
-        htmlFor={id}
         className="block text-[11px] font-semibold uppercase tracking-[0.07em] mb-1.5"
         style={{ color: "var(--text-muted, #8a8e82)" }}
       >
