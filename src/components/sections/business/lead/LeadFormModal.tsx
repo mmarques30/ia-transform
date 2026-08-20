@@ -133,12 +133,18 @@ export function LeadModalProvider({ children }: { children: ReactNode }) {
   const closeModal = useCallback(() => setIsOpen(false), []);
 
   useEffect(() => {
+    const lenis = (window as unknown as { lenis?: { stop: () => void; start: () => void } }).lenis;
     if (isOpen) {
       document.body.style.overflow = "hidden";
+      lenis?.stop();
     } else {
       document.body.style.overflow = "";
+      lenis?.start();
     }
-    return () => { document.body.style.overflow = ""; };
+    return () => {
+      document.body.style.overflow = "";
+      lenis?.start();
+    };
   }, [isOpen]);
 
   useEffect(() => {
@@ -167,32 +173,38 @@ function LeadModal({ onClose }: { onClose: () => void }) {
 
   return (
     <div
-      className="fixed inset-0 z-[500] flex items-center justify-center p-4"
+      className="lead-modal-scroll fixed inset-0 z-[500] overflow-y-auto overscroll-contain"
+      data-lenis-prevent
       style={{
         background: "rgba(0,0,0,0.72)",
         backdropFilter: "blur(6px)",
+        WebkitOverflowScrolling: "touch",
       }}
-      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
       <div
-        className="relative w-full max-w-[540px] rounded-2xl overflow-hidden"
-        style={{
-          background: "#111310",
-          border: "1px solid rgba(139,155,58,0.22)",
-        }}
+        className="flex min-h-full items-center justify-center p-5"
+        onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
       >
-        <button
-          type="button"
-          onClick={onClose}
-          className="absolute top-4 right-4 p-1 z-10 transition-colors"
-          style={{ color: "var(--text-muted, #8a8e82)" }}
-          onMouseEnter={(e) => { e.currentTarget.style.color = "#fff"; }}
-          onMouseLeave={(e) => { e.currentTarget.style.color = "var(--text-muted, #8a8e82)"; }}
+        <div
+          className="relative w-full max-w-[540px] rounded-2xl overflow-hidden"
+          style={{
+            background: "#111310",
+            border: "1px solid rgba(139,155,58,0.22)",
+          }}
         >
-          <X className="h-5 w-5" />
-        </button>
+          <button
+            type="button"
+            onClick={onClose}
+            className="absolute top-4 right-4 p-1 z-10 transition-colors"
+            style={{ color: "var(--text-muted, #8a8e82)" }}
+            onMouseEnter={(e) => { e.currentTarget.style.color = "#fff"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.color = "var(--text-muted, #8a8e82)"; }}
+          >
+            <X className="h-5 w-5" />
+          </button>
 
-        <FormWizard onSuccess={handleSuccess} />
+          <FormWizard onSuccess={handleSuccess} />
+        </div>
       </div>
     </div>
   );
