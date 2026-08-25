@@ -65,12 +65,12 @@ const CARGOS = [
   "Analista",
 ];
 
-const FAIXAS = [
-  "Menos de R$ 1 milhão",
-  "Entre 1MM e 5MM",
-  "Entre 5MM e 10MM",
-  "Entre 10MM e 50MM",
-  "Acima de 50MM",
+const FAIXAS: Array<{ value: string; label: string }> = [
+  { value: "Menos de R$ 1 milhão", label: "Menos de R$ 1M" },
+  { value: "Entre R$1M e R$3M", label: "Entre R$ 1M e R$ 3M" },
+  { value: "Entre R$3M e R$5M", label: "Entre R$ 3M e R$ 5M" },
+  { value: "Entre R$5M e R$10M", label: "Entre R$ 5M e R$ 10M" },
+  { value: "Acima de R$10M", label: "Acima de R$ 10M" },
 ];
 
 /**
@@ -646,8 +646,8 @@ export function HeroForm({
                 Selecione
               </option>
               {FAIXAS.map((f) => (
-                <option key={f} value={f}>
-                  {f}
+                <option key={f.value} value={f.value}>
+                  {f.label}
                 </option>
               ))}
             </select>
