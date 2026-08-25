@@ -73,18 +73,6 @@ const FAIXAS = [
   "Acima de 50MM",
 ];
 
-const SETORES = [
-  "Contabilidade",
-  "Logística",
-  "Marketing/Agência",
-  "Consultoria",
-  "Varejo",
-  "Alimentação",
-  "Beleza",
-  "Eventos",
-  "Outros",
-];
-
 /**
  * Microcopy escalonada no botão durante o submit. A Edge Function gasta
  * ~3-5s rodando ~14 queries (form, contato, deal, qualify, etc) — o texto
@@ -245,10 +233,8 @@ export function HeroForm({
     "firstname",
     "email",
     "phone",
-    "company",
     "cargo",
     "faixa_de_faturamento",
-    "setor_do_mercado",
   ] as const;
 
   /** Valida um único field. Retorna mensagem de erro ou "" se OK. */
@@ -359,8 +345,6 @@ export function HeroForm({
         phone: String(fd.get("phone") ?? "").trim(),
         cargo: String(fd.get("cargo") ?? "").trim(),
         faixa_de_faturamento: String(fd.get("faixa_de_faturamento") ?? "").trim(),
-        company: String(fd.get("company") ?? "").trim(),
-        setor_do_mercado: String(fd.get("setor_do_mercado") ?? "").trim(),
       };
 
       const utmSource = params.get("utm_source") ?? "";
@@ -624,19 +608,6 @@ export function HeroForm({
             />
           </Field>
 
-          <Field id="company" label="Empresa" required error={fieldErrors.company}>
-            <input
-              id="company"
-              name="company"
-              type="text"
-              required
-              autoComplete="organization"
-              placeholder="Ex: Construtora Souza"
-              aria-invalid={!!fieldErrors.company}
-              className="form-input"
-            />
-          </Field>
-
           <Field id="cargo" label="Seu cargo" required error={fieldErrors.cargo}>
             <select
               id="cargo"
@@ -677,30 +648,6 @@ export function HeroForm({
               {FAIXAS.map((f) => (
                 <option key={f} value={f}>
                   {f}
-                </option>
-              ))}
-            </select>
-          </Field>
-
-          <Field
-            id="setor_do_mercado"
-            label="Setor da empresa"
-            required
-            error={fieldErrors.setor_do_mercado}
-          >
-            <select
-              id="setor_do_mercado"
-              name="setor_do_mercado"
-              defaultValue=""
-              required
-              className="form-input"
-            >
-              <option value="" disabled>
-                Selecione
-              </option>
-              {SETORES.map((s) => (
-                <option key={s} value={s}>
-                  {s}
                 </option>
               ))}
             </select>
