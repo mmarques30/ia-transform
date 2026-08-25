@@ -20,7 +20,7 @@ import { CtaGlow } from "@/components/sections/business/variantB/CtaGlow";
 
 const BULLETS: string[] = [
   "Mariana Marques · Fundadora da IAplicada",
-  "11 anos como executiva, com passagens por Mercado Livre, Suzano e Amor Gold",
+  "11 anos como executiva, com passagens por Mercado Livre, Suzano e Anglo Gold",
   "Liderou frentes de transformação digital e melhoria de processos em escala Latam",
   "+40 sistemas implementados pelo time IAplicada",
 ];
@@ -73,7 +73,7 @@ export function MentorMari() {
               <strong className="text-foreground font-semibold">11 anos no corporativo</strong>{" "}
               liderando transformação digital e reestruturação de processos, gerando impacto
               financeiro em operações de grande escala. Hoje, ela e um time de especialistas em
-              operação e IA aplicam essa bagagem em PMEs — do diagnóstico à implementação, com o{" "}
+              operação e IA aplicam essa bagagem diversas empresas, do diagnóstico à implementação, com o{" "}
               <strong className="text-foreground font-semibold">Método APLICA</strong>, refinado em
               mais de 40 sistemas entregues.
             </p>
