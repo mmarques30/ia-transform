@@ -16,22 +16,24 @@ const FORM_ENDPOINT = "https://ciwdlceyjsnlnunktqzx.supabase.co/functions/v1/for
 const SUPABASE_ANON_KEY =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNpd2RsY2V5anNubG51bmt0cXp4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyMTU3OTksImV4cCI6MjA4OTc5MTc5OX0.tl-7gEObYBB7wDUS5_pKh9UyRlJQNdnWPiRpMFYrbUM";
 
+type Option = string | { value: string; label: string };
+
 const QUESTIONS: {
   field: string;
   section: string;
   label: string;
-  options: string[];
+  options: Option[];
 }[] = [
   {
     field: "faixa_de_faturamento",
     section: "Sobre sua empresa",
     label: "Em qual etapa está sua empresa?",
     options: [
-      "Menos de R$ 1 milhão",
-      "Entre 1MM e 5MM",
-      "Entre 5MM e 10MM",
-      "Entre 10MM e 50MM",
-      "Acima de 50MM",
+      { value: "Menos de R$ 1 milhão", label: "Menos de R$ 1M" },
+      { value: "Entre R$1M e R$3M", label: "Entre R$ 1M e R$ 3M" },
+      { value: "Entre R$3M e R$5M", label: "Entre R$ 3M e R$ 5M" },
+      { value: "Entre R$5M e R$10M", label: "Entre R$ 5M e R$ 10M" },
+      { value: "Acima de R$10M", label: "Acima de R$ 10M" },
     ],
   },
   {
@@ -587,12 +589,14 @@ function QuestionStep({
 
       <div className="flex flex-col gap-2.5">
         {question.options.map((opt) => {
-          const isSelected = selected === opt;
+          const optValue = typeof opt === "string" ? opt : opt.value;
+          const optLabel = typeof opt === "string" ? opt : opt.label;
+          const isSelected = selected === optValue;
           return (
             <button
-              key={opt}
+              key={optValue}
               type="button"
-              onClick={() => onSelect(opt)}
+              onClick={() => onSelect(optValue)}
               className="group flex items-center gap-3 w-full text-left rounded-xl px-4 py-3.5 transition-all duration-200"
               style={{
                 background: isSelected
@@ -636,7 +640,7 @@ function QuestionStep({
                   color: isSelected ? "#fff" : "var(--text-sage, #c4c8bc)",
                 }}
               >
-                {opt}
+                {optLabel}
               </span>
             </button>
           );
