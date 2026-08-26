@@ -2570,7 +2570,7 @@
 .hero-founder-photo {
   position: absolute;
   right: -4%;
-  top: 5%;
+  top: -2%;
   bottom: 0;
   width: 40%;
   height: auto;
@@ -2598,13 +2598,10 @@
   width: 100%;
   max-width: 1280px;
   margin: 0 auto;
-  padding: 72px 48px;
+  padding: 40px 48px;
   display: grid;
-  /* 56/44 dá coluna esquerda mais generosa (~618px) pro título
-     editorial gigante e coluna direita menor (~486px) pra o form
-     não dominar visualmente. */
-  grid-template-columns: 56fr 44fr;
-  gap: 48px;
+  grid-template-columns: 60fr 40fr;
+  gap: 40px;
   align-items: center;
   overflow: visible;
 }

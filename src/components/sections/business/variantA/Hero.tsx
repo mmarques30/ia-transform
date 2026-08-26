@@ -17,7 +17,7 @@ export function Hero() {
         <HeroFlowBg />
         <div className="hero-founder-photo" aria-hidden="true">
           <img
-            src="/brand/Design sem nome (20).png"
+            src="/brand/mariana-transparente.png"
             alt=""
             loading="eager"
             decoding="async"
