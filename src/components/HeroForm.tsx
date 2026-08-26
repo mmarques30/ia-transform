@@ -496,7 +496,7 @@ export function HeroForm({
       onMouseLeave={handleMouseLeave}
       className={`hero-form-card rounded-[24px] overflow-hidden relative${compact ? " hero-form-compact" : ""}`}
       style={{
-        backgroundColor: "oklch(0.995 0.003 110 / 0.85)",
+        backgroundColor: "oklch(0.995 0.003 110 / 0.72)",
         backdropFilter: "blur(16px)",
         WebkitBackdropFilter: "blur(16px)",
         border: "1px solid oklch(0.88 0.02 115 / 0.7)",
