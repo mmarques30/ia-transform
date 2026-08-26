@@ -2566,6 +2566,33 @@
   align-items: center;
 }
 
+/* Foto da fundadora — posicionada à direita, atrás do form, com
+   fade gradiente na borda esquerda pra integrar com o fundo escuro.
+   Estilo inspirado em LPs como Acelerador Empresarial / G4. */
+.hero-founder-photo {
+  position: absolute;
+  right: -4%;
+  bottom: 0;
+  width: 38%;
+  height: 90%;
+  z-index: 2;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.4) 25%, black 55%);
+  mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.4) 25%, black 55%);
+}
+.hero-founder-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 10%;
+  display: block;
+}
+@media (max-width: 900px) {
+  .hero-founder-photo {
+    display: none;
+  }
+}
+
 .hero-b {
   position: relative;
   z-index: 3;
