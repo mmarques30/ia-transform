@@ -1,5 +1,6 @@
 import { Reveal } from "@/components/Reveal";
 import { HeroForm } from "@/components/HeroForm";
+import { FOUNDER } from "@/config/brand";
 
 /**
  * Hero (LP-A) — mesma estrutura da /businessv2 com copy própria da /.
@@ -14,6 +15,20 @@ export function Hero() {
     <>
       <section id="top" className="hero-section-b">
         <HeroFlowBg />
+        <div className="hero-founder-photo" aria-hidden="true">
+          <img
+            src={FOUNDER.photoSrc}
+            alt=""
+            loading="eager"
+            decoding="async"
+            onError={(e) => {
+              const img = e.currentTarget;
+              if (FOUNDER.photoFallback && img.src.includes(FOUNDER.photoSrc.split("/").pop()!)) {
+                img.src = FOUNDER.photoFallback;
+              }
+            }}
+          />
+        </div>
         <div className="hero-b">
           <div className="hero-b-text">
             <Reveal>
