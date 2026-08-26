@@ -17,16 +17,10 @@ export function Hero() {
         <HeroFlowBg />
         <div className="hero-founder-photo" aria-hidden="true">
           <img
-            src={FOUNDER.photoSrc}
+            src="/brand/Design sem nome (20).png"
             alt=""
             loading="eager"
             decoding="async"
-            onError={(e) => {
-              const img = e.currentTarget;
-              if (FOUNDER.photoFallback && img.src.includes(FOUNDER.photoSrc.split("/").pop()!)) {
-                img.src = FOUNDER.photoFallback;
-              }
-            }}
           />
         </div>
         <div className="hero-b">
