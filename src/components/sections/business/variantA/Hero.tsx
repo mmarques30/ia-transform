@@ -1,5 +1,4 @@
 import { Reveal } from "@/components/Reveal";
-import { QualifierStrip } from "@/components/sections/business/variantA/QualifierStrip";
 import { HeroForm } from "@/components/HeroForm";
 
 /**
@@ -13,7 +12,6 @@ import { HeroForm } from "@/components/HeroForm";
 export function Hero() {
   return (
     <>
-      <QualifierStrip />
       <section id="top" className="hero-section-b">
         <HeroFlowBg />
         <div className="hero-b">
