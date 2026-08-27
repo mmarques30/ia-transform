@@ -3606,6 +3606,56 @@ select.lead-input option {
   .lead-sep { padding: 0 24px; }
 }
 
+/* ── Value Strip ───────────────────────────────────── */
+.value-strip {
+  width: 100%;
+  background: rgba(200,224,64,0.07);
+  border-top: 1px solid rgba(200,224,64,0.15);
+  border-bottom: 1px solid rgba(200,224,64,0.15);
+  padding: 18px 0;
+  overflow: hidden;
+}
+.value-strip-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+.value-strip-item {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+.value-strip-text {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-primary);
+  font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  white-space: nowrap;
+}
+.value-strip-divider {
+  display: inline-block;
+  width: 1px;
+  height: 18px;
+  background: rgba(200,224,64,0.35);
+  margin: 0 24px;
+}
+@media (max-width: 767px) {
+  .value-strip { padding: 14px 0; }
+  .value-strip-inner {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px 0;
+  }
+  .value-strip-text { font-size: 11px; letter-spacing: 0.1em; }
+  .value-strip-divider { margin: 0 14px; height: 14px; }
+}
+
 /* ── Team carousel ─────────────────────────────────── */
 .team-carousel-wrapper {
   position: relative;
@@ -3622,7 +3672,7 @@ select.lead-input option {
 .team-carousel-track::-webkit-scrollbar { display: none; }
 
 .team-card {
-  flex: 0 0 320px;
+  flex: 0 0 clamp(320px, calc(33.333% - 14px), 420px);
   scroll-snap-align: start;
   border-radius: 16px;
   overflow: hidden;

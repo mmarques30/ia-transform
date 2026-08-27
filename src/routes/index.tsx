@@ -7,6 +7,7 @@ import { MetodoAplicaBook } from "@/components/sections/business/variantA/Metodo
 import { AppShowcase } from "@/components/sections/business/variantA/AppShowcase";
 import { MentorMari } from "@/components/sections/business/variantA/MentorMari";
 import { Team } from "@/components/sections/business/variantA/Team";
+import { ValueStrip } from "@/components/sections/business/variantA/ValueStrip";
 import { FAQ } from "@/components/sections/business/variantA/FAQ";
 import { Testimonials } from "@/components/sections/business/variantB/Testimonials";
 import { DiagnosticoModalProvider } from "@/components/sections/business/variantB/DiagnosticoModal";
@@ -65,6 +66,8 @@ function BusinessLanding() {
     <DiagnosticoModalProvider>
       <main className="min-h-screen text-foreground" style={{ backgroundColor: "#0a0c07" }}>
         <Hero />
+
+        <ValueStrip />
 
         <BgDobra intensity="media">
           <Problem />
