@@ -79,7 +79,7 @@ export function Team() {
   return (
     <section
       id="time"
-      className="relative py-[80px] lg:py-[110px] overflow-hidden"
+      className="relative py-[80px] lg:py-[110px]"
       style={{ background: "linear-gradient(180deg, #0c0f07 0%, #111408 50%, #0c0f07 100%)" }}
     >
       <div
