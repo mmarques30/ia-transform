@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { BgDobra } from "@/components/BgDobra";
 import { Hero } from "@/components/sections/business/variantA/Hero";
 import { Problem } from "@/components/sections/business/variantA/Problem";
+import { Comparison } from "@/components/sections/business/variantA/Comparison";
 import { MetodoAplicaBook } from "@/components/sections/business/variantA/MetodoAplicaBook";
 import { AppShowcase } from "@/components/sections/business/variantA/AppShowcase";
 import { MentorMari } from "@/components/sections/business/variantA/MentorMari";
@@ -68,6 +69,8 @@ function BusinessLanding() {
         <BgDobra intensity="media">
           <Problem />
         </BgDobra>
+
+        <Comparison />
 
         <Testimonials />
 
