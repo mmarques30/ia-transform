@@ -2606,7 +2606,7 @@
   margin: 0 auto;
   padding: clamp(120px, 18vh, 220px) 32px 60px;
   display: grid;
-  grid-template-columns: 1fr minmax(280px, 340px);
+  grid-template-columns: 1fr minmax(340px, 420px);
   gap: 40px;
   align-items: start;
   overflow: visible;
@@ -2651,7 +2651,7 @@
 .hero-b-form-col {
   min-width: 0;
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
 }
 /* Cap absoluto no wrapper do HeroForm dentro do hero — o form nunca
    passa de 460px, mesmo se a col crescer em telas largas. Assim ele
@@ -2695,6 +2695,7 @@
 }
 .hero-b-sub {
   margin-top: 20px;
+  max-width: 38ch;
   font-family: "Instrument Serif", serif;
   font-style: italic;
   font-size: clamp(20px, 1.7vw, 26px);
@@ -2716,7 +2717,7 @@
     white-space: normal;
   }
   .hero-b {
-    grid-template-columns: 1fr minmax(260px, 300px);
+    grid-template-columns: 1fr minmax(300px, 380px);
     gap: 32px;
     padding-left: 24px;
     padding-right: 24px;
