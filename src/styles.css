@@ -3599,3 +3599,100 @@ select.lead-input option {
 @media (max-width: 900px) {
   .lead-sep { padding: 0 24px; }
 }
+
+/* ── Team carousel ─────────────────────────────────── */
+.team-carousel-wrapper {
+  position: relative;
+}
+.team-carousel-track {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 0 max(1.5rem, calc((100vw - 1200px) / 2 + 1.5rem));
+}
+.team-carousel-track::-webkit-scrollbar { display: none; }
+
+.team-card {
+  flex: 0 0 320px;
+  scroll-snap-align: start;
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  transition: border-color 0.3s;
+}
+.team-card:hover {
+  border-color: rgba(200,224,64,0.3);
+}
+
+.team-card-photo {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: #111408;
+}
+.team-card-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.team-card-info {
+  padding: 20px 22px 24px;
+}
+.team-card-name {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--color-foreground);
+  line-height: 1.2;
+}
+.team-card-role {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-primary);
+  font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+.team-card-bio {
+  margin-top: 12px;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--color-sage);
+}
+
+.team-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(12,15,7,0.85);
+  border: 1px solid rgba(200,224,64,0.3);
+  color: var(--color-primary);
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: opacity 0.25s, background 0.2s;
+  z-index: 2;
+}
+.team-arrow:hover {
+  background: rgba(200,224,64,0.12);
+}
+.team-arrow-prev { left: max(0.75rem, calc((100vw - 1200px) / 2)); }
+.team-arrow-next { right: max(0.75rem, calc((100vw - 1200px) / 2)); }
+
+@media (max-width: 767px) {
+  .team-card { flex: 0 0 280px; }
+  .team-carousel-track { gap: 14px; padding: 0 1.25rem; }
+  .team-arrow { display: none; }
+}

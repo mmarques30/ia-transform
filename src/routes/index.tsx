@@ -5,7 +5,7 @@ import { Problem } from "@/components/sections/business/variantA/Problem";
 import { MetodoAplicaBook } from "@/components/sections/business/variantA/MetodoAplicaBook";
 import { AppShowcase } from "@/components/sections/business/variantA/AppShowcase";
 import { MentorMari } from "@/components/sections/business/variantA/MentorMari";
-import { Guarantee } from "@/components/sections/business/variantA/Guarantee";
+import { Team } from "@/components/sections/business/variantA/Team";
 import { FAQ } from "@/components/sections/business/variantA/FAQ";
 import { Testimonials } from "@/components/sections/business/variantB/Testimonials";
 import { DiagnosticoModalProvider } from "@/components/sections/business/variantB/DiagnosticoModal";
@@ -79,7 +79,7 @@ function BusinessLanding() {
 
         <MentorMari />
 
-        <Guarantee />
+        <Team />
 
         <FAQ />
 
