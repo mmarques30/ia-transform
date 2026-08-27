@@ -173,15 +173,9 @@ export function Testimonials() {
               className="font-extrabold text-[28px] sm:text-[36px] lg:text-[42px] leading-[1.08] tracking-[-0.02em] uppercase"
               style={{ textWrap: "balance", color: "var(--color-primary)" }}
             >
-              Quem já saiu <span className="text-foreground">do operacional</span>
+              Mais de 50 empresas já possuem{" "}
+              <span className="text-foreground">sistemas personalizados</span>
             </h2>
-          </Reveal>
-          <Reveal delay={0.05}>
-            <p className="mt-5 text-[15.5px] text-sage leading-[1.6] max-w-[560px] mx-auto">
-              Empresas de{" "}
-              <strong className="text-foreground font-bold">serviço, produto e indústria</strong>.
-              Todas com o mesmo padrão de problema. Todas com o mesmo resultado.
-            </p>
           </Reveal>
         </div>
 
