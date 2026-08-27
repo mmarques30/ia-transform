@@ -17,15 +17,11 @@ export function Problem() {
               className="font-extrabold text-[28px] sm:text-[36px] lg:text-[46px] leading-[1.08] tracking-[-0.02em]"
               style={{ textWrap: "balance" }}
             >
-              <em
-                style={{
-                  fontFamily: '"Instrument Serif", serif',
-                  fontWeight: 500,
-                  color: "var(--color-primary)",
-                }}
+              <span
+                style={{ color: "var(--color-primary)" }}
               >
                 O sistema que libera a operação
-              </em>{" "}
+              </span>{" "}
               <span className="text-foreground">e escala a receita.</span>
             </h2>
           </Reveal>

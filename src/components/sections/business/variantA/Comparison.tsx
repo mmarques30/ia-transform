@@ -39,15 +39,11 @@ export function Comparison() {
               className="font-extrabold text-[26px] sm:text-[34px] lg:text-[42px] leading-[1.08] tracking-[-0.02em]"
               style={{ textWrap: "balance" }}
             >
-              <em
-                style={{
-                  fontFamily: '"Instrument Serif", serif',
-                  fontWeight: 500,
-                  color: "var(--color-primary)",
-                }}
+              <span
+                style={{ color: "var(--color-primary)" }}
               >
                 As empresas que mais escalam hoje
-              </em>{" "}
+              </span>{" "}
               <span className="text-foreground">
                 são as que automatizam a operação antes de contratar mais gente.
               </span>
