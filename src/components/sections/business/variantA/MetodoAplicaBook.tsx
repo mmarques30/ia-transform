@@ -65,15 +65,11 @@ export function MetodoAplicaBook() {
               style={{ textWrap: "balance" }}
             >
               Um diagnóstico. Um sistema.{" "}
-              <em
-                style={{
-                  fontFamily: '"Instrument Serif", serif',
-                  color: "var(--color-primary)",
-                  fontWeight: 500,
-                }}
+              <span
+                style={{ color: "var(--color-primary)" }}
               >
                 90 dias.
-              </em>
+              </span>
             </h2>
           </Reveal>
 

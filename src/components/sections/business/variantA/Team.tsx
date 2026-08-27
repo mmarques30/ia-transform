@@ -134,15 +134,11 @@ export function Team() {
               style={{ textWrap: "balance" }}
             >
               Seu novo{" "}
-              <em
-                style={{
-                  fontFamily: '"Instrument Serif", serif',
-                  color: "var(--color-primary)",
-                  fontWeight: 500,
-                }}
+              <span
+                style={{ color: "var(--color-primary)" }}
               >
                 Time.
-              </em>
+              </span>
             </h2>
           </Reveal>
 

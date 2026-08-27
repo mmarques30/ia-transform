@@ -46,15 +46,11 @@ export function FAQ() {
               style={{ textWrap: "balance" }}
             >
               Tire suas{" "}
-              <em
-                style={{
-                  fontFamily: '"Instrument Serif", serif',
-                  color: "var(--color-primary)",
-                  fontWeight: 500,
-                }}
+              <span
+                style={{ color: "var(--color-primary)" }}
               >
                 Dúvidas
-              </em>
+              </span>
             </h2>
           </Reveal>
 
