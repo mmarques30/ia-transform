@@ -2,32 +2,6 @@ import { Reveal } from "@/components/Reveal";
 import { OriginButton } from "@/components/ui/origin-button";
 import { PainelClientesShowcase } from "@/components/sections/business/variantB/painel/PainelClientesShowcase";
 
-interface CompareCard {
-  eyebrow: string;
-  title: string;
-  detail: string;
-  highlight?: boolean;
-}
-
-const CARDS: CompareCard[] = [
-  {
-    eyebrow: "ERP",
-    title: "Feito pra padronizar",
-    detail: "Foi projetado para operações padrão. A sua não é.",
-  },
-  {
-    eyebrow: "Consultoria",
-    title: "Entrega diagnóstico",
-    detail: "Você ainda precisa implementar. O slide não roda sozinho.",
-  },
-  {
-    eyebrow: "IAplicada",
-    title: "Software com IA que roda",
-    detail: "Na sua operação, do jeito que ela funciona. Construído, implementado e funcionando.",
-    highlight: true,
-  },
-];
-
 export function MetodoAplicaBook() {
   return (
     <section
@@ -80,13 +54,11 @@ export function MetodoAplicaBook() {
           </Reveal>
         </div>
 
-        <div className="mt-12 lg:mt-16 grid md:grid-cols-3 gap-5 lg:gap-6 max-w-[1000px] mx-auto">
-          {CARDS.map((card, i) => (
-            <Reveal key={card.eyebrow} delay={0.1 + i * 0.08}>
-              <CompareCardComponent card={card} />
-            </Reveal>
-          ))}
-        </div>
+        <Reveal delay={0.12}>
+          <div className="mt-12 lg:mt-16 max-w-[960px] mx-auto">
+            <ComparisonTable />
+          </div>
+        </Reveal>
 
         <div className="mt-16 lg:mt-20 max-w-[820px] mx-auto text-center">
           <Reveal delay={0.3}>
@@ -120,35 +92,91 @@ export function MetodoAplicaBook() {
   );
 }
 
-function CompareCardComponent({ card }: { card: CompareCard }) {
+function ComparisonTable() {
   return (
     <div
-      className="rounded-[16px] px-6 py-7 lg:px-7 lg:py-8 h-full flex flex-col"
+      className="rounded-[20px] overflow-hidden"
       style={{
-        background: card.highlight
-          ? "linear-gradient(160deg, rgba(200,224,64,0.12) 0%, rgba(200,224,64,0.04) 100%)"
-          : "rgba(255,255,255,0.03)",
-        border: card.highlight
-          ? "1.5px solid rgba(200,224,64,0.4)"
-          : "1px solid rgba(255,255,255,0.06)",
+        border: "1px solid rgba(255,255,255,0.08)",
+        background: "rgba(255,255,255,0.02)",
       }}
     >
-      <span
-        className="text-[10px] uppercase tracking-[0.2em] font-bold"
-        style={{
-          color: card.highlight ? "var(--color-primary)" : "rgba(255,255,255,0.4)",
-          fontFamily: '"JetBrains Mono", ui-monospace, Menlo, monospace',
-        }}
-      >
-        {card.eyebrow}
-      </span>
-      <h3
-        className="mt-3 text-[18px] lg:text-[20px] font-extrabold leading-[1.15] tracking-[-0.01em]"
-        style={{ color: card.highlight ? "var(--color-primary)" : "var(--color-foreground)" }}
-      >
-        {card.title}
-      </h3>
-      <p className="mt-3 text-[13.5px] lg:text-[14.5px] text-sage leading-[1.55]">{card.detail}</p>
+      {/* Header row */}
+      <div className="metodo-table-row metodo-table-header">
+        <div className="metodo-table-cell metodo-table-label" />
+        <div className="metodo-table-cell metodo-table-neg">
+          <span className="metodo-table-icon">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M5 5L13 13M13 5L5 13" stroke="rgba(255,100,100,0.7)" strokeWidth="1.8" strokeLinecap="round" />
+            </svg>
+          </span>
+          <span className="metodo-table-eyebrow" style={{ color: "rgba(255,100,100,0.6)" }}>ERP</span>
+        </div>
+        <div className="metodo-table-cell metodo-table-neg">
+          <span className="metodo-table-icon">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M5 5L13 13M13 5L5 13" stroke="rgba(255,100,100,0.7)" strokeWidth="1.8" strokeLinecap="round" />
+            </svg>
+          </span>
+          <span className="metodo-table-eyebrow" style={{ color: "rgba(255,100,100,0.6)" }}>Consultoria</span>
+        </div>
+        <div className="metodo-table-cell metodo-table-pos">
+          <span className="metodo-table-icon">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M4 9.5L7.5 13L14 5.5" stroke="var(--color-primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </span>
+          <span className="metodo-table-eyebrow" style={{ color: "var(--color-primary)" }}>IAplicada</span>
+        </div>
+      </div>
+
+      {/* Row: Proposta */}
+      <div className="metodo-table-row">
+        <div className="metodo-table-cell metodo-table-label">
+          <span className="metodo-table-label-text">Proposta</span>
+        </div>
+        <div className="metodo-table-cell metodo-table-neg">
+          <span className="metodo-table-value-neg">Feito pra padronizar</span>
+        </div>
+        <div className="metodo-table-cell metodo-table-neg">
+          <span className="metodo-table-value-neg">Entrega diagnóstico</span>
+        </div>
+        <div className="metodo-table-cell metodo-table-pos">
+          <span className="metodo-table-value-pos">Software com IA que roda</span>
+        </div>
+      </div>
+
+      {/* Row: Realidade */}
+      <div className="metodo-table-row">
+        <div className="metodo-table-cell metodo-table-label">
+          <span className="metodo-table-label-text">Realidade</span>
+        </div>
+        <div className="metodo-table-cell metodo-table-neg">
+          <span className="metodo-table-value-neg">Foi projetado para operações padrão. A sua não é.</span>
+        </div>
+        <div className="metodo-table-cell metodo-table-neg">
+          <span className="metodo-table-value-neg">Você ainda precisa implementar. O slide não roda sozinho.</span>
+        </div>
+        <div className="metodo-table-cell metodo-table-pos">
+          <span className="metodo-table-value-pos">Na sua operação, do jeito que ela funciona. Construído, implementado e funcionando.</span>
+        </div>
+      </div>
+
+      {/* Row: Resultado */}
+      <div className="metodo-table-row metodo-table-footer">
+        <div className="metodo-table-cell metodo-table-label">
+          <span className="metodo-table-label-text">Resultado</span>
+        </div>
+        <div className="metodo-table-cell metodo-table-neg">
+          <span className="metodo-table-verdict-neg">Você se adapta ao software</span>
+        </div>
+        <div className="metodo-table-cell metodo-table-neg">
+          <span className="metodo-table-verdict-neg">Slide bonito, execução zero</span>
+        </div>
+        <div className="metodo-table-cell metodo-table-pos">
+          <span className="metodo-table-verdict-pos">Sistema rodando em 30 dias</span>
+        </div>
+      </div>
     </div>
   );
 }
