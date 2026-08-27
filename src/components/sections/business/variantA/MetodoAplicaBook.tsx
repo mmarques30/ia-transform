@@ -55,18 +55,12 @@ export function MetodoAplicaBook() {
         </div>
 
         <Reveal delay={0.12}>
-          <div className="mt-8 flex justify-center">
-            <FlowArrow />
-          </div>
-        </Reveal>
-
-        <Reveal delay={0.18}>
-          <div className="mt-6 max-w-[720px] mx-auto">
+          <div className="mt-10 max-w-[720px] mx-auto">
             <PainelClientesShowcase />
           </div>
         </Reveal>
 
-        <Reveal delay={0.25}>
+        <Reveal delay={0.18}>
           <div className="mt-12 text-center">
             <OriginButton onClick={() => document.getElementById("top")?.scrollIntoView({ behavior: "smooth" })}>
               quero meu sistema
@@ -78,24 +72,3 @@ export function MetodoAplicaBook() {
   );
 }
 
-function FlowArrow() {
-  return (
-    <div className="flex flex-col items-center gap-0" aria-hidden>
-      <div
-        className="w-px h-[40px]"
-        style={{
-          background: "linear-gradient(to bottom, transparent, var(--color-primary))",
-        }}
-      />
-      <svg width="16" height="10" viewBox="0 0 16 10" fill="none">
-        <path
-          d="M1 1L8 8L15 1"
-          stroke="var(--color-primary)"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
-    </div>
-  );
-}
