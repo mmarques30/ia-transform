@@ -5,10 +5,9 @@ const IAPLogo3D = lazy(
 );
 
 const BULLETS: string[] = [
-  "Mariana Marques · Fundadora da IAplicada",
-  "+5 anos automatizando operações",
-  "+50 sistemas implementados",
-  "Referência em IA aplicada para crescimento sem contratação",
+  "Mariana Marques é a nossa fundadora e atuou por 11 anos como executiva em empresas como Mercado Livre, Suzano e Anglo Gold, liderando frentes de transformação digital para +20 operações.",
+  "Nosso time técnico usa a metodologia APLICA todos os dias, a mesma que implementamos nas empresas.",
+  "+50 sistemas implementados, no Brasil, França e Angola.",
 ];
 
 export function MentorMari() {
@@ -70,7 +69,7 @@ function MentorItem({ children }: { children: React.ReactNode }) {
         className="inline-block h-2 w-2 rounded-full mt-2"
         style={{ border: "1.5px solid var(--color-primary)" }}
       />
-      <span className="whitespace-nowrap overflow-hidden text-ellipsis">{children}</span>
+      <span>{children}</span>
     </li>
   );
 }
