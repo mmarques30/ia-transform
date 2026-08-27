@@ -1,6 +1,6 @@
 import { Reveal } from "@/components/Reveal";
 import { OriginButton } from "@/components/ui/origin-button";
-
+import { PainelClientesShowcase } from "@/components/sections/business/variantB/painel/PainelClientesShowcase";
 
 interface CompareCard {
   eyebrow: string;
@@ -65,10 +65,8 @@ export function MetodoAplicaBook() {
               style={{ textWrap: "balance" }}
             >
               Um diagnóstico. Um sistema.{" "}
-              <span
-                style={{ color: "var(--color-primary)" }}
-              >
-                90 dias.
+              <span style={{ color: "var(--color-primary)" }}>
+                30 dias para o primeiro resultado.
               </span>
             </h2>
           </Reveal>
@@ -76,8 +74,8 @@ export function MetodoAplicaBook() {
           <Reveal delay={0.08}>
             <p className="mt-5 text-[15px] lg:text-[16.5px] text-sage leading-[1.6] max-w-[640px] mx-auto">
               O Método <strong className="text-foreground font-bold">APLICA</strong> identifica onde
-              sua operação sangra, constrói o sistema que para o sangramento e implementa dentro do
-              seu negócio em 90 dias, com marcos semanais, sem depender de você para funcionar.
+              sua operação trava, constrói o sistema que resolve e implementa dentro do seu negócio.
+              Sem ERP engessado. Sem consultoria que some depois da apresentação.
             </p>
           </Reveal>
         </div>
@@ -90,8 +88,32 @@ export function MetodoAplicaBook() {
           ))}
         </div>
 
+        <div className="mt-16 lg:mt-20 max-w-[820px] mx-auto text-center">
+          <Reveal delay={0.3}>
+            <h3
+              className="font-extrabold text-[24px] sm:text-[30px] lg:text-[36px] leading-[1.1] tracking-[-0.02em] text-foreground"
+              style={{ textWrap: "balance" }}
+            >
+              Sua operação roda. Seu time entrega.{" "}
+              <span style={{ color: "var(--color-primary)" }}>
+                Você acompanha tudo sem estar no meio de tudo.
+              </span>
+            </h3>
+          </Reveal>
+        </div>
+
         <Reveal delay={0.35}>
-          <MetodoCta />
+          <div className="mt-10 max-w-[720px] mx-auto">
+            <PainelClientesShowcase />
+          </div>
+        </Reveal>
+
+        <Reveal delay={0.4}>
+          <div className="mt-12 text-center">
+            <OriginButton onClick={() => document.getElementById("top")?.scrollIntoView({ behavior: "smooth" })}>
+              quero meu sistema
+            </OriginButton>
+          </div>
         </Reveal>
       </div>
     </section>
@@ -127,16 +149,6 @@ function CompareCardComponent({ card }: { card: CompareCard }) {
         {card.title}
       </h3>
       <p className="mt-3 text-[13.5px] lg:text-[14.5px] text-sage leading-[1.55]">{card.detail}</p>
-    </div>
-  );
-}
-
-function MetodoCta() {
-  return (
-    <div className="mt-10 lg:mt-12 text-center">
-      <OriginButton onClick={() => document.getElementById("top")?.scrollIntoView({ behavior: "smooth" })}>
-        quero meu diagnóstico
-      </OriginButton>
     </div>
   );
 }
