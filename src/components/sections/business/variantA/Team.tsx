@@ -48,61 +48,90 @@ export function Team() {
   const trackRef = useRef<HTMLDivElement>(null);
   const [current, setCurrent] = useState(0);
   const total = TEAM.length;
+  const isTransitioning = useRef(false);
 
-  const scrollToIndex = useCallback(
-    (index: number) => {
+  const getCardWidth = useCallback(() => {
+    const el = trackRef.current;
+    if (!el) return 340;
+    const card = el.querySelector<HTMLElement>(".team-card");
+    if (!card) return 340;
+    return card.offsetWidth + 20;
+  }, []);
+
+  useEffect(() => {
+    const el = trackRef.current;
+    if (!el) return;
+    const cardWidth = getCardWidth();
+    el.scrollLeft = cardWidth * total;
+  }, [total, getCardWidth]);
+
+  const scrollToPosition = useCallback(
+    (index: number, smooth: boolean) => {
       const el = trackRef.current;
       if (!el) return;
-      const cards = el.querySelectorAll<HTMLElement>(".team-card");
-      if (!cards.length) return;
-
-      const wrappedIndex = ((index % total) + total) % total;
-      setCurrent(wrappedIndex);
-
-      const target = cards[wrappedIndex];
-      if (!target) return;
-
-      const trackRect = el.getBoundingClientRect();
-      const cardRect = target.getBoundingClientRect();
-      const scrollTarget = el.scrollLeft + (cardRect.left - trackRect.left) -
-        parseFloat(getComputedStyle(el).paddingLeft);
-
-      el.scrollTo({ left: scrollTarget, behavior: "smooth" });
+      const cardWidth = getCardWidth();
+      const targetScroll = cardWidth * (total + index);
+      el.scrollTo({ left: targetScroll, behavior: smooth ? "smooth" : "instant" });
     },
-    [total],
+    [total, getCardWidth],
   );
 
   const goNext = useCallback(() => {
-    scrollToIndex(current + 1);
-  }, [current, scrollToIndex]);
+    if (isTransitioning.current) return;
+    isTransitioning.current = true;
+    const next = (current + 1) % total;
+    setCurrent(next);
+    scrollToPosition(next, true);
+    setTimeout(() => { isTransitioning.current = false; }, 400);
+  }, [current, total, scrollToPosition]);
 
   const goPrev = useCallback(() => {
-    scrollToIndex(current - 1);
-  }, [current, scrollToIndex]);
+    if (isTransitioning.current) return;
+    isTransitioning.current = true;
+    const prev = (current - 1 + total) % total;
+    setCurrent(prev);
+    scrollToPosition(prev, true);
+    setTimeout(() => { isTransitioning.current = false; }, 400);
+  }, [current, total, scrollToPosition]);
+
+  const goTo = useCallback(
+    (index: number) => {
+      if (isTransitioning.current) return;
+      isTransitioning.current = true;
+      setCurrent(index);
+      scrollToPosition(index, true);
+      setTimeout(() => { isTransitioning.current = false; }, 400);
+    },
+    [scrollToPosition],
+  );
 
   useEffect(() => {
     const el = trackRef.current;
     if (!el) return;
 
+    const handleScrollEnd = () => {
+      if (isTransitioning.current) return;
+      const cardWidth = getCardWidth();
+      const scrollLeft = el.scrollLeft;
+      const minBound = cardWidth * 0.5;
+      const maxBound = cardWidth * (total * 2 + 0.5);
+
+      if (scrollLeft < minBound) {
+        el.scrollTo({ left: scrollLeft + cardWidth * total, behavior: "instant" });
+      } else if (scrollLeft > maxBound) {
+        el.scrollTo({ left: scrollLeft - cardWidth * total, behavior: "instant" });
+      }
+
+      const offset = scrollLeft - cardWidth * total;
+      const idx = Math.round(offset / cardWidth);
+      const wrapped = ((idx % total) + total) % total;
+      setCurrent(wrapped);
+    };
+
     let timeout: ReturnType<typeof setTimeout>;
     const handleScroll = () => {
       clearTimeout(timeout);
-      timeout = setTimeout(() => {
-        const cards = el.querySelectorAll<HTMLElement>(".team-card");
-        if (!cards.length) return;
-        const trackLeft = el.getBoundingClientRect().left;
-        const padLeft = parseFloat(getComputedStyle(el).paddingLeft);
-        let closest = 0;
-        let minDist = Infinity;
-        cards.forEach((card, i) => {
-          const dist = Math.abs(card.getBoundingClientRect().left - trackLeft - padLeft);
-          if (dist < minDist) {
-            minDist = dist;
-            closest = i;
-          }
-        });
-        setCurrent(closest);
-      }, 100);
+      timeout = setTimeout(handleScrollEnd, 120);
     };
 
     el.addEventListener("scroll", handleScroll, { passive: true });
@@ -110,7 +139,9 @@ export function Team() {
       el.removeEventListener("scroll", handleScroll);
       clearTimeout(timeout);
     };
-  }, []);
+  }, [total, getCardWidth]);
+
+  const tripled = [...TEAM, ...TEAM, ...TEAM];
 
   return (
     <section
@@ -153,8 +184,8 @@ export function Team() {
         <Reveal delay={0.15}>
           <div className="team-carousel-wrapper">
             <div className="team-carousel-track" ref={trackRef}>
-              {TEAM.map((member) => (
-                <TeamCard key={member.name} member={member} />
+              {tripled.map((member, i) => (
+                <TeamCard key={`${member.name}-${i}`} member={member} />
               ))}
             </div>
 
@@ -182,7 +213,7 @@ export function Team() {
                 <button
                   key={i}
                   className={`team-dot${i === current ? " team-dot-active" : ""}`}
-                  onClick={() => scrollToIndex(i)}
+                  onClick={() => goTo(i)}
                   aria-label={`Ir para ${TEAM[i].name}`}
                 />
               ))}
