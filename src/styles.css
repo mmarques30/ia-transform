@@ -3697,6 +3697,31 @@ select.lead-input option {
 .team-arrow-prev { left: max(0.75rem, calc((100vw - 1200px) / 2)); }
 .team-arrow-next { right: max(0.75rem, calc((100vw - 1200px) / 2)); }
 
+/* Dot indicators */
+.team-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 24px;
+}
+.team-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(200,224,64,0.2);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: background 0.25s, transform 0.25s;
+}
+.team-dot:hover {
+  background: rgba(200,224,64,0.4);
+}
+.team-dot-active {
+  background: var(--color-primary);
+  transform: scale(1.25);
+}
+
 @media (max-width: 767px) {
   .team-card { flex: 0 0 280px; }
   .team-carousel-track { gap: 14px; padding: 0 1.25rem; }

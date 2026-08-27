@@ -1,4 +1,4 @@
-import { useRef, useState, useCallback, useEffect } from "react";
+import { useRef, useCallback, useEffect, useState } from "react";
 import { Reveal } from "@/components/Reveal";
 import { OriginButton } from "@/components/ui/origin-button";
 
@@ -46,35 +46,71 @@ const TEAM: TeamMember[] = [
 
 export function Team() {
   const trackRef = useRef<HTMLDivElement>(null);
-  const [canPrev, setCanPrev] = useState(false);
-  const [canNext, setCanNext] = useState(true);
+  const [current, setCurrent] = useState(0);
+  const total = TEAM.length;
 
-  const updateArrows = useCallback(() => {
-    const el = trackRef.current;
-    if (!el) return;
-    setCanPrev(el.scrollLeft > 4);
-    setCanNext(el.scrollLeft < el.scrollWidth - el.clientWidth - 4);
-  }, []);
+  const scrollToIndex = useCallback(
+    (index: number) => {
+      const el = trackRef.current;
+      if (!el) return;
+      const cards = el.querySelectorAll<HTMLElement>(".team-card");
+      if (!cards.length) return;
+
+      const wrappedIndex = ((index % total) + total) % total;
+      setCurrent(wrappedIndex);
+
+      const target = cards[wrappedIndex];
+      if (!target) return;
+
+      const trackRect = el.getBoundingClientRect();
+      const cardRect = target.getBoundingClientRect();
+      const scrollTarget = el.scrollLeft + (cardRect.left - trackRect.left) -
+        parseFloat(getComputedStyle(el).paddingLeft);
+
+      el.scrollTo({ left: scrollTarget, behavior: "smooth" });
+    },
+    [total],
+  );
+
+  const goNext = useCallback(() => {
+    scrollToIndex(current + 1);
+  }, [current, scrollToIndex]);
+
+  const goPrev = useCallback(() => {
+    scrollToIndex(current - 1);
+  }, [current, scrollToIndex]);
 
   useEffect(() => {
     const el = trackRef.current;
     if (!el) return;
-    updateArrows();
-    el.addEventListener("scroll", updateArrows, { passive: true });
-    window.addEventListener("resize", updateArrows);
-    return () => {
-      el.removeEventListener("scroll", updateArrows);
-      window.removeEventListener("resize", updateArrows);
-    };
-  }, [updateArrows]);
 
-  const scroll = (dir: 1 | -1) => {
-    const el = trackRef.current;
-    if (!el) return;
-    const card = el.querySelector(".team-card") as HTMLElement | null;
-    const step = card ? card.offsetWidth + 20 : 340;
-    el.scrollBy({ left: dir * step, behavior: "smooth" });
-  };
+    let timeout: ReturnType<typeof setTimeout>;
+    const handleScroll = () => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        const cards = el.querySelectorAll<HTMLElement>(".team-card");
+        if (!cards.length) return;
+        const trackLeft = el.getBoundingClientRect().left;
+        const padLeft = parseFloat(getComputedStyle(el).paddingLeft);
+        let closest = 0;
+        let minDist = Infinity;
+        cards.forEach((card, i) => {
+          const dist = Math.abs(card.getBoundingClientRect().left - trackLeft - padLeft);
+          if (dist < minDist) {
+            minDist = dist;
+            closest = i;
+          }
+        });
+        setCurrent(closest);
+      }, 100);
+    };
+
+    el.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      el.removeEventListener("scroll", handleScroll);
+      clearTimeout(timeout);
+    };
+  }, []);
 
   return (
     <section
@@ -142,9 +178,8 @@ export function Team() {
 
             <button
               className="team-arrow team-arrow-prev"
-              onClick={() => scroll(-1)}
+              onClick={goPrev}
               aria-label="Anterior"
-              style={{ opacity: canPrev ? 1 : 0, pointerEvents: canPrev ? "auto" : "none" }}
             >
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                 <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -152,14 +187,24 @@ export function Team() {
             </button>
             <button
               className="team-arrow team-arrow-next"
-              onClick={() => scroll(1)}
+              onClick={goNext}
               aria-label="Próximo"
-              style={{ opacity: canNext ? 1 : 0, pointerEvents: canNext ? "auto" : "none" }}
             >
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                 <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </button>
+
+            <div className="team-dots">
+              {TEAM.map((_, i) => (
+                <button
+                  key={i}
+                  className={`team-dot${i === current ? " team-dot-active" : ""}`}
+                  onClick={() => scrollToIndex(i)}
+                  aria-label={`Ir para ${TEAM[i].name}`}
+                />
+              ))}
+            </div>
           </div>
         </Reveal>
 
