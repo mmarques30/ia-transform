@@ -32,7 +32,7 @@ export function Problem() {
 
           <Reveal delay={0.05}>
             <p className="mt-5 text-[15px] lg:text-[17px] text-sage leading-[1.6] max-w-[560px] mx-auto">
-              O mesmo que já entregamos em mais de 40 empresas no Brasil e fora do país.
+              O mesmo que já entregamos em mais de 50 empresas no Brasil e fora do país.
             </p>
           </Reveal>
 

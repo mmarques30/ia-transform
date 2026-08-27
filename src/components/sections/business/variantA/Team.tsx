@@ -129,25 +129,11 @@ export function Team() {
       <div className="relative">
         <div className="container-page text-center mb-10 lg:mb-14">
           <Reveal>
-            <span
-              className="inline-block px-3.5 py-1.5 rounded-full text-[11px] tracking-[0.2em] uppercase font-bold"
-              style={{
-                border: "1px solid rgba(200,224,64,0.4)",
-                background: "rgba(200,224,64,0.06)",
-                color: "var(--color-primary)",
-                fontFamily: '"JetBrains Mono", ui-monospace, Menlo, monospace',
-              }}
-            >
-              Seu novo time
-            </span>
-          </Reveal>
-
-          <Reveal delay={0.05}>
             <h2
-              className="mt-5 font-extrabold text-[30px] sm:text-[36px] lg:text-[42px] leading-[1.05] tracking-[-0.025em] text-foreground"
+              className="font-extrabold text-[30px] sm:text-[36px] lg:text-[42px] leading-[1.05] tracking-[-0.025em] text-foreground"
               style={{ textWrap: "balance" }}
             >
-              Quem vai construir{" "}
+              Seu novo{" "}
               <em
                 style={{
                   fontFamily: '"Instrument Serif", serif',
@@ -155,7 +141,7 @@ export function Team() {
                   fontWeight: 500,
                 }}
               >
-                o seu sistema.
+                Time.
               </em>
             </h2>
           </Reveal>
