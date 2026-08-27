@@ -7,6 +7,7 @@ interface TeamMember {
   role: string;
   photo: string;
   bio: string;
+  photoPosition?: string;
 }
 
 const TEAM: TeamMember[] = [
@@ -14,6 +15,7 @@ const TEAM: TeamMember[] = [
     name: "Mariana Marques",
     role: "Founder & CEO",
     photo: "/brand/mariana-marques.jpg",
+    photoPosition: "center 40%",
     bio: "11 anos como executiva em Mercado Livre, Suzano e AngloGold, liderando mais de 40 frentes de transformação digital na América Latina. Fundou a IAplicada para entregar o que viu funcionar em empresa grande — adaptado para o tamanho e o processo de quem está crescendo agora. Criou a metodologia APLICA e lidera cada projeto do diagnóstico à implementação.",
   },
   {
@@ -182,6 +184,7 @@ function TeamCard({ member }: { member: TeamMember }) {
           alt={member.name}
           loading="lazy"
           decoding="async"
+          style={member.photoPosition ? { objectPosition: member.photoPosition } : undefined}
         />
       </div>
       <div className="team-card-info">
