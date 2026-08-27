@@ -1,6 +1,6 @@
 import { Reveal } from "@/components/Reveal";
 import { OriginButton } from "@/components/ui/origin-button";
-import { useDiagnosticoModal } from "@/components/sections/business/variantB/DiagnosticoModal";
+
 
 export function Guarantee() {
   return (
@@ -100,10 +100,9 @@ export function Guarantee() {
 }
 
 function GuaranteeCta() {
-  const modal = useDiagnosticoModal();
   return (
     <div className="mt-10 text-center">
-      <OriginButton onClick={modal?.openModal}>
+      <OriginButton onClick={() => document.getElementById("top")?.scrollIntoView({ behavior: "smooth" })}>
         quero meu diagnóstico
       </OriginButton>
     </div>

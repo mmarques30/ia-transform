@@ -1,6 +1,6 @@
 import { Reveal } from "@/components/Reveal";
 import { OriginButton } from "@/components/ui/origin-button";
-import { useDiagnosticoModal } from "@/components/sections/business/variantB/DiagnosticoModal";
+
 import { PainelClientesShowcase } from "@/components/sections/business/variantB/painel/PainelClientesShowcase";
 
 /**
@@ -71,10 +71,9 @@ export function AppShowcase() {
 }
 
 function AppShowcaseCta() {
-  const modal = useDiagnosticoModal();
   return (
     <div className="mt-12 text-center">
-      <OriginButton onClick={modal?.openModal}>
+      <OriginButton onClick={() => document.getElementById("top")?.scrollIntoView({ behavior: "smooth" })}>
         quero meu sistema
       </OriginButton>
     </div>
