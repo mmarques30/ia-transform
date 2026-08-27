@@ -1,17 +1,8 @@
-import { FOUNDER } from "@/config/brand";
+import { lazy, Suspense } from "react";
 
-/**
- * MentorMari (LP-A) — mesma estrutura da /businessv2, copy própria.
- *
- * Copy adaptada pro ângulo LP-A ("crescimento sem contratação"):
- *  - Eyebrow "Quem lidera a IAplicada"
- *  - H2 "Quem mapeia, constrói e implementa dentro da sua empresa."
- *  - 4 credenciais focadas em automação de PME + IA aplicada
- *  - Parágrafo "não entregamos recomendação, entregamos sistema
- *    rodando" — o diagnóstico continua sendo com a IAplicada (não
- *    "com a Mari"), decisão de posicionamento time-first.
- *  - CTA "Agendar diagnóstico com a IAplicada"
- */
+const IAPLogo3D = lazy(
+  () => import("@/components/sections/business/lead/IAPLogo3D").then((m) => ({ default: m.IAPLogo3D }))
+);
 
 const BULLETS: string[] = [
   "Mariana Marques · Fundadora da IAplicada",
@@ -25,20 +16,10 @@ export function MentorMari() {
     <section id="mentora" className="relative">
       <div className="section-veil">
         <div className="founder-section">
-          <div className="founder-photo-col">
-            <img
-              src={FOUNDER.photoSrc}
-              alt={FOUNDER.name}
-              loading="lazy"
-              decoding="async"
-              className="founder-photo"
-              onError={(e) => {
-                const img = e.currentTarget;
-                if (FOUNDER.photoFallback && img.src.includes(FOUNDER.photoSrc.split("/").pop()!)) {
-                  img.src = FOUNDER.photoFallback;
-                }
-              }}
-            />
+          <div className="founder-logo3d-col">
+            <Suspense fallback={null}>
+              <IAPLogo3D width="100%" height="100%" scale={1.6} />
+            </Suspense>
           </div>
 
           <div className="founder-text-col">
