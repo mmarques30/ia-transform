@@ -1,6 +1,6 @@
 import { Reveal } from "@/components/Reveal";
 import { OriginButton } from "@/components/ui/origin-button";
-import { useDiagnosticoModal } from "@/components/sections/business/variantB/DiagnosticoModal";
+
 
 interface CompareCard {
   eyebrow: string;
@@ -136,10 +136,9 @@ function CompareCardComponent({ card }: { card: CompareCard }) {
 }
 
 function MetodoCta() {
-  const modal = useDiagnosticoModal();
   return (
     <div className="mt-10 lg:mt-12 text-center">
-      <OriginButton onClick={modal?.openModal}>
+      <OriginButton onClick={() => document.getElementById("top")?.scrollIntoView({ behavior: "smooth" })}>
         quero meu diagnóstico
       </OriginButton>
     </div>
