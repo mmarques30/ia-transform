@@ -3608,11 +3608,15 @@ select.lead-input option {
 
 /* ── Value Strip ───────────────────────────────────── */
 .value-strip {
+  position: relative;
+  z-index: 10;
   width: 100%;
-  background: rgba(200,224,64,0.07);
-  border-top: 1px solid rgba(200,224,64,0.15);
-  border-bottom: 1px solid rgba(200,224,64,0.15);
-  padding: 18px 0;
+  background: linear-gradient(180deg, rgba(200,224,64,0.10) 0%, rgba(200,224,64,0.04) 100%);
+  border-top: 1px solid rgba(200,224,64,0.20);
+  border-bottom: 1px solid rgba(200,224,64,0.20);
+  padding: 28px 0;
+  margin-top: -160px;
+  backdrop-filter: blur(12px);
   overflow: hidden;
 }
 .value-strip-inner {
@@ -3627,7 +3631,14 @@ select.lead-input option {
 .value-strip-item {
   display: flex;
   align-items: center;
-  gap: 0;
+  gap: 8px;
+}
+.value-strip-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary);
+  flex-shrink: 0;
 }
 .value-strip-text {
   font-size: 13px;
@@ -3641,19 +3652,20 @@ select.lead-input option {
 .value-strip-divider {
   display: inline-block;
   width: 1px;
-  height: 18px;
+  height: 24px;
   background: rgba(200,224,64,0.35);
-  margin: 0 24px;
+  margin: 0 28px;
 }
 @media (max-width: 767px) {
-  .value-strip { padding: 14px 0; }
+  .value-strip { padding: 20px 0; margin-top: -20px; }
   .value-strip-inner {
     flex-wrap: wrap;
     justify-content: center;
-    gap: 8px 0;
+    gap: 12px 0;
   }
+  .value-strip-icon svg { width: 16px; height: 16px; }
   .value-strip-text { font-size: 11px; letter-spacing: 0.1em; }
-  .value-strip-divider { margin: 0 14px; height: 14px; }
+  .value-strip-divider { margin: 0 16px; height: 16px; }
 }
 
 /* ── Team carousel ─────────────────────────────────── */
@@ -3664,7 +3676,6 @@ select.lead-input option {
   display: flex;
   gap: 20px;
   overflow-x: auto;
-  scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
   padding: 0 max(1.5rem, calc((100vw - 1200px) / 2 + 1.5rem));
@@ -3672,8 +3683,7 @@ select.lead-input option {
 .team-carousel-track::-webkit-scrollbar { display: none; }
 
 .team-card {
-  flex: 0 0 clamp(320px, calc(33.333% - 14px), 420px);
-  scroll-snap-align: start;
+  flex: 0 0 320px;
   border-radius: 16px;
   overflow: hidden;
   background: rgba(255,255,255,0.03);
