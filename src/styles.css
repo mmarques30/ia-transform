@@ -2561,7 +2561,7 @@
   background: radial-gradient(120% 90% at 100% 40%, rgba(200, 224, 64, 0.08), transparent 60%);
   min-height: 100vh;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
 }
 
 /* Foto da fundadora — posicionada à direita, atrás do form, com
@@ -2604,11 +2604,11 @@
   width: 100%;
   max-width: 1280px;
   margin: 0 auto;
-  padding: 40px 48px;
+  padding: clamp(80px, 12vh, 140px) 32px 40px;
   display: grid;
-  grid-template-columns: 60fr 34fr;
-  gap: 48px;
-  align-items: center;
+  grid-template-columns: 1fr minmax(280px, 340px);
+  gap: 40px;
+  align-items: start;
   overflow: visible;
 }
 
@@ -2715,25 +2715,33 @@
   .hero-b-h1 {
     white-space: normal;
   }
+  .hero-b {
+    grid-template-columns: 1fr minmax(260px, 300px);
+    gap: 32px;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+  .hero-b-h1 {
+    font-size: clamp(38px, 4.5vw, 54px);
+  }
 }
 @media (max-width: 900px) {
   .hero-b {
     grid-template-columns: 1fr;
     padding: 32px 24px 48px;
     gap: 28px;
-    /* No mobile a section não força 100vh — o conteúdo empilhado
-       naturalmente enche a viewport, forçar min-height forçaria
-       scroll interno estranho. */
     min-height: 0;
   }
   .hero-section-b {
     align-items: stretch;
     min-height: 0;
   }
-  /* Hierarquia mobile forte: título grande e dominante, sub e p
-     bem menores. Ratio h1:sub ~2.5x pra o título "cantar" acima
-     do resto. Line-height 1.05 dá respiro nas 4 linhas italic
-     serif sem cramp. */
+  .hero-b-form-col {
+    justify-content: stretch;
+  }
+  .hero-b-form-col > * {
+    max-width: 100%;
+  }
   .hero-b-h1 {
     margin-top: 28px;
     font-size: clamp(36px, 10vw, 46px);
@@ -3655,6 +3663,9 @@ select.lead-input option {
   height: 24px;
   background: rgba(200,224,64,0.35);
   margin: 0 28px;
+}
+@media (max-width: 900px) {
+  .value-strip { margin-top: -40px; }
 }
 @media (max-width: 767px) {
   .value-strip { padding: 20px 0; margin-top: -20px; }
