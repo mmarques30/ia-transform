@@ -4,7 +4,6 @@ import { Hero } from "@/components/sections/business/variantA/Hero";
 import { Problem } from "@/components/sections/business/variantA/Problem";
 import { Comparison } from "@/components/sections/business/variantA/Comparison";
 import { MetodoAplicaBook } from "@/components/sections/business/variantA/MetodoAplicaBook";
-import { AppShowcase } from "@/components/sections/business/variantA/AppShowcase";
 import { MentorMari } from "@/components/sections/business/variantA/MentorMari";
 import { Team } from "@/components/sections/business/variantA/Team";
 import { ValueStrip } from "@/components/sections/business/variantA/ValueStrip";
@@ -75,13 +74,9 @@ function BusinessLanding() {
 
         <Comparison />
 
+        <MetodoAplicaBook />
+
         <Testimonials />
-
-        <BgDobra intensity="media">
-          <MetodoAplicaBook />
-        </BgDobra>
-
-        <AppShowcase />
 
         <MentorMari />
 
