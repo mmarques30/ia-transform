@@ -3762,7 +3762,7 @@ select.lead-input option {
   border-top: 1px solid rgba(200,224,64,0.20);
   border-bottom: 1px solid rgba(200,224,64,0.20);
   padding: 28px 0;
-  margin-top: -160px;
+  margin-top: clamp(-160px, -18vh, -80px);
   backdrop-filter: blur(12px);
   overflow: hidden;
 }
