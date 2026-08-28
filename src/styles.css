@@ -1953,20 +1953,12 @@
   border-radius: 20px;
   overflow: hidden;
   position: relative;
+  pointer-events: none;
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow:
     0 60px 120px -40px rgba(0, 0, 0, 0.9),
     0 30px 70px -30px var(--iap-glow, rgba(111, 110, 255, 0.4));
   transform: rotateX(1.5deg);
-  transition:
-    transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1),
-    box-shadow 0.7s;
-}
-.iap-stage:hover .iap-device {
-  transform: rotateX(0) translateY(-4px);
-  box-shadow:
-    0 70px 130px -40px rgba(0, 0, 0, 0.9),
-    0 40px 90px -30px var(--iap-glow, rgba(111, 110, 255, 0.4));
 }
 
 .iap-chrome {
@@ -2194,13 +2186,6 @@
   border-radius: 14px;
   padding: 16px 18px;
   backdrop-filter: blur(8px);
-  transition:
-    transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
-    border-color 0.4s;
-}
-.iap-kpi:hover {
-  transform: translateY(-3px);
-  border-color: rgba(255, 255, 255, 0.16);
 }
 .iap-kpi-label {
   font-family: "JetBrains Mono", ui-monospace, monospace;
@@ -2350,10 +2335,6 @@
   margin: 0 -10px;
   border-radius: 11px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  transition: background 0.3s;
-}
-.iap-action:hover {
-  background: rgba(255, 255, 255, 0.04);
 }
 .iap-action:last-child {
   border-bottom: none;
@@ -2404,18 +2385,11 @@
   padding: 7px 14px;
   border-radius: 9px;
   border: none;
-  cursor: pointer;
+  cursor: default;
   font-family: "Schibsted Grotesk", "Inter", sans-serif;
   color: #fff;
   background: linear-gradient(135deg, var(--iap-g1, #4f7cff), var(--iap-g2, #9f6bff));
   box-shadow: 0 8px 20px -6px var(--iap-glow, rgba(111, 110, 255, 0.4));
-  transition:
-    transform 0.25s,
-    box-shadow 0.25s;
-}
-.iap-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 26px -6px var(--iap-glow, rgba(111, 110, 255, 0.4));
 }
 .iap-btn.iap-ghost {
   background: rgba(255, 255, 255, 0.06);
@@ -2424,7 +2398,7 @@
   color: #f2f4f8;
 }
 .iap-btn.iap-ghost:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.06);
 }
 
 .iap-anim {
@@ -3700,10 +3674,6 @@ select.lead-input option {
   overflow: hidden;
   background: rgba(255,255,255,0.03);
   border: 1px solid rgba(255,255,255,0.06);
-  transition: border-color 0.3s;
-}
-.team-card:hover {
-  border-color: rgba(200,224,64,0.3);
 }
 
 .team-card-photo {
