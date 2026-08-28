@@ -25,7 +25,7 @@ const CLIENTS: Client[] = [
   { name: "PSA Consultores", logo: "/clients/psa-logo-quem-somos.png" },
   { name: "Borges & Zembruski" },
   { name: "Recon", logo: "/clients/recon-logo-proposal.png" },
-  { name: "Focus FinTax", logo: "/clients/focus-fintax-logo.png" },
+  { name: "Focus FinTax" },
   { name: "Turystar" },
   { name: "Uiara Intimates" },
 ];
