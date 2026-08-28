@@ -5,9 +5,9 @@ const IAPLogo3D = lazy(
 );
 
 const BULLETS: string[] = [
-  "Mariana Marques é a nossa fundadora e atuou por 11 anos como executiva em empresas como Mercado Livre, Suzano e Anglo Gold, liderando frentes de transformação digital para +20 operações.",
   "Nosso time técnico usa a metodologia APLICA todos os dias, a mesma que implementamos nas empresas.",
   "+50 sistemas implementados, no Brasil, França e Angola.",
+  "Não entregamos recomendação. Entregamos sistema rodando. Cada projeto começa com um diagnóstico com a IAplicada e o sistema é construído para o jeito que o seu negócio funciona.",
 ];
 
 export function MentorMari() {
@@ -22,16 +22,7 @@ export function MentorMari() {
           </div>
 
           <div className="founder-text-col">
-            <span
-              className="text-[11px] uppercase tracking-[0.2em] font-bold"
-              style={{
-                color: "var(--color-primary)",
-                fontFamily: '"JetBrains Mono", ui-monospace, Menlo, monospace',
-              }}
-            >
-              Quem lidera a IAplicada
-            </span>
-            <h2 className="mt-4 font-extrabold text-[26px] sm:text-[32px] lg:text-[38px] leading-[1.08] tracking-[-0.02em] text-foreground">
+            <h2 className="font-extrabold text-[26px] sm:text-[32px] lg:text-[38px] leading-[1.08] tracking-[-0.02em] text-foreground">
               Quem mapeia, constrói e implementa
               <br />
               <span style={{ color: "var(--color-primary)" }}>dentro da sua empresa.</span>
@@ -42,15 +33,6 @@ export function MentorMari() {
                 <MentorItem key={b}>{b}</MentorItem>
               ))}
             </ul>
-
-            <p className="mt-6 text-[14px] lg:text-[14.5px] text-sage leading-[1.55] max-w-[560px]">
-              <strong className="text-foreground font-semibold">
-                Não entregamos recomendação. Entregamos sistema rodando.
-              </strong>{" "}
-              Cada projeto começa com um diagnóstico com a IAplicada e o sistema é construído para o
-              jeito que o seu negócio funciona.
-            </p>
-
           </div>
         </div>
       </div>
