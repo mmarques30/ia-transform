@@ -100,116 +100,118 @@ export function Testimonials() {
   return (
     <section id="depoimentos" className="section-veil py-[80px] lg:py-[110px] overflow-hidden">
       <div className="container-page">
-        <div className="max-w-[860px] mx-auto text-center">
-          <Reveal>
-            <h2
-              className="font-extrabold text-[28px] sm:text-[36px] lg:text-[42px] leading-[1.08] tracking-[-0.02em] uppercase"
-              style={{ textWrap: "balance", color: "var(--color-primary)" }}
+        <div className="tsplit-card">
+          <div className="max-w-[860px] mx-auto text-center">
+            <Reveal>
+              <h2
+                className="font-extrabold text-[28px] sm:text-[36px] lg:text-[42px] leading-[1.08] tracking-[-0.02em] uppercase"
+                style={{ textWrap: "balance", color: "var(--color-primary)" }}
+              >
+                Mais de 50 empresas já possuem{" "}
+                <span className="text-foreground">sistemas personalizados</span>
+              </h2>
+            </Reveal>
+          </div>
+
+          <div className="mt-8 lg:mt-10">
+            <ClientLogos bare fadeColor="var(--tsplit-card-bg)" />
+          </div>
+
+          <Reveal delay={0.1}>
+            <div
+              className="tsplit"
+              onMouseEnter={() => setPaused(true)}
+              onMouseLeave={() => setPaused(false)}
             >
-              Mais de 50 empresas já possuem{" "}
-              <span className="text-foreground">sistemas personalizados</span>
-            </h2>
-          </Reveal>
-        </div>
-      </div>
+              <div className="tsplit-content">
+                <div className="tsplit-tag-area">
+                  {TESTIMONIALS.map((item, i) => (
+                    <span
+                      key={i}
+                      className={`tsplit-tag ${active === i ? "tsplit-tag-active" : ""}`}
+                    >
+                      <span className="tsplit-tag-line" />
+                      {item.company}
+                    </span>
+                  ))}
+                </div>
 
-      <ClientLogos transparent />
+                <div className="tsplit-quote-area">
+                  {TESTIMONIALS.map((item, i) => (
+                    <blockquote
+                      key={i}
+                      className={`tsplit-quote ${active === i ? "tsplit-quote-active" : ""}`}
+                    >
+                      {item.text}
+                    </blockquote>
+                  ))}
+                </div>
 
-      <div className="container-page">
-        <Reveal delay={0.1}>
-          <div
-            className="tsplit"
-            onMouseEnter={() => setPaused(true)}
-            onMouseLeave={() => setPaused(false)}
-          >
-            <div className="tsplit-content">
-              <div className="tsplit-tag-area">
-                {TESTIMONIALS.map((item, i) => (
-                  <span
-                    key={i}
-                    className={`tsplit-tag ${active === i ? "tsplit-tag-active" : ""}`}
+                <div className="tsplit-author-area">
+                  {TESTIMONIALS.map((item, i) => (
+                    <div
+                      key={i}
+                      className={`tsplit-author ${active === i ? "tsplit-author-active" : ""}`}
+                    >
+                      <span className="tsplit-author-line" />
+                      <div>
+                        <p className="tsplit-author-name">{item.name}</p>
+                        <p className="tsplit-author-role">{item.role}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="tsplit-nav">
+                  <button
+                    type="button"
+                    onClick={() => { prev(); setPaused(true); }}
+                    className="tsplit-nav-btn"
+                    aria-label="Anterior"
                   >
-                    <span className="tsplit-tag-line" />
-                    {item.company}
-                  </span>
-                ))}
+                    <ArrowLeft className="h-4 w-4" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => { next(); setPaused(true); }}
+                    className="tsplit-nav-btn"
+                    aria-label="Próximo"
+                  >
+                    <ArrowRight className="h-4 w-4" />
+                  </button>
+
+                  <div className="tsplit-dots">
+                    {TESTIMONIALS.map((_, i) => (
+                      <button
+                        key={i}
+                        type="button"
+                        onClick={() => { setActive(i); setPaused(true); }}
+                        className={`tsplit-dot ${active === i ? "tsplit-dot-active" : ""}`}
+                        aria-label={`Depoimento ${i + 1}`}
+                      />
+                    ))}
+                  </div>
+                </div>
               </div>
 
-              <div className="tsplit-quote-area">
-                {TESTIMONIALS.map((item, i) => (
-                  <blockquote
-                    key={i}
-                    className={`tsplit-quote ${active === i ? "tsplit-quote-active" : ""}`}
-                  >
-                    {item.text}
-                  </blockquote>
-                ))}
-              </div>
-
-              <div className="tsplit-author-area">
+              <div className="tsplit-photo-col">
                 {TESTIMONIALS.map((item, i) => (
                   <div
                     key={i}
-                    className={`tsplit-author ${active === i ? "tsplit-author-active" : ""}`}
+                    className={`tsplit-photo ${active === i ? "tsplit-photo-active" : ""}`}
                   >
-                    <span className="tsplit-author-line" />
-                    <div>
-                      <p className="tsplit-author-name">{item.name}</p>
-                      <p className="tsplit-author-role">{item.role}</p>
-                    </div>
+                    <img
+                      src={item.photoSrc}
+                      alt={item.name}
+                      loading="lazy"
+                      decoding="async"
+                    />
                   </div>
                 ))}
               </div>
-
-              <div className="tsplit-nav">
-                <button
-                  type="button"
-                  onClick={() => { prev(); setPaused(true); }}
-                  className="tsplit-nav-btn"
-                  aria-label="Anterior"
-                >
-                  <ArrowLeft className="h-4 w-4" />
-                </button>
-                <button
-                  type="button"
-                  onClick={() => { next(); setPaused(true); }}
-                  className="tsplit-nav-btn"
-                  aria-label="Próximo"
-                >
-                  <ArrowRight className="h-4 w-4" />
-                </button>
-
-                <div className="tsplit-dots">
-                  {TESTIMONIALS.map((_, i) => (
-                    <button
-                      key={i}
-                      type="button"
-                      onClick={() => { setActive(i); setPaused(true); }}
-                      className={`tsplit-dot ${active === i ? "tsplit-dot-active" : ""}`}
-                      aria-label={`Depoimento ${i + 1}`}
-                    />
-                  ))}
-                </div>
-              </div>
             </div>
-
-            <div className="tsplit-photo-col">
-              {TESTIMONIALS.map((item, i) => (
-                <div
-                  key={i}
-                  className={`tsplit-photo ${active === i ? "tsplit-photo-active" : ""}`}
-                >
-                  <img
-                    src={item.photoSrc}
-                    alt={item.name}
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-        </Reveal>
+          </Reveal>
+        </div>
       </div>
     </section>
   );
