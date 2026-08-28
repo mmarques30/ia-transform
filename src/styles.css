@@ -3799,3 +3799,74 @@ select.lead-input option {
   .team-carousel-track { gap: 14px; padding: 0 1.25rem; }
   .team-arrow { display: none; }
 }
+
+/* ── Para Quem ─────────────────────────────────── */
+.para-quem-section {
+  padding: 80px 0;
+}
+.para-quem-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 56px 48px;
+  border-radius: 20px;
+  border: 1px solid rgba(200,224,64,0.12);
+  background: rgba(200,224,64,0.03);
+}
+.para-quem-title {
+  font-family: "Instrument Serif", serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(32px, 4vw, 48px);
+  line-height: 1.1;
+  color: var(--color-foreground, #f4f5ec);
+  margin-bottom: 48px;
+}
+.para-quem-title-em {
+  color: var(--color-primary);
+  font-weight: 700;
+}
+.para-quem-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.para-quem-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: start;
+  padding: 40px 0;
+}
+.para-quem-grid > :first-child .para-quem-card {
+  padding-top: 0;
+}
+.para-quem-grid > :not(:last-child) .para-quem-card {
+  border-bottom: 1px solid rgba(200,224,64,0.15);
+}
+.para-quem-grid > :last-child .para-quem-card {
+  padding-bottom: 0;
+}
+.para-quem-card-title {
+  font-family: "DM Sans", "Inter", sans-serif;
+  font-weight: 800;
+  font-size: clamp(24px, 3vw, 34px);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  color: var(--color-foreground, #f4f5ec);
+}
+.para-quem-card-desc {
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--color-sage, #b8bcae);
+  padding-top: 4px;
+}
+@media (max-width: 768px) {
+  .para-quem-inner {
+    padding: 36px 24px;
+  }
+  .para-quem-card {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 28px 0;
+  }
+}
