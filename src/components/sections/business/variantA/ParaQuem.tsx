@@ -27,8 +27,8 @@ export function ParaQuem() {
           <Reveal>
             <h2 className="para-quem-title">
               Para{" "}
-              <strong className="para-quem-title-em">quem</strong> é a
-              IAplicada?
+              <strong className="para-quem-title-em">quem</strong> é o
+              Business?
             </h2>
           </Reveal>
 
