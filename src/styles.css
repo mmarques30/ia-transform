@@ -1919,131 +1919,134 @@
    (15s / 19s / 17s pra bater com a referência 21st.dev).
    ============================================================ */
 
-.testimonial-carousel {
-  max-width: 720px;
+/* --- Split testimonial (tsplit) ----------------------------------------- */
+.tsplit {
+  display: grid;
+  grid-template-columns: 1fr 240px;
+  gap: 48px;
+  align-items: center;
+  max-width: 960px;
   margin: 0 auto;
-  padding-top: 32px;
+  padding-top: 40px;
 }
-.testimonial-quote-area {
-  position: relative;
-  min-height: 120px;
-  margin-bottom: 40px;
+.tsplit-content { display: flex; flex-direction: column; gap: 0; }
+
+/* Company tag */
+.tsplit-tag-area { position: relative; height: 20px; margin-bottom: 20px; }
+.tsplit-tag {
+  position: absolute; inset: 0;
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--color-sage);
+  opacity: 0; transform: translateY(8px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  pointer-events: none;
 }
-.testimonial-quote {
-  position: absolute;
-  inset: 0;
+.tsplit-tag-active { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.tsplit-tag-line {
+  display: block; width: 28px; height: 1px;
+  background: rgba(255,255,255,0.3);
+}
+
+/* Quote */
+.tsplit-quote-area { position: relative; min-height: 180px; margin-bottom: 32px; }
+.tsplit-quote {
+  position: absolute; inset: 0;
   font-family: "Instrument Serif", serif;
   font-style: italic;
-  font-size: clamp(18px, 2.5vw, 24px);
-  line-height: 1.55;
+  font-size: clamp(22px, 2.8vw, 32px);
+  line-height: 1.35;
   color: var(--color-foreground);
-  opacity: 0;
-  transform: translateY(12px);
-  filter: blur(4px);
+  margin: 0;
+  opacity: 0; transform: translateY(32px);
+  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
   pointer-events: none;
-  transition: opacity 0.5s ease, transform 0.5s ease, filter 0.5s ease;
 }
-.testimonial-quote-active {
-  opacity: 1;
-  transform: translateY(0);
-  filter: blur(0);
-  pointer-events: auto;
+.tsplit-quote-active {
+  opacity: 1; transform: translateY(0); pointer-events: auto;
 }
-.testimonial-author-row {
-  display: flex;
-  align-items: center;
-  gap: 20px;
+
+/* Author */
+.tsplit-author-area { position: relative; height: 44px; margin-bottom: 28px; }
+.tsplit-author {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; gap: 14px;
+  opacity: 0;
+  transition: opacity 0.35s ease 0.15s;
+  pointer-events: none;
 }
-.testimonial-avatars {
-  display: flex;
-  align-items: center;
-}
-.testimonial-avatar {
-  position: relative;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  overflow: hidden;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  background: transparent;
-  outline: 2px solid var(--color-background);
-  outline-offset: -2px;
-  transition: transform 0.3s ease, filter 0.3s ease;
-  filter: grayscale(1);
-  margin-left: -6px;
-}
-.testimonial-avatar:first-child { margin-left: 0; }
-.testimonial-avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 20%;
-  display: block;
-}
-.testimonial-avatar-active {
-  z-index: 2;
-  transform: scale(1.15);
-  filter: grayscale(0);
-}
-.testimonial-avatar:hover {
-  filter: grayscale(0);
-  transform: scale(1.08);
-}
-.testimonial-divider {
-  width: 1px;
-  height: 32px;
-  background: rgba(255,255,255,0.12);
+.tsplit-author-active { opacity: 1; pointer-events: auto; }
+.tsplit-author-line {
+  display: block; width: 32px; height: 1px;
+  background: rgba(255,255,255,0.15);
   flex-shrink: 0;
 }
-.testimonial-info-area {
-  position: relative;
-  flex: 1;
-  min-height: 44px;
+.tsplit-author-name {
+  font-size: 14px; font-weight: 600;
+  color: var(--color-foreground); line-height: 1.3;
 }
-.testimonial-info {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  opacity: 0;
-  transform: translateX(-8px);
+.tsplit-author-role {
+  font-size: 12px; color: var(--color-sage); line-height: 1.3; margin-top: 2px;
+}
+
+/* Nav arrows + dots */
+.tsplit-nav { display: flex; align-items: center; gap: 10px; }
+.tsplit-nav-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px; border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: transparent; color: var(--color-foreground);
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+.tsplit-nav-btn:hover {
+  border-color: var(--color-primary);
+  background: rgba(255,255,255,0.04);
+}
+.tsplit-dots {
+  display: flex; align-items: center; gap: 6px; margin-left: 12px;
+}
+.tsplit-dot {
+  width: 7px; height: 7px; border-radius: 50%; border: none; padding: 0;
+  background: rgba(255,255,255,0.15); cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
+}
+.tsplit-dot-active {
+  background: var(--color-primary); transform: scale(1.3);
+}
+.tsplit-dot:hover { background: rgba(255,255,255,0.35); }
+
+/* Photo column */
+.tsplit-photo-col {
+  position: relative; width: 240px; height: 320px;
+}
+.tsplit-photo {
+  position: absolute; inset: 0;
+  border-radius: 16px; overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.08);
+  opacity: 0; filter: blur(16px); transform: scale(1.04);
+  transition: opacity 0.55s ease, filter 0.55s ease, transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
   pointer-events: none;
-  transition: opacity 0.4s ease, transform 0.4s ease;
 }
-.testimonial-info-active {
-  opacity: 1;
-  transform: translateX(0);
-  pointer-events: auto;
+.tsplit-photo-active {
+  opacity: 1; filter: blur(0); transform: scale(1); pointer-events: auto;
 }
-.testimonial-info-name {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--color-foreground);
-  line-height: 1.3;
+.tsplit-photo img {
+  width: 100%; height: 100%; object-fit: cover;
+  object-position: center 20%; display: block;
 }
-.testimonial-info-role {
-  font-size: 12px;
-  color: var(--color-sage);
-  line-height: 1.3;
-  margin-top: 2px;
-}
-@media (max-width: 640px) {
-  .testimonial-carousel { padding-top: 24px; }
-  .testimonial-author-row {
-    flex-direction: column;
-    align-items: center;
-    gap: 14px;
+
+/* Mobile */
+@media (max-width: 768px) {
+  .tsplit {
+    grid-template-columns: 1fr;
+    gap: 28px; padding-top: 28px;
   }
-  .testimonial-avatars { justify-content: center; flex-wrap: wrap; gap: 2px 0; }
-  .testimonial-divider { display: none; }
-  .testimonial-avatar { width: 32px; height: 32px; margin-left: -4px; }
-  .testimonial-avatar:first-child { margin-left: 0; }
-  .testimonial-quote-area { min-height: 180px; margin-bottom: 28px; }
-  .testimonial-info-area { text-align: center; min-height: 40px; width: 100%; }
-  .testimonial-info { align-items: center; }
+  .tsplit-photo-col {
+    width: 100%; height: 280px;
+    order: -1;
+  }
+  .tsplit-quote-area { min-height: 200px; }
 }
 
 /* ============================================================
