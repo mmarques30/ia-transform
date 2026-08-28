@@ -202,7 +202,7 @@ export function PainelAtlas() {
                   Reunião com a Vertex
                   <small>dossiê do cliente pronto</small>
                 </span>
-                <button className="iap-btn">Agendar</button>
+                <span className="iap-btn" aria-hidden>Agendar</span>
               </div>
               <div className="iap-action">
                 <span className="iap-ico iap-risk">!</span>
@@ -210,7 +210,7 @@ export function PainelAtlas() {
                   Desconto Grupo Naves
                   <small>12% · acima da alçada</small>
                 </span>
-                <button className="iap-btn">Decidir</button>
+                <span className="iap-btn" aria-hidden>Decidir</span>
               </div>
               <div className="iap-action">
                 <span className="iap-ico iap-opp">↗</span>
@@ -218,7 +218,7 @@ export function PainelAtlas() {
                   8 upgrades de plano
                   <small>+R$ 19 mil/mês</small>
                 </span>
-                <button className="iap-btn iap-ghost">Ver</button>
+                <span className="iap-btn iap-ghost" aria-hidden>Ver</span>
               </div>
             </div>
           </div>

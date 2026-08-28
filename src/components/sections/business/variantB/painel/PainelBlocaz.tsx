@@ -182,7 +182,7 @@ export function PainelBlocaz() {
                   Compra de cimento
                   <small>R$ 38 mil · pedido pronto</small>
                 </span>
-                <button className="iap-btn">Aprovar</button>
+                <span className="iap-btn" aria-hidden>Aprovar</span>
               </div>
               <div className="iap-action">
                 <span className="iap-ico iap-opp">↗</span>
@@ -190,7 +190,7 @@ export function PainelBlocaz() {
                   Pedido Construtora Alfa
                   <small>R$ 54 mil · fora da alçada</small>
                 </span>
-                <button className="iap-btn">Revisar</button>
+                <span className="iap-btn" aria-hidden>Revisar</span>
               </div>
               <div className="iap-action">
                 <span className="iap-ico iap-ai">✦</span>
@@ -198,7 +198,7 @@ export function PainelBlocaz() {
                   Reajuste +4% na tabela
                   <small>simulação de impacto pronta</small>
                 </span>
-                <button className="iap-btn iap-ghost">Aplicar</button>
+                <span className="iap-btn iap-ghost" aria-hidden>Aplicar</span>
               </div>
             </div>
           </div>

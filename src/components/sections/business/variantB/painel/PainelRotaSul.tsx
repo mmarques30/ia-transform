@@ -184,7 +184,7 @@ export function PainelRotaSul() {
                   Frete spot fora da tabela
                   <small>R$ 14 mil · margem 31%</small>
                 </span>
-                <button className="iap-btn">Aprovar</button>
+                <span className="iap-btn" aria-hidden>Aprovar</span>
               </div>
               <div className="iap-action">
                 <span className="iap-ico iap-opp">↗</span>
@@ -192,7 +192,7 @@ export function PainelRotaSul() {
                   Contrato mensal Mega
                   <small>R$ 92 mil/mês · minuta pronta</small>
                 </span>
-                <button className="iap-btn">Revisar</button>
+                <span className="iap-btn" aria-hidden>Revisar</span>
               </div>
               <div className="iap-action">
                 <span className="iap-ico iap-ai">✦</span>
@@ -200,7 +200,7 @@ export function PainelRotaSul() {
                   Reajuste CWB→POA
                   <small>simulação de frete pronta</small>
                 </span>
-                <button className="iap-btn iap-ghost">Simular</button>
+                <span className="iap-btn iap-ghost" aria-hidden>Simular</span>
               </div>
             </div>
           </div>
