@@ -7,6 +7,7 @@ import { MetodoAplicaBook } from "@/components/sections/business/variantA/Metodo
 import { MentorMari } from "@/components/sections/business/variantA/MentorMari";
 import { Team } from "@/components/sections/business/variantA/Team";
 import { ValueStrip } from "@/components/sections/business/variantA/ValueStrip";
+import { ParaQuem } from "@/components/sections/business/variantA/ParaQuem";
 import { FAQ } from "@/components/sections/business/variantA/FAQ";
 import { Testimonials } from "@/components/sections/business/variantB/Testimonials";
 import { DiagnosticoModalProvider } from "@/components/sections/business/variantB/DiagnosticoModal";
@@ -81,6 +82,8 @@ function BusinessLanding() {
         <MentorMari />
 
         <Team />
+
+        <ParaQuem />
 
         <FAQ />
 
