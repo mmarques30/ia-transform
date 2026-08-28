@@ -12,7 +12,7 @@ const FAQ_ITEMS: { q: string; a: string }[] = [
   },
   {
     q: "Qual a diferença entre a IAplicada e um ERP ou consultoria tradicional?",
-    a: "ERP força a empresa a se adaptar ao software. A IAplicada constrói o software para se adaptar à empresa.\n\nConsultoria entrega diagnóstico e vai embora. A IAplicada foi fundada por Mariana Marques, com 11 anos como executiva em Mercado Livre, Suzano e AngloGold, liderando mais de 40 frentes de transformação digital na América Latina. O que entregamos não é o que um consultor aprendeu em livro. É o que funcionou em empresa grande, adaptado para o tamanho e o processo de quem está crescendo agora.\n\nVocê recebe sistema rodando, não slide.",
+    a: "ERP força a empresa a se adaptar ao software. A IAplicada constrói o software para se adaptar à empresa.\n\nConsultoria entrega diagnóstico e vai embora. A IAplicada foi fundada por Mariana Marques, com 11 anos como executiva em Mercado Livre, Suzano e AngloGold, liderando transformação digital na América Latina. O que entregamos não é o que um consultor aprendeu em livro. É o que funcionou em empresas grandes, agora adaptado para o tamanho e o processo de quem está crescendo.\n\nVocê recebe sistema rodando, não slide.",
   },
   {
     q: "Para que tipo de empresa a IAplicada atende?",
