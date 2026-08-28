@@ -16,7 +16,7 @@ const TEAM: TeamMember[] = [
     role: "Founder & CEO",
     photo: "/brand/mariana-marques.jpg",
     photoPosition: "center 40%",
-    bio: "11 anos como executiva em Mercado Livre, Suzano e AngloGold, liderando mais de 40 frentes de transformação digital na América Latina. Fundou a IAplicada para entregar o que viu funcionar em empresa grande — adaptado para o tamanho e o processo de quem está crescendo agora. Criou a metodologia APLICA e lidera cada projeto do diagnóstico à implementação.",
+    bio: "11 anos como executiva em Mercado Livre, Suzano e AngloGold, liderando transformação digital na América Latina. Fundou a IAplicada para entregar o que viu funcionar em empresas grandes e agora adaptando para o tamanho e o processo de quem está crescendo. Criou a metodologia APLICA e lidera cada projeto, trazendo sua visão sistêmica e expertise em IA pra transformar novas operações.",
   },
   {
     name: "Ana Cecilia",
