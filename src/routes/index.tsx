@@ -4,7 +4,6 @@ import { Hero } from "@/components/sections/business/variantA/Hero";
 import { Problem } from "@/components/sections/business/variantA/Problem";
 import { Comparison } from "@/components/sections/business/variantA/Comparison";
 import { MetodoAplicaBook } from "@/components/sections/business/variantA/MetodoAplicaBook";
-import { MentorMari } from "@/components/sections/business/variantA/MentorMari";
 import { Team } from "@/components/sections/business/variantA/Team";
 import { ValueStrip } from "@/components/sections/business/variantA/ValueStrip";
 import { ParaQuem } from "@/components/sections/business/variantA/ParaQuem";
@@ -55,8 +54,7 @@ export const Route = createFileRoute("/")({
  *  04 SelectedClients (reusa v2 — stats com count-up)
  *  05 MetodoAplicaBook (trilha vertical A·P·L·I·C·A)
  *  06 AppShowcase (tabs de painéis)
- *  07 MentorMari (foto full-bleed + credenciais)
- *  08 Guarantee (entregáveis + garantia de implementação)
+ *  07 Guarantee (entregáveis + garantia de implementação)
  *  09 FinalForm (HeroForm inline no fim)
  *  12 QualifierStrip rodapé
  *  13 Footer
@@ -78,8 +76,6 @@ function BusinessLanding() {
         <MetodoAplicaBook />
 
         <Testimonials />
-
-        <MentorMari />
 
         <Team />
 
