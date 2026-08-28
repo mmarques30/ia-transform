@@ -19,43 +19,52 @@ interface Client {
 }
 
 const CLIENTS: Client[] = [
-  {
-    name: "Mercado Livre",
-    logo: "/clients/mercado-livre-logo.png",
-  },
+  { name: "Mercado Livre" },
   { name: "iFood", logo: "/clients/IFood_logo.svg.png" },
   { name: "Cimed", logo: "/clients/cimed-logo.svg" },
   { name: "PSA Consultores", logo: "/clients/psa-logo-quem-somos.png" },
-  // LCR removida do carrossel — arquivo JPEG (lcr_contadores_logo.jpeg)
-  // não tem alpha channel, então o filter brightness(0) invert(1) deixa
-  // ela aparecendo como retângulo branco invisível. Pra trazer de volta,
-  // precisa de PNG/SVG com fundo transparente.
-  // { name: "LCR Contadores", logo: "/clients/lcr_contadores_logo.jpeg" },
-  { name: "Borges & Zembruski", logo: "/clients/borges-zembruski-logo.png" },
+  { name: "Borges & Zembruski" },
   { name: "Recon", logo: "/clients/recon-logo-proposal.png" },
   { name: "Focus FinTax", logo: "/clients/focus-fintax-logo.png" },
-  // Turystar — arquivo (1.png) é RGB sem canal alpha (fundo branco
-  // sólido). Com o filter brightness(0) invert(1), apareceria como
-  // retângulo branco invisível (mesmo bug do antigo LCR jpeg).
-  // Pra ativar: subir versão PNG/SVG com fundo TRANSPARENTE.
   { name: "Turystar" },
   { name: "Uiara Intimates" },
 ];
 
 interface ClientLogosProps {
-  /**
-   * Desliga o `.section-veil` local e reduz o padding. Usado quando o
-   * carrossel roda por dentro de outra dobra (ex: LP `/` renderiza
-   * <ClientLogos transparent /> como children do OliveWave) — evita a
-   * caixa escura em torno do carrossel que dava sensação de "fundo
-   * separado". LP-B e LP-C mantêm o comportamento antigo (default).
-   */
   transparent?: boolean;
+  /** Render only the marquee track — no <section> wrapper, no heading.
+   *  Used when the marquee runs inside a parent card container. */
+  bare?: boolean;
+  /** CSS color for the lateral fade gradient. Defaults to --color-background. */
+  fadeColor?: string;
 }
 
-export function ClientLogos({ transparent = false }: ClientLogosProps = {}) {
-  // Renderiza 2x pra animação contínua sem gap
+export function ClientLogos({ transparent = false, bare = false, fadeColor }: ClientLogosProps = {}) {
   const loop = [...CLIENTS, ...CLIENTS];
+  const fade = fadeColor ?? "var(--color-background)";
+
+  const marquee = (
+    <div className="relative overflow-hidden">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16"
+        style={{ background: `linear-gradient(90deg, ${fade} 0%, transparent 100%)` }}
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16"
+        style={{ background: `linear-gradient(270deg, ${fade} 0%, transparent 100%)` }}
+      />
+      <div className="ticker-track items-center" aria-hidden>
+        {loop.map((client, i) => (
+          <ClientItem key={`${client.name}-${i}`} client={client} />
+        ))}
+      </div>
+    </div>
+  );
+
+  if (bare) return marquee;
+
   return (
     <section
       className={`${transparent ? "" : "section-veil "}${transparent ? "py-4 lg:py-6" : "py-[56px] lg:py-[72px]"} overflow-hidden`}
@@ -67,24 +76,16 @@ export function ClientLogos({ transparent = false }: ClientLogosProps = {}) {
       </div>
 
       <div className="relative mt-9 overflow-hidden">
-        {/* Fades laterais */}
         <div
           aria-hidden
           className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24"
-          style={{
-            background:
-              "linear-gradient(90deg, var(--color-background) 0%, transparent 100%)",
-          }}
+          style={{ background: `linear-gradient(90deg, ${fade} 0%, transparent 100%)` }}
         />
         <div
           aria-hidden
           className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24"
-          style={{
-            background:
-              "linear-gradient(270deg, var(--color-background) 0%, transparent 100%)",
-          }}
+          style={{ background: `linear-gradient(270deg, ${fade} 0%, transparent 100%)` }}
         />
-
         <div className="ticker-track items-center" aria-hidden>
           {loop.map((client, i) => (
             <ClientItem key={`${client.name}-${i}`} client={client} />
