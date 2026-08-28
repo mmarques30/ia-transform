@@ -3418,6 +3418,12 @@
   max-height: 620px;
   background: radial-gradient(ellipse at 50% 50%, rgba(200, 224, 64, 0.06) 0%, transparent 70%);
 }
+.founder-logo-static {
+  width: 180px;
+  height: 180px;
+  opacity: 0.5;
+  filter: drop-shadow(0 0 40px rgba(200, 224, 64, 0.15));
+}
 
 .founder-text-col {
   padding: 72px 48px 72px 72px;

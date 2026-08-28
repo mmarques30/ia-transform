@@ -1,9 +1,3 @@
-import { lazy, Suspense } from "react";
-
-const IAPLogo3D = lazy(
-  () => import("@/components/sections/business/lead/IAPLogo3D").then((m) => ({ default: m.IAPLogo3D }))
-);
-
 const BULLETS: string[] = [
   "Nosso time técnico usa a metodologia APLICA todos os dias, a mesma que implementamos nas empresas.",
   "+50 sistemas implementados, no Brasil, França e Angola.",
@@ -16,9 +10,11 @@ export function MentorMari() {
       <div className="section-veil">
         <div className="founder-section">
           <div className="founder-logo3d-col">
-            <Suspense fallback={null}>
-              <IAPLogo3D width="100%" height="100%" scale={1.6} />
-            </Suspense>
+            <img
+              src="/brand/logo-mark.svg"
+              alt="IAplicada"
+              className="founder-logo-static"
+            />
           </div>
 
           <div className="founder-text-col">
