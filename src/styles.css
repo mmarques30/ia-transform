@@ -2509,6 +2509,7 @@
   border-radius: 9px;
   border: none;
   cursor: default;
+  pointer-events: none;
   font-family: "Schibsted Grotesk", "Inter", sans-serif;
   color: #fff;
   background: linear-gradient(135deg, var(--iap-g1, #4f7cff), var(--iap-g2, #9f6bff));
