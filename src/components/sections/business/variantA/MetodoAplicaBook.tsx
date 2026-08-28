@@ -49,7 +49,7 @@ export function MetodoAplicaBook() {
             <p className="mt-5 text-[15px] lg:text-[16.5px] text-sage leading-[1.6] max-w-[600px] mx-auto">
               O Método <strong className="text-foreground font-bold">APLICA</strong> identifica onde
               sua operação trava, constrói o sistema que resolve e implementa dentro do seu negócio
-              — em até <strong className="text-foreground font-bold">90 dias</strong>.
+              em até <strong className="text-foreground font-bold">90 dias</strong>.
             </p>
           </Reveal>
         </div>
