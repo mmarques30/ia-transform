@@ -4044,3 +4044,169 @@ select.lead-input option {
   width: 100%;
   max-height: 100vh;
 }
+
+/* ─── Hero: H1 das variantes /iaplicada-* (frases longas) ───
+   O H1 da / é nowrap porque cabe folgado; os das variantes têm até
+   38 chars por frase e precisam quebrar dentro da coluna de texto. */
+.hero-b-h1--wrap {
+  white-space: normal;
+  font-size: clamp(40px, 4.2vw, 58px);
+  line-height: 1.04;
+}
+@media (max-width: 900px) {
+  .hero-b-h1--wrap {
+    font-size: clamp(32px, 9vw, 42px);
+  }
+}
+
+/* ─── A conta que ninguém faz ───
+   4 cards lidos como equação: 10 × 2h = 400h = 2 pessoas. Os
+   operadores ficam na junção entre cards; no mobile a lista empilha
+   e o operador vai pro meio, entre um card e o próximo. A tinta lime
+   cresce do card 1 ao 4 pra reforçar a progressão. */
+.conta-section {
+  position: relative;
+  overflow: hidden;
+  padding: 80px 0;
+}
+@media (min-width: 1024px) {
+  .conta-section {
+    padding: 120px 0;
+  }
+}
+.conta-sub {
+  margin-top: 14px;
+  font-family: "Instrument Serif", serif;
+  font-style: italic;
+  font-size: clamp(18px, 2vw, 24px);
+  line-height: 1.25;
+  color: var(--color-sage, #b8bcae);
+}
+.conta-grid {
+  list-style: none;
+  margin: 56px auto 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 28px;
+  max-width: 1120px;
+}
+.conta-step {
+  position: relative;
+  display: flex;
+}
+.conta-step > div:first-child {
+  flex: 1;
+  display: flex;
+}
+.conta-card {
+  position: relative;
+  flex: 1;
+  padding: 26px 24px 26px;
+  border-radius: 18px;
+  border: 1px solid rgba(200, 224, 64, 0.14);
+  background: linear-gradient(180deg, rgba(200, 224, 64, 0.03), rgba(15, 17, 9, 0.7));
+  transition: border-color 0.25s ease;
+}
+.conta-step[data-step="2"] .conta-card {
+  border-color: rgba(200, 224, 64, 0.2);
+  background: linear-gradient(180deg, rgba(200, 224, 64, 0.05), rgba(15, 17, 9, 0.7));
+}
+.conta-step[data-step="3"] .conta-card {
+  border-color: rgba(200, 224, 64, 0.28);
+  background: linear-gradient(180deg, rgba(200, 224, 64, 0.075), rgba(15, 17, 9, 0.7));
+}
+.conta-step[data-step="4"] .conta-card {
+  border-color: rgba(200, 224, 64, 0.45);
+  background: linear-gradient(180deg, rgba(200, 224, 64, 0.11), rgba(15, 17, 9, 0.75));
+  box-shadow: 0 24px 60px -28px rgba(200, 224, 64, 0.45);
+}
+.conta-card-index {
+  display: block;
+  font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: var(--color-primary);
+  opacity: 0.85;
+}
+.conta-card-num {
+  margin-top: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 10px;
+  font-weight: 800;
+  font-size: clamp(54px, 5.4vw, 80px);
+  line-height: 0.95;
+  letter-spacing: -0.045em;
+  color: var(--color-primary);
+}
+.conta-card-label {
+  font-size: clamp(15px, 1.15vw, 17px);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  color: var(--color-foreground, #f4f5ec);
+}
+.conta-card-desc {
+  margin-top: 14px;
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--color-sage, #b8bcae);
+}
+.conta-op {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  right: -14px;
+  transform: translate(50%, -50%);
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1;
+  color: #0a0c07;
+  background: var(--color-primary);
+  box-shadow: 0 0 0 5px #0d1009;
+}
+.conta-closing {
+  margin: 48px auto 0;
+  max-width: 640px;
+  text-align: center;
+  font-size: clamp(16px, 1.4vw, 19px);
+  line-height: 1.55;
+  color: var(--color-sage, #b8bcae);
+}
+.conta-closing strong {
+  color: var(--color-foreground, #f4f5ec);
+  font-weight: 700;
+}
+@media (max-width: 960px) {
+  .conta-grid {
+    grid-template-columns: 1fr;
+    max-width: 440px;
+    gap: 30px;
+    margin-top: 40px;
+  }
+  .conta-card {
+    padding: 22px 22px 22px;
+  }
+  .conta-card-num {
+    font-size: clamp(48px, 15vw, 64px);
+  }
+  .conta-op {
+    top: auto;
+    right: auto;
+    left: 50%;
+    bottom: -15px;
+    transform: translate(-50%, 50%);
+  }
+  .conta-closing {
+    margin-top: 40px;
+  }
+}

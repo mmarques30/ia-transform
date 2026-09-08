@@ -13,6 +13,9 @@ import { Route as ThankYouBusinessRouteImport } from './routes/thank-you-busines
 import { Route as LeadObrigadoRouteImport } from './routes/lead-obrigado'
 import { Route as LeadRouteImport } from './routes/lead'
 import { Route as IndicacaobusinessRouteImport } from './routes/indicacaobusiness'
+import { Route as IaplicadaErpRouteImport } from './routes/iaplicada-erp'
+import { Route as IaplicadaCrescimentoRouteImport } from './routes/iaplicada-crescimento'
+import { Route as IaplicadaContratacaoRouteImport } from './routes/iaplicada-contratacao'
 import { Route as Contabil02RouteImport } from './routes/contabil02'
 import { Route as ContabilThankYouRouteImport } from './routes/contabil-thank-you'
 import { Route as ContabilRouteImport } from './routes/contabil'
@@ -38,6 +41,21 @@ const LeadRoute = LeadRouteImport.update({
 const IndicacaobusinessRoute = IndicacaobusinessRouteImport.update({
   id: '/indicacaobusiness',
   path: '/indicacaobusiness',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IaplicadaErpRoute = IaplicadaErpRouteImport.update({
+  id: '/iaplicada-erp',
+  path: '/iaplicada-erp',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IaplicadaCrescimentoRoute = IaplicadaCrescimentoRouteImport.update({
+  id: '/iaplicada-crescimento',
+  path: '/iaplicada-crescimento',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IaplicadaContratacaoRoute = IaplicadaContratacaoRouteImport.update({
+  id: '/iaplicada-contratacao',
+  path: '/iaplicada-contratacao',
   getParentRoute: () => rootRouteImport,
 } as any)
 const Contabil02Route = Contabil02RouteImport.update({
@@ -77,6 +95,9 @@ export interface FileRoutesByFullPath {
   '/contabil': typeof ContabilRoute
   '/contabil-thank-you': typeof ContabilThankYouRoute
   '/contabil02': typeof Contabil02Route
+  '/iaplicada-contratacao': typeof IaplicadaContratacaoRoute
+  '/iaplicada-crescimento': typeof IaplicadaCrescimentoRoute
+  '/iaplicada-erp': typeof IaplicadaErpRoute
   '/indicacaobusiness': typeof IndicacaobusinessRoute
   '/lead': typeof LeadRoute
   '/lead-obrigado': typeof LeadObrigadoRoute
@@ -89,6 +110,9 @@ export interface FileRoutesByTo {
   '/contabil': typeof ContabilRoute
   '/contabil-thank-you': typeof ContabilThankYouRoute
   '/contabil02': typeof Contabil02Route
+  '/iaplicada-contratacao': typeof IaplicadaContratacaoRoute
+  '/iaplicada-crescimento': typeof IaplicadaCrescimentoRoute
+  '/iaplicada-erp': typeof IaplicadaErpRoute
   '/indicacaobusiness': typeof IndicacaobusinessRoute
   '/lead': typeof LeadRoute
   '/lead-obrigado': typeof LeadObrigadoRoute
@@ -102,6 +126,9 @@ export interface FileRoutesById {
   '/contabil': typeof ContabilRoute
   '/contabil-thank-you': typeof ContabilThankYouRoute
   '/contabil02': typeof Contabil02Route
+  '/iaplicada-contratacao': typeof IaplicadaContratacaoRoute
+  '/iaplicada-crescimento': typeof IaplicadaCrescimentoRoute
+  '/iaplicada-erp': typeof IaplicadaErpRoute
   '/indicacaobusiness': typeof IndicacaobusinessRoute
   '/lead': typeof LeadRoute
   '/lead-obrigado': typeof LeadObrigadoRoute
@@ -116,6 +143,9 @@ export interface FileRouteTypes {
     | '/contabil'
     | '/contabil-thank-you'
     | '/contabil02'
+    | '/iaplicada-contratacao'
+    | '/iaplicada-crescimento'
+    | '/iaplicada-erp'
     | '/indicacaobusiness'
     | '/lead'
     | '/lead-obrigado'
@@ -128,6 +158,9 @@ export interface FileRouteTypes {
     | '/contabil'
     | '/contabil-thank-you'
     | '/contabil02'
+    | '/iaplicada-contratacao'
+    | '/iaplicada-crescimento'
+    | '/iaplicada-erp'
     | '/indicacaobusiness'
     | '/lead'
     | '/lead-obrigado'
@@ -140,6 +173,9 @@ export interface FileRouteTypes {
     | '/contabil'
     | '/contabil-thank-you'
     | '/contabil02'
+    | '/iaplicada-contratacao'
+    | '/iaplicada-crescimento'
+    | '/iaplicada-erp'
     | '/indicacaobusiness'
     | '/lead'
     | '/lead-obrigado'
@@ -153,6 +189,9 @@ export interface RootRouteChildren {
   ContabilRoute: typeof ContabilRoute
   ContabilThankYouRoute: typeof ContabilThankYouRoute
   Contabil02Route: typeof Contabil02Route
+  IaplicadaContratacaoRoute: typeof IaplicadaContratacaoRoute
+  IaplicadaCrescimentoRoute: typeof IaplicadaCrescimentoRoute
+  IaplicadaErpRoute: typeof IaplicadaErpRoute
   IndicacaobusinessRoute: typeof IndicacaobusinessRoute
   LeadRoute: typeof LeadRoute
   LeadObrigadoRoute: typeof LeadObrigadoRoute
@@ -187,6 +226,27 @@ declare module '@tanstack/react-router' {
       path: '/indicacaobusiness'
       fullPath: '/indicacaobusiness'
       preLoaderRoute: typeof IndicacaobusinessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/iaplicada-erp': {
+      id: '/iaplicada-erp'
+      path: '/iaplicada-erp'
+      fullPath: '/iaplicada-erp'
+      preLoaderRoute: typeof IaplicadaErpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/iaplicada-crescimento': {
+      id: '/iaplicada-crescimento'
+      path: '/iaplicada-crescimento'
+      fullPath: '/iaplicada-crescimento'
+      preLoaderRoute: typeof IaplicadaCrescimentoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/iaplicada-contratacao': {
+      id: '/iaplicada-contratacao'
+      path: '/iaplicada-contratacao'
+      fullPath: '/iaplicada-contratacao'
+      preLoaderRoute: typeof IaplicadaContratacaoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contabil02': {
@@ -252,6 +312,9 @@ const rootRouteChildren: RootRouteChildren = {
   ContabilRoute: ContabilRoute,
   ContabilThankYouRoute: ContabilThankYouRoute,
   Contabil02Route: Contabil02Route,
+  IaplicadaContratacaoRoute: IaplicadaContratacaoRoute,
+  IaplicadaCrescimentoRoute: IaplicadaCrescimentoRoute,
+  IaplicadaErpRoute: IaplicadaErpRoute,
   IndicacaobusinessRoute: IndicacaobusinessRoute,
   LeadRoute: LeadRoute,
   LeadObrigadoRoute: LeadObrigadoRoute,
