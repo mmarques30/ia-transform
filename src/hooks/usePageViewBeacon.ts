@@ -22,8 +22,7 @@ import { useLocation } from "@tanstack/react-router";
  * - Falha em silêncio — tracker não pode quebrar UX.
  */
 
-const ENDPOINT =
-  "https://ciwdlceyjsnlnunktqzx.supabase.co/functions/v1/mads-lp-pageview";
+const ENDPOINT = "https://ciwdlceyjsnlnunktqzx.supabase.co/functions/v1/mads-lp-pageview";
 const SESSION_KEY = "mads_session_id";
 
 function shouldSkip(pathname: string): boolean {
@@ -32,14 +31,28 @@ function shouldSkip(pathname: string): boolean {
   return false;
 }
 
+function fallbackId(): string {
+  return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 12)}`;
+}
+
+// crypto.randomUUID não existe em WebViews antigos (iOS < 15.4, Android
+// WebView < 92) e sessionStorage lança em modo privado/cookies bloqueados.
+// Qualquer falha aqui vira "script error" no Clarity e perde o pageview.
 function getOrCreateSessionId(): string {
   if (typeof window === "undefined") return "";
-  let id = sessionStorage.getItem(SESSION_KEY);
-  if (!id) {
-    id = crypto.randomUUID();
-    sessionStorage.setItem(SESSION_KEY, id);
+  try {
+    let id = sessionStorage.getItem(SESSION_KEY);
+    if (!id) {
+      id =
+        typeof crypto !== "undefined" && typeof crypto.randomUUID === "function"
+          ? crypto.randomUUID()
+          : fallbackId();
+      sessionStorage.setItem(SESSION_KEY, id);
+    }
+    return id;
+  } catch {
+    return fallbackId();
   }
-  return id;
 }
 
 function pickUTMs() {
@@ -63,27 +76,27 @@ export function usePageViewBeacon() {
     if (typeof window === "undefined") return;
     if (shouldSkip(pathname)) return;
 
-    const payload = {
-      url: window.location.href,
-      referrer: document.referrer || undefined,
-      session_id: getOrCreateSessionId(),
-      screen_width: window.screen?.width,
-      screen_height: window.screen?.height,
-      viewport_width: window.innerWidth,
-      viewport_height: window.innerHeight,
-      ...pickUTMs(),
-    };
-
-    const sendFallback = () => {
-      fetch(ENDPOINT, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-        keepalive: true,
-      }).catch(() => {});
-    };
-
     try {
+      const payload = {
+        url: window.location.href,
+        referrer: document.referrer || undefined,
+        session_id: getOrCreateSessionId(),
+        screen_width: window.screen?.width,
+        screen_height: window.screen?.height,
+        viewport_width: window.innerWidth,
+        viewport_height: window.innerHeight,
+        ...pickUTMs(),
+      };
+
+      const sendFallback = () => {
+        fetch(ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+          keepalive: true,
+        }).catch(() => {});
+      };
+
       if (navigator.sendBeacon) {
         const blob = new Blob([JSON.stringify(payload)], { type: "text/plain" });
         const ok = navigator.sendBeacon(ENDPOINT, blob);
