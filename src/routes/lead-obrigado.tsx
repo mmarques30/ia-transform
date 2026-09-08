@@ -1,9 +1,13 @@
-import { useEffect } from "react";
+import { useEffect, type ReactNode } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { CheckCircle2, Mail, MessageCircle } from "lucide-react";
 import { BgDobra } from "@/components/BgDobra";
 import { Footer } from "@/components/sections/Footer";
 import { Reveal } from "@/components/Reveal";
+import { VideoPlayer } from "@/components/ui/video-player";
+
+/** Vídeo de boas-vindas exibido logo após o envio do kit. */
+const WELCOME_VIDEO_ID = "DB2wiUEPT18";
 
 interface LeadObrigadoSearch {
   eid?: string;
@@ -58,37 +62,21 @@ function LeadObrigadoPage() {
   return (
     <main className="min-h-screen text-foreground" style={{ backgroundColor: "#0a0c07" }}>
       <BgDobra intensity="alta">
-        <section className="relative pt-[100px] pb-[60px] lg:pt-[140px] lg:pb-[80px]">
+        <section className="relative pt-[72px] pb-[56px] lg:pt-[96px] lg:pb-[80px]">
           <div className="container-page">
-            <div className="text-center max-w-[760px] mx-auto">
+            {/* Cabeçalho enxuto — o vídeo é o protagonista */}
+            <div className="text-center max-w-[880px] mx-auto">
               <Reveal>
                 <img
                   src="/brand/iaplicada-logo-dark.png"
                   alt="IAplicada"
-                  height={28}
+                  height={26}
                   className="block mx-auto"
-                  style={{ height: 28, width: "auto" }}
+                  style={{ height: 26, width: "auto" }}
                 />
               </Reveal>
 
               <Reveal delay={0.05}>
-                <span
-                  className="inline-flex h-16 w-16 items-center justify-center rounded-full mt-8"
-                  style={{
-                    backgroundColor: "rgba(139,155,58,0.15)",
-                    border: "1.5px solid rgba(139,155,58,0.4)",
-                    boxShadow: "0 0 30px -6px rgba(200,224,64,0.2)",
-                  }}
-                >
-                  <CheckCircle2
-                    className="h-9 w-9"
-                    strokeWidth={2}
-                    style={{ color: "var(--color-primary)" }}
-                  />
-                </span>
-              </Reveal>
-
-              <Reveal delay={0.1}>
                 <span
                   className="mt-6 inline-flex items-center gap-2 rounded-full px-3 py-1 text-[10px] uppercase tracking-[0.16em] font-semibold"
                   style={{
@@ -97,84 +85,106 @@ function LeadObrigadoPage() {
                     border: "1px solid rgba(139,155,58,0.3)",
                   }}
                 >
-                  <span
-                    className="h-1.5 w-1.5 rounded-full"
-                    style={{ backgroundColor: "var(--color-primary)" }}
-                  />
+                  <CheckCircle2 className="h-3.5 w-3.5" strokeWidth={2.4} />
                   Kit enviado
                 </span>
               </Reveal>
 
-              <Reveal delay={0.15}>
-                <h1 className="h-mix mt-7 text-[34px] sm:text-[48px] lg:text-[62px] leading-[1.05] text-foreground">
-                  Pronto! Kit <em>a caminho.</em>
+              <Reveal delay={0.1}>
+                <h1 className="h-mix mt-5 text-[30px] sm:text-[40px] lg:text-[46px] leading-[1.06] text-foreground">
+                  Pronto! Antes de abrir o kit, <em>assista isso.</em>
                 </h1>
               </Reveal>
 
-              <Reveal delay={0.2}>
-                <p className="mt-7 text-[17px] sm:text-[18px] text-sage leading-[1.65] max-w-[600px] mx-auto">
-                  Enviamos o acesso completo para você.
-                  <br />
-                  Confira agora nos canais abaixo:
+              <Reveal delay={0.15}>
+                <p className="mt-4 text-[15px] sm:text-[17px] text-sage leading-[1.6] max-w-[560px] mx-auto">
+                  O acesso completo já está indo pro seu WhatsApp e e-mail.
                 </p>
               </Reveal>
             </div>
+
+            {/* Vídeo */}
+            <Reveal delay={0.2}>
+              <div className="mt-8 lg:mt-10 max-w-[920px] mx-auto">
+                <VideoPlayer
+                  videoId={WELCOME_VIDEO_ID}
+                  size="full"
+                  title="Vídeo de boas-vindas ao kit de automação com IA"
+                  className="rounded-2xl"
+                  style={{
+                    border: "1px solid rgba(139,155,58,0.28)",
+                    boxShadow:
+                      "0 0 60px -12px rgba(200,224,64,0.18), 0 0 120px -24px rgba(139,155,58,0.14), 0 28px 70px -20px rgba(0,0,0,0.7)",
+                  }}
+                />
+              </div>
+            </Reveal>
+
+            {/* Onde o kit chega — segundo plano, discreto, enquanto ela assiste */}
+            <Reveal delay={0.28}>
+              <div className="mt-5 lg:mt-6 max-w-[560px] mx-auto grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                <ChannelPill
+                  icon={<MessageCircle className="h-4.5 w-4.5" />}
+                  label="WhatsApp"
+                  hint="Verifique suas mensagens"
+                />
+                <ChannelPill
+                  icon={<Mail className="h-4.5 w-4.5" />}
+                  label="E-mail"
+                  hint="Confira a caixa de entrada"
+                />
+              </div>
+            </Reveal>
+
+            <Reveal delay={0.34}>
+              <p
+                className="mt-8 text-center text-[11px] uppercase tracking-[0.08em]"
+                style={{ color: "var(--text-muted, #8a8e82)" }}
+              >
+                &#10038; IAplicada
+              </p>
+            </Reveal>
           </div>
         </section>
       </BgDobra>
 
-      <section className="section-veil py-[80px] lg:py-[120px]">
-        <div className="container-page">
-          <div className="max-w-[480px] mx-auto flex flex-col gap-4">
-            <Reveal>
-              <div
-                className="flex items-center gap-4 rounded-xl px-6 py-5"
-                style={{
-                  background: "rgba(139,155,58,0.08)",
-                  border: "1px solid rgba(139,155,58,0.25)",
-                }}
-              >
-                <MessageCircle className="h-6 w-6 shrink-0" style={{ color: "var(--color-primary)" }} />
-                <div>
-                  <p className="text-[15px] font-semibold text-foreground">WhatsApp</p>
-                  <p className="text-[13px] mt-0.5" style={{ color: "var(--text-sage, #c4c8bc)" }}>
-                    Verifique suas mensagens
-                  </p>
-                </div>
-              </div>
-            </Reveal>
-
-            <Reveal delay={0.08}>
-              <div
-                className="flex items-center gap-4 rounded-xl px-6 py-5"
-                style={{
-                  background: "rgba(139,155,58,0.08)",
-                  border: "1px solid rgba(139,155,58,0.25)",
-                }}
-              >
-                <Mail className="h-6 w-6 shrink-0" style={{ color: "var(--color-primary)" }} />
-                <div>
-                  <p className="text-[15px] font-semibold text-foreground">E-mail</p>
-                  <p className="text-[13px] mt-0.5" style={{ color: "var(--text-sage, #c4c8bc)" }}>
-                    Confira sua caixa de entrada
-                  </p>
-                </div>
-              </div>
-            </Reveal>
-          </div>
-
-          <Reveal delay={0.14}>
-            <p
-              className="mt-10 text-center text-[11px] uppercase tracking-[0.08em]"
-              style={{ color: "var(--text-muted, #8a8e82)" }}
-            >
-              &#10038; IAplicada
-            </p>
-          </Reveal>
-        </div>
-      </section>
-
       <Footer />
     </main>
+  );
+}
+
+function ChannelPill({
+  icon,
+  label,
+  hint,
+}: {
+  icon: ReactNode;
+  label: string;
+  hint: string;
+}) {
+  return (
+    <div
+      className="flex items-center gap-3 rounded-xl px-4 py-3"
+      style={{
+        background: "rgba(255,255,255,0.025)",
+        border: "1px solid rgba(139,155,58,0.16)",
+      }}
+    >
+      <span
+        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full"
+        style={{
+          backgroundColor: "rgba(139,155,58,0.12)",
+          color: "var(--color-primary)",
+        }}
+      >
+        {icon}
+      </span>
+      <div className="min-w-0">
+        <p className="text-[13px] font-semibold leading-tight" style={{ color: "rgba(255,255,255,0.86)" }}>{label}</p>
+        <p className="text-[12px] mt-0.5" style={{ color: "var(--text-muted, #8a8e82)" }}>
+          {hint}
+        </p>
+      </div>
+    </div>
   );
 }
