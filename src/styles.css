@@ -4046,17 +4046,15 @@ select.lead-input option {
 }
 
 /* ─── Hero: H1 das variantes /iaplicada-* (frases longas) ───
-   O H1 da / é nowrap porque cabe folgado; os das variantes têm até
-   38 chars por frase e precisam quebrar dentro da coluna de texto. */
+   Mesma fonte, tamanho e entrelinha da / (herda tudo de .hero-b-h1).
+   A única diferença é permitir quebra: o H1 da / é nowrap porque cabe
+   folgado; os das variantes têm até 38 chars por frase e quebram
+   dentro da coluna de texto, como as 3 linhas da original. */
 .hero-b-h1--wrap {
   white-space: normal;
-  font-size: clamp(40px, 4.2vw, 58px);
-  line-height: 1.04;
-}
-@media (max-width: 900px) {
-  .hero-b-h1--wrap {
-    font-size: clamp(32px, 9vw, 42px);
-  }
+  /* Evita última linha com uma palavra só (as duas últimas palavras de
+     cada frase também vão com &nbsp; no lpVariants.tsx). */
+  text-wrap: pretty;
 }
 
 /* ─── A conta que ninguém faz ───
