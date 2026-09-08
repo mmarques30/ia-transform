@@ -3972,11 +3972,19 @@ select.lead-input option {
 }
 
 /* ── VideoPlayer (branding IAplicada) ── */
+/* O iframe é mais alto que a moldura e a sobra fica cortada (overflow
+   hidden no container). O vídeo 16:9 continua ocupando exatamente a
+   moldura; a barra de título/logo do YouTube é desenhada na faixa
+   letterbox extra, que fica fora da área visível. */
+.iap-video__mount {
+  --iap-crop: clamp(48px, 14%, 90px);
+}
 .iap-video__mount iframe {
   position: absolute;
-  inset: 0;
+  left: 0;
+  top: calc(-1 * var(--iap-crop));
   width: 100%;
-  height: 100%;
+  height: calc(100% + 2 * var(--iap-crop));
   border: 0;
   pointer-events: none;
 }

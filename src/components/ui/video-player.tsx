@@ -48,6 +48,7 @@ interface YTPlayer {
   mute(): void;
   unMute(): void;
   isMuted(): boolean;
+  unloadModule(module: string): void;
   destroy(): void;
 }
 
@@ -93,6 +94,20 @@ function loadYouTubeApi(): Promise<YTNamespace> {
   return ytApiPromise;
 }
 
+/**
+ * Desliga legendas. Não existe playerVar que force captions OFF (só ON),
+ * então descarregamos os módulos de legenda — precisa repetir no play
+ * porque o YouTube recarrega o módulo ao iniciar a reprodução.
+ */
+function disableCaptions(p: YTPlayer) {
+  try {
+    p.unloadModule("captions");
+    p.unloadModule("cc");
+  } catch {
+    /* módulo pode não existir nessa versão do player */
+  }
+}
+
 function formatTime(time: number) {
   if (!Number.isFinite(time) || time < 0) time = 0;
   const hours = Math.floor(time / 3600);
@@ -131,7 +146,6 @@ const VideoPlayer = React.forwardRef<HTMLDivElement, VideoPlayerProps>(
     ref,
   ) => {
     const [isReady, setIsReady] = React.useState(false);
-    const [hasStarted, setHasStarted] = React.useState(false);
     const [isPlaying, setIsPlaying] = React.useState(false);
     const [currentTime, setCurrentTime] = React.useState(0);
     const [duration, setDuration] = React.useState(0);
@@ -175,11 +189,13 @@ const VideoPlayer = React.forwardRef<HTMLDivElement, VideoPlayerProps>(
             disablekb: 1,
             iv_load_policy: 3,
             fs: 0,
+            cc_load_policy: 0,
             origin: window.location.origin,
           },
           events: {
             onReady: (e) => {
               if (cancelled) return;
+              disableCaptions(e.target);
               setDuration(e.target.getDuration());
               setIsReady(true);
               if (pendingPlay.current) {
@@ -190,7 +206,7 @@ const VideoPlayer = React.forwardRef<HTMLDivElement, VideoPlayerProps>(
             onStateChange: (e) => {
               if (cancelled) return;
               if (e.data === YT.PlayerState.PLAYING) {
-                setHasStarted(true);
+                disableCaptions(e.target);
                 setIsPlaying(true);
                 if (!duration) setDuration(e.target.getDuration());
               } else if (
@@ -385,8 +401,9 @@ const VideoPlayer = React.forwardRef<HTMLDivElement, VideoPlayerProps>(
             aria-hidden
           />
 
-          {/* Poster até o primeiro play */}
-          {!hasStarted && (
+          {/* Poster: antes do play e em pausa/fim — cobre a barra de título,
+              a tela de "mais vídeos" e o end screen do YouTube. */}
+          {!isPlaying && (
             <div className="absolute inset-0 pointer-events-none">
               {!posterFailed && (
                 <img
