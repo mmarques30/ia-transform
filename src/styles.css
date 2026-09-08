@@ -2669,7 +2669,9 @@
   position: absolute;
   right: -8%;
   top: 0;
-  bottom: 0;
+  /* termina no meio da .value-strip (que sobe clamp(80px,18vh,160px)
+     sobre a hero), pra faixa cobrir o fim da foto sem sobrar cauda */
+  bottom: calc(clamp(80px, 18vh, 160px) - 44px);
   width: 40%;
   z-index: 2;
   pointer-events: none;
