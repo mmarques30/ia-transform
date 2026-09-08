@@ -22,9 +22,9 @@ export const LP_VARIANTS = {
       "Em até 90 dias construímos o software com IA que automatiza a operação sob medida pro jeito que a empresa funciona. Sem ERP engessado. Sem consultoria que some depois da apresentação.",
     heroTitle: (
       <>
-        <span className="hero-b-h1-sans">Faturamento cresceu.</span>
+        <span className="hero-b-h1-sans">Faturamento&nbsp;cresceu.</span>
         <br />
-        <em className="hero-b-h1-em">Operação virou gargalo.</em>
+        <em className="hero-b-h1-em">Operação virou&nbsp;gargalo.</em>
       </>
     ),
     heroSubtitle: (
@@ -42,9 +42,9 @@ export const LP_VARIANTS = {
       "Em até 90 dias construímos o software com IA que preenche o vazio entre o ERP e o que a empresa realmente precisa. Automações, integrações e agentes que fazem o trabalho manual que sobrou.",
     heroTitle: (
       <>
-        <span className="hero-b-h1-sans">Seu ERP arrumou o cadastro.</span>
+        <span className="hero-b-h1-sans">Seu ERP arrumou o&nbsp;cadastro.</span>
         <br />
-        <em className="hero-b-h1-em">Não arrumou a operação.</em>
+        <em className="hero-b-h1-em">Não arrumou a&nbsp;operação.</em>
       </>
     ),
     heroSubtitle: (
@@ -63,9 +63,9 @@ export const LP_VARIANTS = {
       "Em até 90 dias construímos o software com IA que resolve o trabalho manual que hoje custaria mais gente na folha. Aumentar custo fixo é a última coisa que sua empresa precisa agora.",
     heroTitle: (
       <>
-        <span className="hero-b-h1-sans">Você não precisa contratar mais gente.</span>
+        <span className="hero-b-h1-sans">Você não precisa contratar mais&nbsp;gente.</span>
         <br />
-        <em className="hero-b-h1-em">Precisa da operação dando conta.</em>
+        <em className="hero-b-h1-em">Precisa da operação dando&nbsp;conta.</em>
       </>
     ),
     heroSubtitle: (

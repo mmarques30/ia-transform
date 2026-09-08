@@ -4052,6 +4052,9 @@ select.lead-input option {
    dentro da coluna de texto, como as 3 linhas da original. */
 .hero-b-h1--wrap {
   white-space: normal;
+  /* Evita última linha com uma palavra só (as duas últimas palavras de
+     cada frase também vão com &nbsp; no lpVariants.tsx). */
+  text-wrap: pretty;
 }
 
 /* ─── A conta que ninguém faz ───
