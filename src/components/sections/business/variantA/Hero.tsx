@@ -15,8 +15,8 @@ interface HeroProps {
   title?: React.ReactNode;
   /** Sub-headline alternativa. Default: copy da /. */
   subtitle?: React.ReactNode;
-  /** utm_content gravado no lead quando a URL não traz um. */
-  utmContent?: string;
+  /** Slug fixo da rota enviado como `landing_page` no lead. */
+  landingPage?: string;
 }
 
 const DEFAULT_TITLE = (
@@ -37,7 +37,7 @@ const DEFAULT_SUBTITLE = (
   </>
 );
 
-export function Hero({ title, subtitle, utmContent }: HeroProps = {}) {
+export function Hero({ title, subtitle, landingPage }: HeroProps = {}) {
   const isVariant = title !== undefined;
   return (
     <>
@@ -73,7 +73,7 @@ export function Hero({ title, subtitle, utmContent }: HeroProps = {}) {
               <HeroForm
                 formSlug="business"
                 thankYouPath="/thank-you-business"
-                utmContentFallback={utmContent}
+                landingPage={landingPage}
                 compact
               />
             </Reveal>

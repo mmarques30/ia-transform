@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState, type FocusEvent, type FormEve
 import { useNavigate } from "@tanstack/react-router";
 import { AlertCircle } from "lucide-react";
 import { getMetaPixelCookies, getFbclidFromUrl } from "@/lib/metaCookies";
+import { captureAttribution, landingPageFromPath } from "@/lib/attribution";
 
 /**
  * Wrapper safe pro Clarity. window.clarity é injetado pelo snippet no
@@ -55,11 +56,11 @@ interface HeroFormProps {
    */
   compact?: boolean;
   /**
-   * Valor do hidden field utm_content quando a URL não traz um. As
-   * rotas /iaplicada-* passam o slug da variante pra medir Lead→MQL
-   * por versão da LP mesmo em tráfego sem UTM.
+   * Slug fixo da página, enviado sempre como `landing_page` (o CRM
+   * identifica a LP por ele). "home" na /, slug da rota nas variantes
+   * /iaplicada-*. Omitido = derivado do pathname na abertura.
    */
-  utmContentFallback?: string;
+  landingPage?: string;
 }
 
 /** Opções sincronizadas com form_fields do CRM (slug=business). */
@@ -105,14 +106,26 @@ export function HeroForm({
   thankYouPath = "/thank-you-business",
   onSuccess,
   compact = false,
-  utmContentFallback = "",
+  landingPage,
 }: HeroFormProps = {}) {
   const navigate = useNavigate();
-  const [utmContentValue, setUtmContentValue] = useState(utmContentFallback);
+  /** Hidden fields de tracking. landing_page é fixo por rota; page_url e
+   *  referrer só existem no client, então entram no mount. UTMs/click ids
+   *  são capturados da URL aqui (e guardados em sessionStorage) pra não
+   *  se perderem se a query string sumir antes do submit. */
+  const [tracking, setTracking] = useState({
+    landing_page: landingPage ?? "",
+    page_url: "",
+    referrer: "",
+  });
   useEffect(() => {
-    const fromUrl = new URLSearchParams(window.location.search).get("utm_content");
-    if (fromUrl) setUtmContentValue(fromUrl);
-  }, []);
+    captureAttribution();
+    setTracking({
+      landing_page: landingPage ?? landingPageFromPath(window.location.pathname),
+      page_url: window.location.href,
+      referrer: document.referrer,
+    });
+  }, [landingPage]);
   const [loading, setLoading] = useState(false);
   const [loadingMsg, setLoadingMsg] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -241,13 +254,7 @@ export function HeroForm({
    * Sem todos preenchidos a Edge Function devolve missing[] e o lead
    * fica desqualificado. Bloqueamos no client antes pra evitar o roundtrip.
    */
-  const REQUIRED_FIELDS = [
-    "firstname",
-    "email",
-    "phone",
-    "cargo",
-    "faixa_de_faturamento",
-  ] as const;
+  const REQUIRED_FIELDS = ["firstname", "email", "phone", "cargo", "faixa_de_faturamento"] as const;
 
   /** Valida um único field. Retorna mensagem de erro ou "" se OK. */
   function validateField(name: string, value: string): string {
@@ -359,14 +366,24 @@ export function HeroForm({
         faixa_de_faturamento: String(fd.get("faixa_de_faturamento") ?? "").trim(),
       };
 
-      const utmSource = params.get("utm_source") ?? "";
-      const utmMedium = params.get("utm_medium") ?? "";
-      const utmCampaign = params.get("utm_campaign") ?? "";
-      const utmTerm = params.get("utm_term") ?? "";
-      const utmContent =
-        params.get("utm_content") || String(fd.get("utm_content") ?? "").trim();
-      const fbclid = getFbclidFromUrl() ?? params.get("fbclid") ?? "";
-      const gclid = params.get("gclid") ?? "";
+      // UTMs e click ids: só o que veio na URL (capturado na abertura da
+      // página e guardado na sessão). Sem fallback — sem UTM, vai vazio.
+      const attribution = captureAttribution();
+      const utmSource = attribution.utm_source;
+      const utmMedium = attribution.utm_medium;
+      const utmCampaign = attribution.utm_campaign;
+      const utmTerm = attribution.utm_term;
+      const utmContent = attribution.utm_content;
+      const utmId = attribution.utm_id;
+      const fbclid = getFbclidFromUrl() ?? params.get("fbclid") ?? attribution.fbclid;
+      const gclid = attribution.gclid;
+      // Identidade da LP (hidden fields) — independente de UTM.
+      const landing_page =
+        String(fd.get("landing_page") ?? "").trim() ||
+        landingPage ||
+        landingPageFromPath(window.location.pathname);
+      const pageUrl = String(fd.get("page_url") ?? "") || window.location.href;
+      const referrer = String(fd.get("referrer") ?? "") || document.referrer;
       // Cookies do pixel Meta — alimentam o Match Quality da CAPI
       // server-side. Pixel é injetado no __root.tsx; quando o user
       // chega aqui via submit (alguns segundos depois), _fbp/_fbc
@@ -376,6 +393,9 @@ export function HeroForm({
 
       const payload = {
         form_slug: formSlug,
+        // Slug fixo da rota ("home", "iaplicada-erp", ...). O CRM usa este
+        // campo pra saber a LP; utm_content é só repasse do que veio na URL.
+        landing_page,
         fields,
         // ─── Shape esperada pela Edge Function form-submit ───
         // A Edge Function lê utm.source / attribution.fbclid / meta.page_url.
@@ -388,11 +408,12 @@ export function HeroForm({
           campaign: utmCampaign,
           term: utmTerm,
           content: utmContent,
+          id: utmId,
         },
         attribution: { fbclid, gclid, fbp, fbc },
         meta: {
-          page_url: typeof window !== "undefined" ? window.location.href : "",
-          referrer: typeof document !== "undefined" ? document.referrer : "",
+          page_url: pageUrl,
+          referrer,
           user_agent: typeof navigator !== "undefined" ? navigator.userAgent : "",
         },
         // Backwards-compat: mantém o shape antigo (top-level) caso algum
@@ -402,6 +423,7 @@ export function HeroForm({
         utm_campaign: utmCampaign,
         utm_term: utmTerm,
         utm_content: utmContent,
+        utm_id: utmId,
         fbclid,
         gclid,
         // Mesmo eventID que dispara no fbq client. Permite a Edge Function
@@ -584,7 +606,9 @@ export function HeroForm({
           className={compact ? "space-y-1.5" : "space-y-2"}
           noValidate
         >
-          <input type="hidden" name="utm_content" value={utmContentValue} readOnly />
+          <input type="hidden" name="landing_page" value={tracking.landing_page} readOnly />
+          <input type="hidden" name="page_url" value={tracking.page_url} readOnly />
+          <input type="hidden" name="referrer" value={tracking.referrer} readOnly />
 
           <Field id="firstname" label="Nome Completo" required error={fieldErrors.firstname}>
             <input
