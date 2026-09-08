@@ -54,6 +54,12 @@ interface HeroFormProps {
    * submit e o payload são idênticos ao form normal.
    */
   compact?: boolean;
+  /**
+   * Valor do hidden field utm_content quando a URL não traz um. As
+   * rotas /iaplicada-* passam o slug da variante pra medir Lead→MQL
+   * por versão da LP mesmo em tráfego sem UTM.
+   */
+  utmContentFallback?: string;
 }
 
 /** Opções sincronizadas com form_fields do CRM (slug=business). */
@@ -99,8 +105,14 @@ export function HeroForm({
   thankYouPath = "/thank-you-business",
   onSuccess,
   compact = false,
+  utmContentFallback = "",
 }: HeroFormProps = {}) {
   const navigate = useNavigate();
+  const [utmContentValue, setUtmContentValue] = useState(utmContentFallback);
+  useEffect(() => {
+    const fromUrl = new URLSearchParams(window.location.search).get("utm_content");
+    if (fromUrl) setUtmContentValue(fromUrl);
+  }, []);
   const [loading, setLoading] = useState(false);
   const [loadingMsg, setLoadingMsg] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -351,7 +363,8 @@ export function HeroForm({
       const utmMedium = params.get("utm_medium") ?? "";
       const utmCampaign = params.get("utm_campaign") ?? "";
       const utmTerm = params.get("utm_term") ?? "";
-      const utmContent = params.get("utm_content") ?? "";
+      const utmContent =
+        params.get("utm_content") || String(fd.get("utm_content") ?? "").trim();
       const fbclid = getFbclidFromUrl() ?? params.get("fbclid") ?? "";
       const gclid = params.get("gclid") ?? "";
       // Cookies do pixel Meta — alimentam o Match Quality da CAPI
@@ -571,6 +584,8 @@ export function HeroForm({
           className={compact ? "space-y-1.5" : "space-y-2"}
           noValidate
         >
+          <input type="hidden" name="utm_content" value={utmContentValue} readOnly />
+
           <Field id="firstname" label="Nome Completo" required error={fieldErrors.firstname}>
             <input
               id="firstname"

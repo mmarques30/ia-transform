@@ -22,10 +22,6 @@ const FAQ_ITEMS: { q: string; a: string }[] = [
     q: "O diagnóstico é realmente gratuito? E se eu já tiver sistemas?",
     a: "Sim. Sem custo e sem compromisso de contratação. Mesmo que você não feche, leva o mapa de processos, o ranking de gargalos e o playbook do trimestre. O material fica com você.\n\nSe já usa outros sistemas, o que construímos se integra ao que você já tem: planilha, CRM, ERP, WhatsApp, e-mail. Não jogamos fora o que funciona. Automatizamos o que trava.",
   },
-  {
-    q: "Vale a pena o investimento? Tem como calcular?",
-    a: "Tem. Faça a conta.\n\nUma empresa com 10 pessoas gastando 2 horas por dia em tarefas manuais acumula 400 horas paradas por mês. A R$ 80 por hora, são R$ 32 mil por mês em tempo que não vira receita.\n\nSem contar o custo de erro, retrabalho e decisão lenta.\n\nA PSA Consultores economizou R$ 251 mil no primeiro ano com o sistema. ROI de 1.806%. A B&Z Advocacia eliminou R$ 60 mil por ano em custo de equipe. A LCR Contábil automatizou 10.948 lançamentos por mês que antes dependiam de operador.\n\nO investimento é calculado por escopo e apresentado depois do diagnóstico. Mas a pergunta certa não é quanto custa. É quanto está custando não ter.",
-  },
 ];
 
 export function FAQ() {

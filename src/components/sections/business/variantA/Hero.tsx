@@ -10,18 +10,41 @@ import { FOUNDER } from "@/config/brand";
  * "recupere o controle da operação e escale a receita sem contratar".
  */
 
-export function Hero() {
+interface HeroProps {
+  /** H1 alternativo (variantes /iaplicada-*). Default: copy da /. */
+  title?: React.ReactNode;
+  /** Sub-headline alternativa. Default: copy da /. */
+  subtitle?: React.ReactNode;
+  /** utm_content gravado no lead quando a URL não traz um. */
+  utmContent?: string;
+}
+
+const DEFAULT_TITLE = (
+  <>
+    <span className="hero-b-h1-sans">Faça o dobro.</span>
+    <br />
+    <em className="hero-b-h1-em">Entregue em metade do tempo.</em>
+    <br />
+    <span className="hero-b-h1-sans">Com o time que você já tem.</span>
+  </>
+);
+
+const DEFAULT_SUBTITLE = (
+  <>
+    Em até <em style={{ color: "var(--color-primary)" }}>90 dias</em> construímos o software com IA
+    que automatiza sua operação de ponta a ponta, sob medida para o jeito que seu negócio funciona.
+    Sem ERP engessado. Sem consultoria que some depois da apresentação.
+  </>
+);
+
+export function Hero({ title, subtitle, utmContent }: HeroProps = {}) {
+  const isVariant = title !== undefined;
   return (
     <>
       <section id="top" className="hero-section-b">
         <HeroFlowBg />
         <div className="hero-founder-photo" aria-hidden="true">
-          <img
-            src="/brand/mariana-transparente.png"
-            alt=""
-            loading="eager"
-            decoding="async"
-          />
+          <img src="/brand/mariana-transparente.png" alt="" loading="eager" decoding="async" />
         </div>
         <div className="hero-b">
           <div className="hero-b-text">
@@ -35,28 +58,24 @@ export function Hero() {
             </Reveal>
 
             <Reveal delay={0.05}>
-              <h1 className="hero-b-h1">
-                <span className="hero-b-h1-sans">Faça o dobro.</span>
-                <br />
-                <em className="hero-b-h1-em">Entregue em metade do tempo.</em>
-                <br />
-                <span className="hero-b-h1-sans">Com o time que você já tem.</span>
+              <h1 className={`hero-b-h1${isVariant ? " hero-b-h1--wrap" : ""}`}>
+                {title ?? DEFAULT_TITLE}
               </h1>
             </Reveal>
 
             <Reveal delay={0.08}>
-              <p className="hero-b-sub">
-                Em até <em style={{ color: "var(--color-primary)" }}>90 dias</em> construímos o
-                software com IA que automatiza sua operação de ponta a ponta, sob medida para o
-                jeito que seu negócio funciona. Sem ERP engessado. Sem consultoria que some depois
-                da apresentação.
-              </p>
+              <p className="hero-b-sub">{subtitle ?? DEFAULT_SUBTITLE}</p>
             </Reveal>
           </div>
 
           <div className="hero-b-form-col">
             <Reveal delay={0.15}>
-              <HeroForm formSlug="business" thankYouPath="/thank-you-business" compact />
+              <HeroForm
+                formSlug="business"
+                thankYouPath="/thank-you-business"
+                utmContentFallback={utmContent}
+                compact
+              />
             </Reveal>
           </div>
         </div>

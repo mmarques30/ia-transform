@@ -1,16 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { BgDobra } from "@/components/BgDobra";
-import { Hero } from "@/components/sections/business/variantA/Hero";
-import { Problem } from "@/components/sections/business/variantA/Problem";
-import { Comparison } from "@/components/sections/business/variantA/Comparison";
-import { MetodoAplicaBook } from "@/components/sections/business/variantA/MetodoAplicaBook";
-import { Team } from "@/components/sections/business/variantA/Team";
-import { ValueStrip } from "@/components/sections/business/variantA/ValueStrip";
-import { ParaQuem } from "@/components/sections/business/variantA/ParaQuem";
-import { FAQ } from "@/components/sections/business/variantA/FAQ";
-import { Testimonials } from "@/components/sections/business/variantB/Testimonials";
-import { DiagnosticoModalProvider } from "@/components/sections/business/variantB/DiagnosticoModal";
-import { Footer } from "@/components/sections/Footer";
+import { BusinessLanding } from "@/components/sections/business/variantA/BusinessLanding";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -39,52 +28,3 @@ export const Route = createFileRoute("/")({
   }),
   component: BusinessLanding,
 });
-
-/**
- * / (LP-A) — mesma estrutura da /businessv2, copy própria pro ângulo
- * "recuperar o controle e escalar sem contratar". Componentes que só
- * mudam de copy foram duplicados em variantA/; componentes onde a
- * copy é a mesma (Testimonials, SelectedClients, DiagnosticoModal)
- * são reusados diretamente de variantB.
- *
- * Ordem espelha o fluxo da v2:
- *  01 Hero (QualifierStrip + form inline + fluxo SVG no bg)
- *  02 Problem (ChaosCards + 2-col bullets + CTA glow)
- *  03 Testimonials (reusa v2 — 9 depoimentos reais)
- *  04 SelectedClients (reusa v2 — stats com count-up)
- *  05 MetodoAplicaBook (trilha vertical A·P·L·I·C·A)
- *  06 AppShowcase (tabs de painéis)
- *  07 Guarantee (entregáveis + garantia de implementação)
- *  09 FinalForm (HeroForm inline no fim)
- *  12 QualifierStrip rodapé
- *  13 Footer
- */
-function BusinessLanding() {
-  return (
-    <DiagnosticoModalProvider>
-      <main className="min-h-screen text-foreground" style={{ backgroundColor: "#0a0c07" }}>
-        <Hero />
-
-        <ValueStrip />
-
-        <BgDobra intensity="media">
-          <Problem />
-        </BgDobra>
-
-        <Comparison />
-
-        <MetodoAplicaBook />
-
-        <Testimonials />
-
-        <Team />
-
-        <ParaQuem />
-
-        <FAQ />
-
-        <Footer />
-      </main>
-    </DiagnosticoModalProvider>
-  );
-}
