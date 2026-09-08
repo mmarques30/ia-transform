@@ -17,8 +17,8 @@ export interface BusinessLandingProps {
   heroTitle?: React.ReactNode;
   /** Sub-headline do hero. Omitido = copy da /. */
   heroSubtitle?: React.ReactNode;
-  /** utm_content gravado no lead quando a URL não traz um. */
-  utmContent?: string;
+  /** Slug fixo da rota, enviado sempre como `landing_page`. Default "home". */
+  landingPage?: string;
 }
 
 /**
@@ -30,11 +30,15 @@ export interface BusinessLandingProps {
  *  Hero → ValueStrip → Problem → Comparison → MetodoAplicaBook
  *  → ContaQueNinguemFaz → Testimonials → Team → ParaQuem → FAQ → Footer
  */
-export function BusinessLanding({ heroTitle, heroSubtitle, utmContent }: BusinessLandingProps) {
+export function BusinessLanding({
+  heroTitle,
+  heroSubtitle,
+  landingPage = "home",
+}: BusinessLandingProps) {
   return (
     <DiagnosticoModalProvider>
       <main className="min-h-screen text-foreground" style={{ backgroundColor: "#0a0c07" }}>
-        <Hero title={heroTitle} subtitle={heroSubtitle} utmContent={utmContent} />
+        <Hero title={heroTitle} subtitle={heroSubtitle} landingPage={landingPage} />
 
         <ValueStrip />
 

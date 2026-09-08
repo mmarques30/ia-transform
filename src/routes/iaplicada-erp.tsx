@@ -7,6 +7,6 @@ const v = LP_VARIANTS.erp;
 export const Route = createFileRoute("/iaplicada-erp")({
   head: () => variantHead(v),
   component: () => (
-    <BusinessLanding heroTitle={v.heroTitle} heroSubtitle={v.heroSubtitle} utmContent={v.slug} />
+    <BusinessLanding heroTitle={v.heroTitle} heroSubtitle={v.heroSubtitle} landingPage={v.slug} />
   ),
 });
