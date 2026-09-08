@@ -153,12 +153,17 @@ export const Route = createRootRoute({
         children: `(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script",(function(){var p=(window.location&&window.location.pathname)||"";if(p.indexOf("/contabil")===0)return "${CLARITY_PROJECT_ID_CONTABIL}";return "${CLARITY_PROJECT_ID_BUSINESS}";})());try{if(window.location&&window.location.hostname==="iaplicada.com"){window.clarity("set","environment","production");}else{window.clarity("set","environment","preview");}}catch(e){}`,
       },
       // Meta Pixel — conversões / remarketing Facebook/Instagram Ads.
-      // Define a função fbq() imediatamente (com fila) e dispara
-      // init + PageView, mas atrasa o download do fbevents.js externo em
-      // 2s pra não competir com o LCP. Quando o script carrega, a fila
-      // é drenada e os eventos vão na ordem certa.
+      //
+      // O PageView só chega na Meta depois que o fbevents.js carrega —
+      // é ele que vira "Landing Page View" no Ads Manager. Antes o
+      // download era atrasado 2s (setTimeout) pra proteger o LCP, e
+      // quem saía antes disso contava como clique sem LPV: no mads o
+      // beacon server-side registrava ~1 sessão com fbclid por clique
+      // enquanto a Meta via só ~55-65% delas como LPV. Carrega agora
+      // com fetchpriority=low: não disputa banda com a Hero e o
+      // PageView sai o mais cedo possível.
       {
-        children: `!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.defer=!0;t.src=v;setTimeout(function(){s=b.getElementsByTagName(e)[0];if(s&&s.parentNode){s.parentNode.insertBefore(t,s);}else{b.head.appendChild(t);}},2000);}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${META_PIXEL_ID}');fbq('track','PageView');`,
+        children: `!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;t.fetchPriority='low';s=b.getElementsByTagName(e)[0];if(s&&s.parentNode){s.parentNode.insertBefore(t,s);}else{b.head.appendChild(t);}}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${META_PIXEL_ID}');fbq('track','PageView');`,
       },
     ],
   }),
