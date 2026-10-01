@@ -4,6 +4,7 @@ import { lazy, useEffect, useState } from "react";
 import appCss from "../styles.css?url";
 import { isInAppBrowser } from "../lib/useEnv";
 import { usePageViewBeacon } from "../hooks/usePageViewBeacon";
+import { useMetaPageView } from "../hooks/useMetaPageView";
 
 /**
  * BrandBackground (WebGL via OGL) é lazy pra não pesar o entry chunk
@@ -207,6 +208,11 @@ function RootComponent() {
    *  as LPs públicas; thank-you e admin são pulados pelo próprio
    *  hook. Substitui as chamadas individuais por página. */
   usePageViewBeacon();
+
+  /** PageView do Meta Pixel a cada navegação SPA. O script inline no
+   *  head só cobre a carga inicial; sem isso, thank-you e variantes
+   *  nunca aparecem como URL de evento no Gerenciador. */
+  useMetaPageView();
 
   useEffect(() => {
     // Lenis adiciona inércia ao scroll. Bom no desktop, mas no WebView
