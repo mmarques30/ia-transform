@@ -5,6 +5,7 @@ import { LP_VARIANTS, variantHead } from "@/config/lpVariants";
 const v = LP_VARIANTS.contratacao;
 
 export const Route = createFileRoute("/iaplicada-contratacao")({
+  staticData: { sitemap: true },
   head: () => variantHead(v),
   component: () => (
     <BusinessLanding heroTitle={v.heroTitle} heroSubtitle={v.heroSubtitle} landingPage={v.slug} />

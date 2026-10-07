@@ -5,6 +5,7 @@ import { LP_VARIANTS, variantHead } from "@/config/lpVariants";
 const v = LP_VARIANTS.erp;
 
 export const Route = createFileRoute("/iaplicada-erp")({
+  staticData: { sitemap: true },
   head: () => variantHead(v),
   component: () => (
     <BusinessLanding heroTitle={v.heroTitle} heroSubtitle={v.heroSubtitle} landingPage={v.slug} />

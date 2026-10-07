@@ -86,8 +86,10 @@ export function variantHead(v: LpVariant) {
       { property: "og:title", content: v.metaTitle },
       { property: "og:description", content: v.metaDescription },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: `https://iaplicada.com/${v.slug}` },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "theme-color", content: "#0d0d0d" },
     ],
+    links: [{ rel: "canonical", href: `https://iaplicada.com/${v.slug}` }],
   };
 }

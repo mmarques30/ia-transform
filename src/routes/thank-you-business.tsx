@@ -16,6 +16,7 @@ interface ThankYouSearch {
 }
 
 export const Route = createFileRoute("/thank-you-business")({
+  staticData: { sitemap: false },
   validateSearch: (search: Record<string, unknown>): ThankYouSearch => ({
     eid: typeof search.eid === "string" ? search.eid : undefined,
   }),
@@ -27,6 +28,7 @@ export const Route = createFileRoute("/thank-you-business")({
         content:
           "Recebemos suas informações. Em breve você será contatado para dar continuidade ao seu diagnóstico estratégico.",
       },
+      { property: "og:url", content: "https://iaplicada.com/thank-you-business" },
       { name: "robots", content: "noindex, nofollow" },
       { property: "og:title", content: "Inscrição confirmada · IAplicada Business" },
     ],

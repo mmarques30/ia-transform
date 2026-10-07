@@ -12,6 +12,7 @@ import {
 import { Footer } from "@/components/sections/Footer";
 
 export const Route = createFileRoute("/lead")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       {
@@ -32,9 +33,11 @@ export const Route = createFileRoute("/lead")({
           "Prompts, automacoes e agentes de IA prontos para usar na sua empresa. Gratuito, acesso imediato.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://iaplicada.com/lead" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "theme-color", content: "#080a07" },
     ],
+    links: [{ rel: "canonical", href: "https://iaplicada.com/lead" }],
   }),
   component: LeadMagnetLanding,
 });

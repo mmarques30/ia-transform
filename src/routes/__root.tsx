@@ -59,6 +59,7 @@ function NotFoundComponent() {
 }
 
 export const Route = createRootRoute({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { charSet: "utf-8" },
@@ -80,7 +81,6 @@ export const Route = createRootRoute({
           "Não construímos por hype. Cada sistema é projetado pra resolver um problema operacional específico.",
       },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "https://iaplicada.com/" },
       { property: "og:image", content: "https://iaplicada.com/brand/capa_biz_sistemas.jpg" },
       { name: "twitter:card", content: "summary_large_image" },
       {

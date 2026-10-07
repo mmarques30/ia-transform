@@ -14,6 +14,7 @@ interface LeadObrigadoSearch {
 }
 
 export const Route = createFileRoute("/lead-obrigado")({
+  staticData: { sitemap: false },
   validateSearch: (search: Record<string, unknown>): LeadObrigadoSearch => ({
     eid: typeof search.eid === "string" ? search.eid : undefined,
   }),
@@ -25,6 +26,7 @@ export const Route = createFileRoute("/lead-obrigado")({
         content:
           "Seu kit de automação com IA foi enviado. Confira seu WhatsApp e e-mail.",
       },
+      { property: "og:url", content: "https://iaplicada.com/lead-obrigado" },
       { name: "robots", content: "noindex, nofollow" },
       { property: "og:title", content: "Kit enviado · IAplicada" },
     ],
