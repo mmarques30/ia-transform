@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { BusinessLanding } from "@/components/sections/business/variantA/BusinessLanding";
 
 export const Route = createFileRoute("/")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       {
@@ -22,9 +23,11 @@ export const Route = createFileRoute("/")({
           "Construímos sistemas de IA sob medida que eliminam o trabalho manual que trava sua operação — para você escalar receita sem precisar contratar mais ninguém.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://iaplicada.com/" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "theme-color", content: "#0d0d0d" },
     ],
+    links: [{ rel: "canonical", href: "https://iaplicada.com/" }],
   }),
   component: BusinessLanding,
 });
