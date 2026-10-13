@@ -1,8 +1,39 @@
 import { useCallback, useEffect, useRef, useState, type FocusEvent, type FormEvent } from "react";
 import { useNavigate } from "@tanstack/react-router";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, TriangleAlert } from "lucide-react";
 import { getMetaPixelCookies, getFbclidFromUrl } from "@/lib/metaCookies";
 import { captureAttribution, landingPageFromPath } from "@/lib/attribution";
+import {
+  CORRIGIR_PARAM,
+  WHATSAPP_REFORCO,
+  buildCorrigirHref,
+  checkWhatsappRemote,
+  formatPhone,
+  naoWhatsappMensagem,
+  normalizePhoneInput,
+  onlyDigits,
+  readLeadDraft,
+  sanitizeMotivo,
+  saveLeadDraft,
+  validatePhoneFormat,
+  type FormatIssue,
+  type WhatsappRemoteResult,
+} from "@/lib/whatsapp";
+
+/** Aviso do campo de WhatsApp. Não bloqueia o envio. */
+interface PhoneWarning {
+  motivo: string;
+  mensagem: string;
+  /** Mostra o reforço de confiança embaixo da mensagem. */
+  reforco: boolean;
+}
+
+/**
+ * O retorno via "errou? corrigir" (?corrigir=1) preenche só o primeiro
+ * HeroForm montado na página. /businessv2 tem dois (hero + final) e o do
+ * modal monta depois: nenhum deles deve repetir o preenchimento.
+ */
+let corrigirConsumed = false;
 
 /**
  * Wrapper safe pro Clarity. window.clarity é injetado pelo snippet no
@@ -126,6 +157,155 @@ export function HeroForm({
       referrer: document.referrer,
     });
   }, [landingPage]);
+
+  /* ─── Campo de WhatsApp ───────────────────────────────────────────
+   * Máscara enquanto digita, validação de formato ao sair do campo e
+   * checagem "existe no WhatsApp?" em segundo plano. Nada disso bloqueia
+   * o envio: o resultado vai no hidden whatsapp_check e o aviso só pede
+   * um segundo clique ("Enviar mesmo assim"). */
+  const formRef = useRef<HTMLFormElement>(null);
+  const phoneRef = useRef<HTMLInputElement>(null);
+  const [phoneDisplay, setPhoneDisplay] = useState("");
+  const phoneDigits = onlyDigits(phoneDisplay);
+  const [phoneWarning, setPhoneWarning] = useState<PhoneWarning | null>(null);
+  /** Espelho síncrono do aviso: o submit roda no mesmo evento que pode
+   *  acabar de criá-lo (Enter dentro do campo) e não pode ler state velho. */
+  const phoneWarningRef = useRef<PhoneWarning | null>(null);
+  const [whatsappCheck, setWhatsappCheck] = useState("");
+  /** 55DD9XXXXXXXX devolvido pela checagem remota; substitui o valor do campo no envio. */
+  const verifiedPhone = useRef<string | null>(null);
+  /** Descarta respostas de checagens antigas (o número mudou no meio). */
+  const checkSeq = useRef(0);
+  const lastRemote = useRef<{ digits: string; result: WhatsappRemoteResult } | null>(null);
+  /** Primeiro clique com aviso na tela só foca o campo; o segundo envia. */
+  const warningAcknowledged = useRef(false);
+
+  function showPhoneWarning(next: PhoneWarning) {
+    const prev = phoneWarningRef.current;
+    if (!prev || prev.motivo !== next.motivo || prev.mensagem !== next.mensagem) {
+      // Aviso novo: volta a exigir o clique de confirmação.
+      warningAcknowledged.current = false;
+      trackClarity("event", `whatsapp_aviso_${next.motivo}`);
+    }
+    phoneWarningRef.current = next;
+    setPhoneWarning(next);
+  }
+
+  function clearPhoneWarning() {
+    warningAcknowledged.current = false;
+    phoneWarningRef.current = null;
+    setPhoneWarning(null);
+  }
+
+  function applyFormatIssue(issue: FormatIssue) {
+    verifiedPhone.current = null;
+    setWhatsappCheck(`formato:${issue.motivo}`);
+    showPhoneWarning({ motivo: issue.motivo, mensagem: issue.mensagem, reforco: issue.reforco });
+  }
+
+  function applyRemoteResult(digits: string, result: WhatsappRemoteResult) {
+    if (result.kind === "verificado") {
+      verifiedPhone.current = result.telefone;
+      setWhatsappCheck("ok");
+      clearPhoneWarning();
+      return;
+    }
+    verifiedPhone.current = null;
+    if (result.kind === "invalido") {
+      if (result.motivo === "nao_whatsapp") {
+        setWhatsappCheck("nao_whatsapp");
+        showPhoneWarning({
+          motivo: "nao_whatsapp",
+          mensagem: naoWhatsappMensagem(digits),
+          reforco: true,
+        });
+      } else {
+        const motivo = sanitizeMotivo(result.motivo);
+        setWhatsappCheck(`formato:${motivo}`);
+        showPhoneWarning({
+          motivo,
+          mensagem: result.mensagem || "Confere o seu WhatsApp?",
+          reforco: false,
+        });
+      }
+      return;
+    }
+    // verificado: false, timeout ou erro de rede: segue sem aviso.
+    setWhatsappCheck("nao_verificado");
+    clearPhoneWarning();
+  }
+
+  function startRemoteCheck(digits: string) {
+    const cached = lastRemote.current;
+    if (cached && cached.digits === digits) {
+      applyRemoteResult(digits, cached.result);
+      return;
+    }
+    verifiedPhone.current = null;
+    setWhatsappCheck("nao_verificado");
+    clearPhoneWarning();
+    const seq = ++checkSeq.current;
+    void checkWhatsappRemote(formatPhone(digits)).then((result) => {
+      if (result.kind !== "erro") lastRemote.current = { digits, result };
+      if (seq !== checkSeq.current) return;
+      applyRemoteResult(digits, result);
+    });
+  }
+
+  function handlePhoneChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const inputType = (e.nativeEvent as InputEvent).inputType;
+    const digits = normalizePhoneInput(e.target.value, phoneDigits, inputType);
+    setPhoneDisplay(formatPhone(digits));
+    // Número mudou: resultado anterior não vale mais.
+    checkSeq.current++;
+    verifiedPhone.current = null;
+    const issue = digits ? validatePhoneFormat(digits) : null;
+    setWhatsappCheck(!digits ? "" : issue ? `formato:${issue.motivo}` : "nao_verificado");
+    // Corrigiu: o aviso some na hora. Ainda errado: o aviso atual fica até sair do campo.
+    if (phoneWarningRef.current && !issue) clearPhoneWarning();
+  }
+
+  function handlePhoneBlur() {
+    const digits = onlyDigits(phoneRef.current?.value ?? phoneDisplay);
+    if (!digits) {
+      clearPhoneWarning();
+      setWhatsappCheck("");
+      return;
+    }
+    const issue = validatePhoneFormat(digits);
+    if (issue) {
+      applyFormatIssue(issue);
+      return;
+    }
+    startRemoteCheck(digits);
+  }
+
+  /** Volta do "errou? corrigir": preenche com o envio anterior e foca o WhatsApp. */
+  useEffect(() => {
+    if (corrigirConsumed) return;
+    if (new URLSearchParams(window.location.search).get(CORRIGIR_PARAM) !== "1") return;
+    const draft = readLeadDraft();
+    const form = formRef.current;
+    if (!draft || !form) return;
+    corrigirConsumed = true;
+    for (const name of ["firstname", "email", "cargo", "faixa_de_faturamento"] as const) {
+      const el = form.elements.namedItem(name) as HTMLInputElement | HTMLSelectElement | null;
+      if (el && draft[name]) el.value = draft[name];
+    }
+    setPhoneDisplay(formatPhone(onlyDigits(draft.phone)));
+    setAllRequiredFilled(
+      [draft.firstname, draft.email, draft.phone, draft.cargo, draft.faixa_de_faturamento].every(
+        (v) => v.trim() !== "",
+      ),
+    );
+    requestAnimationFrame(() => {
+      const input = phoneRef.current;
+      if (!input) return;
+      input.focus();
+      input.select();
+    });
+  }, []);
+
   const [loading, setLoading] = useState(false);
   const [loadingMsg, setLoadingMsg] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -264,9 +444,8 @@ export function HeroForm({
     if (name === "email" && trimmed && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) {
       return "E-mail inválido";
     }
-    if (name === "phone" && trimmed && trimmed.replace(/\D/g, "").length < 10) {
-      return "Inclua DDD (mín. 10 dígitos)";
-    }
+    // WhatsApp: formato não bloqueia mais o envio. O aviso vem do
+    // handlePhoneBlur / handleSubmit e o resultado vai em whatsapp_check.
     return "";
   }
 
@@ -338,6 +517,27 @@ export function HeroForm({
       return;
     }
 
+    // WhatsApp com aviso: o primeiro clique só leva o foco pro campo com o
+    // aviso visível; o segundo envia ("Enviar mesmo assim"). Formato é
+    // recalculado aqui porque Enter dentro do campo envia sem passar pelo blur.
+    const submitDigits = onlyDigits(String(fdValidate.get("phone") ?? ""));
+    const submitIssue = validatePhoneFormat(submitDigits);
+    let warningOnScreen = phoneWarningRef.current !== null;
+    if (submitIssue && phoneWarningRef.current?.motivo !== submitIssue.motivo) {
+      applyFormatIssue(submitIssue);
+      warningOnScreen = true;
+    }
+    if (warningOnScreen && !warningAcknowledged.current) {
+      warningAcknowledged.current = true;
+      trackClarity("event", "whatsapp_aviso_primeiro_clique");
+      phoneRef.current?.focus();
+      return;
+    }
+    if (warningOnScreen) trackClarity("event", "whatsapp_enviar_mesmo_assim");
+    const whatsappCheckFinal = submitIssue
+      ? `formato:${submitIssue.motivo}`
+      : whatsappCheck || "nao_verificado";
+
     setLoading(true);
     startLoadingStages();
 
@@ -358,12 +558,17 @@ export function HeroForm({
           ? new URLSearchParams(window.location.search)
           : new URLSearchParams();
 
+      const typedPhone = String(fd.get("phone") ?? "").trim();
       const fields = {
         firstname: String(fd.get("firstname") ?? "").trim(),
         email: String(fd.get("email") ?? "").trim(),
-        phone: String(fd.get("phone") ?? "").trim(),
+        // Número confirmado no WhatsApp vai no formato 55DD9XXXXXXXX;
+        // senão, o que a pessoa digitou (com máscara).
+        phone: (!submitIssue && verifiedPhone.current) || typedPhone,
         cargo: String(fd.get("cargo") ?? "").trim(),
         faixa_de_faturamento: String(fd.get("faixa_de_faturamento") ?? "").trim(),
+        // ok | nao_verificado | nao_whatsapp | formato:<motivo>
+        whatsapp_check: whatsappCheckFinal,
       };
 
       // UTMs e click ids: só o que veio na URL (capturado na abertura da
@@ -426,6 +631,7 @@ export function HeroForm({
         utm_id: utmId,
         fbclid,
         gclid,
+        whatsapp_check: whatsappCheckFinal,
         // Mesmo eventID que dispara no fbq client. Permite a Edge Function
         // mandar Conversions API com o mesmo ID se quiser deduplicar
         // server-side no futuro.
@@ -498,6 +704,16 @@ export function HeroForm({
       trackClarity("event", "form_submit_success");
       trackClarity("set", "lead_event_id", eventID);
       submitted.current = true;
+
+      // Tela de obrigado mostra o número digitado + "errou? corrigir".
+      saveLeadDraft({
+        firstname: fields.firstname,
+        email: fields.email,
+        phone: typedPhone,
+        cargo: fields.cargo,
+        faixa_de_faturamento: fields.faixa_de_faturamento,
+        returnHref: buildCorrigirHref(),
+      });
 
       clearLoadingStages();
       if (onSuccess) {
@@ -595,6 +811,7 @@ export function HeroForm({
         }
       >
         <form
+          ref={formRef}
           onSubmit={handleSubmit}
           onFocusCapture={handleFocusCapture}
           onBlurCapture={(e) => {
@@ -609,6 +826,7 @@ export function HeroForm({
           <input type="hidden" name="landing_page" value={tracking.landing_page} readOnly />
           <input type="hidden" name="page_url" value={tracking.page_url} readOnly />
           <input type="hidden" name="referrer" value={tracking.referrer} readOnly />
+          <input type="hidden" name="whatsapp_check" value={whatsappCheck} readOnly />
 
           <Field id="firstname" label="Nome Completo" required error={fieldErrors.firstname}>
             <input
@@ -636,17 +854,31 @@ export function HeroForm({
             />
           </Field>
 
-          <Field id="phone" label="WhatsApp com DDD" required error={fieldErrors.phone}>
+          <Field id="phone" label="Seu WhatsApp (com DDD)" required error={fieldErrors.phone}>
             <input
+              ref={phoneRef}
               id="phone"
               name="phone"
               type="tel"
+              inputMode="tel"
               required
-              autoComplete="tel"
-              placeholder="(11) 99999-9999"
-              aria-invalid={!!fieldErrors.phone}
+              autoComplete="tel-national"
+              placeholder="(11) 99999-8888"
+              value={phoneDisplay}
+              onChange={handlePhoneChange}
+              onBlur={handlePhoneBlur}
+              aria-invalid={!!fieldErrors.phone || !!phoneWarning}
+              aria-describedby={phoneWarning ? "phone-hint phone-warning" : "phone-hint"}
               className="form-input"
             />
+            <p
+              id="phone-hint"
+              className="mt-1 text-[11.5px] leading-tight"
+              style={{ color: "oklch(0.45 0.02 122)" }}
+            >
+              Vamos te chamar nesse número.
+            </p>
+            {phoneWarning && <WhatsappWarning warning={phoneWarning} />}
           </Field>
 
           <Field id="cargo" label="Seu cargo" required error={fieldErrors.cargo}>
@@ -714,9 +946,40 @@ export function HeroForm({
             disabled={loading || !allRequiredFilled}
             className="hero-form-cta mt-1 w-full inline-flex items-center justify-center rounded-full px-6 py-4 text-[14.5px] font-bold uppercase tracking-[0.06em] disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {loading ? loadingMsg || "Enviando..." : "SOLICITAR DIAGNÓSTICO"}
+            {loading
+              ? loadingMsg || "Enviando..."
+              : phoneWarning
+                ? "Enviar mesmo assim"
+                : "SOLICITAR DIAGNÓSTICO"}
           </button>
         </form>
+      </div>
+    </div>
+  );
+}
+
+/** Caixa de aviso do WhatsApp: destaque quente, legível, sem travar o envio. */
+function WhatsappWarning({ warning }: { warning: PhoneWarning }) {
+  return (
+    <div
+      id="phone-warning"
+      role="alert"
+      className="mt-2 flex items-start gap-2.5 rounded-xl px-3.5 py-3"
+      style={{
+        backgroundColor: "#FFF5E6",
+        border: "1px solid #F1C27D",
+        color: "#5A3410",
+      }}
+    >
+      <TriangleAlert
+        className="h-4 w-4 mt-[2px] shrink-0"
+        strokeWidth={2.2}
+        style={{ color: "#C2620A" }}
+        aria-hidden
+      />
+      <div className="text-[12.5px] leading-[1.45]">
+        <p className="font-semibold">{warning.mensagem}</p>
+        {warning.reforco && <p className="mt-1.5">{WHATSAPP_REFORCO}</p>}
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import {
   CheckCircle2,
   ArrowRight,
@@ -10,6 +10,7 @@ import {
 import { BgDobra } from "@/components/BgDobra";
 import { Footer } from "@/components/sections/Footer";
 import { Reveal } from "@/components/Reveal";
+import { formatPhone, onlyDigits, readLeadDraft } from "@/lib/whatsapp";
 
 interface ThankYouSearch {
   eid?: string;
@@ -77,9 +78,25 @@ const NEXT_STEPS = [
   },
 ];
 
+/**
+ * Número que a pessoa digitou no form (sessionStorage, mesma aba) + link
+ * de volta pra LP de origem com o campo de WhatsApp em foco.
+ */
+function useSubmittedWhatsapp() {
+  const [data, setData] = useState<{ phone: string; returnHref: string } | null>(null);
+  useEffect(() => {
+    const draft = readLeadDraft();
+    const digits = draft ? onlyDigits(draft.phone) : "";
+    if (draft && digits) setData({ phone: formatPhone(digits), returnHref: draft.returnHref });
+  }, []);
+  return data;
+}
+
 function ThankYouBusinessPage() {
   const { eid } = Route.useSearch();
   useFireLeadBackup(eid);
+  const whatsapp = useSubmittedWhatsapp();
+  const navigate = useNavigate();
 
   return (
     <main className="min-h-screen text-foreground" style={{ backgroundColor: "#0a0c07" }}>
@@ -128,6 +145,29 @@ function ThankYouBusinessPage() {
                   Em breve você será contatado pra dar continuidade ao seu diagnóstico.
                 </p>
               </Reveal>
+
+              {whatsapp && (
+                <Reveal delay={0.18}>
+                  <p className="mt-4 text-[15px] sm:text-[16px] text-sage leading-[1.6]">
+                    Vamos te chamar no WhatsApp{" "}
+                    <strong className="text-foreground font-semibold whitespace-nowrap">
+                      {whatsapp.phone}
+                    </strong>
+                    .{" "}
+                    <a
+                      href={whatsapp.returnHref}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        navigate({ href: whatsapp.returnHref });
+                      }}
+                      className="underline underline-offset-4 whitespace-nowrap"
+                      style={{ color: "var(--color-primary)" }}
+                    >
+                      errou? corrigir
+                    </a>
+                  </p>
+                </Reveal>
+              )}
 
               <Reveal delay={0.2}>
                 <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-[600px] mx-auto">
