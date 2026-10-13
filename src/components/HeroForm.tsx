@@ -179,6 +179,8 @@ export function HeroForm({
   const lastRemote = useRef<{ digits: string; result: WhatsappRemoteResult } | null>(null);
   /** Primeiro clique com aviso na tela só foca o campo; o segundo envia. */
   const warningAcknowledged = useRef(false);
+  /** Envio em andamento: checagem que chegar depois não mexe mais na tela. */
+  const sending = useRef(false);
 
   function showPhoneWarning(next: PhoneWarning) {
     const prev = phoneWarningRef.current;
@@ -212,22 +214,18 @@ export function HeroForm({
     }
     verifiedPhone.current = null;
     if (result.kind === "invalido") {
-      if (result.motivo === "nao_whatsapp") {
-        setWhatsappCheck("nao_whatsapp");
-        showPhoneWarning({
-          motivo: "nao_whatsapp",
-          mensagem: naoWhatsappMensagem(digits),
-          reforco: true,
-        });
-      } else {
-        const motivo = sanitizeMotivo(result.motivo);
-        setWhatsappCheck(`formato:${motivo}`);
-        showPhoneWarning({
-          motivo,
-          mensagem: result.mensagem || "Confere o seu WhatsApp?",
-          reforco: false,
-        });
-      }
+      // ok:false → mostra a `mensagem` da função (já vem com o reforço
+      // de confiança no caso nao_whatsapp). Texto local só de reserva.
+      const naoWhatsapp = result.motivo === "nao_whatsapp";
+      const motivo = naoWhatsapp ? "nao_whatsapp" : sanitizeMotivo(result.motivo);
+      setWhatsappCheck(naoWhatsapp ? "nao_whatsapp" : `formato:${motivo}`);
+      showPhoneWarning(
+        result.mensagem
+          ? { motivo, mensagem: result.mensagem, reforco: false }
+          : naoWhatsapp
+            ? { motivo, mensagem: naoWhatsappMensagem(digits), reforco: true }
+            : { motivo, mensagem: "Confere o seu WhatsApp?", reforco: false },
+      );
       return;
     }
     // verificado: false, timeout ou erro de rede: segue sem aviso.
@@ -247,7 +245,9 @@ export function HeroForm({
     const seq = ++checkSeq.current;
     void checkWhatsappRemote(formatPhone(digits)).then((result) => {
       if (result.kind !== "erro") lastRemote.current = { digits, result };
-      if (seq !== checkSeq.current) return;
+      // Número mudou no meio, ou o envio já saiu (foi com nao_verificado):
+      // a resposta não muda mais nada na tela.
+      if (seq !== checkSeq.current || sending.current) return;
       applyRemoteResult(digits, result);
     });
   }
@@ -280,7 +280,12 @@ export function HeroForm({
     startRemoteCheck(digits);
   }
 
-  /** Volta do "errou? corrigir": preenche com o envio anterior e foca o WhatsApp. */
+  /**
+   * Volta do "errou? corrigir": repõe nome, e-mail, cargo e faturamento do
+   * envio anterior e deixa o WhatsApp VAZIO e em foco, com whatsapp_check
+   * zerado, pra pessoa digitar o número do zero. O reenvio usa o mesmo
+   * e-mail e o CRM troca o telefone do contato.
+   */
   useEffect(() => {
     if (corrigirConsumed) return;
     if (new URLSearchParams(window.location.search).get(CORRIGIR_PARAM) !== "1") return;
@@ -292,18 +297,13 @@ export function HeroForm({
       const el = form.elements.namedItem(name) as HTMLInputElement | HTMLSelectElement | null;
       if (el && draft[name]) el.value = draft[name];
     }
-    setPhoneDisplay(formatPhone(onlyDigits(draft.phone)));
-    setAllRequiredFilled(
-      [draft.firstname, draft.email, draft.phone, draft.cargo, draft.faixa_de_faturamento].every(
-        (v) => v.trim() !== "",
-      ),
-    );
-    requestAnimationFrame(() => {
-      const input = phoneRef.current;
-      if (!input) return;
-      input.focus();
-      input.select();
-    });
+    setPhoneDisplay("");
+    setWhatsappCheck("");
+    verifiedPhone.current = null;
+    lastRemote.current = null;
+    clearPhoneWarning();
+    setAllRequiredFilled(false);
+    requestAnimationFrame(() => phoneRef.current?.focus());
   }, []);
 
   const [loading, setLoading] = useState(false);
@@ -538,6 +538,7 @@ export function HeroForm({
       ? `formato:${submitIssue.motivo}`
       : whatsappCheck || "nao_verificado";
 
+    sending.current = true;
     setLoading(true);
     startLoadingStages();
 
@@ -737,6 +738,7 @@ export function HeroForm({
       setLoadingMsg("");
       setError(message);
       setLoading(false);
+      sending.current = false;
     }
   }
 
@@ -958,8 +960,23 @@ export function HeroForm({
   );
 }
 
+/**
+ * Separa o título do aviso (até a primeira pergunta, ex.: "Não achamos
+ * WhatsApp em (31) 95051-2233. Confere o DDD e os dígitos?") do resto
+ * (o reforço de confiança que a função manda na mesma `mensagem`).
+ */
+function splitWarning(text: string): [string, string] {
+  const q = text.indexOf("?");
+  if (q > 0 && q < 160 && q < text.length - 1) {
+    return [text.slice(0, q + 1).trim(), text.slice(q + 1).trim()];
+  }
+  return [text, ""];
+}
+
 /** Caixa de aviso do WhatsApp: destaque quente, legível, sem travar o envio. */
 function WhatsappWarning({ warning }: { warning: PhoneWarning }) {
+  const [titulo, corpo] = splitWarning(warning.mensagem);
+  const detalhe = warning.reforco ? WHATSAPP_REFORCO : corpo;
   return (
     <div
       id="phone-warning"
@@ -978,8 +995,8 @@ function WhatsappWarning({ warning }: { warning: PhoneWarning }) {
         aria-hidden
       />
       <div className="text-[12.5px] leading-[1.45]">
-        <p className="font-semibold">{warning.mensagem}</p>
-        {warning.reforco && <p className="mt-1.5">{WHATSAPP_REFORCO}</p>}
+        <p className="font-semibold">{warning.reforco ? warning.mensagem : titulo}</p>
+        {detalhe && <p className="mt-1.5">{detalhe}</p>}
       </div>
     </div>
   );

@@ -13,8 +13,17 @@ import { FORM_HEADERS } from "./formSubmit";
 export const WHATSAPP_CHECK_ENDPOINT =
   "https://ciwdlceyjsnlnunktqzx.supabase.co/functions/v1/whatsapp-check";
 
-/** Tempo máximo da checagem remota. Passou disso, segue sem verificar. */
-export const WHATSAPP_CHECK_TIMEOUT_MS = 2500;
+/**
+ * Quanto tempo a resposta da checagem ainda vale pra mostrar o aviso.
+ *
+ * O envio NUNCA espera por ela: se a pessoa enviar antes da resposta, vai
+ * whatsapp_check=nao_verificado. Mas não dá pra cortar em 2,5s: o caso do
+ * número sem WhatsApp é o mais lento da função (consulta a Z-API duas
+ * vezes, com e sem o 9, até 2,5s cada) e ainda soma o preflight de CORS e
+ * o cold start. Com corte em 2,5s o aviso de "não achamos WhatsApp" quase
+ * nunca chegava a aparecer.
+ */
+export const WHATSAPP_CHECK_TIMEOUT_MS = 8000;
 
 export const PHONE_MAX_DIGITS = 11;
 
