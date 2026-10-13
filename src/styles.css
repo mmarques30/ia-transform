@@ -2705,7 +2705,12 @@
   width: 100%;
   max-width: 1280px;
   margin: 0 auto;
-  padding: clamp(120px, 18vh, 220px) 32px 60px;
+  /* Embaixo: a .value-strip sobe clamp(80px,18vh,160px) sobre a hero.
+     Reservar essa altura (+32px de folga) garante que o form nunca fica
+     sob a faixa quando cresce (ex.: aviso do WhatsApp) — antes o botão
+     de enviar ficava coberto e não dava pra clicar. Sem o aviso, a hero
+     continua com 100vh nas telas comuns (min-height manda). */
+  padding: clamp(120px, 18vh, 220px) 32px calc(clamp(80px, 18vh, 160px) + 32px);
   display: grid;
   grid-template-columns: 1fr minmax(340px, 420px);
   gap: 40px;
