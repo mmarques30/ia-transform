@@ -1,5 +1,6 @@
 import { Reveal } from "@/components/Reveal";
 import { OriginButton } from "@/components/ui/origin-button";
+import { useLpCopy, type LpCopy } from "@/lib/lpLocale";
 
 const LEFT_ITEMS = [
   "Tudo passa pelo fundador",
@@ -17,7 +18,51 @@ const RIGHT_ITEMS = [
   "Time executa, você escala",
 ];
 
+const COPY_PT_BR = {
+  titleA: "As empresas que mais escalam hoje",
+  titleB: "são as que automatizam a operação antes de contratar mais gente.",
+  sub: "Existe uma diferença fundamental entre empresas que crescem com eficiência e as que crescem multiplicando problema. É uma questão de sistema, não de equipe.",
+  leftTitle: "Como a maioria opera:",
+  leftItems: LEFT_ITEMS,
+  leftResult: "Crescimento que cria gargalo, não velocidade.",
+  rightTitle: "Como opera com a IAplicada:",
+  rightItems: RIGHT_ITEMS,
+  rightResult: "Mais receita com o time que você já tem.",
+  resultLabel: "Resultado:",
+  cta: "quero meu diagnóstico",
+};
+
+const COPY: LpCopy<typeof COPY_PT_BR> = {
+  "pt-br": COPY_PT_BR,
+  en: {
+    titleA: "The companies scaling fastest today",
+    titleB: "are the ones that automate operations before hiring more people.",
+    sub: "There's a fundamental difference between companies that grow efficiently and the ones that grow by multiplying problems. It's a matter of systems, not headcount.",
+    leftTitle: "How most companies operate:",
+    leftItems: [
+      "Everything goes through the founder",
+      "Operations live in spreadsheets and group chats",
+      "Decisions stall for lack of data",
+      "Growing means hiring more people",
+      "Rework becomes a fixed cost",
+    ],
+    leftResult: "Growth that creates bottlenecks, not speed.",
+    rightTitle: "How it runs with IAplicada:",
+    rightItems: [
+      "The system handles the routine work",
+      "Centralized, integrated data",
+      "Decisions happen in the system, not in group chats",
+      "AI eliminates rework at the root",
+      "Your team executes, you scale",
+    ],
+    rightResult: "More revenue with the team you already have.",
+    resultLabel: "Result:",
+    cta: "request diagnostic",
+  },
+};
+
 export function Comparison() {
+  const c = useLpCopy(COPY);
   return (
     <section
       className="relative py-[80px] lg:py-[110px]"
@@ -42,18 +87,17 @@ export function Comparison() {
               <span
                 style={{ color: "var(--color-primary)" }}
               >
-                As empresas que mais escalam hoje
+                {c.titleA}
               </span>{" "}
               <span className="text-foreground">
-                são as que automatizam a operação antes de contratar mais gente.
+                {c.titleB}
               </span>
             </h2>
           </Reveal>
 
           <Reveal delay={0.05}>
             <p className="mt-5 text-[15px] lg:text-[16px] text-sage leading-[1.6] max-w-[640px] mx-auto">
-              Existe uma diferença fundamental entre empresas que crescem com eficiência e as que
-              crescem multiplicando problema. É uma questão de sistema, não de equipe.
+              {c.sub}
             </p>
           </Reveal>
         </div>
@@ -61,15 +105,17 @@ export function Comparison() {
         <Reveal delay={0.12}>
           <div className="mt-14 lg:mt-16 grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 max-w-[900px] mx-auto">
             <ComparisonCard
-              title="Como a maioria opera:"
-              items={LEFT_ITEMS}
-              result="Crescimento que cria gargalo, não velocidade."
+              title={c.leftTitle}
+              items={c.leftItems}
+              result={c.leftResult}
+              resultLabel={c.resultLabel}
               variant="negative"
             />
             <ComparisonCard
-              title="Como opera com a IAplicada:"
-              items={RIGHT_ITEMS}
-              result="Mais receita com o time que você já tem."
+              title={c.rightTitle}
+              items={c.rightItems}
+              result={c.rightResult}
+              resultLabel={c.resultLabel}
               variant="positive"
             />
           </div>
@@ -78,7 +124,7 @@ export function Comparison() {
         <Reveal delay={0.3}>
           <div className="mt-12 lg:mt-16 text-center">
             <OriginButton onClick={() => document.getElementById("top")?.scrollIntoView({ behavior: "smooth" })}>
-              quero meu diagnóstico
+              {c.cta}
             </OriginButton>
           </div>
         </Reveal>
@@ -91,11 +137,13 @@ function ComparisonCard({
   title,
   items,
   result,
+  resultLabel,
   variant,
 }: {
   title: string;
   items: string[];
   result: string;
+  resultLabel: string;
   variant: "negative" | "positive";
 }) {
   const isPositive = variant === "positive";
@@ -160,7 +208,7 @@ function ComparisonCard({
         }}
       >
         <p className="text-[13px] tracking-[0.08em] uppercase font-bold" style={{ color: isPositive ? "var(--color-primary)" : "rgba(255,255,255,0.4)" }}>
-          Resultado:
+          {resultLabel}
         </p>
         <p
           className="mt-1.5 text-[14px] lg:text-[15px] leading-[1.5] font-semibold"

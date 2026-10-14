@@ -1,15 +1,29 @@
 import { Logo } from "@/components/Logo";
+import { useLpCopy, type LpCopy } from "@/lib/lpLocale";
 
 const SOCIAL = [
   { label: "LinkedIn", href: "https://www.linkedin.com/in/marianamarquescabral/" },
   { label: "Instagram", href: "https://www.instagram.com/marimarquescb/" },
 ];
 
+const COPY_PT_BR = {
+  social: "Redes",
+  phoneLabel: "(11) 95056-6101",
+};
+
+const COPY: LpCopy<typeof COPY_PT_BR> = {
+  "pt-br": COPY_PT_BR,
+  // Fora do Brasil o telefone vai com o código do país.
+  "pt-us": { ...COPY_PT_BR, phoneLabel: "+55 11 95056-6101" },
+  en: { social: "Social", phoneLabel: "+55 11 95056-6101" },
+};
+
 /**
  * Footer compacto — single-row no desktop, stack no mobile.
  * Contém: logo · #hashtag | redes | © + email + telefone.
  */
 export function Footer() {
+  const c = useLpCopy(COPY);
   return (
     <footer className="py-6 border-t border-border bg-background">
       <div className="container-page">
@@ -36,7 +50,7 @@ export function Footer() {
           {/* Redes */}
           <nav className="flex flex-wrap items-center gap-x-5 gap-y-2 text-[12.5px]">
             <span className="text-[10px] uppercase tracking-[0.14em] text-muted-foreground font-semibold">
-              Redes
+              {c.social}
             </span>
             {SOCIAL.map((s) => (
               <a
@@ -64,7 +78,7 @@ export function Footer() {
               href="tel:+5511950566101"
               className="hover:text-foreground transition-colors"
             >
-              (11) 95056-6101
+              {c.phoneLabel}
             </a>
           </div>
         </div>

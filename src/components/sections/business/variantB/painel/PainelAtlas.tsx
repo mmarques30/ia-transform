@@ -1,4 +1,76 @@
 import { useIapIn } from "./useIapIn";
+import { useLpCopy, type LpCopy } from "@/lib/lpLocale";
+
+const COPY_PT_BR = {
+  url: "painel.atlascontabil.com.br",
+  company: "Atlas Contábil",
+  live: "AO VIVO",
+  clock: "TER 22:14",
+  aiA: "Vertex com padrão de churn — ",
+  aiMoney: "R$ 8,5 mil/mês",
+  aiB: " em risco.",
+  aiTag: "IA · AGORA",
+  kpis: [
+    { label: "MRR", value: "R$ 214 mil", trend: "↗ +R$ 11 mil" },
+    { label: "Propostas paradas", value: "R$ 74 mil", trend: "! 4 sem resposta" },
+    { label: "Upgrades possíveis", value: "+R$ 19 mil", trend: "↗ 8 clientes prontos" },
+  ],
+  chartTitle: "MRR · 6 meses",
+  chartEnd: "214k",
+  months: ["fev", "mar", "abr", "mai", "jun", "jul"],
+  decide: "Pra você decidir",
+  actions: [
+    { label: "Reunião com a Vertex", detail: "dossiê do cliente pronto", btn: "Agendar" },
+    { label: "Desconto Grupo Naves", detail: "12% · acima da alçada", btn: "Decidir" },
+    { label: "8 upgrades de plano", detail: "+R$ 19 mil/mês", btn: "Ver" },
+  ],
+};
+
+/** Empresa fictícia; nos EUA com nome, domínio e valores em dólar. */
+const COPY: LpCopy<typeof COPY_PT_BR> = {
+  "pt-br": COPY_PT_BR,
+  "pt-us": {
+    ...COPY_PT_BR,
+    url: "painel.atlasaccounting.com",
+    company: "Atlas Accounting",
+    aiMoney: "US$ 4,2 mil/mês",
+    kpis: [
+      { label: "MRR", value: "US$ 108 mil", trend: "↗ +US$ 5,5 mil" },
+      { label: "Propostas paradas", value: "US$ 37 mil", trend: "! 4 sem resposta" },
+      { label: "Upgrades possíveis", value: "+US$ 9,5 mil", trend: "↗ 8 clientes prontos" },
+    ],
+    chartEnd: "108k",
+    actions: [
+      COPY_PT_BR.actions[0],
+      { label: "Desconto Naves Group", detail: "12% · acima da alçada", btn: "Decidir" },
+      { label: "8 upgrades de plano", detail: "+US$ 9,5 mil/mês", btn: "Ver" },
+    ],
+  },
+  en: {
+    url: "dashboard.atlasaccounting.com",
+    company: "Atlas Accounting",
+    live: "LIVE",
+    clock: "TUE 10:14 PM",
+    aiA: "Vertex shows a churn pattern — ",
+    aiMoney: "$4.2K/month",
+    aiB: " at risk.",
+    aiTag: "AI · NOW",
+    kpis: [
+      { label: "MRR", value: "$108K", trend: "↗ +$5.5K" },
+      { label: "Stalled proposals", value: "$37K", trend: "! 4 with no reply" },
+      { label: "Possible upgrades", value: "+$9.5K", trend: "↗ 8 clients ready" },
+    ],
+    chartTitle: "MRR · 6 months",
+    chartEnd: "108k",
+    months: ["Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+    decide: "For you to decide",
+    actions: [
+      { label: "Meeting with Vertex", detail: "client dossier ready", btn: "Schedule" },
+      { label: "Naves Group discount", detail: "12% · above approval limit", btn: "Decide" },
+      { label: "8 plan upgrades", detail: "+$9.5K/month", btn: "View" },
+    ],
+  },
+};
 
 /**
  * PainelAtlas (V2) — serviços recorrentes (contábil).
@@ -6,6 +78,7 @@ import { useIapIn } from "./useIapIn";
  * Copy/valores/cores preservados.
  */
 export function PainelAtlas() {
+  const c = useLpCopy(COPY);
   const { ref, isIn } = useIapIn();
   return (
     <div
@@ -28,7 +101,7 @@ export function PainelAtlas() {
             <span></span>
           </div>
           <div className="iap-urlbar">
-            <span className="iap-lock">●</span> painel.atlascontabil.com.br
+            <span className="iap-lock">●</span> {c.url}
           </div>
         </div>
         <div className="iap-panel">
@@ -37,12 +110,12 @@ export function PainelAtlas() {
             style={{ "--iap-d": ".05s" } as React.CSSProperties}
           >
             <div className="iap-company">
-              <div className="iap-logo">A</div>Atlas Contábil
+              <div className="iap-logo">A</div>{c.company}
             </div>
             <div className="iap-live">
               <span className="iap-live-dot"></span>
-              <span className="iap-on">AO VIVO</span>
-              <span className="iap-clock">TER 22:14</span>
+              <span className="iap-on">{c.live}</span>
+              <span className="iap-clock">{c.clock}</span>
             </div>
           </div>
 
@@ -50,35 +123,36 @@ export function PainelAtlas() {
             <div className="iap-ai-inner">
               <div className="iap-ai-spark">✦</div>
               <div className="iap-ai-text">
-                Vertex com padrão de churn — <span className="iap-money">R$ 8,5 mil/mês</span> em
-                risco.
+                {c.aiA}
+                <span className="iap-money">{c.aiMoney}</span>
+                {c.aiB}
               </div>
-              <span className="iap-ai-tag">IA · AGORA</span>
+              <span className="iap-ai-tag">{c.aiTag}</span>
             </div>
           </div>
 
           <div className="iap-kpis">
             <div className="iap-kpi iap-anim" style={{ "--iap-d": ".25s" } as React.CSSProperties}>
-              <div className="iap-kpi-label">MRR</div>
-              <div className="iap-kpi-value">R$ 214 mil</div>
-              <span className="iap-trend iap-up">↗ +R$ 11 mil</span>
+              <div className="iap-kpi-label">{c.kpis[0].label}</div>
+              <div className="iap-kpi-value">{c.kpis[0].value}</div>
+              <span className="iap-trend iap-up">{c.kpis[0].trend}</span>
             </div>
             <div className="iap-kpi iap-anim" style={{ "--iap-d": ".33s" } as React.CSSProperties}>
-              <div className="iap-kpi-label">Propostas paradas</div>
-              <div className="iap-kpi-value">R$ 74 mil</div>
-              <span className="iap-trend iap-down">! 4 sem resposta</span>
+              <div className="iap-kpi-label">{c.kpis[1].label}</div>
+              <div className="iap-kpi-value">{c.kpis[1].value}</div>
+              <span className="iap-trend iap-down">{c.kpis[1].trend}</span>
             </div>
             <div className="iap-kpi iap-anim" style={{ "--iap-d": ".41s" } as React.CSSProperties}>
-              <div className="iap-kpi-label">Upgrades possíveis</div>
-              <div className="iap-kpi-value iap-grad">+R$ 19 mil</div>
-              <span className="iap-trend iap-up">↗ 8 clientes prontos</span>
+              <div className="iap-kpi-label">{c.kpis[2].label}</div>
+              <div className="iap-kpi-value iap-grad">{c.kpis[2].value}</div>
+              <span className="iap-trend iap-up">{c.kpis[2].trend}</span>
             </div>
           </div>
 
           <div className="iap-grid2">
             <div className="iap-box iap-anim" style={{ "--iap-d": ".5s" } as React.CSSProperties}>
               <div className="iap-box-title">
-                MRR · 6 meses <em style={{ color: "#34d399" }}>+22%</em>
+                {c.chartTitle} <em style={{ color: "#34d399" }}>+22%</em>
               </div>
               <svg className="iap-chart" viewBox="0 0 420 118" xmlns="http://www.w3.org/2000/svg">
                 <defs>
@@ -165,7 +239,7 @@ export function PainelAtlas() {
                   fill="#38bdf8"
                   textAnchor="end"
                 >
-                  214k
+                  {c.chartEnd}
                 </text>
                 <g
                   fontFamily="JetBrains Mono"
@@ -174,51 +248,51 @@ export function PainelAtlas() {
                   textAnchor="middle"
                 >
                   <text x="20" y="114">
-                    fev
+                    {c.months[0]}
                   </text>
                   <text x="96" y="114">
-                    mar
+                    {c.months[1]}
                   </text>
                   <text x="172" y="114">
-                    abr
+                    {c.months[2]}
                   </text>
                   <text x="248" y="114">
-                    mai
+                    {c.months[3]}
                   </text>
                   <text x="324" y="114">
-                    jun
+                    {c.months[4]}
                   </text>
                   <text x="400" y="114" fontWeight="700" fill="#fff">
-                    jul
+                    {c.months[5]}
                   </text>
                 </g>
               </svg>
             </div>
             <div className="iap-box iap-anim" style={{ "--iap-d": ".6s" } as React.CSSProperties}>
-              <div className="iap-box-title">Pra você decidir</div>
+              <div className="iap-box-title">{c.decide}</div>
               <div className="iap-action">
                 <span className="iap-ico iap-risk">!</span>
                 <span className="iap-lbl">
-                  Reunião com a Vertex
-                  <small>dossiê do cliente pronto</small>
+                  {c.actions[0].label}
+                  <small>{c.actions[0].detail}</small>
                 </span>
-                <span className="iap-btn" aria-hidden>Agendar</span>
+                <span className="iap-btn" aria-hidden>{c.actions[0].btn}</span>
               </div>
               <div className="iap-action">
                 <span className="iap-ico iap-risk">!</span>
                 <span className="iap-lbl">
-                  Desconto Grupo Naves
-                  <small>12% · acima da alçada</small>
+                  {c.actions[1].label}
+                  <small>{c.actions[1].detail}</small>
                 </span>
-                <span className="iap-btn" aria-hidden>Decidir</span>
+                <span className="iap-btn" aria-hidden>{c.actions[1].btn}</span>
               </div>
               <div className="iap-action">
                 <span className="iap-ico iap-opp">↗</span>
                 <span className="iap-lbl">
-                  8 upgrades de plano
-                  <small>+R$ 19 mil/mês</small>
+                  {c.actions[2].label}
+                  <small>{c.actions[2].detail}</small>
                 </span>
-                <span className="iap-btn iap-ghost" aria-hidden>Ver</span>
+                <span className="iap-btn iap-ghost" aria-hidden>{c.actions[2].btn}</span>
               </div>
             </div>
           </div>

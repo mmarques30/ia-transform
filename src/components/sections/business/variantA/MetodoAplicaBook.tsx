@@ -1,8 +1,36 @@
 import { Reveal } from "@/components/Reveal";
 import { OriginButton } from "@/components/ui/origin-button";
 import { PainelClientesShowcase } from "@/components/sections/business/variantB/painel/PainelClientesShowcase";
+import { useLpCopy, type LpCopy } from "@/lib/lpLocale";
+
+const COPY_PT_BR = {
+  eyebrow: "Como a gente faz",
+  titleA: "Sua operação roda. Seu time entrega.",
+  titleB: "Você acompanha tudo sem estar no meio de tudo.",
+  /** Texto em volta de APLICA e de "90 dias" (que vão em negrito). */
+  subA: "O Método ",
+  subB: " identifica onde sua operação trava, constrói o sistema que resolve e implementa dentro do seu negócio em até ",
+  days: "90 dias",
+  subC: ".",
+  cta: "quero meu sistema",
+};
+
+const COPY: LpCopy<typeof COPY_PT_BR> = {
+  "pt-br": COPY_PT_BR,
+  en: {
+    eyebrow: "How we do it",
+    titleA: "Your operations run. Your team delivers.",
+    titleB: "You keep track of everything without being in the middle of everything.",
+    subA: "The ",
+    subB: " Method pinpoints where your operations get stuck, builds the system that fixes it, and implements it inside your business in up to ",
+    days: "90 days",
+    subC: ".",
+    cta: "learn more",
+  },
+};
 
 export function MetodoAplicaBook() {
+  const c = useLpCopy(COPY);
   return (
     <section
       id="metodo-aplica"
@@ -29,7 +57,7 @@ export function MetodoAplicaBook() {
                 fontFamily: '"JetBrains Mono", ui-monospace, Menlo, monospace',
               }}
             >
-              Como a gente faz
+              {c.eyebrow}
             </span>
           </Reveal>
 
@@ -38,18 +66,20 @@ export function MetodoAplicaBook() {
               className="mt-5 font-extrabold text-[28px] sm:text-[36px] lg:text-[44px] leading-[1.08] tracking-[-0.025em] text-foreground"
               style={{ textWrap: "balance" }}
             >
-              Sua operação roda. Seu time entrega.{" "}
+              {c.titleA}{" "}
               <span style={{ color: "var(--color-primary)" }}>
-                Você acompanha tudo sem estar no meio de tudo.
+                {c.titleB}
               </span>
             </h2>
           </Reveal>
 
           <Reveal delay={0.08}>
             <p className="mt-5 text-[15px] lg:text-[16.5px] text-sage leading-[1.6] max-w-[600px] mx-auto">
-              O Método <strong className="text-foreground font-bold">APLICA</strong> identifica onde
-              sua operação trava, constrói o sistema que resolve e implementa dentro do seu negócio
-              em até <strong className="text-foreground font-bold">90 dias</strong>.
+              {c.subA}
+              <strong className="text-foreground font-bold">APLICA</strong>
+              {c.subB}
+              <strong className="text-foreground font-bold">{c.days}</strong>
+              {c.subC}
             </p>
           </Reveal>
         </div>
@@ -63,7 +93,7 @@ export function MetodoAplicaBook() {
         <Reveal delay={0.18}>
           <div className="mt-12 text-center">
             <OriginButton onClick={() => document.getElementById("top")?.scrollIntoView({ behavior: "smooth" })}>
-              quero meu sistema
+              {c.cta}
             </OriginButton>
           </div>
         </Reveal>

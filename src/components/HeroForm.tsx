@@ -3,6 +3,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { AlertCircle, TriangleAlert } from "lucide-react";
 import { getMetaPixelCookies, getFbclidFromUrl } from "@/lib/metaCookies";
 import { captureAttribution, landingPageFromPath } from "@/lib/attribution";
+import { useLpCopy, type LpCopy } from "@/lib/lpLocale";
 import {
   CORRIGIR_PARAM,
   WHATSAPP_REFORCO,
@@ -63,9 +64,12 @@ const SUPABASE_ANON_KEY =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNpd2RsY2V5anNubG51bmt0cXp4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyMTU3OTksImV4cCI6MjA4OTc5MTc5OX0.tl-7gEObYBB7wDUS5_pKh9UyRlJQNdnWPiRpMFYrbUM";
 
 interface HeroFormProps {
-  /** Slug do funil — define a origem do lead no CRM. Default: business. */
+  /**
+   * Slug do funil — define a origem do lead no CRM. Default: o do idioma
+   * da LP (business no Brasil, business-us / business-en fora).
+   */
   formSlug?: string;
-  /** Rota da página de obrigado pra onde redireciona após o envio. */
+  /** Rota da página de obrigado pra onde redireciona após o envio. Default: a do idioma. */
   thankYouPath?: string;
   /**
    * Callback opcional pós-submit bem-sucedido. Quando fornecido, ele é
@@ -123,6 +127,156 @@ const LOADING_STAGES: Array<{ at: number; text: string }> = [
   { at: 3200, text: "Quase lá..." },
 ];
 
+/** Faixas da LP dos EUA em português. Contrato com o backend: não editar. */
+const FAIXAS_US_PT: Array<{ value: string; label: string }> = [
+  "Menos de US$ 500 mil",
+  "Entre US$ 500 mil e US$ 1 milhão",
+  "Entre US$ 1 e US$ 3 milhões",
+  "Entre US$ 3 e US$ 10 milhões",
+  "Acima de US$ 10 milhões",
+].map((v) => ({ value: v, label: v }));
+
+/** Faixas da LP em inglês. Contrato com o backend: não editar. */
+const FAIXAS_US_EN: Array<{ value: string; label: string }> = [
+  "Less than $500K",
+  "$500K to $1M",
+  "$1M to $3M",
+  "$3M to $10M",
+  "More than $10M",
+].map((v) => ({ value: v, label: v }));
+
+/** Cargos da LP em inglês. Contrato com o backend: não editar. */
+const CARGOS_EN = [
+  "CEO / Founder / Owner",
+  "Director / VP / Head",
+  "Manager",
+  "Coordinator / Supervisor",
+  "Analyst",
+];
+
+interface FormCopy {
+  formSlug: string;
+  thankYouPath: string;
+  /**
+   * br: máscara (DD) 9XXXX-XXXX + validação de formato + checagem remota.
+   * intl: formato internacional livre (+1 305 555 0123), sem máscara nem
+   * checagem; vai com whatsapp_check=nao_verificado.
+   */
+  phoneMode: "br" | "intl";
+  cargos: string[];
+  faixas: Array<{ value: string; label: string }>;
+  loadingStages: Array<{ at: number; text: string }>;
+  eyebrow: string;
+  title: string;
+  nameLabel: string;
+  namePlaceholder: string;
+  emailLabel: string;
+  emailPlaceholder: string;
+  phoneLabel: string;
+  phonePlaceholder: string;
+  phoneHint: string;
+  cargoLabel: string;
+  faixaLabel: string;
+  select: string;
+  required: string;
+  invalidEmail: string;
+  /** Só no modo intl: menos de 7 ou mais de 15 dígitos. */
+  invalidPhone: string;
+  missingFields: string;
+  /** Mensagem de erro do backend vem em português: em inglês usa a genérica. */
+  useBackendError: boolean;
+  submitFailed: (status: number) => string;
+  genericError: string;
+  sending: string;
+  submitAnyway: string;
+  submit: string;
+}
+
+const FORM_COPY_PT_BR: FormCopy = {
+  formSlug: "business",
+  thankYouPath: "/thank-you-business",
+  phoneMode: "br",
+  cargos: CARGOS,
+  faixas: FAIXAS,
+  loadingStages: LOADING_STAGES,
+  eyebrow: "Vagas limitadas por ciclo",
+  title: "Vamos construir o seu?",
+  nameLabel: "Nome Completo",
+  namePlaceholder: "João da Silva",
+  emailLabel: "E-mail",
+  emailPlaceholder: "voce@email.com",
+  phoneLabel: "Seu WhatsApp (com DDD)",
+  phonePlaceholder: "(11) 99999-8888",
+  phoneHint: "Vamos te chamar nesse número.",
+  cargoLabel: "Seu cargo",
+  faixaLabel: "Faturamento anual da empresa",
+  select: "Selecione",
+  required: "Campo obrigatório",
+  invalidEmail: "E-mail inválido",
+  invalidPhone: "Confere o número com o código do país.",
+  missingFields: "Preencha os campos obrigatórios:",
+  useBackendError: true,
+  submitFailed: (status) => `Falha no envio (HTTP ${status})`,
+  genericError: "Não conseguimos enviar agora. Tente novamente em alguns instantes.",
+  sending: "Enviando...",
+  submitAnyway: "Enviar mesmo assim",
+  submit: "SOLICITAR DIAGNÓSTICO",
+};
+
+const FORM_COPY: LpCopy<FormCopy> = {
+  "pt-br": FORM_COPY_PT_BR,
+  "pt-us": {
+    ...FORM_COPY_PT_BR,
+    formSlug: "business-us",
+    thankYouPath: "/thank-you-us",
+    phoneMode: "intl",
+    faixas: FAIXAS_US_PT,
+    phoneLabel: "WhatsApp (com código do país)",
+    phonePlaceholder: "+1 (305) 555-0123",
+    phoneHint: "Com o código do país. Vamos te chamar nesse número.",
+  },
+  en: {
+    formSlug: "business-en",
+    thankYouPath: "/thank-you-en",
+    phoneMode: "intl",
+    cargos: CARGOS_EN,
+    faixas: FAIXAS_US_EN,
+    loadingStages: [
+      { at: 0, text: "Sending..." },
+      { at: 600, text: "Validating your info..." },
+      { at: 1800, text: "Setting up your access..." },
+      { at: 3200, text: "Almost there..." },
+    ],
+    eyebrow: "Limited spots per cycle",
+    title: "Shall we build yours?",
+    nameLabel: "Full Name",
+    namePlaceholder: "John Smith",
+    emailLabel: "Email",
+    emailPlaceholder: "you@company.com",
+    phoneLabel: "Phone number",
+    phonePlaceholder: "+1 (305) 555-0123",
+    phoneHint: "Include your country code.",
+    cargoLabel: "Your role",
+    faixaLabel: "Company annual revenue",
+    select: "Select",
+    required: "Required field",
+    invalidEmail: "Invalid email",
+    invalidPhone: "Please check the number, including the country code.",
+    missingFields: "Please fill in the required fields:",
+    useBackendError: false,
+    submitFailed: (status) => `Submission failed (HTTP ${status}). Please try again.`,
+    genericError: "We couldn't submit right now. Please try again in a few moments.",
+    sending: "Sending...",
+    submitAnyway: "Submit anyway",
+    submit: "REQUEST DIAGNOSTIC",
+  },
+};
+
+/** Telefone internacional: só dígitos, +, espaço, parênteses, hífen e ponto. */
+function sanitizeIntlPhone(raw: string): string {
+  return raw.replace(/[^\d+\s().-]/g, "").slice(0, 24);
+}
+
 /**
  * HeroForm — campos nativos React integrados ao design dark da LP.
  * Submete via POST JSON pra Edge Function form-submit da IAplicada,
@@ -133,13 +287,17 @@ const LOADING_STAGES: Array<{ at: number; text: string }> = [
  * Em caso de sucesso, navega pra /thank-you-business.
  */
 export function HeroForm({
-  formSlug = "business",
-  thankYouPath = "/thank-you-business",
+  formSlug: formSlugProp,
+  thankYouPath: thankYouPathProp,
   onSuccess,
   compact = false,
   landingPage,
 }: HeroFormProps = {}) {
   const navigate = useNavigate();
+  const c = useLpCopy(FORM_COPY);
+  const formSlug = formSlugProp ?? c.formSlug;
+  const thankYouPath = thankYouPathProp ?? c.thankYouPath;
+  const intlPhone = c.phoneMode === "intl";
   /** Hidden fields de tracking. landing_page é fixo por rota; page_url e
    *  referrer só existem no client, então entram no mount. UTMs/click ids
    *  são capturados da URL aqui (e guardados em sessionStorage) pra não
@@ -253,6 +411,12 @@ export function HeroForm({
   }
 
   function handlePhoneChange(e: React.ChangeEvent<HTMLInputElement>) {
+    if (intlPhone) {
+      const value = sanitizeIntlPhone(e.target.value);
+      setPhoneDisplay(value);
+      setWhatsappCheck(value.trim() ? "nao_verificado" : "");
+      return;
+    }
     const inputType = (e.nativeEvent as InputEvent).inputType;
     const digits = normalizePhoneInput(e.target.value, phoneDigits, inputType);
     setPhoneDisplay(formatPhone(digits));
@@ -266,6 +430,7 @@ export function HeroForm({
   }
 
   function handlePhoneBlur() {
+    if (intlPhone) return;
     const digits = onlyDigits(phoneRef.current?.value ?? phoneDisplay);
     if (!digits) {
       clearPhoneWarning();
@@ -325,7 +490,7 @@ export function HeroForm({
   }
   function startLoadingStages() {
     clearLoadingStages();
-    for (const stage of LOADING_STAGES) {
+    for (const stage of c.loadingStages) {
       if (stage.at === 0) {
         setLoadingMsg(stage.text);
       } else {
@@ -440,9 +605,13 @@ export function HeroForm({
   function validateField(name: string, value: string): string {
     const trimmed = value.trim();
     const isRequired = (REQUIRED_FIELDS as readonly string[]).includes(name);
-    if (isRequired && !trimmed) return "Campo obrigatório";
+    if (isRequired && !trimmed) return c.required;
     if (name === "email" && trimmed && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) {
-      return "E-mail inválido";
+      return c.invalidEmail;
+    }
+    if (intlPhone && name === "phone" && trimmed) {
+      const digits = onlyDigits(trimmed).length;
+      if (digits < 7 || digits > 15) return c.invalidPhone;
     }
     // WhatsApp: formato não bloqueia mais o envio. O aviso vem do
     // handlePhoneBlur / handleSubmit e o resultado vai em whatsapp_check.
@@ -521,7 +690,7 @@ export function HeroForm({
     // aviso visível; o segundo envia ("Enviar mesmo assim"). Formato é
     // recalculado aqui porque Enter dentro do campo envia sem passar pelo blur.
     const submitDigits = onlyDigits(String(fdValidate.get("phone") ?? ""));
-    const submitIssue = validatePhoneFormat(submitDigits);
+    const submitIssue = intlPhone ? null : validatePhoneFormat(submitDigits);
     let warningOnScreen = phoneWarningRef.current !== null;
     if (submitIssue && phoneWarningRef.current?.motivo !== submitIssue.motivo) {
       applyFormatIssue(submitIssue);
@@ -662,8 +831,8 @@ export function HeroForm({
           : "";
         throw new Error(
           missing
-            ? `Preencha os campos obrigatórios: ${missing}`
-            : body?.error || `Falha no envio (HTTP ${res.status})`,
+            ? `${c.missingFields} ${missing}`
+            : (c.useBackendError && body?.error) || c.submitFailed(res.status),
         );
       }
 
@@ -725,10 +894,7 @@ export function HeroForm({
         navigate({ to: thankYouPath, search: { eid: eventID } });
       }
     } catch (err) {
-      const message =
-        err instanceof Error
-          ? err.message
-          : "Não conseguimos enviar agora. Tente novamente em alguns instantes.";
+      const message = err instanceof Error ? err.message : c.genericError;
 
       console.error("[form] submit failed", message);
       trackClarity("event", "form_submit_error");
@@ -785,7 +951,7 @@ export function HeroForm({
               className="h-1.5 w-1.5 rounded-full"
               style={{ backgroundColor: "var(--color-primary)" }}
             />
-            Vagas limitadas por ciclo
+            {c.eyebrow}
           </span>
         )}
         <p
@@ -801,7 +967,7 @@ export function HeroForm({
             fontStyle: "italic",
           }}
         >
-          Vamos construir o seu?
+          {c.title}
         </p>
       </div>
 
@@ -830,33 +996,33 @@ export function HeroForm({
           <input type="hidden" name="referrer" value={tracking.referrer} readOnly />
           <input type="hidden" name="whatsapp_check" value={whatsappCheck} readOnly />
 
-          <Field id="firstname" label="Nome Completo" required error={fieldErrors.firstname}>
+          <Field id="firstname" label={c.nameLabel} required error={fieldErrors.firstname}>
             <input
               id="firstname"
               name="firstname"
               type="text"
               required
               autoComplete="name"
-              placeholder="João da Silva"
+              placeholder={c.namePlaceholder}
               aria-invalid={!!fieldErrors.firstname}
               className="form-input"
             />
           </Field>
 
-          <Field id="email" label="E-mail" required error={fieldErrors.email}>
+          <Field id="email" label={c.emailLabel} required error={fieldErrors.email}>
             <input
               id="email"
               name="email"
               type="email"
               required
               autoComplete="email"
-              placeholder="voce@email.com"
+              placeholder={c.emailPlaceholder}
               aria-invalid={!!fieldErrors.email}
               className="form-input"
             />
           </Field>
 
-          <Field id="phone" label="Seu WhatsApp (com DDD)" required error={fieldErrors.phone}>
+          <Field id="phone" label={c.phoneLabel} required error={fieldErrors.phone}>
             <input
               ref={phoneRef}
               id="phone"
@@ -864,8 +1030,8 @@ export function HeroForm({
               type="tel"
               inputMode="tel"
               required
-              autoComplete="tel-national"
-              placeholder="(11) 99999-8888"
+              autoComplete={intlPhone ? "tel" : "tel-national"}
+              placeholder={c.phonePlaceholder}
               value={phoneDisplay}
               onChange={handlePhoneChange}
               onBlur={handlePhoneBlur}
@@ -878,12 +1044,12 @@ export function HeroForm({
               className="mt-1 text-[11.5px] leading-tight"
               style={{ color: "oklch(0.45 0.02 122)" }}
             >
-              Vamos te chamar nesse número.
+              {c.phoneHint}
             </p>
             {phoneWarning && <WhatsappWarning warning={phoneWarning} />}
           </Field>
 
-          <Field id="cargo" label="Seu cargo" required error={fieldErrors.cargo}>
+          <Field id="cargo" label={c.cargoLabel} required error={fieldErrors.cargo}>
             <select
               id="cargo"
               name="cargo"
@@ -893,11 +1059,11 @@ export function HeroForm({
               className="form-input"
             >
               <option value="" disabled>
-                Selecione
+                {c.select}
               </option>
-              {CARGOS.map((c) => (
-                <option key={c} value={c}>
-                  {c}
+              {c.cargos.map((cargo) => (
+                <option key={cargo} value={cargo}>
+                  {cargo}
                 </option>
               ))}
             </select>
@@ -905,7 +1071,7 @@ export function HeroForm({
 
           <Field
             id="faixa_de_faturamento"
-            label="Faturamento anual da empresa"
+            label={c.faixaLabel}
             required
             error={fieldErrors.faixa_de_faturamento}
           >
@@ -918,9 +1084,9 @@ export function HeroForm({
               className="form-input"
             >
               <option value="" disabled>
-                Selecione
+                {c.select}
               </option>
-              {FAIXAS.map((f) => (
+              {c.faixas.map((f) => (
                 <option key={f.value} value={f.value}>
                   {f.label}
                 </option>
@@ -948,11 +1114,7 @@ export function HeroForm({
             disabled={loading || !allRequiredFilled}
             className="hero-form-cta mt-1 w-full inline-flex items-center justify-center rounded-full px-6 py-4 text-[14.5px] font-bold uppercase tracking-[0.06em] disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {loading
-              ? loadingMsg || "Enviando..."
-              : phoneWarning
-                ? "Enviar mesmo assim"
-                : "SOLICITAR DIAGNÓSTICO"}
+            {loading ? loadingMsg || c.sending : phoneWarning ? c.submitAnyway : c.submit}
           </button>
         </form>
       </div>

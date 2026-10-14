@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Reveal } from "@/components/Reveal";
+import { useLpCopy, type LpCopy } from "@/lib/lpLocale";
 
 const FAQ_ITEMS: { q: string; a: string }[] = [
   {
@@ -24,7 +25,44 @@ const FAQ_ITEMS: { q: string; a: string }[] = [
   },
 ];
 
+const COPY_PT_BR = {
+  titleA: "Tire suas",
+  titleB: "Dúvidas",
+  items: FAQ_ITEMS,
+};
+
+const COPY: LpCopy<typeof COPY_PT_BR> = {
+  "pt-br": COPY_PT_BR,
+  en: {
+    titleA: "Frequently Asked",
+    titleB: "Questions",
+    items: [
+      {
+        q: "What exactly does IAplicada do?",
+        a: "We build custom AI-powered software that automates how your business operates. It's not an off-the-shelf tool license, and it's not consulting that ends with a slide deck.\n\nWe map your processes, find where the company is losing time and money, and deliver a system that already works inside your operations. With one difference: the built-in AI learns from every use. What your team corrects becomes the standard and comes back as a suggestion. The more the system is used, the less it needs to be filled in.",
+      },
+      {
+        q: "How long does it take, and how much does it cost?",
+        a: "A working MVP in up to 30 days. Larger projects are split into modules, prioritizing what drives results first. Every delivery works on its own; it's not a promise for the next phase.\n\nPricing is based on scope. After the diagnostic, you get a proposal with the modules, the delivery order and the corresponding price. The commercial terms are held for the evaluation period.",
+      },
+      {
+        q: "How is IAplicada different from an ERP or a traditional consultancy?",
+        a: "An ERP forces the company to adapt to the software. IAplicada builds the software to adapt to the company.\n\nConsultancies hand over a diagnosis and leave. IAplicada was founded by Mariana Marques, who spent 11 years as an executive at Mercado Libre, Suzano and AngloGold, leading digital transformation across Latin America. What we deliver isn't what a consultant learned from a book. It's what worked at large companies, now adapted to the size and processes of companies that are growing.\n\nYou get a running system, not slides.",
+      },
+      {
+        q: "What kind of companies does IAplicada work with?",
+        a: "Companies that already have revenue, have operations running, and need to scale without multiplying headcount.\n\nThe criterion isn't the industry. It's the problem: manual processes eating up hours of expensive people, data scattered across spreadsheets and chat apps, decisions that stall because they depend on a single person, revenue growth that operations can't keep up with.\n\nAnd especially anyone who wants their time back. Run the company from wherever you want, without having to be there for every decision. The system keeps operations running. You focus on what only you can do.",
+      },
+      {
+        q: "Is the diagnostic really free? What if I already have systems in place?",
+        a: "Yes. No cost and no commitment to hire us. Even if you don't move forward, you keep the process map, the bottleneck ranking and the quarterly playbook. The material is yours.\n\nIf you already use other systems, what we build integrates with what you have: spreadsheets, CRM, ERP, email, messaging apps. We don't throw away what works. We automate what's stuck.",
+      },
+    ],
+  },
+};
+
 export function FAQ() {
+  const c = useLpCopy(COPY);
   return (
     <section
       id="faq"
@@ -41,17 +79,17 @@ export function FAQ() {
               className="font-extrabold text-[30px] sm:text-[40px] lg:text-[52px] leading-[1.03] tracking-[-0.025em] text-foreground"
               style={{ textWrap: "balance" }}
             >
-              Tire suas{" "}
+              {c.titleA}{" "}
               <span
                 style={{ color: "var(--color-primary)" }}
               >
-                Dúvidas
+                {c.titleB}
               </span>
             </h2>
           </Reveal>
 
           <div className="mt-10 flex flex-col gap-3">
-            {FAQ_ITEMS.map((item, i) => (
+            {c.items.map((item, i) => (
               <Reveal key={i} delay={0.05 * (i + 1)}>
                 <FaqItem num={i + 1} question={item.q} answer={item.a} />
               </Reveal>

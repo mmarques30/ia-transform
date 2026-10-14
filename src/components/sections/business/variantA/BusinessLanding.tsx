@@ -11,6 +11,7 @@ import { FAQ } from "@/components/sections/business/variantA/FAQ";
 import { Testimonials } from "@/components/sections/business/variantB/Testimonials";
 import { DiagnosticoModalProvider } from "@/components/sections/business/variantB/DiagnosticoModal";
 import { Footer } from "@/components/sections/Footer";
+import { LpLocaleProvider, type LpLocale } from "@/lib/lpLocale";
 
 export interface BusinessLandingProps {
   /** H1 do hero. Omitido = copy da /. */
@@ -19,6 +20,11 @@ export interface BusinessLandingProps {
   heroSubtitle?: React.ReactNode;
   /** Slug fixo da rota, enviado sempre como `landing_page`. Default "home". */
   landingPage?: string;
+  /**
+   * Idioma/mercado da LP. Default pt-br (Brasil). pt-us e en trocam a copy
+   * de todas as dobras e o form (slug, faixas, telefone, obrigado).
+   */
+  locale?: LpLocale;
 }
 
 /**
@@ -34,34 +40,37 @@ export function BusinessLanding({
   heroTitle,
   heroSubtitle,
   landingPage = "home",
+  locale = "pt-br",
 }: BusinessLandingProps) {
   return (
-    <DiagnosticoModalProvider>
-      <main className="min-h-screen text-foreground" style={{ backgroundColor: "#0a0c07" }}>
-        <Hero title={heroTitle} subtitle={heroSubtitle} landingPage={landingPage} />
+    <LpLocaleProvider locale={locale}>
+      <DiagnosticoModalProvider>
+        <main className="min-h-screen text-foreground" style={{ backgroundColor: "#0a0c07" }}>
+          <Hero title={heroTitle} subtitle={heroSubtitle} landingPage={landingPage} />
 
-        <ValueStrip />
+          <ValueStrip />
 
-        <BgDobra intensity="media">
-          <Problem />
-        </BgDobra>
+          <BgDobra intensity="media">
+            <Problem />
+          </BgDobra>
 
-        <Comparison />
+          <Comparison />
 
-        <MetodoAplicaBook />
+          <MetodoAplicaBook />
 
-        <ContaQueNinguemFaz />
+          <ContaQueNinguemFaz />
 
-        <Testimonials />
+          <Testimonials />
 
-        <Team />
+          <Team />
 
-        <ParaQuem />
+          <ParaQuem />
 
-        <FAQ />
+          <FAQ />
 
-        <Footer />
-      </main>
-    </DiagnosticoModalProvider>
+          <Footer />
+        </main>
+      </DiagnosticoModalProvider>
+    </LpLocaleProvider>
   );
 }

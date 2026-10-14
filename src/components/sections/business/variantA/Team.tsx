@@ -1,6 +1,7 @@
 import { useRef, useCallback, useEffect, useState } from "react";
 import { Reveal } from "@/components/Reveal";
 import { OriginButton } from "@/components/ui/origin-button";
+import { useLpCopy, type LpCopy } from "@/lib/lpLocale";
 
 interface TeamMember {
   name: string;
@@ -44,10 +45,57 @@ const TEAM: TeamMember[] = [
   },
 ];
 
+const COPY_PT_BR = {
+  titleA: "Seu novo",
+  titleB: "Time.",
+  sub: "Você será acompanhado por quem já construiu operações, liderou transformações e entrega sistema rodando de verdade.",
+  team: TEAM,
+  prev: "Anterior",
+  next: "Próximo",
+  goTo: (name: string) => `Ir para ${name}`,
+  cta: "quero meu diagnóstico",
+};
+
+/** Bios na mesma ordem do TEAM (nome, cargo e foto não mudam). */
+function withBios(bios: string[]): TeamMember[] {
+  return TEAM.map((member, i) => ({ ...member, bio: bios[i] }));
+}
+
+const COPY: LpCopy<typeof COPY_PT_BR> = {
+  "pt-br": COPY_PT_BR,
+  // "do país" lido por quem está nos EUA ficaria ambíguo.
+  "pt-us": {
+    ...COPY_PT_BR,
+    team: withBios(
+      TEAM.map((m) =>
+        m.bio.replace("nas maiores instituições financeiras do país", "nas maiores instituições financeiras do Brasil"),
+      ),
+    ),
+  },
+  en: {
+    titleA: "Your new",
+    titleB: "Team.",
+    sub: "You'll work alongside people who have built operations, led transformations and deliver systems that actually run.",
+    team: withBios([
+      "11 years as an executive at Mercado Libre, Suzano and AngloGold, leading digital transformation across Latin America. She founded IAplicada to deliver what she saw work at large companies, now adapted to the size and processes of companies that are growing. She created the APLICA methodology and leads every project, bringing her systems thinking and AI expertise to transform new operations.",
+      "10 years in B2B and B2C sales at some of Brazil's largest financial institutions. She worked at Inter&Co, allu and Localiza&Co, running the full sales cycle: prospecting, negotiation and post-sale. At IAplicada, she manages client relationships and the sales process from first contact to close.",
+      "With more than 5 years leading projects at technology and digital marketing companies, he worked as a Web Project Manager at Nerdweb and as a Customer Success Manager before joining IAplicada. He makes sure every delivery ships on time, with agile methodology and the perspective of someone who follows the project from diagnostic to system in production.",
+      "Specialist in building systems that run on their own. He works with backend development, workflow automation with n8n, API integrations and AI with Claude and Anthropic. At IAplicada, he turns the mapped process into a system in production: Lovable on the front end, Supabase for the database, automations that eliminate repetitive work.",
+      "Keeps IAplicada's sales and marketing operations running behind the scenes: content management, sales process support and organizing the fronts that connect the team to the client. She's the one who makes sure nothing falls through the cracks.",
+    ]),
+    prev: "Previous",
+    next: "Next",
+    goTo: (name: string) => `Go to ${name}`,
+    cta: "request diagnostic",
+  },
+};
+
 export function Team() {
+  const c = useLpCopy(COPY);
+  const team = c.team;
   const trackRef = useRef<HTMLDivElement>(null);
   const [current, setCurrent] = useState(0);
-  const total = TEAM.length;
+  const total = team.length;
   const isTransitioning = useRef(false);
 
   const getCardWidth = useCallback(() => {
@@ -141,7 +189,7 @@ export function Team() {
     };
   }, [total, getCardWidth]);
 
-  const tripled = [...TEAM, ...TEAM, ...TEAM];
+  const tripled = [...team, ...team, ...team];
 
   return (
     <section
@@ -164,19 +212,18 @@ export function Team() {
               className="font-extrabold text-[30px] sm:text-[36px] lg:text-[42px] leading-[1.05] tracking-[-0.025em] text-foreground"
               style={{ textWrap: "balance" }}
             >
-              Seu novo{" "}
+              {c.titleA}{" "}
               <span
                 style={{ color: "var(--color-primary)" }}
               >
-                Time.
+                {c.titleB}
               </span>
             </h2>
           </Reveal>
 
           <Reveal delay={0.08}>
             <p className="mt-4 text-[15px] lg:text-[16px] text-sage leading-[1.6] max-w-[560px] mx-auto">
-              Você será acompanhado por quem já construiu operações, liderou transformações
-              e entrega sistema rodando de verdade.
+              {c.sub}
             </p>
           </Reveal>
         </div>
@@ -192,7 +239,7 @@ export function Team() {
             <button
               className="team-arrow team-arrow-prev"
               onClick={goPrev}
-              aria-label="Anterior"
+              aria-label={c.prev}
             >
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                 <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -201,7 +248,7 @@ export function Team() {
             <button
               className="team-arrow team-arrow-next"
               onClick={goNext}
-              aria-label="Próximo"
+              aria-label={c.next}
             >
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                 <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -209,12 +256,12 @@ export function Team() {
             </button>
 
             <div className="team-dots">
-              {TEAM.map((_, i) => (
+              {team.map((_, i) => (
                 <button
                   key={i}
                   className={`team-dot${i === current ? " team-dot-active" : ""}`}
                   onClick={() => goTo(i)}
-                  aria-label={`Ir para ${TEAM[i].name}`}
+                  aria-label={c.goTo(team[i].name)}
                 />
               ))}
             </div>
@@ -224,7 +271,7 @@ export function Team() {
         <Reveal delay={0.35}>
           <div className="mt-12 lg:mt-16 text-center">
             <OriginButton onClick={() => document.getElementById("top")?.scrollIntoView({ behavior: "smooth" })}>
-              quero meu diagnóstico
+              {c.cta}
             </OriginButton>
           </div>
         </Reveal>
