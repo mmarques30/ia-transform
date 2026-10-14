@@ -151,6 +151,12 @@ function useFireLeadEvents(eid: string | undefined, market: IntlMarket) {
   }, [eid, market]);
 }
 
+/** E.164 dos EUA/Canadá fica legível: +13055550123 → +1 (305) 555-0123. */
+function formatIntlPhone(e164: string): string {
+  const m = /^\+1(\d{3})(\d{3})(\d{4})$/.exec(e164);
+  return m ? `+1 (${m[1]}) ${m[2]}-${m[3]}` : e164;
+}
+
 /** O que a pessoa enviou no form (sessionStorage, mesma aba). */
 function useSubmittedDraft() {
   const [data, setData] = useState<{ phone: string; email: string; returnHref: string } | null>(
@@ -228,7 +234,7 @@ export function ThankYouIntl({ market, eid }: { market: IntlMarket; eid?: string
                     <p className="mt-4 text-[15px] sm:text-[16px] text-sage leading-[1.6]">
                       Vamos te chamar no WhatsApp{" "}
                       <strong className="text-foreground font-semibold whitespace-nowrap">
-                        {draft.phone}
+                        {formatIntlPhone(draft.phone)}
                       </strong>
                       .{" "}
                       <a
