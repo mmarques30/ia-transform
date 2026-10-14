@@ -180,7 +180,7 @@ interface FormCopy {
   select: string;
   required: string;
   invalidEmail: string;
-  /** Só no modo intl: menos de 7 ou mais de 15 dígitos. */
+  /** Só no modo intl: número que não dá pra converter em E.164. */
   invalidPhone: string;
   missingFields: string;
   /** Mensagem de erro do backend vem em português: em inglês usa a genérica. */
@@ -213,7 +213,7 @@ const FORM_COPY_PT_BR: FormCopy = {
   select: "Selecione",
   required: "Campo obrigatório",
   invalidEmail: "E-mail inválido",
-  invalidPhone: "Confere o número com o código do país.",
+  invalidPhone: "Inclua o + e o código do país, ex: +1 305 555 0123.",
   missingFields: "Preencha os campos obrigatórios:",
   useBackendError: true,
   submitFailed: (status) => `Falha no envio (HTTP ${status})`,
@@ -233,7 +233,7 @@ const FORM_COPY: LpCopy<FormCopy> = {
     faixas: FAIXAS_US_PT,
     phoneLabel: "WhatsApp (com código do país)",
     phonePlaceholder: "+1 (305) 555-0123",
-    phoneHint: "Com o código do país. Vamos te chamar nesse número.",
+    phoneHint: "Com + e o código do país. Vamos te chamar nesse número.",
   },
   en: {
     formSlug: "business-en",
@@ -255,13 +255,13 @@ const FORM_COPY: LpCopy<FormCopy> = {
     emailPlaceholder: "you@company.com",
     phoneLabel: "Phone number",
     phonePlaceholder: "+1 (305) 555-0123",
-    phoneHint: "Include your country code.",
+    phoneHint: "Include + and your country code.",
     cargoLabel: "Your role",
     faixaLabel: "Company annual revenue",
     select: "Select",
     required: "Required field",
     invalidEmail: "Invalid email",
-    invalidPhone: "Please check the number, including the country code.",
+    invalidPhone: "Add + and your country code, e.g. +1 305 555 0123.",
     missingFields: "Please fill in the required fields:",
     useBackendError: false,
     submitFailed: (status) => `Submission failed (HTTP ${status}). Please try again.`,
@@ -275,6 +275,38 @@ const FORM_COPY: LpCopy<FormCopy> = {
 /** Telefone internacional: só dígitos, +, espaço, parênteses, hífen e ponto. */
 function sanitizeIntlPhone(raw: string): string {
   return raw.replace(/[^\d+\s().-]/g, "").slice(0, 24);
+}
+
+/**
+ * Telefone internacional em E.164 (+<código do país><número>), que é o que o
+ * CRM exige: sem o +, o form-submit lê o número como brasileiro e reprova
+ * (ex.: (786) 555-1234 vira "DDD não existe").
+ *
+ *  - com + (ou 00 na frente): mantém o código do país digitado
+ *  - sem +, número dos EUA/Canadá (10 dígitos, ou 11 com o 1 na frente,
+ *    no formato do plano americano) → +1
+ *  - qualquer outra coisa sem +: ambíguo (não dá pra saber o país) → null
+ *
+ * null também quando o total foge de 8–15 dígitos (limites do E.164).
+ */
+function toE164Intl(raw: string): string | null {
+  const trimmed = raw.trim();
+  let digits = onlyDigits(trimmed);
+  let explicitCountry = trimmed.startsWith("+");
+  if (!explicitCountry && digits.startsWith("00")) {
+    digits = digits.slice(2);
+    explicitCountry = true;
+  }
+  if (!explicitCountry) {
+    // Plano de numeração dos EUA/Canadá: código de área e prefixo começam
+    // com 2–9. Sem isso, celular brasileiro sem +55 ((11) 98765-4321 tem 11
+    // dígitos começando com 1) passaria por americano.
+    const national = digits.length === 11 && digits.startsWith("1") ? digits.slice(1) : digits;
+    if (!/^[2-9]\d{2}[2-9]\d{6}$/.test(national)) return null;
+    digits = `1${national}`;
+  }
+  if (digits.length < 8 || digits.length > 15) return null;
+  return `+${digits}`;
 }
 
 /**
@@ -609,9 +641,8 @@ export function HeroForm({
     if (name === "email" && trimmed && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) {
       return c.invalidEmail;
     }
-    if (intlPhone && name === "phone" && trimmed) {
-      const digits = onlyDigits(trimmed).length;
-      if (digits < 7 || digits > 15) return c.invalidPhone;
+    if (intlPhone && name === "phone" && trimmed && !toE164Intl(trimmed)) {
+      return c.invalidPhone;
     }
     // WhatsApp: formato não bloqueia mais o envio. O aviso vem do
     // handlePhoneBlur / handleSubmit e o resultado vai em whatsapp_check.
@@ -729,12 +760,14 @@ export function HeroForm({
           : new URLSearchParams();
 
       const typedPhone = String(fd.get("phone") ?? "").trim();
+      // LPs dos EUA: sempre E.164 (o validateField já barrou o que não converte).
+      const intlE164 = intlPhone ? toE164Intl(typedPhone) : null;
       const fields = {
         firstname: String(fd.get("firstname") ?? "").trim(),
         email: String(fd.get("email") ?? "").trim(),
         // Número confirmado no WhatsApp vai no formato 55DD9XXXXXXXX;
-        // senão, o que a pessoa digitou (com máscara).
-        phone: (!submitIssue && verifiedPhone.current) || typedPhone,
+        // senão, o que a pessoa digitou (com máscara). Fora do Brasil, E.164.
+        phone: intlE164 || (!submitIssue && verifiedPhone.current) || typedPhone,
         cargo: String(fd.get("cargo") ?? "").trim(),
         faixa_de_faturamento: String(fd.get("faixa_de_faturamento") ?? "").trim(),
         // ok | nao_verificado | nao_whatsapp | formato:<motivo>
@@ -876,10 +909,12 @@ export function HeroForm({
       submitted.current = true;
 
       // Tela de obrigado mostra o número digitado + "errou? corrigir".
+      // Fora do Brasil mostra o E.164 enviado: se o +1 foi deduzido, a
+      // pessoa vê e corrige.
       saveLeadDraft({
         firstname: fields.firstname,
         email: fields.email,
-        phone: typedPhone,
+        phone: intlE164 || typedPhone,
         cargo: fields.cargo,
         faixa_de_faturamento: fields.faixa_de_faturamento,
         returnHref: buildCorrigirHref(),
