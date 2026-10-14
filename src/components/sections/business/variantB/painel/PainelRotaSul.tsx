@@ -1,4 +1,79 @@
 import { useIapIn } from "./useIapIn";
+import { useLpCopy, type LpCopy } from "@/lib/lpLocale";
+
+const COPY_PT_BR = {
+  url: "painel.rotasul.com.br",
+  logo: "R",
+  company: "Rota Sul Transportes",
+  live: "AO VIVO",
+  clock: "TER 22:14",
+  aiA: "A rota CWB→POA está com ",
+  aiMoney: "margem de 9%",
+  aiB: " — puxando seu mês pra baixo.",
+  aiTag: "IA · AGORA",
+  kpis: [
+    { label: "Julho", value: "R$ 638 mil", trend: "" },
+    { label: "Ocupação da frota", value: "81%", trend: "↗ +9 p.p." },
+    { label: "Custo por km", value: "R$ 4,86", trend: "↘ +7%" },
+  ],
+  chartTitle: "Margem por rota",
+  chartTag: "1 abaixo do mínimo",
+  routes: ["CWB→SP", "CWB→FLN", "SP→CWB", "CWB→CXS", "CWB→POA"],
+  decide: "Pra você decidir",
+  actions: [
+    { label: "Frete spot fora da tabela", detail: "R$ 14 mil · margem 31%", btn: "Aprovar" },
+    { label: "Contrato mensal Mega", detail: "R$ 92 mil/mês · minuta pronta", btn: "Revisar" },
+    { label: "Reajuste CWB→POA", detail: "simulação de frete pronta", btn: "Simular" },
+  ],
+};
+
+/** Empresa fictícia; nos EUA com nome, domínio, rotas e valores de lá. */
+const COPY: LpCopy<typeof COPY_PT_BR> = {
+  "pt-br": COPY_PT_BR,
+  "pt-us": {
+    ...COPY_PT_BR,
+    url: "painel.southlinefreight.com",
+    logo: "S",
+    company: "Southline Freight",
+    aiA: "A rota MIA→ATL está com ",
+    kpis: [
+      { label: "Julho", value: "US$ 320 mil", trend: "" },
+      COPY_PT_BR.kpis[1],
+      { label: "Custo por milha", value: "US$ 2,41", trend: "↘ +7%" },
+    ],
+    routes: ["MIA→ORL", "MIA→TPA", "ORL→MIA", "MIA→JAX", "MIA→ATL"],
+    actions: [
+      { label: "Frete spot fora da tabela", detail: "US$ 7 mil · margem 31%", btn: "Aprovar" },
+      { label: "Contrato mensal Mega", detail: "US$ 46 mil/mês · minuta pronta", btn: "Revisar" },
+      { label: "Reajuste MIA→ATL", detail: "simulação de frete pronta", btn: "Simular" },
+    ],
+  },
+  en: {
+    url: "dashboard.southlinefreight.com",
+    logo: "S",
+    company: "Southline Freight",
+    live: "LIVE",
+    clock: "TUE 10:14 PM",
+    aiA: "The MIA→ATL lane is running at a ",
+    aiMoney: "9% margin",
+    aiB: " — dragging your month down.",
+    aiTag: "AI · NOW",
+    kpis: [
+      { label: "July", value: "$320K", trend: "" },
+      { label: "Fleet utilization", value: "81%", trend: "↗ +9 pts" },
+      { label: "Cost per mile", value: "$2.41", trend: "↘ +7%" },
+    ],
+    chartTitle: "Margin by lane",
+    chartTag: "1 below minimum",
+    routes: ["MIA→ORL", "MIA→TPA", "ORL→MIA", "MIA→JAX", "MIA→ATL"],
+    decide: "For you to decide",
+    actions: [
+      { label: "Spot freight off the rate card", detail: "$7K · 31% margin", btn: "Approve" },
+      { label: "Mega monthly contract", detail: "$46K/month · draft ready", btn: "Review" },
+      { label: "MIA→ATL rate increase", detail: "freight simulation ready", btn: "Simulate" },
+    ],
+  },
+};
 
 /**
  * PainelRotaSul (V3) — operação física / logística.
@@ -6,6 +81,7 @@ import { useIapIn } from "./useIapIn";
  * Copy/valores/cores preservados.
  */
 export function PainelRotaSul() {
+  const c = useLpCopy(COPY);
   const { ref, isIn } = useIapIn();
   return (
     <div
@@ -28,7 +104,7 @@ export function PainelRotaSul() {
             <span></span>
           </div>
           <div className="iap-urlbar">
-            <span className="iap-lock">●</span> painel.rotasul.com.br
+            <span className="iap-lock">●</span> {c.url}
           </div>
         </div>
         <div className="iap-panel">
@@ -37,12 +113,12 @@ export function PainelRotaSul() {
             style={{ "--iap-d": ".05s" } as React.CSSProperties}
           >
             <div className="iap-company">
-              <div className="iap-logo">R</div>Rota Sul Transportes
+              <div className="iap-logo">{c.logo}</div>{c.company}
             </div>
             <div className="iap-live">
               <span className="iap-live-dot"></span>
-              <span className="iap-on">AO VIVO</span>
-              <span className="iap-clock">TER 22:14</span>
+              <span className="iap-on">{c.live}</span>
+              <span className="iap-clock">{c.clock}</span>
             </div>
           </div>
 
@@ -50,37 +126,38 @@ export function PainelRotaSul() {
             <div className="iap-ai-inner">
               <div className="iap-ai-spark">✦</div>
               <div className="iap-ai-text">
-                A rota CWB→POA está com <span className="iap-money">margem de 9%</span> — puxando
-                seu mês pra baixo.
+                {c.aiA}
+                <span className="iap-money">{c.aiMoney}</span>
+                {c.aiB}
               </div>
-              <span className="iap-ai-tag">IA · AGORA</span>
+              <span className="iap-ai-tag">{c.aiTag}</span>
             </div>
           </div>
 
           <div className="iap-kpis">
             <div className="iap-kpi iap-anim" style={{ "--iap-d": ".25s" } as React.CSSProperties}>
-              <div className="iap-kpi-label">Julho</div>
-              <div className="iap-kpi-value">R$ 638 mil</div>
+              <div className="iap-kpi-label">{c.kpis[0].label}</div>
+              <div className="iap-kpi-value">{c.kpis[0].value}</div>
               <div className="iap-meta-bar">
                 <i style={{ width: "88%" }}></i>
               </div>
             </div>
             <div className="iap-kpi iap-anim" style={{ "--iap-d": ".33s" } as React.CSSProperties}>
-              <div className="iap-kpi-label">Ocupação da frota</div>
-              <div className="iap-kpi-value iap-grad">81%</div>
-              <span className="iap-trend iap-up">↗ +9 p.p.</span>
+              <div className="iap-kpi-label">{c.kpis[1].label}</div>
+              <div className="iap-kpi-value iap-grad">{c.kpis[1].value}</div>
+              <span className="iap-trend iap-up">{c.kpis[1].trend}</span>
             </div>
             <div className="iap-kpi iap-anim" style={{ "--iap-d": ".41s" } as React.CSSProperties}>
-              <div className="iap-kpi-label">Custo por km</div>
-              <div className="iap-kpi-value">R$ 4,86</div>
-              <span className="iap-trend iap-down">↘ +7%</span>
+              <div className="iap-kpi-label">{c.kpis[2].label}</div>
+              <div className="iap-kpi-value">{c.kpis[2].value}</div>
+              <span className="iap-trend iap-down">{c.kpis[2].trend}</span>
             </div>
           </div>
 
           <div className="iap-grid2">
             <div className="iap-box iap-anim" style={{ "--iap-d": ".5s" } as React.CSSProperties}>
               <div className="iap-box-title">
-                Margem por rota <em style={{ color: "#fb7185" }}>1 abaixo do mínimo</em>
+                {c.chartTitle} <em style={{ color: "#fb7185" }}>{c.chartTag}</em>
               </div>
               <svg className="iap-chart" viewBox="0 0 420 118" xmlns="http://www.w3.org/2000/svg">
                 <defs>
@@ -91,7 +168,7 @@ export function PainelRotaSul() {
                 </defs>
                 <g fontFamily="JetBrains Mono" fontSize="9.5">
                   <text x="10" y="18" fill="rgba(236,238,242,.6)">
-                    CWB→SP
+                    {c.routes[0]}
                   </text>
                   <rect
                     className="iap-hbar"
@@ -107,7 +184,7 @@ export function PainelRotaSul() {
                     28%
                   </text>
                   <text x="10" y="42" fill="rgba(236,238,242,.6)">
-                    CWB→FLN
+                    {c.routes[1]}
                   </text>
                   <rect
                     className="iap-hbar"
@@ -124,7 +201,7 @@ export function PainelRotaSul() {
                     24%
                   </text>
                   <text x="10" y="66" fill="rgba(236,238,242,.6)">
-                    SP→CWB
+                    {c.routes[2]}
                   </text>
                   <rect
                     className="iap-hbar"
@@ -141,7 +218,7 @@ export function PainelRotaSul() {
                     20%
                   </text>
                   <text x="10" y="90" fill="rgba(236,238,242,.6)">
-                    CWB→CXS
+                    {c.routes[3]}
                   </text>
                   <rect
                     className="iap-hbar"
@@ -158,7 +235,7 @@ export function PainelRotaSul() {
                     16%
                   </text>
                   <text x="10" y="114" fill="#fb7185" fontWeight="700">
-                    CWB→POA
+                    {c.routes[4]}
                   </text>
                   <rect
                     className="iap-hbar"
@@ -177,30 +254,30 @@ export function PainelRotaSul() {
               </svg>
             </div>
             <div className="iap-box iap-anim" style={{ "--iap-d": ".6s" } as React.CSSProperties}>
-              <div className="iap-box-title">Pra você decidir</div>
+              <div className="iap-box-title">{c.decide}</div>
               <div className="iap-action">
                 <span className="iap-ico iap-risk">!</span>
                 <span className="iap-lbl">
-                  Frete spot fora da tabela
-                  <small>R$ 14 mil · margem 31%</small>
+                  {c.actions[0].label}
+                  <small>{c.actions[0].detail}</small>
                 </span>
-                <span className="iap-btn" aria-hidden>Aprovar</span>
+                <span className="iap-btn" aria-hidden>{c.actions[0].btn}</span>
               </div>
               <div className="iap-action">
                 <span className="iap-ico iap-opp">↗</span>
                 <span className="iap-lbl">
-                  Contrato mensal Mega
-                  <small>R$ 92 mil/mês · minuta pronta</small>
+                  {c.actions[1].label}
+                  <small>{c.actions[1].detail}</small>
                 </span>
-                <span className="iap-btn" aria-hidden>Revisar</span>
+                <span className="iap-btn" aria-hidden>{c.actions[1].btn}</span>
               </div>
               <div className="iap-action">
                 <span className="iap-ico iap-ai">✦</span>
                 <span className="iap-lbl">
-                  Reajuste CWB→POA
-                  <small>simulação de frete pronta</small>
+                  {c.actions[2].label}
+                  <small>{c.actions[2].detail}</small>
                 </span>
-                <span className="iap-btn iap-ghost" aria-hidden>Simular</span>
+                <span className="iap-btn iap-ghost" aria-hidden>{c.actions[2].btn}</span>
               </div>
             </div>
           </div>

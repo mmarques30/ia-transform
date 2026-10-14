@@ -1,4 +1,5 @@
 import { Reveal } from "@/components/Reveal";
+import { useLpCopy, type LpCopy } from "@/lib/lpLocale";
 
 const SEGMENTS = [
   {
@@ -13,7 +14,36 @@ const SEGMENTS = [
   },
 ];
 
+const COPY_PT_BR = {
+  titleA: "Para",
+  titleEm: "quem",
+  titleB: "é o Business?",
+  segments: SEGMENTS,
+};
+
+const COPY: LpCopy<typeof COPY_PT_BR> = {
+  "pt-br": COPY_PT_BR,
+  en: {
+    titleA: "Who is",
+    titleEm: "Business",
+    titleB: "for?",
+    segments: [
+      {
+        title: "Business Owners,\nFounders\nand Partners",
+        description:
+          "Who are stuck in day-to-day operations, putting out fires every day, and want a system that keeps the company running without them in the middle of everything.",
+      },
+      {
+        title: "Operations Directors\nand Department\nManagers",
+        description:
+          "Who lead teams in any area, whether sales, finance, logistics, customer success, accounting or anything else, and need automation that eliminates manual processes and rework while fitting the way the team already works.",
+      },
+    ],
+  },
+};
+
 export function ParaQuem() {
+  const c = useLpCopy(COPY);
   return (
     <section
       className="para-quem-section"
@@ -26,14 +56,13 @@ export function ParaQuem() {
         <div className="para-quem-inner">
           <Reveal>
             <h2 className="para-quem-title">
-              Para{" "}
-              <strong className="para-quem-title-em">quem</strong> é o
-              Business?
+              {c.titleA}{" "}
+              <strong className="para-quem-title-em">{c.titleEm}</strong> {c.titleB}
             </h2>
           </Reveal>
 
           <div className="para-quem-grid">
-            {SEGMENTS.map((seg, i) => (
+            {c.segments.map((seg, i) => (
               <Reveal key={i} delay={0.08 + i * 0.1}>
                 <div className="para-quem-card">
                   <h3 className="para-quem-card-title">

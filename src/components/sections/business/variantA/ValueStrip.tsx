@@ -1,3 +1,5 @@
+import { useLpCopy, type LpCopy } from "@/lib/lpLocale";
+
 const ITEMS = [
   {
     label: "Decisão com dados",
@@ -36,14 +38,20 @@ const ITEMS = [
   },
 ];
 
+const LABELS: LpCopy<string[]> = {
+  "pt-br": ITEMS.map((item) => item.label),
+  en: ["Data-driven decisions", "AI that learns", "Bottleneck-free execution", "Scale without hiring"],
+};
+
 export function ValueStrip() {
+  const labels = useLpCopy(LABELS);
   return (
     <div className="value-strip">
       <div className="value-strip-inner">
         {ITEMS.map((item, i) => (
           <div key={i} className="value-strip-item">
             <span className="value-strip-icon">{item.icon}</span>
-            <span className="value-strip-text">{item.label}</span>
+            <span className="value-strip-text">{labels[i]}</span>
             {i < ITEMS.length - 1 && <span className="value-strip-divider" aria-hidden />}
           </div>
         ))}

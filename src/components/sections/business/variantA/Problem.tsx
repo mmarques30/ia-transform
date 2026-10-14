@@ -1,5 +1,6 @@
 import { Reveal } from "@/components/Reveal";
 import { OriginButton } from "@/components/ui/origin-button";
+import { useLpCopy, type LpCopy } from "@/lib/lpLocale";
 
 const PILLARS = [
   { label: "ENTREGANDO", bold: "MAIS RÁPIDO" },
@@ -7,7 +8,35 @@ const PILLARS = [
   { label: "CRESCENDO", bold: "SEM CONTRATAR" },
 ];
 
+const COPY_PT_BR = {
+  titleA: "O sistema que libera a operação",
+  titleB: "e escala a receita.",
+  sub: "O mesmo que já entregamos em mais de 50 empresas no Brasil e fora do país.",
+  pillars: PILLARS,
+  cta: "quero meu diagnóstico",
+};
+
+const COPY: LpCopy<typeof COPY_PT_BR> = {
+  "pt-br": COPY_PT_BR,
+  "pt-us": {
+    ...COPY_PT_BR,
+    sub: "O mesmo que já entregamos em mais de 50 empresas, dentro e fora do Brasil.",
+  },
+  en: {
+    titleA: "The system that frees up your operations",
+    titleB: "and scales your revenue.",
+    sub: "The same system we've delivered to more than 50 companies in Brazil and abroad.",
+    pillars: [
+      { label: "DELIVERING", bold: "FASTER" },
+      { label: "RUNNING", bold: "WITHOUT YOU" },
+      { label: "GROWING", bold: "WITHOUT HIRING" },
+    ],
+    cta: "request diagnostic",
+  },
+};
+
 export function Problem() {
+  const c = useLpCopy(COPY);
   return (
     <section className="relative">
       <div className="section-veil w-full py-[72px] lg:py-[110px]">
@@ -20,21 +49,21 @@ export function Problem() {
               <span
                 style={{ color: "var(--color-primary)" }}
               >
-                O sistema que libera a operação
+                {c.titleA}
               </span>{" "}
-              <span className="text-foreground">e escala a receita.</span>
+              <span className="text-foreground">{c.titleB}</span>
             </h2>
           </Reveal>
 
           <Reveal delay={0.05}>
             <p className="mt-5 text-[15px] lg:text-[17px] text-sage leading-[1.6] max-w-[560px] mx-auto">
-              O mesmo que já entregamos em mais de 50 empresas no Brasil e fora do país.
+              {c.sub}
             </p>
           </Reveal>
 
           <Reveal delay={0.12}>
             <div className="mt-12 lg:mt-16 grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-6 max-w-[960px] mx-auto">
-              {PILLARS.map((p, i) => (
+              {c.pillars.map((p, i) => (
                 <div
                   key={i}
                   className="rounded-2xl px-6 py-10 lg:py-12 flex flex-col items-center justify-center"
@@ -66,7 +95,7 @@ export function Problem() {
           <Reveal delay={0.25}>
             <div className="mt-12 lg:mt-16">
               <OriginButton onClick={() => document.getElementById("top")?.scrollIntoView({ behavior: "smooth" })}>
-                quero meu diagnóstico
+                {c.cta}
               </OriginButton>
             </div>
           </Reveal>

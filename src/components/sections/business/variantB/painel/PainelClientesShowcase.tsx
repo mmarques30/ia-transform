@@ -3,6 +3,7 @@ import { PainelBlocaz } from "./PainelBlocaz";
 import { PainelAtlas } from "./PainelAtlas";
 import { PainelRotaSul } from "./PainelRotaSul";
 import { PainelScaler } from "./PainelScaler";
+import { useLpCopy, type LpCopy } from "@/lib/lpLocale";
 
 /**
  * PainelClientesShowcase — carrossel com tabs dos 3 painéis de
@@ -35,7 +36,13 @@ const TABS: Tab[] = [
 
 const AUTO_ROTATE_MS = 8000;
 
+const TAB_LABELS: LpCopy<Record<TabKey, string>> = {
+  "pt-br": { industria: "Indústria", servicos: "Serviços", logistica: "Logística" },
+  en: { industria: "Manufacturing", servicos: "Services", logistica: "Logistics" },
+};
+
 export function PainelClientesShowcase() {
+  const labels = useLpCopy(TAB_LABELS);
   const [active, setActive] = useState<TabKey>(TABS[0].key);
   const [userInteracted, setUserInteracted] = useState(false);
 
@@ -74,7 +81,7 @@ export function PainelClientesShowcase() {
                 boxShadow: isActive ? "0 0 20px -8px rgba(200,224,64,0.5)" : "none",
               }}
             >
-              {t.label}
+              {labels[t.key]}
             </button>
           );
         })}

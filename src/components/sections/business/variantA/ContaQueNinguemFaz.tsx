@@ -1,5 +1,6 @@
 import { Reveal } from "@/components/Reveal";
 import { OriginButton } from "@/components/ui/origin-button";
+import { useLpCopy, type LpCopy } from "@/lib/lpLocale";
 
 const STEPS = [
   { num: "10", label: "pessoas", desc: "no time" },
@@ -11,7 +12,41 @@ const STEPS = [
 // Operador que liga cada card ao próximo: 10 × 2h = 400h = 2 pessoas
 const OPERATORS = ["×", "=", "="];
 
+const COPY_PT_BR = {
+  titleA: "A conta que",
+  titleB: "ninguém faz.",
+  sub: "E que segura o crescimento no fim do ano.",
+  steps: STEPS,
+  closingA: "Esse é o custo real de operar sem automação.",
+  closingB: "Não aparece no DRE. Fica diluído no CLT do time.",
+  cta: "quero meu diagnóstico",
+};
+
+const COPY: LpCopy<typeof COPY_PT_BR> = {
+  "pt-br": COPY_PT_BR,
+  // DRE e CLT são termos do Brasil: na LP dos EUA vira P&L e folha.
+  "pt-us": {
+    ...COPY_PT_BR,
+    closingB: "Não aparece no P&L. Fica diluído na folha do time.",
+  },
+  en: {
+    titleA: "The math",
+    titleB: "nobody does.",
+    sub: "And it's what holds back growth by year-end.",
+    steps: [
+      { num: "10", label: "people", desc: "on the team" },
+      { num: "2h", label: "a day", desc: "of repetitive manual work" },
+      { num: "400h", label: "a month", desc: "lost on work a system should be doing on its own" },
+      { num: "2", label: "full-time people", desc: "just to keep up what should be automatic" },
+    ],
+    closingA: "That's the real cost of running without automation.",
+    closingB: "It doesn't show up on the P&L. It's buried in payroll.",
+    cta: "request diagnostic",
+  },
+};
+
 export function ContaQueNinguemFaz() {
+  const c = useLpCopy(COPY);
   return (
     <section
       id="a-conta"
@@ -33,16 +68,16 @@ export function ContaQueNinguemFaz() {
               className="font-extrabold text-[30px] sm:text-[40px] lg:text-[52px] leading-[1.03] tracking-[-0.025em] text-foreground"
               style={{ textWrap: "balance" }}
             >
-              A conta que <span style={{ color: "var(--color-primary)" }}>ninguém faz.</span>
+              {c.titleA} <span style={{ color: "var(--color-primary)" }}>{c.titleB}</span>
             </h2>
           </Reveal>
           <Reveal delay={0.05}>
-            <p className="conta-sub">E que segura o crescimento no fim do ano.</p>
+            <p className="conta-sub">{c.sub}</p>
           </Reveal>
         </div>
 
         <ol className="conta-grid">
-          {STEPS.map((step, i) => (
+          {c.steps.map((step, i) => (
             <li key={step.num} className="conta-step" data-step={i + 1}>
               <Reveal delay={0.08 + i * 0.1}>
                 <div className="conta-card">
@@ -65,8 +100,7 @@ export function ContaQueNinguemFaz() {
 
         <Reveal delay={0.5}>
           <p className="conta-closing">
-            Esse é o custo real de operar sem automação.{" "}
-            <strong>Não aparece no DRE. Fica diluído no CLT do time.</strong>
+            {c.closingA} <strong>{c.closingB}</strong>
           </p>
         </Reveal>
 
@@ -75,7 +109,7 @@ export function ContaQueNinguemFaz() {
             <OriginButton
               onClick={() => document.getElementById("top")?.scrollIntoView({ behavior: "smooth" })}
             >
-              quero meu diagnóstico
+              {c.cta}
             </OriginButton>
           </div>
         </Reveal>

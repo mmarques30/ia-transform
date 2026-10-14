@@ -70,12 +70,9 @@ export function Hero({ title, subtitle, landingPage }: HeroProps = {}) {
 
           <div className="hero-b-form-col">
             <Reveal delay={0.15}>
-              <HeroForm
-                formSlug="business"
-                thankYouPath="/thank-you-business"
-                landingPage={landingPage}
-                compact
-              />
+              {/* Slug do form e página de obrigado vêm do idioma da LP
+                  (business + /thank-you-business no Brasil). */}
+              <HeroForm landingPage={landingPage} compact />
             </Reveal>
           </div>
         </div>

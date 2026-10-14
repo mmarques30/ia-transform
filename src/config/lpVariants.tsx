@@ -76,6 +76,54 @@ export const LP_VARIANTS = {
       </>
     ),
   },
+  /**
+   * Trilha A — brasileiro com empresa nos EUA. Mesma copy da contratacao;
+   * o que muda (US$, WhatsApp internacional, form business-us) vem do
+   * locale pt-us na rota.
+   */
+  usContratacao: {
+    slug: "us-contratacao",
+    metaTitle:
+      "IAplicada Business · Você não precisa contratar mais gente. Precisa da operação dando conta.",
+    metaDescription:
+      "Em até 90 dias construímos o software com IA que resolve o trabalho manual que hoje custaria mais gente na folha. Aumentar custo fixo é a última coisa que sua empresa precisa agora.",
+    heroTitle: (
+      <>
+        <span className="hero-b-h1-sans">Você não precisa contratar mais&nbsp;gente.</span>
+        <br />
+        <em className="hero-b-h1-em">Precisa da operação dando&nbsp;conta.</em>
+      </>
+    ),
+    heroSubtitle: (
+      <>
+        Em até {NOVENTA_DIAS} construímos o software com IA que resolve o trabalho manual que hoje
+        custaria mais gente na folha. Aumentar custo fixo é a última coisa que sua empresa precisa
+        agora.
+      </>
+    ),
+  },
+  /** Trilha EN — empresas americanas. Inglês, form business-en (locale en). */
+  enContratacao: {
+    slug: "en-contratacao",
+    metaTitle:
+      "IAplicada Business · You don't need to hire more people. You need operations that keep up.",
+    metaDescription:
+      "In up to 90 days we build the AI-powered software that handles the manual work that would otherwise mean more people on payroll. Adding fixed costs is the last thing your company needs right now.",
+    heroTitle: (
+      <>
+        <span className="hero-b-h1-sans">You don't need to hire more&nbsp;people.</span>
+        <br />
+        <em className="hero-b-h1-em">You need operations that keep&nbsp;up.</em>
+      </>
+    ),
+    heroSubtitle: (
+      <>
+        In up to <em style={{ color: "var(--color-primary)" }}>90 days</em> we build the AI-powered
+        software that handles the manual work that would otherwise mean more people on payroll.
+        Adding fixed costs is the last thing your company needs right now.
+      </>
+    ),
+  },
 } satisfies Record<string, LpVariant>;
 
 export function variantHead(v: LpVariant) {
