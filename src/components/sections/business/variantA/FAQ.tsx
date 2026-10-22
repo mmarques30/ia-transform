@@ -1,6 +1,20 @@
 import { useState } from "react";
 import { Reveal } from "@/components/Reveal";
 import { useLpCopy, type LpCopy } from "@/lib/lpLocale";
+import { jsonLd } from "@/lib/structuredData";
+
+/** As mesmas perguntas em schema.org (FAQPage): IAs e buscadores extraem a resposta direto. */
+function faqJsonLd(items: { q: string; a: string }[]): string {
+  return jsonLd({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: items.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: { "@type": "Answer", text: item.a.replace(/\n\n/g, " ") },
+    })),
+  });
+}
 
 const FAQ_ITEMS: { q: string; a: string }[] = [
   {
@@ -72,6 +86,7 @@ export function FAQ() {
           "radial-gradient(80% 60% at 50% 0%, rgba(200,224,64,0.08), transparent 65%), linear-gradient(180deg, #0a0c07 0%, #0f1109 100%)",
       }}
     >
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: faqJsonLd(c.items) }} />
       <div className="container-page relative py-[80px] lg:py-[120px]">
         <div className="max-w-[860px] mx-auto">
           <Reveal>
