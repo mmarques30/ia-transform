@@ -58,18 +58,47 @@ function useFireLeadBackup(eid: string | undefined) {
 }
 
 /**
- * Conversão do Google Ads (tag AW-18531612150 carregada no __root.tsx).
- * Pronta pra ligar: quando o rótulo da conversão for definido, troque
- * ROTULO_A_DEFINIR e descomente o bloco. Dispara só com eid (veio do envio
- * do form), igual ao Lead do Meta acima.
+ * Conversão do Google Ads (tag base AW-18531612150 carregada no __root.tsx).
+ *
+ * Uma única vez por envio de formulário: só dispara com eid (gerado no
+ * envio) e guarda os eids já convertidos no localStorage, então recarregar
+ * a página, voltar pelo histórico ou abrir o link de novo não conta outra
+ * conversão. transaction_id = eid faz o próprio Google descartar repetição.
  */
+const GADS_CONVERSION_SEND_TO = "AW-18531612150/u9k7CMHqk6YdEPbrx4RF";
+const GADS_CONVERTED_KEY = "iap_gads_converted";
+
+function readConvertedEids(): string[] {
+  try {
+    const list = JSON.parse(localStorage.getItem(GADS_CONVERTED_KEY) ?? "[]");
+    return Array.isArray(list) ? list.filter((x): x is string => typeof x === "string") : [];
+  } catch {
+    return [];
+  }
+}
+
+function markConverted(eid: string): void {
+  try {
+    // Só os últimos 20: o suficiente pra cobrir reenvios no mesmo aparelho.
+    const list = [...readConvertedEids().filter((x) => x !== eid), eid].slice(-20);
+    localStorage.setItem(GADS_CONVERTED_KEY, JSON.stringify(list));
+  } catch {
+    // storage bloqueado: o transaction_id ainda evita contagem dupla no Google
+  }
+}
+
 function useFireGoogleAdsConversion(eid: string | undefined) {
   useEffect(() => {
-    if (!eid) return;
-    // type GtagFn = (command: "event", action: string, params: Record<string, unknown>) => void;
-    // const gtag = (window as unknown as { gtag?: GtagFn }).gtag;
-    // if (typeof gtag !== "function") return;
-    // gtag('event', 'conversion', { send_to: 'AW-18531612150/ROTULO_A_DEFINIR' });
+    if (!eid || readConvertedEids().includes(eid)) return;
+    type GtagFn = (command: "event", action: string, params: Record<string, unknown>) => void;
+    const gtag = (window as unknown as { gtag?: GtagFn }).gtag;
+    if (typeof gtag !== "function") return;
+    markConverted(eid);
+    try {
+      gtag("event", "conversion", { send_to: GADS_CONVERSION_SEND_TO, transaction_id: eid });
+    } catch (err) {
+      console.warn("[thank-you] Google Ads conversion throw", err);
+    }
   }, [eid]);
 }
 
