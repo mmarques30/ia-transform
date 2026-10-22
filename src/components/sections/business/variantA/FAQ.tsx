@@ -22,6 +22,10 @@ const FAQ_ITEMS: { q: string; a: string }[] = [
     a: "Construímos software com inteligência artificial sob medida para automatizar a operação do negócio. Não é licença de ferramenta pronta e não é consultoria que entrega apresentação.\n\nMapeamos os processos, identificamos onde a empresa perde tempo e dinheiro, e entregamos um sistema que já funciona dentro da operação. Com uma diferença: a IA embutida aprende com cada uso. O que o time corrige vira padrão e volta sugerido. Quanto mais o sistema é usado, menos precisa ser preenchido.",
   },
   {
+    q: "Como implementar IA na minha empresa?",
+    a: "Começa por um diagnóstico gratuito: mapeamos os processos da operação, identificamos onde a empresa perde tempo e dinheiro e montamos o ranking de gargalos.\n\nDepois construímos o sistema pelo Método APLICA, começando pelo que gera resultado primeiro: MVP funcional em até 30 dias e o sistema completo em até 90 dias, integrado ao que a empresa já usa (planilha, CRM, ERP, WhatsApp, e-mail). Sem jogar fora o que já funciona.",
+  },
+  {
     q: "Em quanto tempo fica pronto e quanto custa?",
     a: "Em até 30 dias o MVP funcional. Projetos maiores são divididos por módulos, priorizando o que gera resultado primeiro. Cada entrega é funcional, não uma promessa de próxima fase.\n\nO investimento é calculado por escopo. Depois do diagnóstico, você recebe uma proposta com os módulos, a ordem de entrega e o valor correspondente. A condição comercial é preservada durante o período de avaliação.",
   },
@@ -32,6 +36,10 @@ const FAQ_ITEMS: { q: string; a: string }[] = [
   {
     q: "Para que tipo de empresa a IAplicada atende?",
     a: "Empresas que já faturam, têm operação rodando e precisam escalar sem multiplicar o time.\n\nO critério não é setor. É o problema: processo manual que consome hora de gente cara, dado espalhado em planilha e WhatsApp, decisão que trava porque depende de uma pessoa só, crescimento de receita que não acompanha o crescimento da operação.\n\nE especialmente quem quer recuperar tempo. Tocar a empresa de onde quiser, sem precisar estar presente para cada decisão. O sistema faz o operacional rodar. Você cuida do que só você pode fazer.",
+  },
+  {
+    q: "Vale mais a pena contratar mais gente ou automatizar com IA?",
+    a: "Faça a conta: um time de 10 pessoas que gasta 2 horas por dia em trabalho manual repetitivo perde 400 horas por mês, o equivalente a 2 pessoas em tempo integral só para manter o que deveria ser automático. Contratar aumenta esse custo fixo; automatizar devolve essas horas para o time.\n\nNos nossos clientes, o mesmo time passou a produzir mais: na PSA Consultores, a eficiência operacional subiu pelo menos 50% em seis meses, com R$ 191 mil de ROI documentado em cinco meses de projeto.",
   },
   {
     q: "O diagnóstico é realmente gratuito? E se eu já tiver sistemas?",
@@ -56,6 +64,10 @@ const COPY: LpCopy<typeof COPY_PT_BR> = {
         a: "We build custom AI-powered software that automates how your business operates. It's not an off-the-shelf tool license, and it's not consulting that ends with a slide deck.\n\nWe map your processes, find where the company is losing time and money, and deliver a system that already works inside your operations. With one difference: the built-in AI learns from every use. What your team corrects becomes the standard and comes back as a suggestion. The more the system is used, the less it needs to be filled in.",
       },
       {
+        q: "How do I implement AI in my company?",
+        a: "It starts with a free diagnostic: we map your operational processes, find where the company is losing time and money, and build a ranking of bottlenecks.\n\nThen we build the system with the APLICA Method, starting with what drives results first: a working MVP in up to 30 days and the complete system in up to 90 days, integrated with the tools the company already uses (spreadsheets, CRM, ERP, email, messaging apps). Without throwing away what already works.",
+      },
+      {
         q: "How long does it take, and how much does it cost?",
         a: "A working MVP in up to 30 days. Larger projects are split into modules, prioritizing what drives results first. Every delivery works on its own; it's not a promise for the next phase.\n\nPricing is based on scope. After the diagnostic, you get a proposal with the modules, the delivery order and the corresponding price. The commercial terms are held for the evaluation period.",
       },
@@ -66,6 +78,10 @@ const COPY: LpCopy<typeof COPY_PT_BR> = {
       {
         q: "What kind of companies does IAplicada work with?",
         a: "Companies that already have revenue, have operations running, and need to scale without multiplying headcount.\n\nThe criterion isn't the industry. It's the problem: manual processes eating up hours of expensive people, data scattered across spreadsheets and chat apps, decisions that stall because they depend on a single person, revenue growth that operations can't keep up with.\n\nAnd especially anyone who wants their time back. Run the company from wherever you want, without having to be there for every decision. The system keeps operations running. You focus on what only you can do.",
+      },
+      {
+        q: "Is it better to hire more people or automate with AI?",
+        a: "Do the math: a team of 10 people spending 2 hours a day on repetitive manual work loses 400 hours a month, the equivalent of 2 full-time people just to keep up what should be automatic. Hiring adds to that fixed cost; automating gives those hours back to the team.\n\nWith our clients, the same team started producing more: at PSA Consultores, operational efficiency went up at least 50% in six months, with R$191K in documented ROI five months into the project.",
       },
       {
         q: "Is the diagnostic really free? What if I already have systems in place?",

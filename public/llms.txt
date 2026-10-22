@@ -28,6 +28,10 @@ Empresas que já faturam, têm operação rodando e precisam escalar sem multipl
 
 Perfis atendidos: empresários, fundadores e sócios presos no operacional; diretores de operações e gestores de área (comercial, financeiro, logística, CS, contábil e outras).
 
+## Contratar mais gente ou automatizar?
+
+Um time de 10 pessoas que gasta 2 horas por dia em trabalho manual repetitivo perde 400 horas por mês, o equivalente a 2 pessoas em tempo integral. Contratar aumenta esse custo fixo; automatizar devolve essas horas para o time.
+
 ## Diferença para ERP e consultoria
 
 ERP força a empresa a se adaptar ao software; a IAplicada constrói o software para se adaptar à empresa. Consultoria entrega diagnóstico e vai embora; a IAplicada entrega o sistema em produção.
@@ -55,6 +59,6 @@ Mariana Marques, Founder & CEO. 11 anos como executiva em Mercado Livre, Suzano 
 
 ## Contato
 
-- E-mail comercial: comercial@iaplicada.com
+- E-mail: mariana@iaplicada.com
 - Telefone/WhatsApp: +55 11 95056-6101
 - Diagnóstico gratuito: https://iaplicada.com/

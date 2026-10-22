@@ -11,7 +11,9 @@ const PILLARS = [
 const COPY_PT_BR = {
   titleA: "O sistema que libera a operação",
   titleB: "e escala a receita.",
-  sub: "O mesmo que já entregamos em mais de 50 empresas no Brasil e fora do país.",
+  // Frase de definição logo no início da página: é o trecho que buscadores
+  // e IAs extraem pra responder "o que é a IAplicada".
+  sub: "A IAplicada constrói software com IA sob medida que automatiza a operação da sua empresa. O mesmo sistema que já entregamos em mais de 50 empresas no Brasil e fora do\u00a0país.",
   pillars: PILLARS,
   cta: "quero meu diagnóstico",
 };
@@ -20,12 +22,12 @@ const COPY: LpCopy<typeof COPY_PT_BR> = {
   "pt-br": COPY_PT_BR,
   "pt-us": {
     ...COPY_PT_BR,
-    sub: "O mesmo que já entregamos em mais de 50 empresas, dentro e fora do Brasil.",
+    sub: "A IAplicada constrói software com IA sob medida que automatiza a operação da sua empresa. O mesmo sistema que já entregamos em mais de 50 empresas, dentro e fora do\u00a0Brasil.",
   },
   en: {
     titleA: "The system that frees up your operations",
     titleB: "and scales your revenue.",
-    sub: "The same system we've delivered to more than 50 companies in Brazil and abroad.",
+    sub: "IAplicada builds custom AI-powered software that automates your company's operations. The same system we've delivered to more than 50 companies in Brazil and\u00a0abroad.",
     pillars: [
       { label: "DELIVERING", bold: "FASTER" },
       { label: "RUNNING", bold: "WITHOUT YOU" },

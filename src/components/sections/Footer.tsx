@@ -69,10 +69,10 @@ export function Footer() {
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-muted-foreground">
             <span>© 2026 IAplicada</span>
             <a
-              href="mailto:comercial@iaplicada.com"
+              href="mailto:mariana@iaplicada.com"
               className="hover:text-foreground transition-colors"
             >
-              comercial@iaplicada.com
+              mariana@iaplicada.com
             </a>
             <a
               href="tel:+5511950566101"

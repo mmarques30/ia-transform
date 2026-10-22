@@ -21,7 +21,7 @@ export const SITE_GRAPH = {
       name: "IAplicada",
       url: `${SITE}/`,
       logo: `${SITE}/brand/iaplicada-logo-dark.png`,
-      email: "comercial@iaplicada.com",
+      email: "mariana@iaplicada.com",
       telephone: "+55-11-95056-6101",
       slogan: "#menoshypemaisentrega",
       description:
