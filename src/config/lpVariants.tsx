@@ -12,11 +12,18 @@ export interface LpVariant {
   metaDescription: string;
   heroTitle: React.ReactNode;
   heroSubtitle: React.ReactNode;
+  /**
+   * URL oficial (canonical) quando não é a própria rota. As /iaplicada-*
+   * são variantes de anúncio quase iguais à home: apontam pra ela pra não
+   * dividir a relevância da página principal no Google.
+   */
+  canonical?: string;
 }
 
 export const LP_VARIANTS = {
   crescimento: {
     slug: "iaplicada-crescimento",
+    canonical: "https://iaplicada.com/",
     metaTitle: "IAplicada Business · Faturamento cresceu. Operação virou gargalo.",
     metaDescription:
       "Em até 90 dias construímos o software com IA que automatiza a operação sob medida pro jeito que a empresa funciona. Sem ERP engessado. Sem consultoria que some depois da apresentação.",
@@ -37,6 +44,7 @@ export const LP_VARIANTS = {
   },
   erp: {
     slug: "iaplicada-erp",
+    canonical: "https://iaplicada.com/",
     metaTitle: "IAplicada Business · Seu ERP arrumou o cadastro. Não arrumou a operação.",
     metaDescription:
       "Em até 90 dias construímos o software com IA que preenche o vazio entre o ERP e o que a empresa realmente precisa. Automações, integrações e agentes que fazem o trabalho manual que sobrou.",
@@ -57,6 +65,7 @@ export const LP_VARIANTS = {
   },
   contratacao: {
     slug: "iaplicada-contratacao",
+    canonical: "https://iaplicada.com/",
     metaTitle:
       "IAplicada Business · Você não precisa contratar mais gente. Precisa da operação dando conta.",
     metaDescription:
@@ -127,6 +136,7 @@ export const LP_VARIANTS = {
 } satisfies Record<string, LpVariant>;
 
 export function variantHead(v: LpVariant) {
+  const url = v.canonical ?? `https://iaplicada.com/${v.slug}`;
   return {
     meta: [
       { title: v.metaTitle },
@@ -134,10 +144,10 @@ export function variantHead(v: LpVariant) {
       { property: "og:title", content: v.metaTitle },
       { property: "og:description", content: v.metaDescription },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: `https://iaplicada.com/${v.slug}` },
+      { property: "og:url", content: url },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "theme-color", content: "#0d0d0d" },
     ],
-    links: [{ rel: "canonical", href: `https://iaplicada.com/${v.slug}` }],
+    links: [{ rel: "canonical", href: url }],
   };
 }

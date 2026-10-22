@@ -9,9 +9,9 @@
  */
 
 import { getMetaPixelCookies, getFbclidFromUrl } from "./metaCookies";
+import { getGoogleClickIds } from "./googleClickIds";
 
-export const FORM_ENDPOINT =
-  "https://ciwdlceyjsnlnunktqzx.supabase.co/functions/v1/form-submit";
+export const FORM_ENDPOINT = "https://ciwdlceyjsnlnunktqzx.supabase.co/functions/v1/form-submit";
 
 export const SUPABASE_ANON_KEY =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNpd2RsY2V5anNubG51bmt0cXp4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyMTU3OTksImV4cCI6MjA4OTc5MTc5OX0.tl-7gEObYBB7wDUS5_pKh9UyRlJQNdnWPiRpMFYrbUM";
@@ -33,6 +33,8 @@ interface TrafficContext {
   attribution: {
     fbclid: string;
     gclid: string;
+    gbraid?: string;
+    wbraid?: string;
     fbp?: string;
     fbc?: string;
   };
@@ -72,6 +74,8 @@ export function captureTrafficContext(): TrafficContext {
   // Cookies do pixel Meta — alimentam Match Quality da CAPI server-side.
   const { fbp, fbc } = getMetaPixelCookies();
   const fbclid = getFbclidFromUrl() ?? params.get("fbclid") ?? "";
+  // Cliques do Google Ads salvos por 90 dias (googleClickIds).
+  const google = getGoogleClickIds();
 
   return {
     utm: {
@@ -83,7 +87,9 @@ export function captureTrafficContext(): TrafficContext {
     },
     attribution: {
       fbclid,
-      gclid: params.get("gclid") ?? "",
+      gclid: google.gclid,
+      gbraid: google.gbraid,
+      wbraid: google.wbraid,
       fbp,
       fbc,
     },
