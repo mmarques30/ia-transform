@@ -13,6 +13,7 @@ import { isInAppBrowser } from "../lib/useEnv";
 import { usePageViewBeacon } from "../hooks/usePageViewBeacon";
 import { useMetaPageView } from "../hooks/useMetaPageView";
 import { SITE_GRAPH, jsonLd } from "../lib/structuredData";
+import { saveGoogleClickIds } from "../lib/googleClickIds";
 
 /**
  * BrandBackground (WebGL via OGL) é lazy pra não pesar o entry chunk
@@ -43,6 +44,16 @@ const BrandBackground = lazy(() =>
 const CLARITY_PROJECT_ID_BUSINESS = "wpgxq27fhi"; // / + /businessv2
 const CLARITY_PROJECT_ID_CONTABIL = "x291ty5740"; // /contabil + /contabil-thank-you + /contabil02
 const META_PIXEL_ID = "619312151238896";
+
+// Google Ads (gtag.js). Mesmo snippet que o Google Ads entrega; vai logo
+// depois da abertura do <head> em todas as páginas (ver RootShell).
+const GOOGLE_ADS_ID = "AW-18531612150";
+const GOOGLE_TAG_INLINE = `
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', '${GOOGLE_ADS_ID}');
+`;
 
 function NotFoundComponent() {
   return (
@@ -199,6 +210,9 @@ function RootShell({ children }: { children: React.ReactNode }) {
   return (
     <html lang={htmlLang(pathname)}>
       <head>
+        {/* Google tag (gtag.js) */}
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ADS_ID}`} />
+        <script dangerouslySetInnerHTML={{ __html: GOOGLE_TAG_INLINE }} />
         <HeadContent />
       </head>
       <body>
@@ -231,6 +245,14 @@ function RootComponent() {
    *  hook. Substitui as chamadas individuais por página. */
   usePageViewBeacon();
   useMetaPageView();
+
+  /** Clique do Google Ads (gclid/gbraid/wbraid) da URL → localStorage por
+   *  90 dias, em qualquer página, pra chegar no form mesmo se a pessoa
+   *  navegar antes de enviar. Roda de novo a cada navegação. */
+  const locationHref = useRouterState({ select: (s) => s.location.href });
+  useEffect(() => {
+    saveGoogleClickIds();
+  }, [locationHref]);
 
   useEffect(() => {
     // Lenis adiciona inércia ao scroll. Bom no desktop, mas no WebView

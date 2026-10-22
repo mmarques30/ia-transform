@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, type FocusEvent, type FormEvent } from "re
 import { useNavigate } from "@tanstack/react-router";
 import { ArrowRight, AlertCircle } from "lucide-react";
 import { getMetaPixelCookies, getFbclidFromUrl } from "@/lib/metaCookies";
+import { getGoogleClickIds } from "@/lib/googleClickIds";
 
 /**
  * Wrapper safe pro Clarity. window.clarity é injetado pelo snippet no
@@ -309,7 +310,10 @@ export function HeroForm({
       const utmTerm = urlUtmTerm && urlUtmTerm.trim() ? urlUtmTerm : defaultUtmTerm;
       const utmContent = params.get("utm_content") ?? "";
       const fbclid = getFbclidFromUrl() ?? params.get("fbclid") ?? "";
-      const gclid = params.get("gclid") ?? "";
+      // Cliques do Google Ads salvos por 90 dias (googleClickIds); sem
+      // localStorage, vale o que estiver na URL.
+      const google = getGoogleClickIds();
+      const gclid = google.gclid;
       // Cookies do pixel Meta — alimentam o Match Quality da CAPI
       // server-side. Pixel é injetado no __root.tsx; quando o user
       // chega aqui via submit, _fbp/_fbc já estão criados em
@@ -331,7 +335,7 @@ export function HeroForm({
           term: utmTerm,
           content: utmContent,
         },
-        attribution: { fbclid, gclid, fbp, fbc },
+        attribution: { fbclid, gclid, gbraid: google.gbraid, wbraid: google.wbraid, fbp, fbc },
         meta: {
           page_url: typeof window !== "undefined" ? window.location.href : "",
           referrer: typeof document !== "undefined" ? document.referrer : "",

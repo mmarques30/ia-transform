@@ -5,7 +5,8 @@ import { LP_VARIANTS, variantHead } from "@/config/lpVariants";
 const v = LP_VARIANTS.crescimento;
 
 export const Route = createFileRoute("/iaplicada-crescimento")({
-  staticData: { sitemap: true },
+  // Fora do sitemap: o canonical aponta pra home (ver lpVariants).
+  staticData: { sitemap: false },
   head: () => variantHead(v),
   component: () => (
     <BusinessLanding heroTitle={v.heroTitle} heroSubtitle={v.heroSubtitle} landingPage={v.slug} />

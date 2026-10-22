@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState, type FocusEvent, type FormEve
 import { useNavigate } from "@tanstack/react-router";
 import { AlertCircle, TriangleAlert } from "lucide-react";
 import { getMetaPixelCookies, getFbclidFromUrl } from "@/lib/metaCookies";
+import { getGoogleClickIds } from "@/lib/googleClickIds";
 import { captureAttribution, landingPageFromPath } from "@/lib/attribution";
 import { useLpCopy, type LpCopy } from "@/lib/lpLocale";
 import {
@@ -784,7 +785,10 @@ export function HeroForm({
       const utmContent = attribution.utm_content;
       const utmId = attribution.utm_id;
       const fbclid = getFbclidFromUrl() ?? params.get("fbclid") ?? attribution.fbclid;
-      const gclid = attribution.gclid;
+      // Cliques do Google Ads salvos por 90 dias (googleClickIds); sem
+      // localStorage, vale o que estiver na URL/sessão.
+      const google = getGoogleClickIds();
+      const gclid = google.gclid || attribution.gclid;
       // Identidade da LP (hidden fields) — independente de UTM.
       const landing_page =
         String(fd.get("landing_page") ?? "").trim() ||
@@ -818,7 +822,7 @@ export function HeroForm({
           content: utmContent,
           id: utmId,
         },
-        attribution: { fbclid, gclid, fbp, fbc },
+        attribution: { fbclid, gclid, gbraid: google.gbraid, wbraid: google.wbraid, fbp, fbc },
         meta: {
           page_url: pageUrl,
           referrer,

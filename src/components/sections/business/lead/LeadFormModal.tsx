@@ -11,6 +11,7 @@ import { AlertCircle, ArrowLeft, ArrowRight, Check, X } from "lucide-react";
 import { useNavigate } from "@tanstack/react-router";
 import { OriginButton } from "@/components/ui/origin-button";
 import { getMetaPixelCookies, getFbclidFromUrl } from "@/lib/metaCookies";
+import { getGoogleClickIds } from "@/lib/googleClickIds";
 
 const FORM_ENDPOINT = "https://ciwdlceyjsnlnunktqzx.supabase.co/functions/v1/form-submit";
 const SUPABASE_ANON_KEY =
@@ -290,7 +291,10 @@ function FormWizard({ onSuccess }: { onSuccess: (eventID: string) => void }) {
       const utmTerm = params.get("utm_term") ?? "";
       const utmContent = params.get("utm_content") ?? "";
       const fbclid = getFbclidFromUrl() ?? params.get("fbclid") ?? "";
-      const gclid = params.get("gclid") ?? "";
+      // Cliques do Google Ads salvos por 90 dias (googleClickIds); sem
+      // localStorage, vale o que estiver na URL.
+      const google = getGoogleClickIds();
+      const gclid = google.gclid;
 
       const fields: Record<string, string> = {
         firstname: (data.firstname ?? "").trim(),
@@ -311,7 +315,7 @@ function FormWizard({ onSuccess }: { onSuccess: (eventID: string) => void }) {
           term: utmTerm,
           content: utmContent,
         },
-        attribution: { fbclid, gclid, fbp, fbc },
+        attribution: { fbclid, gclid, gbraid: google.gbraid, wbraid: google.wbraid, fbp, fbc },
         meta: {
           page_url: window.location.href,
           referrer: document.referrer,

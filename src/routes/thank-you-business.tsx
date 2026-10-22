@@ -57,6 +57,22 @@ function useFireLeadBackup(eid: string | undefined) {
   }, [eid]);
 }
 
+/**
+ * Conversão do Google Ads (tag AW-18531612150 carregada no __root.tsx).
+ * Pronta pra ligar: quando o rótulo da conversão for definido, troque
+ * ROTULO_A_DEFINIR e descomente o bloco. Dispara só com eid (veio do envio
+ * do form), igual ao Lead do Meta acima.
+ */
+function useFireGoogleAdsConversion(eid: string | undefined) {
+  useEffect(() => {
+    if (!eid) return;
+    // type GtagFn = (command: "event", action: string, params: Record<string, unknown>) => void;
+    // const gtag = (window as unknown as { gtag?: GtagFn }).gtag;
+    // if (typeof gtag !== "function") return;
+    // gtag('event', 'conversion', { send_to: 'AW-18531612150/ROTULO_A_DEFINIR' });
+  }, [eid]);
+}
+
 const NEXT_STEPS = [
   {
     n: "01",
@@ -95,6 +111,7 @@ function useSubmittedWhatsapp() {
 function ThankYouBusinessPage() {
   const { eid } = Route.useSearch();
   useFireLeadBackup(eid);
+  useFireGoogleAdsConversion(eid);
   const whatsapp = useSubmittedWhatsapp();
   const navigate = useNavigate();
 
