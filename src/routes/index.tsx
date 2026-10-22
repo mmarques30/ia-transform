@@ -5,17 +5,18 @@ export const Route = createFileRoute("/")({
   staticData: { sitemap: true },
   head: () => ({
     meta: [
-      {
-        title: "IAplicada Business · Recupere o controle da operação e escale a receita",
-      },
+      // Título e descrição dizem a categoria ("software com IA sob medida")
+      // e o nome da marca: é o que o Google mostra e o que as IAs usam pra
+      // entender do que a página trata.
+      { title: "IAplicada · Software com IA sob medida para a sua operação" },
       {
         name: "description",
         content:
-          "Em até 90 dias implementamos os sistemas de IA que automatizam o operacional e liberam seu time para crescer. Sem aumentar a folha.",
+          "A IAplicada constrói software com IA sob medida que automatiza a operação da sua empresa em até 90 dias, sem aumentar a folha. Diagnóstico gratuito.",
       },
       {
         property: "og:title",
-        content: "IAplicada Business · Recupere o controle da operação e escale a receita",
+        content: "IAplicada · Software com IA sob medida para a sua operação",
       },
       {
         property: "og:description",

@@ -1,10 +1,18 @@
-import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
+import {
+  Outlet,
+  Link,
+  createRootRoute,
+  HeadContent,
+  Scripts,
+  useRouterState,
+} from "@tanstack/react-router";
 import { lazy, useEffect, useState } from "react";
 
 import appCss from "../styles.css?url";
 import { isInAppBrowser } from "../lib/useEnv";
 import { usePageViewBeacon } from "../hooks/usePageViewBeacon";
 import { useMetaPageView } from "../hooks/useMetaPageView";
+import { SITE_GRAPH, jsonLd } from "../lib/structuredData";
 
 /**
  * BrandBackground (WebGL via OGL) é lazy pra não pesar o entry chunk
@@ -130,6 +138,9 @@ export const Route = createRootRoute({
       },
     ],
     scripts: [
+      // Quem é a IAplicada (empresa, fundadora, site) em schema.org, pra
+      // Google e IAs (ChatGPT, Perplexity, Gemini) identificarem a marca.
+      { type: "application/ld+json", children: jsonLd(SITE_GRAPH) },
       // Microsoft Clarity — heatmaps, session replays, frustration signals.
       // Inicializa cedo pra capturar a sessão desde o primeiro paint.
       //
@@ -173,9 +184,20 @@ export const Route = createRootRoute({
   notFoundComponent: NotFoundComponent,
 });
 
+/**
+ * Idioma da página no <html lang>. Buscadores e IAs usam isso pra saber em
+ * que língua está o conteúdo: o site é pt-BR, menos a LP em inglês.
+ */
+function htmlLang(pathname: string): string {
+  return pathname.startsWith("/en-contratacao") || pathname.startsWith("/thank-you-en")
+    ? "en"
+    : "pt-BR";
+}
+
 function RootShell({ children }: { children: React.ReactNode }) {
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
   return (
-    <html lang="en">
+    <html lang={htmlLang(pathname)}>
       <head>
         <HeadContent />
       </head>
