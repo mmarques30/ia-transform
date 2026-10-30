@@ -805,7 +805,7 @@ export function HeroForm({
 
       const payload = {
         form_slug: formSlug,
-        // Slug fixo da rota ("home", "iaplicada-erp", ...). O CRM usa este
+        // Slug fixo da rota ("home", "iaplicada-contratacao", ...). O CRM usa este
         // campo pra saber a LP; utm_content é só repasse do que veio na URL.
         landing_page,
         fields,
