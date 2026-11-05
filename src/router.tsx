@@ -1,8 +1,20 @@
+import { useEffect, useState } from "react";
 import { createRouter, useRouter, type ErrorComponentProps } from "@tanstack/react-router";
 import { routeTree } from "./routeTree.gen";
+import { isChunkLoadError, reloadOnceForChunkError } from "./lib/chunkReload";
 
 function DefaultErrorComponent({ error, reset }: ErrorComponentProps) {
   const router = useRouter();
+
+  // Arquivo sumiu por causa de deploy (ex.: enviou o form numa LP aberta antes
+  // do deploy): recarrega na mesma URL em vez de mostrar o erro. Enquanto
+  // recarrega, só o fundo da página.
+  const chunkError = isChunkLoadError(error);
+  const [reloading, setReloading] = useState(chunkError);
+  useEffect(() => {
+    if (chunkError && !reloadOnceForChunkError()) setReloading(false);
+  }, [chunkError]);
+  if (reloading) return <div className="min-h-screen bg-background" />;
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
