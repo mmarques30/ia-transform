@@ -14,6 +14,7 @@ import { usePageViewBeacon } from "../hooks/usePageViewBeacon";
 import { useMetaPageView } from "../hooks/useMetaPageView";
 import { SITE_GRAPH, jsonLd } from "../lib/structuredData";
 import { saveGoogleClickIds } from "../lib/googleClickIds";
+import { reloadOnceForChunkError } from "../lib/chunkReload";
 
 /**
  * BrandBackground (WebGL via OGL) é lazy pra não pesar o entry chunk
@@ -253,6 +254,17 @@ function RootComponent() {
   useEffect(() => {
     saveGoogleClickIds();
   }, [locationHref]);
+
+  /** Arquivo de código que sumiu num deploy (aba aberta antes dele): o Vite
+   *  avisa por este evento; recarrega uma vez em vez de quebrar a página.
+   *  Se a trava impedir o reload, o erro segue pro DefaultErrorComponent. */
+  useEffect(() => {
+    const onPreloadError = (event: Event) => {
+      if (reloadOnceForChunkError()) event.preventDefault();
+    };
+    window.addEventListener("vite:preloadError", onPreloadError);
+    return () => window.removeEventListener("vite:preloadError", onPreloadError);
+  }, []);
 
   useEffect(() => {
     // Lenis adiciona inércia ao scroll. Bom no desktop, mas no WebView
