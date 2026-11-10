@@ -34,20 +34,17 @@ const DEFAULT_TITLE = (
 
 const DEFAULT_SUBTITLE = (
   <>
-    Em até <em>90 dias</em> construímos o software com IA que automatiza sua operação de ponta a
-    ponta, sob medida para o jeito que seu negócio funciona. Sem ERP engessado. Sem consultoria que
-    some depois da apresentação.
+    Em até <em>90 dias</em>, o software com IA que automatiza sua operação, sob medida para o jeito
+    que seu negócio funciona. Sem ERP engessado. Sem consultoria que some.
   </>
 );
 
 interface HeroCopy {
-  eyebrow: string;
   trustStrong: string;
   trust: string;
 }
 
 const HERO_PT: HeroCopy = {
-  eyebrow: "Software com IA sob medida",
   trustStrong: "+50 empresas",
   trust: "já operam com sistemas da IAplicada",
 };
@@ -55,7 +52,6 @@ const HERO_PT: HeroCopy = {
 const COPY: LpCopy<HeroCopy> = {
   "pt-br": HERO_PT,
   en: {
-    eyebrow: "Custom AI-powered software",
     trustStrong: "50+ companies",
     trust: "already run IAplicada systems",
   },
@@ -81,10 +77,6 @@ export function Hero({ title, subtitle, landingPage }: HeroProps = {}) {
       <div className="lpx-wrap">
         <div className="lpx-hero-grid">
           <div className="min-w-0 max-w-[580px]">
-            <Reveal>
-              <span className="lpx-eyebrow">{c.eyebrow}</span>
-            </Reveal>
-
             <Reveal delay={0.05}>
               <h1 className="lpx-h1">{title ?? DEFAULT_TITLE}</h1>
             </Reveal>
