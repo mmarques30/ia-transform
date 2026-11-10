@@ -1,7 +1,7 @@
 import { BrainCircuit, Plug } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 import { CtaButton } from "@/components/lpx/CtaButton";
-import { PainelClientesShowcase } from "@/components/sections/business/variantB/painel/PainelClientesShowcase";
+import { SistemaShowcase } from "@/components/lpx/SistemaMockup";
 import { useLpCopy, type LpCopy } from "@/lib/lpLocale";
 
 const COPY_PT_BR = {
@@ -105,66 +105,63 @@ export function MetodoAplicaBook() {
           </Reveal>
         </div>
 
-        <div className="mt-14 lg:mt-20 grid grid-cols-1 lg:grid-cols-[minmax(0,360px)_minmax(0,1fr)] gap-10 lg:gap-14 items-start">
-          <div>
-            <ol className="lpx-steps">
-              {c.steps.map((step, i) => (
-                <li key={step.title} className="lpx-step">
-                  <span className="lpx-step-dot" aria-hidden>
-                    {i + 1}
-                  </span>
-                  <Reveal delay={0.08 * i}>
-                    <span className="lpx-mono text-[11px] uppercase tracking-[0.16em] text-[var(--lpx-lime-hi)]">
-                      {step.tag}
-                    </span>
-                    <p className="mt-2 text-[19px] font-semibold tracking-[-0.02em] text-[var(--lpx-text)]">
-                      {step.title}
-                    </p>
-                    <p className="mt-1.5 text-[14.5px] leading-[1.6] text-[var(--lpx-muted)]">
-                      {step.text}
-                    </p>
-                  </Reveal>
-                </li>
-              ))}
-            </ol>
-            <Reveal delay={0.3}>
-              <div className="mt-2 pl-[52px]">
-                <CtaButton>{c.cta}</CtaButton>
-              </div>
-            </Reveal>
-          </div>
+        <ol className="lpx-steps lpx-steps--row mt-12 lg:mt-16">
+          {c.steps.map((step, i) => (
+            <li key={step.title} className="lpx-step">
+              <span className="lpx-step-dot" aria-hidden>
+                {i + 1}
+              </span>
+              <Reveal delay={0.08 * i}>
+                <span className="lpx-mono text-[11px] uppercase tracking-[0.16em] text-[var(--lpx-lime-hi)]">
+                  {step.tag}
+                </span>
+                <p className="mt-2 text-[19px] font-semibold tracking-[-0.02em] text-[var(--lpx-text)]">
+                  {step.title}
+                </p>
+                <p className="mt-1.5 max-w-[34ch] text-[14.5px] leading-[1.6] text-[var(--lpx-muted)]">
+                  {step.text}
+                </p>
+              </Reveal>
+            </li>
+          ))}
+        </ol>
 
-          <Reveal delay={0.12}>
-            <div className="relative">
-              <div className="lpx-device">
-                <div className="p-4 sm:p-5">
-                  <PainelClientesShowcase variant="lpx" />
-                </div>
-              </div>
-
-              <div
-                className="lpx-float lpx-float--chip hidden md:flex"
-                style={{ left: -36, bottom: -22 }}
-              >
-                <span className="lpx-icon lpx-icon--sm">
-                  <BrainCircuit className="h-4 w-4" strokeWidth={1.9} />
-                </span>
-                <span className="text-[13px] font-medium text-[var(--lpx-text)]">{c.chipAi}</span>
-              </div>
-              <div
-                className="lpx-float lpx-float--chip hidden md:flex"
-                style={{ right: -20, top: -26, animationDelay: "-3.5s" }}
-              >
-                <span className="lpx-icon lpx-icon--sm">
-                  <Plug className="h-4 w-4" strokeWidth={1.9} />
-                </span>
-                <span className="text-[13px] font-medium text-[var(--lpx-text)]">
-                  {c.chipIntegra}
-                </span>
+        <Reveal delay={0.12}>
+          <div className="relative mt-10 lg:mt-14">
+            <div className="lpx-device">
+              <div className="p-4 sm:p-6">
+                <SistemaShowcase />
               </div>
             </div>
-          </Reveal>
-        </div>
+
+            <div
+              className="lpx-float lpx-float--chip hidden md:flex"
+              style={{ left: -28, bottom: -22 }}
+            >
+              <span className="lpx-icon lpx-icon--sm">
+                <BrainCircuit className="h-4 w-4" strokeWidth={1.9} />
+              </span>
+              <span className="text-[13px] font-medium text-[var(--lpx-text)]">{c.chipAi}</span>
+            </div>
+            <div
+              className="lpx-float lpx-float--chip hidden md:flex"
+              style={{ right: -20, top: -26, animationDelay: "-3.5s" }}
+            >
+              <span className="lpx-icon lpx-icon--sm">
+                <Plug className="h-4 w-4" strokeWidth={1.9} />
+              </span>
+              <span className="text-[13px] font-medium text-[var(--lpx-text)]">
+                {c.chipIntegra}
+              </span>
+            </div>
+          </div>
+        </Reveal>
+
+        <Reveal delay={0.2}>
+          <div className="mt-12 lg:mt-14 flex justify-center">
+            <CtaButton>{c.cta}</CtaButton>
+          </div>
+        </Reveal>
       </div>
     </section>
   );
