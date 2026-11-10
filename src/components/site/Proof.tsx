@@ -1,6 +1,7 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, Clock, Quote, Users, Wallet } from "lucide-react";
 import { CtaButton, Eyebrow, Rise, prefersReducedMotion, useInView, useTilt } from "./primitives";
+import { CASE_MOCKS, type CaseMockKey } from "./CaseMockups";
 
 /* ───────────────────────── Calculadora ───────────────────────── */
 
@@ -155,51 +156,57 @@ export function CalculatorSection() {
 
 /* ───────────────────────── Cases ───────────────────────── */
 
-const CASES = [
+const CASES: {
+  mock: CaseMockKey;
+  client: string;
+  title: string;
+  text: string;
+  tags: string[];
+}[] = [
   {
-    img: "/clients/quadra-arquitetura.webp",
+    mock: "quadra",
     client: "Quadra Arquitetura",
     title: "Gestão de obras com assistente de IA",
     text: "Cada etapa da obra com dono, prazo e status visível do celular.",
     tags: ["Obras", "Assistente IA", "Tarefas"],
   },
   {
-    img: "/clients/focus-tax.webp",
+    mock: "focus",
     client: "Focus FinTax",
     title: "Teses tributárias de ponta a ponta",
     text: "O gargalo da calculadora manual virou processo automatizado com alerta de falha.",
     tags: ["Tributário", "Automação", "Relatórios"],
   },
   {
-    img: "/clients/psa-tax.webp",
+    mock: "psa",
     client: "PSA Consultores",
     title: "Painel de projetos estratégicos",
     text: "R$ 191 mil de ROI documentado em cinco meses de projeto.",
     tags: ["Consultoria", "Painel", "ROI"],
   },
   {
-    img: "/clients/industria-moveis-dashboard.webp",
+    mock: "moveis",
     client: "Indústria moveleira",
     title: "Receita e margem em tempo real",
     text: "Pedidos, margem e receita mensal num painel único para a diretoria.",
     tags: ["Indústria", "Dashboard", "Margem"],
   },
   {
-    img: "/clients/uiara-comunidade.webp",
+    mock: "uiara",
     client: "Uiara Intimates",
     title: "Plataforma de comunidade",
     text: "O projeto da vida da fundadora no ar em dois meses e meio.",
     tags: ["Comunidade", "Plataforma", "Engajamento"],
   },
   {
-    img: "/clients/catalogo-ferramentas-fiscais.webp",
+    mock: "fiscal",
     client: "Escritório contábil",
     title: "Catálogo de ferramentas fiscais",
     text: "Consulta de XML, SPED e ICMS em um só lugar, sem digitação dupla.",
     tags: ["Contábil", "Fiscal", "Integrações"],
   },
   {
-    img: "/clients/recuperacao-tributaria-varejo.webp",
+    mock: "varejo",
     client: "Varejo",
     title: "Diagnóstico de recuperação tributária",
     text: "Funil que qualifica o lead e calcula o potencial de recuperação na hora.",
@@ -207,23 +214,19 @@ const CASES = [
   },
 ];
 
-function CaseCard({ c }: { c: (typeof CASES)[number] }) {
+function CaseCard({ c, hidden }: { c: (typeof CASES)[number]; hidden?: boolean }) {
   const tilt = useTilt<HTMLElement>(7);
+  const Mock = CASE_MOCKS[c.mock];
   return (
     <article
       ref={tilt.ref}
       onMouseMove={tilt.onMouseMove}
       onMouseLeave={tilt.onMouseLeave}
       className="st-case"
+      aria-hidden={hidden || undefined}
     >
       <div className="st-case-img">
-        <img
-          src={c.img}
-          alt={`Sistema ${c.client}: ${c.title}`}
-          loading="lazy"
-          width={1600}
-          height={900}
-        />
+        <Mock />
       </div>
       <div className="st-case-body">
         <span className="st-mono st-case-client">{c.client}</span>
@@ -239,24 +242,58 @@ function CaseCard({ c }: { c: (typeof CASES)[number] }) {
   );
 }
 
-export function CasesSection() {
-  const trackRef = useRef<HTMLDivElement>(null);
-  const [edge, setEdge] = useState({ start: true, end: false });
+/** Velocidade do carrossel em px por ms (~35 px/s). */
+const CASES_SPEED = 0.035;
 
-  const update = useCallback(() => {
-    const t = trackRef.current;
-    if (!t) return;
-    setEdge({
-      start: t.scrollLeft < 8,
-      end: t.scrollLeft + t.clientWidth > t.scrollWidth - 8,
+/**
+ * Carrossel em loop contínuo: a lista é renderizada duas vezes e a faixa
+ * anda sozinha (translateX), voltando ao início ao completar uma volta.
+ * Pausa com o mouse em cima, ao arrastar e fora da tela. As setas e o
+ * arraste no celular empurram a faixa.
+ */
+export function CasesSection() {
+  const viewRef = useRef<HTMLDivElement>(null);
+  const railRef = useRef<HTMLDivElement>(null);
+  const state = useRef({ offset: 0, boost: 0, hover: false, drag: false, visible: false, x: 0 });
+
+  useEffect(() => {
+    const view = viewRef.current;
+    const rail = railRef.current;
+    if (!view || !rail) return;
+    const st = state.current;
+    const reduced = prefersReducedMotion();
+
+    const io = new IntersectionObserver(([e]) => {
+      st.visible = e.isIntersecting;
     });
+    io.observe(view);
+
+    let raf = 0;
+    let last = performance.now();
+    const frame = (now: number) => {
+      const dt = Math.min(64, now - last);
+      last = now;
+      const half = rail.scrollWidth / 2;
+      if (st.visible && half > 0) {
+        if (!st.hover && !st.drag && !reduced) st.offset += dt * CASES_SPEED;
+        const step = st.boost * 0.14;
+        st.offset += step;
+        st.boost -= step;
+        st.offset = ((st.offset % half) + half) % half;
+        rail.style.transform = `translate3d(${-st.offset}px,0,0)`;
+      }
+      raf = requestAnimationFrame(frame);
+    };
+    raf = requestAnimationFrame(frame);
+    return () => {
+      cancelAnimationFrame(raf);
+      io.disconnect();
+    };
   }, []);
 
-  const scroll = (dir: number) => {
-    const t = trackRef.current;
-    if (!t) return;
-    const card = t.querySelector<HTMLElement>(".st-case");
-    t.scrollBy({ left: dir * ((card?.offsetWidth ?? 360) + 20), behavior: "smooth" });
+  const nudge = (dir: number) => {
+    const card = railRef.current?.querySelector<HTMLElement>(".st-case");
+    state.current.boost += dir * ((card?.offsetWidth ?? 380) + 20);
   };
 
   return (
@@ -274,29 +311,42 @@ export function CasesSection() {
             </p>
           </Rise>
           <div className="st-cases-nav">
-            <button
-              type="button"
-              onClick={() => scroll(-1)}
-              disabled={edge.start}
-              aria-label="Anterior"
-            >
+            <button type="button" onClick={() => nudge(-1)} aria-label="Anterior">
               <ArrowLeft size={18} />
             </button>
-            <button
-              type="button"
-              onClick={() => scroll(1)}
-              disabled={edge.end}
-              aria-label="Próximo"
-            >
+            <button type="button" onClick={() => nudge(1)} aria-label="Próximo">
               <ArrowRight size={18} />
             </button>
           </div>
         </div>
       </div>
-      <div className="st-cases-track" ref={trackRef} onScroll={update}>
-        {CASES.map((c) => (
-          <CaseCard key={c.title} c={c} />
-        ))}
+      <div
+        className="st-cases-track"
+        ref={viewRef}
+        onMouseEnter={() => (state.current.hover = true)}
+        onMouseLeave={() => (state.current.hover = false)}
+        onPointerDown={(e) => {
+          if (e.pointerType === "mouse") return;
+          state.current.drag = true;
+          state.current.x = e.clientX;
+        }}
+        onPointerMove={(e) => {
+          const st = state.current;
+          if (!st.drag) return;
+          st.offset -= e.clientX - st.x;
+          st.x = e.clientX;
+        }}
+        onPointerUp={() => (state.current.drag = false)}
+        onPointerCancel={() => (state.current.drag = false)}
+      >
+        <div className="st-cases-rail" ref={railRef}>
+          {CASES.map((c) => (
+            <CaseCard key={c.title} c={c} />
+          ))}
+          {CASES.map((c) => (
+            <CaseCard key={`${c.title}-loop`} c={c} hidden />
+          ))}
+        </div>
       </div>
     </section>
   );

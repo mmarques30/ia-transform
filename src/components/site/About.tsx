@@ -24,16 +24,16 @@ const TEAM = [
     bio: "10 anos em comercial B2B e B2C. Passou por Inter&Co, allu e Localiza&Co.",
   },
   {
-    name: "Yuri Souza",
-    role: "PMO",
-    photo: "/brand/yuri.png",
-    bio: "Mais de 5 anos liderando projetos. Garante que cada entrega saia no prazo.",
+    name: "Matheus Farah",
+    role: "Tech Lead",
+    photo: "/brand/matheus.png",
+    bio: "Lidera a engenharia: arquitetura, integrações via API, automações com n8n e IA com Claude.",
   },
   {
-    name: "Matheus Farah",
-    role: "Software Developer",
-    photo: "/brand/matheus.png",
-    bio: "Backend, n8n, integrações via API e IA com Claude. Transforma processo em sistema.",
+    name: "Maria Olívia",
+    role: "Developer",
+    photo: "/brand/maria-olivia.jpg",
+    bio: "Desenvolve as telas e integrações que colocam cada sistema em produção.",
   },
   {
     name: "Maria Eduarda",
@@ -42,6 +42,20 @@ const TEAM = [
     bio: "Mantém a operação comercial e de marketing rodando nos bastidores.",
   },
 ];
+
+/** Foto do membro; se o arquivo ainda não existir, mostra as iniciais. */
+function MemberPhoto({ src, name }: { src: string; name: string }) {
+  const [failed, setFailed] = useState(false);
+  if (failed) {
+    const initials = name
+      .split(" ")
+      .map((p) => p[0])
+      .slice(0, 2)
+      .join("");
+    return <span className="st-member-initials">{initials}</span>;
+  }
+  return <img src={src} alt={name} loading="lazy" onError={() => setFailed(true)} />;
+}
 
 export function AboutSection() {
   return (
@@ -127,7 +141,7 @@ export function AboutSection() {
                 <Rise key={m.name} delay={i * 80}>
                   <article className="st-member">
                     <div className="st-member-photo">
-                      <img src={m.photo} alt={m.name} loading="lazy" />
+                      <MemberPhoto src={m.photo} name={m.name} />
                     </div>
                     <div className="st-member-info">
                       <b>{m.name}</b>
@@ -138,6 +152,16 @@ export function AboutSection() {
                 </Rise>
               ))}
             </div>
+            <Rise className="st-team-more">
+              <span className="st-team-more-dots" aria-hidden>
+                <i />
+                <i />
+                <i />
+              </span>
+              <span>
+                Entre outros especialistas em dados, automação e produto que entram em cada projeto.
+              </span>
+            </Rise>
           </div>
         </div>
       </div>
