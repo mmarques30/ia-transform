@@ -1052,32 +1052,72 @@
     border-top: 1px solid var(--st-line);
   }
 }
+/* Mobile: a foto vai para trás do texto, translúcida, ocupando o hero
+   inteiro. O texto fica na parte de baixo, sobre um véu escuro. */
 @media (max-width: 600px) {
   .st-hero {
-    padding-top: 112px;
+    min-height: 100svh;
+    padding-top: 96px;
+    padding-bottom: 24px;
+    justify-content: flex-end;
   }
   .st-hero-stage {
-    height: 440px;
+    position: absolute;
+    z-index: 0;
+    inset: 56px 0 0 0;
+    width: 100%;
+    max-width: none;
+    height: auto;
+    margin: 0;
   }
-  .st-float--alert {
+  .st-hero-stage::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    background: linear-gradient(
+      180deg,
+      rgba(7, 8, 6, 0) 0,
+      rgba(7, 8, 6, 0) 30svh,
+      rgba(7, 8, 6, 0.6) 52svh,
+      rgba(7, 8, 6, 0.9) 72svh,
+      var(--st-bg) 86svh
+    );
+  }
+  .st-hero-photo {
+    top: 0;
+    bottom: auto;
+    left: 50%;
+    height: 74svh;
+    opacity: 0.55;
+    transform: translateX(-50%);
+    mask-image: linear-gradient(180deg, #000 55%, transparent 95%);
+    -webkit-mask-image: linear-gradient(180deg, #000 55%, transparent 95%);
+  }
+  .st-hero-halo {
+    inset: 0 6% 40%;
+    opacity: 0.7;
+  }
+  .st-hero-mark,
+  .st-float,
+  .st-hero-word {
     display: none;
   }
-  .st-float--status {
-    top: 8%;
-    right: 0;
+  .st-orbits {
+    left: 0;
+    width: 100%;
+    height: 60%;
+    opacity: 0.6;
   }
-  .st-float-head .st-mono {
-    display: none;
+  .st-hero-copy {
+    padding-top: 40svh;
   }
-  .st-float--status {
-    width: 160px;
-    right: -1%;
+  .st-hero-title,
+  .st-hero-sub {
+    text-shadow: 0 2px 24px rgba(7, 8, 6, 0.9);
   }
-  .st-float--status .st-float-rows {
-    display: none;
-  }
-  .st-float--metric {
-    display: none;
+  .st-hero-chips {
+    margin-top: 32px;
   }
   .st-hero-chips {
     grid-template-columns: 1fr;
