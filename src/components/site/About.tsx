@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Briefcase,
   Check,
@@ -46,6 +46,13 @@ const TEAM = [
 /** Foto do membro; se o arquivo ainda não existir, mostra as iniciais. */
 function MemberPhoto({ src, name }: { src: string; name: string }) {
   const [failed, setFailed] = useState(false);
+  const ref = useRef<HTMLImageElement>(null);
+  // A imagem renderizada no servidor pode falhar antes da hidratação,
+  // quando o onError do React ainda não existe: confere ao montar.
+  useEffect(() => {
+    const img = ref.current;
+    if (img && img.complete && img.naturalWidth === 0) setFailed(true);
+  }, []);
   if (failed) {
     const initials = name
       .split(" ")
@@ -54,7 +61,7 @@ function MemberPhoto({ src, name }: { src: string; name: string }) {
       .join("");
     return <span className="st-member-initials">{initials}</span>;
   }
-  return <img src={src} alt={name} loading="lazy" onError={() => setFailed(true)} />;
+  return <img ref={ref} src={src} alt={name} loading="lazy" onError={() => setFailed(true)} />;
 }
 
 export function AboutSection() {
