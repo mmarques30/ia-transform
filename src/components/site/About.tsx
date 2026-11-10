@@ -32,7 +32,7 @@ const TEAM = [
   {
     name: "Maria Olívia",
     role: "Developer",
-    photo: "/brand/maria-olivia.jpg",
+    photo: "/brand/maria-olivia.webp",
     bio: "Desenvolve as telas e integrações que colocam cada sistema em produção.",
   },
   {
