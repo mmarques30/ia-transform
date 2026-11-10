@@ -2437,6 +2437,160 @@
   }
 }
 
+/* ─── /lead (Kit de Automação com IA) ───────────────────────────── */
+
+.lpx-lead-hero {
+  min-height: 0;
+  padding-bottom: 0;
+  text-align: center;
+}
+.lpx-lead-portal {
+  left: 50%;
+  top: 34%;
+  width: min(1000px, 92vw);
+  opacity: 0.85;
+}
+.lpx-lead-h1 {
+  font-size: clamp(40px, 5.6vw, 80px);
+}
+/* Logo do fundo bem suave pra não brigar com o título. */
+.lpx-lead-portal .lpx-portal-logo {
+  opacity: 0.14;
+}
+.lpx-lead-hero .lpx-hero-sub {
+  max-width: 600px;
+}
+/* Prévia do kit em leque */
+.lpx-fan {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  height: clamp(260px, 30vw, 380px);
+  margin-top: clamp(48px, 6vw, 80px);
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(180deg, #000 55%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 55%, transparent 100%);
+}
+.lpx-fan-card {
+  --spread: calc((var(--i) - 1.5));
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: clamp(190px, 21vw, 270px);
+  margin: 0;
+  transform: translateX(-50%) translateX(calc(var(--spread) * clamp(150px, 17vw, 230px)))
+    translateY(calc(abs(var(--spread)) * 26px)) rotate(calc(var(--spread) * 5deg));
+  transition: transform 0.6s var(--lpx-ease);
+}
+.lpx-fan-card img {
+  display: block;
+  width: 100%;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 30px 70px -20px rgba(0, 0, 0, 0.9),
+    0 0 0 6px rgba(255, 255, 255, 0.02);
+}
+.lpx-fan-card figcaption {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(200, 224, 64, 0.3);
+  background: rgba(10, 12, 7, 0.75);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  color: var(--lpx-lime-hi);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.lpx-fan:hover .lpx-fan-card {
+  transform: translateX(-50%) translateX(calc(var(--spread) * clamp(170px, 19vw, 260px)))
+    translateY(calc(abs(var(--spread)) * 18px)) rotate(calc(var(--spread) * 3deg));
+}
+@media (max-width: 640px) {
+  .lpx-fan-card {
+    width: 160px;
+    transform: translateX(-50%) translateX(calc(var(--spread) * 82px))
+      translateY(calc(abs(var(--spread)) * 18px)) rotate(calc(var(--spread) * 6deg));
+  }
+  .lpx-fan-card figcaption {
+    display: none;
+  }
+}
+
+/* Módulos do kit */
+.lpx-module {
+  overflow: hidden;
+}
+.lpx-module-shot {
+  position: relative;
+  height: 230px;
+  padding: 22px 22px 0;
+  overflow: hidden;
+  border-bottom: 1px solid var(--lpx-line);
+  background:
+    radial-gradient(80% 90% at 50% 100%, rgba(200, 224, 64, 0.16), transparent 70%),
+    rgba(255, 255, 255, 0.015);
+}
+.lpx-module-shot img {
+  display: block;
+  width: 100%;
+  border-radius: 12px 12px 0 0;
+  box-shadow: 0 20px 50px -20px rgba(0, 0, 0, 0.9);
+  transition: transform 0.8s var(--lpx-ease);
+}
+.lpx-module:hover .lpx-module-shot img {
+  transform: translateY(-14px);
+}
+.lpx-module--hl {
+  border-color: rgba(200, 224, 64, 0.3);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.07),
+    0 40px 100px -50px rgba(200, 224, 64, 0.5);
+}
+
+/* Preço do CTA final */
+.lpx-price {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.lpx-price b {
+  font-family: "Inter Tight", "Inter", sans-serif;
+  font-size: clamp(56px, 7vw, 88px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  background: linear-gradient(90deg, var(--lpx-lime-hi), var(--lpx-lime));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.lpx-price-old {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lpx-faint);
+}
+
+/* Modal do form do kit (/lead): mesmo vidro escuro do form da LP. */
+.lpx-modal-card {
+  border-radius: 28px !important;
+  border: 1px solid rgba(200, 224, 64, 0.22) !important;
+  background:
+    radial-gradient(80% 50% at 100% 0%, rgba(200, 224, 64, 0.12), transparent 60%),
+    linear-gradient(180deg, rgba(26, 31, 18, 0.97) 0%, rgba(12, 15, 9, 0.98) 100%) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 50px 120px -40px rgba(0, 0, 0, 0.95),
+    0 30px 100px -50px rgba(200, 224, 64, 0.5);
+}
+
 /* ─── Marquee ───────────────────────────────────────────────────── */
 
 .lpx-marquee {

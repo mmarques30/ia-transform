@@ -9,7 +9,6 @@ import {
 } from "react";
 import { AlertCircle, ArrowLeft, ArrowRight, Check, X } from "lucide-react";
 import { useNavigate } from "@tanstack/react-router";
-import { OriginButton } from "@/components/ui/origin-button";
 import { getMetaPixelCookies, getFbclidFromUrl } from "@/lib/metaCookies";
 import { getGoogleClickIds } from "@/lib/googleClickIds";
 
@@ -189,11 +188,7 @@ function LeadModal({ onClose }: { onClose: () => void }) {
         onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
       >
         <div
-          className="relative w-full max-w-[540px] rounded-2xl overflow-hidden"
-          style={{
-            background: "#111310",
-            border: "1px solid rgba(139,155,58,0.22)",
-          }}
+          className="lpx-modal-card relative w-full max-w-[540px] rounded-2xl overflow-hidden"
         >
           <button
             type="button"
@@ -417,7 +412,7 @@ function FormWizard({ onSuccess }: { onSuccess: (eventID: string) => void }) {
       </div>
 
       {/* Header */}
-      <div className="flex items-center justify-between px-6 pt-5 pb-2">
+      <div className="flex items-center justify-between px-6 pr-14 pt-5 pb-2">
         <div className="flex items-center gap-3">
           {step > 0 && (
             <button
@@ -551,14 +546,12 @@ function PersonalDataStep({
         </WizardField>
       </div>
 
-      <OriginButton
-        type="button"
-        onClick={onContinue}
-        className="w-full mt-6 py-[17px] text-[13px] tracking-[0.09em]"
-      >
-        Continuar
-        <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
-      </OriginButton>
+      <button type="button" onClick={onContinue} className="lpx-btn lpx-btn--block mt-6">
+        <span>Continuar</span>
+        <span className="lpx-btn-arrow" aria-hidden>
+          <ArrowRight className="h-4 w-4" strokeWidth={2.4} />
+        </span>
+      </button>
 
       <p
         className="text-[10px] text-center uppercase tracking-[0.06em] mt-3"
