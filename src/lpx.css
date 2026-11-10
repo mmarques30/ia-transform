@@ -522,7 +522,7 @@
 }
 
 .lpx-h1 {
-  margin-top: 26px;
+  margin-top: 0;
   font-family: "Inter Tight", "Inter", system-ui, sans-serif;
   font-weight: 600;
   font-size: clamp(40px, 4.3vw, 64px);
@@ -545,17 +545,12 @@
   display: none;
 }
 .lpx-h1 .hero-b-h1-em {
-  margin-top: 0.06em;
-  font-family: "Instrument Serif", Georgia, serif;
-  font-style: italic;
-  font-weight: 400;
-  letter-spacing: -0.02em;
-  font-size: 1.08em;
+  /* Mesma fonte, peso e tamanho das outras linhas: o destaque é só a cor. */
+  font-style: normal;
   background: linear-gradient(90deg, var(--lpx-lime-hi), var(--lpx-lime) 60%, #a9c22c);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  padding-right: 0.06em;
 }
 @media (max-width: 960px) {
   .lpx-h1 {
@@ -565,9 +560,9 @@
 }
 
 .lpx-hero-sub {
-  margin-top: 24px;
-  max-width: 50ch;
-  font-size: clamp(16px, 1.2vw, 17.5px);
+  margin-top: 22px;
+  max-width: 480px;
+  font-size: clamp(15.5px, 1.1vw, 16.5px);
   line-height: 1.6;
   color: var(--lpx-muted);
   text-wrap: pretty;
@@ -853,6 +848,101 @@
 .hero-form-card.lpx-form select.form-input option {
   background: #12160d;
   color: var(--lpx-text);
+}
+/* Lista suspensa moderna (select personalizável do navegador). Continua
+   sendo o <select> nativo: valor, validação e envio não mudam. Onde o
+   navegador não suporta (Safari/iOS), fica o seletor do sistema. */
+@supports (appearance: base-select) {
+  .hero-form-card.lpx-form select.form-input,
+  .hero-form-card.lpx-form select.form-input::picker(select) {
+    appearance: base-select;
+  }
+  .hero-form-card.lpx-form select.form-input {
+    display: flex;
+    align-items: center;
+    background-image: none;
+    padding-right: 14px;
+  }
+  .hero-form-card.lpx-form select.form-input::picker-icon {
+    content: "";
+    width: 12px;
+    height: 12px;
+    margin-left: auto;
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23c8e040' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><path d='m6 9 6 6 6-6'/></svg>")
+      center / contain no-repeat;
+    transition: rotate 0.3s var(--lpx-ease);
+  }
+  .hero-form-card.lpx-form select.form-input:open::picker-icon {
+    rotate: 180deg;
+  }
+  .hero-form-card.lpx-form select.form-input:open {
+    border-color: rgba(200, 224, 64, 0.65);
+    box-shadow: 0 0 0 4px rgba(200, 224, 64, 0.12);
+  }
+  .hero-form-card.lpx-form select.form-input::picker(select) {
+    margin-top: 8px;
+    padding: 6px;
+    border-radius: 16px;
+    border: 1px solid rgba(200, 224, 64, 0.22);
+    background: rgba(16, 19, 12, 0.97);
+    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(18px);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.06),
+      0 30px 70px -20px rgba(0, 0, 0, 0.9),
+      0 20px 60px -30px rgba(200, 224, 64, 0.35);
+    opacity: 0;
+    translate: 0 -6px;
+    transition:
+      opacity 0.2s ease,
+      translate 0.25s var(--lpx-ease),
+      overlay 0.25s allow-discrete,
+      display 0.25s allow-discrete;
+  }
+  .hero-form-card.lpx-form select.form-input:open::picker(select) {
+    opacity: 1;
+    translate: 0 0;
+  }
+  @starting-style {
+    .hero-form-card.lpx-form select.form-input:open::picker(select) {
+      opacity: 0;
+      translate: 0 -6px;
+    }
+  }
+  .hero-form-card.lpx-form select.form-input option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 12px;
+    border-radius: 11px;
+    background: transparent;
+    color: #d9dccf;
+    font-size: 14.5px;
+    cursor: pointer;
+    transition:
+      background 0.15s ease,
+      color 0.15s ease;
+  }
+  /* "Selecione" fica só no campo fechado, não na lista. */
+  .hero-form-card.lpx-form select.form-input option[value=""] {
+    display: none;
+  }
+  .hero-form-card.lpx-form select.form-input option:hover,
+  .hero-form-card.lpx-form select.form-input option:focus-visible {
+    background: rgba(200, 224, 64, 0.1);
+    color: var(--lpx-text);
+    outline: none;
+  }
+  .hero-form-card.lpx-form select.form-input option:checked {
+    background: rgba(200, 224, 64, 0.14);
+    color: var(--lpx-lime-hi);
+    font-weight: 500;
+  }
+  .hero-form-card.lpx-form select.form-input option::checkmark {
+    order: 1;
+    margin-left: auto;
+    color: var(--lpx-lime);
+  }
 }
 .hero-form-card.lpx-form label {
   font-size: 12.5px;
