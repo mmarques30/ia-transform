@@ -234,6 +234,18 @@ function RootShell({ children }: { children: React.ReactNode }) {
   );
 }
 
+/**
+ * LPs com o fundo próprio (portal + marca no hero, src/lpx.css): nelas o
+ * BrandBackground global não monta — ele desenhava as pétalas por cima do
+ * hero e disputava espaço com o formulário.
+ */
+const OWN_BACKGROUND_PATHS = new Set([
+  "/",
+  "/iaplicada-contratacao",
+  "/us-contratacao",
+  "/en-contratacao",
+]);
+
 function RootComponent() {
   /** Mostra o BrandBackground só APÓS o first paint, pra não bloquear
    *  o critical path. Visualmente o BG entra ~50ms depois — usuário
@@ -251,6 +263,7 @@ function RootComponent() {
    *  90 dias, em qualquer página, pra chegar no form mesmo se a pessoa
    *  navegar antes de enviar. Roda de novo a cada navegação. */
   const locationHref = useRouterState({ select: (s) => s.location.href });
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
   useEffect(() => {
     saveGoogleClickIds();
   }, [locationHref]);
@@ -298,7 +311,9 @@ function RootComponent() {
   }, []);
   return (
     <>
-      {showBg && <BrandBackground />}
+      {showBg && !OWN_BACKGROUND_PATHS.has(pathname.replace(/\/$/, "") || "/") && (
+        <BrandBackground />
+      )}
       <Outlet />
     </>
   );

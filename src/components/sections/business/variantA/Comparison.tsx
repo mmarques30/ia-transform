@@ -1,5 +1,7 @@
+import { Check, X } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
-import { OriginButton } from "@/components/ui/origin-button";
+import { CtaButton } from "@/components/lpx/CtaButton";
+import { SectionHead } from "@/components/lpx/SectionHead";
 import { useLpCopy, type LpCopy } from "@/lib/lpLocale";
 
 const LEFT_ITEMS = [
@@ -19,6 +21,7 @@ const RIGHT_ITEMS = [
 ];
 
 const COPY_PT_BR = {
+  eyebrow: "Antes e depois",
   titleA: "As empresas que mais escalam hoje",
   titleB: "são as que automatizam a operação antes de contratar mais gente.",
   sub: "Existe uma diferença fundamental entre empresas que crescem com eficiência e as que crescem multiplicando problema. É uma questão de sistema, não de equipe.",
@@ -29,12 +32,13 @@ const COPY_PT_BR = {
   rightItems: RIGHT_ITEMS,
   rightResult: "Mais receita com o time que você já tem.",
   resultLabel: "Resultado:",
-  cta: "quero meu diagnóstico",
+  cta: "Quero meu diagnóstico",
 };
 
 const COPY: LpCopy<typeof COPY_PT_BR> = {
   "pt-br": COPY_PT_BR,
   en: {
+    eyebrow: "Before and after",
     titleA: "The companies scaling fastest today",
     titleB: "are the ones that automate operations before hiring more people.",
     sub: "There's a fundamental difference between companies that grow efficiently and the ones that grow by multiplying problems. It's a matter of systems, not headcount.",
@@ -57,53 +61,33 @@ const COPY: LpCopy<typeof COPY_PT_BR> = {
     ],
     rightResult: "More revenue with the team you already have.",
     resultLabel: "Result:",
-    cta: "request diagnostic",
+    cta: "Request my diagnostic",
   },
 };
 
+/**
+ * Antes × depois: card apagado com X (como a maioria opera) contra o card
+ * iluminado com check (com a IAplicada), com o selo "VS" no meio.
+ */
 export function Comparison() {
   const c = useLpCopy(COPY);
   return (
-    <section
-      className="relative py-[80px] lg:py-[110px]"
-      style={{ background: "linear-gradient(180deg, #0c0f07 0%, #111408 50%, #0c0f07 100%)" }}
-    >
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(60% 60% at 50% 50%, rgba(200,224,64,0.04), transparent 60%)",
-        }}
-      />
+    <section className="lpx-section relative">
+      <div className="lpx-glow" aria-hidden style={{ bottom: -200, right: -160 }} />
 
-      <div className="relative container-page">
-        <div className="max-w-[860px] mx-auto text-center">
+      <div className="lpx-wrap relative">
+        <SectionHead
+          eyebrow={c.eyebrow}
+          title={
+            <>
+              {c.titleA} <span className="lpx-dim">{c.titleB}</span>
+            </>
+          }
+          sub={c.sub}
+        />
+
+        <div className="relative mt-14 lg:mt-20 grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6 max-w-[1040px] mx-auto">
           <Reveal>
-            <h2
-              className="font-extrabold text-[26px] sm:text-[34px] lg:text-[42px] leading-[1.08] tracking-[-0.02em]"
-              style={{ textWrap: "balance" }}
-            >
-              <span
-                style={{ color: "var(--color-primary)" }}
-              >
-                {c.titleA}
-              </span>{" "}
-              <span className="text-foreground">
-                {c.titleB}
-              </span>
-            </h2>
-          </Reveal>
-
-          <Reveal delay={0.05}>
-            <p className="mt-5 text-[15px] lg:text-[16px] text-sage leading-[1.6] max-w-[640px] mx-auto">
-              {c.sub}
-            </p>
-          </Reveal>
-        </div>
-
-        <Reveal delay={0.12}>
-          <div className="mt-14 lg:mt-16 grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 max-w-[900px] mx-auto">
             <ComparisonCard
               title={c.leftTitle}
               items={c.leftItems}
@@ -111,6 +95,8 @@ export function Comparison() {
               resultLabel={c.resultLabel}
               variant="negative"
             />
+          </Reveal>
+          <Reveal delay={0.1}>
             <ComparisonCard
               title={c.rightTitle}
               items={c.rightItems}
@@ -118,14 +104,15 @@ export function Comparison() {
               resultLabel={c.resultLabel}
               variant="positive"
             />
-          </div>
-        </Reveal>
+          </Reveal>
+          <span className="lpx-vs" aria-hidden>
+            VS
+          </span>
+        </div>
 
-        <Reveal delay={0.3}>
-          <div className="mt-12 lg:mt-16 text-center">
-            <OriginButton onClick={() => document.getElementById("top")?.scrollIntoView({ behavior: "smooth" })}>
-              {c.cta}
-            </OriginButton>
+        <Reveal delay={0.2}>
+          <div className="mt-12 lg:mt-14 flex justify-center">
+            <CtaButton>{c.cta}</CtaButton>
           </div>
         </Reveal>
       </div>
@@ -146,76 +133,37 @@ function ComparisonCard({
   resultLabel: string;
   variant: "negative" | "positive";
 }) {
-  const isPositive = variant === "positive";
+  const positive = variant === "positive";
+  const Mark = positive ? Check : X;
 
   return (
-    <div
-      className="rounded-2xl overflow-hidden"
-      style={{
-        background: isPositive ? "rgba(200,224,64,0.08)" : "rgba(255,255,255,0.04)",
-        border: isPositive
-          ? "1px solid rgba(200,224,64,0.3)"
-          : "1px solid rgba(255,255,255,0.1)",
-        boxShadow: "0 20px 40px -20px rgba(0,0,0,0.5)",
-      }}
-    >
-      <div className="px-7 pt-8 pb-6 lg:px-8 lg:pt-9 lg:pb-7">
-        <h3
-          className="text-[18px] lg:text-[20px] font-extrabold tracking-[-0.01em] leading-[1.2] text-center"
-          style={{ color: isPositive ? "var(--color-primary)" : "rgba(255,255,255,0.7)" }}
+    <div className={`lpx-compare h-full${positive ? " lpx-compare--pos lpx-spot" : ""}`}>
+      <div className="p-7 lg:p-9">
+        <p
+          className={`text-[19px] lg:text-[21px] font-semibold tracking-[-0.02em] ${positive ? "text-[var(--lpx-text)]" : "text-[var(--lpx-muted)]"}`}
         >
           {title}
-        </h3>
+        </p>
 
-        <div className="mt-6 flex flex-col">
-          {items.map((item, i) => (
-            <div key={i}>
-              <div className="py-3.5 text-center">
-                <span
-                  className="text-[14px] lg:text-[15px] leading-[1.5]"
-                  style={{
-                    color: isPositive ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.55)",
-                    fontWeight: isPositive ? 500 : 400,
-                  }}
-                >
-                  {item}
-                </span>
-              </div>
-              {i < items.length - 1 && (
-                <div
-                  style={{
-                    height: 1,
-                    background: isPositive
-                      ? "rgba(200,224,64,0.15)"
-                      : "rgba(255,255,255,0.08)",
-                  }}
-                />
-              )}
-            </div>
+        <ul className="mt-6 space-y-1">
+          {items.map((item) => (
+            <li key={item} className="flex items-start gap-3.5 py-2.5">
+              <span className={`lpx-mark${positive ? " lpx-mark--pos" : ""}`}>
+                <Mark className="h-3.5 w-3.5" strokeWidth={2.6} />
+              </span>
+              <span
+                className={`text-[15px] leading-[1.5] ${positive ? "text-[var(--lpx-text)] font-medium" : "text-[#8a8f7d]"}`}
+              >
+                {item}
+              </span>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
 
-      <div
-        className="px-7 py-5 lg:px-8 lg:py-6 text-center"
-        style={{
-          background: isPositive
-            ? "rgba(200,224,64,0.12)"
-            : "rgba(255,255,255,0.03)",
-          borderTop: isPositive
-            ? "1px solid rgba(200,224,64,0.2)"
-            : "1px solid rgba(255,255,255,0.06)",
-        }}
-      >
-        <p className="text-[13px] tracking-[0.08em] uppercase font-bold" style={{ color: isPositive ? "var(--color-primary)" : "rgba(255,255,255,0.4)" }}>
-          {resultLabel}
-        </p>
-        <p
-          className="mt-1.5 text-[14px] lg:text-[15px] leading-[1.5] font-semibold"
-          style={{ color: isPositive ? "var(--color-primary)" : "rgba(255,255,255,0.6)" }}
-        >
-          {result}
-        </p>
+      <div className={`lpx-compare-foot${positive ? " lpx-compare-foot--pos" : ""}`}>
+        <span className="lpx-mono text-[11px] uppercase tracking-[0.16em]">{resultLabel}</span>
+        <p className="mt-1.5 text-[15.5px] leading-[1.45] font-semibold">{result}</p>
       </div>
     </div>
   );

@@ -41,7 +41,9 @@ const TAB_LABELS: LpCopy<Record<TabKey, string>> = {
   en: { industria: "Manufacturing", servicos: "Services", logistica: "Logistics" },
 };
 
-export function PainelClientesShowcase() {
+export function PainelClientesShowcase({
+  variant = "default",
+}: { variant?: "default" | "lpx" } = {}) {
   const labels = useLpCopy(TAB_LABELS);
   const [active, setActive] = useState<TabKey>(TABS[0].key);
   const [userInteracted, setUserInteracted] = useState(false);
@@ -61,9 +63,32 @@ export function PainelClientesShowcase() {
 
   return (
     <div className="w-full">
-      <div className="flex flex-wrap items-center gap-2 mb-5">
+      <div
+        className={
+          variant === "lpx" ? "lpx-segment mb-5" : "flex flex-wrap items-center gap-2 mb-5"
+        }
+        role={variant === "lpx" ? "tablist" : undefined}
+      >
         {TABS.map((t) => {
           const isActive = t.key === active;
+          if (variant === "lpx") {
+            return (
+              <button
+                key={t.key}
+                type="button"
+                role="tab"
+                aria-selected={isActive}
+                data-active={isActive}
+                onClick={() => {
+                  setActive(t.key);
+                  setUserInteracted(true);
+                }}
+                className="lpx-segment-btn"
+              >
+                {labels[t.key]}
+              </button>
+            );
+          }
           return (
             <button
               key={t.key}

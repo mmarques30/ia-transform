@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState, type FocusEvent, type FormEvent } from "react";
 import { useNavigate } from "@tanstack/react-router";
-import { AlertCircle, TriangleAlert } from "lucide-react";
+import { AlertCircle, ArrowRight, LockKeyhole, TriangleAlert } from "lucide-react";
 import { getMetaPixelCookies, getFbclidFromUrl } from "@/lib/metaCookies";
 import { getGoogleClickIds } from "@/lib/googleClickIds";
 import { captureAttribution, landingPageFromPath } from "@/lib/attribution";
@@ -97,6 +97,11 @@ interface HeroFormProps {
    * /iaplicada-*. Omitido = derivado do pathname na abertura.
    */
   landingPage?: string;
+  /**
+   * "dark": card escuro de vidro da LP principal (/, variantes). Mostra o
+   * selo, botão em pílula com seta e a linha "sem custo". Só visual.
+   */
+  variant?: "light" | "dark";
 }
 
 /** Opções sincronizadas com form_fields do CRM (slug=business). */
@@ -191,6 +196,8 @@ interface FormCopy {
   sending: string;
   submitAnyway: string;
   submit: string;
+  /** Linha de confiança embaixo do botão (variante dark). */
+  reassure: string;
 }
 
 const FORM_COPY_PT_BR: FormCopy = {
@@ -222,6 +229,7 @@ const FORM_COPY_PT_BR: FormCopy = {
   sending: "Enviando...",
   submitAnyway: "Enviar mesmo assim",
   submit: "SOLICITAR DIAGNÓSTICO",
+  reassure: "Diagnóstico gratuito e sem compromisso.",
 };
 
 const FORM_COPY: LpCopy<FormCopy> = {
@@ -270,6 +278,7 @@ const FORM_COPY: LpCopy<FormCopy> = {
     sending: "Sending...",
     submitAnyway: "Submit anyway",
     submit: "REQUEST DIAGNOSTIC",
+    reassure: "Free diagnostic, no commitment.",
   },
 };
 
@@ -325,7 +334,9 @@ export function HeroForm({
   onSuccess,
   compact = false,
   landingPage,
+  variant = "light",
 }: HeroFormProps = {}) {
+  const dark = variant === "dark";
   const navigate = useNavigate();
   const c = useLpCopy(FORM_COPY);
   const formSlug = formSlugProp ?? c.formSlug;
@@ -952,25 +963,47 @@ export function HeroForm({
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className={`hero-form-card rounded-[24px] overflow-hidden relative${compact ? " hero-form-compact" : ""}`}
-      style={{
-        backgroundColor: "oklch(0.995 0.003 110 / 0.72)",
-        backdropFilter: "blur(16px)",
-        WebkitBackdropFilter: "blur(16px)",
-        border: "1px solid oklch(0.88 0.02 115 / 0.7)",
-        boxShadow:
-          "0 30px 60px -25px oklch(0.18 0.02 122 / 0.18), 0 10px 25px -10px oklch(0.18 0.02 122 / 0.08)",
-        transition: "transform 0.25s ease-out, box-shadow 0.4s ease",
-        willChange: "transform",
-      }}
+      className={`hero-form-card rounded-[24px] overflow-hidden relative${compact ? " hero-form-compact" : ""}${dark ? " lpx-form" : ""}`}
+      style={
+        dark
+          ? {
+              transition: "transform 0.25s ease-out, box-shadow 0.4s ease",
+              willChange: "transform",
+            }
+          : {
+              backgroundColor: "oklch(0.995 0.003 110 / 0.72)",
+              backdropFilter: "blur(16px)",
+              WebkitBackdropFilter: "blur(16px)",
+              border: "1px solid oklch(0.88 0.02 115 / 0.7)",
+              boxShadow:
+                "0 30px 60px -25px oklch(0.18 0.02 122 / 0.18), 0 10px 25px -10px oklch(0.18 0.02 122 / 0.08)",
+              transition: "transform 0.25s ease-out, box-shadow 0.4s ease",
+              willChange: "transform",
+            }
+      }
     >
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 rounded-[24px]"
-        style={{ boxShadow: "inset 0 1px 0 oklch(1 0 0 / 0.9)" }}
-      />
+      {dark ? (
+        <div aria-hidden className="lpx-form-glow" />
+      ) : (
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 rounded-[24px]"
+          style={{ boxShadow: "inset 0 1px 0 oklch(1 0 0 / 0.9)" }}
+        />
+      )}
+
+      {dark && (
+        <div className="lpx-form-head relative">
+          <span className="lpx-form-badge">
+            <span className="lpx-form-badge-dot" aria-hidden />
+            {c.eyebrow}
+          </span>
+          <p className="lpx-form-title">{c.title}</p>
+        </div>
+      )}
 
       <div
+        hidden={dark}
         className={
           compact ? "px-6 pt-4 lg:px-7 lg:pt-4 relative" : "px-6 pt-4 lg:px-7 lg:pt-5 relative"
         }
@@ -1012,9 +1045,11 @@ export function HeroForm({
 
       <div
         className={
-          compact
-            ? "px-6 pb-4 pt-3 lg:px-7 lg:pb-4 lg:pt-2 relative"
-            : "px-6 pb-4 pt-3 lg:px-7 lg:pb-5 lg:pt-3 relative"
+          dark
+            ? "lpx-form-body relative"
+            : compact
+              ? "px-6 pb-4 pt-3 lg:px-7 lg:pb-4 lg:pt-2 relative"
+              : "px-6 pb-4 pt-3 lg:px-7 lg:pb-5 lg:pt-3 relative"
         }
       >
         <form
@@ -1027,7 +1062,7 @@ export function HeroForm({
           }}
           onInput={handleFormInput}
           onChange={handleFormInput}
-          className={compact ? "space-y-1.5" : "space-y-2"}
+          className={dark ? "space-y-3" : compact ? "space-y-1.5" : "space-y-2"}
           noValidate
         >
           <input type="hidden" name="landing_page" value={tracking.landing_page} readOnly />
@@ -1035,7 +1070,13 @@ export function HeroForm({
           <input type="hidden" name="referrer" value={tracking.referrer} readOnly />
           <input type="hidden" name="whatsapp_check" value={whatsappCheck} readOnly />
 
-          <Field id="firstname" label={c.nameLabel} required error={fieldErrors.firstname}>
+          <Field
+            dark={dark}
+            id="firstname"
+            label={c.nameLabel}
+            required
+            error={fieldErrors.firstname}
+          >
             <input
               id="firstname"
               name="firstname"
@@ -1048,7 +1089,7 @@ export function HeroForm({
             />
           </Field>
 
-          <Field id="email" label={c.emailLabel} required error={fieldErrors.email}>
+          <Field dark={dark} id="email" label={c.emailLabel} required error={fieldErrors.email}>
             <input
               id="email"
               name="email"
@@ -1061,7 +1102,7 @@ export function HeroForm({
             />
           </Field>
 
-          <Field id="phone" label={c.phoneLabel} required error={fieldErrors.phone}>
+          <Field dark={dark} id="phone" label={c.phoneLabel} required error={fieldErrors.phone}>
             <input
               ref={phoneRef}
               id="phone"
@@ -1081,14 +1122,14 @@ export function HeroForm({
             <p
               id="phone-hint"
               className="mt-1 text-[11.5px] leading-tight"
-              style={{ color: "oklch(0.45 0.02 122)" }}
+              style={{ color: dark ? "var(--lpx-faint)" : "oklch(0.45 0.02 122)" }}
             >
               {c.phoneHint}
             </p>
-            {phoneWarning && <WhatsappWarning warning={phoneWarning} />}
+            {phoneWarning && <WhatsappWarning warning={phoneWarning} dark={dark} />}
           </Field>
 
-          <Field id="cargo" label={c.cargoLabel} required error={fieldErrors.cargo}>
+          <Field dark={dark} id="cargo" label={c.cargoLabel} required error={fieldErrors.cargo}>
             <select
               id="cargo"
               name="cargo"
@@ -1109,6 +1150,7 @@ export function HeroForm({
           </Field>
 
           <Field
+            dark={dark}
             id="faixa_de_faturamento"
             label={c.faixaLabel}
             required
@@ -1137,24 +1179,54 @@ export function HeroForm({
             <div
               role="alert"
               className="flex items-start gap-2 rounded-md px-3 py-2.5 text-[12.5px]"
-              style={{
-                backgroundColor: "oklch(0.96 0.05 25)",
-                border: "1px solid oklch(0.82 0.1 25)",
-                color: "oklch(0.4 0.16 25)",
-              }}
+              style={
+                dark
+                  ? {
+                      backgroundColor: "rgba(255, 110, 90, 0.08)",
+                      border: "1px solid rgba(255, 120, 100, 0.35)",
+                      color: "#ffb4a8",
+                      borderRadius: 12,
+                    }
+                  : {
+                      backgroundColor: "oklch(0.96 0.05 25)",
+                      border: "1px solid oklch(0.82 0.1 25)",
+                      color: "oklch(0.4 0.16 25)",
+                    }
+              }
             >
               <AlertCircle className="h-4 w-4 mt-0.5 shrink-0" strokeWidth={2} />
               <span>{error}</span>
             </div>
           )}
 
-          <button
-            type="submit"
-            disabled={loading || !allRequiredFilled}
-            className="hero-form-cta mt-1 w-full inline-flex items-center justify-center rounded-full px-6 py-4 text-[14.5px] font-bold uppercase tracking-[0.06em] disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {loading ? loadingMsg || c.sending : phoneWarning ? c.submitAnyway : c.submit}
-          </button>
+          {dark ? (
+            <>
+              <button
+                type="submit"
+                disabled={loading || !allRequiredFilled}
+                className="lpx-btn lpx-btn--block lpx-form-submit"
+              >
+                <span>
+                  {loading ? loadingMsg || c.sending : phoneWarning ? c.submitAnyway : c.submit}
+                </span>
+                <span className="lpx-btn-arrow" aria-hidden>
+                  <ArrowRight className="h-4 w-4" strokeWidth={2.4} />
+                </span>
+              </button>
+              <p className="lpx-form-reassure">
+                <LockKeyhole className="h-3.5 w-3.5" strokeWidth={2} aria-hidden />
+                {c.reassure}
+              </p>
+            </>
+          ) : (
+            <button
+              type="submit"
+              disabled={loading || !allRequiredFilled}
+              className="hero-form-cta mt-1 w-full inline-flex items-center justify-center rounded-full px-6 py-4 text-[14.5px] font-bold uppercase tracking-[0.06em] disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {loading ? loadingMsg || c.sending : phoneWarning ? c.submitAnyway : c.submit}
+            </button>
+          )}
         </form>
       </div>
     </div>
@@ -1175,7 +1247,7 @@ function splitWarning(text: string): [string, string] {
 }
 
 /** Caixa de aviso do WhatsApp: destaque quente, legível, sem travar o envio. */
-function WhatsappWarning({ warning }: { warning: PhoneWarning }) {
+function WhatsappWarning({ warning, dark }: { warning: PhoneWarning; dark?: boolean }) {
   const [titulo, corpo] = splitWarning(warning.mensagem);
   const detalhe = warning.reforco ? WHATSAPP_REFORCO : corpo;
   return (
@@ -1183,16 +1255,24 @@ function WhatsappWarning({ warning }: { warning: PhoneWarning }) {
       id="phone-warning"
       role="alert"
       className="mt-2 flex items-start gap-2.5 rounded-xl px-3.5 py-3"
-      style={{
-        backgroundColor: "#FFF5E6",
-        border: "1px solid #F1C27D",
-        color: "#5A3410",
-      }}
+      style={
+        dark
+          ? {
+              backgroundColor: "rgba(255, 176, 64, 0.08)",
+              border: "1px solid rgba(255, 176, 64, 0.38)",
+              color: "#ffd9a3",
+            }
+          : {
+              backgroundColor: "#FFF5E6",
+              border: "1px solid #F1C27D",
+              color: "#5A3410",
+            }
+      }
     >
       <TriangleAlert
         className="h-4 w-4 mt-[2px] shrink-0"
         strokeWidth={2.2}
-        style={{ color: "#C2620A" }}
+        style={{ color: dark ? "#ffb347" : "#C2620A" }}
         aria-hidden
       />
       <div className="text-[12.5px] leading-[1.45]">
@@ -1208,8 +1288,10 @@ function Field({
   label,
   required,
   error,
+  dark,
   children,
 }: {
+  dark?: boolean;
   id: string;
   label: string;
   required?: boolean;
@@ -1220,8 +1302,10 @@ function Field({
     <div>
       <label
         htmlFor={id}
-        className="block text-[12px] font-semibold mb-1"
-        style={{ color: "oklch(0.32 0.02 122)" }}
+        className={
+          dark ? "block text-[12.5px] font-medium mb-1.5" : "block text-[12px] font-semibold mb-1"
+        }
+        style={{ color: dark ? "#c9cdbd" : "oklch(0.32 0.02 122)" }}
       >
         {label}
         {required && (
@@ -1236,7 +1320,7 @@ function Field({
           id={`${id}-error`}
           role="alert"
           className="mt-1 text-[11.5px] font-medium leading-tight"
-          style={{ color: "oklch(0.5 0.18 25)" }}
+          style={{ color: dark ? "#ff9a8a" : "oklch(0.5 0.18 25)" }}
         >
           {error}
         </p>

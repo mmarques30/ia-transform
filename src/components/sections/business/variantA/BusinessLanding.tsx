@@ -1,4 +1,3 @@
-import { BgDobra } from "@/components/BgDobra";
 import { Hero } from "@/components/sections/business/variantA/Hero";
 import { Problem } from "@/components/sections/business/variantA/Problem";
 import { Comparison } from "@/components/sections/business/variantA/Comparison";
@@ -13,6 +12,9 @@ import { DiagnosticoModalProvider } from "@/components/sections/business/variant
 import { Footer } from "@/components/sections/Footer";
 import { LpLocaleProvider, pickLpCopy, type LpCopy, type LpLocale } from "@/lib/lpLocale";
 import { ORG_ID, jsonLd } from "@/lib/structuredData";
+import { LpNav } from "@/components/lpx/LpNav";
+import { onSpotlightMove } from "@/components/lpx/spotlight";
+import { FinalCta } from "@/components/lpx/FinalCta";
 
 /** O que a LP vende, em schema.org (Service), no idioma da página. */
 const SERVICE_COPY: LpCopy<{ serviceType: string; description: string; areaServed: string }> = {
@@ -71,7 +73,7 @@ export interface BusinessLandingProps {
  *
  * Ordem das dobras:
  *  Hero → ValueStrip → Problem → Comparison → MetodoAplicaBook
- *  → ContaQueNinguemFaz → Testimonials → Team → ParaQuem → FAQ → Footer
+ *  → ContaQueNinguemFaz → Testimonials → Team → ParaQuem → FAQ → FinalCta → Footer
  */
 export function BusinessLanding({
   heroTitle,
@@ -82,7 +84,9 @@ export function BusinessLanding({
   return (
     <LpLocaleProvider locale={locale}>
       <DiagnosticoModalProvider>
-        <main className="min-h-screen text-foreground" style={{ backgroundColor: "#0a0c07" }}>
+        <LpNav />
+        <main className="lpx-main min-h-screen text-foreground" onPointerMove={onSpotlightMove}>
+          <div className="lpx-grain" aria-hidden />
           <script
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: serviceJsonLd(locale) }}
@@ -91,9 +95,7 @@ export function BusinessLanding({
 
           <ValueStrip />
 
-          <BgDobra intensity="media">
-            <Problem />
-          </BgDobra>
+          <Problem />
 
           <Comparison />
 
@@ -108,6 +110,8 @@ export function BusinessLanding({
           <ParaQuem />
 
           <FAQ />
+
+          <FinalCta />
 
           <Footer />
         </main>

@@ -1,5 +1,8 @@
+import { Receipt } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
-import { OriginButton } from "@/components/ui/origin-button";
+import { CountUp } from "@/components/lpx/CountUp";
+import { CtaButton } from "@/components/lpx/CtaButton";
+import { SectionHead } from "@/components/lpx/SectionHead";
 import { useLpCopy, type LpCopy } from "@/lib/lpLocale";
 
 const STEPS = [
@@ -13,13 +16,14 @@ const STEPS = [
 const OPERATORS = ["×", "=", "="];
 
 const COPY_PT_BR = {
+  eyebrow: "Faça as contas",
   titleA: "A conta que",
   titleB: "ninguém faz.",
   sub: "E que segura o crescimento no fim do ano.",
   steps: STEPS,
   closingA: "Esse é o custo real de operar sem automação.",
   closingB: "Não aparece no DRE. Fica diluído no CLT do time.",
-  cta: "quero meu diagnóstico",
+  cta: "Quero meu diagnóstico",
 };
 
 const COPY: LpCopy<typeof COPY_PT_BR> = {
@@ -30,6 +34,7 @@ const COPY: LpCopy<typeof COPY_PT_BR> = {
     closingB: "Não aparece no P&L. Fica diluído na folha do time.",
   },
   en: {
+    eyebrow: "Run the numbers",
     titleA: "The math",
     titleB: "nobody does.",
     sub: "And it's what holds back growth by year-end.",
@@ -41,76 +46,93 @@ const COPY: LpCopy<typeof COPY_PT_BR> = {
     ],
     closingA: "That's the real cost of running without automation.",
     closingB: "It doesn't show up on the P&L. It's buried in payroll.",
-    cta: "request diagnostic",
+    cta: "Request my diagnostic",
   },
 };
 
+/** "400h" → 400 + "h": o número anima, o sufixo fica fixo. */
+function splitNum(num: string): [number, string] {
+  const m = num.match(/^(\d+)(.*)$/);
+  return m ? [Number(m[1]), m[2]] : [0, num];
+}
+
+/**
+ * A conta que ninguém faz: 10 × 2h = 400h = 2 pessoas, em cards com
+ * número animado ligados por operadores; o resultado fecha em lime.
+ */
 export function ContaQueNinguemFaz() {
   const c = useLpCopy(COPY);
   return (
-    <section
-      id="a-conta"
-      className="conta-section"
-      style={{ background: "linear-gradient(180deg, #0c0f07 0%, #0f1209 50%, #0c0f07 100%)" }}
-    >
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(60% 50% at 50% 100%, rgba(200,224,64,0.07), transparent 65%)",
-        }}
-      />
-      <div className="container-page relative">
-        <div className="max-w-[820px] mx-auto text-center">
-          <Reveal>
-            <h2
-              className="font-extrabold text-[30px] sm:text-[40px] lg:text-[52px] leading-[1.03] tracking-[-0.025em] text-foreground"
-              style={{ textWrap: "balance" }}
-            >
-              {c.titleA} <span style={{ color: "var(--color-primary)" }}>{c.titleB}</span>
-            </h2>
-          </Reveal>
-          <Reveal delay={0.05}>
-            <p className="conta-sub">{c.sub}</p>
-          </Reveal>
-        </div>
+    <section id="a-conta" className="lpx-section relative overflow-hidden">
+      <div className="lpx-grid" aria-hidden />
+      <div className="lpx-horizon" aria-hidden style={{ top: "62%", opacity: 0.55 }} />
 
-        <ol className="conta-grid">
-          {c.steps.map((step, i) => (
-            <li key={step.num} className="conta-step" data-step={i + 1}>
-              <Reveal delay={0.08 + i * 0.1}>
-                <div className="conta-card">
-                  <span className="conta-card-index">{String(i + 1).padStart(2, "0")}</span>
-                  <div className="conta-card-num">
-                    {step.num}
-                    <span className="conta-card-label">{step.label}</span>
+      <div className="lpx-wrap relative">
+        <SectionHead
+          eyebrow={c.eyebrow}
+          title={
+            <>
+              {c.titleA} <em>{c.titleB}</em>
+            </>
+          }
+          sub={c.sub}
+        />
+
+        <ol className="lpx-conta mt-14 lg:mt-20">
+          {c.steps.map((step, i) => {
+            const [n, suffix] = splitNum(step.num);
+            const last = i === c.steps.length - 1;
+            return (
+              <li key={step.num} className="lpx-conta-step">
+                <Reveal delay={0.08 + i * 0.1} className="h-full">
+                  <div
+                    className={`lpx-card lpx-card--hover lpx-spot h-full p-6 lg:p-7${last ? " lpx-card--lime" : ""}`}
+                  >
+                    <span
+                      className={`lpx-mono text-[12px] ${last ? "text-[#0a0c07]/55" : "text-[var(--lpx-faint)]"}`}
+                    >
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <p
+                      className={`lpx-mono mt-8 text-[52px] lg:text-[60px] font-semibold leading-none tracking-[-0.04em] ${last ? "text-[#0a0c07]" : "text-[var(--lpx-text)]"}`}
+                    >
+                      <CountUp value={n} />
+                      {suffix}
+                    </p>
+                    <p
+                      className={`mt-3 text-[15px] font-semibold ${last ? "text-[#0a0c07]" : "text-[var(--lpx-lime-hi)]"}`}
+                    >
+                      {step.label}
+                    </p>
+                    <p
+                      className={`mt-1 text-[14px] leading-[1.5] ${last ? "text-[#0a0c07]/75" : "text-[var(--lpx-muted)]"}`}
+                    >
+                      {step.desc}
+                    </p>
                   </div>
-                  <p className="conta-card-desc">{step.desc}</p>
-                </div>
-              </Reveal>
-              {i < OPERATORS.length && (
-                <span className="conta-op" aria-hidden>
-                  {OPERATORS[i]}
-                </span>
-              )}
-            </li>
-          ))}
+                </Reveal>
+                {i < OPERATORS.length && (
+                  <span className="lpx-op" aria-hidden>
+                    {OPERATORS[i]}
+                  </span>
+                )}
+              </li>
+            );
+          })}
         </ol>
 
-        <Reveal delay={0.5}>
-          <p className="conta-closing">
-            {c.closingA} <strong>{c.closingB}</strong>
-          </p>
-        </Reveal>
-
-        <Reveal delay={0.55}>
-          <div className="mt-10 text-center">
-            <OriginButton
-              onClick={() => document.getElementById("top")?.scrollIntoView({ behavior: "smooth" })}
-            >
-              {c.cta}
-            </OriginButton>
+        <Reveal delay={0.4}>
+          <div className="lpx-callout mt-10 lg:mt-12">
+            <span className="lpx-icon">
+              <Receipt className="h-5 w-5" strokeWidth={1.8} />
+            </span>
+            <p className="text-[16px] lg:text-[18px] leading-[1.5] text-[var(--lpx-muted)]">
+              {c.closingA}{" "}
+              <strong className="font-semibold text-[var(--lpx-text)]">{c.closingB}</strong>
+            </p>
+            <div className="lpx-callout-cta">
+              <CtaButton>{c.cta}</CtaButton>
+            </div>
           </div>
         </Reveal>
       </div>
