@@ -545,12 +545,17 @@
   display: none;
 }
 .lpx-h1 .hero-b-h1-em {
-  /* Mesma fonte, peso e tamanho das outras linhas: o destaque é só a cor. */
-  font-style: normal;
+  margin-top: 0.06em;
+  font-family: "Instrument Serif", Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  font-size: 1.08em;
   background: linear-gradient(90deg, var(--lpx-lime-hi), var(--lpx-lime) 60%, #a9c22c);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  padding-right: 0.06em;
 }
 @media (max-width: 960px) {
   .lpx-h1 {
