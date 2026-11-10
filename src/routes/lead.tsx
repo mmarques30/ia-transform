@@ -1,15 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { BgDobra } from "@/components/BgDobra";
 import { LeadHero } from "@/components/sections/business/lead/LeadHero";
 import { LeadProblem } from "@/components/sections/business/lead/LeadProblem";
 import { LeadKitContent } from "@/components/sections/business/lead/LeadKitContent";
 import { LeadCredibility } from "@/components/sections/business/lead/LeadCredibility";
 import { LeadCtaFinal } from "@/components/sections/business/lead/LeadCtaFinal";
-import {
-  LeadModalProvider,
-  useLeadModal,
-} from "@/components/sections/business/lead/LeadFormModal";
+import { LeadModalProvider, useLeadModal } from "@/components/sections/business/lead/LeadFormModal";
 import { Footer } from "@/components/sections/Footer";
+import { LeadNav } from "@/components/sections/business/lead/LeadNav";
+import { onSpotlightMove } from "@/components/lpx/spotlight";
 
 export const Route = createFileRoute("/lead")({
   staticData: { sitemap: true },
@@ -45,29 +43,23 @@ export const Route = createFileRoute("/lead")({
 function LeadMagnetLanding() {
   return (
     <LeadModalProvider>
-      <main className="min-h-screen text-foreground" style={{ backgroundColor: "#080a07", overflowX: "hidden" }}>
+      <LeadNavWithModal />
+      <main className="lpx-main min-h-screen text-foreground" onPointerMove={onSpotlightMove}>
+        <div className="lpx-grain" aria-hidden />
         <LeadHeroWithModal />
-
-        <BgDobra intensity="media">
-          <LeadProblemWithModal />
-        </BgDobra>
-
-        <Separator />
-
+        <LeadProblemWithModal />
         <LeadKitContent />
-
-        <Separator />
-
         <LeadCredibilityWithModal />
-
-        <Separator />
-
         <LeadCtaFinalWithModal />
-
         <Footer />
       </main>
     </LeadModalProvider>
   );
+}
+
+function LeadNavWithModal() {
+  const modal = useLeadModal();
+  return <LeadNav onOpenModal={modal?.openModal ?? (() => {})} />;
 }
 
 function LeadHeroWithModal() {
@@ -89,12 +81,3 @@ function LeadCtaFinalWithModal() {
   const modal = useLeadModal();
   return <LeadCtaFinal onOpenModal={modal?.openModal ?? (() => {})} />;
 }
-
-function Separator() {
-  return (
-    <div className="lead-sep" aria-hidden>
-      &#10038; &#10038; &#10038;
-    </div>
-  );
-}
-

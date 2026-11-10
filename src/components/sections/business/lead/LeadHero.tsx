@@ -1,85 +1,86 @@
-import { lazy, Suspense } from "react";
 import { Reveal } from "@/components/Reveal";
-import { OriginButton } from "@/components/ui/origin-button";
-import { LeadKitMockups } from "./LeadKitMockups";
-
-const IAPLogo3D = lazy(() =>
-  import("./IAPLogo3D").then((m) => ({ default: m.IAPLogo3D }))
-);
+import { LockKeyhole } from "lucide-react";
+import { LeadCta } from "./LeadCta";
 
 interface LeadHeroProps {
   onOpenModal: () => void;
 }
 
+/** Prévia do kit em leque, abaixo do botão. */
+const PREVIEW = [
+  { src: "/mockups/mockup-prompts.png", label: "Prompts de IA" },
+  { src: "/mockups/mockup-automacao.png", label: "Automações" },
+  { src: "/mockups/mockup-agente.png", label: "Agente Virtual" },
+  { src: "/mockups/mockup-financeiro.png", label: "Financeiro IA" },
+];
+
+/**
+ * Hero da /lead no visual da LP: grade, anéis com o símbolo da IAplicada,
+ * título com a frase em serifa, botão que abre o form e a prévia do kit.
+ */
 export function LeadHero({ onOpenModal }: LeadHeroProps) {
   return (
-    <section
-      id="lead-hero"
-      className="lead-hero-wrap relative"
-      style={{
-        minHeight: "100vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        background:
-          "radial-gradient(ellipse 80% 60% at 50% 40%, rgba(200,224,64,0.07), transparent 70%), #080a07",
-      }}
-    >
-      <LeadKitMockups />
+    <section id="lead-hero" className="lpx-hero lpx-lead-hero">
+      <div className="lpx-grid" aria-hidden />
+      <div className="lpx-portal lpx-lead-portal" aria-hidden>
+        <div className="lpx-portal-ring" />
+        <div className="lpx-portal-ring" />
+        <div className="lpx-portal-ring" />
+        <div className="lpx-portal-core" />
+        <img className="lpx-portal-logo" src="/brand/logo-petals.png" alt="" decoding="async" />
+        <div className="lpx-portal-spin">
+          <div className="lpx-portal-orbit" />
+        </div>
+      </div>
 
-      <div className="relative z-[3] w-full max-w-[1280px] mx-auto px-6 lg:px-12 py-[72px]">
-        <div className="max-w-[860px] mx-auto text-center">
-          <div className="mx-auto mb-8 flex items-center justify-center pointer-events-none" style={{ width: 100, height: 100, background: "none" }}>
-            <Suspense fallback={null}>
-              <IAPLogo3D width={100} height={100} scale={2} />
-            </Suspense>
-          </div>
-
+      <div className="lpx-wrap relative z-[3]">
+        <div className="mx-auto max-w-[900px] text-center">
+          <Reveal>
+            <span className="lpx-eyebrow-line lpx-eyebrow-line--center">
+              Kit gratuito · Acesso imediato
+            </span>
+          </Reveal>
           <Reveal delay={0.05}>
-            <h1
-              className="font-extrabold leading-[1.04] tracking-[-0.03em] text-foreground"
-              style={{
-                fontFamily: '"Instrument Serif", serif',
-                fontStyle: "italic",
-                fontSize: "clamp(48px, 8vw, 80px)",
-                textWrap: "balance",
-              }}
-            >
-              Automatize{" "}
-              <span style={{ color: "var(--color-primary)" }}>o que trava</span>{" "}
-              sua operação.{" "}
-              <span style={{ color: "var(--color-primary)" }}>
-                Sem contratar ninguém.
-              </span>
+            <h1 className="lpx-h1 lpx-lead-h1 mt-6">
+              <span className="hero-b-h1-sans">Automatize o que trava sua operação.</span>
+              <em className="hero-b-h1-em">Sem contratar ninguém.</em>
             </h1>
           </Reveal>
-
-          <Reveal delay={0.08}>
-            <p
-              className="mt-6"
-              style={{
-                fontFamily: '"Instrument Serif", serif',
-                fontStyle: "italic",
-                fontSize: "clamp(18px, 3vw, 24px)",
-                lineHeight: 1.35,
-                color: "var(--color-foreground, #f4f5ec)",
-              }}
-            >
-              Prompts, automações e agentes de IA{" "}
-              <em style={{ color: "var(--color-primary)" }}>prontos para usar</em> na sua empresa,
-              <br />
-              testados em operações reais, tudo isso em um kit gratuito pra você começar a automatizar.
+          <Reveal delay={0.1}>
+            <p className="lpx-hero-sub mx-auto">
+              Prompts, automações e agentes de IA <em>prontos para usar</em> na sua empresa,
+              testados em operações reais. Tudo num kit gratuito pra você começar a automatizar.
             </p>
           </Reveal>
-
-          <Reveal delay={0.1}>
-            <div className="mt-10">
-              <OriginButton onClick={onOpenModal}>
-                Quero o kit completo &rarr;
-              </OriginButton>
+          <Reveal delay={0.15}>
+            <div className="mt-9 flex flex-col items-center gap-4">
+              <LeadCta onClick={onOpenModal}>Quero o kit completo</LeadCta>
+              <span className="inline-flex items-center gap-2 text-[12.5px] text-[var(--lpx-faint)]">
+                <LockKeyhole
+                  className="h-3.5 w-3.5 text-[var(--lpx-lime)]"
+                  strokeWidth={2}
+                  aria-hidden
+                />
+                Gratuito. Você recebe o acesso na hora.
+              </span>
             </div>
           </Reveal>
         </div>
+
+        <Reveal delay={0.2}>
+          <div className="lpx-fan" aria-hidden>
+            {PREVIEW.map((p, i) => (
+              <figure
+                key={p.src}
+                className="lpx-fan-card"
+                style={{ "--i": i } as React.CSSProperties}
+              >
+                <img src={p.src} alt="" loading="eager" decoding="async" draggable={false} />
+                <figcaption>{p.label}</figcaption>
+              </figure>
+            ))}
+          </div>
+        </Reveal>
       </div>
     </section>
   );

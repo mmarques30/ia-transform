@@ -1,121 +1,87 @@
 import { Reveal } from "@/components/Reveal";
+import { SectionHead } from "@/components/lpx/SectionHead";
 
-interface DeliverableItem {
+interface Module {
   n: string;
   title: string;
   detail: string;
+  img: string;
 }
 
-const KIT_ITEMS: DeliverableItem[] = [
+const MODULES: Module[] = [
   {
     n: "01",
     title: "Prompts de IA para Operação",
     detail:
       "Prompts prontos e calibrados para atendimento ao cliente, análise financeira rápida e aceleração de vendas. Copie, ajuste e use hoje.",
+    img: "/mockups/mockup-prompts.png",
   },
   {
     n: "02",
     title: "Automações Prontas",
     detail:
       "Fluxos completos para n8n, Make e Zapier que eliminam tarefas manuais repetitivas. Importe direto, sem precisar construir do zero.",
+    img: "/mockups/mockup-automacao.png",
   },
   {
     n: "03",
     title: "Agentes de IA Configurados",
     detail:
       "Exemplos reais de agentes rodando em operações, com contexto de como foram configurados e o que cada um resolve.",
+    img: "/mockups/mockup-agente.png",
   },
 ];
 
+/** O que está dentro: os três módulos em cards com a prévia de cada um. */
 export function LeadKitContent() {
   return (
-    <section className="relative section-veil py-[100px] lg:py-[140px] xl:py-[160px]">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(80% 80% at 70% 50%, rgba(200,224,64,0.08), transparent 60%)",
-        }}
-      />
+    <section className="lpx-section relative">
+      <div className="lpx-grid lpx-grid--fine" aria-hidden />
+      <div className="lpx-wrap relative">
+        <SectionHead
+          size="xl"
+          eyebrow="O que está dentro"
+          title={
+            <>
+              Três módulos. <em>Resultado na semana.</em>
+            </>
+          }
+          sub={
+            <>
+              Cada módulo foi construído a partir de implementações reais. Sem teoria, sem
+              enrolação:{" "}
+              <strong className="font-semibold text-[var(--lpx-text)]">
+                o que já funciona, pronto pra aplicar.
+              </strong>
+            </>
+          }
+        />
 
-      <div className="container-page relative z-[2]">
-        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center max-w-[960px] mx-auto">
-          <Reveal>
-            <div>
-              <span
-                className="inline-block px-3.5 py-1.5 rounded-full text-[11px] tracking-[0.2em] uppercase font-bold"
-                style={{
-                  border: "1px solid rgba(200,224,64,0.4)",
-                  background: "rgba(200,224,64,0.06)",
-                  color: "var(--color-primary)",
-                  fontFamily: '"JetBrains Mono", ui-monospace, Menlo, monospace',
-                }}
+        <div className="mt-14 lg:mt-20 grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6">
+          {MODULES.map((m, i) => (
+            <Reveal key={m.n} delay={0.08 * i} className="h-full">
+              <article
+                className={`lpx-card lpx-card--hover lpx-spot lpx-module h-full${i === 1 ? " lpx-module--hl" : ""}`}
               >
-                O que está dentro
-              </span>
-              <h2
-                className="mt-5 font-extrabold text-[30px] sm:text-[36px] lg:text-[42px] leading-[1.05] tracking-[-0.025em] text-foreground"
-                style={{ textWrap: "balance" }}
-              >
-                Três módulos.{" "}
-                <em
-                  style={{
-                    fontFamily: '"Instrument Serif", serif',
-                    color: "var(--color-primary)",
-                    fontWeight: 500,
-                  }}
-                >
-                  Resultado na semana.
-                </em>
-              </h2>
-              <p className="mt-5 text-[14.5px] lg:text-[15.5px] text-sage leading-[1.65]">
-                Cada módulo foi construído a partir de implementações reais. Não é conteúdo
-                teórico, é o que já está funcionando em empresas como a sua.
-              </p>
-              <p className="mt-4 text-[14.5px] lg:text-[15.5px] text-sage leading-[1.65]">
-                Sem teoria. Sem enrolação.{" "}
-                <strong className="text-foreground font-bold">
-                  O que já funciona, pronto pra aplicar.
-                </strong>
-              </p>
-            </div>
-          </Reveal>
-
-          <div>
-            <Reveal>
-              <p
-                className="text-[10px] uppercase tracking-[0.22em] font-bold mb-4"
-                style={{
-                  color: "var(--color-primary)",
-                  fontFamily: '"JetBrains Mono", ui-monospace, Menlo, monospace',
-                }}
-              >
-                Você leva
-              </p>
+                <div className="lpx-module-shot" aria-hidden>
+                  <img src={m.img} alt="" loading="lazy" decoding="async" draggable={false} />
+                </div>
+                <div className="p-7">
+                  <span className="lpx-mono text-[11px] uppercase tracking-[0.16em] text-[var(--lpx-lime-hi)]">
+                    Módulo {m.n}
+                  </span>
+                  <h3 className="mt-2 text-[21px] font-semibold leading-[1.2] tracking-[-0.02em] text-[var(--lpx-text)]">
+                    {m.title}
+                  </h3>
+                  <p className="mt-3 text-[14.5px] leading-[1.65] text-[var(--lpx-muted)]">
+                    {m.detail}
+                  </p>
+                </div>
+              </article>
             </Reveal>
-            <ul className="guarantee-list">
-              {KIT_ITEMS.map((item, i) => (
-                <Reveal key={item.n} delay={0.05 + i * 0.12}>
-                  <DeliverableRow item={item} />
-                </Reveal>
-              ))}
-            </ul>
-          </div>
+          ))}
         </div>
       </div>
     </section>
-  );
-}
-
-function DeliverableRow({ item }: { item: DeliverableItem }) {
-  return (
-    <li className="guarantee-item">
-      <span className="guarantee-item__n">{item.n}</span>
-      <div className="guarantee-item__body">
-        <h3 className="guarantee-item__title">{item.title}</h3>
-        <p className="guarantee-item__detail">{item.detail}</p>
-      </div>
-    </li>
   );
 }

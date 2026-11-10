@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Reveal } from "@/components/Reveal";
-import { CountUp } from "@/components/lpx/CountUp";
+import { FounderAbout, LightBand } from "@/components/lpx/FounderBand";
 import { CtaButton } from "@/components/lpx/CtaButton";
 import { useLpCopy, useLpLocale, type LpCopy } from "@/lib/lpLocale";
 
@@ -162,124 +162,59 @@ function MemberPhoto({ src, name }: { src: string; name: string }) {
   );
 }
 
-function Wave({ flip = false }: { flip?: boolean }) {
-  return (
-    <svg
-      className={`lpx-wave${flip ? " lpx-wave--flip" : ""}`}
-      viewBox="0 0 1440 120"
-      preserveAspectRatio="none"
-      aria-hidden
-    >
-      <path d="M0,64 C180,120 360,10 620,40 C880,70 1040,118 1240,82 C1340,64 1400,40 1440,30 L1440,120 L0,120 Z" />
-    </svg>
-  );
-}
-
 export function Team() {
   const c = useLpCopy(COPY);
   const en = useLpLocale() === "en";
   const xp = en ? XP_EN : XP;
 
   return (
-    <section id="time" className="lpx-light">
-      <Wave />
-      <div className="lpx-light-body">
-        <div className="lpx-wrap">
-          <div className="lpx-about-grid">
-            <Reveal className="lpx-about-photo-wrap">
-              <div className="lpx-about-photo">
-                <img
-                  src="/brand/mariana-marques.jpg"
-                  alt={c.photoAlt}
-                  width={1086}
-                  height={1448}
-                  loading="lazy"
-                  decoding="async"
-                />
-              </div>
-              <div className="lpx-about-badge">
-                <img src="/brand/logo-mark.svg" alt="" width={28} height={28} />
-                <span>
-                  <b>Mariana Marques</b>
-                  <small>Founder & CEO</small>
-                </span>
-              </div>
-            </Reveal>
+    <LightBand id="time">
+      <FounderAbout
+        eyebrow={c.eyebrow}
+        titleA={c.titleA}
+        titleEm={c.titleEm}
+        lead={c.lead}
+        stats={c.stats}
+        xpLabel={c.xpLabel}
+        xp={xp}
+        photoAlt={c.photoAlt}
+      />
 
-            <div>
-              <Reveal>
-                <span className="lpx-eyebrow-line">{c.eyebrow}</span>
-                <h2 className="lpx-h2 lpx-h2--ink mt-5">
-                  {c.titleA} <em>{c.titleEm}</em>
-                </h2>
-              </Reveal>
-              <Reveal delay={0.08}>
-                <p className="lpx-about-lead">{c.lead}</p>
-              </Reveal>
-              <Reveal delay={0.14}>
-                <div className="lpx-about-stats">
-                  {c.stats.map((s) => (
-                    <div key={s.label}>
-                      <b>
-                        {s.prefix}
-                        <CountUp value={s.value} />
-                      </b>
-                      <span>{s.label}</span>
-                    </div>
-                  ))}
+      <div className="lpx-team">
+        <Reveal className="max-w-[640px]">
+          <span className="lpx-eyebrow-line">{c.teamLabel}</span>
+          <h3 className="lpx-team-title">{c.teamTitle}</h3>
+        </Reveal>
+        <Reveal delay={0.1}>
+          <div className="lpx-team-grid">
+            {c.team.map((m) => (
+              <article key={m.name} className="lpx-member">
+                <div className="lpx-member-photo">
+                  <MemberPhoto src={m.photo} name={m.name} />
                 </div>
-              </Reveal>
-              <Reveal delay={0.2}>
-                <div className="lpx-about-xp">
-                  <span className="lpx-mono">{c.xpLabel}</span>
-                  {xp.map((x) => (
-                    <span key={x} className="lpx-about-chip">
-                      {x}
-                    </span>
-                  ))}
+                <div className="lpx-member-info">
+                  <b>{m.name}</b>
+                  <small>{m.role}</small>
+                  <p>{m.bio}</p>
                 </div>
-              </Reveal>
-            </div>
+              </article>
+            ))}
           </div>
-
-          <div className="lpx-team">
-            <Reveal className="max-w-[640px]">
-              <span className="lpx-eyebrow-line">{c.teamLabel}</span>
-              <h3 className="lpx-team-title">{c.teamTitle}</h3>
-            </Reveal>
-            <Reveal delay={0.1}>
-              <div className="lpx-team-grid">
-                {c.team.map((m) => (
-                  <article key={m.name} className="lpx-member">
-                    <div className="lpx-member-photo">
-                      <MemberPhoto src={m.photo} name={m.name} />
-                    </div>
-                    <div className="lpx-member-info">
-                      <b>{m.name}</b>
-                      <small>{m.role}</small>
-                      <p>{m.bio}</p>
-                    </div>
-                  </article>
-                ))}
-              </div>
-            </Reveal>
-            <Reveal>
-              <div className="lpx-team-foot">
-                <p className="lpx-team-more">
-                  <span className="lpx-team-more-dots" aria-hidden>
-                    <i />
-                    <i />
-                    <i />
-                  </span>
-                  {c.more}
-                </p>
-                <CtaButton>{c.cta}</CtaButton>
-              </div>
-            </Reveal>
+        </Reveal>
+        <Reveal>
+          <div className="lpx-team-foot">
+            <p className="lpx-team-more">
+              <span className="lpx-team-more-dots" aria-hidden>
+                <i />
+                <i />
+                <i />
+              </span>
+              {c.more}
+            </p>
+            <CtaButton>{c.cta}</CtaButton>
           </div>
-        </div>
+        </Reveal>
       </div>
-      <Wave flip />
-    </section>
+    </LightBand>
   );
 }
