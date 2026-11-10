@@ -1071,6 +1071,34 @@
   border-radius: 16px;
 }
 
+/* Rótulo no padrão do site institucional: texto mono com uma linha antes. */
+.lpx-eyebrow-line {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--lpx-lime);
+}
+.lpx-eyebrow-line::before,
+.lpx-eyebrow-line--center::after {
+  content: "";
+  width: 28px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.6;
+}
+/* Título grande (padrão dos títulos do site). */
+.lpx-h2--xl {
+  font-size: clamp(36px, 5.2vw, 68px);
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+}
+
 /* ─── Comparação (antes × depois) ───────────────────────────────── */
 
 .lpx-compare {
@@ -1428,14 +1456,24 @@
    no celular. */
 .lpx-wall {
   columns: 3 320px;
-  column-gap: 20px;
+  column-gap: 28px;
 }
 .lpx-wall-item {
   break-inside: avoid;
-  margin-bottom: 20px;
+  margin-bottom: 28px;
 }
 .lpx-tcard {
-  padding: 26px 26px 22px;
+  padding: 32px 30px 26px;
+}
+/* Logos de ponta a ponta da tela, fora do container. */
+.lpx-bleed {
+  position: relative;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  padding: 30px 0;
+  border-top: 1px solid var(--lpx-line);
+  border-bottom: 1px solid var(--lpx-line);
+  background: rgba(255, 255, 255, 0.015);
 }
 .lpx-tcard--hl {
   border-color: rgba(200, 224, 64, 0.26);
@@ -1482,93 +1520,320 @@
   }
 }
 
-/* ─── Time ──────────────────────────────────────────────────────── */
+/* ─── Time (mesma estrutura da dobra Sobre/Time do site) ──────── */
 
-.lpx-founder-card {
-  display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.3fr);
-  overflow: hidden;
-  border-color: rgba(200, 224, 64, 0.2);
-  background:
-    radial-gradient(70% 90% at 100% 0%, rgba(200, 224, 64, 0.1), transparent 60%), var(--lpx-panel);
-}
-.lpx-founder-card-photo {
+.lpx-light {
   position: relative;
-  min-height: 420px;
+  color: #10120b;
 }
-.lpx-founder-card-photo img,
-.lpx-team-card-photo img {
+.lpx-light-body {
+  margin: -1px 0;
+  padding: clamp(56px, 7vw, 96px) 0;
+  background:
+    radial-gradient(40% 32% at 85% 30%, rgba(200, 224, 64, 0.28), transparent 70%),
+    radial-gradient(36% 28% at 8% 78%, rgba(115, 137, 37, 0.14), transparent 70%), #f3f3e8;
+}
+.lpx-wave {
+  display: block;
+  width: 100%;
+  height: clamp(50px, 8vw, 120px);
+  fill: #f3f3e8;
+}
+.lpx-wave--flip {
+  transform: rotate(180deg);
+}
+.lpx-h2--ink {
+  color: #10120b;
+}
+.lpx-h2--ink em {
+  color: #738925;
+}
+.lpx-light .lpx-eyebrow-line {
+  color: #738925;
+}
+.lpx-about-grid {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: clamp(32px, 6vw, 80px);
+  align-items: center;
+}
+.lpx-about-photo-wrap {
+  position: relative;
+}
+.lpx-about-photo {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 10px rgba(255, 255, 255, 0.6),
+    0 0 0 11px rgba(115, 137, 37, 0.25),
+    0 50px 90px -40px rgba(16, 18, 11, 0.5);
+}
+.lpx-about-photo::after {
+  content: "";
   position: absolute;
   inset: 0;
+  background: radial-gradient(circle at 80% 90%, rgba(200, 224, 64, 0.35), transparent 50%);
+  mix-blend-mode: multiply;
+}
+.lpx-about-photo img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 1s var(--lpx-ease);
+  object-position: center 30%;
+  transition: transform 1.2s var(--lpx-ease);
 }
-.lpx-founder-card-photo::after {
-  content: "";
+.lpx-about-photo-wrap:hover .lpx-about-photo img {
+  transform: scale(1.05);
+}
+.lpx-about-badge {
   position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, transparent 60%, rgba(14, 17, 10, 0.9) 100%);
+  right: 4%;
+  bottom: 8%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px 10px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.85);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 20px 40px -20px rgba(16, 18, 11, 0.4);
+  animation: lpx-float 6s ease-in-out infinite;
 }
-.lpx-team-card {
-  overflow: hidden;
+.lpx-about-badge img {
+  width: 36px;
+  height: 36px;
+  padding: 4px;
+  border-radius: 50%;
+  background: #10120b;
 }
-.lpx-team-row {
+.lpx-about-badge b {
+  display: block;
+  font-size: 14px;
+}
+.lpx-about-badge small {
+  font-size: 12px;
+  color: rgba(16, 18, 11, 0.6);
+}
+.lpx-about-lead {
+  margin-top: 20px;
+  max-width: 560px;
+  font-size: clamp(15px, 1.25vw, 17px);
+  line-height: 1.65;
+  color: rgba(16, 18, 11, 0.68);
+}
+.lpx-about-stats {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 20px;
+  max-width: 520px;
+  margin-top: 36px;
 }
-@media (max-width: 767px) {
-  .lpx-team-row {
-    display: flex;
-    gap: 12px;
-    margin: 0 -24px;
-    padding: 0 24px 6px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-padding: 0 24px;
-    scrollbar-width: none;
-  }
-  .lpx-team-row::-webkit-scrollbar {
-    display: none;
-  }
-  .lpx-team-row > * {
-    flex: 0 0 82%;
-    scroll-snap-align: start;
-  }
+.lpx-about-stats b {
+  display: block;
+  font-family: "Inter Tight", "Inter", sans-serif;
+  font-size: clamp(34px, 4vw, 48px);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.04em;
 }
-.lpx-team-card-photo {
+.lpx-about-stats > div > span {
+  display: block;
+  margin-top: 6px;
+  font-size: 13px;
+  color: rgba(16, 18, 11, 0.6);
+}
+.lpx-about-xp {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 30px;
+}
+.lpx-about-xp .lpx-mono {
+  margin-right: 6px;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(16, 18, 11, 0.5);
+}
+.lpx-about-chip {
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(16, 18, 11, 0.08);
+  background: #fff;
+  font-size: 13.5px;
+  font-weight: 600;
+}
+.lpx-team {
+  margin-top: clamp(60px, 8vw, 100px);
+}
+.lpx-team-title {
+  margin-top: 12px;
+  font-family: "Inter Tight", "Inter", sans-serif;
+  font-size: clamp(22px, 2.4vw, 30px);
+  font-weight: 650;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+.lpx-team-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 32px;
+}
+.lpx-member {
   position: relative;
-  aspect-ratio: 4 / 3.4;
+  aspect-ratio: 3 / 4;
+  border-radius: 24px;
   overflow: hidden;
+  border: 1px solid rgba(16, 18, 11, 0.06);
+  background: #fff;
+  box-shadow: 0 30px 60px -40px rgba(16, 18, 11, 0.35);
 }
-.lpx-team-card-photo::after {
-  content: "";
+.lpx-member-photo {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    180deg,
-    rgba(17, 20, 13, 0) 40%,
-    rgba(17, 20, 13, 0.55) 72%,
-    rgba(17, 20, 13, 0.92) 92%,
-    #11140c 100%
-  );
+  background: linear-gradient(180deg, #e3e6cf, #cfd4ad);
 }
-.lpx-team-card:hover .lpx-team-card-photo img,
-.lpx-founder-card:hover .lpx-founder-card-photo img {
-  transform: scale(1.04);
+.lpx-member-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  transition: transform 0.9s var(--lpx-ease);
 }
-@media (max-width: 860px) {
-  .lpx-founder-card {
+.lpx-member:hover .lpx-member-photo img {
+  transform: scale(1.06);
+}
+.lpx-member-info {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: rgba(16, 18, 11, 0.82);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  color: var(--lpx-text);
+}
+.lpx-member-info b {
+  display: block;
+  font-size: 15px;
+}
+.lpx-member-info small {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--lpx-lime);
+}
+.lpx-member-info p {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--lpx-muted);
+  transition:
+    max-height 0.5s var(--lpx-ease),
+    opacity 0.4s,
+    margin 0.5s;
+}
+.lpx-member:hover .lpx-member-info p {
+  max-height: 100px;
+  margin-top: 8px;
+  opacity: 1;
+}
+.lpx-member-initials {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding-bottom: 30%;
+  font-family: "Instrument Serif", Georgia, serif;
+  font-style: italic;
+  font-size: 72px;
+  color: #738925;
+  background:
+    radial-gradient(70% 60% at 50% 35%, rgba(200, 224, 64, 0.45), transparent 70%),
+    linear-gradient(180deg, #eef0dc, #d6dcb0);
+}
+.lpx-team-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 26px;
+}
+.lpx-team-more {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13.5px;
+  color: rgba(16, 18, 11, 0.58);
+}
+.lpx-team-more-dots {
+  display: flex;
+  flex: none;
+}
+.lpx-team-more-dots i {
+  width: 22px;
+  height: 22px;
+  margin-left: -7px;
+  border-radius: 50%;
+  border: 2px solid #f3f3e8;
+  background: linear-gradient(135deg, #cfd4ad, #9fae55);
+}
+.lpx-team-more-dots i:first-child {
+  margin-left: 0;
+}
+.lpx-team-more-dots i:nth-child(2) {
+  background: linear-gradient(135deg, #e3e6cf, #b9c27a);
+}
+.lpx-team-more-dots i:nth-child(3) {
+  background: #10120b;
+}
+@media (hover: none) {
+  .lpx-member-info p {
+    max-height: none;
+    margin-top: 6px;
+    opacity: 1;
+  }
+}
+@media (max-width: 900px) {
+  .lpx-about-grid {
     grid-template-columns: minmax(0, 1fr);
   }
-  .lpx-founder-card-photo {
-    min-height: 0;
-    aspect-ratio: 4 / 3.6;
+  .lpx-about-photo-wrap {
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
   }
-  .lpx-founder-card-photo::after {
-    background: linear-gradient(180deg, transparent 60%, rgba(14, 17, 10, 0.9) 100%);
+  .lpx-team-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 480px) {
+  .lpx-team-grid {
+    gap: 10px;
+  }
+  .lpx-member-info {
+    left: 6px;
+    right: 6px;
+    bottom: 6px;
+    padding: 10px 12px;
+  }
+  .lpx-member-info p {
+    display: none;
+  }
+  .lpx-about-stats {
+    gap: 12px;
   }
 }
 

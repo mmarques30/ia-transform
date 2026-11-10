@@ -1,188 +1,285 @@
-import { Linkedin } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import { Reveal } from "@/components/Reveal";
+import { CountUp } from "@/components/lpx/CountUp";
 import { CtaButton } from "@/components/lpx/CtaButton";
-import { SectionHead } from "@/components/lpx/SectionHead";
-import { useLpCopy, type LpCopy } from "@/lib/lpLocale";
+import { useLpCopy, useLpLocale, type LpCopy } from "@/lib/lpLocale";
 
-interface TeamMember {
+/**
+ * "Quem constrói": mesma estrutura da dobra Sobre/Time do site
+ * institucional (/site). Faixa clara com ondas, a fundadora em destaque
+ * (foto redonda, selo, números e passagens) e o time em retratos com nome
+ * e cargo; a bio aparece no hover (no celular fica sempre visível).
+ */
+
+interface Member {
   name: string;
   role: string;
   photo: string;
   bio: string;
-  photoPosition?: string;
 }
 
-const TEAM: TeamMember[] = [
-  {
-    name: "Mariana Marques",
-    role: "Founder & CEO",
-    photo: "/brand/mariana-marques.jpg",
-    photoPosition: "center 40%",
-    bio: "11 anos como executiva em Mercado Livre, Suzano e AngloGold, liderando transformação digital na América Latina. Fundou a IAplicada para entregar o que viu funcionar em empresas grandes e agora adaptando para o tamanho e o processo de quem está crescendo. Criou a metodologia APLICA e lidera cada projeto, trazendo sua visão sistêmica e expertise em IA pra transformar novas operações.",
-  },
-  {
-    name: "Ana Cecilia",
-    role: "Account Executive",
-    photo: "/brand/ana-cecilia.png",
-    bio: "10 anos em comercial B2B e B2C nas maiores instituições financeiras do país. Passou por Inter&Co, allu e Localiza&Co, conduzindo todo o ciclo de vendas: prospecção, negociação e pós-venda. Na IAplicada, cuida do relacionamento com clientes e do processo comercial do primeiro contato ao fechamento.",
-  },
-  {
-    name: "Matheus Farah",
-    role: "Software Developer",
-    photo: "/brand/matheus.png",
-    bio: "Especialista em construir sistemas que rodam sozinhos. Trabalha com desenvolvimento backend, automação de fluxos com n8n, integrações via API e IA com Claude e Anthropic. Na IAplicada, transforma o processo mapeado em sistema em produção: Lovable no front, Supabase no banco, automações que eliminam o trabalho repetitivo.",
-  },
-  {
-    name: "Maria Eduarda",
-    role: "Sales & Marketing Support",
-    photo: "/brand/maria-eduarda.png",
-    bio: "Responsável por manter a operação comercial e de marketing da IAplicada funcionando nos bastidores: gestão de conteúdo, suporte ao processo de vendas e organização das frentes que conectam o time ao cliente. É quem garante que nada caia entre as cadeiras.",
-  },
-];
+interface TeamCopy {
+  eyebrow: string;
+  titleA: string;
+  titleEm: string;
+  lead: string;
+  stats: Array<{ value: number; prefix?: string; label: string }>;
+  xpLabel: string;
+  teamLabel: string;
+  teamTitle: string;
+  team: Member[];
+  more: string;
+  photoAlt: string;
+  cta: string;
+}
 
-const COPY_PT_BR = {
-  eyebrow: "Quem constrói",
-  titleA: "Seu novo",
-  titleB: "time.",
-  sub: "Você será acompanhado por quem já construiu operações, liderou transformações e entrega sistema rodando de verdade.",
-  team: TEAM,
-  founderTag: "Fundadora",
+const PHOTOS = {
+  ana: "/brand/ana-cecilia.png",
+  matheus: "/brand/matheus.png",
+  olivia: "/brand/maria-olivia.webp",
+  eduarda: "/brand/maria-eduarda.png",
+};
+
+const PT: TeamCopy = {
+  eyebrow: "Quem lidera",
+  titleA: "Aprendi em ambientes onde",
+  titleEm: "caos não é opção.",
+  lead: "Antes da IAplicada, foram 11 anos como executiva em Mercado Livre, Suzano e AngloGold, liderando transformação digital na América Latina. Trouxe para cá o padrão de operação que não pode parar, adaptado para o tamanho e o processo de quem está crescendo. Criei o Método APLICA e lidero cada projeto.",
+  stats: [
+    { value: 11, label: "anos como executiva" },
+    { value: 50, prefix: "+", label: "empresas atendidas" },
+    { value: 90, label: "dias até o sistema completo" },
+  ],
+  xpLabel: "Passagens",
+  teamLabel: "Seu novo time",
+  teamTitle: "Quem já construiu operações e entrega sistema rodando de verdade.",
+  team: [
+    {
+      name: "Ana Cecilia",
+      role: "Account Executive",
+      photo: PHOTOS.ana,
+      bio: "10 anos em comercial B2B e B2C. Passou por Inter&Co, allu e Localiza&Co.",
+    },
+    {
+      name: "Matheus Farah",
+      role: "Tech Lead",
+      photo: PHOTOS.matheus,
+      bio: "Lidera a engenharia: arquitetura, integrações via API, automações com n8n e IA com Claude.",
+    },
+    {
+      name: "Maria Olívia",
+      role: "Developer",
+      photo: PHOTOS.olivia,
+      bio: "Desenvolve as telas e integrações que colocam cada sistema em produção.",
+    },
+    {
+      name: "Maria Eduarda",
+      role: "Sales & Marketing Support",
+      photo: PHOTOS.eduarda,
+      bio: "Mantém a operação comercial e de marketing rodando nos bastidores.",
+    },
+  ],
+  more: "Entre outros especialistas em dados, automação e produto que entram em cada projeto.",
+  photoAlt: "Mariana Marques, fundadora e CEO da IAplicada",
   cta: "Quero meu diagnóstico",
 };
 
-/** Bios na mesma ordem do TEAM (nome, cargo e foto não mudam). */
-function withBios(bios: string[]): TeamMember[] {
-  return TEAM.map((member, i) => ({ ...member, bio: bios[i] }));
-}
-
-const COPY: LpCopy<typeof COPY_PT_BR> = {
-  "pt-br": COPY_PT_BR,
-  // "do país" lido por quem está nos EUA ficaria ambíguo.
-  "pt-us": {
-    ...COPY_PT_BR,
-    team: withBios(
-      TEAM.map((m) =>
-        m.bio.replace(
-          "nas maiores instituições financeiras do país",
-          "nas maiores instituições financeiras do Brasil",
-        ),
-      ),
-    ),
-  },
+const COPY: LpCopy<TeamCopy> = {
+  "pt-br": PT,
   en: {
-    eyebrow: "Who builds it",
-    titleA: "Your new",
-    titleB: "team.",
-    sub: "You'll work alongside people who have built operations, led transformations and deliver systems that actually run.",
-    team: withBios([
-      "11 years as an executive at Mercado Libre, Suzano and AngloGold, leading digital transformation across Latin America. She founded IAplicada to deliver what she saw work at large companies, now adapted to the size and processes of companies that are growing. She created the APLICA methodology and leads every project, bringing her systems thinking and AI expertise to transform new operations.",
-      "10 years in B2B and B2C sales at some of Brazil's largest financial institutions. She worked at Inter&Co, allu and Localiza&Co, running the full sales cycle: prospecting, negotiation and post-sale. At IAplicada, she manages client relationships and the sales process from first contact to close.",
-      "Specialist in building systems that run on their own. He works with backend development, workflow automation with n8n, API integrations and AI with Claude and Anthropic. At IAplicada, he turns the mapped process into a system in production: Lovable on the front end, Supabase for the database, automations that eliminate repetitive work.",
-      "Keeps IAplicada's sales and marketing operations running behind the scenes: content management, sales process support and organizing the fronts that connect the team to the client. She's the one who makes sure nothing falls through the cracks.",
-    ]),
-    founderTag: "Founder",
+    eyebrow: "Who leads",
+    titleA: "I learned in environments where",
+    titleEm: "chaos is not an option.",
+    lead: "Before IAplicada, I spent 11 years as an executive at Mercado Libre, Suzano and AngloGold, leading digital transformation across Latin America. I brought that standard of operations that can't stop, adapted to the size and processes of companies that are growing. I created the APLICA Method and I lead every project.",
+    stats: [
+      { value: 11, label: "years as an executive" },
+      { value: 50, prefix: "+", label: "companies served" },
+      { value: 90, label: "days to the full system" },
+    ],
+    xpLabel: "Former roles",
+    teamLabel: "Your new team",
+    teamTitle: "People who have built operations and ship systems that actually run.",
+    team: [
+      {
+        name: "Ana Cecilia",
+        role: "Account Executive",
+        photo: PHOTOS.ana,
+        bio: "10 years in B2B and B2C sales. Worked at Inter&Co, allu and Localiza&Co.",
+      },
+      {
+        name: "Matheus Farah",
+        role: "Tech Lead",
+        photo: PHOTOS.matheus,
+        bio: "Leads engineering: architecture, API integrations, n8n automations and AI with Claude.",
+      },
+      {
+        name: "Maria Olívia",
+        role: "Developer",
+        photo: PHOTOS.olivia,
+        bio: "Builds the screens and integrations that put each system into production.",
+      },
+      {
+        name: "Maria Eduarda",
+        role: "Sales & Marketing Support",
+        photo: PHOTOS.eduarda,
+        bio: "Keeps sales and marketing operations running behind the scenes.",
+      },
+    ],
+    more: "Plus other specialists in data, automation and product who join each project.",
+    photoAlt: "Mariana Marques, founder and CEO of IAplicada",
     cta: "Request my diagnostic",
   },
 };
 
-const FOUNDER_LINKEDIN = "https://www.linkedin.com/in/marianamarquescabral/";
+const XP = ["Mercado Livre", "Suzano", "AngloGold"];
+const XP_EN = ["Mercado Libre", "Suzano", "AngloGold"];
 
-/**
- * Time: a fundadora em destaque (card largo, foto + bio) e o restante do
- * time em cards de vidro com foto, cargo e bio.
- */
-export function Team() {
-  const c = useLpCopy(COPY);
-  const [founder, ...rest] = c.team;
-
+/** Foto do membro; se o arquivo não carregar, mostra as iniciais. */
+function MemberPhoto({ src, name }: { src: string; name: string }) {
+  const [failed, setFailed] = useState(false);
+  const ref = useRef<HTMLImageElement>(null);
+  useEffect(() => {
+    const img = ref.current;
+    if (img && img.complete && img.naturalWidth === 0) setFailed(true);
+  }, []);
+  if (failed) {
+    const initials = name
+      .split(" ")
+      .map((p) => p[0])
+      .slice(0, 2)
+      .join("");
+    return <span className="lpx-member-initials">{initials}</span>;
+  }
   return (
-    <section id="time" className="lpx-section relative">
-      <div className="lpx-grid" aria-hidden />
-      <div className="lpx-wrap relative">
-        <SectionHead
-          eyebrow={c.eyebrow}
-          title={
-            <>
-              {c.titleA} <em>{c.titleB}</em>
-            </>
-          }
-          sub={c.sub}
-        />
-
-        <Reveal delay={0.1}>
-          <article className="lpx-card lpx-spot lpx-founder-card mt-12 lg:mt-16">
-            <div className="lpx-founder-card-photo">
-              <img
-                src={founder.photo}
-                alt={founder.name}
-                loading="lazy"
-                decoding="async"
-                style={
-                  founder.photoPosition ? { objectPosition: founder.photoPosition } : undefined
-                }
-              />
-            </div>
-            <div className="flex flex-col justify-center p-7 lg:p-12">
-              <span className="lpx-eyebrow self-start">{c.founderTag}</span>
-              <h3 className="mt-5 text-[30px] lg:text-[40px] font-semibold leading-[1.05] tracking-[-0.035em] text-[var(--lpx-text)]">
-                {founder.name}
-              </h3>
-              <p className="mt-1 text-[15px] font-medium text-[var(--lpx-lime-hi)]">
-                {founder.role}
-              </p>
-              <p className="mt-5 text-[15.5px] leading-[1.7] text-[var(--lpx-muted)] max-w-[62ch]">
-                {founder.bio}
-              </p>
-              <a
-                href={FOUNDER_LINKEDIN}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="lpx-btn-ghost lpx-btn-ghost--sm mt-7 self-start"
-              >
-                <Linkedin className="h-4 w-4" strokeWidth={1.8} />
-                LinkedIn
-              </a>
-            </div>
-          </article>
-        </Reveal>
-
-        <Reveal delay={0.1}>
-          <div className="lpx-team-row mt-4 lg:mt-5">
-            {rest.map((member) => (
-              <TeamCard key={member.name} member={member} />
-            ))}
-          </div>
-        </Reveal>
-
-        <Reveal delay={0.2}>
-          <div className="mt-12 lg:mt-14 flex justify-center">
-            <CtaButton>{c.cta}</CtaButton>
-          </div>
-        </Reveal>
-      </div>
-    </section>
+    <img
+      ref={ref}
+      src={src}
+      alt={name}
+      loading="lazy"
+      decoding="async"
+      onError={() => setFailed(true)}
+    />
   );
 }
 
-function TeamCard({ member }: { member: TeamMember }) {
+function Wave({ flip = false }: { flip?: boolean }) {
   return (
-    <article className="lpx-card lpx-card--hover lpx-spot lpx-team-card h-full">
-      <div className="lpx-team-card-photo">
-        <img
-          src={member.photo}
-          alt={member.name}
-          loading="lazy"
-          decoding="async"
-          style={member.photoPosition ? { objectPosition: member.photoPosition } : undefined}
-        />
+    <svg
+      className={`lpx-wave${flip ? " lpx-wave--flip" : ""}`}
+      viewBox="0 0 1440 120"
+      preserveAspectRatio="none"
+      aria-hidden
+    >
+      <path d="M0,64 C180,120 360,10 620,40 C880,70 1040,118 1240,82 C1340,64 1400,40 1440,30 L1440,120 L0,120 Z" />
+    </svg>
+  );
+}
+
+export function Team() {
+  const c = useLpCopy(COPY);
+  const en = useLpLocale() === "en";
+  const xp = en ? XP_EN : XP;
+
+  return (
+    <section id="time" className="lpx-light">
+      <Wave />
+      <div className="lpx-light-body">
+        <div className="lpx-wrap">
+          <div className="lpx-about-grid">
+            <Reveal className="lpx-about-photo-wrap">
+              <div className="lpx-about-photo">
+                <img
+                  src="/brand/mariana-marques.jpg"
+                  alt={c.photoAlt}
+                  width={1086}
+                  height={1448}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div className="lpx-about-badge">
+                <img src="/brand/logo-mark.svg" alt="" width={28} height={28} />
+                <span>
+                  <b>Mariana Marques</b>
+                  <small>Founder & CEO</small>
+                </span>
+              </div>
+            </Reveal>
+
+            <div>
+              <Reveal>
+                <span className="lpx-eyebrow-line">{c.eyebrow}</span>
+                <h2 className="lpx-h2 lpx-h2--ink mt-5">
+                  {c.titleA} <em>{c.titleEm}</em>
+                </h2>
+              </Reveal>
+              <Reveal delay={0.08}>
+                <p className="lpx-about-lead">{c.lead}</p>
+              </Reveal>
+              <Reveal delay={0.14}>
+                <div className="lpx-about-stats">
+                  {c.stats.map((s) => (
+                    <div key={s.label}>
+                      <b>
+                        {s.prefix}
+                        <CountUp value={s.value} />
+                      </b>
+                      <span>{s.label}</span>
+                    </div>
+                  ))}
+                </div>
+              </Reveal>
+              <Reveal delay={0.2}>
+                <div className="lpx-about-xp">
+                  <span className="lpx-mono">{c.xpLabel}</span>
+                  {xp.map((x) => (
+                    <span key={x} className="lpx-about-chip">
+                      {x}
+                    </span>
+                  ))}
+                </div>
+              </Reveal>
+            </div>
+          </div>
+
+          <div className="lpx-team">
+            <Reveal className="max-w-[640px]">
+              <span className="lpx-eyebrow-line">{c.teamLabel}</span>
+              <h3 className="lpx-team-title">{c.teamTitle}</h3>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <div className="lpx-team-grid">
+                {c.team.map((m) => (
+                  <article key={m.name} className="lpx-member">
+                    <div className="lpx-member-photo">
+                      <MemberPhoto src={m.photo} name={m.name} />
+                    </div>
+                    <div className="lpx-member-info">
+                      <b>{m.name}</b>
+                      <small>{m.role}</small>
+                      <p>{m.bio}</p>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </Reveal>
+            <Reveal>
+              <div className="lpx-team-foot">
+                <p className="lpx-team-more">
+                  <span className="lpx-team-more-dots" aria-hidden>
+                    <i />
+                    <i />
+                    <i />
+                  </span>
+                  {c.more}
+                </p>
+                <CtaButton>{c.cta}</CtaButton>
+              </div>
+            </Reveal>
+          </div>
+        </div>
       </div>
-      <div className="p-6 lg:p-7">
-        <h3 className="text-[20px] font-semibold tracking-[-0.02em] text-[var(--lpx-text)]">
-          {member.name}
-        </h3>
-        <p className="mt-0.5 text-[13.5px] font-medium text-[var(--lpx-lime-hi)]">{member.role}</p>
-        <p className="mt-4 text-[14px] leading-[1.65] text-[var(--lpx-muted)]">{member.bio}</p>
-      </div>
-    </article>
+      <Wave flip />
+    </section>
   );
 }

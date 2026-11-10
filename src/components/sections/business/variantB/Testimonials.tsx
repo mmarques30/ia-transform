@@ -231,6 +231,7 @@ export function Testimonials() {
 
       <div className="lpx-wrap relative">
         <SectionHead
+          size="xl"
           eyebrow={c.eyebrow}
           title={
             <>
@@ -240,7 +241,7 @@ export function Testimonials() {
         />
 
         <Reveal delay={0.1}>
-          <dl className="lpx-metrics mt-12 lg:mt-16">
+          <dl className="lpx-metrics mt-14 lg:mt-20">
             {c.metrics.map((m) => (
               <div key={m.label} className="lpx-metric">
                 <dt className="sr-only">{m.label}</dt>
@@ -262,12 +263,12 @@ export function Testimonials() {
           </dl>
         </Reveal>
 
-        <div className="mt-10 lg:mt-12">
-          <ClientLogos bare fadeColor="var(--lpx-bg)" />
+        <div className="lpx-bleed mt-14 lg:mt-20">
+          <ClientLogos bare fadeColor="#0e100b" />
         </div>
 
         <Reveal delay={0.1}>
-          <div className="lpx-wall mt-10 lg:mt-12">
+          <div className="lpx-wall mt-14 lg:mt-20">
             {c.testimonials.map((item, i) => {
               const highlight = c.highlights[i];
               return (
