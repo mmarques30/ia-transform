@@ -73,6 +73,76 @@ const SPARKS = [
   "0,20 12,16 24,18 36,10 48,12 60,8 72,4",
 ];
 
+/**
+ * Cada painel simula o sistema de um cliente: cores e logo da marca dele
+ * (empresas fictícias), não as da IAplicada.
+ */
+const THEMES: Record<Sector, React.CSSProperties> = {
+  industria: {
+    "--a1": "#ff8a3d",
+    "--a1-hi": "#ffb37a",
+    "--a2": "#ff4d6d",
+    "--on-a": "#1f0d04",
+    "--alert": "#ff4d6d",
+  } as React.CSSProperties,
+  servicos: {
+    "--a1": "#2dd4a7",
+    "--a1-hi": "#7eecd0",
+    "--a2": "#38bdf8",
+    "--on-a": "#04201a",
+    "--alert": "#ffb347",
+  } as React.CSSProperties,
+  logistica: {
+    "--a1": "#f472b6",
+    "--a1-hi": "#f9a8d4",
+    "--a2": "#a78bfa",
+    "--on-a": "#2a0a1c",
+    "--alert": "#ffb347",
+  } as React.CSSProperties,
+};
+
+/** Logos das empresas fictícias (marca simples em SVG). */
+function ClientLogo({ sector, size = 36 }: { sector: Sector; size?: number }) {
+  const id = `sx-logo-${sector}`;
+  return (
+    <svg width={size} height={size} viewBox="0 0 36 36" aria-hidden>
+      <defs>
+        <linearGradient id={id} x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" style={{ stopColor: "var(--a1)" }} />
+          <stop offset="1" style={{ stopColor: "var(--a2)" }} />
+        </linearGradient>
+      </defs>
+      <rect width="36" height="36" rx="10" fill={`url(#${id})`} />
+      {sector === "industria" && (
+        <g style={{ fill: "var(--on-a)" }}>
+          <rect x="8" y="20" width="9" height="7" rx="1.5" />
+          <rect x="19" y="20" width="9" height="7" rx="1.5" />
+          <rect x="13.5" y="11.5" width="9" height="7" rx="1.5" opacity=".8" />
+        </g>
+      )}
+      {sector === "servicos" && (
+        <g
+          fill="none"
+          style={{ stroke: "var(--on-a)" }}
+          strokeWidth="2.6"
+          strokeLinejoin="round"
+          strokeLinecap="round"
+        >
+          <path d="M9 26 L18 9 L27 26" />
+          <path d="M13.5 19.5 H22.5" />
+        </g>
+      )}
+      {sector === "logistica" && (
+        <g fill="none" style={{ stroke: "var(--on-a)" }} strokeWidth="2.6" strokeLinecap="round">
+          <path d="M10 25 C10 18, 26 19, 26 12" />
+          <circle cx="10" cy="25" r="2.2" style={{ fill: "var(--on-a)" }} stroke="none" />
+          <path d="M22 11 L26 11 L26 15" strokeLinejoin="round" />
+        </g>
+      )}
+    </svg>
+  );
+}
+
 export function SistemaShowcase() {
   const labels = useLpCopy(TAB_LABELS);
   const [active, setActive] = useState<Sector>("industria");
@@ -124,9 +194,9 @@ function SistemaMockup({ sector }: { sector: Sector }) {
   const NAV = [LayoutDashboard, Workflow, Users, FileText, ChartNoAxesCombined, Settings];
 
   return (
-    <div className="sx" aria-hidden>
+    <div className="sx" style={THEMES[sector]} aria-hidden>
       <aside className="sx-side">
-        <img src="/brand/logo-petals.png" alt="" className="sx-side-logo" decoding="async" />
+        <ClientLogo sector={sector} size={32} />
         <nav className="sx-side-nav">
           {NAV.map((Icon, i) => (
             <span key={i} className="sx-side-btn" data-active={i === 0}>
@@ -142,7 +212,7 @@ function SistemaMockup({ sector }: { sector: Sector }) {
       <div className="sx-main">
         <header className="sx-head sx-in" style={{ "--d": "0s" } as React.CSSProperties}>
           <div className="flex items-center gap-3">
-            <span className="sx-avatar">{data.company.charAt(0)}</span>
+            <ClientLogo sector={sector} />
             <div>
               <p className="sx-company">{data.company}</p>
               <p className="sx-url">{data.url}</p>
@@ -276,8 +346,8 @@ function AreaChart({ months, end }: { months: string[]; end: string }) {
       <svg viewBox="0 0 384 120" className="sx-area">
         <defs>
           <linearGradient id="sx-fill" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stopColor="#c8e040" stopOpacity=".35" />
-            <stop offset="1" stopColor="#c8e040" stopOpacity="0" />
+            <stop offset="0" style={{ stopColor: "var(--a1)", stopOpacity: 0.35 }} />
+            <stop offset="1" style={{ stopColor: "var(--a1)", stopOpacity: 0 }} />
           </linearGradient>
         </defs>
         {[30, 60, 90].map((y) => (
