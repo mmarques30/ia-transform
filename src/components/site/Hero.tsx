@@ -97,6 +97,18 @@ export function SiteHero() {
           />
           <div className="st-hero-floor" />
 
+          {/* Só no mobile: selos do card de retrato */}
+          <div className="st-hero-pill">
+            <span className="st-status-dot" /> +50 empresas
+          </div>
+          <div className="st-hero-namecard">
+            <img src="/brand/logo-mark.svg" alt="" width={30} height={30} />
+            <span>
+              <b>Mariana Marques</b>
+              <small>Founder & CEO · IAplicada</small>
+            </span>
+          </div>
+
           <div className="st-float st-float--status">
             <div className="st-float-head">
               <span className="st-dots">

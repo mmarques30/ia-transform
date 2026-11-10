@@ -1052,16 +1052,34 @@
     border-top: 1px solid var(--st-line);
   }
 }
-/* Mobile: a foto ocupa a primeira tela, nítida no alto, e o texto
-   entra embaixo sobre um degradê escuro, com respiro. */
+/* Selos do card de retrato: só existem no mobile */
+.st-hero-pill,
+.st-hero-namecard {
+  display: none;
+}
+
+/* Mobile (só até 600px; desktop não muda): a foto fica atrás de tudo,
+   translúcida, com brilho, anel e wordmark vazado. O texto entra num
+   painel de vidro por cima dela e dois selos de vidro flutuam. */
+@keyframes st-hero-zoom {
+  from {
+    transform: translateX(-50%) scale(1);
+  }
+  to {
+    transform: translateX(-50%) scale(1.06);
+  }
+}
 @media (max-width: 600px) {
   .st-hero {
     min-height: 100svh;
-    padding-top: 0;
-    padding-bottom: 28px;
+    padding-top: 92px;
+    padding-bottom: 22px;
     justify-content: flex-end;
   }
-  .st-hero-bg .st-hero-beam {
+  .st-hero-word,
+  .st-float,
+  .st-hero-mark,
+  .st-hero-floor {
     display: none;
   }
   .st-hero-stage {
@@ -1072,62 +1090,140 @@
     max-width: none;
     height: auto;
     margin: 0;
+    overflow: hidden;
+  }
+  .st-hero-stage::before {
+    content: "IAPLICADA";
+    position: absolute;
+    z-index: 0;
+    left: 50%;
+    top: 96px;
+    transform: translateX(-50%);
+    font-size: 66px;
+    font-weight: 800;
+    letter-spacing: -0.06em;
+    line-height: 1;
+    white-space: nowrap;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(200, 224, 64, 0.3);
   }
   .st-hero-stage::after {
     content: "";
     position: absolute;
     inset: 0;
-    z-index: 3;
+    z-index: 2;
     background: linear-gradient(
       180deg,
-      rgba(7, 8, 6, 0.55) 0,
-      rgba(7, 8, 6, 0) 14svh,
-      rgba(7, 8, 6, 0) 36svh,
-      rgba(7, 8, 6, 0.75) 54svh,
-      var(--st-bg) 68svh
+      rgba(7, 8, 6, 0.6) 0,
+      rgba(7, 8, 6, 0) 18svh,
+      rgba(7, 8, 6, 0) 40svh,
+      rgba(7, 8, 6, 0.78) 62svh,
+      var(--st-bg) 92svh
     );
   }
+  .st-hero-halo {
+    inset: 12svh 0 auto;
+    height: 55svh;
+    opacity: 0.9;
+  }
+  .st-orbits {
+    left: -12%;
+    width: 124%;
+    top: 12svh;
+    height: 52svh;
+    z-index: 3;
+  }
   .st-hero-photo {
-    top: 6svh;
+    z-index: 1;
+    top: 64px;
     bottom: auto;
     left: 50%;
-    height: 66svh;
-    opacity: 0.9;
-    filter: none;
-    transform: translateX(-50%);
-    mask-image: none;
-    -webkit-mask-image: none;
+    height: 74svh;
+    opacity: 0.72;
+    filter: drop-shadow(0 0 40px rgba(200, 224, 64, 0.3));
+    mask-image: linear-gradient(180deg, #000 60%, transparent 100%);
+    -webkit-mask-image: linear-gradient(180deg, #000 60%, transparent 100%);
+    animation: st-hero-zoom 14s ease-in-out infinite alternate;
   }
-  .st-hero-halo,
-  .st-orbits,
-  .st-hero-mark,
-  .st-hero-floor,
-  .st-float,
-  .st-hero-word {
-    display: none;
+
+  /* selos de vidro sobre a foto */
+  .st-hero-pill,
+  .st-hero-namecard {
+    display: flex;
+    position: absolute;
+    z-index: 4;
+    align-items: center;
+    background: rgba(18, 22, 12, 0.42);
+    border: 1px solid rgba(238, 240, 228, 0.16);
+    backdrop-filter: blur(16px) saturate(1.4);
+    -webkit-backdrop-filter: blur(16px) saturate(1.4);
+    box-shadow:
+      0 20px 40px -20px rgba(0, 0, 0, 0.7),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    animation: st-bob 6s ease-in-out infinite;
   }
+  .st-hero-pill {
+    top: 24svh;
+    left: 16px;
+    gap: 8px;
+    padding: 7px 12px;
+    border-radius: 999px;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--st-text);
+  }
+  .st-hero-namecard {
+    top: 49svh;
+    right: 16px;
+    gap: 10px;
+    padding: 8px 12px 8px 8px;
+    border-radius: 16px;
+    animation-delay: 1.8s;
+  }
+  .st-hero-namecard img {
+    width: 30px;
+    height: 30px;
+    padding: 4px;
+    border-radius: 10px;
+    background: var(--st-ink);
+    border: 1px solid rgba(200, 224, 64, 0.35);
+  }
+  .st-hero-namecard b {
+    display: block;
+    font-size: 13px;
+    letter-spacing: -0.01em;
+  }
+  .st-hero-namecard small {
+    font-family: var(--st-mono);
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--st-lime);
+  }
+
+  /* texto solto sobre a foto, sem caixa */
   .st-hero-copy {
-    padding-top: 56svh;
+    margin-top: 52svh;
   }
   .st-hero-title {
-    font-size: 36px;
-    line-height: 1.02;
-    letter-spacing: -0.04em;
-  }
-  .st-hero-sub {
-    margin-top: 14px;
-    font-size: 15px;
+    font-size: 38px;
+    line-height: 1;
   }
   .st-hero-title,
   .st-hero-sub {
-    text-shadow: 0 2px 18px rgba(7, 8, 6, 0.85);
+    text-shadow: 0 2px 20px rgba(7, 8, 6, 0.9);
+  }
+  .st-hero-sub {
+    margin-top: 12px;
+    font-size: 14.5px;
   }
   .st-hero-ctas {
-    margin-top: 22px;
-    gap: 14px;
+    margin-top: 20px;
+    gap: 12px;
   }
+
   .st-hero-chips {
-    margin-top: 32px;
+    margin-top: 20px;
   }
   .st-hero-chips {
     grid-template-columns: 1fr;
