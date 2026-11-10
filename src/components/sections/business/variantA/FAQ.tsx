@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { Plus } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
+import { CtaButton } from "@/components/lpx/CtaButton";
 import { useLpCopy, type LpCopy } from "@/lib/lpLocale";
 import { jsonLd } from "@/lib/structuredData";
 
@@ -48,16 +50,22 @@ const FAQ_ITEMS: { q: string; a: string }[] = [
 ];
 
 const COPY_PT_BR = {
+  eyebrow: "Perguntas frequentes",
   titleA: "Tire suas",
-  titleB: "Dúvidas",
+  titleB: "dúvidas",
+  sub: "Não achou o que procurava? No diagnóstico gratuito a gente responde olhando para a sua operação.",
+  cta: "Quero meu diagnóstico",
   items: FAQ_ITEMS,
 };
 
 const COPY: LpCopy<typeof COPY_PT_BR> = {
   "pt-br": COPY_PT_BR,
   en: {
-    titleA: "Frequently Asked",
-    titleB: "Questions",
+    eyebrow: "FAQ",
+    titleA: "Frequently asked",
+    titleB: "questions",
+    sub: "Didn't find what you were looking for? In the free diagnostic we answer by looking at your own operation.",
+    cta: "Request my diagnostic",
     items: [
       {
         q: "What exactly does IAplicada do?",
@@ -91,38 +99,47 @@ const COPY: LpCopy<typeof COPY_PT_BR> = {
   },
 };
 
+/**
+ * FAQ em duas colunas: título, apoio e CTA fixos à esquerda; acordeão à
+ * direita (abre com transição de altura, o primeiro já vem aberto).
+ */
 export function FAQ() {
   const c = useLpCopy(COPY);
+  const [open, setOpen] = useState<number | null>(0);
   return (
-    <section
-      id="faq"
-      className="relative overflow-hidden"
-      style={{
-        background:
-          "radial-gradient(80% 60% at 50% 0%, rgba(200,224,64,0.08), transparent 65%), linear-gradient(180deg, #0a0c07 0%, #0f1109 100%)",
-      }}
-    >
+    <section id="faq" className="lpx-section relative">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: faqJsonLd(c.items) }} />
-      <div className="container-page relative py-[80px] lg:py-[120px]">
-        <div className="max-w-[860px] mx-auto">
-          <Reveal>
-            <h2
-              className="font-extrabold text-[30px] sm:text-[40px] lg:text-[52px] leading-[1.03] tracking-[-0.025em] text-foreground"
-              style={{ textWrap: "balance" }}
-            >
-              {c.titleA}{" "}
-              <span
-                style={{ color: "var(--color-primary)" }}
-              >
-                {c.titleB}
-              </span>
-            </h2>
-          </Reveal>
+      <div className="lpx-wrap relative">
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,400px)_minmax(0,1fr)] gap-10 lg:gap-16 items-start">
+          <div className="lg:sticky lg:top-[120px]">
+            <Reveal>
+              <span className="lpx-eyebrow">{c.eyebrow}</span>
+            </Reveal>
+            <Reveal delay={0.05}>
+              <h2 className="lpx-h2 mt-6">
+                {c.titleA} <em>{c.titleB}</em>
+              </h2>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <p className="lpx-lead mt-5">{c.sub}</p>
+            </Reveal>
+            <Reveal delay={0.15}>
+              <div className="mt-8">
+                <CtaButton>{c.cta}</CtaButton>
+              </div>
+            </Reveal>
+          </div>
 
-          <div className="mt-10 flex flex-col gap-3">
+          <div className="flex flex-col gap-3">
             {c.items.map((item, i) => (
-              <Reveal key={i} delay={0.05 * (i + 1)}>
-                <FaqItem num={i + 1} question={item.q} answer={item.a} />
+              <Reveal key={item.q} delay={0.04 * (i + 1)}>
+                <FaqItem
+                  num={i + 1}
+                  question={item.q}
+                  answer={item.a}
+                  open={open === i}
+                  onToggle={() => setOpen(open === i ? null : i)}
+                />
               </Reveal>
             ))}
           </div>
@@ -136,66 +153,49 @@ function FaqItem({
   num,
   question,
   answer,
+  open,
+  onToggle,
 }: {
   num: number;
   question: string;
   answer: string;
+  open: boolean;
+  onToggle: () => void;
 }) {
-  const [open, setOpen] = useState(false);
-
+  const id = `faq-${num}`;
   return (
-    <div
-      className="faq-item"
-      style={{
-        borderRadius: 12,
-        border: "1px solid rgba(200,224,64,0.12)",
-        background: "rgba(15,17,9,0.6)",
-        transition: "border-color 0.25s ease",
-        ...(open ? { borderColor: "rgba(200,224,64,0.3)" } : {}),
-      }}
-    >
+    <div className="lpx-faq-item" data-open={open}>
       <button
-        onClick={() => setOpen(!open)}
-        className="w-full flex items-center gap-4 lg:gap-6 px-5 lg:px-7 py-5 text-left cursor-pointer"
+        type="button"
+        onClick={onToggle}
+        className="w-full flex items-center gap-4 lg:gap-5 px-5 lg:px-7 py-5 text-left cursor-pointer"
         aria-expanded={open}
+        aria-controls={id}
       >
-        <span
-          className="shrink-0 font-extrabold text-[22px] lg:text-[28px] leading-none"
-          style={{ color: "var(--color-primary)", fontFamily: '"JetBrains Mono", monospace' }}
-        >
+        <span className="lpx-mono shrink-0 text-[13px] text-[var(--lpx-faint)]">
           {String(num).padStart(2, "0")}
         </span>
-        <span className="flex-1 font-bold text-[15px] lg:text-[17px] text-foreground leading-[1.3]">
+        <span className="flex-1 text-[15.5px] lg:text-[17px] font-semibold leading-[1.35] tracking-[-0.01em] text-[var(--lpx-text)]">
           {question}
         </span>
-        <span
-          className="shrink-0 text-[20px] lg:text-[24px] font-light transition-transform duration-300"
-          style={{
-            color: "var(--color-primary)",
-            transform: open ? "rotate(45deg)" : "rotate(0deg)",
-          }}
-        >
-          +
+        <span className="lpx-faq-toggle" aria-hidden>
+          <Plus className="h-4 w-4" strokeWidth={2.2} />
         </span>
       </button>
 
-      <div
-        className="faq-answer overflow-hidden transition-all duration-300"
-        style={{
-          maxHeight: open ? 600 : 0,
-          opacity: open ? 1 : 0,
-        }}
-      >
-        <div className="px-5 lg:px-7 pb-6 pl-[60px] lg:pl-[76px]">
-          {answer.split("\n\n").map((p, i) => (
-            <p
-              key={i}
-              className="text-[14px] lg:text-[15px] text-sage leading-[1.6]"
-              style={{ marginTop: i > 0 ? "0.75rem" : 0 }}
-            >
-              {p}
-            </p>
-          ))}
+      <div className="lpx-faq-answer" id={id} role="region">
+        <div>
+          <div className="px-5 lg:px-7 pb-6 pl-[52px] lg:pl-[66px] pr-6 lg:pr-[76px]">
+            {answer.split("\n\n").map((p, i) => (
+              <p
+                key={i}
+                className="text-[14.5px] lg:text-[15px] leading-[1.7] text-[var(--lpx-muted)]"
+                style={{ marginTop: i > 0 ? "0.8rem" : 0 }}
+              >
+                {p}
+              </p>
+            ))}
+          </div>
         </div>
       </div>
     </div>

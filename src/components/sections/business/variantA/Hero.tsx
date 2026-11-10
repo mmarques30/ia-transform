@@ -1,17 +1,20 @@
 import { Reveal } from "@/components/Reveal";
 import { HeroForm } from "@/components/HeroForm";
-import { FOUNDER } from "@/config/brand";
+import { useLpCopy, type LpCopy } from "@/lib/lpLocale";
 
 /**
- * Hero (LP-A) — mesma estrutura da /businessv2 com copy própria da /.
+ * Hero da LP Business.
  *
- * Layout/tipografia/background travados via classes .hero-b-* no
- * styles.css (compartilhado com /businessv2). Copy própria pro ângulo
- * "recupere o controle da operação e escale a receita sem contratar".
+ * Fundo em camadas: grade fina, brilho lime e um "portal" (anéis + o
+ * símbolo da IAplicada girando devagar) entre o texto e o formulário.
+ * Coluna de texto enxuta (rótulo, título, descrição, prova social),
+ * centralizada na altura do formulário à direita.
+ *
+ * Título e subtítulo podem vir da rota (variantes); o resto é do idioma.
  */
 
 interface HeroProps {
-  /** H1 alternativo (variantes /iaplicada-*). Default: copy da /. */
+  /** H1 alternativo (variantes). Default: copy da /. */
   title?: React.ReactNode;
   /** Sub-headline alternativa. Default: copy da /. */
   subtitle?: React.ReactNode;
@@ -31,124 +34,105 @@ const DEFAULT_TITLE = (
 
 const DEFAULT_SUBTITLE = (
   <>
-    Em até <em style={{ color: "var(--color-primary)" }}>90 dias</em> construímos o software com IA
-    que automatiza sua operação de ponta a ponta, sob medida para o jeito que seu negócio funciona.
-    Sem ERP engessado. Sem consultoria que some depois da apresentação.
+    Em até <em>90 dias</em> construímos o software com IA que automatiza sua operação de ponta a
+    ponta, sob medida para o jeito que seu negócio funciona. Sem ERP engessado. Sem consultoria que
+    some depois da apresentação.
   </>
 );
 
+interface HeroCopy {
+  eyebrow: string;
+  trustStrong: string;
+  trust: string;
+}
+
+const HERO_PT: HeroCopy = {
+  eyebrow: "Software com IA sob medida",
+  trustStrong: "+50 empresas",
+  trust: "já operam com sistemas da IAplicada",
+};
+
+const COPY: LpCopy<HeroCopy> = {
+  "pt-br": HERO_PT,
+  en: {
+    eyebrow: "Custom AI-powered software",
+    trustStrong: "50+ companies",
+    trust: "already run IAplicada systems",
+  },
+};
+
+/** Fotos reais dos clientes dos depoimentos. */
+const CLIENT_FACES = [
+  "/clients/mariana-quadra.png",
+  "/clients/patricia.jpg",
+  "/clients/carlos-prado.jpg",
+  "/clients/karen.jpg",
+  "/clients/bruno-lcr.jpg",
+];
+
 export function Hero({ title, subtitle, landingPage }: HeroProps = {}) {
-  const isVariant = title !== undefined;
+  const c = useLpCopy(COPY);
+
   return (
-    <>
-      <section id="top" className="hero-section-b">
-        <HeroFlowBg />
-        <div className="hero-founder-photo" aria-hidden="true">
-          <img src="/brand/mariana-transparente.png" alt="" loading="eager" decoding="async" />
-        </div>
-        <div className="hero-b">
-          <div className="hero-b-text">
+    <section id="top" className="lpx-hero">
+      <div className="lpx-grid" aria-hidden />
+      <HeroPortal />
+
+      <div className="lpx-wrap">
+        <div className="lpx-hero-grid">
+          <div className="min-w-0 max-w-[580px]">
             <Reveal>
-              <img
-                src="/brand/iaplicada-logo-dark.png"
-                alt="IAplicada"
-                height={28}
-                className="hero-b-logo"
-              />
+              <span className="lpx-eyebrow">{c.eyebrow}</span>
             </Reveal>
 
             <Reveal delay={0.05}>
-              <h1 className={`hero-b-h1${isVariant ? " hero-b-h1--wrap" : ""}`}>
-                {title ?? DEFAULT_TITLE}
-              </h1>
+              <h1 className="lpx-h1">{title ?? DEFAULT_TITLE}</h1>
             </Reveal>
 
-            <Reveal delay={0.08}>
-              <p className="hero-b-sub">{subtitle ?? DEFAULT_SUBTITLE}</p>
+            <Reveal delay={0.1}>
+              <p className="lpx-hero-sub">{subtitle ?? DEFAULT_SUBTITLE}</p>
+            </Reveal>
+
+            <Reveal delay={0.15}>
+              <div className="mt-8 flex items-center gap-4">
+                <div className="lpx-avatars shrink-0" aria-hidden>
+                  {CLIENT_FACES.map((src) => (
+                    <img key={src} src={src} alt="" loading="lazy" decoding="async" />
+                  ))}
+                </div>
+                <p className="text-[13.5px] leading-snug text-[var(--lpx-muted)]">
+                  <strong className="font-semibold text-[var(--lpx-text)]">{c.trustStrong}</strong>{" "}
+                  {c.trust}
+                </p>
+              </div>
             </Reveal>
           </div>
 
           <div className="hero-b-form-col">
-            <Reveal delay={0.15}>
+            <Reveal delay={0.12}>
               {/* Slug do form e página de obrigado vêm do idioma da LP
                   (business + /thank-you-business no Brasil). */}
-              <HeroForm landingPage={landingPage} compact />
+              <HeroForm landingPage={landingPage} compact variant="dark" />
             </Reveal>
           </div>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 }
 
-/**
- * HeroFlowBg — camada decorativa de fluxo de dados no fundo da hero.
- * Cópia idêntica do componente da variantB/Hero (ids sufixados -a pra
- * não colidir com o do LP-B se as duas telas coexistirem no bundle).
- */
-function HeroFlowBg() {
+/** Anéis concêntricos com o símbolo da IAplicada e uma órbita girando. */
+function HeroPortal() {
   return (
-    <div className="hero-flow-bg" aria-hidden="true">
-      <div className="hero-flow-glow" />
-      <svg
-        viewBox="0 0 1440 852"
-        preserveAspectRatio="xMidYMid slice"
-        xmlns="http://www.w3.org/2000/svg"
-        style={{ opacity: 0.45 }}
-      >
-        <defs>
-          <linearGradient id="hero-flow-grad-a" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0" stopColor="#d5e95a" stopOpacity="0" />
-            <stop offset="0.3" stopColor="#d5e95a" stopOpacity="0.55" />
-            <stop offset="0.7" stopColor="#d5e95a" stopOpacity="0.55" />
-            <stop offset="1" stopColor="#d5e95a" stopOpacity="0" />
-          </linearGradient>
-          <filter id="hero-flow-blur-a">
-            <feGaussianBlur stdDeviation="0.5" />
-          </filter>
-        </defs>
-
-        <g
-          stroke="url(#hero-flow-grad-a)"
-          strokeWidth="1.4"
-          fill="none"
-          filter="url(#hero-flow-blur-a)"
-        >
-          <path d="M 200 200 C 500 220, 700 350, 940 380" opacity="0.7" />
-          <path d="M 240 320 C 520 320, 720 400, 940 430" opacity="0.6" />
-          <path d="M 260 470 C 520 460, 720 490, 940 490" opacity="0.7" />
-          <path d="M 220 600 C 520 580, 720 560, 940 550" opacity="0.55" />
-          <path d="M 320 700 C 560 660, 760 620, 940 600" opacity="0.4" />
-        </g>
-
-        <g fill="#d5e95a">
-          <circle cx="380" cy="270" r="2.5" opacity="0.85" />
-          <circle cx="620" cy="330" r="2" opacity="0.7" />
-          <circle cx="810" cy="370" r="1.8" opacity="0.5" />
-          <circle cx="450" cy="340" r="2" opacity="0.65" />
-          <circle cx="720" cy="410" r="2.5" opacity="0.85" />
-          <circle cx="380" cy="465" r="2.2" opacity="0.7" />
-          <circle cx="660" cy="480" r="2.8" opacity="0.9">
-            <animate attributeName="r" values="2.8;4;2.8" dur="2s" repeatCount="indefinite" />
-          </circle>
-          <circle cx="880" cy="495" r="2" opacity="0.6" />
-          <circle cx="400" cy="590" r="1.8" opacity="0.5" />
-          <circle cx="700" cy="570" r="2.2" opacity="0.65" />
-        </g>
-
-        <g fill="none" stroke="#d5e95a" strokeWidth="1" opacity="0.35">
-          <circle cx="200" cy="200" r="6" />
-          <circle cx="200" cy="200" r="12" opacity="0.4" />
-          <circle cx="260" cy="470" r="6" />
-          <circle cx="260" cy="470" r="12" opacity="0.4" />
-        </g>
-
-        <g fill="none" stroke="#d5e95a" strokeWidth="1" opacity="0.5">
-          <circle cx="940" cy="490" r="10" />
-          <circle cx="940" cy="490" r="18" opacity="0.5" />
-          <circle cx="940" cy="490" r="28" opacity="0.25" />
-        </g>
-      </svg>
+    <div className="lpx-portal" aria-hidden>
+      <div className="lpx-portal-ring" />
+      <div className="lpx-portal-ring" />
+      <div className="lpx-portal-ring" />
+      <div className="lpx-portal-core" />
+      <img className="lpx-portal-logo" src="/brand/logo-petals.png" alt="" decoding="async" />
+      <div className="lpx-portal-spin">
+        <div className="lpx-portal-orbit" />
+      </div>
     </div>
   );
 }

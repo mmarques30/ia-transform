@@ -1,60 +1,53 @@
+import { BrainCircuit, ChartNoAxesCombined, Gauge, TrendingUp } from "lucide-react";
 import { useLpCopy, type LpCopy } from "@/lib/lpLocale";
 
-const ITEMS = [
-  {
-    label: "Decisão com dados",
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M3 15V13L5 9L8 12L12 6L17 11V15H3Z" fill="currentColor" fillOpacity="0.15" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-        <path d="M3 5V15H17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    ),
-  },
-  {
-    label: "IA que aprende",
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M10 2L12 7H17L13 10.5L14.5 16L10 12.5L5.5 16L7 10.5L3 7H8L10 2Z" fill="currentColor" fillOpacity="0.15" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-      </svg>
-    ),
-  },
-  {
-    label: "Execução sem gargalo",
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M10 3V10L14 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-        <circle cx="10" cy="10" r="7.5" stroke="currentColor" strokeWidth="1.5" />
-      </svg>
-    ),
-  },
-  {
-    label: "Escala sem contratar",
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M4 16L8 8L12 12L16 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M13 4H16V7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    ),
-  },
-];
+/**
+ * Faixa de valores: painel de vidro que sobe por cima do fim do hero,
+ * com os quatro ganhos do sistema (ícone + título + uma linha).
+ */
 
-const LABELS: LpCopy<string[]> = {
-  "pt-br": ITEMS.map((item) => item.label),
-  en: ["Data-driven decisions", "AI that learns", "Bottleneck-free execution", "Scale without hiring"],
+const ICONS = [ChartNoAxesCombined, BrainCircuit, Gauge, TrendingUp];
+
+const ITEMS: LpCopy<Array<{ title: string; text: string }>> = {
+  "pt-br": [
+    { title: "Decisão com dados", text: "Os números da operação num painel só" },
+    { title: "IA que aprende", text: "Treinada no jeito que seu time trabalha" },
+    { title: "Execução sem gargalo", text: "A rotina roda sem depender de você" },
+    { title: "Escala sem contratar", text: "Mais volume com o mesmo time" },
+  ],
+  en: [
+    { title: "Data-driven decisions", text: "Your operation's numbers in one dashboard" },
+    { title: "AI that learns", text: "Trained on how your team works" },
+    { title: "Bottleneck-free execution", text: "Routine work runs without you" },
+    { title: "Scale without hiring", text: "More volume with the same team" },
+  ],
 };
 
 export function ValueStrip() {
-  const labels = useLpCopy(LABELS);
+  const items = useLpCopy(ITEMS);
   return (
-    <div className="value-strip">
-      <div className="value-strip-inner">
-        {ITEMS.map((item, i) => (
-          <div key={i} className="value-strip-item">
-            <span className="value-strip-icon">{item.icon}</span>
-            <span className="value-strip-text">{labels[i]}</span>
-            {i < ITEMS.length - 1 && <span className="value-strip-divider" aria-hidden />}
-          </div>
-        ))}
+    <div className="lpx-valuebar">
+      <div className="lpx-wrap">
+        <ul className="lpx-valuebar-inner">
+          {items.map((item, i) => {
+            const Icon = ICONS[i];
+            return (
+              <li key={item.title} className="lpx-valuebar-item">
+                <span className="lpx-icon">
+                  <Icon className="h-5 w-5" strokeWidth={1.8} />
+                </span>
+                <span className="min-w-0">
+                  <span className="block text-[15px] font-semibold tracking-[-0.01em] text-[var(--lpx-text)]">
+                    {item.title}
+                  </span>
+                  <span className="mt-0.5 block text-[13px] leading-snug text-[var(--lpx-muted)]">
+                    {item.text}
+                  </span>
+                </span>
+              </li>
+            );
+          })}
+        </ul>
       </div>
     </div>
   );

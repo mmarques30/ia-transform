@@ -1,4 +1,6 @@
+import { Building2, Crown } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
+import { SectionHead } from "@/components/lpx/SectionHead";
 import { useLpCopy, type LpCopy } from "@/lib/lpLocale";
 
 const SEGMENTS = [
@@ -15,6 +17,7 @@ const SEGMENTS = [
 ];
 
 const COPY_PT_BR = {
+  eyebrow: "Perfil ideal",
   titleA: "Para",
   titleEm: "quem",
   titleB: "é o Business?",
@@ -24,6 +27,7 @@ const COPY_PT_BR = {
 const COPY: LpCopy<typeof COPY_PT_BR> = {
   "pt-br": COPY_PT_BR,
   en: {
+    eyebrow: "Ideal fit",
     titleA: "Who is",
     titleEm: "Business",
     titleB: "for?",
@@ -42,42 +46,49 @@ const COPY: LpCopy<typeof COPY_PT_BR> = {
   },
 };
 
+const SEGMENT_ICONS = [Crown, Building2];
+
+/** Para quem é: os dois perfis em cards com ícone e borda iluminada. */
 export function ParaQuem() {
   const c = useLpCopy(COPY);
   return (
-    <section
-      className="para-quem-section"
-      style={{
-        background:
-          "linear-gradient(180deg, #0c0f07 0%, #131710 50%, #0c0f07 100%)",
-      }}
-    >
-      <div className="container-page">
-        <div className="para-quem-inner">
-          <Reveal>
-            <h2 className="para-quem-title">
-              {c.titleA}{" "}
-              <strong className="para-quem-title-em">{c.titleEm}</strong> {c.titleB}
-            </h2>
-          </Reveal>
+    <section className="lpx-section relative">
+      <div className="lpx-glow" aria-hidden style={{ top: 40, right: -240 }} />
+      <div className="lpx-wrap relative">
+        <SectionHead
+          eyebrow={c.eyebrow}
+          title={
+            <>
+              {c.titleA} <em>{c.titleEm}</em> {c.titleB}
+            </>
+          }
+        />
 
-          <div className="para-quem-grid">
-            {c.segments.map((seg, i) => (
-              <Reveal key={i} delay={0.08 + i * 0.1}>
-                <div className="para-quem-card">
-                  <h3 className="para-quem-card-title">
-                    {seg.title.split("\n").map((line, j) => (
-                      <span key={j}>
-                        {line}
-                        {j < seg.title.split("\n").length - 1 && <br />}
-                      </span>
-                    ))}
+        <div className="mt-12 lg:mt-16 grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-5">
+          {c.segments.map((seg, i) => {
+            const Icon = SEGMENT_ICONS[i];
+            return (
+              <Reveal key={seg.title} delay={0.08 + i * 0.1} className="h-full">
+                <article className="lpx-card lpx-card--hover lpx-spot lpx-edge h-full p-7 lg:p-10">
+                  <div className="flex items-center justify-between">
+                    <span className="lpx-icon">
+                      <Icon className="h-5 w-5" strokeWidth={1.8} />
+                    </span>
+                    <span className="lpx-mono text-[13px] text-[var(--lpx-faint)]">0{i + 1}</span>
+                  </div>
+                  <h3
+                    style={{ textWrap: "balance" }}
+                    className="mt-8 text-[24px] lg:text-[28px] font-semibold leading-[1.12] tracking-[-0.03em] text-[var(--lpx-text)]"
+                  >
+                    {seg.title.replace(/\n/g, " ")}
                   </h3>
-                  <p className="para-quem-card-desc">{seg.description}</p>
-                </div>
+                  <p className="mt-4 text-[15px] leading-[1.7] text-[var(--lpx-muted)]">
+                    {seg.description}
+                  </p>
+                </article>
               </Reveal>
-            ))}
-          </div>
+            );
+          })}
         </div>
       </div>
     </section>

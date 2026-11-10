@@ -1,8 +1,9 @@
-import { useState, useEffect, useCallback } from "react";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { Quote } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 import { ClientLogos } from "@/components/sections/ClientLogos";
-import { useLpCopy, type LpCopy } from "@/lib/lpLocale";
+import { CountUp } from "@/components/lpx/CountUp";
+import { SectionHead } from "@/components/lpx/SectionHead";
+import { useLpCopy, useLpLocale, type LpCopy } from "@/lib/lpLocale";
 
 interface TestimonialItem {
   name: string;
@@ -78,13 +79,57 @@ const TESTIMONIALS: TestimonialItem[] = [
   },
 ];
 
+/** Números que os próprios clientes citam nos depoimentos abaixo. */
+interface Metric {
+  prefix?: string;
+  value: number;
+  suffix: string;
+  label: string;
+  source: string;
+}
+
+const METRICS_PT: Metric[] = [
+  {
+    prefix: "+",
+    value: 50,
+    suffix: "",
+    label: "empresas com sistema próprio",
+    source: "Brasil e exterior",
+  },
+  {
+    prefix: "R$ ",
+    value: 191,
+    suffix: " mil",
+    label: "de ROI documentado em 5 meses",
+    source: "PSA Consultores",
+  },
+  {
+    value: 2,
+    suffix: "h",
+    label: "no que levava 2 semanas, o processo mais crítico",
+    source: "Turystar",
+  },
+  {
+    prefix: "+",
+    value: 50,
+    suffix: "%",
+    label: "de eficiência operacional em 6 meses",
+    source: "PSA Consultores",
+  },
+];
+
 const COPY_PT_BR = {
+  eyebrow: "Resultados",
   titleA: "Mais de 50 empresas já possuem",
   titleB: "sistemas personalizados",
+  metrics: METRICS_PT,
   testimonials: TESTIMONIALS,
-  prev: "Anterior",
-  next: "Próximo",
-  dot: (n: number) => `Depoimento ${n}`,
+  /** Destaque numérico de alguns depoimentos (índice no TESTIMONIALS). */
+  highlights: {
+    3: "R$ 191 mil de ROI",
+    5: "2 semanas → 2 horas",
+    6: "+50% de eficiência",
+  } as Record<number, string>,
 };
 
 /**
@@ -134,152 +179,142 @@ const EN_TESTIMONIALS: Array<Pick<TestimonialItem, "role" | "text">> = [
 const COPY: LpCopy<typeof COPY_PT_BR> = {
   "pt-br": COPY_PT_BR,
   en: {
+    eyebrow: "Results",
     titleA: "More than 50 companies already run",
     titleB: "custom-built systems",
+    metrics: [
+      {
+        value: 50,
+        suffix: "+",
+        label: "companies running their own system",
+        source: "Brazil and abroad",
+      },
+      {
+        prefix: "R$",
+        value: 191,
+        suffix: "K",
+        label: "in documented ROI in 5 months",
+        source: "PSA Consultores",
+      },
+      {
+        value: 2,
+        suffix: "h",
+        label: "for what used to take 2 weeks, their most critical process",
+        source: "Turystar",
+      },
+      {
+        prefix: "+",
+        value: 50,
+        suffix: "%",
+        label: "operational efficiency in 6 months",
+        source: "PSA Consultores",
+      },
+    ],
     testimonials: TESTIMONIALS.map((item, i) => ({ ...item, ...EN_TESTIMONIALS[i] })),
-    prev: "Previous",
-    next: "Next",
-    dot: (n: number) => `Testimonial ${n}`,
+    highlights: { 3: "R$191K in ROI", 5: "2 weeks → 2 hours", 6: "+50% efficiency" },
   },
 };
 
+/**
+ * Resultados: faixa de métricas (números citados pelos clientes), logos e
+ * um mural de depoimentos em colunas (masonry): todos visíveis de uma vez,
+ * foto pequena, e os que trazem número ganham um selo em destaque.
+ * No celular o mural vira uma fileira que desliza para o lado.
+ */
 export function Testimonials() {
   const c = useLpCopy(COPY);
-  const testimonials = c.testimonials;
-  const [active, setActive] = useState(0);
-  const [paused, setPaused] = useState(false);
-
-  const next = useCallback(() => {
-    setActive((c) => (c + 1) % testimonials.length);
-  }, []);
-
-  const prev = useCallback(() => {
-    setActive((c) => (c - 1 + testimonials.length) % testimonials.length);
-  }, []);
-
-  useEffect(() => {
-    if (paused) return;
-    const id = setInterval(next, 7000);
-    return () => clearInterval(id);
-  }, [paused, next]);
-
-  const t = testimonials[active];
+  const numberLocale = useLpLocale() === "en" ? "en-US" : "pt-BR";
 
   return (
-    <section id="depoimentos" className="section-veil py-[80px] lg:py-[110px] overflow-hidden">
-      <div className="container-page">
-        <div className="tsplit-card">
-          <div className="max-w-[860px] mx-auto text-center">
-            <Reveal>
-              <h2
-                className="font-extrabold text-[28px] sm:text-[36px] lg:text-[42px] leading-[1.08] tracking-[-0.02em] uppercase"
-                style={{ textWrap: "balance", color: "var(--color-primary)" }}
-              >
-                {c.titleA}{" "}
-                <span className="text-foreground">{c.titleB}</span>
-              </h2>
-            </Reveal>
-          </div>
+    <section id="depoimentos" className="lpx-section relative">
+      <div className="lpx-glow" aria-hidden style={{ top: 120, left: -260 }} />
 
-          <div className="mt-8 lg:mt-10">
-            <ClientLogos bare fadeColor="var(--tsplit-card-bg)" />
-          </div>
+      <div className="lpx-wrap relative">
+        <SectionHead
+          eyebrow={c.eyebrow}
+          title={
+            <>
+              {c.titleA} <em>{c.titleB}</em>
+            </>
+          }
+        />
 
-          <Reveal delay={0.1}>
-            <div
-              className="tsplit"
-              onMouseEnter={() => setPaused(true)}
-              onMouseLeave={() => setPaused(false)}
-            >
-              <div className="tsplit-content">
-                <div className="tsplit-tag-area">
-                  {testimonials.map((item, i) => (
-                    <span
-                      key={i}
-                      className={`tsplit-tag ${active === i ? "tsplit-tag-active" : ""}`}
-                    >
-                      <span className="tsplit-tag-line" />
-                      {item.company}
-                    </span>
-                  ))}
-                </div>
+        <Reveal delay={0.1}>
+          <dl className="lpx-metrics mt-12 lg:mt-16">
+            {c.metrics.map((m) => (
+              <div key={m.label} className="lpx-metric">
+                <dt className="sr-only">{m.label}</dt>
+                <dd>
+                  <span className="lpx-metric-value">
+                    {m.prefix}
+                    <CountUp value={m.value} locale={numberLocale} />
+                    {m.suffix}
+                  </span>
+                  <span className="mt-2 block text-[14px] leading-snug text-[var(--lpx-muted)]">
+                    {m.label}
+                  </span>
+                  <span className="lpx-mono mt-3 block text-[10.5px] uppercase tracking-[0.14em] text-[var(--lpx-faint)]">
+                    {m.source}
+                  </span>
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </Reveal>
 
-                <div className="tsplit-quote-area">
-                  {testimonials.map((item, i) => (
-                    <blockquote
-                      key={i}
-                      className={`tsplit-quote ${active === i ? "tsplit-quote-active" : ""}`}
-                    >
+        <div className="mt-10 lg:mt-12">
+          <ClientLogos bare fadeColor="var(--lpx-bg)" />
+        </div>
+
+        <Reveal delay={0.1}>
+          <div className="lpx-wall mt-10 lg:mt-12">
+            {c.testimonials.map((item, i) => {
+              const highlight = c.highlights[i];
+              return (
+                <div key={item.name + i} className="lpx-wall-item">
+                  <figure
+                    className={`lpx-card lpx-card--hover lpx-spot lpx-tcard${highlight ? " lpx-tcard--hl" : ""}`}
+                  >
+                    <div className="flex items-center justify-between gap-3">
+                      {highlight ? (
+                        <span className="lpx-tcard-badge">{highlight}</span>
+                      ) : (
+                        <Quote
+                          className="h-5 w-5 text-[var(--lpx-lime)]"
+                          strokeWidth={1.8}
+                          aria-hidden
+                        />
+                      )}
+                      <span className="lpx-mono text-[10.5px] uppercase tracking-[0.14em] text-[var(--lpx-faint)]">
+                        {item.company}
+                      </span>
+                    </div>
+                    <blockquote className="mt-5 text-[15px] leading-[1.65] text-[#d9dccf]">
                       {item.text}
                     </blockquote>
-                  ))}
-                </div>
-
-                <div className="tsplit-author-area">
-                  {testimonials.map((item, i) => (
-                    <div
-                      key={i}
-                      className={`tsplit-author ${active === i ? "tsplit-author-active" : ""}`}
-                    >
-                      <span className="tsplit-author-line" />
-                      <div>
-                        <p className="tsplit-author-name">{item.name}</p>
-                        <p className="tsplit-author-role">{item.role}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="tsplit-nav">
-                  <button
-                    type="button"
-                    onClick={() => { prev(); setPaused(true); }}
-                    className="tsplit-nav-btn"
-                    aria-label={c.prev}
-                  >
-                    <ArrowLeft className="h-4 w-4" />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => { next(); setPaused(true); }}
-                    className="tsplit-nav-btn"
-                    aria-label={c.next}
-                  >
-                    <ArrowRight className="h-4 w-4" />
-                  </button>
-
-                  <div className="tsplit-dots">
-                    {testimonials.map((_, i) => (
-                      <button
-                        key={i}
-                        type="button"
-                        onClick={() => { setActive(i); setPaused(true); }}
-                        className={`tsplit-dot ${active === i ? "tsplit-dot-active" : ""}`}
-                        aria-label={c.dot(i + 1)}
+                    <figcaption className="mt-6 flex items-center gap-3 border-t border-white/[0.07] pt-5">
+                      <img
+                        src={item.photoSrc}
+                        alt={item.name}
+                        loading="lazy"
+                        decoding="async"
+                        className="h-10 w-10 shrink-0 rounded-[12px] object-cover"
                       />
-                    ))}
-                  </div>
+                      <span className="min-w-0">
+                        <span className="block text-[14.5px] font-semibold text-[var(--lpx-text)]">
+                          {item.name}
+                        </span>
+                        <span className="block truncate text-[12.5px] text-[var(--lpx-muted)]">
+                          {item.role} · {item.company}
+                        </span>
+                      </span>
+                    </figcaption>
+                  </figure>
                 </div>
-              </div>
-
-              <div className="tsplit-photo-col">
-                {testimonials.map((item, i) => (
-                  <div
-                    key={i}
-                    className={`tsplit-photo ${active === i ? "tsplit-photo-active" : ""}`}
-                  >
-                    <img
-                      src={item.photoSrc}
-                      alt={item.name}
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
-          </Reveal>
-        </div>
+              );
+            })}
+          </div>
+        </Reveal>
       </div>
     </section>
   );
