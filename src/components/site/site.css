@@ -4875,3 +4875,13 @@
     radial-gradient(70% 60% at 50% 35%, rgba(200, 224, 64, 0.45), transparent 70%),
     linear-gradient(180deg, #eef0dc, #d6dcb0);
 }
+
+/* Desktop: o hero usa uma área mais larga que o resto da página, para o
+   título começar mais à esquerda e respirar em relação à foto. */
+@media (min-width: 1025px) {
+  .st-hero .st-container {
+    max-width: 1520px;
+    padding-left: clamp(24px, 4vw, 64px);
+    padding-right: clamp(24px, 4vw, 64px);
+  }
+}
