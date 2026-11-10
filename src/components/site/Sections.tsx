@@ -40,18 +40,24 @@ const STATS = [
 ];
 
 const LOGOS: { name: string; src?: string }[] = [
-  { name: "Mercado Livre", src: "/clients/mercado-livre-logo.png" },
-  { name: "iFood", src: "/clients/IFood_logo.svg.png" },
+  // Todos em /clients/logos/: versões brancas com fundo transparente,
+  // recortadas no limite do desenho (geradas a partir dos originais).
+  { name: "Mercado Livre", src: "/clients/logos/mercado-livre.png" },
+  { name: "iFood", src: "/clients/logos/ifood.png" },
   { name: "Cimed", src: "/clients/cimed-logo.svg" },
-  { name: "PSA Consultores", src: "/clients/psa-logo-quem-somos.png" },
-  { name: "Borges & Zembruski" },
-  { name: "Recon", src: "/clients/recon-logo-proposal.png" },
-  { name: "Focus FinTax" },
+  { name: "Life Fitness", src: "/clients/logos/life-fitness.png" },
+  { name: "PSA Consultores", src: "/clients/logos/psa.png" },
+  { name: "AGF Consultoria & Contabilidade", src: "/clients/logos/agf.png" },
+  { name: "Borges & Zembruski", src: "/clients/logos/borges-zembruski.png" },
+  { name: "Copa Cozinha", src: "/clients/logos/copa-cozinha.png" },
+  { name: "Recon", src: "/clients/logos/recon.png" },
+  { name: "FiskaNew", src: "/clients/logos/fiskanew.png" },
+  { name: "Focus FinTax", src: "/clients/logos/focus-fintax.png" },
+  { name: "LCR Contadores", src: "/clients/logos/lcr.png" },
+  { name: "Cliente IAplicada", src: "/clients/logos/cliente-lambda.png" },
   { name: "Turystar" },
   { name: "Uiara Intimates" },
   { name: "Quadra Arquitetura" },
-  { name: "LCR Contadores" },
-  { name: "Tijolo Capital" },
 ];
 
 function LogoItem({ logo }: { logo: { name: string; src?: string } }) {
