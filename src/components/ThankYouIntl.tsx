@@ -12,6 +12,7 @@ import { BgDobra } from "@/components/BgDobra";
 import { Footer } from "@/components/sections/Footer";
 import { Reveal } from "@/components/Reveal";
 import { LpLocaleProvider } from "@/lib/lpLocale";
+import { SaveOurNumber } from "@/components/SaveOurNumber";
 import { readLeadDraft } from "@/lib/whatsapp";
 
 /**
@@ -263,6 +264,10 @@ export function ThankYouIntl({ market, eid }: { market: IntlMarket; eid?: string
                     </p>
                   </Reveal>
                 )}
+
+                <Reveal delay={0.19}>
+                  <SaveOurNumber lang={market} />
+                </Reveal>
 
                 <Reveal delay={0.2}>
                   <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-[600px] mx-auto">

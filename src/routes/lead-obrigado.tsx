@@ -4,6 +4,7 @@ import { CheckCircle2, Mail, MessageCircle } from "lucide-react";
 import { BgDobra } from "@/components/BgDobra";
 import { Footer } from "@/components/sections/Footer";
 import { Reveal } from "@/components/Reveal";
+import { SaveOurNumber } from "@/components/SaveOurNumber";
 import { VideoPlayer } from "@/components/ui/video-player";
 
 /** Vídeo de boas-vindas exibido logo após o envio do kit. */
@@ -104,6 +105,10 @@ function LeadObrigadoPage() {
                 </p>
               </Reveal>
             </div>
+
+            <Reveal delay={0.18}>
+              <SaveOurNumber />
+            </Reveal>
 
             {/* Vídeo */}
             <Reveal delay={0.2}>
