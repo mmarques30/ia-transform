@@ -10,6 +10,7 @@ import {
 import { BgDobra } from "@/components/BgDobra";
 import { Footer } from "@/components/sections/Footer";
 import { Reveal } from "@/components/Reveal";
+import { SaveOurNumber } from "@/components/SaveOurNumber";
 import { formatPhone, onlyDigits, readLeadDraft } from "@/lib/whatsapp";
 
 interface ThankYouSearch {
@@ -214,6 +215,10 @@ function ThankYouBusinessPage() {
                   </p>
                 </Reveal>
               )}
+
+              <Reveal delay={0.19}>
+                <SaveOurNumber />
+              </Reveal>
 
               <Reveal delay={0.2}>
                 <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-[600px] mx-auto">

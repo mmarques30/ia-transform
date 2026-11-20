@@ -38,8 +38,8 @@ export function Footer() {
   return (
     <footer className="lpx-footer">
       <div className="lpx-wrap">
-        <div className="grid grid-cols-2 md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)_minmax(0,1fr)] gap-x-6 gap-y-10 md:gap-8 py-14 lg:py-16">
-          <div className="col-span-2 md:col-span-1">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)_minmax(0,1fr)] gap-x-6 gap-y-10 md:gap-8 py-14 lg:py-16">
+          <div className="sm:col-span-2 md:col-span-1">
             <div className="flex items-center gap-2.5">
               <Logo size={24} />
               <span className="border-l border-white/15 pl-2.5 text-[12.5px] text-[var(--lpx-muted)]">
